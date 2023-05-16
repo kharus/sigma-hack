@@ -1,21 +1,22 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
 <configuration>
   <preference name="adminBrowserLimit" value="200" />
-  <preference name="baseDir" value="E:/code/sigmakee-runtime" />
+  <preference name="baseDir" value="@project.basedir@/../sigmakee-runtime" />
   <preference name="cache" value="yes" />
   <preference name="celtdir" value="" />
-  <preference name="editDir" value="E:/code/sumo" />
+  <preference name="editDir" value="@project.basedir@/../sumo" />
   <preference name="eprover" value="/home/apease/E/bin/e_ltb_runner" />
   <preference name="graphVizDir" value="/usr/bin" />
   <preference name="holdsPrefix" value="no" />
   <preference name="hostname" value="localhost" />
   <preference name="https" value="false" />
-  <preference name="inferenceTestDir" value="E:/code/sigmakee-runtime/KBs/tests" />
+  <preference name="inferenceTestDir" value="@project.basedir@/../sigmakee-runtime/KBs/tests" />
   <preference name="jedit" value="jedit" />
-  <preference name="kbDir" value="E:/code/sigmakee-runtime/KBs" />
+  <preference name="kbDir" value="@project.basedir@/../sigmakee-runtime/KBs" />
   <preference name="leoExecutable" value="/home/apease/leo" />
   <preference name="lineNumberCommand" value="" />
   <preference name="loadCELT" value="no" />
-  <preference name="logDir" value="E:/code/sigmakee-runtime/logs" />
+  <preference name="logDir" value="@project.basedir@/../sigmakee-runtime/logs" />
   <preference name="logLevel" value="warning" />
   <preference name="port" value="8080" />
   <preference name="prolog" value="" />
