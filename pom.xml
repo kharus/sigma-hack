@@ -17,6 +17,28 @@
         <java.version>17</java.version>
         <spring-shell.version>3.0.3</spring-shell.version>
     </properties>
+
+        <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+            <id>github1</id>
+            <url>https://maven.pkg.github.com/kharus/hack-sigma-utils</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>github2</id>
+            <url>https://maven.pkg.github.com/kharus/tptp-antlr-hack</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

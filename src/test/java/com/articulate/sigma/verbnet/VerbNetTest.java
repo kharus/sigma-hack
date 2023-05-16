@@ -1,6 +1,7 @@
-package com.articulate.sigma.VerbNet;
+package com.articulate.sigma.verbnet;
 
 import com.articulate.sigma.*;
+import com.articulate.sigma.VerbNet.VerbNet;
 import com.articulate.sigma.utils.StringUtil;
 import com.articulate.sigma.wordNet.*;
 import org.junit.Test;
