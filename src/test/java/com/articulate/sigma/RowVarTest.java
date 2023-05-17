@@ -1,12 +1,13 @@
 package com.articulate.sigma;
 
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * These tests follow PredVarInst.test( ), with the exception of that method's call to FormulaPreprocessor.
@@ -14,9 +15,10 @@ import static org.junit.Assert.*;
  * TODO: See how relevant the line "if (kb.kbCache.transInstOf("exhaustiveAttribute","VariableArityRelation"))"
  * at the start of the original PredVarInst.test( ) method is. Should these tests somehow reflect that?
  */
-public class RowVarTest extends UnitTestBase  {
+public class RowVarTest extends UnitTestBase {
 
     /**
+     *
      */
     @Test
     public void testFindRowVars() {
@@ -38,6 +40,7 @@ public class RowVarTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testRowVarRels() {
@@ -67,6 +70,7 @@ public class RowVarTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testLinks() {
@@ -85,8 +89,8 @@ public class RowVarTest extends UnitTestBase  {
         f.read(stmt1);
 
         //RowVars.DEBUG = true;
-        HashMap<String,HashSet<String>> rels = RowVars.getRowVarRelations(f);
-        HashMap<String,Integer> rowVarMaxArities = RowVars.getRowVarMaxAritiesWithOtherArgs(rels, kb, f);
+        HashMap<String, HashSet<String>> rels = RowVars.getRowVarRelations(f);
+        HashMap<String, Integer> rowVarMaxArities = RowVars.getRowVarMaxAritiesWithOtherArgs(rels, kb, f);
         int arity = kb.kbCache.valences.get("links").intValue();
         System.out.println("testLinks(): arity of 'links': " + arity);
         System.out.println("testLinks(): rels: " + rels);
@@ -101,6 +105,7 @@ public class RowVarTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testLinks2() {
@@ -119,7 +124,7 @@ public class RowVarTest extends UnitTestBase  {
         f.read(stmt1);
 
         //RowVars.DEBUG = true;
-        ArrayList<Formula> results = RowVars.expandRowVars(kb,f);
+        ArrayList<Formula> results = RowVars.expandRowVars(kb, f);
         String result = results.get(0).getFormula();
         String expected = "(=>\n" +
                 "  (and\n" +
@@ -135,10 +140,11 @@ public class RowVarTest extends UnitTestBase  {
             System.out.println("testLinks2(): success!");
         else
             System.out.println("testLinks2(): failure");
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
+     *
      */
     @Test
     public void testRowVarExp() {
@@ -149,7 +155,7 @@ public class RowVarTest extends UnitTestBase  {
         f.read(stmt);
 
         //RowVars.DEBUG = true;
-        ArrayList<Formula> results = RowVars.expandRowVars(kb,f);
+        ArrayList<Formula> results = RowVars.expandRowVars(kb, f);
         System.out.println("testRowVarExp(: input: " + stmt);
         System.out.println("testRowVarExp(): results: " + results);
         System.out.println("testRowVarExp(): results size: " + results.size());
@@ -158,6 +164,6 @@ public class RowVarTest extends UnitTestBase  {
             System.out.println("testLinks(): success!");
         else
             System.out.println("testLinks(): failure");
-        assertTrue(results.size() == RowVars.MAX_ARITY);
+        assertEquals(RowVars.MAX_ARITY, results.size());
     }
 }

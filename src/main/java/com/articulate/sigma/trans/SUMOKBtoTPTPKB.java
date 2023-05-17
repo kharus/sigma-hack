@@ -9,25 +9,19 @@ import java.util.*;
 public class SUMOKBtoTPTPKB {
 
     public static final boolean filterSimpleOnly = false;
-
-    public KB kb;
-
     // flags to support including numbers and HOL in pseudo-FOL for flexible provers
     public static boolean removeHOL = true; // remove higher order expressions
     public static boolean removeNum = true; // remove numbers
-
     public static boolean debug = false;
-
     public static String lang = "fof"; // or thf
-
     public static HashSet<String> excludedPredicates = new HashSet<>();
-
+    // maps TPTP axiom IDs to SUMO formulas
+    public static HashMap<String, Formula> axiomKey = new HashMap<>();
+    public KB kb;
     public Set<String> alreadyWrittenTPTPs = new HashSet<>();
 
-    // maps TPTP axiom IDs to SUMO formulas
-    public static HashMap<String,Formula> axiomKey = new HashMap<>();
-
     /**
+     *
      */
     public SUMOKBtoTPTPKB() {
 
@@ -55,14 +49,7 @@ public class SUMOKBtoTPTPKB {
     }
 
     /**
-     */
-    public String getSanitizedKBname() {
-
-        String sanitizedKBName = kb.name.replaceAll("\\W","_");
-        return sanitizedKBName;
-    }
-
-    /**
+     *
      */
     public static String langToExtension(String l) {
 
@@ -72,6 +59,7 @@ public class SUMOKBtoTPTPKB {
     }
 
     /**
+     *
      */
     public static String extensionToLang(String l) {
 
@@ -81,51 +69,9 @@ public class SUMOKBtoTPTPKB {
     }
 
     /**
+     *
      */
-    public String getInfFilename() {
-
-        String sanitizedKBName = getSanitizedKBname();
-        String filename = KBmanager.getMgr().getPref("kbDir") + File.separator +
-                sanitizedKBName + "." + langToExtension(lang);
-        return filename;
-    }
-
-    /**
-     */
-    public String copyFile(String fileName) {
-
-        String outputPath = "";
-        FileReader in = null;
-        FileWriter out = null;
-        try {
-            String sanitizedKBName = kb.name.replaceAll("\\W","_");
-            File inputFile = new File(fileName);
-            File outputFile = File.createTempFile(sanitizedKBName, ".p", null);
-            outputPath = outputFile.getCanonicalPath();
-            in = new FileReader(inputFile);
-            out = new FileWriter(outputFile);
-            int c;
-            while ((c = in.read()) != -1)
-                out.write(c);
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            try {
-                if (in != null) in.close();
-                if (out != null) out.close();
-            }
-            catch (Exception ieo) {
-                ieo.printStackTrace();
-            }
-        }
-        return outputPath;
-    }
-
-    /**
-     */
-    public static void addToFile (String fileName, ArrayList<String> axioms, String conjecture) {
+    public static void addToFile(String fileName, ArrayList<String> axioms, String conjecture) {
 
         DataOutputStream out = null;
         try {
@@ -141,19 +87,91 @@ public class SUMOKBtoTPTPKB {
                 out.writeBytes(conjecture);
                 out.flush();
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 if (out != null) out.close();
-            }
-            catch (Exception ioe) {
+            } catch (Exception ioe) {
                 ioe.printStackTrace();
             }
         }
-        return;
+    }
+
+    /**
+     *
+     */
+    public static void main(String[] args) {
+
+        //debug = true;
+        KBmanager.getMgr().initializeOnce();
+
+        SUMOKBtoTPTPKB skbtptpkb = new SUMOKBtoTPTPKB();
+        String kbName = KBmanager.getMgr().getPref("sumokbname");
+        skbtptpkb.kb = KBmanager.getMgr().getKB(kbName);
+        String filename = KBmanager.getMgr().getPref("kbDir") + File.separator + kbName + SUMOKBtoTPTPKB.lang;
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(new BufferedWriter(new FileWriter(filename, true)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String fileWritten = skbtptpkb.writeFile(filename, null, false, pw);
+        if (StringUtil.isNonEmptyString(fileWritten))
+            System.out.println("File written: " + fileWritten + " with key: " + axiomKey);
+        else
+            System.out.println("Could not write " + filename);
+    }
+
+    /**
+     *
+     */
+    public String getSanitizedKBname() {
+
+        String sanitizedKBName = kb.name.replaceAll("\\W", "_");
+        return sanitizedKBName;
+    }
+
+    /**
+     *
+     */
+    public String getInfFilename() {
+
+        String sanitizedKBName = getSanitizedKBname();
+        String filename = KBmanager.getMgr().getPref("kbDir") + File.separator +
+                sanitizedKBName + "." + langToExtension(lang);
+        return filename;
+    }
+
+    /**
+     *
+     */
+    public String copyFile(String fileName) {
+
+        String outputPath = "";
+        FileReader in = null;
+        FileWriter out = null;
+        try {
+            String sanitizedKBName = kb.name.replaceAll("\\W", "_");
+            File inputFile = new File(fileName);
+            File outputFile = File.createTempFile(sanitizedKBName, ".p", null);
+            outputPath = outputFile.getCanonicalPath();
+            in = new FileReader(inputFile);
+            out = new FileWriter(outputFile);
+            int c;
+            while ((c = in.read()) != -1)
+                out.write(c);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (in != null) in.close();
+                if (out != null) out.close();
+            } catch (Exception ieo) {
+                ieo.printStackTrace();
+            }
+        }
+        return outputPath;
     }
 
     /**
@@ -161,24 +179,47 @@ public class SUMOKBtoTPTPKB {
      *                    the key is the renamed relation and the
      *                    value is the original name.
      */
-    protected void printVariableArityRelationContent(PrintWriter pr, TreeMap<String,String> relationMap,
+    protected void printVariableArityRelationContent(PrintWriter pr, TreeMap<String, String> relationMap,
                                                      String sanitizedKBName, int axiomIndex) {
 
         Iterator<String> it = relationMap.keySet().iterator();
         while (it.hasNext()) {
             String key = it.next();
             String value = relationMap.get(key);
-            ArrayList<Formula> result = kb.ask("arg",1,value);
+            ArrayList<Formula> result = kb.ask("arg", 1, value);
             if (result != null) {
                 for (int i = 0; i < result.size(); i++) {
                     Formula f = result.get(i);
-                    String s = f.getFormula().replace(value,key);
+                    String s = f.getFormula().replace(value, key);
                     pr.println(lang + "(kb_" + sanitizedKBName + "_" + axiomIndex++ +
                             ",axiom,(" + SUMOformulaToTPTPformula.tptpParseSUOKIFString(s, false) + ")).");
                 }
             }
         }
     }
+
+    /**
+     *  Sets isQuestion and calls writeTPTPFile() below
+
+     public String writeFile(String fileName,
+     Formula conjecture) {
+
+     final boolean isQuestion = false;
+     return writeFile(fileName,conjecture,isQuestion);
+     }
+     */
+    /**
+     *  Sets pw and calls writeTPTPFile() below
+
+     public String writeFile(String fileName,
+     Formula conjecture,
+     boolean isQuestion) {
+
+     final PrintWriter pw = null;
+     return writeFile(fileName,conjecture,isQuestion,pw);
+     }
+     */
+
     /**
      * Print the sorts of any numeric constants encountered during processing.
      * They are stored in SUMOtoTFAform.numericConstantTypes
@@ -189,62 +230,22 @@ public class SUMOKBtoTPTPKB {
         if (size == SUMOtoTFAform.numericConstantCount)
             return;
         for (String t : SUMOtoTFAform.numericConstantTypes.keySet()) {
-            if (SUMOtoTFAform.numericConstantValues.keySet().contains(t))
+            if (SUMOtoTFAform.numericConstantValues.containsKey(t))
                 continue;
             String type = SUMOtoTFAform.numericConstantTypes.get(t);
             if (debug) System.out.println("SUMOKBtoTPTPKB.printTFFNumericConstants(): term, type: " + t + ", " + type);
-            pr.println("tff(" + SUMOformulaToTPTPformula.translateWord(t, StreamTokenizer.TT_WORD,false)  +
-                    "_sig,type," + SUMOformulaToTPTPformula.translateWord(t, StreamTokenizer.TT_WORD,false)  +
-                    ":" + SUMOKBtoTFAKB.translateSort(kb,type) + ").");
+            pr.println("tff(" + SUMOformulaToTPTPformula.translateWord(t, StreamTokenizer.TT_WORD, false) +
+                    "_sig,type," + SUMOformulaToTPTPformula.translateWord(t, StreamTokenizer.TT_WORD, false) +
+                    ":" + SUMOKBtoTFAKB.translateSort(kb, type) + ").");
         }
         for (String t : SUMOtoTFAform.numericConstantTypes.keySet()) {
-            if (SUMOtoTFAform.numericConstantValues.keySet().contains(t))
+            if (SUMOtoTFAform.numericConstantValues.containsKey(t))
                 continue;
         }
     }
 
     /**
-     *  Sets isQuestion and calls writeTPTPFile() below
-
-    public String writeFile(String fileName,
-                                Formula conjecture) {
-
-        final boolean isQuestion = false;
-        return writeFile(fileName,conjecture,isQuestion);
-    }
-*/
-    /**
-     *  Sets pw and calls writeTPTPFile() below
-
-    public String writeFile(String fileName,
-                                Formula conjecture,
-                                boolean isQuestion) {
-
-        final PrintWriter pw = null;
-        return writeFile(fileName,conjecture,isQuestion,pw);
-    }
-*/
-    /**
-     */
-    public class OrderedFormulae extends TreeSet<Formula> {
-
-        public int compare(Object o1, Object o2) {
-            Formula f1 = (Formula) o1;
-            Formula f2 = (Formula) o2;
-            int fileCompare = f1.sourceFile.compareTo(f2.sourceFile);
-            if (fileCompare == 0) {
-                fileCompare = (Integer.valueOf(f1.startLine))
-                        .compareTo(Integer.valueOf(f2.startLine));
-                if (fileCompare == 0) {
-                    fileCompare = (Long.valueOf(f1.endFilePosition))
-                            .compareTo(Long.valueOf(f2.endFilePosition));
-                }
-            }
-            return fileCompare;
-        }
-    }
-
-    /**
+     *
      */
     public void writeHeader(PrintWriter pw, String sanitizedKBName) {
 
@@ -258,7 +259,7 @@ public class SUMOKBtoTPTPKB {
     }
 
     /**
-     *  Write all axioms in the KB to TPTP format.
+     * Write all axioms in the KB to TPTP format.
      *
      * @param fileName - the full pathname of the file to write
      */
@@ -274,8 +275,8 @@ public class SUMOKBtoTPTPKB {
         String result = null;
         try {
             int axiomIndex = 1;   // a count appended to axiom names to make a unique ID
-            TreeMap<String,String> relationMap = new TreeMap<String,String>(); // A Map of variable arity relations keyed by new name
-            writeHeader(pw,fileName);
+            TreeMap<String, String> relationMap = new TreeMap<String, String>(); // A Map of variable arity relations keyed by new name
+            writeHeader(pw, fileName);
 
             OrderedFormulae orderedFormulae = new OrderedFormulae();
             orderedFormulae.addAll(kb.formulaMap.values());
@@ -298,61 +299,58 @@ public class SUMOKBtoTPTPKB {
                     pw.println("% is higher order");
                     if (removeHOL)
                         continue;
-                }
-                else
+                } else
                     pw.println("% not higher order");
-                if (!KBmanager.getMgr().prefEquals("cache","yes") && f.isCached())
+                if (!KBmanager.getMgr().prefEquals("cache", "yes") && f.isCached())
                     continue;
                 if (counter++ == 100) System.out.print(".");
                 if ((counter % 4000) == 1)
                     System.out.println("\nSUMOKBtoTPTPKB.writeFile() : still working");
                 FormulaPreprocessor fp = new FormulaPreprocessor();
                 if (debug) System.out.println("SUMOKBtoTPTPKB.writeFile() : process: " + f);
-                Set<Formula> processed = fp.preProcess(f,false,kb);
+                Set<Formula> processed = fp.preProcess(f, false, kb);
                 if (debug) System.out.println("SUMOKBtoTPTPKB.writeFile() : processed: " + processed);
                 if (!processed.isEmpty()) {
                     HashSet<Formula> withRelnRenames = new HashSet<Formula>();
                     for (Formula f2 : processed)
-                        withRelnRenames.add(f2.renameVariableArityRelations(kb,relationMap));
+                        withRelnRenames.add(f2.renameVariableArityRelations(kb, relationMap));
                     for (Formula f3 : withRelnRenames) {
                         if (lang.equals("fof")) {
                             SUMOformulaToTPTPformula stptp = new SUMOformulaToTPTPformula(lang);
-                            if (debug) System.out.println("SUMOKBtoTPTPKB.writeFile() : % tptp input: " + f3.format("",""," "));
-                            result = stptp.tptpParseSUOKIFString(f3.getFormula(), false);
+                            if (debug)
+                                System.out.println("SUMOKBtoTPTPKB.writeFile() : % tptp input: " + f3.format("", "", " "));
+                            result = SUMOformulaToTPTPformula.tptpParseSUOKIFString(f3.getFormula(), false);
                             if (debug) System.out.println("% INFO in SUMOKBtoTPTPKB.writeFile(): result: " + result);
                             if (result != null)
                                 f.theTptpFormulas.add(result);
-                        }
-                        else if (lang.equals("tff")) {
+                        } else if (lang.equals("tff")) {
                             SUMOtoTFAform stfa = new SUMOtoTFAform();
                             SUMOtoTFAform.kb = kb;
-                            pw.println("% tff input: " + f3.format("",""," "));
-                            if (debug) System.out.println("SUMOKBtoTPTPKB.writeFile() : % tff input: " + f3.format("",""," "));
+                            pw.println("% tff input: " + f3.format("", "", " "));
+                            if (debug)
+                                System.out.println("SUMOKBtoTPTPKB.writeFile() : % tff input: " + f3.format("", "", " "));
                             stfa.sorts = stfa.missingSorts(f3);
                             if (stfa.sorts != null && stfa.sorts.size() > 0)
                                 f3.tffSorts.addAll(stfa.sorts);
-                            result = stfa.process(f3.getFormula(),false);
+                            result = SUMOtoTFAform.process(f3.getFormula(), false);
                             printTFFNumericConstants(pw);
                             SUMOtoTFAform.initNumericConstantTypes();
                             if (!StringUtil.emptyString(result))
                                 f.theTptpFormulas.add(result);
-                            else
-                                if (!StringUtil.emptyString(SUMOtoTFAform.filterMessage))
-                                    pw.println("% " + SUMOtoTFAform.filterMessage);
-                        }
-                        else
+                            else if (!StringUtil.emptyString(SUMOtoTFAform.filterMessage))
+                                pw.println("% " + SUMOtoTFAform.filterMessage);
+                        } else
                             pw.println("% unhandled language option " + lang);
                     }
-                }
-                else {
+                } else {
                     //System.out.println("SUMOKBtoTPTPKB.writeFile() : % empty result from preprocess on " + f.getFormula().replace("\\n"," "));
-                    pw.println("% empty result from preprocess on " + f.getFormula().replace("\\n"," "));
+                    pw.println("% empty result from preprocess on " + f.getFormula().replace("\\n", " "));
                 }
                 for (String sort : f.tffSorts) {
                     if (!StringUtil.emptyString(sort) &&
                             !alreadyWrittenTPTPs.contains(sort)) {
                         String name = "kb_" + getSanitizedKBname() + "_" + axiomIndex++;
-                        axiomKey.put(name,f);
+                        axiomKey.put(name, f);
                         pw.print(lang + "(" + name);
                         pw.println(",axiom,(" + sort + ")).");
                         alreadyWrittenTPTPs.add(sort);
@@ -361,21 +359,21 @@ public class SUMOKBtoTPTPKB {
                 for (String theTPTPFormula : f.theTptpFormulas) {
                     if (!StringUtil.emptyString(theTPTPFormula) &&
                             !alreadyWrittenTPTPs.contains(theTPTPFormula) &&
-                            !filterAxiom(f,theTPTPFormula,pw)) {
+                            !filterAxiom(f, theTPTPFormula, pw)) {
                         if (debug) System.out.println("SUMOKBtoTPTPKB.writeFile() : writing " + theTPTPFormula);
                         String name = "kb_" + getSanitizedKBname() + "_" + axiomIndex++;
-                        axiomKey.put(name,f);
+                        axiomKey.put(name, f);
                         pw.print(lang + "(" + name);
                         pw.println(",axiom,(" + theTPTPFormula + ")).");
-                        if (debug) System.out.println("SUMOKBtoTPTPKB.writeFile() : finished writing " + theTPTPFormula + " with name " + name);
+                        if (debug)
+                            System.out.println("SUMOKBtoTPTPKB.writeFile() : finished writing " + theTPTPFormula + " with name " + name);
                         alreadyWrittenTPTPs.add(theTPTPFormula);
-                    }
-                    else
+                    } else
                         pw.println("% empty, already written or filtered formula, skipping : " + theTPTPFormula);
                 }
             }
             System.out.println();
-            printVariableArityRelationContent(pw,relationMap,getSanitizedKBname(),axiomIndex);
+            printVariableArityRelationContent(pw, relationMap, getSanitizedKBname(), axiomIndex);
             printTFFNumericConstants(pw);
             if (conjecture != null) {  //----Print conjecture if one has been supplied
                 // conjecture.getTheTptpFormulas() should return a
@@ -389,25 +387,22 @@ public class SUMOKBtoTPTPKB {
             result = getInfFilename();
             pw.flush();
             pw.close();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println("Error in SUMOKBtoTPTPKB.writeFile(): " + ex.getMessage());
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 //kb.kbCache.clearSortalTypeCache();
                 if (pw != null) {
                     pw.flush();
                     pw.close();
                 }
-            }
-            catch (Exception ioe) {
+            } catch (Exception ioe) {
                 ioe.printStackTrace();
             }
         }
-        kb.axiomKey = axiomKey;
-        KBmanager.getMgr().serialize();
+        KB.axiomKey = axiomKey;
+        KBmanager.serialize();
         System.out.println("SUMOKBtoTPTPKB.writeFile(): axiomKey: " + axiomKey.size());
         KB.axiomKey = axiomKey;
         System.out.println("SUMOKBtoTPTPKB.writeFile(): seconds: " + (System.currentTimeMillis() - millis) / 1000);
@@ -416,7 +411,7 @@ public class SUMOKBtoTPTPKB {
 
     /**
      * @return true if the given formula is simple clause,
-     *   and contains one of the excluded predicates;
+     * and contains one of the excluded predicates;
      * otherwise return false;
      */
     public boolean filterExcludePredicates(Formula formula) {
@@ -428,6 +423,7 @@ public class SUMOKBtoTPTPKB {
     }
 
     /**
+     *
      */
     public boolean filterAxiom(Formula form, String tptp, PrintWriter pw) {
 
@@ -435,10 +431,7 @@ public class SUMOKBtoTPTPKB {
         if (tptp.matches(".*'[a-z][a-zA-Z0-9_]*\\(.*") &&
                 this.getClass().equals(SUMOKBtoTPTPKB.class)) { // only filter numbers in TPTP, not TFF
             pw.println("% number: " + tptp);
-            if (removeNum)
-                return true;
-            else
-                return false;
+            return removeNum;
         }
         if (tptp.indexOf("'") > -1 || tptp.indexOf('"') >= 0) {
             pw.println("% f: " + form.format("", "", " "));
@@ -449,44 +442,38 @@ public class SUMOKBtoTPTPKB {
         if (form.isHigherOrder(kb))
             if (removeHOL)
                 return true;
-        if (filterExcludePredicates(form) == false) {
+        if (!filterExcludePredicates(form)) {
             if (!alreadyWrittenTPTPs.contains(tptp)) {
                 //pw.println("% not already written: " + tptp);
                 return false;
-            }
-            else {
+            } else {
                 pw.println("% already written: " + tptp);
                 return true;
             }
-        }
-        else {
+        } else {
             pw.println("% filtered predicate: " + form.getArgument(0));
             return true;
         }
     }
 
     /**
+     *
      */
-    public static void main(String[] args) {
+    public class OrderedFormulae extends TreeSet<Formula> {
 
-        //debug = true;
-        KBmanager.getMgr().initializeOnce();
-
-        SUMOKBtoTPTPKB skbtptpkb = new SUMOKBtoTPTPKB();
-        String kbName = KBmanager.getMgr().getPref("sumokbname");
-        skbtptpkb.kb = KBmanager.getMgr().getKB(kbName);
-        String filename = KBmanager.getMgr().getPref("kbDir") + File.separator + kbName + SUMOKBtoTPTPKB.lang;
-        PrintWriter pw = null;
-        try {
-            pw = new PrintWriter(new BufferedWriter(new FileWriter(filename, true)));
+        public int compare(Object o1, Object o2) {
+            Formula f1 = (Formula) o1;
+            Formula f2 = (Formula) o2;
+            int fileCompare = f1.sourceFile.compareTo(f2.sourceFile);
+            if (fileCompare == 0) {
+                fileCompare = (Integer.valueOf(f1.startLine))
+                        .compareTo(Integer.valueOf(f2.startLine));
+                if (fileCompare == 0) {
+                    fileCompare = (Long.valueOf(f1.endFilePosition))
+                            .compareTo(Long.valueOf(f2.endFilePosition));
+                }
+            }
+            return fileCompare;
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        String fileWritten = skbtptpkb.writeFile(filename, null, false, pw);
-        if (StringUtil.isNonEmptyString(fileWritten))
-            System.out.println("File written: " + fileWritten + " with key: " + axiomKey);
-        else
-            System.out.println("Could not write " + filename);
     }
 }

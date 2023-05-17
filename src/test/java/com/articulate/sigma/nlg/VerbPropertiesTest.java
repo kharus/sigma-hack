@@ -16,51 +16,51 @@ public class VerbPropertiesTest {
         String inputVerb = "blahblah";
 
         List<String> expected = Lists.newArrayList("");
-        List<String> actual  = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.AGENT);
+        List<String> actual = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.AGENT);
         assertEquals(expected, actual);
 
         expected = Lists.newArrayList("to");
-        actual  = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.DESTINATION);
+        actual = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.DESTINATION);
         assertEquals(expected, actual);
 
         expected = Lists.newArrayList("toward");
-        actual  = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.DIRECTION);
+        actual = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.DIRECTION);
         assertEquals(expected, actual);
 
         expected = Lists.newArrayList("in");
-        actual  = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.EVENTPARTLYLOCATED);
+        actual = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.EVENTPARTLYLOCATED);
         assertEquals(expected, actual);
 
         expected = Lists.newArrayList("");
-        actual  = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.EXPERIENCER);
+        actual = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.EXPERIENCER);
         assertEquals(expected, actual);
 
         expected = Lists.newArrayList("with");
-        actual  = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.INSTRUMENT);
+        actual = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.INSTRUMENT);
         assertEquals(expected, actual);
 
         expected = Lists.newArrayList("");
-        actual  = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.MOVES);
+        actual = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.MOVES);
         assertEquals(expected, actual);
 
         expected = Lists.newArrayList("from");
-        actual  = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.ORIGIN);
+        actual = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.ORIGIN);
         assertEquals(expected, actual);
 
         expected = Lists.newArrayList("along");
-        actual  = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.PATH);
+        actual = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.PATH);
         assertEquals(expected, actual);
 
         expected = Lists.newArrayList("");
-        actual  = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.PATIENT);
+        actual = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.PATIENT);
         assertEquals(expected, actual);
 
         expected = Lists.newArrayList("out of", "from");
-        actual  = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.RESOURCE);
+        actual = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.RESOURCE);
         assertEquals(expected, actual);
 
         expected = Lists.newArrayList("");
-        actual  = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.OTHER);
+        actual = verbPropertiesSimple.getPrepositionForCaseRole(inputVerb, CaseRole.OTHER);
         assertEquals(expected, actual);
     }
 

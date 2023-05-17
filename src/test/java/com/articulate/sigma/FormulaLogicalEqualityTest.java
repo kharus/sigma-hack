@@ -28,14 +28,15 @@ public class FormulaLogicalEqualityTest extends UnitTestBase {
     private static long totalExecutionTime;
     private static int testCount;
 
-    @Parameterized.Parameter(value= 0)
+    @Parameterized.Parameter(value = 0)
     public String f1Text;
-    @Parameterized.Parameter(value= 1)
+    @Parameterized.Parameter(value = 1)
     public String f2Text;
-    @Parameterized.Parameter(value= 2)
+    @Parameterized.Parameter(value = 2)
     public boolean areEqual;
 
     /**
+     *
      */
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> loadParamteres() {
@@ -59,25 +60,26 @@ public class FormulaLogicalEqualityTest extends UnitTestBase {
             testCount = 0;
             totalExecutionTime = 0;
             System.out.println("Loaded " + jsonObject.size() + " tests.");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
     }
 
     /**
+     *
      */
     @After
     public void performanceReport() {
 
-       System.out.println("\nFormulaLogicalEqualityTest: \nA total of " +
-               testCount + " tests ran with an average of " +
-               ((totalExecutionTime/testCount) / 1000000) +
-               " milisecond execution time per test.\n");
+        System.out.println("\nFormulaLogicalEqualityTest: \nA total of " +
+                testCount + " tests ran with an average of " +
+                ((totalExecutionTime / testCount) / 1000000) +
+                " milisecond execution time per test.\n");
     }
 
     /**
+     *
      */
     @Test
     public void test() {
@@ -104,8 +106,7 @@ public class FormulaLogicalEqualityTest extends UnitTestBase {
                 System.out.println("FormulaLogicalEqualityTest.test() Not equal: fail!");
             assertTrue("The following should be equal: \n" +
                     f1.getFormula() + "\n and \n" + f2.getFormula(), comparisonResult);
-        }
-        else {
+        } else {
             if (comparisonResult)
                 System.out.println("FormulaLogicalEqualityTest.test() equal: fail!");
             else

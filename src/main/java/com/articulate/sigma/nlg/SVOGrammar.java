@@ -26,6 +26,8 @@ public class SVOGrammar {
     // "The indirect object of the sentence will usually be the instrument."
     private static final List<CaseRole> INDIRECTOBJECT_CASEROLES = Lists.newArrayList(CaseRole.DIRECTION, CaseRole.PATH, CaseRole.ORIGIN, CaseRole.DESTINATION, CaseRole.EVENTPARTLYLOCATED,
             CaseRole.INSTRUMENT, CaseRole.RESOURCE);
+    // Mappings for verb/grammar role combinations that fall out of the default grammar role behavior.
+    private static final Map<String, Multimap<SVOElement.SVOGrammarPosition, CaseRole>> specialVerbGrammarPositionBehaviorMap = Maps.newHashMap();
 
     // Insert default mappings into the multimap.
     static {
@@ -34,9 +36,7 @@ public class SVOGrammar {
         defaultGrammarPositions.putAll(SVOElement.SVOGrammarPosition.INDIRECT_OBJECT, INDIRECTOBJECT_CASEROLES);
     }
 
-    // Mappings for verb/grammar role combinations that fall out of the default grammar role behavior.
-    private static final Map<String, Multimap<SVOElement.SVOGrammarPosition, CaseRole>> specialVerbGrammarPositionBehaviorMap = Maps.newHashMap();
-    static  {
+    static {
         // agent: The man burned the wood.  patient: The wood burned.
         Multimap<SVOElement.SVOGrammarPosition, CaseRole> svoList = ArrayListMultimap.create();
         svoList.putAll(SVOElement.SVOGrammarPosition.SUBJECT, Lists.newArrayList(CaseRole.AGENT, CaseRole.PATIENT));
@@ -63,20 +63,21 @@ public class SVOGrammar {
     /**
      * Return the case roles most appropriate for a given grammar role and a verb. Returns default values if there
      * are no special rules for the given verb.
+     *
      * @param verb
      * @param grammarRole
      * @return
      */
-    public static List<CaseRole> getCaseRolesForGrammarPosition(String verb, SVOElement.SVOGrammarPosition grammarRole)   {
+    public static List<CaseRole> getCaseRolesForGrammarPosition(String verb, SVOElement.SVOGrammarPosition grammarRole) {
         List<CaseRole> retList;
 
         // First try exception list.
-        if (specialVerbGrammarPositionBehaviorMap.containsKey(verb) && specialVerbGrammarPositionBehaviorMap.get(verb).containsKey(grammarRole))    {
+        if (specialVerbGrammarPositionBehaviorMap.containsKey(verb) && specialVerbGrammarPositionBehaviorMap.get(verb).containsKey(grammarRole)) {
             Multimap<SVOElement.SVOGrammarPosition, CaseRole> mm = specialVerbGrammarPositionBehaviorMap.get(verb);
             retList = Lists.newArrayList(mm.get(grammarRole));
         }
         // Use the default.
-        else    {
+        else {
             retList = Lists.newArrayList(defaultGrammarPositions.get(grammarRole));
         }
 

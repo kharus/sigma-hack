@@ -32,6 +32,7 @@ import static org.junit.Assert.assertEquals;
 public class MultiWordsTest extends UnitTestBase {
 
     /**
+     *
      */
     @Test
     public void testVerbMultiWordKickBucket1() {
@@ -44,6 +45,7 @@ public class MultiWordsTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testVerbMultiWordKickBucket2() {
@@ -56,6 +58,7 @@ public class MultiWordsTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testVerbMultiWordCatsAndDogs1() {
@@ -69,6 +72,7 @@ public class MultiWordsTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testVerbMultiWordCatsAndDogs2() {
@@ -82,6 +86,7 @@ public class MultiWordsTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testVerbMultiWordCatsAndDogs3() {
@@ -96,6 +101,7 @@ public class MultiWordsTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testVerbMultiWordCatsAndDogs4() {
@@ -110,6 +116,7 @@ public class MultiWordsTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testVerbMultiWordCatsAndDogs5() {
@@ -119,11 +126,12 @@ public class MultiWordsTest extends UnitTestBase {
         // Incorrect root form
         String result = WordNet.wn.getMultiWords().findMultiWord(input);
 
-        assertEquals("raining_cats_and_dogs",result);
+        assertEquals("raining_cats_and_dogs", result);
         //WordNet.wn.getSUMO
     }
 
     /**
+     *
      */
     @Test
     public void testNounMultiWord1() {
@@ -138,6 +146,7 @@ public class MultiWordsTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testNounMultiWord2() {
@@ -148,6 +157,6 @@ public class MultiWordsTest extends UnitTestBase {
 
         assertEquals(2, endIndex);
         assertEquals(1, synset.size());
-        assertEquals("110107303",synset.get(0));
+        assertEquals("110107303", synset.get(0));
     }
 }

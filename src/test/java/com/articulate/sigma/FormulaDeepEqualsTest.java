@@ -1,7 +1,7 @@
 package com.articulate.sigma;
 
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -9,9 +9,10 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by sserban on 2/11/15.
  */
-public class FormulaDeepEqualsTest extends UnitTestBase{
+public class FormulaDeepEqualsTest extends UnitTestBase {
 
     /**
+     *
      */
     @Test
     public void testDeepEquals() {
@@ -86,6 +87,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase{
     }
 
     /**
+     *
      */
     @Test
     public void testDeepEquals2() {
@@ -127,9 +129,10 @@ public class FormulaDeepEqualsTest extends UnitTestBase{
     }
 
     /**
+     *
      */
     @Test
-    public void testDeepEqualsErrorCases(){
+    public void testDeepEqualsErrorCases() {
 
         Formula f = new Formula();
         f.read("(<=> (instance ?REL SymmetricRelation) (forall (?INST1 ?INST2) (=> (?REL ?INST1 ?INST2) (?REL ?INST2 ?INST1)))))");
@@ -149,6 +152,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase{
     }
 
     /**
+     *
      */
     @Test
     public void testLogicallyEqualsErrorCases() {
@@ -156,7 +160,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase{
         Formula f = new Formula();
         f.read("(<=> (instance ?REL SymmetricRelation) (forall (?INST1 ?INST2) (=> (?REL ?INST1 ?INST2) (?REL ?INST2 ?INST1)))))");
 
-        assertFalse(f.logicallyEquals((Formula)null));
+        assertFalse(f.logicallyEquals((Formula) null));
 
         Formula compared = new Formula();
         assertFalse(f.logicallyEquals(compared));
@@ -171,6 +175,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase{
     }
 
     /**
+     *
      */
     @Test
     public void testUnifyWith() {
@@ -265,9 +270,10 @@ public class FormulaDeepEqualsTest extends UnitTestBase{
         assertTrue(f1.unifyWith(f2));
         long stop = System.nanoTime();
         System.out.println("Execution time (in microseconds): " + ((stop - start) / 1000));
-   }
+    }
 
     /**
+     *
      */
     @Test
     public void testLogicallyEqualsPerformance() {

@@ -1,18 +1,20 @@
 package com.articulate.sigma.trans;
 
+import com.articulate.sigma.Formula;
+import com.articulate.sigma.KBmanager;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import com.articulate.sigma.*;
-import static org.junit.Assert.*;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
 import java.util.HashMap;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TPTP2SUMOTest {
 
     /**
+     *
      */
     @BeforeClass
     public static void init() {
@@ -20,6 +22,7 @@ public class TPTP2SUMOTest {
     }
 
     /**
+     *
      */
     @Ignore
     @Test
@@ -42,13 +45,13 @@ public class TPTP2SUMOTest {
                 System.out.println("\t" + hm.get(s).sumo + "\n");
                 System.out.println(TPTP2SUMO.collapseConnectives(new Formula(hm.get(s).sumo)));
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("e: " + e);
         }
     }
 
     /**
+     *
      */
     @Ignore
     @Test
@@ -62,10 +65,11 @@ public class TPTP2SUMOTest {
                 "  (foo B B)\n" +
                 "  (bar C))";
         System.out.println("result: " + result);
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
+     *
      */
     @Ignore
     @Test
@@ -81,15 +85,16 @@ public class TPTP2SUMOTest {
                 "    (bar C))\n" +
                 "  (blah F G))";
         System.out.println("result: " + result);
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
+     *
      */
     @Test
     public void testCollapse3() {
 
-        KBmanager.prefOverride.put("loadLexicons","false");
+        KBmanager.prefOverride.put("loadLexicons", "false");
         KBmanager.getMgr().initializeOnce();
         System.out.println("TPTP2SUMOTest.testPartition3()");
         Formula f = new Formula("(forall (?X155 ?X156 ?X157 ?X158)\n" +

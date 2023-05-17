@@ -1,7 +1,6 @@
 package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.KB;
-import com.articulate.sigma.KBmanager;
 
 import java.util.Collection;
 
@@ -18,10 +17,11 @@ public enum CaseRole {
     /**
      * Is the input string a valid case role?
      * Note that this method is case-sensitive.
+     *
      * @param input
      * @return
      */
-    public static boolean isKnownCaseRole(String input)    {
+    public static boolean isKnownCaseRole(String input) {
         try {
             CaseRole.valueOf(input);
         } catch (IllegalArgumentException e) {
@@ -33,14 +33,14 @@ public enum CaseRole {
 
     /**
      * From the input list, return the first string that is a valid case role.
+     *
      * @param list
-     * @return
-     *  a CaseRole object if its string is found in the list; else null
+     * @return a CaseRole object if its string is found in the list; else null
      */
-    public static CaseRole getCaseRole(Collection<String> list)    {
-        for (String input : list)    {
+    public static CaseRole getCaseRole(Collection<String> list) {
+        for (String input : list) {
             input = input.toUpperCase();
-            if (isKnownCaseRole(input))   {
+            if (isKnownCaseRole(input)) {
                 return CaseRole.valueOf(input);
             }
         }
@@ -50,10 +50,11 @@ public enum CaseRole {
     /**
      * Return a valid case role based on the string input. If string does not match any case role,
      * return OTHER.
+     *
      * @param input
      * @return
      */
-    public static CaseRole toCaseRole(String input, KB kb)     {
+    public static CaseRole toCaseRole(String input, KB kb) {
         CaseRole role = null;
         try {
             role = CaseRole.valueOf(input.toUpperCase());
@@ -69,7 +70,7 @@ public enum CaseRole {
                 }
             }
         }
-        if(role == null) {
+        if (role == null) {
             role = CaseRole.OTHER;
         }
 

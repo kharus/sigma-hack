@@ -4,24 +4,26 @@ import com.google.common.collect.Sets;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.Arrays;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
 public class KBTest extends UnitTestBase {
 
     /**
+     *
      */
     @Test
     public void testMostSpecificTerm() {
 
-        String t = SigmaTestBase.kb.mostSpecificTerm(Arrays.asList(new String[]{"Entity","RealNumber"}));
+        String t = SigmaTestBase.kb.mostSpecificTerm(Arrays.asList("Entity", "RealNumber"));
         System.out.println("testMostSpecificTerm(): " + t);
         assertEquals("RealNumber", t);
     }
 
     /**
+     *
      */
     @Test
     public void testAskWithTwoRestrictionsDirect1() {
@@ -53,13 +55,15 @@ public class KBTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
-    public void testIsSubclass2()   {
+    public void testIsSubclass2() {
         assertTrue(SigmaTestBase.kb.isSubclass("Driving", "Process"));
     }
 
     /**
+     *
      */
     @Test
     public void testRemoveSuperClassesEmptyInput() {
@@ -71,6 +75,7 @@ public class KBTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testRemoveSuperClassesOneElementInput() {
@@ -82,6 +87,7 @@ public class KBTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testRemoveSuperClassesTwoElementIdenticalInput1() {
@@ -93,6 +99,7 @@ public class KBTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testRemoveSuperClassesTwoElementIdenticalInput2() {
@@ -104,6 +111,7 @@ public class KBTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testRemoveSuperClassesTwoElementIdenticalInput3() {
@@ -115,6 +123,7 @@ public class KBTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testRemoveSuperClassesTwoElementInput() {
@@ -126,6 +135,7 @@ public class KBTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testRemoveSuperClassesTwoElementInputReverse() {
@@ -137,6 +147,7 @@ public class KBTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testRemoveSuperClassesTwoElementInputNoSubclass() {
@@ -148,6 +159,7 @@ public class KBTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testRemoveSuperClassesFiveElementInput() {

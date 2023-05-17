@@ -8,14 +8,19 @@ package com.articulate.sigma;
 import com.articulate.sigma.trans.SUMOKBtoTFAKB;
 import com.articulate.sigma.trans.SUMOKBtoTPTPKB;
 import com.articulate.sigma.trans.SUMOformulaToTPTPformula;
-import com.articulate.sigma.utils.MapUtils;
-import com.google.common.collect.*;
-import org.junit.*;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -23,15 +28,16 @@ import static org.junit.Assert.assertTrue;
 /**
  * FormulaPreprocessor tests not focused on findExplicitTypes( ) or computeVariableTypes( ).
  */
-public class FormulaPreprocessorTest extends UnitTestBase  {
+public class FormulaPreprocessorTest extends UnitTestBase {
 
     /**
+     *
      */
     // TODO: Technically, this should to in the FormulaTest class, but the gatherRelationsWithArgTypes( ) method requires a KB
     // and none of the other tests in that class do. Maybe move the method to FormulaPreprocessor--it's the only Formula method
     // requiring a KB.
     @Test
-    public void testGatherRelationships()   {
+    public void testGatherRelationships() {
 
         System.out.println("\n============= testGatherRelationships ==================");
         String stmt = "(agent Leaving Human)";
@@ -54,6 +60,7 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     // FIXME: test is waiting completion of Formula.logicallyEquals()
     @Ignore
@@ -89,6 +96,7 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     // FIXME: test is waiting completion of Formula.logicallyEquals()
     @Ignore
@@ -120,9 +128,10 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
-    public void testMergeToMap1()   {
+    public void testMergeToMap1() {
 
         System.out.println("\n============= testMergeToMap1 ==================");
 //        Set<String> objectSet1 = Sets.newHashSet("Object", "CorpuscularObject");
@@ -155,6 +164,7 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void test4() {
@@ -193,6 +203,7 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void test5() {
@@ -231,6 +242,7 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void test6() {
@@ -259,10 +271,11 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
             System.out.println("test6(): pass");
         else
             System.out.println("test6(): fail");
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     /**
+     *
      */
     @Test
     public void test7() {
@@ -291,10 +304,11 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
             System.out.println("test7(): pass");
         else
             System.out.println("test7(): fail");
-        assertEquals(expected,actual.iterator().next().toString());
+        assertEquals(expected, actual.iterator().next().toString());
     }
 
     /**
+     *
      */
     @Test
     public void testAbsolute() {
@@ -306,7 +320,7 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
         Formula f = new Formula();
         f.read(strf);
         //FormulaPreprocessor.debug = true;
-        HashMap<String,HashSet<String>> actual = fp.findAllTypeRestrictions(f, kb);
+        HashMap<String, HashSet<String>> actual = fp.findAllTypeRestrictions(f, kb);
         String expected = "{?NUMBER1=[RealNumber], ?NUMBER2=[NonnegativeRealNumber]}";
         System.out.println("testAbsolute(): actual: " + actual);
         System.out.println("testAbsolute(): expected: " + expected);
@@ -314,10 +328,11 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
             System.out.println("testAbsolute(): pass");
         else
             System.out.println("testAbsolute(): fail");
-        assertEquals(expected,actual.toString());
+        assertEquals(expected, actual.toString());
     }
 
     /**
+     *
      */
     @Test
     public void testInstantiatePredStmt4() {
@@ -348,6 +363,7 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testMinValuePreprocess() {
@@ -368,7 +384,7 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
         //RowVars.DEBUG = true;
         System.out.println("testMinValuePreprocess: greaterThanOrEqualTo valence: " +
                 kb.kbCache.valences.get("greaterThanOrEqualTo"));
-        assertTrue(2 == kb.kbCache.valences.get("greaterThanOrEqualTo"));
+        assertEquals(2, (int) kb.kbCache.valences.get("greaterThanOrEqualTo"));
         Set<Formula> actual = fp.preProcess(f, false, kb);
         System.out.println("testMinValuePreprocess(): actual: " + actual);
         Set<Formula> expected = Sets.newHashSet();
@@ -382,6 +398,7 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testArgNumsPreprocess() {
@@ -415,11 +432,12 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
         System.out.println("testArgNumsPreprocess: patient valence: " +
                 kb.kbCache.valences.get("patient"));
 
-        ArrayList<Formula> forms = RowVars.expandRowVars(kb,f);
+        ArrayList<Formula> forms = RowVars.expandRowVars(kb, f);
         System.out.println("testArgNumsPreprocess: forms: " + forms);
     }
 
     /**
+     *
      */
     @Test
     public void testTVRPreprocess() {
@@ -437,8 +455,7 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
             //skbtfakb.writeFile(filename, null, false, "", false, pw);
             pw.flush();
             pw.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("\n============= testTVRPreprocess ==================");
@@ -486,6 +503,7 @@ public class FormulaPreprocessorTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testFunctionVariable() {

@@ -1,16 +1,15 @@
 package com.articulate.sigma;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
 public class KbIntegrationTest extends IntegrationTestBase {
 
     /**
+     *
      */
     @Test
     public void testIsChildOf3() {
@@ -18,13 +17,14 @@ public class KbIntegrationTest extends IntegrationTestBase {
         KBcache cache = SigmaTestBase.kb.kbCache;
         System.out.println("parents of Shirt (as instance): " + cache.getParentClassesOfInstance("Shirt"));
         System.out.println("parents of Shirt: " + cache.parents.get("subclass").get("Shirt"));
-        System.out.println("KBcache.childOfP(subclass, WearableItem, Shirt): " + cache.childOfP("subclass", "WearableItem","Shirt"));
+        System.out.println("KBcache.childOfP(subclass, WearableItem, Shirt): " + cache.childOfP("subclass", "WearableItem", "Shirt"));
         System.out.println("SigmaTestBase.kb.isChildOf(Shirt, WearableItem): " + SigmaTestBase.kb.isChildOf("Shirt", "WearableItem"));
         System.out.println("SigmaTestBase.kb.childOf(Shirt, WearableItem): " + SigmaTestBase.kb.childOf("Shirt", "WearableItem"));
         assertTrue(SigmaTestBase.kb.isSubclass("Shirt", "WearableItem"));
     }
 
     /**
+     *
      */
     @Test
     public void testAskWithTwoRestrictionsDirect2() {
@@ -33,19 +33,21 @@ public class KbIntegrationTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
-    public void testIsSubclass1()   {
+    public void testIsSubclass1() {
 
         KBcache cache = SigmaTestBase.kb.kbCache;
         System.out.println("parents of Boy (as instance): " + cache.getParentClassesOfInstance("Boy"));
         System.out.println("parents of Boy: " + cache.parents.get("Boy"));
-        System.out.println("childOfP(\"Boy\", \"Entity\"): " + cache.childOfP("subclass", "Entity","Boy"));
+        System.out.println("childOfP(\"Boy\", \"Entity\"): " + cache.childOfP("subclass", "Entity", "Boy"));
         System.out.println("SigmaTestBase.kb.isChildOf(\"Boy\", \"Entity\"): " + SigmaTestBase.kb.isChildOf("Boy", "Entity"));
         assertTrue(SigmaTestBase.kb.isSubclass("Boy", "Entity"));
     }
 
     /**
+     *
      */
     @Test
     public void testIsHigherOrder() {
@@ -61,6 +63,7 @@ public class KbIntegrationTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testIsHigherOrder2() {
@@ -87,6 +90,7 @@ public class KbIntegrationTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testIsHigherOrder3() {
@@ -105,10 +109,11 @@ public class KbIntegrationTest extends IntegrationTestBase {
             System.out.println("testIsHigherOrder3(): success!");
         else
             System.out.println("testIsHigherOrder3(): failure");
-        assertTrue(!f.isHigherOrder(SigmaTestBase.kb));
+        assertFalse(f.isHigherOrder(SigmaTestBase.kb));
     }
 
     /**
+     *
      */
     @Test
     public void testIsHigherOrder4() {

@@ -3,7 +3,9 @@ package com.articulate.sigma.nlg;
 import com.articulate.sigma.KB;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.Set;
@@ -20,22 +22,22 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
     public ExpectedException expectedException = ExpectedException.none();
 
     // Testing for null/empty parameters.
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testNullKB() {
         new SumoProcessCollector(null, "agent", "Process", "Human");
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testEmptyRole() {
         new SumoProcessCollector(knowledgeBase, "", "Process", "Human");
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testEmptyProcess() {
         new SumoProcessCollector(knowledgeBase, "agent", "", "Human");
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testEmptyEntity() {
         new SumoProcessCollector(knowledgeBase, "agent", "Process", "");
     }
@@ -178,12 +180,12 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
     public void testCreateNewRoleScratchPad() {
         SumoProcessCollector process = new SumoProcessCollector(knowledgeBase, "agent", "Transportation", "Maria");
 
-        Multimap<CaseRole,String> originalMap = process.createNewRoleScratchPad();
+        Multimap<CaseRole, String> originalMap = process.createNewRoleScratchPad();
         assertEquals(1, originalMap.size());
         originalMap.clear();
         assertEquals(0, originalMap.size());
 
-        Multimap<CaseRole,String> actualMap = process.createNewRoleScratchPad();
+        Multimap<CaseRole, String> actualMap = process.createNewRoleScratchPad();
 
         assertEquals(1, actualMap.size());
     }

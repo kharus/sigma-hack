@@ -14,7 +14,7 @@ public class KBmanagerInitTest extends UnitTestBase {
      * may save developers time when they encounter unexpected results.
      */
     @Test
-    public void testNbrKifFilesLoaded()   {
+    public void testNbrKifFilesLoaded() {
 
         int expected = UnitTestBase.NUM_KIF_FILES;
         int actual = SigmaTestBase.kb.constituents.size();
@@ -25,7 +25,7 @@ public class KBmanagerInitTest extends UnitTestBase {
      * Verify how long the base class's KBmanager initialization took.
      */
     @Test
-    public void testInitializationTime()   {
+    public void testInitializationTime() {
         assertTrue("Actual time = " + UnitTestBase.totalKbMgrInitTime, UnitTestBase.totalKbMgrInitTime < 280000);
         // Just in case something whacky is going on, make sure it's greater than some minimum, too.
         assertTrue("Actual time = " + UnitTestBase.totalKbMgrInitTime, UnitTestBase.totalKbMgrInitTime > 10000);

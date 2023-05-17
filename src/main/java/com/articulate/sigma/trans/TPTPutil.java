@@ -30,33 +30,33 @@ import java.util.List;
 public class TPTPutil {
 
     /**
-     *  Remove enclosing meta-information from a TPTP axiom.
+     * Remove enclosing meta-information from a TPTP axiom.
      */
     private static String extractTPTPaxiom(String t) {
 
-        return t.substring(1,t.length()-1).trim();
+        return t.substring(1, t.length() - 1).trim();
     }
 
     /**
-     *  Remove enclosing meta-information from a TPTP axiom.
+     * Remove enclosing meta-information from a TPTP axiom.
      */
     private static String removeTPTPSuffix(String t) {
 
         if (t.endsWith(Formula.termMentionSuffix) || t.endsWith(Formula.termMentionSuffix))
-            return t.substring(0,t.length()-Formula.termMentionSuffix.length());
+            return t.substring(0, t.length() - Formula.termMentionSuffix.length());
         else
             return t;
     }
 
     /**
-     *  Remove enclosing meta-information from a TPTP axiom.
+     * Remove enclosing meta-information from a TPTP axiom.
      */
     private static String returnAndIndent(int level) {
 
-    	StringBuffer result = new StringBuffer();
+        StringBuffer result = new StringBuffer();
         result.append("<br>\n");
         for (int i = 0; i < level; i++)
-        	result.append("&nbsp;&nbsp;");
+            result.append("&nbsp;&nbsp;");
         return result.toString();
     }
 
@@ -75,15 +75,14 @@ public class TPTPutil {
 
         //System.out.println("INFO in Formula.htmlTPTPFormat(): " + f.toString());
         //System.out.println("INFO in Formula.htmlTPTPFormat(): theTptpFormulas.size()" + f.theTptpFormulas.size());
-        if (f.theTptpFormulas == null || f.theTptpFormulas.size() < 1) 
-            return "No TPTP formula.  May not be expressible in strict first order.";        
+        if (f.theTptpFormulas == null || f.theTptpFormulas.size() < 1)
+            return "No TPTP formula.  May not be expressible in strict first order.";
         StringBuffer result = new StringBuffer();
         for (String formString : f.theTptpFormulas) {
             if (!StringUtil.emptyString(formString)) {
                 //System.out.println("INFO in Formula.htmlTPTPFormat(): TPTP formula: " + formString);
                 formString = formString.trim();
-            }
-            else {
+            } else {
                 System.out.println("Error in Formula.htmlTPTPFormat(): empty TPTP formula: " + formString);
                 continue;
             }
@@ -102,93 +101,79 @@ public class TPTPutil {
                 ch = formString.charAt(i);
                 if (inComment) {     // In a comment
                     result.append(ch);
-                    if (ch == '\'') 
+                    if (ch == '\'')
                         inComment = false;
-                }
-                else {
+                } else {
                     if (inToken) {
                         if (!Character.isJavaIdentifierPart(ch)) {
                             inToken = false;
                             String tokenNoSuffix = removeTPTPSuffix(token.toString());
-                            result.append("<a href=\"" + hyperlink + "&term=" + tokenNoSuffix + "\">s__" + token.toString() + "</a>");
+                            result.append("<a href=\"" + hyperlink + "&term=" + tokenNoSuffix + "\">s__" + token + "</a>");
                             token = new StringBuffer();
                             result.append(ch);
                             tokenNum++;
-                        }
-                        else
+                        } else
                             token.append(ch);
-                    }
-                    else if (ch == '\'') {
+                    } else if (ch == '\'') {
                         inComment = true;
                         result.append(ch);
-                    }
-                    else if (ch == '(') {
+                    } else if (ch == '(') {
                         level++;
                         result.append(ch);
-                    }
-                    else if (ch == ':') {
-                    	if (!traditionalLogic)
-                    		result.append(ch);
+                    } else if (ch == ':') {
+                        if (!traditionalLogic)
+                            result.append(ch);
                         result.append(returnAndIndent(level));
-                    }
-                    else if (ch == '!') {
-                    	if (!traditionalLogic)
-                    		result.append(ch);
-                    	else
-                    		result.append("&forall;");
-                    }
-                    else if (ch == '?') {
-                    	if (!traditionalLogic)
-                    		result.append(ch);
-                       	else
-                    		result.append("&exist;");
-                    }
-                    else if (ch == '&') {
-                    	if (traditionalLogic)
-                    		result.append("&and;");
-                    	else
-                    		result.append(ch);
+                    } else if (ch == '!') {
+                        if (!traditionalLogic)
+                            result.append(ch);
+                        else
+                            result.append("&forall;");
+                    } else if (ch == '?') {
+                        if (!traditionalLogic)
+                            result.append(ch);
+                        else
+                            result.append("&exist;");
+                    } else if (ch == '&') {
+                        if (traditionalLogic)
+                            result.append("&and;");
+                        else
+                            result.append(ch);
                         result.append(returnAndIndent(level));
-                    }
-                    else if (ch == '|') {
-                    	if (traditionalLogic)
-                    		result.append("&or;");
-                    	else
-                    		result.append(ch);
+                    } else if (ch == '|') {
+                        if (traditionalLogic)
+                            result.append("&or;");
+                        else
+                            result.append(ch);
                         result.append(returnAndIndent(level));
-                    }
-                    else if (ch == '~') {
-                    	if (traditionalLogic)
-                    		result.append("&not;");
-                    	else
-                    		result.append(ch);
-                    }
-                    else if (ch == ')') {
+                    } else if (ch == '~') {
+                        if (traditionalLogic)
+                            result.append("&not;");
+                        else
+                            result.append(ch);
+                    } else if (ch == ')') {
                         level--;
                         tokenNum = 0;
                         result.append(ch);
-                        if ((i+1 < formString.length()) && formString.charAt(i+1) != ')')
-                        	result.append(returnAndIndent(level));
-                    }
-                    else if (formString.substring(i).startsWith("=>")) {
+                        if ((i + 1 < formString.length()) && formString.charAt(i + 1) != ')')
+                            result.append(returnAndIndent(level));
+                    } else if (formString.substring(i).startsWith("=>")) {
                         i++;
                         if (traditionalLogic)
-                        	result.append("&rArr;");
+                            result.append("&rArr;");
                         else
-                        	result.append("=&gt;");
+                            result.append("=&gt;");
                         result.append(returnAndIndent(level));
-                    }
-                    else {
+                    } else {
                         if (formString.substring(i).startsWith("s__")) {
                             inToken = true;
                             i = i + 2;
-                        }
-                        else
+                        } else
                             result.append(ch);
                     }
                 }
             }
-            result.append("<P>\n");                
+            result.append("<P>\n");
         }
         return result.toString();
     }
@@ -213,7 +198,7 @@ public class TPTPutil {
 
         //System.out.println("\nTPTPutil.citation: sumoStep: " + sumoStep);
         //System.out.println("TPTPutil.citation: stepName: " + stepName);
-        ArrayList<Formula> ciAxioms = kb.ask("arg",0,"containsFormula");
+        ArrayList<Formula> ciAxioms = kb.ask("arg", 0, "containsFormula");
         //System.out.println("TPTPutil.citation: formulas: " + ciAxioms);
         for (Formula f : ciAxioms) {
             Formula arg = f.getArgument(2);
@@ -233,7 +218,7 @@ public class TPTPutil {
      */
     public static String getCitationString(String sumoStep, String stepName, KB kb) {
 
-        ArrayList<Formula> ciAxioms = kb.ask("arg",0,"containsFormula");
+        ArrayList<Formula> ciAxioms = kb.ask("arg", 0, "containsFormula");
         //System.out.println("TPTPutil.getCitationString: stepName: " + stepName);
         //System.out.println("TPTPutil.getCitationString: sumo: " + sumoStep);
         for (Formula f : ciAxioms) {
@@ -242,7 +227,7 @@ public class TPTPutil {
                 if (arg.equals(new Formula(sumoStep))) {
                     //System.out.println("TPTPutil.getCitationString: formula arg: " + arg);
                     String term = f.getStringArgument(1);
-                    ArrayList<Formula> comments = kb.askWithRestriction(0,"comment",1,term);
+                    ArrayList<Formula> comments = kb.askWithRestriction(0, "comment", 1, term);
                     if (comments != null && comments.size() > 0)
                         return comments.get(0).getStringArgument(2);
                 }
@@ -252,6 +237,7 @@ public class TPTPutil {
     }
 
     /**
+     *
      */
     public static void test() {
 
@@ -260,10 +246,11 @@ public class TPTPutil {
         //f.theTptpFormulas.add("fof(kb_ArabicCulture_20,axiom,(( s__subclass(s__Hajj,s__Translocation) ))).");
         f.theTptpFormulas.add("(! [V__P] : (s__instance(V__P,s__Agent) => ((s__attribute(V__P,s__Muslim) & s__capability(s__Hajj,s__agent__m,V__P)) => " +
                 "s__modalAttribute('(? [V__H] : (s__instance(V__H,s__Process) & s__instance(V__H,s__Hajj) & s__agent(V__H,V__P)))',s__Obligation))))");
-        System.out.println(TPTPutil.htmlTPTPFormat(f,"http://sigma.ontologyportal.org:4040/sigma?kb=SUMO&term=",false));
+        System.out.println(TPTPutil.htmlTPTPFormat(f, "http://sigma.ontologyportal.org:4040/sigma?kb=SUMO&term=", false));
     }
 
     /**
+     *
      */
     public static void showHelp() {
 
@@ -276,6 +263,7 @@ public class TPTPutil {
     }
 
     /**
+     *
      */
     public static void main(String[] args) throws IOException {
 
@@ -288,32 +276,30 @@ public class TPTPutil {
             showHelp();
         else {
             TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
-            KBmanager.prefOverride.put("loadLexicons","false");
+            KBmanager.prefOverride.put("loadLexicons", "false");
             KBmanager.getMgr().initializeOnce();
             String kbName = KBmanager.getMgr().getPref("sumokbname");
             KB kb = KBmanager.getMgr().getKB(kbName);
             if (args != null && args.length > 1 && args[0].contains("f")) {
                 try {
-                    List<String> lines = FileUtil.readLines(args[1],false);
+                    List<String> lines = FileUtil.readLines(args[1], false);
                     String query = "(";
-                    StringBuffer answerVars = new StringBuffer("");
+                    StringBuffer answerVars = new StringBuffer();
                     System.out.println("input: " + lines + "\n");
-                    tpp.parseProofOutput((ArrayList<String>) lines, query, kb,answerVars);
+                    tpp.parseProofOutput((ArrayList<String>) lines, query, kb, answerVars);
                     System.out.println("TPTPutil.main(): " + tpp.proof.size() + " steps ");
                     System.out.println("TPTPutil.main(): showing only source axioms ");
                     for (TPTPFormula step : tpp.proof) {
                         //System.out.println(step);
                         if (TPTPutil.sourceAxiom(step)) {
                             Formula f = new Formula(step.sumo);
-                            System.out.println(f.format("","  ","\n"));
+                            System.out.println(f.format("", "  ", "\n"));
                         }
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            else if (args != null && args.length > 1 && args[0].contains("i")) {
+            } else if (args != null && args.length > 1 && args[0].contains("i")) {
                 try {
                     KB.force = true;
                     kb.loadVampire();
@@ -337,28 +323,25 @@ public class TPTPutil {
                                 int secondParen = name.indexOf(")", firstComma + 1);
                                 id = name.substring(firstComma + 1, secondParen);
                                 //System.out.println("TPTPutil.main(): id: " + id);
-                                if (KB.axiomKey.keySet().contains(id)) {
+                                if (KB.axiomKey.containsKey(id)) {
                                     //System.out.println("TPTPutil.main(): formula: " + KB.axiomKey.get(id));
                                     String str = getCitationString(KB.axiomKey.get(id).toString(), name, kb);
                                     if (!StringUtil.emptyString(str))
                                         System.out.println("\n" + str);
                                 }
                             }
-                            System.out.println("\n" + f.format("","  ","\n"));
+                            System.out.println("\n" + f.format("", "  ", "\n"));
                         }
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            else if (args != null && args.length > 0 && args[0].contains("t"))
+            } else if (args != null && args.length > 0 && args[0].contains("t"))
                 test();
             else
                 showHelp();
         }
     }
-
 
 
 }

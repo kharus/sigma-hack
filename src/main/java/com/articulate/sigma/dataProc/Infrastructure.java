@@ -1,28 +1,23 @@
 package com.articulate.sigma.dataProc;
 
 import com.articulate.sigma.HTMLformatter;
-import com.articulate.sigma.KB;
-import com.articulate.sigma.KBmanager;
-import com.articulate.sigma.KButilities;
 import com.articulate.sigma.utils.MapUtils;
 import com.articulate.sigma.utils.StringUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
 import java.io.LineNumberReader;
+import java.sql.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import java.sql.*;
-
 public class Infrastructure {
 
     public static boolean initialized = false;
-    public static Infrastructure inf =  null;
+    public static Infrastructure inf = null;
 
     public static Connection conn = null;
 
@@ -33,62 +28,90 @@ public class Infrastructure {
     // exterior key of product type, interior key of relation, interior set of allowed values
     public HashMap<String, HashMap<String, HashSet<String>>> allowableValues = new HashMap<>();
 
-    public HashMap<String,String> productTypes = new HashMap<>();  // id, name
-    public HashMap<String,HashSet<String>> productsByTypeNames = new HashMap<>();
+    public HashMap<String, String> productTypes = new HashMap<>();  // id, name
+    public HashMap<String, HashSet<String>> productsByTypeNames = new HashMap<>();
 
-    public HashMap<String,Product> products = new HashMap<>(); //id, product
-    public HashMap<String,Category> categories = new HashMap<>(); //id, category
+    public HashMap<String, Product> products = new HashMap<>(); //id, product
+    public HashMap<String, Category> categories = new HashMap<>(); //id, category
     public HashMap<String, HashSet<String>> parents = new HashMap<>(); //parent name, list of categories
 
     /**
+     *
      */
-    public class Product {
-        public String SUMO = null;
-        public String ID = null;
-        public String name = null;
-        public String subCat = null; // a JSON oid
-        public HashMap<String,String> attributes = new HashMap<>();
+    public static void initOnce() {
 
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            if (SUMO != null)
-                sb.append("SUMO:" + SUMO + " ");
-            sb.append(ID + " : " + name + " : " + subCat);
-            sb.append("    " + attributes);
-            return sb.toString();
+        if (initialized)
+            return;
+        String productsF = System.getenv("PRODUCTS");
+        String mappingsF = System.getenv("MAPPINGS");
+        String categoriesF = System.getenv("CATEGORIES");
+        String typesF = System.getenv("TYPES");
+        inf = new Infrastructure();
+        try {
+            inf.productCatJSONtoSUMO(productsF, categoriesF, mappingsF, typesF);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        initialized = true;
+    }
+
+    /**
+     *
+     */
+    public static void initOnceDB() {
+
+        if (initialized)
+            return;
+        try {
+            String url = "jdbc:postgresql://localhost/sumo";
+            Properties props = new Properties();
+            props.setProperty("user", "postgres");
+            props.setProperty("password", "postgres");
+            props.setProperty("ssl", "false");
+            Class.forName("org.postgresql.Driver");
+            conn = DriverManager.getConnection(url, props);
+            String productsF = System.getenv("PRODUCTS");
+            String mappingsF = System.getenv("MAPPINGS");
+            String categoriesF = System.getenv("CATEGORIES");
+            String typesF = System.getenv("TYPES");
+            inf = new Infrastructure();
+            inf.productCatJSONtoSUMO(productsF, categoriesF, mappingsF, typesF);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //inf = new Infrastructure();
+        //inf.productCatJSONtoSUMO(productsF, categoriesF, mappingsF, typesF);
+        initialized = true;
+    }
+
+    /**
+     *
+     */
+    public static void showHelp() {
+
+        System.out.println("KButilities class");
+        System.out.println("  options:");
+        System.out.println("  -h - show this help screen");
+        System.out.println("  -i initialize");
+    }
+
+    /**
+     *
+     */
+    public static void main(String[] args) {
+
+        if (args != null && args.length > 0 && args[0].equals("-h"))
+            showHelp();
+        else {
+            if (args != null && args.length > 1 && args[0].equals("-i")) {
+                initOnceDB();
+            } else
+                showHelp();
         }
     }
 
     /**
-     */
-    public class Category {
-        public String ID = null;
-        public String SUMO = null;
-        public String name = null;
-        public String parent = null; // a JSON oid
-        public String productType = null;  // a JSON oid
-        public HashSet<String> sectors = new HashSet<>();
-
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            if (SUMO != null)
-                sb.append("SUMO:" + SUMO + " ");
-            sb.append(ID + " : " + name + " : " + parent);
-            sb.append("    " + sectors);
-            return sb.toString();
-        }
-    }
-
-    /**
-     * maps are old string ID keys and new (SUMO) id values
-     */
-    public class Mappings {
-        public HashMap<String,String> terms = new HashMap<>();
-        public HashMap<String,String> relations = new HashMap<>();
-        public HashMap<String,String> units = new HashMap<>();
-    }
-
-    /**
+     *
      */
     private void processProductTypes(JSONArray arraypt) throws SQLException {
 
@@ -97,7 +120,7 @@ public class Infrastructure {
             JSONObject jso2 = (JSONObject) jo.get("_id");
             String oid = (String) jso2.get("$oid");
             String name = (String) jo.get("name");
-            productTypes.put(oid,name);
+            productTypes.put(oid, name);
             PreparedStatement st = conn.prepareStatement("INSERT INTO edges (rel, source, target) " +
                     "VALUES ('instance','" + StringUtil.stringToKIFid(name) + "','ProductAttribute') " +
                     "ON CONFLICT DO NOTHING;");
@@ -107,6 +130,7 @@ public class Infrastructure {
     }
 
     /**
+     *
      */
     private Mappings processMappings(JSONObject objm) {
 
@@ -115,24 +139,25 @@ public class Infrastructure {
         for (Object o : terms) {
             String old = (String) ((JSONObject) o).get("old");
             String newTerm = (String) ((JSONObject) o).get("new");
-            mappings.terms.put(old,newTerm);
+            mappings.terms.put(old, newTerm);
         }
         JSONArray relations = (JSONArray) objm.get("relations");
         for (Object o : relations) {
             String old = (String) ((JSONObject) o).get("old");
             String newTerm = (String) ((JSONObject) o).get("new");
-            mappings.relations.put(old,newTerm);
+            mappings.relations.put(old, newTerm);
         }
         JSONArray units = (JSONArray) objm.get("units");
         for (Object o : relations) {
             String old = (String) ((JSONObject) o).get("old");
             String newTerm = (String) ((JSONObject) o).get("new");
-            mappings.units.put(old,newTerm);
+            mappings.units.put(old, newTerm);
         }
         return mappings;
     }
 
     /**
+     *
      */
     private void processCategories(JSONArray arrayc,
                                    Mappings mappings) throws SQLException {
@@ -155,7 +180,7 @@ public class Infrastructure {
             c.SUMO = StringUtil.stringToKIFid(c.name);
             //if (mappings.terms.containsKey(c.name))
             //    c.SUMO = mappings.terms.get(c.name);
-            categories.put(c.ID,c);
+            categories.put(c.ID, c);
             JSONObject jsoProdType = (JSONObject) jso.get("productTypeId");
             if (jsoProdType != null) {
                 c.productType = (String) jsoProdType.get("$oid");
@@ -163,23 +188,23 @@ public class Infrastructure {
                 System.out.println("(industryProductType " + c.SUMO + " " +
                         StringUtil.stringToKIFid(productTypes.get(c.productType)) + ")");
                 PreparedStatement st = conn.prepareStatement("INSERT INTO edges (rel, source, target) " +
-                                               "VALUES ('industryProductType','" + c.SUMO + "','" +
-                                               StringUtil.stringToKIFid(productTypes.get(c.productType)) + "')" +
-                                               "ON CONFLICT DO NOTHING;");
+                        "VALUES ('industryProductType','" + c.SUMO + "','" +
+                        StringUtil.stringToKIFid(productTypes.get(c.productType)) + "')" +
+                        "ON CONFLICT DO NOTHING;");
                 st.executeUpdate();
                 st.close();
-            }
-            else
+            } else
                 System.out.println("processCategories(): null product type for " + o);
             //System.out.println("processCategories(): " + c);
         }
         for (Category c : categories.values()) {
             if (categories.containsKey(c.parent))
-            MapUtils.addToMap(parents,categories.get(c.parent).name,c.name);
+                MapUtils.addToMap(parents, categories.get(c.parent).name, c.name);
         }
     }
 
     /**
+     *
      */
     private void processProduct(JSONObject jso,
                                 Mappings mappings) throws SQLException {
@@ -193,21 +218,21 @@ public class Infrastructure {
         p.ID = oid;
         p.name = name;
         //System.out.println("processProduct(): " + p.name);
-        p.attributes = (HashMap<String,String>) attrib;
+        p.attributes = (HashMap<String, String>) attrib;
         JSONObject jsocat = (JSONObject) jso.get("subCategoryId");
         String subcat = (String) jsocat.get("$oid");
-        if (categories.keySet().contains(subcat)) { // points to a duplicate concepts in categories
+        if (categories.containsKey(subcat)) { // points to a duplicate concepts in categories
             //System.out.println("processProducts(): found id: " + cat);
             Category subCat = categories.get(subcat);
             p.subCat = subcat;
             String subCatName = subCat.name;
-            MapUtils.addToMap(productsByTypeNames,subCatName,p.ID);
+            MapUtils.addToMap(productsByTypeNames, subCatName, p.ID);
             System.out.println("(subclass " +
                     StringUtil.stringToKIFid(p.name) + " " +
                     StringUtil.stringToKIFid(subCatName) + ")");
             PreparedStatement st = conn.prepareStatement("INSERT INTO edges (rel, source, target) " +
-                    "VALUES ('subclass','" + StringUtil.stringToKIFid(p.name)  + "','" +
-                    StringUtil.stringToKIFid(subCatName)  + "') ON CONFLICT DO NOTHING;");
+                    "VALUES ('subclass','" + StringUtil.stringToKIFid(p.name) + "','" +
+                    StringUtil.stringToKIFid(subCatName) + "') ON CONFLICT DO NOTHING;");
             st.executeUpdate();
             st.close();
             String SUMO = subCat.SUMO;
@@ -223,16 +248,15 @@ public class Infrastructure {
                                 StringUtil.stringToKIFid(p.name) + " " +
                                 StringUtil.stringToKIFid(brand) + ")");
                         PreparedStatement st2 = conn.prepareStatement("INSERT INTO edges (rel, source, target) " +
-                                "VALUES ('manufacturer','" + StringUtil.stringToKIFid(p.name)  + "','" +
-                                StringUtil.stringToKIFid(brand)  + "') ON CONFLICT DO NOTHING;");
+                                "VALUES ('manufacturer','" + StringUtil.stringToKIFid(p.name) + "','" +
+                                StringUtil.stringToKIFid(brand) + "') ON CONFLICT DO NOTHING;");
                         st2.executeUpdate();
                         st2.close();
                     }
-                }
-                else {
+                } else {
                     String newR = StringUtil.stringToKIFid(r);
                     //if (mappings.relations.containsKey(r))
-                   //     newR = mappings.relations.get(r);
+                    //     newR = mappings.relations.get(r);
                     MapUtils.addToMap(relsForType, subCatName, r);
                     MapUtils.addToMapMap(allowableValues, subCatName, r, attrib.get(r).toString());
                     String value = attrib.get(r).toString();
@@ -242,7 +266,7 @@ public class Infrastructure {
                             r + "') ON CONFLICT DO NOTHING;");
                     st2.executeUpdate();
                     String funcID = "Function" + funcIdCounter++;
-                    String val = processValue(value,funcID);
+                    String val = processValue(value, funcID);
                     if (Character.isDigit(value.charAt(0))) {
                         System.out.println("(memberMeasure " + StringUtil.stringToKIFid(name) + " " +
                                 StringUtil.stringToKIFid(r) + " " + funcID + ")");
@@ -255,10 +279,11 @@ public class Infrastructure {
                 }
             }
         }
-        products.put(p.ID,p);
+        products.put(p.ID, p);
     }
 
     /**
+     *
      */
     public void toSUMObyParent() throws SQLException {
 
@@ -315,11 +340,10 @@ public class Infrastructure {
                     Object objp = jp.parse(line);
                     JSONObject obj = (JSONObject) objp;
                     //arrayp.add(obj);
-                    processProduct(obj,mappings);
+                    processProduct(obj, mappings);
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error reading " + filename + "\n" + e.getMessage());
             e.printStackTrace();
         }
@@ -359,6 +383,7 @@ public class Infrastructure {
     /**
      * Parse a sample of products and their categories formatted in a JSON.
      * Uses JSON API at http://alex-public-doc.s3.amazonaws.com/json_simple-1.1/index.html
+     *
      * @param filenamep must be full path
      * @param filenamec must be full path
      */
@@ -375,8 +400,8 @@ public class Infrastructure {
         JSONArray arraypt = null;
         JSONArray arrayc = null;
         JSONObject objm = null;
-        HashMap<String,Category> categories = new HashMap<>();
-        HashMap<String,String> productType = new HashMap<>();
+        HashMap<String, Category> categories = new HashMap<>();
+        HashMap<String, String> productType = new HashMap<>();
         Mappings mappings = new Mappings();
         try {
             // read product types
@@ -397,13 +422,13 @@ public class Infrastructure {
             objm = (JSONObject) jpm.parse(frm);
 
             processProductTypes(arraypt);
-            mappings = processMappings((JSONObject) objm);
+            mappings = processMappings(objm);
 
             // process categories
-            processCategories(arrayc,mappings);
+            processCategories(arrayc, mappings);
             toSUMObyParent();
 
-            readProducts(filenamep,mappings);
+            readProducts(filenamep, mappings);
             //System.out.println("(applicableRelation " + SUMO + " " + newR + ")");
             //System.out.println("(allowableValue " + SUMO + " " + newR + " \"" + attrib.get(r) + "\")");
             for (String ptype : relsForType.keySet()) {
@@ -418,22 +443,21 @@ public class Infrastructure {
                 }
             }
             for (String ptype : allowableValues.keySet()) {
-                HashMap<String,HashSet<String>> rels = allowableValues.get(ptype);
+                HashMap<String, HashSet<String>> rels = allowableValues.get(ptype);
                 for (String rel : rels.keySet()) {
                     HashSet<String> vals = rels.get(rel);
                     for (String val : vals) {
                         String funcID = "Function" + funcIdCounter++;
-                        val = processValue(val,funcID);
+                        val = processValue(val, funcID);
                         if (val.startsWith("(")) {
-                            System.out.println("(allowableValue " + StringUtil.stringToKIFid(ptype) + " " + StringUtil.stringToKIFid(rel)  + " " + val + ")");
+                            System.out.println("(allowableValue " + StringUtil.stringToKIFid(ptype) + " " + StringUtil.stringToKIFid(rel) + " " + val + ")");
                             PreparedStatement st = conn.prepareStatement("INSERT INTO ternary (rel, arg1, arg2, arg3) " +
                                     "VALUES ('allowableValue','" + StringUtil.stringToKIFid(ptype) + "','" +
                                     rel + "','" + val + "') ON CONFLICT DO NOTHING;");
                             st.executeUpdate();
                             st.close();
-                        }
-                        else {
-                            System.out.println("(allowableValue " + StringUtil.stringToKIFid(ptype) + " " + StringUtil.stringToKIFid(rel)  + " \"" + val + "\")");
+                        } else {
+                            System.out.println("(allowableValue " + StringUtil.stringToKIFid(ptype) + " " + StringUtil.stringToKIFid(rel) + " \"" + val + "\")");
                             PreparedStatement st = conn.prepareStatement("INSERT INTO ternary (rel, arg1, arg2, arg3) " +
                                     "VALUES ('allowableValue','" + StringUtil.stringToKIFid(ptype) + "','" +
                                     rel + "','" + val + "') ON CONFLICT DO NOTHING;");
@@ -444,14 +468,14 @@ public class Infrastructure {
                 }
             }
             //System.out.println(allowableValues);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error reading " + filenamep + " " + filenamec + "\n" + e.getMessage());
             e.printStackTrace();
         }
     }
 
     /**
+     *
      */
     public ArrayList<String> getProductTypes() {
 
@@ -461,6 +485,7 @@ public class Infrastructure {
     }
 
     /**
+     *
      */
     public ArrayList<String> getProductTypesDB() {
 
@@ -476,14 +501,14 @@ public class Infrastructure {
             }
             rs.close();
             st.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return al;
     }
 
     /**
+     *
      */
     public ArrayList<String> getCategories(String productType) {
 
@@ -503,6 +528,7 @@ public class Infrastructure {
     }
 
     /**
+     *
      */
     public ArrayList<String> getCategoriesDB(String productType) {
 
@@ -520,14 +546,14 @@ public class Infrastructure {
             }
             rs.close();
             st.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return al;
     }
 
     /**
+     *
      */
     public ArrayList<String> getSubCategories(String category) {
 
@@ -539,6 +565,7 @@ public class Infrastructure {
     }
 
     /**
+     *
      */
     public ArrayList<String> getSubCategoriesDB(String category) throws SQLException {
 
@@ -556,18 +583,18 @@ public class Infrastructure {
             }
             rs.close();
             st.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return al;
     }
 
     /**
+     *
      */
     public HashSet<String> getAllowedRelations(String subCategory) {
 
-        if (StringUtil.emptyString(subCategory) )
+        if (StringUtil.emptyString(subCategory))
             return null;
         subCategory = StringUtil.decode(subCategory);
         System.out.println("getAllowedRelations(): subCategory: " + subCategory);
@@ -576,10 +603,11 @@ public class Infrastructure {
     }
 
     /**
+     *
      */
     public HashSet<String> getAllowedRelationsDB(String subCategory) throws SQLException {
 
-        if (StringUtil.emptyString(subCategory) )
+        if (StringUtil.emptyString(subCategory))
             return null;
         HashSet<String> result = new HashSet<>();
         subCategory = StringUtil.decode(subCategory);
@@ -592,18 +620,18 @@ public class Infrastructure {
                 result.add(rs.getString("target"));
             rs.close();
             st.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
     }
 
     /**
+     *
      */
     public ArrayList<String> getAllowableValues(String subCategory, String rel) {
 
-        if (StringUtil.emptyString(subCategory) )
+        if (StringUtil.emptyString(subCategory))
             return null;
         ArrayList<String> al = new ArrayList<>();
         System.out.println("getAllowableValues(): subCategory: " + subCategory);
@@ -622,10 +650,11 @@ public class Infrastructure {
     }
 
     /**
+     *
      */
     public ArrayList<String> getAllowableValuesDB(String subCategory, String rel) {
 
-        if (StringUtil.emptyString(subCategory) )
+        if (StringUtil.emptyString(subCategory))
             return null;
         ArrayList<String> al = new ArrayList<>();
         System.out.println("getAllowableValuesDB(): subCategory: " + subCategory);
@@ -639,8 +668,7 @@ public class Infrastructure {
                 al.add(rs.getString("arg3"));
             rs.close();
             st.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("getAllowableValuesDB(): al: " + al);
@@ -649,6 +677,7 @@ public class Infrastructure {
     }
 
     /**
+     *
      */
     public ArrayList<String> getProducts(Map<String, String> params) {
 
@@ -668,7 +697,7 @@ public class Infrastructure {
                 boolean allMatch = true;
                 for (String attribName : params.keySet()) {
                     if (attribName.equals("subCategory") || attribName.equals("category") ||
-                        attribName.equals("submit") || attribName.equals("productType"))
+                            attribName.equals("submit") || attribName.equals("productType"))
                         continue;
                     System.out.println("getProducts(): attribName: " + attribName);
                     String search = StringUtil.decode(params.get(attribName));
@@ -691,6 +720,7 @@ public class Infrastructure {
     }
 
     /**
+     *
      */
     public ArrayList<String> getProductsByTypeDB(String subCat) {
 
@@ -705,8 +735,7 @@ public class Infrastructure {
             }
             rs.close();
             st.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return al;
@@ -724,8 +753,7 @@ public class Infrastructure {
                 int result = rs.getInt(1);
                 return result;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return -1;
@@ -767,19 +795,17 @@ public class Infrastructure {
                     try {
                         Statement st = conn.createStatement();
                         ResultSet rs = st.executeQuery("SELECT arg3 FROM ternary WHERE rel='allowableValue' AND " +
-                            "arg1='" + id + "' AND arg2='" + HTMLformatter.decodeFromURL(attribName) + "';");
+                                "arg1='" + id + "' AND arg2='" + HTMLformatter.decodeFromURL(attribName) + "';");
                         while (rs.next()) {
                             String result2 = rs.getString("arg3");
                             if (result2.startsWith("Function")) {
 
-                            }
-                            else if (search.equals(result2))
+                            } else if (search.equals(result2))
                                 found = true;
                         }
                         rs.close();
                         st.close();
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     if (!found)
@@ -795,76 +821,52 @@ public class Infrastructure {
     }
 
     /**
+     *
      */
-    public static void initOnce() {
+    public class Product {
+        public String SUMO = null;
+        public String ID = null;
+        public String name = null;
+        public String subCat = null; // a JSON oid
+        public HashMap<String, String> attributes = new HashMap<>();
 
-        if (initialized)
-            return;
-        String productsF = System.getenv("PRODUCTS");
-        String mappingsF = System.getenv("MAPPINGS");
-        String categoriesF = System.getenv("CATEGORIES");
-        String typesF = System.getenv("TYPES");
-        inf = new Infrastructure();
-        try {
-            inf.productCatJSONtoSUMO(productsF, categoriesF, mappingsF, typesF);
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            if (SUMO != null)
+                sb.append("SUMO:" + SUMO + " ");
+            sb.append(ID + " : " + name + " : " + subCat);
+            sb.append("    " + attributes);
+            return sb.toString();
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        initialized = true;
     }
 
     /**
+     *
      */
-    public static void initOnceDB() {
+    public class Category {
+        public String ID = null;
+        public String SUMO = null;
+        public String name = null;
+        public String parent = null; // a JSON oid
+        public String productType = null;  // a JSON oid
+        public HashSet<String> sectors = new HashSet<>();
 
-        if (initialized)
-            return;
-        try {
-            String url = "jdbc:postgresql://localhost/sumo";
-            Properties props = new Properties();
-            props.setProperty("user", "postgres");
-            props.setProperty("password", "postgres");
-            props.setProperty("ssl", "false");
-            Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection(url, props);
-            String productsF = System.getenv("PRODUCTS");
-            String mappingsF = System.getenv("MAPPINGS");
-            String categoriesF = System.getenv("CATEGORIES");
-            String typesF = System.getenv("TYPES");
-            inf = new Infrastructure();
-            inf.productCatJSONtoSUMO(productsF, categoriesF, mappingsF, typesF);
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            if (SUMO != null)
+                sb.append("SUMO:" + SUMO + " ");
+            sb.append(ID + " : " + name + " : " + parent);
+            sb.append("    " + sectors);
+            return sb.toString();
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        //inf = new Infrastructure();
-        //inf.productCatJSONtoSUMO(productsF, categoriesF, mappingsF, typesF);
-        initialized = true;
     }
 
     /**
+     * maps are old string ID keys and new (SUMO) id values
      */
-    public static void showHelp() {
-
-        System.out.println("KButilities class");
-        System.out.println("  options:");
-        System.out.println("  -h - show this help screen");
-        System.out.println("  -i initialize");
-    }
-
-    /**
-     */
-    public static void main(String[] args) {
-
-        if (args != null && args.length > 0 && args[0].equals("-h"))
-            showHelp();
-        else {
-            if (args != null && args.length > 1 && args[0].equals("-i")) {
-                initOnceDB();
-            }
-            else
-                showHelp();
-        }
+    public class Mappings {
+        public HashMap<String, String> terms = new HashMap<>();
+        public HashMap<String, String> relations = new HashMap<>();
+        public HashMap<String, String> units = new HashMap<>();
     }
 }

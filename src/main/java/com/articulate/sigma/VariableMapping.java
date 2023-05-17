@@ -15,12 +15,10 @@ Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed
 Systems, August 9, Acapulco, Mexico. See also http://github.com/ontologyportal
 */
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
+ *
  */
 public class VariableMapping {
 
@@ -28,6 +26,7 @@ public class VariableMapping {
     String var2;
 
     /**
+     *
      */
     public VariableMapping(String v1, String v2) {
         var1 = v1;
@@ -35,6 +34,77 @@ public class VariableMapping {
     }
 
     /**
+     *
+     */
+    public static List<Set<VariableMapping>> intersect(List<Set<VariableMapping>> mapList1,
+                                                       List<Set<VariableMapping>> mapList2) {
+
+        List<Set<VariableMapping>> intersection = new LinkedList<Set<VariableMapping>>();
+        if (mapList1 == null || mapList2 == null) {
+            return null;
+        }
+        for (Set<VariableMapping> set1 : mapList1) {
+            for (Set<VariableMapping> set2 : mapList2) {
+                Set<VariableMapping> newSet = VariableMapping.unify(set1, set2);
+                if (newSet != null && !intersection.contains(newSet)) {
+                    intersection.add(newSet);
+                }
+            }
+        }
+        if (intersection.isEmpty()) {
+            //keeping the convention of null meaning imposibility
+            intersection = null;
+        }
+        return intersection;
+    }
+
+    /**
+     *
+     */
+    public static List<Set<VariableMapping>> union(List<Set<VariableMapping>> mapList1,
+                                                   List<Set<VariableMapping>> mapList2) {
+
+        List<Set<VariableMapping>> union = new LinkedList<Set<VariableMapping>>();
+        if (mapList1 != null) {
+            for (Set<VariableMapping> set1 : mapList1) {
+                union.add(set1);
+            }
+        }
+        if (mapList2 != null) {
+            for (Set<VariableMapping> set2 : mapList2) {
+                if (!union.contains(set2)) {
+                    union.add(set2);
+                }
+            }
+        }
+        return union;
+    }
+
+    /**
+     *
+     */
+    private static Set<VariableMapping> unify(Set<VariableMapping> set1, Set<VariableMapping> set2) {
+
+        Set<VariableMapping> result = new HashSet<VariableMapping>();
+        for (VariableMapping element : set1) {
+            result.add(element);
+        }
+        for (VariableMapping element : set2) {
+            //testing the element does not collide with an existing element
+            for (VariableMapping e : result) {
+                boolean leftVarsEqual = e.var1.equals(element.var1);
+                boolean rightVarsEqual = e.var2.equals(element.var2);
+                if ((leftVarsEqual && !rightVarsEqual) || (!leftVarsEqual && rightVarsEqual)) {
+                    return null;
+                }
+            }
+            result.add(element);
+        }
+        return result;
+    }
+
+    /**
+     *
      */
     @Override
     public boolean equals(Object o) {
@@ -48,17 +118,14 @@ public class VariableMapping {
 
         VariableMapping that = (VariableMapping) o;
 
-        if (var1 != null ? !var1.equals(that.var1) : that.var1 != null) {
+        if (!Objects.equals(var1, that.var1)) {
             return false;
         }
-        if (var2 != null ? !var2.equals(that.var2) : that.var2 != null) {
-            return false;
-        }
-
-        return true;
+        return Objects.equals(var2, that.var2);
     }
 
     /**
+     *
      */
     @Override
     public int hashCode() {
@@ -69,73 +136,7 @@ public class VariableMapping {
     }
 
     /**
-     */
-    public static List<Set<VariableMapping>> intersect(List<Set<VariableMapping>> mapList1,
-                                                       List<Set<VariableMapping>> mapList2) {
-
-        List<Set<VariableMapping>> intersection = new LinkedList<Set<VariableMapping>>();
-        if (mapList1 == null || mapList2 == null) {
-            return null;
-        }
-        for (Set<VariableMapping> set1 : mapList1) {
-            for (Set<VariableMapping> set2 : mapList2) {
-                Set<VariableMapping> newSet = VariableMapping.unify(set1, set2);
-                if(newSet != null && !intersection.contains(newSet)) {
-                    intersection.add(newSet);
-                }
-            }
-        }
-        if (intersection.isEmpty()) {
-            //keeping the convention of null meaning imposibility
-            intersection = null;
-        }
-        return intersection;
-    }
-
-    /**
-     */
-    public static List<Set<VariableMapping>> union(List<Set<VariableMapping>> mapList1,
-                                                   List<Set<VariableMapping>> mapList2) {
-
-        List<Set<VariableMapping>> union = new LinkedList<Set<VariableMapping>>();
-        if(mapList1 != null) {
-            for (Set<VariableMapping> set1 : mapList1) {
-                union.add(set1);
-            }
-        }
-        if (mapList2 != null) {
-            for (Set<VariableMapping> set2 : mapList2) {
-                if ( !union.contains(set2)) {
-                    union.add(set2);
-                }
-            }
-        }
-        return union;
-    }
-
-    /**
-     */
-    private static Set<VariableMapping> unify(Set<VariableMapping> set1, Set<VariableMapping> set2) {
-
-        Set<VariableMapping> result = new HashSet<VariableMapping>();
-        for(VariableMapping element:set1) {
-            result.add(element);
-        }
-        for(VariableMapping element:set2) {
-            //testing the element does not collide with an existing element
-            for(VariableMapping e:result){
-                boolean leftVarsEqual = e.var1.equals(element.var1);
-                boolean rightVarsEqual = e.var2.equals(element.var2);
-                if ((leftVarsEqual && !rightVarsEqual) || (!leftVarsEqual && rightVarsEqual)) {
-                    return null;
-                }
-            }
-            result.add(element);
-        }
-        return result;
-    }
-
-    /**
+     *
      */
     @Override
     public String toString() {

@@ -1,10 +1,9 @@
 package com.articulate.sigma.wordNet;
 
 import com.articulate.sigma.UnitTestBase;
-import com.articulate.sigma.wordNet.WordNet;
-import com.articulate.sigma.wordNet.WordNetUtilities;
 import org.junit.Test;
-import java.util.*;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -14,9 +13,10 @@ import static org.junit.Assert.assertTrue;
 public class WordNetTest extends UnitTestBase {
 
     /**
+     *
      */
     @Test
-    public void testVerbRootFormGoing()  {
+    public void testVerbRootFormGoing() {
 
         String actual = WordNet.wn.verbRootForm("going", "going");
         String expected = "go";
@@ -24,9 +24,10 @@ public class WordNetTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
-    public void testVerbRootFormDriving()  {
+    public void testVerbRootFormDriving() {
 
         String actual = WordNet.wn.verbRootForm("driving", "driving");
         String expected = "drive";
@@ -34,9 +35,10 @@ public class WordNetTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
-    public void testGetSingularFormGo()  {
+    public void testGetSingularFormGo() {
 
         String actual = WordNetUtilities.verbPlural("go");
         String expected = "goes";
@@ -44,9 +46,10 @@ public class WordNetTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
-    public void testGetSingularFormDrive()  {
+    public void testGetSingularFormDrive() {
 
         String actual = WordNetUtilities.verbPlural("drive");
         String expected = "drives";
@@ -54,14 +57,16 @@ public class WordNetTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
-    public void testIsValidKey()  {
+    public void testIsValidKey() {
 
         assertTrue(WordNetUtilities.isValidKey("stick_together_VB_1"));
     }
 
     /**
+     *
      */
     @Test
     public void checkWordsToSenses() {

@@ -1,16 +1,16 @@
-
-/** This code is copyright Articulate Software (c) 2003.  Some portions
-copyright Teknowledge (c) 2003 and reused under the terms of the GNU license.
-This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
-Users of this code also consent, by use of this code, to credit Articulate Software
-and Teknowledge in any writings, briefings, publications, presentations, or 
-other representations of any software which incorporates, builds on, or uses this 
-code.  Please cite the following article in any publication with references:
-
-Pease, A., (2003). The Sigma Ontology Development Environment, 
-in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
-August 9, Acapulco, Mexico.
-*/
+/**
+ * This code is copyright Articulate Software (c) 2003.  Some portions
+ * copyright Teknowledge (c) 2003 and reused under the terms of the GNU license.
+ * This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
+ * Users of this code also consent, by use of this code, to credit Articulate Software
+ * and Teknowledge in any writings, briefings, publications, presentations, or
+ * other representations of any software which incorporates, builds on, or uses this
+ * code.  Please cite the following article in any publication with references:
+ * <p>
+ * Pease, A., (2003). The Sigma Ontology Development Environment,
+ * in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
+ * August 9, Acapulco, Mexico.
+ */
 
 
 package com.articulate.sigma;
@@ -24,14 +24,14 @@ import java.util.Iterator;
  */
 public class BasicXMLelement {
 
-     /** The name of the tag */
+    /** The name of the tag */
     public String tagname = null;
-     /** The attributes of the tag in key=value form */
-    public HashMap<String,String> attributes = new HashMap<String,String>();
-     /** Any subelements of the tag, meaning any other
-      *  tags that are nested within this one. */
+    /** The attributes of the tag in key=value form */
+    public HashMap<String, String> attributes = new HashMap<String, String>();
+    /** Any subelements of the tag, meaning any other
+     *  tags that are nested within this one. */
     public ArrayList<BasicXMLelement> subelements = new ArrayList<BasicXMLelement>();
-     /** The contents between the start and end of this tag */
+    /** The contents between the start and end of this tag */
     public String contents = "";
 
 

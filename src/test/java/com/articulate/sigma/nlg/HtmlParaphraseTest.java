@@ -1,9 +1,9 @@
 package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.SigmaTestBase;
-import com.articulate.sigma.utils.StringUtil;
 import com.articulate.sigma.UnitTestBase;
-import org.junit.*;
+import com.articulate.sigma.utils.StringUtil;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 public class HtmlParaphraseTest extends UnitTestBase {
 
     @Test
-    public void testHtmlParaphraseDomainDatePhysical()     {
+    public void testHtmlParaphraseDomainDatePhysical() {
         String stmt = "(domain date 1 Physical)";
 
         String expectedResult = "the number 1 argument of date is an instance of physical";
@@ -30,7 +30,7 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal output: Relations that are instances of object attitude have as their second argument instances that are physical things.
      */
     @Test
-    public void testHtmlParaphraseInstanceRELObjectAttitude()     {
+    public void testHtmlParaphraseInstanceRELObjectAttitude() {
         String stmt = "(=> (and (instance ?REL ObjectAttitude) (?REL ?AGENT ?THING)) (instance ?THING Physical))";
 
         String expectedResult = "if an entity is an instance of object attitude and the entity another entity and a third entity, " +
@@ -42,7 +42,7 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseSubstanceAttributePhysicalState()     {
+    public void testHtmlParaphraseSubstanceAttributePhysicalState() {
         String stmt = "(<=> (instance ?OBJ Substance) (exists (?ATTR) (and (instance ?ATTR PhysicalState) (attribute ?OBJ ?ATTR))))";
 
         String expectedResult = "an object is an instance of substance if and only if there exists an entity such that " +
@@ -54,7 +54,7 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseBiologicallyActiveSubstance()     {
+    public void testHtmlParaphraseBiologicallyActiveSubstance() {
         String stmt = "(subclass BiologicallyActiveSubstance Substance)";
 
         String expectedResult = "biologically active substance is a subclass of substance";
@@ -65,7 +65,7 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphrasePureSubstanceMixture()     {
+    public void testHtmlParaphrasePureSubstanceMixture() {
         String stmt = "(partition Substance PureSubstance Mixture)";
 
         String expectedResult = "substance is exhaustively partitioned into pure substance and mixture";
@@ -79,7 +79,7 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal output: Should have a space after the comma.
      */
     @Test
-    public void testHtmlParaphrasePartlyLocated()     {
+    public void testHtmlParaphrasePartlyLocated() {
         String stmt = "(=> (and (instance ?OBJ1 Object) (partlyLocated ?OBJ1 ?OBJ2)) (exists (?SUB) (and (part ?SUB ?OBJ1) (located ?SUB ?OBJ2))))";
 
         String expectedResult = "if an object is an instance of object and the object is partly located in another object, then there exists a third object such that the third object is a part of the object and the third object is located at the other object";
@@ -93,7 +93,7 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal output: Correct the spacing.
      */
     @Test
-    public void testHtmlParaphraseDefinePhysical()     {
+    public void testHtmlParaphraseDefinePhysical() {
         String stmt = "(<=> (instance ?PHYS Physical) (exists (?LOC ?TIME) (and (located ?PHYS ?LOC) (time ?PHYS ?TIME))))";
 
         String expectedResult = "a physical is an instance of physical if and only if there exist an object and " +
@@ -107,7 +107,7 @@ public class HtmlParaphraseTest extends UnitTestBase {
     // It seems this is not a correct SUO-Kif expression since only instances can be arguments in a case role.
     // Should this test therefore be removed?
     @Test
-    public void testHtmlParaphrasePatient()     {
+    public void testHtmlParaphrasePatient() {
         String stmt = "( patient Leaving ?ENTITY )";
 
         String expectedResult = "an entity is a patient of leaving";
@@ -118,7 +118,7 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseNames()     {
+    public void testHtmlParaphraseNames() {
         String stmt = "(names \"John\" ?H)";
 
         String expectedResult = "an entity has name \"John\"";
@@ -129,7 +129,7 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseSubclassNot()     {
+    public void testHtmlParaphraseSubclassNot() {
         String stmt = "(not (subclass ?X Animal))";
 
         String expectedResult = "a set or class is not a subclass of animal";
@@ -140,7 +140,7 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseNamesNot()     {
+    public void testHtmlParaphraseNamesNot() {
         String stmt = "(not (names \"John\" ?H))";
 
         LanguageFormatter languageFormatter = new LanguageFormatter(stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
@@ -158,8 +158,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseDrivingNot1()     {
-        String stmt =       "(not \n" +
+    public void testHtmlParaphraseDrivingNot1() {
+        String stmt = "(not \n" +
                 "               (exists (?D ?H)\n" +
                 "                   (and\n" +
                 "                       (instance ?D Driving)\n" +
@@ -181,8 +181,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseDrivingNot2()     {
-        String stmt =       "(not\n" +
+    public void testHtmlParaphraseDrivingNot2() {
+        String stmt = "(not\n" +
                 "               (exists (?D)\n" +
                 "                   (and\n" +
                 "                       (instance ?D Driving)\n" +
@@ -203,8 +203,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseDriving1()     {
-        String stmt =       "(exists (?D ?H)\n" +
+    public void testHtmlParaphraseDriving1() {
+        String stmt = "(exists (?D ?H)\n" +
                 "               (and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
@@ -226,8 +226,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseDriving1If()     {
-        String stmt =       "(=> \n" +
+    public void testHtmlParaphraseDriving1If() {
+        String stmt = "(=> \n" +
                 "               (and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
@@ -252,8 +252,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseDriving1IfAndOnlyIf()     {
-        String stmt =       "(<=> \n" +
+    public void testHtmlParaphraseDriving1IfAndOnlyIf() {
+        String stmt = "(<=> \n" +
                 "               (and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
@@ -279,8 +279,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseJohnDriving()     {
-        String stmt =   "(exists (?D ?H)\n" +
+    public void testHtmlParaphraseJohnDriving() {
+        String stmt = "(exists (?D ?H)\n" +
                 "           (and\n" +
                 "           (instance ?D Driving)\n" +
                 "           (instance ?H Human)\n" +
@@ -305,8 +305,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseJohnDrivingNot1()     {
-        String stmt =   "(not\n" +
+    public void testHtmlParaphraseJohnDrivingNot1() {
+        String stmt = "(not\n" +
                 "           (exists (?D ?H)\n" +
                 "               (and\n" +
                 "               (instance ?D Driving)\n" +
@@ -332,8 +332,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseJohnDrivingCar()     {
-        String stmt =   "(exists (?D ?H ?Car)\n" +
+    public void testHtmlParaphraseJohnDrivingCar() {
+        String stmt = "(exists (?D ?H ?Car)\n" +
                 "           (and\n" +
                 "           (instance ?D Driving)\n" +
                 "           (instance ?H Human)\n" +
@@ -362,8 +362,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseHumanDrivingCar()     {
-        String stmt =   "(exists (?D ?H ?Car)\n" +
+    public void testHtmlParaphraseHumanDrivingCar() {
+        String stmt = "(exists (?D ?H ?Car)\n" +
                 "           (and\n" +
                 "           (instance ?D Driving)\n" +
                 "           (instance ?H Human)\n" +
@@ -380,8 +380,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseSubclassIf()     {
-        String stmt =   "(=> " +
+    public void testHtmlParaphraseSubclassIf() {
+        String stmt = "(=> " +
                 "           (subclass ?Cougar Feline) " +
                 "           (subclass ?Cougar Carnivore))";
 
@@ -393,8 +393,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseSubclassMonthFn()     {
-        String stmt =   "(exists (?M) " +
+    public void testHtmlParaphraseSubclassMonthFn() {
+        String stmt = "(exists (?M) " +
                 "           (time JohnsBirth (MonthFn ?M (YearFn 2000))))";
 
         String expectedResult = "there exists a kind of month such that JohnsBirth exists during the month a kind of month";
@@ -410,11 +410,11 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * in the console when you run this test.
      */
     @Test
-    public void testWrongNbrParens()     {
+    public void testWrongNbrParens() {
         System.out.println("\nAbout to perform unit test that throws an IndexOutOfBoundsException.");
         System.out.flush();
-        String stmt =   "(=> " +
-                                // The next line has too many right parens.
+        String stmt = "(=> " +
+                // The next line has too many right parens.
                 "               (instance (GovernmentFn ?Place) StateGovernment)) " +
                 "               (instance ?Place StateOrProvince)) ";
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
@@ -427,8 +427,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseTypesGovFnIf()     {
-        String stmt =   "(=> " +
+    public void testHtmlParaphraseTypesGovFnIf() {
+        String stmt = "(=> " +
                 "           (instance (GovernmentFn ?Place) StateGovernment) " +
                 "           (instance ?Place StateOrProvince)) ";
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
@@ -439,8 +439,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseElementSetIf()     {
-        String stmt =   "(=> " +
+    public void testHtmlParaphraseElementSetIf() {
+        String stmt = "(=> " +
                 "           (forall (?ELEMENT) " +
                 "               (<=> " +
                 "                   (element ?ELEMENT ?SET1) " +
@@ -459,8 +459,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "The document was not classified as top secret before 2001."
      */
     @Test
-    public void testHtmlParaphraseNotClassifiedBefore()     {
-        String stmt =   "(not \n" +
+    public void testHtmlParaphraseNotClassifiedBefore() {
+        String stmt = "(not \n" +
                 "              (exists \n" +
                 "                (?agent ?document ?event) \n" +
                 "                (and \n" +
@@ -492,8 +492,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "The document was classified as top secret before 2001."
      */
     @Test
-    public void testHtmlParaphraseClassifiedBefore()     {
-        String stmt =   "(exists \n" +
+    public void testHtmlParaphraseClassifiedBefore() {
+        String stmt = "(exists \n" +
                 "              (?agent ?document ?event) \n" +
                 "              (and \n" +
                 "                (holdsDuring \n" +
@@ -524,8 +524,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "Bob sent a card."; also "A card was sent by Bob."
      */
     @Test
-    public void testHtmlParaphraseBobSendCard()     {
-        String stmt =   "(exists\n" +
+    public void testHtmlParaphraseBobSendCard() {
+        String stmt = "(exists\n" +
                 "              (?card ?event)\n" +
                 "              (and\n" +
                 "                (instance Mary-1 Human)\n" +
@@ -553,8 +553,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "Bob sent a card to Mary."; also "A card was sent to Mary by Bob."
      */
     @Test
-    public void testHtmlParaphraseBobSendCardMary()     {
-        String stmt =   "(exists\n" +
+    public void testHtmlParaphraseBobSendCardMary() {
+        String stmt = "(exists\n" +
                 "              (?card ?event)\n" +
                 "              (and\n" +
                 "                (instance Mary-1 Human)\n" +
@@ -583,8 +583,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * ideal: Bob sends a bank card to Mary with a/by pigeon.
      */
     @Test
-    public void testHtmlParaphraseBobSendCardMaryWithPigeon()     {
-        String stmt =   "(exists\n" +
+    public void testHtmlParaphraseBobSendCardMaryWithPigeon() {
+        String stmt = "(exists\n" +
                 "              (?card ?event)\n" +
                 "              (and\n" +
                 "                (instance Mary-1 Human)\n" +
@@ -615,8 +615,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "The man Bob sent a card to the woman Mary."; also "A card was sent to Mary by Bob."
      */
     @Test
-    public void testHtmlParaphraseManBobSendCardWomanMary()     {
-        String stmt =   "(exists\n" +
+    public void testHtmlParaphraseManBobSendCardWomanMary() {
+        String stmt = "(exists\n" +
                 "              (?card ?event)\n" +
                 "              (and\n" +
                 "                (attribute Mary-1 Female)\n" +
@@ -649,8 +649,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "A city was built."
      */
     @Test
-    public void testHtmlParaphraseCityBeBuilt()     {
-        String stmt =   "(exists \n" +
+    public void testHtmlParaphraseCityBeBuilt() {
+        String stmt = "(exists \n" +
                 "              (?agent ?city ?event) \n" +
                 "              (and \n" +
                 "                (instance ?agent Agent) \n" +
@@ -678,8 +678,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "The city was built."
      */
     @Test
-    public void testHtmlParaphraseCityBeBuiltWithMachine()     {
-        String stmt =   "(exists \n" +
+    public void testHtmlParaphraseCityBeBuiltWithMachine() {
+        String stmt = "(exists \n" +
                 "              (?agent ?city ?event) \n" +
                 "              (and \n" +
                 "                (instance ?agent Agent) \n" +
@@ -708,8 +708,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "Bob eats and drinks on the desk."
      */
     @Test
-    public void testHtmlParaphraseBobEatsDrinksDesk()     {
-        String stmt =   "(exists \n" +
+    public void testHtmlParaphraseBobEatsDrinksDesk() {
+        String stmt = "(exists \n" +
                 "              (?desk ?event1 ?event2) \n" +
                 "              (and \n" +
                 "                (attribute Robert-1 Male) \n" +
@@ -737,8 +737,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "If John sees a hamburger then he wants it."
      */
     @Test
-    public void testHtmlParaphraseIfJohnSeeHamburgerThenWants()     {
-        String stmt =   "(forall \n" +
+    public void testHtmlParaphraseIfJohnSeeHamburgerThenWants() {
+        String stmt = "(forall \n" +
                 "              (?event ?hamburger) \n" +
                 "              (=> \n" +
                 "                (and \n" +
@@ -765,8 +765,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "John owns a dog."
      */
     @Test
-    public void testJohnOwnsDog()     {
-        String stmt =   "(exists (?dog)\n" +
+    public void testJohnOwnsDog() {
+        String stmt = "(exists (?dog)\n" +
                 "              (and\n" +
                 "               (instance ?dog Canine)\n" +
                 "               (instance John-1 Human)\n" +
@@ -784,8 +784,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "John gives the bank card to Mary."
      */
     @Test
-    public void testJohnGivesCardMary()     {
-        String stmt =   "(exists (?card ?event)\n" +
+    public void testJohnGivesCardMary() {
+        String stmt = "(exists (?card ?event)\n" +
                 "              (and\n" +
                 "               (instance ?event Giving)\n" +
                 "               (instance John-1 Human)\n" +
@@ -813,8 +813,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "The man John gives the card to Mary."
      */
     @Test
-    public void testManJohnGivesCardWomanMary()     {
-        String stmt =   "(exists (?card ?event)\n" +
+    public void testManJohnGivesCardWomanMary() {
+        String stmt = "(exists (?card ?event)\n" +
                 "              (and\n" +
                 "               (instance ?event Giving)\n" +
                 "               (attribute John-1 Male)\n" +
@@ -846,8 +846,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "The oldest dog enters the bank."
      */
     @Test
-    public void testOldestDogEntersBank()     {
-        String stmt =   "(exists \n" +
+    public void testOldestDogEntersBank() {
+        String stmt = "(exists \n" +
                 "                  (?bank ?dog ?event) \n" +
                 "                  (and \n" +
                 "                    (forall \n" +
@@ -885,8 +885,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "Mr Miller enters the bank."
      */
     @Test
-    public void testFullyFormedMaleEntersBank()     {
-        String stmt =   "(exists \n" +
+    public void testFullyFormedMaleEntersBank() {
+        String stmt = "(exists \n" +
                 "                (?bank ?event) \n" +
                 "                (and \n" +
                 "                  (attribute MrMiller FullyFormed) \n" +
@@ -917,8 +917,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: "Mary walks to the bank."
      */
     @Test
-    public void testNamesMaryWalksToBank()     {
-        String stmt =   "(exists \n" +
+    public void testNamesMaryWalksToBank() {
+        String stmt = "(exists \n" +
                 "                (?woman ?bank ?event) \n" +
                 "                (and \n" +
                 "                  (attribute ?woman Female) \n" +
@@ -950,8 +950,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * ? Ideal: "Mr Miller walks to the bank."
      */
     @Test
-    public void testNamesMrMillerWalksToBank()     {
-        String stmt =   "(exists \n" +
+    public void testNamesMrMillerWalksToBank() {
+        String stmt = "(exists \n" +
                 "                (?bank ?event) \n" +
                 "                (and \n" +
                 "                  (attribute MrMiller FullyFormed) \n" +
@@ -983,8 +983,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      *
      */
     @Test
-    public void testHumanTravels()     {
-        String stmt =   "(exists (?he ?event)\n" +
+    public void testHumanTravels() {
+        String stmt = "(exists (?he ?event)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Transportation)\n" +
                 "                    (instance ?he Human)\n" +
@@ -1010,8 +1010,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Note that currently "Sudan" is NOT capitalized.
      */
     @Test
-    public void testHeTravelsSudan()     {
-        String stmt =   "(exists (?he ?event)\n" +
+    public void testHeTravelsSudan() {
+        String stmt = "(exists (?he ?event)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Transportation)\n" +
                 "                    (attribute ?he Male)\n" +
@@ -1040,8 +1040,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * so that the HashSet consists of only a single element which is the least general--the most specific.
      */
     @Test
-    public void testAwakeIf()     {
-        String stmt =   "(=>\n" +
+    public void testAwakeIf() {
+        String stmt = "(=>\n" +
                 "           (and\n" +
                 "               (instance ?PROC IntentionalProcess)\n" +
                 "               (agent ?PROC ?HUMAN)\n" +
@@ -1078,8 +1078,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * able to correctly translate this input into natural language.
      */
     @Test
-    public void testAnimalLanguage()     {
-        String stmt =   "(=>\n" +
+    public void testAnimalLanguage() {
+        String stmt = "(=>\n" +
                 "           (and\n" +
                 "               (instance ?LANG AnimalLanguage)\n" +
                 "               (agent ?PROC ?AGENT)\n" +
@@ -1109,8 +1109,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Ideal: if an entity is an object, then the entity is a collection or the entity is a self connected object
      */
     @Test
-    public void testObjectSubclassesIf()     {
-        String stmt =   "(=>\n" +
+    public void testObjectSubclassesIf() {
+        String stmt = "(=>\n" +
                 "           (instance ?A Object)\n" +
                 "           (or \n" +
                 "               (instance ?A Collection)\n" +
@@ -1132,8 +1132,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testSymmetricRelationIff()     {
-        String stmt =   "(<=>\n" +
+    public void testSymmetricRelationIff() {
+        String stmt = "(<=>\n" +
                 "           (instance ?REL SymmetricRelation)\n" +
                 "           (forall (?INST1 ?INST2)\n" +
                 "               (=>\n" +
@@ -1155,8 +1155,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseDrivingThenSeeingIf()     {
-        String stmt =       "(=> \n" +
+    public void testHtmlParaphraseDrivingThenSeeingIf() {
+        String stmt = "(=> \n" +
                 "               (and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
@@ -1184,8 +1184,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * This assertion is not valid, but we use to test how much the antecedent and the consequent affect each other.
      */
     @Test
-    public void testHtmlParaphraseDrivingThenSeeingWithGlassesIf()     {
-        String stmt =       "(=> \n" +
+    public void testHtmlParaphraseDrivingThenSeeingWithGlassesIf() {
+        String stmt = "(=> \n" +
                 "               (and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
@@ -1215,8 +1215,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * This assertion is not valid, but we use to test how much the antecedent and the consequent affect each other.
      */
     @Test
-    public void testHtmlParaphraseDrivingThenControllingCarIf()     {
-        String stmt =       "(=> \n" +
+    public void testHtmlParaphraseDrivingThenControllingCarIf() {
+        String stmt = "(=> \n" +
                 "               (and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
@@ -1244,8 +1244,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * We use this to test how much the antecedent and the consequent affect each other.
      */
     @Test
-    public void testHtmlParaphraseDrivingThenTransportedIf()     {
-        String stmt =       "(=> \n" +
+    public void testHtmlParaphraseDrivingThenTransportedIf() {
+        String stmt = "(=> \n" +
                 "               (and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
@@ -1272,8 +1272,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * need to be changed.
      */
     @Test
-    public void testHtmlParaphraseBodyMotionBodyPositionIf()     {
-        String stmt =       "(=>\n" +
+    public void testHtmlParaphraseBodyMotionBodyPositionIf() {
+        String stmt = "(=>\n" +
                 "               (instance ?ANIMAL Animal)\n" +
                 "               (or\n" +
                 "                   (exists (?MOTION)\n" +
@@ -1305,8 +1305,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testJohnSeesSelfConnectedObject()     {
-        String stmt =   "(exists (?event ?object)\n" +
+    public void testJohnSeesSelfConnectedObject() {
+        String stmt = "(exists (?event ?object)\n" +
                 "           (and \n" +
                 "               (instance John-1 Human) \n" +
                 "               (instance ?event Seeing) \n" +
@@ -1330,8 +1330,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testJohnSeesSelfConnectedObjectNot1()     {
-        String stmt =   "(exists (?event ?object)\n" +
+    public void testJohnSeesSelfConnectedObjectNot1() {
+        String stmt = "(exists (?event ?object)\n" +
                 "           (and \n" +
                 "               (instance John-1 Human) \n" +
                 "               (instance ?event Seeing) \n" +
@@ -1356,8 +1356,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testJohnSeesSelfConnectedObjectNot2()     {
-        String stmt =   "(exists (?event ?object)\n" +
+    public void testJohnSeesSelfConnectedObjectNot2() {
+        String stmt = "(exists (?event ?object)\n" +
                 "           (and \n" +
                 "               (instance John-1 Human) \n" +
                 "               (instance ?event Seeing) \n" +
@@ -1386,8 +1386,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * This formula has no agent/experiencer. Eventually we will want to translate it into passive voice--currently we fall back to formal NLG.
      */
     @Test
-    public void testSelfConnectedObjectIsSeen()     {
-        String stmt =   "(exists (?event ?object)\n" +
+    public void testSelfConnectedObjectIsSeen() {
+        String stmt = "(exists (?event ?object)\n" +
                 "           (and \n" +
                 "               (instance ?event Seeing) \n" +
                 "               (instance ?object SelfConnectedObject) \n" +
@@ -1409,8 +1409,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testJohnSeesHamburger()     {
-        String stmt =   "(exists (?event ?hamburger)\n" +
+    public void testJohnSeesHamburger() {
+        String stmt = "(exists (?event ?hamburger)\n" +
                 "           (and \n" +
                 "               (instance John-1 Human) \n" +
                 "               (instance ?event Seeing) \n" +
@@ -1434,8 +1434,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testArtifactMoves()     {
-        String stmt =   "(exists (?event ?thing)\n" +
+    public void testArtifactMoves() {
+        String stmt = "(exists (?event ?thing)\n" +
                 "           (and \n" +
                 "               (instance ?event BodyMotion) \n" +
                 "               (instance ?thing Artifact) \n" +
@@ -1458,8 +1458,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testArtifactMovesNot1()     {
-        String stmt =   "(not\n" +
+    public void testArtifactMovesNot1() {
+        String stmt = "(not\n" +
                 "           (exists (?event)\n" +
                 "               (and \n" +
                 "                   (instance ?event BodyMotion) \n" +
@@ -1483,8 +1483,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testArtifactMovesNot2()     {
-        String stmt =   "(exists (?event ?thing)\n" +
+    public void testArtifactMovesNot2() {
+        String stmt = "(exists (?event ?thing)\n" +
                 "           (and \n" +
                 "               (instance ?event BodyMotion) \n" +
                 "               (instance ?thing Artifact) \n" +
@@ -1508,8 +1508,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testGirlDrivesFromLondonOnHighway()     {
-        String stmt =   "(exists (?she ?event ?route)\n" +
+    public void testGirlDrivesFromLondonOnHighway() {
+        String stmt = "(exists (?she ?event ?route)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Driving) \n" +
                 "                    (instance ?she Girl) \n" +
@@ -1533,8 +1533,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testGirlDrivesTowardsLeedsFromLondonOnHighway()     {
-        String stmt =   "(exists (?she ?event ?route)\n" +
+    public void testGirlDrivesTowardsLeedsFromLondonOnHighway() {
+        String stmt = "(exists (?she ?event ?route)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Driving) \n" +
                 "                    (instance ?she Girl) \n" +
@@ -1559,8 +1559,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testGirlDrivesNorthFromLondonOnHighway()     {
-        String stmt =   "(exists (?she ?event ?route)\n" +
+    public void testGirlDrivesNorthFromLondonOnHighway() {
+        String stmt = "(exists (?she ?event ?route)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Driving) \n" +
                 "                    (instance ?she Girl) \n" +
@@ -1585,8 +1585,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testGirlDrivesNorthThroughLeedsFromLondonOnHighway()     {
-        String stmt =   "(exists (?she ?event ?route ?midpoint)\n" +
+    public void testGirlDrivesNorthThroughLeedsFromLondonOnHighway() {
+        String stmt = "(exists (?she ?event ?route ?midpoint)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Driving) \n" +
                 "                    (instance ?she Girl) \n" +
@@ -1613,8 +1613,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testGirlDrivesThroughEngland()     {
-        String stmt =   "(exists (?she ?event)\n" +
+    public void testGirlDrivesThroughEngland() {
+        String stmt = "(exists (?she ?event)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Driving) \n" +
                 "                    (instance ?she Girl) \n" +
@@ -1636,8 +1636,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testGirlCarveWeaponOutOfSoap()     {
-        String stmt =   "(exists (?she ?event ?gun ?soap)\n" +
+    public void testGirlCarveWeaponOutOfSoap() {
+        String stmt = "(exists (?she ?event ?gun ?soap)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Making) \n" +
                 "                    (instance ?she Woman) \n" +
@@ -1665,8 +1665,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
      * Like the previous test, but gun is a result--a more specific patient.
      */
     @Test
-    public void testGirlCarveWeaponOutOfSoap2()     {
-        String stmt =   "(exists (?she ?event ?gun ?soap)\n" +
+    public void testGirlCarveWeaponOutOfSoap2() {
+        String stmt = "(exists (?she ?event ?gun ?soap)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Making) \n" +
                 "                    (instance ?she Woman) \n" +
@@ -1691,8 +1691,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testBoyAttendsDemonstration()     {
-        String stmt =   "(exists (?he ?event)\n" +
+    public void testBoyAttendsDemonstration() {
+        String stmt = "(exists (?he ?event)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Demonstrating) \n" +
                 "                    (instance ?he Boy) \n" +
@@ -1715,8 +1715,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testConnectedObjectBurnsPatient()     {
-        String stmt =   "(exists (?object ?event)\n" +
+    public void testConnectedObjectBurnsPatient() {
+        String stmt = "(exists (?object ?event)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Combustion) \n" +
                 "                    (instance ?object SelfConnectedObject) \n" +
@@ -1737,8 +1737,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testConnectedObjectBurnsResource()     {
-        String stmt =   "(exists (?object ?event)\n" +
+    public void testConnectedObjectBurnsResource() {
+        String stmt = "(exists (?object ?event)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Combustion) \n" +
                 "                    (instance ?object SelfConnectedObject) \n" +
@@ -1759,8 +1759,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testBoyBurnsCombustibleObject()     {
-        String stmt =   "(exists (?he ?event ?object)\n" +
+    public void testBoyBurnsCombustibleObject() {
+        String stmt = "(exists (?he ?event ?object)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Combustion) \n" +
                 "                    (instance ?he Boy) \n" +
@@ -1783,8 +1783,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testDrivingVehicle()     {
-        String stmt =   "(=>\n" +
+    public void testDrivingVehicle() {
+        String stmt = "(=>\n" +
                 "           (instance ?DRIVE Driving)\n" +
                 "           (exists (?VEHICLE)\n" +
                 "               (and\n" +
@@ -1807,8 +1807,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testSwimmingAgentLocatedWater()     {
-        String stmt =   "(=>\n" +
+    public void testSwimmingAgentLocatedWater() {
+        String stmt = "(=>\n" +
                 "           (and\n" +
                 "               (instance ?SWIM Swimming)\n" +
                 "               (agent ?SWIM ?AGENT))\n" +
@@ -1833,8 +1833,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testSwimmingProcessLocatedWater()     {
-        String stmt =   "(=>\n" +
+    public void testSwimmingProcessLocatedWater() {
+        String stmt = "(=>\n" +
                 "           (and\n" +
                 "               (instance ?SWIM Swimming)\n" +
                 "               (agent ?SWIM ?AGENT))\n" +
@@ -1859,8 +1859,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testObjectFillsHole()     {
-        String stmt =   "(exists (?OBJ ?HOLE)\n" +
+    public void testObjectFillsHole() {
+        String stmt = "(exists (?OBJ ?HOLE)\n" +
                 "           (and\n" +
                 "               (instance ?OBJ Object)\n" +
                 "               (instance ?HOLE Hole)\n" +
@@ -1881,8 +1881,8 @@ public class HtmlParaphraseTest extends UnitTestBase {
     }
 
     @Test
-    public void testObjectFillsHoleNot()     {
-        String stmt =   "(exists (?OBJ ?HOLE)\n" +
+    public void testObjectFillsHoleNot() {
+        String stmt = "(exists (?OBJ ?HOLE)\n" +
                 "           (and\n" +
                 "               (instance ?OBJ Object)\n" +
                 "               (instance ?HOLE Hole)\n" +

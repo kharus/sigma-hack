@@ -7,9 +7,7 @@ import com.articulate.sigma.KBmanager;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 //This software is released under the GNU Public License
@@ -21,6 +19,7 @@ public class THFtest extends IntegrationTestBase {
     private static KB kb = null;
 
     /**
+     *
      */
     @BeforeClass
     public static void init() {
@@ -31,22 +30,24 @@ public class THFtest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     public void test(String msg, String f, String expected) {
 
         System.out.println();
         System.out.println("\n======================== " + msg);
-        String result = thf.oneKIF2THF(new Formula(f),false,kb);
+        String result = thf.oneKIF2THF(new Formula(f), false, kb);
         System.out.println("THFtest.test(): result: " + result);
         System.out.println("THFtest.test(): expect: " + expected);
         if (expected.equals(result))
             System.out.println("THFtest.test(): Success!");
         else
             System.out.println("THFtest.test(): fail");
-        assertTrue(expected.equals(result));
+        assertEquals(expected, result);
     }
 
     /**
+     *
      */
     @Test
     public void testTrans1() {

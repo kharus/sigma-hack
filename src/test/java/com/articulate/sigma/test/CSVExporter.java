@@ -43,15 +43,14 @@ public class CSVExporter {
     public void addRow(String[] row) {
 
         if (enabled) {
-            for (int i = 0; i<row.length; i++) {
+            for (int i = 0; i < row.length; i++) {
                 String col = row[i];
                 if (i != 0) {
                     collectedOutput.append(", ");
                 }
                 if (col.contains(",")) {
                     collectedOutput.append("\"").append(col).append("\"");
-                }
-                else {
+                } else {
                     collectedOutput.append(col);
                 }
             }
@@ -66,8 +65,7 @@ public class CSVExporter {
                 File file = new File("testresults-exported-" + System.currentTimeMillis() + ".csv");
                 Files.write(collectedOutput.toString(), file, Charsets.UTF_8);
                 System.out.println("Results exported to: " + file.getPath());
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             collectedOutput = null;

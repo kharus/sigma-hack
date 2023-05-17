@@ -1,8 +1,9 @@
 package com.articulate.sigma;
 
+import com.articulate.sigma.utils.StringUtil;
+
 import java.util.*;
 import java.util.function.BiPredicate;
-import com.articulate.sigma.utils.*;
 
 /**
  * Created by sserban on 2/17/15.
@@ -12,7 +13,7 @@ public class FormulaUtil {
     /**
      * Get the antecedent of an implication.  If not a rule, return null
      */
-    public static String antecedent (Formula f) {
+    public static String antecedent(Formula f) {
 
         if (f == null || !f.isRule())
             return null;
@@ -22,7 +23,7 @@ public class FormulaUtil {
     /**
      * Get the consequent of an implication.  If not a rule, return null
      */
-    public static String consequent (Formula f) {
+    public static String consequent(Formula f) {
 
         if (f == null || !f.isRule())
             return null;
@@ -41,7 +42,7 @@ public class FormulaUtil {
             System.out.println("Error in FormulaUtil.toProlog(): not a simple clause: " + car);
             return "";
         }
-        for (int i = 1; i < f.argumentsToArrayListString(0).size(); i ++) {
+        for (int i = 1; i < f.argumentsToArrayListString(0).size(); i++) {
             if (i != 1)
                 sb.append(",");
             String arg = f.getStringArgument(i);
@@ -56,6 +57,7 @@ public class FormulaUtil {
     }
 
     /**
+     *
      */
     public static String formatCollection(Collection<Formula> c) {
 
@@ -78,7 +80,7 @@ public class FormulaUtil {
             return f.getFormula();
         ArrayList<Formula> lits = f.complexArgumentsToArrayList(0);
         for (Formula form : lits) {
-            String result = getLiteralWithPredAndRowVar(pred,form);
+            String result = getLiteralWithPredAndRowVar(pred, form);
             if (result != null)
                 return result;
         }
@@ -96,11 +98,8 @@ public class FormulaUtil {
         if (!f.isGround())
             return false;
         String pred = f.getStringArgument(0);
-        if (pred.equals("documentation") || pred.equals("format") ||
-            pred.equals("termFormat") || pred.equals("externalImage"))
-            return true;
-        else
-            return false;
+        return pred.equals("documentation") || pred.equals("format") ||
+                pred.equals("termFormat") || pred.equals("externalImage");
     }
 
     /**
@@ -109,7 +108,7 @@ public class FormulaUtil {
     public static List<int[]> getPermutations(int size, BiPredicate<Integer, Integer> validateFn) {
 
         int[] array = new int[size];
-        for( int i = 0; i< size; i++) {
+        for (int i = 0; i < size; i++) {
             array[i] = i;
         }
         List<int[]> result = new LinkedList<int[]>();
@@ -118,6 +117,7 @@ public class FormulaUtil {
     }
 
     /**
+     *
      */
     private static void permutation(int[] prefix, int[] array, List<int[]> permutations,
                                     BiPredicate<Integer, Integer> validateFn) {
@@ -125,20 +125,14 @@ public class FormulaUtil {
         int n = array.length;
         if (n == 0) {
             permutations.add(prefix);
-            return;
-        }
-        else {
+        } else {
             for (int i = 0; i < n; i++) {
                 if (validateFn.test(prefix.length, array[i])) {
                     int[] newPrefix = Arrays.copyOf(prefix, prefix.length + 1);
                     newPrefix[prefix.length] = array[i];
                     int[] leftovers = new int[n - 1];
-                    for (int j = 0; j < i; j++) {
-                        leftovers[j] = array[j];
-                    }
-                    for (int j = i + 1; j < n; j++) {
-                        leftovers[j - 1] = array[j];
-                    }
+                    System.arraycopy(array, 0, leftovers, 0, i);
+                    if (n - (i + 1) >= 0) System.arraycopy(array, i + 1, leftovers, i + 1 - 1, n - (i + 1));
                     permutation(newPrefix, leftovers, permutations, validateFn);
                 }
             }
@@ -162,8 +156,7 @@ public class FormulaUtil {
                 f.read(kifListAsString);
                 ans = f.literalToArrayList();
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return ans;
@@ -190,8 +183,7 @@ public class FormulaUtil {
             else if (Formula.listP(tree)) {
                 if (Formula.empty(tree)) {
                     sb.append(tree);
-                }
-                else {
+                } else {
                     Formula f = new Formula();
                     f.read(tree);
                     List tuple = f.literalToArrayList();
@@ -209,8 +201,7 @@ public class FormulaUtil {
                 sb.append(tree);
             }
             result = sb.toString();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return result;
@@ -221,7 +212,7 @@ public class FormulaUtil {
      */
     public static FormulaMatchMemoMapKey createFormulaMatchMemoMapKey(String s1, String s2) {
 
-        return new FormulaMatchMemoMapKey(s1,s2);
+        return new FormulaMatchMemoMapKey(s1, s2);
     }
 
     public static class FormulaMatchMemoMapKey {
@@ -236,6 +227,7 @@ public class FormulaUtil {
         }
 
         /**
+         *
          */
         @Override
         public boolean equals(Object o) {
@@ -245,13 +237,12 @@ public class FormulaUtil {
 
             FormulaMatchMemoMapKey that = (FormulaMatchMemoMapKey) o;
 
-            if (f1 != null ? !f1.equals(that.f1) : that.f1 != null) return false;
-            if (f2 != null ? !f2.equals(that.f2) : that.f2 != null) return false;
-
-            return true;
+            if (!Objects.equals(f1, that.f1)) return false;
+            return Objects.equals(f2, that.f2);
         }
 
         /**
+         *
          */
         @Override
         public int hashCode() {
@@ -262,6 +253,7 @@ public class FormulaUtil {
         }
 
         /**
+         *
          */
         @Override
         public String toString() {

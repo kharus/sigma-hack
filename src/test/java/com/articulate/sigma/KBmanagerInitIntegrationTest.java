@@ -1,21 +1,24 @@
 package com.articulate.sigma;
 
+import com.articulate.sigma.utils.FileUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.*;
-import com.articulate.sigma.utils.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class KBmanagerInitIntegrationTest extends IntegrationTestBase {
 
-    private static Set<String> kifSet = Sets.newHashSet();
+    private static final Set<String> kifSet = Sets.newHashSet();
 
     /**
+     *
      */
     @BeforeClass
     public static void setKB() {
@@ -57,14 +60,14 @@ public class KBmanagerInitIntegrationTest extends IntegrationTestBase {
         //kifSet.add("UXExperimentalTerms.kif");
         //kifSet.add("VirusProteinAndCellPart.kif");
         //kifSet.add("WMD.kif");
-     }
+    }
 
     /**
      * Verify that you are running your tests with the expected configuration.
      */
     @Test
     @Ignore
-    public void testNbrKifFilesLoaded()   {
+    public void testNbrKifFilesLoaded() {
 
         Set<String> expectedKifFiles = Sets.newHashSet(kifSet);
         Set<String> actualKifFiles = new HashSet<>();
@@ -81,17 +84,17 @@ public class KBmanagerInitIntegrationTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     private void filterExpectedKifs(List<String> actualKifFiles, Set<String> expectedKifFiles) {
 
         List<String> remainingActualKifFiles = Lists.newArrayList(actualKifFiles);
         for (String file : actualKifFiles) {
             String fileName = file.substring(file.lastIndexOf("/") + 1);
-            if (kifSet.contains(fileName))  {
+            if (kifSet.contains(fileName)) {
                 remainingActualKifFiles.remove(file);
                 expectedKifFiles.remove(fileName);
-            }
-            else if (fileName.startsWith("SUMO_"))  {
+            } else if (fileName.startsWith("SUMO_")) {
                 // Remove kif knowledge added after initialization--the cache as well as Interpreter assertions.
                 remainingActualKifFiles.remove(file);
             }
@@ -104,7 +107,7 @@ public class KBmanagerInitIntegrationTest extends IntegrationTestBase {
      * Verify how long the base class's KBmanager initialization took.
      */
     @Test
-    public void testInitializationTime()   {
+    public void testInitializationTime() {
 
         assertTrue("Actual time = " + IntegrationTestBase.totalKbMgrInitTime, IntegrationTestBase.totalKbMgrInitTime < 350000);
         // Just in case something whacky is going on, make sure it's greater than some minimum, too.

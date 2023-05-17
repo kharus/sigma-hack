@@ -13,7 +13,7 @@ public class SumoProcessCollectorTest extends UnitTestBase {
 
     private final KB knowledgeBase = SigmaTestBase.kb;
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testAddInvalidRole() {
         SumoProcessCollector process = new SumoProcessCollector(knowledgeBase, "agent", "Driving", "Mark");
         process.addRole("goal", "HospitalBuilding");

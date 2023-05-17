@@ -1,49 +1,35 @@
 package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.Formula;
-import com.google.common.collect.*;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.TreeMultimap;
 
 import java.util.List;
 import java.util.Map;
 
 /**
-* One element of a LanguageFormatterStack.
-*/
+ * One element of a LanguageFormatterStack.
+ */
 public class StackElement {
-
-    public enum StackState {PROCESSED, TRANSLATED, UNPROCESSED, QUANTIFIED_VARS}
-
-    public class FormulaArg {
-        final String argument;
-        StackState state = StackState.UNPROCESSED;
-        String translation = "";
-
-        public FormulaArg(String arg, StackState stackState) {
-            this.state = stackState;
-            argument = arg;
-        }
-    }
-
-    /**
-     * Holds all the events being processed.
-     */
-    private Map<String, SumoProcessCollector> sumoProcessMap = Maps.newHashMap();
-
-    /**
-     * Holds properties belonging to entities involved in the processes. Key is a string identifier (e.g. variable).
-     */
-    private Multimap<String, SumoProcessEntityProperty> entityProperties = TreeMultimap.create();
 
     /**
      * Holds the arguments of the current clause. We use it to keep track of which arguments have been translated into informal NLG successfully.
      */
     final List<FormulaArg> formulaArgs = Lists.newArrayList();
-
+    /**
+     * Holds all the events being processed.
+     */
+    private Map<String, SumoProcessCollector> sumoProcessMap = Maps.newHashMap();
+    /**
+     * Holds properties belonging to entities involved in the processes. Key is a string identifier (e.g. variable).
+     */
+    private Multimap<String, SumoProcessEntityProperty> entityProperties = TreeMultimap.create();
     /**
      * Indicates whether we have translated this level into informal language.
      */
     private boolean translated = false;
-
     private String translation = "";
 
     /**
@@ -52,20 +38,21 @@ public class StackElement {
      * @param spcMap
      * @param args
      */
-    public StackElement(Map<String, SumoProcessCollector> spcMap, List<String> args)  {
+    public StackElement(Map<String, SumoProcessCollector> spcMap, List<String> args) {
         sumoProcessMap = Maps.newHashMap(spcMap);
         init(args);
     }
 
     /**
      * Init the formulaArgs and translated for this StackElement.
+     *
      * @param args
      */
     void init(List<String> args) {
         translated = false;
         translation = "";
         formulaArgs.clear();
-        for(String arg : args)  {
+        for (String arg : args) {
             formulaArgs.add(new FormulaArg(arg, StackState.UNPROCESSED));
         }
     }
@@ -73,6 +60,7 @@ public class StackElement {
     /**
      * Init the formulaArgs for this StackElement. The formula parameter is used to set valid
      * formulaArgs to states other than UNPROCESSED.
+     *
      * @param formula
      * @param args
      */
@@ -81,14 +69,14 @@ public class StackElement {
 
         // Set the formula args' state.
         String pred = formula.car();
-        if (Formula.isQuantifier(pred))     {
+        if (Formula.isQuantifier(pred)) {
             // See if it is a list of variables.
 
             String temp = args.get(0).replaceAll("[()]", "");
             String[] strings = temp.split(" ");
             boolean isVarList = true;
-            for(String str : strings)  {
-                if (! Formula.isVariable(str)) {
+            for (String str : strings) {
+                if (!Formula.isVariable(str)) {
                     isVarList = false;
                 }
             }
@@ -102,6 +90,7 @@ public class StackElement {
 
     /**
      * Mark this stack element as having been translated.
+     *
      * @param translation
      * @param translated
      */
@@ -112,6 +101,7 @@ public class StackElement {
 
     /**
      * Set the polarity of current stack element's process.
+     *
      * @param predicate
      * @param polarity
      */
@@ -124,10 +114,11 @@ public class StackElement {
 
     /**
      * Set polarity.
+     *
      * @param polarity
      */
     public void setProcessPolarity(VerbProperties.Polarity polarity) {
-        if (sumoProcessMap.isEmpty())     {
+        if (sumoProcessMap.isEmpty()) {
             return;
         }
         String singleKey = sumoProcessMap.keySet().iterator().next();
@@ -136,6 +127,7 @@ public class StackElement {
 
     /**
      * Getter and setter for translated field.
+     *
      * @return
      */
     public boolean getTranslated() {
@@ -148,6 +140,7 @@ public class StackElement {
 
     /**
      * Getter and setter for translated field.
+     *
      * @return
      */
     public Multimap<String, SumoProcessEntityProperty> getEntityProperties() {
@@ -159,11 +152,23 @@ public class StackElement {
     }
 
     /**
-     *
      * @return
      */
     public Map<String, SumoProcessCollector> getSumoProcessMap() {
         return sumoProcessMap;
+    }
+
+    public enum StackState {PROCESSED, TRANSLATED, UNPROCESSED, QUANTIFIED_VARS}
+
+    public class FormulaArg {
+        final String argument;
+        StackState state = StackState.UNPROCESSED;
+        String translation = "";
+
+        public FormulaArg(String arg, StackState stackState) {
+            this.state = stackState;
+            argument = arg;
+        }
     }
 
 

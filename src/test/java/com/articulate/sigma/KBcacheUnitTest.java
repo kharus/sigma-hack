@@ -1,31 +1,34 @@
 package com.articulate.sigma;
 
 /**
- Note that this class, and therefore, Sigma, depends upon several terms
- being present in the ontology in order to function as intended.  They are:
-
- subclass
- subAttribute
- subrelation
- instance
-
- partition
- disjoint
- disjointDecomposition
- exhaustiveDecomposition
- exhaustiveAttribute
-
- domain
- domainSubclass
- Entity
- TransitiveRelation
- Relation
+ * Note that this class, and therefore, Sigma, depends upon several terms
+ * being present in the ontology in order to function as intended.  They are:
+ * <p>
+ * subclass
+ * subAttribute
+ * subrelation
+ * instance
+ * <p>
+ * partition
+ * disjoint
+ * disjointDecomposition
+ * exhaustiveDecomposition
+ * exhaustiveAttribute
+ * <p>
+ * domain
+ * domainSubclass
+ * Entity
+ * TransitiveRelation
+ * Relation
  */
-import com.google.common.collect.Sets;
-import org.junit.Test;
-import org.junit.BeforeClass;
 
-import java.util.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -39,7 +42,7 @@ public class KBcacheUnitTest {
     public static void setup() {
 
         kb.kbCache = new KBcache(kb);
-        KBmanager.getMgr().setPref("cacheDisjoint","true");
+        KBmanager.getMgr().setPref("cacheDisjoint", "true");
         KIF kif = new KIF();
         kif.parseStatement("(subAttribute Attorney Lawyer)");
         kif.parseStatement("(instance Attorney Profession)");
@@ -72,7 +75,7 @@ public class KBcacheUnitTest {
         kif.parseStatement("(partition Animal Vertebrate Invertebrate)");
         kif.parseStatement("(subclass Dog Vertebrate)");
         kif.parseStatement("(subclass Jellyfish Invertebrate)");
-        kb.merge(kif,"");
+        kb.merge(kif, "");
         for (Formula f : kb.formulaMap.values())
             f.sourceFile = "test"; // without a source file kbCache assumes it's a cached formula and ignores it
         kb.kbCache.buildCaches();
@@ -146,7 +149,7 @@ public class KBcacheUnitTest {
     public void testChildren() {
 
         System.out.println("Test children");
-        HashSet<String> expected = new HashSet<>(Arrays.asList("relsub"));
+        HashSet<String> expected = new HashSet<>(List.of("relsub"));
         System.out.println("testChildren(): subrelations: " + kb.kbCache.children.get("subrelation"));
         HashSet<String> actual = null;
         if (kb.kbCache.children.get("subrelation") != null)
@@ -164,7 +167,7 @@ public class KBcacheUnitTest {
         System.out.println("Test signatures");
         ArrayList<String> expected = new ArrayList<>(Arrays.asList("", "Object", "Object"));
         ArrayList<String> actual = kb.kbCache.signatures.get("rel");
-        assertEquals(expected.subList(1,2), actual.subList(1,2));
+        assertEquals(expected.subList(1, 2), actual.subList(1, 2));
     }
 
     /**
@@ -253,7 +256,7 @@ public class KBcacheUnitTest {
         String actual = kb.kbCache.getCommonParent("LadderBackChair", "Table");
         String expected = "Furniture";
         System.out.println("Test testCommonParent(): result: " + actual);
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     /**
@@ -266,7 +269,7 @@ public class KBcacheUnitTest {
                 "var", "subclass", "rel", "CitizenryFn", "ResidentFn", "relsub",
                 "subrelation"));
         HashSet<String> actual = kb.kbCache.getInstancesForType("Relation");
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     /**
@@ -277,29 +280,29 @@ public class KBcacheUnitTest {
         System.out.println("Test testDisjoint");
         HashSet<String> classes = new HashSet<>(Arrays.asList("Dog", "Jellyfish"));
         System.out.println("KBcacheUnitTest.testDisjoint(): Dog&Jellyfish");
-        System.out.println("KBcacheUnitTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb,"Dog", "Jellyfish"));
-        if (kb.kbCache.checkDisjoint(kb,"Dog","Jellyfish"))
+        System.out.println("KBcacheUnitTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb, "Dog", "Jellyfish"));
+        if (kb.kbCache.checkDisjoint(kb, "Dog", "Jellyfish"))
             System.out.println("KBcacheUnitTest.testDisjoint(): pass");
         else
             System.out.println("KBcacheUnitTest.testDisjoint(): fail");
-        assertTrue(kb.kbCache.checkDisjoint(kb,"Dog","Jellyfish"));
+        assertTrue(kb.kbCache.checkDisjoint(kb, "Dog", "Jellyfish"));
 
         System.out.println("KBcacheUnitTest.testDisjoint(): classes: " + classes);
-        System.out.println("KBcacheUnitTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb,classes));
-        if (kb.kbCache.checkDisjoint(kb,classes))
+        System.out.println("KBcacheUnitTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb, classes));
+        if (kb.kbCache.checkDisjoint(kb, classes))
             System.out.println("KBcacheUnitTest.testDisjoint(): pass");
         else
             System.out.println("KBcacheUnitTest.testDisjoint(): fail");
-        assertTrue(kb.kbCache.checkDisjoint(kb,classes));
+        assertTrue(kb.kbCache.checkDisjoint(kb, classes));
 
         classes = new HashSet<>(Arrays.asList("Table", "Chair"));
         System.out.println("KBcacheUnitTest.testDisjoint(): classes: " + classes);
-        System.out.println("KBcacheUnitTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb,classes));
-        if (!kb.kbCache.checkDisjoint(kb,classes))
+        System.out.println("KBcacheUnitTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb, classes));
+        if (!kb.kbCache.checkDisjoint(kb, classes))
             System.out.println("KBcacheUnitTest.testDisjoint(): pass");
         else
             System.out.println("KBcacheUnitTest.testDisjoint(): fail");
-        assertTrue(!kb.kbCache.checkDisjoint(kb,classes));
+        assertFalse(kb.kbCache.checkDisjoint(kb, classes));
     }
 
     /**
@@ -309,15 +312,15 @@ public class KBcacheUnitTest {
 
         System.out.println("Test testCollectArgsFromFormulas");
         String rel = "TransitiveRelation";
-        ArrayList<Formula> forms = kb.askWithRestriction(0,"instance",2,rel);
+        ArrayList<Formula> forms = kb.askWithRestriction(0, "instance", 2, rel);
         System.out.println("INFO in KBcache.testCollectArgsFromFormulas(): forms2: " + forms);
         HashSet<String> actual = new HashSet<>();
         if (forms != null)
-            actual.addAll(KBcache.collectArgFromFormulas(1,forms));
+            actual.addAll(KBcache.collectArgFromFormulas(1, forms));
         HashSet<String> expected = new HashSet<>(Arrays.asList("subAttribute",
-                 "subclass", "subrelation"));
+                "subclass", "subrelation"));
         System.out.println("INFO in KBcache.testCollectArgsFromFormulas(): actual: " + actual);
         System.out.println("INFO in KBcache.testCollectArgsFromFormulas(): expected: " + expected);
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 }

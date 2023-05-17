@@ -1,8 +1,8 @@
 package com.articulate.sigma;
 
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.*;
 
@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 public class KBcacheTest extends IntegrationTestBase {
 
     /**
+     *
      */
     @BeforeClass
     public static void requiredKB() {
@@ -26,6 +27,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testIsParentOf1() {
@@ -40,6 +42,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testBuildParents() {
@@ -63,6 +66,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testBuildChildren() {
@@ -103,6 +107,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testBuildChildren2() {
@@ -118,10 +123,10 @@ public class KBcacheTest extends IntegrationTestBase {
                 "VenezuelanEquineEncephalitis", "ConsciousnessAttribute", "LifeThreateningDisease", "NonspecificDisease",
                 "PsychologicalDysfunction", "Neurosis", "Psychosis", "TyphoidFever", "StateOfMind", "TraitAttribute"));
 */
-        TreeSet<String> expected = new TreeSet<>(Arrays.asList("RationalNumber","Integer","EvenInteger",
-                "OddInteger","PrimeNumber","NonnegativeInteger","PositiveInteger","NegativeInteger",
-                "IrrationalNumber","NonnegativeRealNumber","PositiveRealNumber","PositiveInteger",
-                "NegativeRealNumber","NegativeInteger","BinaryNumber", "RealNumber"));
+        TreeSet<String> expected = new TreeSet<>(Arrays.asList("RationalNumber", "Integer", "EvenInteger",
+                "OddInteger", "PrimeNumber", "NonnegativeInteger", "PositiveInteger", "NegativeInteger",
+                "IrrationalNumber", "NonnegativeRealNumber", "PositiveRealNumber", "PositiveInteger",
+                "NegativeRealNumber", "NegativeInteger", "BinaryNumber", "RealNumber"));
 
         TreeSet<String> actual = new TreeSet<String>(cache.getChildClasses(parent));
 
@@ -135,6 +140,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testTransitiveRelations() {
@@ -170,6 +176,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testIsChildOf1() {
@@ -181,6 +188,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testIsChildOf2() {
@@ -192,6 +200,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testIsChildOf3() {
@@ -205,6 +214,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testIsChildOf4() {
@@ -218,6 +228,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testIsChildOf5() {
@@ -227,6 +238,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testIsChildOf6() {
@@ -237,6 +249,7 @@ public class KBcacheTest extends IntegrationTestBase {
 
 
     /**
+     *
      */
     @Test
     public void testTransitiveRelations2() {
@@ -259,41 +272,42 @@ public class KBcacheTest extends IntegrationTestBase {
         System.out.println("Test testDisjoint");
         HashSet<String> classes = new HashSet<>(Arrays.asList("Arthropod", "Bird"));
         System.out.println("KBcacheTest.testDisjoint(): Arthropod&Bird");
-        System.out.println("KBcacheTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb,"Arthropod", "Bird"));
-        if (kb.kbCache.checkDisjoint(kb,"Arthropod", "Bird"))
+        System.out.println("KBcacheTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb, "Arthropod", "Bird"));
+        if (kb.kbCache.checkDisjoint(kb, "Arthropod", "Bird"))
             System.out.println("KBcacheTest.testDisjoint(): pass");
         else
             System.out.println("KBcacheTest.testDisjoint(): fail");
-        assertTrue(kb.kbCache.checkDisjoint(kb,"Arthropod", "Bird"));
+        assertTrue(kb.kbCache.checkDisjoint(kb, "Arthropod", "Bird"));
 
         System.out.println("KBcacheTest.testDisjoint(): classes: " + classes);
-        System.out.println("KBcacheTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb,classes));
-        if (kb.kbCache.checkDisjoint(kb,classes))
+        System.out.println("KBcacheTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb, classes));
+        if (kb.kbCache.checkDisjoint(kb, classes))
             System.out.println("KBcacheTest.testDisjoint(): pass");
         else
             System.out.println("KBcacheTest.testDisjoint(): fail");
-        assertTrue(kb.kbCache.checkDisjoint(kb,classes));
+        assertTrue(kb.kbCache.checkDisjoint(kb, classes));
 
         classes = new HashSet<>(Arrays.asList("Table", "Chair"));
         System.out.println("KBcacheTest.testDisjoint(): classes: " + classes);
-        System.out.println("KBcacheTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb,classes));
-        if (!kb.kbCache.checkDisjoint(kb,classes))
+        System.out.println("KBcacheTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb, classes));
+        if (!kb.kbCache.checkDisjoint(kb, classes))
             System.out.println("KBcacheTest.testDisjoint(): pass");
         else
             System.out.println("KBcacheTest.testDisjoint(): fail");
-        assertTrue(!kb.kbCache.checkDisjoint(kb,classes));
+        assertFalse(kb.kbCache.checkDisjoint(kb, classes));
 
         classes = new HashSet<>(Arrays.asList("Table", "Agent"));
         System.out.println("KBcacheTest.testDisjoint(): classes: " + classes);
-        System.out.println("KBcacheTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb,classes));
-        if (kb.kbCache.checkDisjoint(kb,classes))
+        System.out.println("KBcacheTest.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb, classes));
+        if (kb.kbCache.checkDisjoint(kb, classes))
             System.out.println("KBcacheTest.testDisjoint(): pass");
         else
             System.out.println("KBcacheTest.testDisjoint(): fail");
-        assertTrue(kb.kbCache.checkDisjoint(kb,classes));
+        assertTrue(kb.kbCache.checkDisjoint(kb, classes));
     }
 
     /**
+     *
      */
     @Test
     public void testSignature() {
@@ -309,41 +323,44 @@ public class KBcacheTest extends IntegrationTestBase {
         ArrayList<String> actual = cache.getSignature("memberTypeCount");
         System.out.println("actual: " + actual);
         System.out.println("expoected: " + expected);
-        assertTrue(actual.equals(expected));
+        assertEquals(actual, expected);
     }
 
     /**
+     *
      */
     @Test
     public void testTransInst() {
 
         System.out.println("\n============= testTransInst ==================");
         KBcache cache = SigmaTestBase.kb.kbCache;
-        System.out.println("testTransInst(): cache.transInstOf(Anger,Entity): " + cache.transInstOf("Anger","Entity"));
+        System.out.println("testTransInst(): cache.transInstOf(Anger,Entity): " + cache.transInstOf("Anger", "Entity"));
         System.out.println("testTransInst(): insts.contains(Anger): " + cache.insts.contains("Anger"));
         //System.out.println("testTransInst(): insts.contains(Anger): " + cache.insts.contains("Anger"));
         //System.out.println("testTransInst(): instancesOf: " + cache.instanceOf);
-        assertTrue(cache.transInstOf("Anger","Entity"));
+        assertTrue(cache.transInstOf("Anger", "Entity"));
     }
 
     /**
+     *
      */
     @Test
     public void testRealization() {
 
         System.out.println("\n============= testRealization ==================");
         KBcache cache = SigmaTestBase.kb.kbCache;
-        System.out.println("testRealization(): cache.isInstanceOf(realization,AntisymmetricRelation): " + cache.isInstanceOf("realization","AntisymmetricRelation"));
-        System.out.println("testRealization(): cache.isInstanceOf(realization,SymmetricRelation): " + cache.isInstanceOf("realization","SymmetricRelation"));
+        System.out.println("testRealization(): cache.isInstanceOf(realization,AntisymmetricRelation): " + cache.isInstanceOf("realization", "AntisymmetricRelation"));
+        System.out.println("testRealization(): cache.isInstanceOf(realization,SymmetricRelation): " + cache.isInstanceOf("realization", "SymmetricRelation"));
         //System.out.println("testRealization(): cache.instances.get(AntisymmetricRelation): " + cache.instances.get("AntisymmetricRelation"));
         //System.out.println("testRealization(): cache.instances.get(SymmetricRelation): " + cache.instances.get("SymmetricRelation"));
         //System.out.println("testRealization(): cache.parents.get(intsance).get(realization): " + cache.parents.get("subrelation").get("realization"));
         //System.out.println("testRealization(): cache.instanceOf.get(realization): " + cache.instanceOf.get("realization"));
-        assertTrue(!cache.isInstanceOf("realization","SymmetricRelation"));
-        assertTrue(cache.isInstanceOf("realization","AntisymmetricRelation"));
+        assertFalse(cache.isInstanceOf("realization", "SymmetricRelation"));
+        assertTrue(cache.isInstanceOf("realization", "AntisymmetricRelation"));
     }
 
     /**
+     *
      */
     @Test
     public void testFunctions() {
@@ -356,6 +373,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testPredicates() {
@@ -368,8 +386,7 @@ public class KBcacheTest extends IntegrationTestBase {
                 if (!cache.isInstanceOf(rel, "Predicate")) {
                     System.out.println("fail - " + rel + " not instance of Predicate");
                     System.out.println("parents of " + rel + " " + cache.instanceOf.get(rel));
-                }
-                else
+                } else
                     System.out.println("success for predicate: " + rel);
             }
         }
@@ -378,8 +395,7 @@ public class KBcacheTest extends IntegrationTestBase {
                 if (!cache.isInstanceOf(rel, "Predicate")) {
                     System.out.println("fail - " + rel + " not instance of Predicate");
                     System.out.println("parents of " + rel + " " + cache.instanceOf.get(rel));
-                }
-                else
+                } else
                     System.out.println("success for predicate: " + rel);
                 assertTrue(cache.isInstanceOf(rel, "Predicate"));
             }

@@ -13,10 +13,9 @@ import java.util.HashSet;
 public class LFeatures {
 
     private static final boolean debug = false;
-
-    public boolean testMode = false;
-
+    public static boolean useCapabilities = true; // include process types from capabilities list
     private final GenSimpTestData genSimpTestData;
+    public boolean testMode = false;
     public boolean attNeg = false; // for propositional attitudes
     public boolean attPlural = false;
     public int attCount = 1;
@@ -41,10 +40,7 @@ public class LFeatures {
     public String subjName = "";
     public boolean subjectPlural = false;
     public int subjectCount = 1;
-
     public RandSet processes = null;
-    public static boolean useCapabilities = true; // include process types from capabilities list
-
     public ArrayList<String> frames = null;  // verb frames for the current process type
     public String frame = null; // the particular verb frame under consideration.
     public String framePart = null; // the frame that gets "consumed" during processing
@@ -117,12 +113,13 @@ public class LFeatures {
 
 
     /**
+     *
      */
     public ArrayList<AVPair> initModals() {
 
         ArrayList<AVPair> modals = new ArrayList<>();
         for (int i = 0; i < 50; i++)
-            modals.add(new AVPair("None",""));
+            modals.add(new AVPair("None", ""));
         if (!GenSimpTestData.suppress.contains("modal")) {
             modals.add(new AVPair("Necessity", "it is necessary that "));
             modals.add(new AVPair("Possibility", "it is possible that "));

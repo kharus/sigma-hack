@@ -22,9 +22,9 @@ import static org.junit.Assert.assertTrue;
 public class FormulaUnificationTest extends UnitTestBase {
     private static final String TEST_FILE_NAME = "formula_unification_tests.json";
 
-    @Parameterized.Parameter(value= 0)
+    @Parameterized.Parameter(value = 0)
     public String f1Text;
-    @Parameterized.Parameter(value= 1)
+    @Parameterized.Parameter(value = 1)
     public String f2Text;
 
 
@@ -45,8 +45,7 @@ public class FormulaUnificationTest extends UnitTestBase {
                 String f2 = (String) jo.get("f2");
                 result.add(new Object[]{f1, f2});
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;

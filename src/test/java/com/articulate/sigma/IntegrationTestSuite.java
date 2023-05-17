@@ -1,15 +1,8 @@
 package com.articulate.sigma;
 
-import com.google.common.collect.Sets;
-import org.junit.Test;
-import com.articulate.sigma.nlg.HtmlParaphraseIntegrationTest;
-import com.articulate.sigma.trans.*;
-import java.util.ArrayList;
-import java.util.Set;
+import com.articulate.sigma.trans.SUMOformulaToTPTPformulaTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-
-import static org.junit.Assert.*;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

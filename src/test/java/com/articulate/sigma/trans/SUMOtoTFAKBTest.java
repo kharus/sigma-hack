@@ -1,17 +1,15 @@
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.*;
+import com.articulate.sigma.Formula;
+import com.articulate.sigma.IntegrationTestBase;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 
-import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.assertEquals;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
+import static junit.framework.TestCase.assertTrue;
 
 //This software is released under the GNU Public License
 //<http://www.gnu.org/copyleft/gpl.html>.
@@ -23,6 +21,7 @@ public class SUMOtoTFAKBTest extends IntegrationTestBase {
     private static SUMOKBtoTFAKB skbtfakb = null;
 
     /**
+     *
      */
     @BeforeClass
     public static void init() {
@@ -35,6 +34,7 @@ public class SUMOtoTFAKBTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testPartition() {
@@ -51,10 +51,11 @@ public class SUMOtoTFAKBTest extends IntegrationTestBase {
             System.out.println("testPartition(): Success!");
         else
             System.out.println("testPartition(): fail");
-        assertTrue(expectedRes.equals(result));
+        assertEquals(expectedRes, result);
     }
 
     /**
+     *
      */
     @Test
     public void testDynamicSortDef() {
@@ -70,10 +71,11 @@ public class SUMOtoTFAKBTest extends IntegrationTestBase {
             System.out.println("testDynamicSortDef(): Success!");
         else
             System.out.println("testDynamicSortDef(): fail");
-        assertTrue(expectedRes.equals(result));
+        assertEquals(expectedRes, result);
     }
 
     /**
+     *
      */
     @Test
     public void testMissingSort() {

@@ -14,26 +14,27 @@ import static org.junit.Assert.assertEquals;
 /**
  * FormulaPreprocessor tests focused on computeVariableTypes().
  */
-public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
+public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
 
     @Test
-    public void testComputeVariableTypesNoVariables()     {
+    public void testComputeVariableTypesNoVariables() {
         String stmt = "(domain date 1 Physical)";
         Formula f = new Formula();
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String,HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
 
-        HashMap<String,HashSet<String>> expected = new HashMap<>();
+        HashMap<String, HashSet<String>> expected = new HashMap<>();
 
         assertEquals(expected, actual);
     }
 
     /**
+     *
      */
     @Test
-    public void testComputeVariableTypesNames()     {
+    public void testComputeVariableTypesNames() {
         String stmt = "(names \"John\" ?H)";
         Formula f = new Formula();
         f.read(stmt);
@@ -49,10 +50,11 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
-    public void testComputeVariableTypesInstance()     {
-        String stmt =   "(exists (?D ?H)\n" +
+    public void testComputeVariableTypesInstance() {
+        String stmt = "(exists (?D ?H)\n" +
                 "           (and\n" +
                 "               (instance ?D Driving)\n" +
                 "               (instance ?H Human)\n" +
@@ -76,8 +78,8 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
      * Result shows that the method does not implicitly ID the agent of a Driving as a human or an entity.
      */
     @Test
-    public void testComputeVariableTypesInstanceImplicitHuman()     {
-        String stmt =   "(exists (?D ?H)\n" +
+    public void testComputeVariableTypesInstanceImplicitHuman() {
+        String stmt = "(exists (?D ?H)\n" +
                 "           (and\n" +
                 "               (instance ?D Driving)\n" +
                 "               (agent ?D ?H)))";
@@ -97,9 +99,10 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
-    public void testComputeVariableTypesInstanceAgentInstrument()     {
+    public void testComputeVariableTypesInstanceAgentInstrument() {
         String stmt = "(exists (?D ?H ?Car)\n" +
                 "           (and\n" +
                 "               (instance ?D Driving)\n" +
@@ -123,10 +126,11 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
-    public void testComputeVariableTypesElementSet()     {
-        String stmt =   "(=> " +
+    public void testComputeVariableTypesElementSet() {
+        String stmt = "(=> " +
                 "           (forall (?ELEMENT) " +
                 "               (<=> " +
                 "                   (element ?ELEMENT ?SET1) " +
@@ -150,10 +154,11 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
-    public void testComputeVariableTypesSubclass()     {
-        String stmt =   "(subclass ?Cougar Feline)";
+    public void testComputeVariableTypesSubclass() {
+        String stmt = "(subclass ?Cougar Feline)";
         Formula f = new Formula();
         f.read(stmt);
 
@@ -168,10 +173,11 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
-    public void testComputeVariableTypesMonthFn()     {
-        String stmt =   "(exists (?M) " +
+    public void testComputeVariableTypesMonthFn() {
+        String stmt = "(exists (?M) " +
                 "           (time JohnsBirth (MonthFn ?M (YearFn 2000))))";
 
         Formula f = new Formula();
@@ -188,10 +194,11 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
-    public void testComputeVariableTypesGovFn()     {
-        String stmt =   "(=> " +
+    public void testComputeVariableTypesGovFn() {
+        String stmt = "(=> " +
                 "           (instance (GovernmentFn ?Place) StateGovernment) " +
                 "           (instance ?Place StateOrProvince))) ";
 
@@ -209,10 +216,11 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
-    public void testComputeVariableTypesSubclassIf()     {
-        String stmt =   "(=> " +
+    public void testComputeVariableTypesSubclassIf() {
+        String stmt = "(=> " +
                 "           (subclass ?Cougar Feline) " +
                 "           (subclass ?Cougar Carnivore))";
         Formula f = new Formula();
@@ -229,6 +237,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testComputeVariableTypesLowTerrain() {
@@ -247,6 +256,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testComputeVariableTypesIfAndOnlyIfTransitiveRelation() {
@@ -268,6 +278,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testComputeVariableTypesForAllElementSet() {
@@ -290,6 +301,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testComputeVariableTypesAwake() {
@@ -297,7 +309,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         expected.put("?HUMAN", Sets.newHashSet("AutonomousAgent"));
         expected.put("?PROC", Sets.newHashSet("Process"));
 
-        String stmt =   "(=>\n" +
+        String stmt = "(=>\n" +
                 "           (and\n" +
                 "               (instance ?PROC IntentionalProcess)\n" +
                 "               (agent ?PROC ?HUMAN)\n" +

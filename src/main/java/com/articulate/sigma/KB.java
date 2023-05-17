@@ -1,24 +1,25 @@
-/** This code is copyright Articulate Software (c) 2003.  Some
-portions copyright Teknowledge (c) 2003 and reused under the termsof the GNU
-license.  This software is released under the GNU Public License
-<http://www.gnu.org/copyleft/gpl.html>.  Users of this code also consent,
-by use of this code, to credit Articulate Software and Teknowledge in any
-writings, briefings, publications, presentations, or other representations
-of any software which incorporates, builds on, or uses this code.  Please
-cite the following article in any publication with references:
-
-Pease, A., (2003). The Sigma Ontology Development Environment, in Working
-Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
-August 9, Acapulco, Mexico. see also
-http://sigmakee.sourceforge.net
-*/
+/**
+ * This code is copyright Articulate Software (c) 2003.  Some
+ * portions copyright Teknowledge (c) 2003 and reused under the termsof the GNU
+ * license.  This software is released under the GNU Public License
+ * <http://www.gnu.org/copyleft/gpl.html>.  Users of this code also consent,
+ * by use of this code, to credit Articulate Software and Teknowledge in any
+ * writings, briefings, publications, presentations, or other representations
+ * of any software which incorporates, builds on, or uses this code.  Please
+ * cite the following article in any publication with references:
+ * <p>
+ * Pease, A., (2003). The Sigma Ontology Development Environment, in Working
+ * Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
+ * August 9, Acapulco, Mexico. see also
+ * http://sigmakee.sourceforge.net
+ */
 
 /**/
 package com.articulate.sigma;
 
-import com.articulate.sigma.tp.Vampire;
 import com.articulate.sigma.tp.EProver;
 import com.articulate.sigma.tp.LEO;
+import com.articulate.sigma.tp.Vampire;
 import com.articulate.sigma.trans.*;
 import com.articulate.sigma.utils.FileUtil;
 import com.articulate.sigma.utils.Pair;
@@ -43,100 +44,87 @@ import java.util.regex.PatternSyntaxException;
  */
 public class KB implements Serializable {
 
-    private boolean isVisible = true;
-
+    /** The String constant that is the suffix for file of user assertions. */
+    public static final String _userAssertionsString = "_UserAssertions.kif";
+    /** The String constant that is the suffix for TPTP file of user assertions. */
+    public static final String _userAssertionsTPTP = "_UserAssertions.tptp";
+    /** The String constant that is the suffix for TFF file of user assertions. */
+    public static final String _userAssertionsTFF = "_UserAssertions.tff";
+    /** The String constant that is the suffix for THF file of user assertions. */
+    public static final String _userAssertionsTHF = "_UserAssertions.thf";
+    /* The String constant that is the suffix for files of cached assertions.     */
+    public static final String _cacheFileSuffix = "_Cache.kif";
+    // maps TPTP axiom IDs to SUMO formulas
+    public static HashMap<String, Formula> axiomKey = new HashMap<>();
+    // force regeneration of TPTP file
+    public static boolean force = false;
+    public static boolean debug = false;
+    /**
+     * A HashMap for holding compiled regular expression patterns. The map is initialized
+     * by calling compilePatterns().
+     */
+    private static HashMap<String, ArrayList> REGEX_PATTERNS = null;
     /** Eprover inference engine process for this KB. */
     public transient EProver eprover;
-
     /** LEO-III inference engine process for this KB. */
     public transient LEO leo;
-
     /** The name of the knowledge base. */
     public String name;
-
     /* An ArrayList of Strings that are the full canonical pathnames of the
      * files that comprise the KB.    */
     public ArrayList<String> constituents = new ArrayList<String>();
-
     /** The natural language in which axiom paraphrases should be presented. */
     public String language = "EnglishLanguage";
-
     /* The location of preprocessed KIF files, suitable for loading into
      * EProver.     */
     public String kbDir = null;
-
     /** The instance of the CELT process. */
     public transient CELT celt = null;
-
     /** a cache built through lazy evaluation of the taxonomic depth of each term */
-    public HashMap<String,Integer> termDepthCache = new HashMap<>();
-
+    public HashMap<String, Integer> termDepthCache = new HashMap<>();
     /* A synchronized SortedSet of Strings, which are all the terms in the KB.     */
     public SortedSet<String> terms = Collections.synchronizedSortedSet(new TreeSet<String>());
-
     // A Map from all uppercase terms to their possibly mixed case original versions
-    public HashMap<String,String> capterms = new HashMap<>();
-
-    /** The String constant that is the suffix for file of user assertions. */
-    public static final String _userAssertionsString = "_UserAssertions.kif";
-
-    /** The String constant that is the suffix for TPTP file of user assertions. */
-    public static final String _userAssertionsTPTP = "_UserAssertions.tptp";
-
-    /** The String constant that is the suffix for TFF file of user assertions. */
-    public static final String _userAssertionsTFF = "_UserAssertions.tff";
-
-    /** The String constant that is the suffix for THF file of user assertions. */
-    public static final String _userAssertionsTHF = "_UserAssertions.thf";
-
-    /* The String constant that is the suffix for files of cached assertions.     */
-    public static final String _cacheFileSuffix = "_Cache.kif";
-
+    public HashMap<String, String> capterms = new HashMap<>();
     /* A Map of all the Formula objects in the KB. Each key is a String
      * representation of a Formula. Each value is the Formula object
      * corresponding to the key.     */
     public HashMap<String, Formula> formulaMap = new HashMap<String, Formula>();
-
     /* A HashMap of ArrayLists of String formulae, containing all the formulae
      * in the KB. Keys are the formula itself, a formula ID, and term indexes
      * created in KIF.createKey(). The actual formula can be retrieved by using
      * the returned String as the key for the variable formulaMap     */
     public HashMap<String, ArrayList<String>> formulas = new HashMap<String, ArrayList<String>>();
-
+    /** Errors found during loading of the KB constituents. */
+    public TreeSet<String> errors = new TreeSet<String>();
+    /** Warnings found during loading of the KB constituents. */
+    public TreeSet<String> warnings = new TreeSet<String>();
+    /* Future: If true, the contents of the KB have been modified without
+     * updating the caches     */
+    public boolean modifiedContents = false;
+    public KBcache kbCache = null;
+    public Map<String, Integer> termFrequency = new HashMap<String, Integer>();
+    /**
+     * This List is used to limit the number of warning messages logged by
+     * loadFormatMaps(lang). If an attempt to load format or termFormat values
+     * for lang is unsuccessful, the list is checked for the presence of lang.
+     * If lang is not in the list, a warning message is logged and lang is added
+     * to the list. The list is cleared whenever a constituent file is added or
+     * removed for KB, since the latter might affect the availability of format
+     * or termFormat values.
+     */
+    protected ArrayList<String> loadFormatMapsAttempted = new ArrayList<String>();
+    private boolean isVisible = true;
     /* The natural language formatting strings for relations in the KB. It is a
      * HashMap of language keys and HashMap values. The interior HashMap is term
      * name keys and String values.     */
     private HashMap<String, HashMap<String, String>> formatMap = new HashMap<String, HashMap<String, String>>();
-
     /* language keys and HashMap values. The interior HashMap is term name keys
      * and String values.     */
     private HashMap<String, HashMap<String, String>> termFormatMap = new HashMap<String, HashMap<String, String>>();
-
-    /** Errors found during loading of the KB constituents. */
-    public TreeSet<String> errors = new TreeSet<String>();
-
-    /** Warnings found during loading of the KB constituents. */
-    public TreeSet<String> warnings = new TreeSet<String>();
-
-    /* Future: If true, the contents of the KB have been modified without
-     * updating the caches     */
-    public boolean modifiedContents = false;
-
     /* If true, assertions of the form (predicate x x) will be included in the
      * relation cache tables.     */
-    private boolean cacheReflexiveAssertions = false;
-
-    public KBcache kbCache = null;
-
-    // maps TPTP axiom IDs to SUMO formulas
-    public static HashMap<String,Formula> axiomKey = new HashMap<>();
-
-    public Map<String, Integer> termFrequency = new HashMap<String, Integer>();
-
-    // force regeneration of TPTP file
-    public static boolean force = false;
-
-    public static boolean debug = false;
+    private final boolean cacheReflexiveAssertions = false;
 
     /**
      * Constructor which takes the name of the KB and the location where KBs preprocessed
@@ -153,8 +141,7 @@ public class KB implements Serializable {
                 if ((loadCelt != null) && loadCelt.equalsIgnoreCase("yes"))
                     celt = new CELT();
             }
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             System.out.println("Error in KB(): " + ioe.getMessage());
             celt = null;
         }
@@ -220,12 +207,6 @@ public class KB implements Serializable {
     }
 
     /**
-     */
-    public boolean isVisible() {
-        return isVisible;
-    }
-
-    /**
      * Constructor
      */
     public KB(String n) {
@@ -239,11 +220,603 @@ public class KB implements Serializable {
                 if ((loadCelt != null) && loadCelt.equalsIgnoreCase("yes"))
                     celt = new CELT();
             }
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             System.out.println("Error in KB(): " + ioe.getMessage());
             celt = null;
         }
+    }
+
+    /**
+     * Returns
+     * true if i is an instance of c in any loaded KB, else returns false.
+     *
+     * @param i A String denoting an instance.
+     * @return true or false.
+     */
+    public static boolean isRelationInAnyKB(String i) {
+
+        HashMap<String, KB> kbs = KBmanager.getMgr().kbs;
+        if (!kbs.isEmpty()) {
+            KB kb = null;
+            Iterator<KB> it = kbs.values().iterator();
+            while (it.hasNext()) {
+                kb = it.next();
+                if (kb.kbCache != null && kb.kbCache.relations != null && kb.kbCache.relations.contains(i))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Converts
+     * all Formula objects in the input List to ArrayList tuples.
+     *
+     * @param formulaList A list of Formulas.
+     * @return An ArrayList of formula tuples (ArrayLists), or an empty
+     * ArrayList.
+     */
+    public static ArrayList<ArrayList<String>> formulasToArrayLists(List<Formula> formulaList) {
+
+        ArrayList<ArrayList<String>> ans = new ArrayList<ArrayList<String>>();
+        if (formulaList instanceof List) {
+            Iterator<Formula> it = formulaList.iterator();
+            Formula f = null;
+            while (it.hasNext()) {
+                f = it.next();
+                ans.add(f.literalToArrayList());
+            }
+        }
+        return ans;
+    }
+
+    /* *************************************************************
+     * Converts
+     * all Strings in the input List to Formula objects.
+     *
+     * @param strings A list of Strings.
+     * @return An ArrayList of Formulas, or an empty ArrayList.
+     */
+    public static ArrayList<Formula> stringsToFormulas(List<String> strings) {
+
+        ArrayList<Formula> ans = new ArrayList<Formula>();
+        if (strings instanceof List) {
+            Iterator<String> it = strings.iterator();
+            while (it.hasNext()) {
+                Formula f = new Formula();
+                f.read(it.next());
+                ans.add(f);
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * Converts a
+     * literal (List object) to a String.
+     *
+     * @param literal A List representing a SUO-KIF formula.
+     * @return A String representing a SUO-KIF formula.
+     */
+    public static String literalListToString(List<String> literal) {
+
+        StringBuffer b = new StringBuffer();
+        if (literal instanceof List) {
+            b.append("(");
+            for (int i = 0; i < literal.size(); i++) {
+                if (i > 0)
+                    b.append(" ");
+                b.append(literal.get(i));
+            }
+            b.append(")");
+        }
+        return b.toString();
+    }
+
+    /**
+     * Converts a
+     * literal (List object) to a Formula.
+     *
+     * @param lit A List representing a SUO-KIF formula.
+     * @return A SUO-KIF Formula object, or null if no Formula can be created.
+     */
+    public static Formula literalListToFormula(List<String> lit) {
+
+        Formula f = null;
+        String theFormula = literalListToString(lit);
+        if (StringUtil.isNonEmptyString(theFormula)) {
+            f = new Formula();
+            f.read(theFormula);
+        }
+        return f;
+    }
+
+    /**
+     * This method returns a compiled regular expression Pattern object indexed by
+     * key.
+     *
+     * @param key
+     *            A String that is the retrieval key for a compiled regular
+     *            expression Pattern.
+     *
+     * @return A compiled regular expression Pattern instance.
+     */
+    public static Pattern getCompiledPattern(String key) {
+
+        if (StringUtil.isNonEmptyString(key) && (REGEX_PATTERNS != null)) {
+            ArrayList al = REGEX_PATTERNS.get(key);
+            if (al != null)
+                return (Pattern) al.get(0);
+        }
+        return null;
+    }
+
+    /**
+     * This method returns the int value that identifies the regular expression
+     * binding group to be returned when there is a match.
+     *
+     * @param key
+     *            A String that is the retrieval key for the binding group index
+     *            associated with a compiled regular expression Pattern.
+     *
+     * @return An int that indexes a binding group.
+     */
+    public static int getPatternGroupIndex(String key) {
+
+        if (StringUtil.isNonEmptyString(key) && (REGEX_PATTERNS != null)) {
+            ArrayList al = REGEX_PATTERNS.get(key);
+            if (al != null)
+                return ((Integer) al.get(1)).intValue();
+        }
+        return -1;
+    }
+
+    /**
+     * This method compiles and stores regular expression Pattern objects and binding
+     * group indexes as two cell ArrayList objects. Each ArrayList is indexed by
+     * a String retrieval key.
+     *
+     * @return void
+     */
+    private static void compilePatterns() {
+
+        if (REGEX_PATTERNS == null) {
+            REGEX_PATTERNS = new HashMap<String, ArrayList>();
+            String[][] patternArray = {{"row_var", "\\@ROW\\d*", "0"},
+                    // { "open_lit", "\\(\\w+\\s+\\?\\w+\\s+.\\w+\\s*\\)", "0"
+                    // },
+                    {"open_lit", "\\(\\w+\\s+\\?\\w+[a-zA-Z_0-9-?\\s]+\\)", "0"},
+                    {"pred_var_1", "\\(holds\\s+(\\?\\w+)\\W", "1"}, {"pred_var_2", "\\((\\?\\w+)\\W", "1"},
+                    {"var_with_digit_suffix", "(\\D+)\\d*", "1"}};
+            String pName = null;
+            Pattern p = null;
+            Integer groupN = null;
+            ArrayList pVal = null;
+            for (int i = 0; i < patternArray.length; i++) {
+                pName = patternArray[i][0];
+                p = Pattern.compile(patternArray[i][1]);
+                groupN = Integer.valueOf(patternArray[i][2]);
+                pVal = new ArrayList();
+                pVal.add(p);
+                pVal.add(groupN);
+                REGEX_PATTERNS.put(pName, pVal);
+            }
+        }
+    }
+
+    /**
+     * This method finds regular expression matches in an input string using a
+     * compiled Pattern and binding group index retrieved with patternKey. If
+     * the ArrayList accumulator is provided, match results are added to it and
+     * it is returned. If accumulator is not provided (is null), then a new
+     * ArrayList is created and returned if matches are found.
+     *
+     * @param input
+     *            The input String in which matches are sought.
+     *
+     * @param patternKey
+     *            A String used as the retrieval key for a regular expression
+     *            Pattern object, and an int index identifying a binding group.
+     *
+     * @param accumulator
+     *            An optional ArrayList to which matches are added. Note that if
+     *            accumulator is provided, it will be the return value even if
+     *            no new matches are found in the input String.
+     *
+     * @return An ArrayList, or null if no matches are found and an accumulator
+     *         is not provided.
+     */
+    public static ArrayList<String> getMatches(String input, String patternKey, ArrayList<String> accumulator) {
+
+        ArrayList<String> ans = null;
+        if (accumulator != null)
+            ans = accumulator;
+        if (REGEX_PATTERNS == null)
+            KB.compilePatterns();
+        if (StringUtil.isNonEmptyString(input) && StringUtil.isNonEmptyString(patternKey)) {
+            Pattern p = KB.getCompiledPattern(patternKey);
+            if (p != null) {
+                Matcher m = p.matcher(input);
+                int gidx = KB.getPatternGroupIndex(patternKey);
+                if (gidx >= 0) {
+                    while (m.find()) {
+                        String rv = m.group(gidx);
+                        if (StringUtil.isNonEmptyString(rv)) {
+                            if (ans == null)
+                                ans = new ArrayList<String>();
+                            if (!(ans.contains(rv)))
+                                ans.add(rv);
+                        }
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * This method finds regular expression matches in an input string using a
+     * compiled Pattern and binding group index retrieved with patternKey, and
+     * returns the results, if any, in an ArrayList.
+     *
+     * @param input
+     *            The input String in which matches are sought.
+     *
+     * @param patternKey
+     *            A String used as the retrieval key for a regular expression
+     *            Pattern object, and an int index identifying a binding group.
+     *
+     * @return An ArrayList, or null if no matches are found.
+     */
+    public static ArrayList<String> getMatches(String input, String patternKey) {
+        return KB.getMatches(input, patternKey, null);
+    }
+
+    /**
+     *
+     * @param obj
+     *            Any object
+     *
+     * @return true if obj is a String representation of a LISP empty list, else
+     *         false.
+     */
+    public static boolean isEmptyList(Object obj) {
+        return (StringUtil.isNonEmptyString(obj) && Formula.empty((String) obj));
+    }
+
+    /**
+     * A static utility method.
+     *
+     * @param obj
+     *            Presumably, a String.
+     * @return true if obj is a SUO-KIF variable, else false.
+     */
+    public static boolean isVariable(String obj) {
+
+        if (StringUtil.isNonEmptyString(obj)) {
+            return (obj.startsWith("?") || obj.startsWith("@"));
+        }
+        return false;
+    }
+
+    /**
+     * A static utility method.
+     *
+     * @param obj
+     *            A String.
+     * @return true if obj is a SUO-KIF logical quantifier, else false.
+     */
+    public static boolean isQuantifier(String obj) {
+
+        return (StringUtil.isNonEmptyString(obj) && (obj.equals("forall") || obj.equals("exists")));
+    }
+
+    /**
+     * A static utility method.
+     *
+     * @param obj
+     *            Presumably, a String.
+     * @return true if obj is a SUO-KIF commutative logical operator, else
+     *         false.
+     */
+    public static boolean isCommutative(String obj) {
+
+        return (StringUtil.isNonEmptyString(obj) && (obj.equals("and") || obj.equals("or")));
+    }
+
+    /**
+     * Keep a count of axioms
+     */
+    public static void addToAxiomCount(HashMap<String, Integer> currentCount,
+                                       Set<String> newAxioms) {
+
+        for (String s : newAxioms) {
+            Integer i = 0;
+            if (currentCount.containsKey(s))
+                i = currentCount.get(s);
+            currentCount.put(s, i + 1);
+        }
+    }
+
+    /**
+     * Attempt to provide guidance on the likely cause of a contradiction
+     * by removing the axioms involved in a contradiction one-by-one and trying
+     * again. @see contradictionHelp()
+     */
+    public static HashMap<String, Formula> collectSourceAxioms(KB kb, TPTP3ProofProcessor tpp) {
+
+        HashMap<String, Formula> sourceAxioms = new HashMap<>();
+        for (TPTPFormula ps : tpp.proof) {
+            System.out.println("KB.collectSourceAxioms(): " + ps.infRule);
+            if (ps.infRule.startsWith("kb_") || ps.infRule.contains("conjecture")) {
+                Formula f = SUMOKBtoTPTPKB.axiomKey.get(ps.infRule);
+                if (f != null && f.sourceFile != null && !f.sourceFile.endsWith(_cacheFileSuffix))
+                    sourceAxioms.put(f.getFormula(), f);
+            }
+        }
+        return sourceAxioms;
+    }
+
+    /**
+     */
+    private static void deletedOldInfFiles(String filename, String prefix) {
+
+        System.out.println("KB.deletedOldInfFiles(): deleting old inference files");
+        FileUtil.delete(filename);
+        FileUtil.delete(prefix + "test.tptp");
+        FileUtil.delete(prefix + "temp-comb.tptp");
+        FileUtil.delete(prefix + "tempt-stmt.tptp");
+    }
+
+    /**
+     * Attempt to provide guidance on the likely cause of a contradiction
+     * by removing the axioms involved in a contradiction one-by-one and trying
+     * again.
+     */
+    public static void contradictionHelp(KB kb, String[] args, int timeout) {
+
+        HashSet<String> commonAxioms = new HashSet<>(); // axioms found in all contradictions
+        HashMap<String, Integer> axiomCount = new HashMap<>(); // count axioms found in contradictions
+        HashSet<Formula> removalSuccess = new HashSet<>(); // removing this axiom results in no contradiction
+        TPTP3ProofProcessor tpp = kb.runProver(args, timeout);
+        tpp.printProof(3);
+        System.out.println();
+        KBmanager.getMgr().removeKB(kb.name);
+        String prefix = KBmanager.getMgr().getPref("kbDir") + File.separator;
+        String filename = prefix + "SUMO_contra.kif";
+        System.out.println("KB.contradictionHelp(): prefix: " + prefix);
+
+        HashMap<String, Formula> sourceAxioms = collectSourceAxioms(kb, tpp);
+        System.out.println("KB.contradictionHelp(): source axioms: " + sourceAxioms.keySet());
+        commonAxioms.addAll(sourceAxioms.keySet());
+        addToAxiomCount(axiomCount, sourceAxioms.keySet());
+        for (String s : sourceAxioms.keySet()) {
+            HashSet<String> minusAxioms = new HashSet<>();
+            minusAxioms.addAll(kb.getFormulas());
+            minusAxioms.remove(s);
+            System.out.println("KB.contradictionHelp(): removed axiom: " + s);
+            ArrayList<String> display = new ArrayList<>();
+            display.addAll(minusAxioms);
+            ArrayList<String> display2 = new ArrayList<>();
+            display2.addAll(display.subList(0, 10));
+            System.out.println("KB.contradictionHelp(): minusAxioms: " +
+                    StringUtil.arrayListToCRLFString(display2) + "...");
+            deletedOldInfFiles(filename, prefix);
+            FileUtil.writeLines(filename, minusAxioms);
+            ArrayList<String> constituents = new ArrayList<>();
+            constituents.add(filename);
+            KBmanager.getMgr().loadKB("test", constituents);
+            KB kb2 = KBmanager.getMgr().getKB("test");
+            TPTP3ProofProcessor tpp2 = kb2.runProver(args, timeout);
+            if (!tpp2.noConjecture || tpp2.status.contains("GaveUp"))
+                removalSuccess.add(kb.formulaMap.get(s));
+            else {
+                //System.out.println("KB.contradictionHelp(): axiomKey: " + SUMOKBtoTPTPKB.axiomKey);
+                System.out.println("KB.contradictionHelp(): proof: ");
+                tpp2.printProof(3);
+                System.out.println();
+                HashMap<String, Formula> sourceAxioms2 = collectSourceAxioms(kb2, tpp2);
+                addToAxiomCount(axiomCount, sourceAxioms2.keySet());
+                commonAxioms.retainAll(sourceAxioms2.keySet());
+            }
+        }
+        System.out.println("KB.contradictionHelp(): common axioms: " + commonAxioms);
+        sourceAxioms.keySet().removeAll(commonAxioms);
+        System.out.println("KB.contradictionHelp(): axiomCount: " + axiomCount);
+        System.out.println("KB.contradictionHelp(): axioms not causing the contradiction: " +
+                sourceAxioms.keySet());
+        System.out.println("KB.contradictionHelp(): axioms that when any one is removed results in no contradiction: " +
+                FormulaUtil.formatCollection(removalSuccess));
+    }
+
+    /**
+     */
+    public static void test() {
+
+        // generateTPTPTestAssertions();
+        // testTPTP(args);
+        KB kb = null;
+        try {
+            KBmanager.getMgr().initializeOnce();
+            kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+            System.out.println("KB.test(): " + kb.getAllSub("ColorAttribute", "subAttribute"));
+
+            String contents = "(subclass ?X Entity)";
+            System.out.println("KB.test(): query Vampire with: " + contents);
+            String dir = KBmanager.getMgr().getPref("kbDir") + File.separator;
+            String type = "tptp";
+            String outfile = dir + "temp-comb." + type;
+            System.out.println("KB.test(): query Vampire on file: " + outfile);
+            Vampire vamp = kb.askVampire(contents, 30, 1);
+            //System.out.println("KB.test(): completed query with result: " + StringUtil.arrayListToCRLFString(vamp.output));
+            TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
+            tpp.parseProofOutput(vamp.output, contents, kb, vamp.qlist);
+            System.out.println("queryExp(): bindings: " + tpp.bindings);
+            System.out.println("queryExp(): proof: " + tpp.proof);
+            ArrayList<String> proofStepsStr = new ArrayList<>();
+            for (TPTPFormula ps : tpp.proof)
+                proofStepsStr.add(ps.toString());
+            //kb.writeTerms();
+            // System.out.println("KB.main(): " + kb.isChildOf("Africa",
+            // "Region"));
+            // kb.askEProver("(subclass ?X Object)",30,1);
+        } catch (Exception ioe) {
+            System.out.println(ioe.getMessage());
+        }
+
+        // kb.generateSemanticNetwork();
+        // kb.generateRandomProof();
+        // kb.instanceOfInstanceP();
+        /*
+        System.out.println("KB.main(): termDepth of Object: " + kb.termDepth("Object"));
+        System.out.println("KB.main(): termDepth of Table: " + kb.termDepth("Table"));
+        System.out.println("KB.main(): termDepth of immediateSubclass: " + kb.termDepth("immediateSubclass"));
+        System.out.println("KB.main(): termDepth of Wagon: " + kb.termDepth("Wagon"));
+        System.out.println("KB.main(): termDepth of Foo: " + kb.termDepth("Foo"));
+*/
+        /*
+         * String foo = "(rel bar \"test\")"; Formula f = new Formula();
+         * f.read(foo); System.out.println(f.getArgument(2).equals("\"test\""));
+         */
+    }
+
+    /**
+     */
+    public static void showHelp() {
+
+        System.out.println("KB class");
+        System.out.println("  options (with a leading '-'):");
+        System.out.println("  h - show this help screen");
+        System.out.println("  t - run test");
+        System.out.println("  a \"<query>\"- ask query");
+        System.out.println("  l - load KB files");
+        System.out.println("  v - ask query of Vampire");
+        System.out.println("  e - ask query of EProver");
+        System.out.println("  L - ask query of LEO-IIIr");
+        System.out.println("  1 - show full proof");
+        System.out.println("  2 - remove single premise proof steps");
+        System.out.println("  3 - show only KB axioms in proof");
+        System.out.println("  x - contradiction help");
+        System.out.println("  p - display TPTP proof");
+        System.out.println("  f - use TFF language");
+        System.out.println("  r - use (regular) FOF language");
+        System.out.println("  o <seconds> - set the query timeout");
+        System.out.println("  c <term1> <term2> - compare term depth");
+        System.out.println("  s - show statistics");
+    }
+
+    /**
+     */
+    public static void main(String[] args) throws IOException {
+
+        System.out.println("INFO in KB.main()");
+        if (args != null && args.length > 0 && args[0].equals("-h"))
+            showHelp();
+        else {
+            KBmanager.prefOverride.put("loadLexicons", "false");
+            System.out.println("KB.main(): Note! Not loading lexicons.");
+            KBmanager.getMgr().initializeOnce();
+            String kbName = KBmanager.getMgr().getPref("sumokbname");
+            KB kb = KBmanager.getMgr().getKB(kbName);
+            if (args != null)
+                System.out.println("KB.main(): args[0]: " + args[0]);
+            if (args != null && args.length > 2 && args[0].contains("c")) {
+                if (!kb.containsTerm(args[1]))
+                    System.out.println("Error in KB.main() no such term: " + args[1]);
+                if (!kb.containsTerm(args[2]))
+                    System.out.println("Error in KB.main() no such term: " + args[2]);
+                int eqrel = kb.compareTermDepth(args[1], args[2]);
+                String eqText = KButilities.eqNum2Text(eqrel);
+                System.out.println("KB.main() term depth of " + args[1] + " : " + kb.termDepth(args[1]));
+                System.out.println("KB.main() term depth of " + args[2] + " : " + kb.termDepth(args[2]));
+                System.out.println("KB.main() eqrel " + eqrel);
+                System.out.println("KB.main() " + args[1] + " " + eqText + " " + args[2]);
+            }
+            if (args != null && args.length > 0 && args[0].contains("t"))
+                test();
+            if (args != null && args.length > 1 && args[0].contains("v")) {
+                KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
+            }
+            if (args != null && args.length > 1 && args[0].contains("e")) {
+                KBmanager.getMgr().prover = KBmanager.Prover.EPROVER;
+            }
+            if (args != null && args.length > 1 && args[0].contains("L")) {
+                KBmanager.getMgr().prover = KBmanager.Prover.LEO;
+            }
+            if (args != null && args.length > 0 && args[0].contains("l")) {
+                System.out.println("KB.main(): Normal completion");
+            }
+            if (args != null && args.length > 0 && args[0].contains("f")) {
+                System.out.println("KB.main(): set to TFF language");
+                SUMOformulaToTPTPformula.lang = "tff";
+                SUMOKBtoTPTPKB.lang = "tff";
+            }
+            if (args != null && args.length > 0 && args[0].contains("r")) {
+                System.out.println("KB.main(): set to FOF language");
+                SUMOformulaToTPTPformula.lang = "fof";
+                SUMOKBtoTPTPKB.lang = "fof";
+            }
+            if (args != null && args.length > 0 && args[0].contains("s")) {
+                System.out.println("KB.main(): show statistics");
+                System.out.println(HTMLformatter.showStatistics(kb));
+            }
+            int timeout = 30;
+            if (args != null && args.length > 2 && args[0].contains("o")) {
+                try {
+                    timeout = Integer.parseInt(args[1]);
+                } catch (NumberFormatException nfe) {
+                    timeout = Integer.parseInt(args[2]);
+                }
+                System.out.println("KB.main(): set timeout to: " + timeout);
+            }
+            if (args != null && args.length > 1 && args[0].contains("a")) {
+                TPTP3ProofProcessor tpp = null;
+                if (args[0].contains("p"))
+                    TPTP3ProofProcessor.tptpProof = true;
+                if (args[0].contains("x")) {
+                    contradictionHelp(kb, args, timeout);
+                } else if (KBmanager.getMgr().prover == KBmanager.Prover.EPROVER) {
+                    kb.loadEProver();
+                    EProver eprover = kb.askEProver(args[1], timeout, 1);
+                    System.out.println("KB.main(): completed Eprover query with result: " + StringUtil.arrayListToCRLFString(eprover.output));
+                    tpp = new TPTP3ProofProcessor();
+                    tpp.parseProofOutput(eprover.output, args[1], kb, eprover.qlist);
+                } else if (KBmanager.getMgr().prover == KBmanager.Prover.VAMPIRE) {
+                    kb.loadVampire();
+                    Vampire vamp = kb.askVampire(args[1], timeout, 1);
+                    System.out.println("KB.main(): completed Vampire query with result: " + StringUtil.arrayListToCRLFString(vamp.output));
+                    tpp = new TPTP3ProofProcessor();
+                    tpp.parseProofOutput(vamp.output, args[1], kb, vamp.qlist);
+                } else if (KBmanager.getMgr().prover == KBmanager.Prover.LEO) {
+                    LEO leo = kb.askLeo(args[1], timeout, 1);
+                    System.out.println("KB.main(): completed LEO query with result: " + StringUtil.arrayListToCRLFString(leo.output));
+                    tpp = new TPTP3ProofProcessor();
+                    tpp.parseProofOutput(leo.output, args[1], kb, leo.qlist);
+                }
+                String link = null;
+                if (tpp != null)
+                    tpp.createProofDotGraph();
+                if (!args[0].contains("x")) {
+                    System.out.println("KB.main(): binding map: " + tpp.bindingMap);
+                    int level = 1;
+                    if (args[0].contains("2") || args[0].contains("3")) {
+                        if (args[0].contains("2"))
+                            level = 2;
+                        if (args[0].contains("3"))
+                            level = 3;
+                    }
+                    System.out.println("KB.main(): proof with level " + level);
+                    System.out.println("KB.main(): axiom key size " + SUMOKBtoTPTPKB.axiomKey.size());
+                    tpp.printProof(level);
+                }
+            }
+        }
+    }
+
+    /**
+     */
+    public boolean isVisible() {
+        return isVisible;
     }
 
     /**
@@ -254,6 +827,17 @@ public class KB implements Serializable {
         return this.terms;
     }
 
+    /**
+     * Sets the synchronized SortedSet of all the terms in the KB to be kbTerms.
+     */
+    public void setTerms(SortedSet<String> newTerms) {
+
+        getTerms().clear();
+        this.terms = Collections.synchronizedSortedSet(newTerms);
+        capterms.clear();
+        for (String t : terms)
+            capterms.put(t.toUpperCase(), t);
+    }
 
     /**
      * Only called in
@@ -266,8 +850,8 @@ public class KB implements Serializable {
      */
     public String simplifyTerm(String term, boolean ignoreCaps) {
 
-        if (getREMatch(term.intern(),ignoreCaps).size() == 1)
-            return getREMatch(term.intern(),ignoreCaps).get(0);
+        if (getREMatch(term.intern(), ignoreCaps).size() == 1)
+            return getREMatch(term.intern(), ignoreCaps).get(0);
         return term;
     }
 
@@ -282,7 +866,7 @@ public class KB implements Serializable {
      */
     public boolean containsRE(String term, boolean ignoreCaps) {
 
-        return (getREMatch(term,ignoreCaps).size() > 0 ? true : false);
+        return (getREMatch(term, ignoreCaps).size() > 0);
     }
 
     /**
@@ -309,25 +893,11 @@ public class KB implements Serializable {
                     matchesList.add(t);
             }
             return matchesList;
-        }
-        catch (PatternSyntaxException ex) {
+        } catch (PatternSyntaxException ex) {
             ArrayList<String> err = new ArrayList<String>();
             err.add("Invalid Input");
             return err;
         }
-    }
-
-    /**
-     * Sets the synchronized SortedSet of all the terms in the KB to be kbTerms.
-     */
-    public void setTerms(SortedSet<String> newTerms) {
-
-        getTerms().clear();
-        this.terms = Collections.synchronizedSortedSet(newTerms);
-        capterms.clear();
-        for (String t : terms)
-            capterms.put(t.toUpperCase(),t);
-        return;
     }
 
     /**
@@ -345,7 +915,7 @@ public class KB implements Serializable {
             if (col2 != null)
                 col.addAll(col2);
             for (int i = 0; i < col.size(); i++) {
-                Formula f = (Formula) col.get(i);
+                Formula f = col.get(i);
                 String lang = f.getStringArgument(1);
                 if (!al.contains(lang.intern()))
                     al.add(lang.intern());
@@ -560,7 +1130,7 @@ public class KB implements Serializable {
         if (debug) System.out.println("KB.isFunctional(): pred: " + pred);
         if (debug) System.out.println("KB.isFunctional(): isFunction: " + isFunction(pred));
         if (Formula.isVariable(pred)) {
-            HashSet<String> varTypes = form.getVarType(this,pred);
+            HashSet<String> varTypes = form.getVarType(this, pred);
             if (varTypes != null) {
                 for (String s : varTypes) {
                     if (debug) System.out.println("KB.isFunctional(): s: " + s);
@@ -573,9 +1143,7 @@ public class KB implements Serializable {
                 }
             }
         }
-        if (!isFunction(pred))
-            return false;
-        return true;
+        return isFunction(pred);
     }
 
     /**
@@ -584,31 +1152,7 @@ public class KB implements Serializable {
      */
     public boolean isRelation(String i) {
 
-        if (kbCache != null && kbCache.relations != null && kbCache.relations.contains(i))
-            return true;
-        return false;
-    }
-
-    /**
-     * Returns
-     * true if i is an instance of c in any loaded KB, else returns false.
-     *
-     * @param i A String denoting an instance.
-     * @return true or false.
-     */
-    public static boolean isRelationInAnyKB(String i) {
-
-        HashMap<String, KB> kbs = KBmanager.getMgr().kbs;
-        if (!kbs.isEmpty()) {
-            KB kb = null;
-            Iterator<KB> it = kbs.values().iterator();
-            while (it.hasNext()) {
-                kb = it.next();
-                if (kb.kbCache != null && kb.kbCache.relations != null && kb.kbCache.relations.contains(i))
-                    return true;
-            }
-        }
-        return false;
+        return kbCache != null && kbCache.relations != null && kbCache.relations.contains(i);
     }
 
     /**
@@ -635,10 +1179,8 @@ public class KB implements Serializable {
             return true;
         if (kbCache.transInstOf(child, parent))
             return true;
-        if (kbCache.childOfP("instance", parent, child) || kbCache.childOfP("subclass", parent, child)
-                || kbCache.childOfP("subrelation", parent, child) || kbCache.childOfP("subAttribute", parent, child))
-            return true;
-        return false;
+        return kbCache.childOfP("instance", parent, child) || kbCache.childOfP("subclass", parent, child)
+                || kbCache.childOfP("subrelation", parent, child) || kbCache.childOfP("subAttribute", parent, child);
     }
 
     /**
@@ -685,89 +1227,6 @@ public class KB implements Serializable {
             return kbCache.childOfP("subAttribute", parent, c1);
         }
         return false;
-    }
-
-    /**
-     * Converts
-     * all Formula objects in the input List to ArrayList tuples.
-     *
-     * @param formulaList A list of Formulas.
-     * @return An ArrayList of formula tuples (ArrayLists), or an empty
-     * ArrayList.
-     */
-    public static ArrayList<ArrayList<String>> formulasToArrayLists(List<Formula> formulaList) {
-
-        ArrayList<ArrayList<String>> ans = new ArrayList<ArrayList<String>>();
-        if (formulaList instanceof List) {
-            Iterator<Formula> it = formulaList.iterator();
-            Formula f = null;
-            while (it.hasNext()) {
-                f = (Formula) it.next();
-                ans.add(f.literalToArrayList());
-            }
-        }
-        return ans;
-    }
-
-    /* *************************************************************
-     * Converts
-     * all Strings in the input List to Formula objects.
-     *
-     * @param strings A list of Strings.
-     * @return An ArrayList of Formulas, or an empty ArrayList.
-     */
-    public static ArrayList<Formula> stringsToFormulas(List<String> strings) {
-
-        ArrayList<Formula> ans = new ArrayList<Formula>();
-        if (strings instanceof List) {
-            Iterator<String> it = strings.iterator();
-            while (it.hasNext()) {
-                Formula f = new Formula();
-                f.read(it.next());
-                ans.add(f);
-            }
-        }
-        return ans;
-    }
-
-    /**
-     * Converts a
-     * literal (List object) to a String.
-     *
-     * @param literal A List representing a SUO-KIF formula.
-     * @return A String representing a SUO-KIF formula.
-     */
-    public static String literalListToString(List<String> literal) {
-
-        StringBuffer b = new StringBuffer();
-        if (literal instanceof List) {
-            b.append("(");
-            for (int i = 0; i < literal.size(); i++) {
-                if (i > 0)
-                    b.append(" ");
-                b.append(literal.get(i));
-            }
-            b.append(")");
-        }
-        return b.toString();
-    }
-
-    /**
-     * Converts a
-     * literal (List object) to a Formula.
-     *
-     * @param lit A List representing a SUO-KIF formula.
-     * @return A SUO-KIF Formula object, or null if no Formula can be created.
-     */
-    public static Formula literalListToFormula(List<String> lit) {
-
-        Formula f = null;
-        String theFormula = literalListToString(lit);
-        if (StringUtil.isNonEmptyString(theFormula)) {
-            f = new Formula();
-            f.read(theFormula);
-        }
-        return f;
     }
 
     /**
@@ -829,7 +1288,7 @@ public class KB implements Serializable {
         String result = null;
         ArrayList<String> terms = getTermsViaAskWithRestriction(argnum1, term1, argnum2, term2, targetArgnum);
         if (!terms.isEmpty())
-            result = (String) terms.get(0);
+            result = terms.get(0);
         return result;
     }
 
@@ -871,8 +1330,7 @@ public class KB implements Serializable {
                 //System.out.println("INFO in KB.askWithRestriction(): thisArg: " + thisArg);
                 if (thisArg == null) {
                     System.out.println("Error in KB.askWithRestriction(): null argument: " + f);
-                }
-                else if (f.getStringArgument(arg).equals(term))
+                } else if (f.getStringArgument(arg).equals(term))
                     result.add(f);
             }
         }
@@ -920,8 +1378,7 @@ public class KB implements Serializable {
                     argb = argnum2;
                     termb = term2;
                     partiala = partial3;
-                }
-                else {
+                } else {
                     argb = argnum3;
                     termb = term3;
                     partiala = partial2;
@@ -934,8 +1391,7 @@ public class KB implements Serializable {
                     argb = argnum1;
                     termb = term1;
                     partiala = partial3;
-                }
-                else {
+                } else {
                     argb = argnum3;
                     termb = term3;
                     partiala = partial1;
@@ -948,8 +1404,7 @@ public class KB implements Serializable {
                     argb = argnum1;
                     termb = term1;
                     partiala = partial2;
-                }
-                else {
+                } else {
                     argb = argnum2;
                     termb = term2;
                     partiala = partial1;
@@ -1002,7 +1457,7 @@ public class KB implements Serializable {
         String ans = null;
         List<String> terms = getTermsViaAWTR(argnum1, term1, argnum2, term2, argnum3, term3, targetArgnum);
         if (!terms.isEmpty())
-            ans = (String) terms.get(0);
+            ans = terms.get(0);
         return ans;
     }
 
@@ -1168,7 +1623,7 @@ public class KB implements Serializable {
         ArrayList<String> ans = new ArrayList<String>();
         if (StringUtil.isNonEmptyString(relation) && StringUtil.isNonEmptyString(idxTerm) && (idxArgnum >= 0)
             // && (idxArgnum < 7)
-                ) {
+        ) {
             TreeSet<String> reduced = new TreeSet<String>();
             List<String> inverseSyns = null;
             List<String> inverses = null;
@@ -1266,11 +1721,11 @@ public class KB implements Serializable {
         String ans = null;
         if (StringUtil.isNonEmptyString(relation) && StringUtil.isNonEmptyString(idxTerm) && (idxArgnum >= 0)
             // && (idxArgnum < 7)
-                ) {
+        ) {
             ArrayList<String> terms = getTermsViaPredicateSubsumption(relation, idxArgnum, idxTerm, targetArgnum,
                     useInverses);
             if (!terms.isEmpty())
-                ans = (String) terms.get(0);
+                ans = terms.get(0);
         }
         return ans;
     }
@@ -1343,10 +1798,10 @@ public class KB implements Serializable {
             oldResult = new HashSet<>();
             oldResult.addAll(temp);
             for (String s : result) {
-                addAllSafe(temp,kbCache.getChildTerms(s,"subclass"));
-                addAllSafe(temp,kbCache.getChildTerms(s,"instance"));
-                addAllSafe(temp,kbCache.getChildTerms(s,rel));
-                addAllSafe(temp,kbCache.getInstancesForType(s));
+                addAllSafe(temp, kbCache.getChildTerms(s, "subclass"));
+                addAllSafe(temp, kbCache.getChildTerms(s, "instance"));
+                addAllSafe(temp, kbCache.getChildTerms(s, rel));
+                addAllSafe(temp, kbCache.getInstancesForType(s));
             }
             result.addAll(temp);
             temp = new ArrayList<>();
@@ -1372,7 +1827,7 @@ public class KB implements Serializable {
         // Add all the terms from the new formula into the KB's current list
         getTerms().addAll(kif.terms);
         for (String t : kif.terms)
-            capterms.put(t.toUpperCase(),t);
+            capterms.put(t.toUpperCase(), t);
         Set<String> keys = kif.formulas.keySet();
         Iterator<String> it = keys.iterator();
         while (it.hasNext()) {
@@ -1400,8 +1855,7 @@ public class KB implements Serializable {
                         formulaMap.put(newFormula.getFormula().intern(), newFormula);
                     }
                 }
-            }
-            else {
+            } else {
                 formulas.put(key, newFormulas);
                 Iterator<String> it2 = newFormulas.iterator();
                 Formula f = null;
@@ -1461,11 +1915,9 @@ public class KB implements Serializable {
             fr.write(formula);
             fr.write("\n");
             flen = file.length();
-        }
-        catch (java.io.IOException e) {
+        } catch (java.io.IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (fr != null)
                 fr.close();
         }
@@ -1488,11 +1940,9 @@ public class KB implements Serializable {
                 fr.write(term);
                 fr.write("\n");
             }
-        }
-        catch (java.io.IOException e) {
+        } catch (java.io.IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (fr != null)
                 fr.close();
         }
@@ -1545,11 +1995,10 @@ public class KB implements Serializable {
             // inference, since these axioms do exist in formulasAlreadyPresent but not in
             // SUMO.tptp. In the future, when SUMO can completely run using whole KB, we
             // can remove SUMOKBtoTPTPKB.fitlerSimpleOnly==false;
-            if (SUMOKBtoTPTPKB.filterSimpleOnly == false && !formulasAlreadyPresent.isEmpty()) {
+            if (!SUMOKBtoTPTPKB.filterSimpleOnly && !formulasAlreadyPresent.isEmpty()) {
                 String sf = formulasAlreadyPresent.get(0).sourceFile;
                 result = "The formula was already added from " + sf;
-            }
-            else {
+            } else {
                 ArrayList<Formula> parsedFormulas = new ArrayList();
                 for (Formula parsedF : kif.formulaMap.values()) { // 2. Confirm that the input has been
                     // converted into at least one Formula object and stored in this.formulaMap.
@@ -1559,8 +2008,7 @@ public class KB implements Serializable {
                         result = result + "Formula in " + parsedF.sourceFile
                                 + " rejected due to arity error of predicate " + term + " in formula: \n"
                                 + parsedF.getFormula();
-                    }
-                    else
+                    } else
                         parsedFormulas.add(parsedF);
                 }
                 if (!parsedFormulas.isEmpty()) {
@@ -1582,19 +2030,17 @@ public class KB implements Serializable {
                         if (debug) System.out.println("KB.tell: using eprover: " + eprover);
                         eprover.assertFormula(tptpfile.getCanonicalPath(), this, eprover, parsedFormulas,
                                 !mgr.getPref("TPTP").equalsIgnoreCase("no"));
-                        eprover.addBatchConfig(tptpfile.getCanonicalPath(), 60); // 6. Add the new tptp file into EBatching.txt
+                        EProver.addBatchConfig(tptpfile.getCanonicalPath(), 60); // 6. Add the new tptp file into EBatching.txt
                         eprover = new EProver(mgr.getPref("eprover")); // 7. Reload eprover
-                    }
-                    else if (KBmanager.getMgr().prover == KBmanager.Prover.VAMPIRE) {
+                    } else if (KBmanager.getMgr().prover == KBmanager.Prover.VAMPIRE) {
                         if (debug) System.out.println("KB.tell: using vampire");
                         Vampire.assertFormula(tptpfile.getCanonicalPath(), this, parsedFormulas,
                                 !mgr.getPref("TPTP").equalsIgnoreCase("no"));
                         // nothing much to do since Vampire has to load it all at query time
                         // just create a single file
-                    }
-                    else if (KBmanager.getMgr().prover == KBmanager.Prover.LEO) {
+                    } else if (KBmanager.getMgr().prover == KBmanager.Prover.LEO) {
                         if (debug) System.out.println("KB.tell: using leo");
-                        leo.assertFormula(tptpfile.getCanonicalPath(), this, parsedFormulas,
+                        LEO.assertFormula(tptpfile.getCanonicalPath(), this, parsedFormulas,
                                 !mgr.getPref("TPTP").equalsIgnoreCase("no"));
                         // nothing much to do since LEO has to load it all at query time
                         // just create a single file
@@ -1602,8 +2048,7 @@ public class KB implements Serializable {
                     result += (allAdded ? " and inference" : " but not for local inference");
                 }
             }
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             System.out.println(ioe.getMessage());
             result = ioe.getMessage();
@@ -1632,8 +2077,7 @@ public class KB implements Serializable {
                 eprover = new EProver(KBmanager.getMgr().getPref("eprover"),
                         System.getenv("SIGMA_HOME") + "/KBs/" + name + "." + lang);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
@@ -1646,10 +2090,9 @@ public class KB implements Serializable {
             if (!processedStmts.isEmpty() && this.eprover != null) {
                 // set timeout in EBatchConfig file and reload eprover
                 try {
-                    eprover.addBatchConfig(null, timeout);
+                    EProver.addBatchConfig(null, timeout);
                     eprover = new EProver(KBmanager.getMgr().getPref("eprover"), maxAnswers < 1 ? 1 : maxAnswers);
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
                 String strQuery = processedStmts.iterator().next().getFormula();
@@ -1677,8 +2120,7 @@ public class KB implements Serializable {
             if (leo == null) {
                 leo = new LEO();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return null;
@@ -1711,8 +2153,7 @@ public class KB implements Serializable {
                     String theTHFstatement =
                             thf.oneKIF2THF(new Formula(combined.toString()), true, this).trim(); // true - it's a query
                     thfquery.add(theTHFstatement);
-                }
-                else {
+                } else {
                     String theTPTPstatement =
                             thf.oneKIF2THF(processedQuery.iterator().next(), true, this).trim(); // true - it's a query
                     thfquery.add(theTPTPstatement);
@@ -1726,8 +2167,7 @@ public class KB implements Serializable {
                     e.printStackTrace();
                 }
                 String strQuery = processedQuery.iterator().next().getFormula();
-            }
-            else
+            } else
                 System.out.println("Error in KB.askLeo(): no TPTP formula translation for query: " + query);
         }
         return leo;
@@ -1768,8 +2208,7 @@ public class KB implements Serializable {
                     System.out.println("Vampire.askVampire(): no such file: " + s + ". Creating it.");
                     KB kb = KBmanager.getMgr().getKB(kbName);
                     KBmanager.getMgr().loadKBforInference(kb);
-                }
-                else {
+                } else {
                     HashSet<String> tptpquery = new HashSet<>();
                     SUMOformulaToTPTPformula stptp = new SUMOformulaToTPTPformula();
                     StringBuffer combined = new StringBuffer();
@@ -1781,32 +2220,29 @@ public class KB implements Serializable {
                         combined.append(")");
                         String theTPTPstatement = SUMOKBtoTPTPKB.lang + "(query" + "_" + axiomIndex++ +
                                 ",conjecture,(" +
-                                stptp.tptpParseSUOKIFString(combined.toString(), true) // true - it's a query
+                                SUMOformulaToTPTPformula.tptpParseSUOKIFString(combined.toString(), true) // true - it's a query
                                 + ")).";
                         tptpquery.add(theTPTPstatement);
-                    }
-                    else {
+                    } else {
                         String theTPTPstatement = SUMOKBtoTPTPKB.lang + "(query" + "_" + axiomIndex++ +
                                 ",conjecture,(" +
-                                stptp.tptpParseSUOKIFString(processedStmts.iterator().next().getFormula(), true) // true - it's a query
+                                SUMOformulaToTPTPformula.tptpParseSUOKIFString(processedStmts.iterator().next().getFormula(), true) // true - it's a query
                                 + ")).";
                         tptpquery.add(theTPTPstatement);
                     }
                     try {
                         System.out.println("KB.askVampire(): calling with: " + s + ", " + timeout + ", " + tptpquery);
-                        System.out.println("KB.askVampire(): qlist: " + stptp.qlist);
+                        System.out.println("KB.askVampire(): qlist: " + SUMOformulaToTPTPformula.qlist);
                         Vampire vampire = new Vampire();
                         vampire.run(this, s, timeout, tptpquery);
-                        vampire.qlist = stptp.qlist;
+                        vampire.qlist = SUMOformulaToTPTPformula.qlist;
                         return vampire;
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     //vampire.terminate();
                 }
-            }
-            else
+            } else
                 System.out.println("Error in KB.askVampire(): no TPTP formula translation for query: " + query);
         }
         return null;
@@ -1819,7 +2255,7 @@ public class KB implements Serializable {
 
         StringBuffer sb = new StringBuffer();
         Vampire.mode = Vampire.ModeType.CASC;
-        Vampire vampire = askVampire(suoKifFormula,30,1);
+        Vampire vampire = askVampire(suoKifFormula, 30, 1);
         TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
         tpp.parseProofOutput(vampire.output, suoKifFormula, this, vampire.qlist);
         String result = tpp.proof.toString().trim();
@@ -1850,10 +2286,9 @@ public class KB implements Serializable {
             if (!processedStmts.isEmpty() && this.eprover != null) {
                 // set timeout in EBatchConfig file and reload eprover
                 try {
-                    eprover.addBatchConfig(null, timeout);
+                    EProver.addBatchConfig(null, timeout);
                     eprover = new EProver(KBmanager.getMgr().getPref("eprover"));
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
                 String strQuery = processedStmts.iterator().next().getFormula();
@@ -1864,7 +2299,7 @@ public class KB implements Serializable {
                     System.out.println("Get response from EProver, start for parsing ...");
                 // System.out.println("Results returned from E = \n" + EResult);
                 TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
-                answers = tpp.parseAnswerTuples(eprover.output, strQuery, this,eprover.qlist);
+                answers = tpp.parseAnswerTuples(eprover.output, strQuery, this, eprover.qlist);
                 return answers;
             }
         }
@@ -1902,8 +2337,7 @@ public class KB implements Serializable {
                     String strQuery = processedStmts.iterator().next().getFormula();
                     result = engine.submitQuery(strQuery, timeout, maxAnswers);
                 }
-            }
-            catch (IOException ioe) {
+            } catch (IOException ioe) {
                 ioe.printStackTrace();
                 String message = ioe.getMessage().replaceAll(":", "&58;");
                 errors.add(message);
@@ -1937,8 +2371,7 @@ public class KB implements Serializable {
         try {
             if (engine != null)
                 engine.terminate();
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             String message = ioe.getMessage().replaceAll(":", "&58;");
             errors.add(message);
@@ -1962,102 +2395,102 @@ public class KB implements Serializable {
 
     public String askLEOOld(String suoKifFormula, int timeout, int maxAnswers, String flag) {
 
-        String result = "";
-        try {
-            String LeoExecutable = KBmanager.getMgr().getPref("leoExecutable");
-            String LeoInput = KBmanager.getMgr().getPref("inferenceTestDir") + "prob.p";
-            String LeoProblem;
-            String responseLine;
-            String LeoOutput = "";
-            File LeoExecutableFile = new File(LeoExecutable);
-            File LeoInputFile = new File(LeoInput);
-            FileWriter LeoInputFileW = new FileWriter(LeoInput);
+    String result = "";
+    try {
+    String LeoExecutable = KBmanager.getMgr().getPref("leoExecutable");
+    String LeoInput = KBmanager.getMgr().getPref("inferenceTestDir") + "prob.p";
+    String LeoProblem;
+    String responseLine;
+    String LeoOutput = "";
+    File LeoExecutableFile = new File(LeoExecutable);
+    File LeoInputFile = new File(LeoInput);
+    FileWriter LeoInputFileW = new FileWriter(LeoInput);
 
-            List<Formula> selectedQuery = new ArrayList<Formula>();
-            Formula newQ = new Formula();
-            newQ.read(suoKifFormula);
-            selectedQuery.add(newQ);
-            List<String> selFs = null;
-            if (flag.equals("LeoSine")) {
-                SInE sine = new SInE(this.formulaMap.keySet());
-                selFs = new ArrayList<String>(sine.performSelection(suoKifFormula));
-                sine.terminate();
-            }
-            else if (flag.equals("LeoLocal"))
-                selFs = new ArrayList<String>();
-            else if (flag.equals("LeoGlobal")) {
-                selFs = new ArrayList<String>();
-                Iterator<Formula> it = this.formulaMap.values().iterator();
-                while (it.hasNext()) {
-                    Formula entry = it.next();
-                    selFs.add(entry.toString());
-                }
-            }
-            try { // add user asserted formulas
-                File dir = new File(this.kbDir);
-                File file = new File(dir, (this.name + _userAssertionsString));
-                String filename = file.getCanonicalPath();
-                BufferedReader userAssertedInput = new BufferedReader(new FileReader(filename));
+    List<Formula> selectedQuery = new ArrayList<Formula>();
+    Formula newQ = new Formula();
+    newQ.read(suoKifFormula);
+    selectedQuery.add(newQ);
+    List<String> selFs = null;
+    if (flag.equals("LeoSine")) {
+    SInE sine = new SInE(this.formulaMap.keySet());
+    selFs = new ArrayList<String>(sine.performSelection(suoKifFormula));
+    sine.terminate();
+    }
+    else if (flag.equals("LeoLocal"))
+    selFs = new ArrayList<String>();
+    else if (flag.equals("LeoGlobal")) {
+    selFs = new ArrayList<String>();
+    Iterator<Formula> it = this.formulaMap.values().iterator();
+    while (it.hasNext()) {
+    Formula entry = it.next();
+    selFs.add(entry.toString());
+    }
+    }
+    try { // add user asserted formulas
+    File dir = new File(this.kbDir);
+    File file = new File(dir, (this.name + _userAssertionsString));
+    String filename = file.getCanonicalPath();
+    BufferedReader userAssertedInput = new BufferedReader(new FileReader(filename));
 
-                try {
-                    String line = null;
-                    /
-                     * readLine is a bit quirky : it returns the content of a
-                     * line MINUS the newline. it returns null only for the END
-                     * of the stream. it returns an empty String if two newlines
-                     * appear in a row.
+    try {
+    String line = null;
+    /
+     * readLine is a bit quirky : it returns the content of a
+     * line MINUS the newline. it returns null only for the END
+     * of the stream. it returns an empty String if two newlines
+     * appear in a row.
 
-                    while ((line = userAssertedInput.readLine()) != null)
-                        selFs.add(line);
-                }
-                finally {
-                    userAssertedInput.close();
-                }
-            }
-            catch (IOException ex) {
-                System.out.println("Error in KB.askLEO(): " + ex.getMessage());
-                ex.printStackTrace();
-            }
-            List<Formula> selectedFormulas = new ArrayList();
-            Formula newF = new Formula();
+    while ((line = userAssertedInput.readLine()) != null)
+    selFs.add(line);
+    }
+    finally {
+    userAssertedInput.close();
+    }
+    }
+    catch (IOException ex) {
+    System.out.println("Error in KB.askLEO(): " + ex.getMessage());
+    ex.printStackTrace();
+    }
+    List<Formula> selectedFormulas = new ArrayList();
+    Formula newF = new Formula();
 
-            Iterator<String> it = selFs.iterator();
-            while (it.hasNext()) {
-                String entry = it.next();
-                newF = new Formula();
-                newF.read(entry);
-                selectedFormulas.add(newF);
-            }
-            System.out.println(selFs.toString());
-            THF thf = new THF();
-            LeoProblem = thf.KIF2THF(selectedFormulas, selectedQuery, this);
-            LeoInputFileW.write(LeoProblem);
-            LeoInputFileW.close();
+    Iterator<String> it = selFs.iterator();
+    while (it.hasNext()) {
+    String entry = it.next();
+    newF = new Formula();
+    newF.read(entry);
+    selectedFormulas.add(newF);
+    }
+    System.out.println(selFs.toString());
+    THF thf = new THF();
+    LeoProblem = thf.KIF2THF(selectedFormulas, selectedQuery, this);
+    LeoInputFileW.write(LeoProblem);
+    LeoInputFileW.close();
 
-            String command = LeoExecutableFile.getCanonicalPath() + " -po 1 -t " + timeout + " "
-                    + LeoInputFile.getCanonicalPath();
+    String command = LeoExecutableFile.getCanonicalPath() + " -po 1 -t " + timeout + " "
+    + LeoInputFile.getCanonicalPath();
 
-            Process leo = Runtime.getRuntime().exec(command);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(leo.getInputStream()));
-            while ((responseLine = reader.readLine()) != null)
-                LeoOutput += responseLine + "\n";
-            reader.close();
-            System.out.println(LeoOutput);
+    Process leo = Runtime.getRuntime().exec(command);
+    BufferedReader reader = new BufferedReader(new InputStreamReader(leo.getInputStream()));
+    while ((responseLine = reader.readLine()) != null)
+    LeoOutput += responseLine + "\n";
+    reader.close();
+    System.out.println(LeoOutput);
 
-            if (LeoOutput.contains("SZS status Theorem")) {
-                result = "Answer 1. yes" + "<br> <br>" + LeoProblem.replaceAll("\\n", "<br>") + "<br> <br>"
-                        + LeoOutput.replaceAll("\\n", "<br>");
-            }
-            else {
-                result = "Answer 1. don't know" + "<br> <br>" + LeoProblem.replaceAll("\\n", "<br>") + "<br> <br>"
-                        + LeoOutput.replaceAll("\\n", "<br>");
-            }
-        }
-        catch (Exception ex) {
-            System.out.println("Error in KB.askLEO(): " + ex.getMessage());
-            ex.printStackTrace();
-        }
-        return result;
+    if (LeoOutput.contains("SZS status Theorem")) {
+    result = "Answer 1. yes" + "<br> <br>" + LeoProblem.replaceAll("\\n", "<br>") + "<br> <br>"
+    + LeoOutput.replaceAll("\\n", "<br>");
+    }
+    else {
+    result = "Answer 1. don't know" + "<br> <br>" + LeoProblem.replaceAll("\\n", "<br>") + "<br> <br>"
+    + LeoOutput.replaceAll("\\n", "<br>");
+    }
+    }
+    catch (Exception ex) {
+    System.out.println("Error in KB.askLEO(): " + ex.getMessage());
+    ex.printStackTrace();
+    }
+    return result;
     }
 
     /**
@@ -2069,7 +2502,7 @@ public class KB implements Serializable {
 
         //System.out.println("KB.termDepth(): " + term);
         if (term.endsWith("+"))
-            term = term.substring(0,term.length()-1);
+            term = term.substring(0, term.length() - 1);
         if (term.startsWith("(")) {
             System.out.println("KB.termDepth(): warning - composite term: " + term);
             Formula f = new Formula(term);
@@ -2085,14 +2518,14 @@ public class KB implements Serializable {
         }
         if (term.equals("Entity") || StringUtil.isNumeric(term))
             return 0;
-        if (!kbCache.subclassOf(term,"Entity") && !kbCache.transInstOf(term,"Entity"))
+        if (!kbCache.subclassOf(term, "Entity") && !kbCache.transInstOf(term, "Entity"))
             return 0;
         if (termDepthCache.containsKey(term))
             return termDepthCache.get(term);
         Set<String> rents = immediateParents(term);
         for (String s : rents) {
             int depth = 1 + termDepth(s);
-            termDepthCache.put(term,depth);
+            termDepthCache.put(term, depth);
             return depth;
         }
         return 0;
@@ -2108,10 +2541,10 @@ public class KB implements Serializable {
             System.out.println("KB.immediateParents(): no such term " + term);
             return result;
         }
-        ArrayList<Formula> forms = askWithRestriction(0,"subclass",1,term);
-        forms.addAll(askWithRestriction(0,"instance",1,term));
-        forms.addAll(askWithRestriction(0,"subrelation",1,term));
-        forms.addAll(askWithRestriction(0,"subAttribute",1,term));
+        ArrayList<Formula> forms = askWithRestriction(0, "subclass", 1, term);
+        forms.addAll(askWithRestriction(0, "instance", 1, term));
+        forms.addAll(askWithRestriction(0, "subrelation", 1, term));
+        forms.addAll(askWithRestriction(0, "subAttribute", 1, term));
         //System.out.println("KB.immediateParents(): forms: " + forms);
         for (Formula f : forms) {
             //System.out.println("KB.immediateParents(): f: " + f);
@@ -2134,13 +2567,13 @@ public class KB implements Serializable {
     public int compareTermDepth(String t1, String t2) {
 
         if (debug) System.out.println("KB.compareTermDepth(): ");
-        if (debug) System.out.println("KB.compareTermDepth(): subattribute: " + kbCache.subAttributeOf(t1,t2));
-        if (debug) System.out.println("KB.compareTermDepth(): subclass: " + kbCache.subclassOf(t1,t2));
+        if (debug) System.out.println("KB.compareTermDepth(): subattribute: " + kbCache.subAttributeOf(t1, t2));
+        if (debug) System.out.println("KB.compareTermDepth(): subclass: " + kbCache.subclassOf(t1, t2));
         if (t1.equals(t2))
             return 0;
-        if (kbCache.subAttributeOf(t2,t1) || kbCache.subclassOf(t2,t1))
+        if (kbCache.subAttributeOf(t2, t1) || kbCache.subclassOf(t2, t1))
             return -1;
-        if (kbCache.subAttributeOf(t1,t2) || kbCache.subclassOf(t1,t2))
+        if (kbCache.subAttributeOf(t1, t2) || kbCache.subclassOf(t1, t2))
             return 1;
         //String p = kbCache.getCommonParent(t1,t2);
         //boolean found = false;
@@ -2170,7 +2603,7 @@ public class KB implements Serializable {
                 System.out.println("Error in KB.mostSpecificType(): no such term: " + t);
                 continue;
             }
-            if (result == "" || compareTermDepth(t,result) < 0)
+            if (result == "" || compareTermDepth(t, result) < 0)
                 result = t;
         }
         return result;
@@ -2191,7 +2624,7 @@ public class KB implements Serializable {
                 System.out.println("Error in KB.mostSpecificType(): no such term: " + t);
                 continue;
             }
-            if (result == "" || compareTermDepth(t,result) > 0)
+            if (result == "" || compareTermDepth(t, result) > 0)
                 result = t;
         }
         return result;
@@ -2210,16 +2643,17 @@ public class KB implements Serializable {
             if (debug) System.out.println("mostSpecificTerm(): depth: " + termDepth(t));
             if (debug) System.out.println("mostSpecificTerm(): result: " + result);
             if (debug) System.out.println("mostSpecificTerm(): result depth: " + termDepth(result));
-            if (debug) System.out.println("mostSpecificTerm(): compareTermDepth(t,result): " + compareTermDepth(t,result));
+            if (debug)
+                System.out.println("mostSpecificTerm(): compareTermDepth(t,result): " + compareTermDepth(t, result));
             if (StringUtil.emptyString(t))
                 continue;
             if (t.endsWith("+"))
-                t = t.substring(0,t.length()-1);
+                t = t.substring(0, t.length() - 1);
             if (!containsTerm(t)) {
                 System.out.println("Error in KB.mostSpecificTerm(): no such term: " + t);
                 continue;
             }
-            if (result == "" || compareTermDepth(t,result) > 0)
+            if (result == "" || compareTermDepth(t, result) > 0)
                 result = t;
         }
         return result;
@@ -2235,11 +2669,9 @@ public class KB implements Serializable {
 
         if (StringUtil.emptyString(term))
             return false;
-        if (getTerms().contains(term.intern()))
-            return true;
+        return getTerms().contains(term.intern());
         //else if (getREMatch(term.intern()).size() >= 1)
         //    return true;
-        return false;
     }
 
     /**
@@ -2409,7 +2841,7 @@ public class KB implements Serializable {
      */
     public ArrayList<String> getNearestRelations(String term) {
 
-        term = Character.toLowerCase(term.charAt(0)) + term.substring(1, term.length());
+        term = Character.toLowerCase(term.charAt(0)) + term.substring(1);
         return getNearestTerms(term);
     }
 
@@ -2418,7 +2850,7 @@ public class KB implements Serializable {
      */
     public ArrayList<String> getNearestNonRelations(String term) {
 
-        term = Character.toUpperCase(term.charAt(0)) + term.substring(1, term.length());
+        term = Character.toUpperCase(term.charAt(0)) + term.substring(1);
         return getNearestTerms(term);
     }
 
@@ -2430,7 +2862,7 @@ public class KB implements Serializable {
 
         if (!getTerms().contains(term)) {
             ArrayList<String> al = getNearestKTerms(term, 0);
-            term = (String) al.get(0);
+            term = al.get(0);
         }
         if (getTerms().size() < 1)
             return "";
@@ -2441,7 +2873,7 @@ public class KB implements Serializable {
         i = i - num;
         if (i < 0)
             i = 0;
-        return (String) tal.get(i);
+        return tal.get(i);
     }
 
     /**
@@ -2452,7 +2884,7 @@ public class KB implements Serializable {
 
         if (!getTerms().contains(term)) {
             ArrayList<String> al = getNearestKTerms(term, 0);
-            term = (String) al.get(0);
+            term = al.get(0);
         }
         if (getTerms().size() < 1)
             return "";
@@ -2463,19 +2895,8 @@ public class KB implements Serializable {
         i = i + num;
         if (i >= tal.size())
             i = tal.size() - 1;
-        return (String) tal.get(i);
+        return tal.get(i);
     }
-
-    /**
-     * This List is used to limit the number of warning messages logged by
-     * loadFormatMaps(lang). If an attempt to load format or termFormat values
-     * for lang is unsuccessful, the list is checked for the presence of lang.
-     * If lang is not in the list, a warning message is logged and lang is added
-     * to the list. The list is cleared whenever a constituent file is added or
-     * removed for KB, since the latter might affect the availability of format
-     * or termFormat values.
-     */
-    protected ArrayList<String> loadFormatMapsAttempted = new ArrayList<String>();
 
     /**
      * Populates the format maps for language lang.
@@ -2550,7 +2971,6 @@ public class KB implements Serializable {
             termFormatMap.clear();
         }
         loadFormatMapsAttempted.clear();
-        return;
     }
 
     /**
@@ -2572,7 +2992,7 @@ public class KB implements Serializable {
         HashMap<String, String> langTermFormatMap = termFormatMap.get(lang);
         if ((langTermFormatMap == null) || langTermFormatMap.isEmpty())
             loadFormatMaps(lang);
-        return (HashMap<String, String>) termFormatMap.get(lang);
+        return termFormatMap.get(lang);
     }
 
     /**
@@ -2631,14 +3051,13 @@ public class KB implements Serializable {
 
         String cname = null;
         for (int i = 0; i < constituents.size(); i++) {
-            cname = (String) constituents.get(i);
+            cname = constituents.get(i);
             if (cname.endsWith(_userAssertionsString)) {
                 try {
                     constituents.remove(i);
                     KBmanager.getMgr().writeConfiguration();
                     reload();
-                }
-                catch (IOException ioe) {
+                } catch (IOException ioe) {
                     System.out.println(
                             "Error in KB.deleteUserAssertionsAndReload(): writing configuration: " + ioe.getMessage());
                 }
@@ -2666,15 +3085,14 @@ public class KB implements Serializable {
             file = new KIF(canonicalPath);
             file.readFile(canonicalPath);
             warnings.addAll(file.warningSet);
-        }
-        catch (Exception ex1) {
+        } catch (Exception ex1) {
             StringBuilder error = new StringBuilder();
             error.append(ex1.getMessage());
             if (ex1 instanceof ParseException)
                 error.append(" at line " + ((ParseException) ex1).getErrorOffset());
             error.append(" in file " + canonicalPath);
             errors.add(error.toString());
-            System.out.println("Error in KB.addConstituent(): " + error.toString());
+            System.out.println("Error in KB.addConstituent(): " + error);
             ex1.printStackTrace();
         }
         file.filename = filename;
@@ -2689,8 +3107,7 @@ public class KB implements Serializable {
         for (Map.Entry<String, Integer> entry : file.termFrequency.entrySet()) {
             if (!termFrequency.containsKey(entry.getKey())) {
                 termFrequency.put(entry.getKey(), entry.getValue());
-            }
-            else {
+            } else {
                 termFrequency.put(entry.getKey(), termFrequency.get(entry.getKey()) + entry.getValue());
             }
         }
@@ -2714,7 +3131,7 @@ public class KB implements Serializable {
         Iterator<Formula> it2 = file.formulaMap.values().iterator();
         //System.out.println("INFO in KB.addConstituent(): add values");
         while (it2.hasNext()) { // Iterate through values
-            Formula f = (Formula) it2.next();
+            Formula f = it2.next();
             String internedFormula = f.getFormula().intern();
             if ((count++ % 100) == 1)
                 System.out.print(".");
@@ -2725,7 +3142,7 @@ public class KB implements Serializable {
         }
         this.getTerms().addAll(file.terms);
         for (String t : file.terms)
-            capterms.put(t.toUpperCase(),t);
+            capterms.put(t.toUpperCase(), t);
         if (!constituents.contains(file.filename) && !file.filename.endsWith(_cacheFileSuffix)) // don't add auto-generated cache file
             constituents.add(file.filename);
     }
@@ -2773,19 +3190,19 @@ public class KB implements Serializable {
             if (nci.hasNext())
                 System.out.println("INFO in KB.reload()");
             while (nci.hasNext()) {
-                String cName = (String) nci.next();
+                String cName = nci.next();
                 addConstituent(cName);
                 // addConstituent(cName, false, false, false);
             }
             // build kb cache when "cache" = "yes"
             //if (KBmanager.getMgr().getPref("cache").equalsIgnoreCase("yes")) {
-                kbCache = new KBcache(this);
-                kbCache.buildCaches();
-                checkArity(); // Re-perform arity checks on everything
+            kbCache = new KBcache(this);
+            kbCache.buildCaches();
+            checkArity(); // Re-perform arity checks on everything
             //}
             //else {
             //    kbCache = new KBcache(this);
-                // checkArity needs the cache, so don't call it.
+            // checkArity needs the cache, so don't call it.
             //}
             // At this point, we have reloaded all constituents, have
             // rebuilt the relation caches, and, if cache == yes, have
@@ -2813,7 +3230,7 @@ public class KB implements Serializable {
 
         Iterator<String> it = formulas.keySet().iterator();
         while (it.hasNext()) {
-            String key = (String) it.next();
+            String key = it.next();
             ArrayList<String> list = formulas.get(key);
             for (int i = 0; i < list.size(); i++) {
                 String s = list.get(i);
@@ -2825,16 +3242,14 @@ public class KB implements Serializable {
             pr = new PrintWriter(fr);
             it = formulaMap.keySet().iterator();
             while (it.hasNext()) {
-                String s = (String) it.next();
+                String s = it.next();
                 pr.println(s);
                 pr.println();
             }
-        }
-        catch (java.io.IOException e) {
+        } catch (java.io.IOException e) {
             System.out.println("Error in KB.writeFile(): Error writing file " + fname);
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (pr != null) {
                 pr.close();
             }
@@ -2853,160 +3268,12 @@ public class KB implements Serializable {
         se.setAttribute("name", name);
         for (int i = 0; i < constituents.size(); i++) {
             SimpleElement constituent = new SimpleElement("constituent");
-            String filename = (String) constituents.get(i);
+            String filename = constituents.get(i);
             filename = KBmanager.escapeFilename(filename);
             constituent.setAttribute("filename", filename);
             se.addChildElement(constituent);
         }
         return se;
-    }
-
-    /**
-     * A HashMap for holding compiled regular expression patterns. The map is initialized
-     * by calling compilePatterns().
-     */
-    private static HashMap<String, ArrayList> REGEX_PATTERNS = null;
-
-    /**
-     * This method returns a compiled regular expression Pattern object indexed by
-     * key.
-     *
-     * @param key
-     *            A String that is the retrieval key for a compiled regular
-     *            expression Pattern.
-     *
-     * @return A compiled regular expression Pattern instance.
-     */
-    public static Pattern getCompiledPattern(String key) {
-
-        if (StringUtil.isNonEmptyString(key) && (REGEX_PATTERNS != null)) {
-            ArrayList al = (ArrayList) REGEX_PATTERNS.get(key);
-            if (al != null)
-                return (Pattern) al.get(0);
-        }
-        return null;
-    }
-
-    /**
-     * This method returns the int value that identifies the regular expression
-     * binding group to be returned when there is a match.
-     *
-     * @param key
-     *            A String that is the retrieval key for the binding group index
-     *            associated with a compiled regular expression Pattern.
-     *
-     * @return An int that indexes a binding group.
-     */
-    public static int getPatternGroupIndex(String key) {
-
-        if (StringUtil.isNonEmptyString(key) && (REGEX_PATTERNS != null)) {
-            ArrayList al = (ArrayList) REGEX_PATTERNS.get(key);
-            if (al != null)
-                return ((Integer) al.get(1)).intValue();
-        }
-        return -1;
-    }
-
-    /**
-     * This method compiles and stores regular expression Pattern objects and binding
-     * group indexes as two cell ArrayList objects. Each ArrayList is indexed by
-     * a String retrieval key.
-     *
-     * @return void
-     */
-    private static void compilePatterns() {
-
-        if (REGEX_PATTERNS == null) {
-            REGEX_PATTERNS = new HashMap<String, ArrayList>();
-            String[][] patternArray = { { "row_var", "\\@ROW\\d*", "0" },
-                    // { "open_lit", "\\(\\w+\\s+\\?\\w+\\s+.\\w+\\s*\\)", "0"
-                    // },
-                    { "open_lit", "\\(\\w+\\s+\\?\\w+[a-zA-Z_0-9-?\\s]+\\)", "0" },
-                    { "pred_var_1", "\\(holds\\s+(\\?\\w+)\\W", "1" }, { "pred_var_2", "\\((\\?\\w+)\\W", "1" },
-                    { "var_with_digit_suffix", "(\\D+)\\d*", "1" } };
-            String pName = null;
-            Pattern p = null;
-            Integer groupN = null;
-            ArrayList pVal = null;
-            for (int i = 0; i < patternArray.length; i++) {
-                pName = patternArray[i][0];
-                p = Pattern.compile(patternArray[i][1]);
-                groupN = Integer.valueOf(patternArray[i][2]);
-                pVal = new ArrayList();
-                pVal.add(p);
-                pVal.add(groupN);
-                REGEX_PATTERNS.put(pName, pVal);
-            }
-        }
-        return;
-    }
-
-    /**
-     * This method finds regular expression matches in an input string using a
-     * compiled Pattern and binding group index retrieved with patternKey. If
-     * the ArrayList accumulator is provided, match results are added to it and
-     * it is returned. If accumulator is not provided (is null), then a new
-     * ArrayList is created and returned if matches are found.
-     *
-     * @param input
-     *            The input String in which matches are sought.
-     *
-     * @param patternKey
-     *            A String used as the retrieval key for a regular expression
-     *            Pattern object, and an int index identifying a binding group.
-     *
-     * @param accumulator
-     *            An optional ArrayList to which matches are added. Note that if
-     *            accumulator is provided, it will be the return value even if
-     *            no new matches are found in the input String.
-     *
-     * @return An ArrayList, or null if no matches are found and an accumulator
-     *         is not provided.
-     */
-    public static ArrayList<String> getMatches(String input, String patternKey, ArrayList<String> accumulator) {
-
-        ArrayList<String> ans = null;
-        if (accumulator != null)
-            ans = accumulator;
-        if (REGEX_PATTERNS == null)
-            KB.compilePatterns();
-        if (StringUtil.isNonEmptyString(input) && StringUtil.isNonEmptyString(patternKey)) {
-            Pattern p = KB.getCompiledPattern(patternKey);
-            if (p != null) {
-                Matcher m = p.matcher(input);
-                int gidx = KB.getPatternGroupIndex(patternKey);
-                if (gidx >= 0) {
-                    while (m.find()) {
-                        String rv = m.group(gidx);
-                        if (StringUtil.isNonEmptyString(rv)) {
-                            if (ans == null)
-                                ans = new ArrayList<String>();
-                            if (!(ans.contains(rv)))
-                                ans.add(rv);
-                        }
-                    }
-                }
-            }
-        }
-        return ans;
-    }
-
-    /**
-     * This method finds regular expression matches in an input string using a
-     * compiled Pattern and binding group index retrieved with patternKey, and
-     * returns the results, if any, in an ArrayList.
-     *
-     * @param input
-     *            The input String in which matches are sought.
-     *
-     * @param patternKey
-     *            A String used as the retrieval key for a regular expression
-     *            Pattern object, and an int index identifying a binding group.
-     *
-     * @return An ArrayList, or null if no matches are found.
-     */
-    public static ArrayList<String> getMatches(String input, String patternKey) {
-        return KB.getMatches(input, patternKey, null);
     }
 
     /**
@@ -3027,7 +3294,7 @@ public class KB implements Serializable {
 
         ArrayList<Formula> ans = new ArrayList<Formula>();
         if ((queryLit instanceof List) && !(queryLit.isEmpty())) {
-            String pred = (String) queryLit.get(0);
+            String pred = queryLit.get(0);
             if (pred.equals("instance") && isVariable(queryLit.get(1)) && !(isVariable(queryLit.get(2)))) {
                 String className = queryLit.get(2);
                 String inst = null;
@@ -3036,20 +3303,19 @@ public class KB implements Serializable {
                 Set<String> ai = getAllInstances(className);
                 Iterator<String> it = ai.iterator();
                 while (it.hasNext()) {
-                    inst = (String) it.next();
+                    inst = it.next();
                     fStr = ("(instance " + inst + " " + className + ")");
                     f = new Formula();
                     f.read(fStr);
                     ans.add(f);
                 }
-            }
-            else if (pred.equals("valence") && isVariable((String) queryLit.get(1))
-                    && isVariable((String) queryLit.get(2))) {
+            } else if (pred.equals("valence") && isVariable(queryLit.get(1))
+                    && isVariable(queryLit.get(2))) {
                 TreeSet<String> ai = getAllInstances("Relation");
                 Iterator<String> it = ai.iterator();
                 int valence = 0;
                 while (it.hasNext()) {
-                    String inst = (String) it.next();
+                    String inst = it.next();
                     valence = kbCache.valences.get(inst);
                     if (valence > 0) {
                         String fStr = ("(valence " + inst + " " + valence + ")");
@@ -3058,14 +3324,13 @@ public class KB implements Serializable {
                         ans.add(f);
                     }
                 }
-            }
-            else {
+            } else {
                 String constant = null;
                 int cidx = -1;
                 int qlLen = queryLit.size();
                 String term = null;
                 for (int i = 1; i < qlLen; i++) {
-                    term = (String) queryLit.get(i);
+                    term = queryLit.get(i);
                     if (StringUtil.isNonEmptyString(term) && !isVariable(term)) {
                         constant = term;
                         cidx = i;
@@ -3170,13 +3435,12 @@ public class KB implements Serializable {
 
         if (kbCache.valences.get(relnName) == null) {
             if (Formula.isLogicalOperator(relnName)) // logical operator arity
-                                                        // is checked in
-                                                        // KIF.parse()
+                // is checked in
+                // KIF.parse()
                 return -1;
             System.out.println("Error in KB.getValence(): No valence found for " + relnName);
             return -1;
-        }
-        else
+        } else
             return kbCache.valences.get(relnName);
     }
 
@@ -3190,58 +3454,6 @@ public class KB implements Serializable {
     }
 
     /**
-     *
-     * @param obj
-     *            Any object
-     *
-     * @return true if obj is a String representation of a LISP empty list, else
-     *         false.
-     */
-    public static boolean isEmptyList(Object obj) {
-        return (StringUtil.isNonEmptyString(obj) && Formula.empty((String) obj));
-    }
-
-    /**
-     * A static utility method.
-     *
-     * @param obj
-     *            Presumably, a String.
-     * @return true if obj is a SUO-KIF variable, else false.
-     */
-    public static boolean isVariable(String obj) {
-
-        if (StringUtil.isNonEmptyString(obj)) {
-            return (obj.startsWith("?") || obj.startsWith("@"));
-        }
-        return false;
-    }
-
-    /**
-     * A static utility method.
-     *
-     * @param obj
-     *            A String.
-     * @return true if obj is a SUO-KIF logical quantifier, else false.
-     */
-    public static boolean isQuantifier(String obj) {
-
-        return (StringUtil.isNonEmptyString(obj) && (obj.equals("forall") || obj.equals("exists")));
-    }
-
-    /**
-     * A static utility method.
-     *
-     * @param obj
-     *            Presumably, a String.
-     * @return true if obj is a SUO-KIF commutative logical operator, else
-     *         false.
-     */
-    public static boolean isCommutative(String obj) {
-
-        return (StringUtil.isNonEmptyString(obj) && (obj.equals("and") || obj.equals("or")));
-    }
-
-    /**
      * Hyperlink "[from Wikipedia]" if it occurs
      */
     public String formatWikipedia(String documentation) {
@@ -3249,9 +3461,9 @@ public class KB implements Serializable {
         if (!documentation.contains("[from Wikipedia]"))
             return documentation;
         int space1 = documentation.indexOf(" ");
-        int space2 = documentation.indexOf(" ",space1);
-        String term = documentation.substring(space1+1,space2);
-        return documentation.replace("[from Wikipedia]","[<a href=\"https://en.wikipedia.org/wiki/" + term +
+        int space2 = documentation.indexOf(" ", space1);
+        String term = documentation.substring(space1 + 1, space2);
+        return documentation.replace("[from Wikipedia]", "[<a href=\"https://en.wikipedia.org/wiki/" + term +
                 "\">from Wikipedia]</a>");
     }
 
@@ -3272,8 +3484,7 @@ public class KB implements Serializable {
                 href = "";
                 suffix = ".html";
                 isStaticFile = true;
-            }
-            else if (!href.endsWith("&term="))
+            } else if (!href.endsWith("&term="))
                 href += "&term=";
             int i = -1;
             int j = -1;
@@ -3335,17 +3546,14 @@ public class KB implements Serializable {
                         pw.println(it.next());
                         pw.println();
                     }
-                }
-                else
+                } else
                     System.out.println("Error in KB.writeInferenceEngineFormulas(): no executable " + inferenceEngine);
             }
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             System.out.println("Error in KB.writeInferenceEngineFormulas(): writing file: " + filename);
             System.out.println(ioe.getMessage());
             ioe.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 if (pw != null) {
                     pw.close();
@@ -3353,8 +3561,7 @@ public class KB implements Serializable {
                 if (fw != null) {
                     fw.close();
                 }
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
             }
         }
         return filename;
@@ -3382,8 +3589,7 @@ public class KB implements Serializable {
                 if (factory.getClass().getName().equals("com.articulate.sigma.STP$STPEngineFactory"))
                     res = factory.createWithFormulas(forms);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error in KB.createInterenceEngine():" + e.getMessage());
             e.printStackTrace();
         }
@@ -3423,28 +3629,26 @@ public class KB implements Serializable {
                         PrintWriter pw = new PrintWriter(new FileWriter(infFilename));
                         skb.kb = this;
                         skb.writeFile(infFilename, null, false, pw);
-                    }
-                    else {
+                    } else {
                         SUMOKBtoTFAKB stff = new SUMOKBtoTFAKB();
                         stff.kb = this;
                         SUMOtoTFAform.initOnce();
                         PrintWriter pw = new PrintWriter(new FileWriter(infFilename));
                         stff.writeSorts(pw);
-                        stff.writeFile(infFilename,null,false,pw);
+                        stff.writeFile(infFilename, null, false, pw);
                         stff.printTFFNumericConstants(pw);
                         pw.flush();
                         pw.close();
                     }
                     System.out.println("KB.loadVampire(): write " + lang + ", in seconds: " + (System.currentTimeMillis() - millis) / 1000);
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
                 e.printStackTrace();
             }
         }
-        return;
     }
+
     /**
      * Checks for a Leo executable, preprocesses all of the constituents
      */
@@ -3467,7 +3671,6 @@ public class KB implements Serializable {
         if (!(new File(infFilename).exists()) || KBmanager.getMgr().infFileOld()) {
             System.out.println("INFO in KB.loadLeo(): no need to generate " + lang + "file " + infFilename);
         }
-        return;
     }
 
     /**
@@ -3498,13 +3701,12 @@ public class KB implements Serializable {
                 String tptpFilename = KBmanager.getMgr().getPref("kbDir") + File.separator + this.name + ".tptp";
                 if (!(new File(tptpFilename).exists()) || KBmanager.getMgr().infFileOld()) {
                     System.out.println("INFO in KB.loadEProver(): generating TPTP file");
-                    skb.writeFile(tptpFilename,null, false,pw);
+                    skb.writeFile(tptpFilename, null, false, pw);
                 }
                 if (StringUtil.isNonEmptyString(mgr.getPref("eprover")))
                     eprover = new EProver(mgr.getPref("eprover"), tptpFilename);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
@@ -3512,7 +3714,6 @@ public class KB implements Serializable {
             mgr.setError(mgr.getError() + "\n<br/>No local inference engine is available\n<br/>");
             System.out.println("Error in KB.loadEProver(): EProver not loaded");
         }
-        return;
     }
 
     /**
@@ -3557,15 +3758,14 @@ public class KB implements Serializable {
             if (tptpParseP) {
                 SUMOformulaToTPTPformula stptp = new SUMOformulaToTPTPformula();
                 for (Formula pform : processed) {
-                    tptp.add(stptp.tptpParseSUOKIFString(pform.getFormula(), false)); // not a query
+                    tptp.add(SUMOformulaToTPTPformula.tptpParseSUOKIFString(pform.getFormula(), false)); // not a query
                     errors.addAll(pform.getErrors());
                 }
             }
             for (String p : tptp) {
                 if (StringUtil.isNonEmptyString(p)) {
                     newTreeSet.add(p);
-                }
-                else {
+                } else {
                     String warn = "Warning in KB.preProcess(): empty formula: " + p;
                     System.out.println(warn);
                     warnings.add(warn);
@@ -3610,8 +3810,7 @@ public class KB implements Serializable {
             System.out.println("KB.main(): completed Eprover query with result: " + StringUtil.arrayListToCRLFString(eprover.output));
             tpp = new TPTP3ProofProcessor();
             tpp.parseProofOutput(eprover.output, args[1], this, eprover.qlist);
-        }
-        else if (KBmanager.getMgr().prover == KBmanager.Prover.VAMPIRE) {
+        } else if (KBmanager.getMgr().prover == KBmanager.Prover.VAMPIRE) {
             loadVampire();
             Vampire vamp = askVampire(args[1], timeout, 1);
             System.out.println("KB.main(): completed Vampire query with result: " + StringUtil.arrayListToCRLFString(vamp.output));
@@ -3619,20 +3818,6 @@ public class KB implements Serializable {
             tpp.parseProofOutput(vamp.output, args[1], this, vamp.qlist);
         }
         return tpp;
-    }
-
-    /**
-     * Keep a count of axioms
-     */
-    public static void addToAxiomCount(HashMap<String,Integer> currentCount,
-            Set<String> newAxioms) {
-
-        for (String s : newAxioms) {
-            Integer i = 0;
-            if (currentCount.keySet().contains(s))
-                i = currentCount.get(s);
-            currentCount.put(s,i+1);
-        }
     }
 
     /**
@@ -3648,150 +3833,7 @@ public class KB implements Serializable {
             forLang = new HashMap<>();
             termFormatMap.put(lang, forLang);
         }
-        forLang.put(term,format);
-    }
-
-    /**
-     * Attempt to provide guidance on the likely cause of a contradiction
-     * by removing the axioms involved in a contradiction one-by-one and trying
-     * again. @see contradictionHelp()
-     */
-    public static HashMap<String,Formula> collectSourceAxioms(KB kb, TPTP3ProofProcessor tpp) {
-
-        HashMap<String,Formula> sourceAxioms = new HashMap<>();
-        for (TPTPFormula ps : tpp.proof) {
-            System.out.println("KB.collectSourceAxioms(): " + ps.infRule);
-            if (ps.infRule.startsWith("kb_") || ps.infRule.contains("conjecture")) {
-                Formula f = SUMOKBtoTPTPKB.axiomKey.get(ps.infRule);
-                if (f != null && f.sourceFile != null && !f.sourceFile.endsWith(_cacheFileSuffix))
-                    sourceAxioms.put(f.getFormula(),f);
-            }
-        }
-        return sourceAxioms;
-    }
-
-    /**
-     */
-    private static void deletedOldInfFiles(String filename, String prefix) {
-
-        System.out.println("KB.deletedOldInfFiles(): deleting old inference files");
-        FileUtil.delete(filename);
-        FileUtil.delete(prefix + "test.tptp");
-        FileUtil.delete(prefix + "temp-comb.tptp");
-        FileUtil.delete(prefix + "tempt-stmt.tptp");
-    }
-
-    /**
-     * Attempt to provide guidance on the likely cause of a contradiction
-     * by removing the axioms involved in a contradiction one-by-one and trying
-     * again.
-     */
-    public static void contradictionHelp(KB kb, String[] args, int timeout) {
-
-        HashSet<String> commonAxioms = new HashSet<>(); // axioms found in all contradictions
-        HashMap<String,Integer> axiomCount= new HashMap<>(); // count axioms found in contradictions
-        HashSet<Formula> removalSuccess = new HashSet<>(); // removing this axiom results in no contradiction
-        TPTP3ProofProcessor tpp = kb.runProver(args,timeout);
-        tpp.printProof(3);
-        System.out.println();
-        KBmanager.getMgr().removeKB(kb.name);
-        String prefix = KBmanager.getMgr().getPref("kbDir") + File.separator;
-        String filename = prefix + "SUMO_contra.kif";
-        System.out.println("KB.contradictionHelp(): prefix: " + prefix);
-
-        HashMap<String,Formula> sourceAxioms = collectSourceAxioms(kb,tpp);
-        System.out.println("KB.contradictionHelp(): source axioms: " + sourceAxioms.keySet());
-        commonAxioms.addAll(sourceAxioms.keySet());
-        addToAxiomCount(axiomCount,sourceAxioms.keySet());
-        for (String s : sourceAxioms.keySet()) {
-            HashSet<String> minusAxioms = new HashSet<>();
-            minusAxioms.addAll(kb.getFormulas());
-            minusAxioms.remove(s);
-            System.out.println("KB.contradictionHelp(): removed axiom: " + s);
-            ArrayList<String> display = new ArrayList<>();
-            display.addAll(minusAxioms);
-            ArrayList<String> display2 = new ArrayList<>();
-            display2.addAll(display.subList(0,10));
-            System.out.println("KB.contradictionHelp(): minusAxioms: " +
-                    StringUtil.arrayListToCRLFString(display2) + "...");
-            deletedOldInfFiles(filename,prefix);
-            FileUtil.writeLines(filename, minusAxioms);
-            ArrayList<String> constituents = new ArrayList<>();
-            constituents.add(filename);
-            KBmanager.getMgr().loadKB("test",constituents);
-            KB kb2 = KBmanager.getMgr().getKB("test");
-            TPTP3ProofProcessor tpp2 = kb2.runProver(args,timeout);
-            if (!tpp2.noConjecture || tpp2.status.contains("GaveUp"))
-                removalSuccess.add(kb.formulaMap.get(s));
-            else {
-                //System.out.println("KB.contradictionHelp(): axiomKey: " + SUMOKBtoTPTPKB.axiomKey);
-                System.out.println("KB.contradictionHelp(): proof: ");
-                tpp2.printProof(3);
-                System.out.println();
-                HashMap<String, Formula> sourceAxioms2 = collectSourceAxioms(kb2, tpp2);
-                addToAxiomCount(axiomCount, sourceAxioms2.keySet());
-                commonAxioms.retainAll(sourceAxioms2.keySet());
-            }
-        }
-        System.out.println("KB.contradictionHelp(): common axioms: " + commonAxioms);
-        sourceAxioms.keySet().removeAll(commonAxioms);
-        System.out.println("KB.contradictionHelp(): axiomCount: " + axiomCount);
-        System.out.println("KB.contradictionHelp(): axioms not causing the contradiction: " +
-                sourceAxioms.keySet());
-        System.out.println("KB.contradictionHelp(): axioms that when any one is removed results in no contradiction: " +
-                FormulaUtil.formatCollection(removalSuccess));
-    }
-
-    /**
-     */
-    public static void test() {
-
-        // generateTPTPTestAssertions();
-        // testTPTP(args);
-        KB kb = null;
-        try {
-            KBmanager.getMgr().initializeOnce();
-            kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-            System.out.println("KB.test(): " + kb.getAllSub("ColorAttribute","subAttribute"));
-
-            String contents = "(subclass ?X Entity)";
-            System.out.println("KB.test(): query Vampire with: " + contents);
-            String dir = KBmanager.getMgr().getPref("kbDir") + File.separator;
-            String type = "tptp";
-            String outfile = dir + "temp-comb." + type;
-            System.out.println("KB.test(): query Vampire on file: " + outfile);
-            Vampire vamp = kb.askVampire(contents,30,1);
-            //System.out.println("KB.test(): completed query with result: " + StringUtil.arrayListToCRLFString(vamp.output));
-            TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
-            tpp.parseProofOutput(vamp.output,contents,kb,vamp.qlist);
-            System.out.println("queryExp(): bindings: " + tpp.bindings);
-            System.out.println("queryExp(): proof: " + tpp.proof);
-            ArrayList<String> proofStepsStr = new ArrayList<>();
-            for (TPTPFormula ps : tpp.proof)
-                proofStepsStr.add(ps.toString());
-            //kb.writeTerms();
-            // System.out.println("KB.main(): " + kb.isChildOf("Africa",
-            // "Region"));
-            // kb.askEProver("(subclass ?X Object)",30,1);
-        }
-        catch (Exception ioe) {
-            System.out.println(ioe.getMessage());
-        }
-
-        // kb.generateSemanticNetwork();
-        // kb.generateRandomProof();
-        // kb.instanceOfInstanceP();
-        /*
-        System.out.println("KB.main(): termDepth of Object: " + kb.termDepth("Object"));
-        System.out.println("KB.main(): termDepth of Table: " + kb.termDepth("Table"));
-        System.out.println("KB.main(): termDepth of immediateSubclass: " + kb.termDepth("immediateSubclass"));
-        System.out.println("KB.main(): termDepth of Wagon: " + kb.termDepth("Wagon"));
-        System.out.println("KB.main(): termDepth of Foo: " + kb.termDepth("Foo"));
-*/
-        /*
-         * String foo = "(rel bar \"test\")"; Formula f = new Formula();
-         * f.read(foo); System.out.println(f.getArgument(2).equals("\"test\""));
-         */
+        forLang.put(term, format);
     }
 
     /**
@@ -3804,142 +3846,5 @@ public class KB implements Serializable {
         if (formulaMap != null)
             sb.append(formulaMap.keySet().size() + " formulas");
         return sb.toString();
-    }
-
-    /**
-     */
-    public static void showHelp() {
-
-        System.out.println("KB class");
-        System.out.println("  options (with a leading '-'):");
-        System.out.println("  h - show this help screen");
-        System.out.println("  t - run test");
-        System.out.println("  a \"<query>\"- ask query");
-        System.out.println("  l - load KB files");
-        System.out.println("  v - ask query of Vampire");
-        System.out.println("  e - ask query of EProver");
-        System.out.println("  L - ask query of LEO-IIIr");
-        System.out.println("  1 - show full proof");
-        System.out.println("  2 - remove single premise proof steps");
-        System.out.println("  3 - show only KB axioms in proof");
-        System.out.println("  x - contradiction help");
-        System.out.println("  p - display TPTP proof");
-        System.out.println("  f - use TFF language");
-        System.out.println("  r - use (regular) FOF language");
-        System.out.println("  o <seconds> - set the query timeout");
-        System.out.println("  c <term1> <term2> - compare term depth");
-        System.out.println("  s - show statistics");
-    }
-
-    /**
-     */
-    public static void main(String[] args) throws IOException {
-
-        System.out.println("INFO in KB.main()");
-        if (args != null && args.length > 0 && args[0].equals("-h"))
-            showHelp();
-        else {
-            KBmanager.prefOverride.put("loadLexicons","false");
-            System.out.println("KB.main(): Note! Not loading lexicons.");
-            KBmanager.getMgr().initializeOnce();
-            String kbName = KBmanager.getMgr().getPref("sumokbname");
-            KB kb = KBmanager.getMgr().getKB(kbName);
-            if (args != null)
-                System.out.println("KB.main(): args[0]: " + args[0]);
-            if (args != null && args.length > 2 && args[0].contains("c")) {
-                if (!kb.containsTerm(args[1]))
-                    System.out.println("Error in KB.main() no such term: " + args[1]);
-                if (!kb.containsTerm(args[2]))
-                    System.out.println("Error in KB.main() no such term: " + args[2]);
-                int eqrel = kb.compareTermDepth(args[1], args[2]);
-                String eqText = KButilities.eqNum2Text(eqrel);
-                System.out.println("KB.main() term depth of " + args[1] + " : " + kb.termDepth(args[1]));
-                System.out.println("KB.main() term depth of " + args[2] + " : " + kb.termDepth(args[2]));
-                System.out.println("KB.main() eqrel " + eqrel);
-                System.out.println("KB.main() " + args[1] + " " + eqText + " " + args[2]);
-            }
-            if (args != null && args.length > 0 && args[0].contains("t"))
-                test();
-            if (args != null && args.length > 1 && args[0].contains("v")) {
-                KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
-            }
-            if (args != null && args.length > 1 && args[0].contains("e")) {
-                KBmanager.getMgr().prover = KBmanager.Prover.EPROVER;
-            }
-            if (args != null && args.length > 1 && args[0].contains("L")) {
-                KBmanager.getMgr().prover = KBmanager.Prover.LEO;
-            }
-            if (args != null && args.length > 0 && args[0].contains("l")) {
-                System.out.println("KB.main(): Normal completion");
-            }
-            if (args != null && args.length > 0 && args[0].contains("f")) {
-                System.out.println("KB.main(): set to TFF language");
-                SUMOformulaToTPTPformula.lang = "tff";
-                SUMOKBtoTPTPKB.lang = "tff";
-            }
-            if (args != null && args.length > 0 && args[0].contains("r")) {
-                System.out.println("KB.main(): set to FOF language");
-                SUMOformulaToTPTPformula.lang = "fof";
-                SUMOKBtoTPTPKB.lang = "fof";
-            }
-            if (args != null && args.length > 0 && args[0].contains("s")) {
-                System.out.println("KB.main(): show statistics");
-                System.out.println(HTMLformatter.showStatistics(kb));
-            }
-            int timeout = 30;
-            if (args != null && args.length > 2 && args[0].contains("o")) {
-                try {
-                    timeout = Integer.parseInt(args[1]);
-                }
-                catch(NumberFormatException nfe) {
-                    timeout = Integer.parseInt(args[2]);
-                }
-                System.out.println("KB.main(): set timeout to: " + timeout);
-            }
-            if (args != null && args.length > 1 && args[0].contains("a")) {
-                TPTP3ProofProcessor tpp = null;
-                if (args[0].contains("p"))
-                    TPTP3ProofProcessor.tptpProof = true;
-                if (args[0].contains("x")) {
-                    contradictionHelp(kb,args,timeout);
-                }
-                else if (KBmanager.getMgr().prover == KBmanager.Prover.EPROVER) {
-                    kb.loadEProver();
-                    EProver eprover = kb.askEProver(args[1], timeout, 1);
-                    System.out.println("KB.main(): completed Eprover query with result: " + StringUtil.arrayListToCRLFString(eprover.output));
-                    tpp = new TPTP3ProofProcessor();
-                    tpp.parseProofOutput(eprover.output, args[1], kb, eprover.qlist);
-                }
-                else if (KBmanager.getMgr().prover == KBmanager.Prover.VAMPIRE) {
-                    kb.loadVampire();
-                    Vampire vamp = kb.askVampire(args[1], timeout, 1);
-                    System.out.println("KB.main(): completed Vampire query with result: " + StringUtil.arrayListToCRLFString(vamp.output));
-                    tpp = new TPTP3ProofProcessor();
-                    tpp.parseProofOutput(vamp.output, args[1], kb, vamp.qlist);
-                }
-                else if (KBmanager.getMgr().prover == KBmanager.Prover.LEO) {
-                    LEO leo = kb.askLeo(args[1], timeout, 1);
-                    System.out.println("KB.main(): completed LEO query with result: " + StringUtil.arrayListToCRLFString(leo.output));
-                    tpp = new TPTP3ProofProcessor();
-                    tpp.parseProofOutput(leo.output, args[1], kb, leo.qlist);
-                }
-                String link = null;
-                if (tpp != null)
-                    tpp.createProofDotGraph();
-                if (!args[0].contains("x")) {
-                    System.out.println("KB.main(): binding map: " + tpp.bindingMap);
-                    int level = 1;
-                    if (args[0].contains("2") || args[0].contains("3") ) {
-                        if (args[0].contains("2"))
-                            level = 2;
-                        if (args[0].contains("3"))
-                            level = 3;
-                    }
-                    System.out.println("KB.main(): proof with level " + level);
-                    System.out.println("KB.main(): axiom key size " + SUMOKBtoTPTPKB.axiomKey.size());
-                    tpp.printProof(level);
-                }
-            }
-        }
     }
 }

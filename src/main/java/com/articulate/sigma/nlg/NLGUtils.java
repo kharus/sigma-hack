@@ -1,10 +1,13 @@
 package com.articulate.sigma.nlg;
 
-import com.articulate.sigma.*;
+import com.articulate.sigma.Formula;
+import com.articulate.sigma.KB;
+import com.articulate.sigma.KBmanager;
 import com.articulate.sigma.utils.StringUtil;
 import edu.stanford.nlp.ling.CoreLabel;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -14,13 +17,14 @@ public class NLGUtils implements Serializable {
 
     private static final String SIGMA_HOME = System.getenv("SIGMA_HOME");
     private static final String PHRASES_FILENAME = "Translations/language.txt";
-    private static NLGUtils nlg = null;
-    private HashMap<String,HashMap<String,String>> keywordMap;
     // a list of format parameters or words and the sentence words they match with
-    public static HashMap<String,CoreLabel> outputMap = new HashMap<>();
+    public static HashMap<String, CoreLabel> outputMap = new HashMap<>();
     public static boolean debug = false;
+    private static NLGUtils nlg = null;
+    private HashMap<String, HashMap<String, String>> keywordMap;
 
     /**
+     *
      */
     public static void init(String kbDir) {
 
@@ -28,11 +32,11 @@ public class NLGUtils implements Serializable {
             return;
         System.out.println("NLGUtils.init(): initializing with " + kbDir);
         nlg = new NLGUtils();
-        nlg.readKeywordMap(kbDir);
+        readKeywordMap(kbDir);
     }
 
     /**
-     *  Check whether sources are newer than serialized version.
+     * Check whether sources are newer than serialized version.
      */
     public static boolean serializedExists() {
 
@@ -43,7 +47,7 @@ public class NLGUtils implements Serializable {
     }
 
     /**
-     *  Check whether sources are newer than serialized version.
+     * Check whether sources are newer than serialized version.
      */
     public static boolean serializedOld() {
 
@@ -56,13 +60,11 @@ public class NLGUtils implements Serializable {
         Date configDate = new Date(phrasesFile.lastModified());
         File serfile = new File(kbDir + File.separator + "NLGUtils.ser");
         Date saveDate = new Date(serfile.lastModified());
-        if (saveDate.compareTo(configDate) < 0)
-            return true;
-        return false;
+        return saveDate.compareTo(configDate) < 0;
     }
 
     /**
-     *  Load the most recently save serialized version.
+     * Load the most recently save serialized version.
      */
     public static void loadSerialized() {
 
@@ -84,17 +86,15 @@ public class NLGUtils implements Serializable {
             in.close();
             file.close();
             System.out.println("NLGUtils.loadSerialized(): NLGUtils has been deserialized ");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println("Error in NLGUtils.loadSerialized(): IOException is caught");
             ex.printStackTrace();
             nlg = null;
-            return;
         }
     }
 
     /**
-     *  save serialized version.
+     * save serialized version.
      */
     public static void serialize() {
 
@@ -109,25 +109,25 @@ public class NLGUtils implements Serializable {
             out.close();
             file.close();
             System.out.println("NLGUtils.serialize(): NLGUtils has been serialized: " + nlg);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error in NLGUtils.serialize(): IOException is caught");
             ex.printStackTrace();
         }
     }
 
     /**
+     *
      */
     static String prettyPrint(String term) {
 
         if (term.endsWith("Fn"))
-            term = term.substring(0,term.length()-2);
+            term = term.substring(0, term.length() - 2);
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < term.length(); i++) {
             if (Character.isLowerCase(term.charAt(i)) || !Character.isLetter(term.charAt(i)))
                 result.append(term.charAt(i));
             else {
-                if (i + 1 < term.length() && Character.isUpperCase(term.charAt(i+1)))
+                if (i + 1 < term.length() && Character.isUpperCase(term.charAt(i + 1)))
                     result.append(term.charAt(i));
                 else {
                     if (i != 0)
@@ -141,6 +141,7 @@ public class NLGUtils implements Serializable {
 
     /**
      * Resolve the "format specifiers" in the given printf type of statement.
+     *
      * @param template
      * @param href
      * @return
@@ -195,8 +196,8 @@ public class NLGUtils implements Serializable {
             if (dl > sblen)
                 break;
             int rsblen = rsb.length();
-            if (dk != -1 && (dk+1) < sb.toString().length() && Character.isDigit(sb.toString().charAt(dk+1)))
-                sb = sb.replace(ti, dl+1, rsb.toString()); // replace the argument number
+            if (dk != -1 && (dk + 1) < sb.toString().length() && Character.isDigit(sb.toString().charAt(dk + 1)))
+                sb = sb.replace(ti, dl + 1, rsb.toString()); // replace the argument number
             else
                 sb = sb.replace(ti, dl, rsb.toString());
             sblen = sb.length();
@@ -216,36 +217,33 @@ public class NLGUtils implements Serializable {
      * Format a list of variables which are not enclosed by parens.
      * Formatting includes inserting the appropriate separator between the elements (usually a comma), as well as
      * inserting the conjunction ("and" or its equivalent in another language) if the conjunction doesn't already exist.
-     * @param strseq
-     *  the list of variables
-     * @param language
-     *  the target language (used for the conjunction "and")
-     * @return
-     *  the formatted string
+     *
+     * @param strseq   the list of variables
+     * @param language the target language (used for the conjunction "and")
+     * @return the formatted string
      */
     public static String formatList(String strseq, String language) {
 
-        if (language == null || language.isEmpty())    {
+        if (language == null || language.isEmpty()) {
             throw new IllegalArgumentException("Parameter language is empty or null.");
         }
 
         StringBuilder result = new StringBuilder();
-        String comma = nlg.getKeyword(",", language);
+        String comma = getKeyword(",", language);
         String space = " ";
         String[] arr = strseq.split(space);
         int lastIdx = (arr.length - 1);
         for (int i = 0; i < arr.length; i++) {
             String val = arr[i];
             if (i > 0) {
-                if (val.equals(nlg.getKeyword("and", language))) {
+                if (val.equals(getKeyword("and", language))) {
                     // Make behavior for lists that include "and" the same as for those that don't.
                     continue;
                 }
                 if (i == lastIdx) {
                     result.append(space);
-                    result.append(nlg.getKeyword("and", language));
-                }
-                else {
+                    result.append(getKeyword("and", language));
+                } else {
                     result.append(comma);
                 }
                 result.append(space);
@@ -256,6 +254,7 @@ public class NLGUtils implements Serializable {
     }
 
     /**
+     *
      */
     static boolean logicalOperator(String word) {
 
@@ -264,21 +263,21 @@ public class NLGUtils implements Serializable {
     }
 
     /**
-     *  Read a set of standard words and phrases in several languages.
-     *  Each phrase must appear on a new line with alternatives separated by '|'.
-     *  The first entry should be a set of two letter language identifiers.
+     * Read a set of standard words and phrases in several languages.
+     * Each phrase must appear on a new line with alternatives separated by '|'.
+     * The first entry should be a set of two letter language identifiers.
      *
-     *  @return a HashMap of HashMaps where the first HashMap has a key of the
-     *  English phrase, and the interior HashMap has a key of the two letter
-     *  language identifier.
+     * @return a HashMap of HashMaps where the first HashMap has a key of the
+     * English phrase, and the interior HashMap has a key of the two letter
+     * language identifier.
      */
     public static void readKeywordMap(String dir) {
 
-        if (dir == null || dir.isEmpty())    {
+        if (dir == null || dir.isEmpty()) {
             throw new IllegalArgumentException("Parameter dir is null or empty.");
         }
         File dirFile = new File(dir);
-        if (!dirFile.exists())  {
+        if (!dirFile.exists()) {
             throw new IllegalArgumentException("Parameter dir points to non-existent path: " + dir);
         }
         System.out.println("NLGUtils.readKeywordMap():");
@@ -302,8 +301,8 @@ public class NLGUtils implements Serializable {
                 phrasesFile = new File(dirFile, PHRASES_FILENAME);
                 if (!phrasesFile.canRead())
                     throw new Exception("Cannot read \"" + phrasesFile.getCanonicalPath() + "\"");
-                br = new BufferedReader(new InputStreamReader(new FileInputStream(phrasesFile),"UTF-8"));
-                HashMap<String,String> phrasesByLang = null;
+                br = new BufferedReader(new InputStreamReader(new FileInputStream(phrasesFile), StandardCharsets.UTF_8));
+                HashMap<String, String> phrasesByLang = null;
                 List<String> phraseList = null;
                 List<String> languageKeys = null;
                 String delim = "|";
@@ -327,78 +326,94 @@ public class NLGUtils implements Serializable {
                                 phrasesByLang.put(languageKeys.get(i), phraseList.get(i));
                             getKeywordMap().put(key.intern(), phrasesByLang);
                         }
-                    }
-                    else {
+                    } else {
                         System.out.println("WARNING in NLGUtils.readKeywordMap(): "
                                 + "Unrecognized line");
                         System.out.println(lc + ": \"" + line + "\"");
                     }
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println("ERROR loading " + PHRASES_FILENAME + " at line " + lc + ":");
             System.out.println(ex.getMessage());
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
-                if (br != null) { br.close(); }
-            }
-            catch (Exception ex2) {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (Exception ex2) {
                 ex2.printStackTrace();
             }
             System.out.println("EXIT NLGUtils.readKeywordMap(" + dir + ") with size " + getKeywordMap().keySet().size());
         }
         serialize();
-        return;
     }
 
     /**
      * Generate a linguistic article appropriate to how many times in a
      * paraphrase a particular type has already occurred.
+     *
      * @param occurrence is the number of times a variables of a
      *                   given type have appeared
-     * @param count is the number of times a given variable has
-     *              appeared
+     * @param count      is the number of times a given variable has
+     *                   appeared
      */
     public static String getArticle(String s, int count, int occurrence, String language) {
 
         String ordinal = "";
         switch (occurrence) {
-        case 3: ordinal = nlg.getKeyword("third", language); break;
-        case 4: ordinal = nlg.getKeyword("fourth", language); break;
-        case 5: ordinal = nlg.getKeyword("fifth", language); break;
-        case 6: ordinal = nlg.getKeyword("sixth", language); break;
-        case 7: ordinal = nlg.getKeyword("seventh", language); break;
-        case 8: ordinal = nlg.getKeyword("eighth", language); break;
-        case 9: ordinal = nlg.getKeyword("ninth", language); break;
-        case 10: ordinal = nlg.getKeyword("tenth", language); break;
-        case 11: ordinal = nlg.getKeyword("eleventh", language); break;
-        case 12: ordinal = nlg.getKeyword("twelfth", language); break;
+            case 3:
+                ordinal = getKeyword("third", language);
+                break;
+            case 4:
+                ordinal = getKeyword("fourth", language);
+                break;
+            case 5:
+                ordinal = getKeyword("fifth", language);
+                break;
+            case 6:
+                ordinal = getKeyword("sixth", language);
+                break;
+            case 7:
+                ordinal = getKeyword("seventh", language);
+                break;
+            case 8:
+                ordinal = getKeyword("eighth", language);
+                break;
+            case 9:
+                ordinal = getKeyword("ninth", language);
+                break;
+            case 10:
+                ordinal = getKeyword("tenth", language);
+                break;
+            case 11:
+                ordinal = getKeyword("eleventh", language);
+                break;
+            case 12:
+                ordinal = getKeyword("twelfth", language);
+                break;
         }
         boolean isArabic = (language.matches(".*(?i)arabic.*")
                 || language.equalsIgnoreCase("ar"));
         if (count == 1 && occurrence == 2)
-            return nlg.getKeyword("another", language);
+            return getKeyword("another", language);
         if (count > 1) {
             if (occurrence == 1) {
                 if (isArabic)
                     return ordinal;
                 else
-                    return (nlg.getKeyword("the", language));
-            }
-            else if (occurrence > 2) {
+                    return (getKeyword("the", language));
+            } else if (occurrence > 2) {
                 if (isArabic)
                     return ordinal;
                 else
-                    return (nlg.getKeyword("the", language) + " " + ordinal);
-            }
-            else {
+                    return (getKeyword("the", language) + " " + ordinal);
+            } else {
                 if (isArabic)
-                    return (nlg.getKeyword("the", language) + " " + nlg.getKeyword("other", language));
+                    return (getKeyword("the", language) + " " + getKeyword("other", language));
                 else
-                    return (nlg.getKeyword("the", language) + " " + nlg.getKeyword("other", language));
+                    return (getKeyword("the", language) + " " + getKeyword("other", language));
             }
         }
         // count = 1 (first occurrence of a type)
@@ -408,18 +423,16 @@ public class NLGUtils implements Serializable {
                 return "an";
             else
                 return "a " + ordinal;
-        }
-        else if (isArabic) {
-            String defArt = nlg.getKeyword("the", language);
+        } else if (isArabic) {
+            String defArt = getKeyword("the", language);
             if (ordinal.startsWith(defArt)) {
                 // remove the definite article
                 ordinal = ordinal.substring(defArt.length());
                 // remove shadda
-                ordinal = ordinal.replaceFirst("\\&\\#\\x651\\;","");
+                ordinal = ordinal.replaceFirst("\\&\\#\\x651\\;", "");
             }
             return ordinal;
-        }
-        else
+        } else
             return ordinal;
     }
 
@@ -436,9 +449,15 @@ public class NLGUtils implements Serializable {
         for (int i = 0; i < form.length(); i++) {
             char ch = form.charAt(i);
             switch (ch) {
-            case '"': inString = !inString; break;
-            case '?': if (!inString) inVar = true; break;
-            case '@': if (!inString) inVar = true; break;
+                case '"':
+                    inString = !inString;
+                    break;
+                case '?':
+                    if (!inString) inVar = true;
+                    break;
+                case '@':
+                    if (!inString) inVar = true;
+                    break;
             }
             if (inVar && !Character.isLetterOrDigit(ch) && ch != '?' && ch != '@') {
                 if (!result.contains(var))
@@ -451,13 +470,14 @@ public class NLGUtils implements Serializable {
         }
 
         // Add input-final var if it exists.
-        if (! var.trim().isEmpty()) {
+        if (!var.trim().isEmpty()) {
             result.add(var);
         }
         return result;
     }
 
     /**
+     *
      */
     public static HashMap<String, HashMap<String, String>> getKeywordMap() {
 
@@ -468,6 +488,7 @@ public class NLGUtils implements Serializable {
     }
 
     /**
+     *
      */
     public static void setKeywordMap(HashMap<String, HashMap<String, String>> themap) {
 
@@ -477,6 +498,7 @@ public class NLGUtils implements Serializable {
     }
 
     /**
+     *
      */
     public static String getKeyword(String englishWord, String language) {
 
@@ -485,7 +507,7 @@ public class NLGUtils implements Serializable {
             if (debug) System.out.println("Error in NLGUtils.getKeyword(): keyword map is null");
             return ans;
         }
-        HashMap<String,String> hm = getKeywordMap().get(englishWord);
+        HashMap<String, String> hm = getKeywordMap().get(englishWord);
         if (hm != null) {
             String tmp = hm.get(language);
             if (tmp != null)
@@ -500,18 +522,18 @@ public class NLGUtils implements Serializable {
      * termName is the name of the term to be browsed in the knowledge base and
      * termString is the text that should be displayed hyperlinked.
      *
-     * @param href the anchor string up to the term= parameter, which this method
-     *               will fill in.
-     * @param stmt the KIF statement that will be passed to paraphraseStatement for formatting.
+     * @param href      the anchor string up to the term= parameter, which this method
+     *                  will fill in.
+     * @param stmt      the KIF statement that will be passed to paraphraseStatement for formatting.
      * @param phraseMap the set of NL formatting statements that will be passed to paraphraseStatement.
-     * @param termMap the set of NL statements for terms that will be passed to paraphraseStatement.
-     * @param language the natural language in which the paraphrase should be generated.
+     * @param termMap   the set of NL statements for terms that will be passed to paraphraseStatement.
+     * @param language  the natural language in which the paraphrase should be generated.
      */
-    public static String htmlParaphrase(String href, String stmt, Map<String,String> phraseMap,
-                                        Map<String,String> termMap, KB kb, String language) {
+    public static String htmlParaphrase(String href, String stmt, Map<String, String> phraseMap,
+                                        Map<String, String> termMap, KB kb, String language) {
 
         LanguageFormatter languageFormatter = new LanguageFormatter(stmt, phraseMap, termMap, kb, language);
-        outputMap = languageFormatter.outputMap;
+        outputMap = LanguageFormatter.outputMap;
         return languageFormatter.htmlParaphrase(href);
     }
 
@@ -520,14 +542,11 @@ public class NLGUtils implements Serializable {
      * format string, and returns a new format string with individually
      * numbered argument pointers.
      *
-     * @param f The Formula being paraphrased.
-     *
+     * @param f         The Formula being paraphrased.
      * @param strFormat The format string that contains the patterns and
-     * directives for paraphrasing f.
-     *
-     * @param lang A two-character string indicating the language into
-     * which f should be paraphrased.
-     *
+     *                  directives for paraphrasing f.
+     * @param lang      A two-character string indicating the language into
+     *                  which f should be paraphrased.
      * @return A format string with all relevant argument pointers
      * expanded.
      */
@@ -556,13 +575,13 @@ public class NLGUtils implements Serializable {
                     int high = -1;
                     String delim = " ";
                     boolean isRange = false;
-                    boolean[] argsToPrint = new boolean[ flen ];
+                    boolean[] argsToPrint = new boolean[flen];
                     int nArgsSet = -1;
                     StringBuilder sb = new StringBuilder();
                     while ((p1 < slen) && (p2 >= 0) && (p2 < slen)) {
-                        sb.append(strFormat.substring(p1, p2));
+                        sb.append(strFormat, p1, p2);
                         p1 = (p2 + 2);
-                        for (int k = 0 ; k < argsToPrint.length ; k++) {
+                        for (int k = 0; k < argsToPrint.length; k++) {
                             argsToPrint[k] = false;
                         }
                         lowStr = null;
@@ -573,10 +592,14 @@ public class NLGUtils implements Serializable {
                         nArgsSet = 0;
                         lb = null;
                         lbi = p1;
-                        if (lbi < slen) { lb = strFormat.substring(lbi, (lbi + 1)); }
+                        if (lbi < slen) {
+                            lb = strFormat.substring(lbi, (lbi + 1));
+                        }
                         while ((lb != null) && (lb.equals("{") || lb.equals("["))) {
                             rb = "]";
-                            if (lb.equals("{")) { rb = "}"; }
+                            if (lb.equals("{")) {
+                                rb = "}";
+                            }
                             rbi = strFormat.indexOf(rb, lbi);
                             if (rbi == -1) {
                                 problems.add("Error in format \"" + strFormat + "\": missing \"" + rb + "\"");
@@ -617,28 +640,28 @@ public class NLGUtils implements Serializable {
                                         }
                                     }
                                 }
-                            }
-                            else
+                            } else
                                 delim = ss;
                             lb = null;
                             lbi = p1;
-                            if (lbi < slen) { lb = strFormat.substring(lbi, (lbi + 1)); }
+                            if (lbi < slen) {
+                                lb = strFormat.substring(lbi, (lbi + 1));
+                            }
                         }
-                        String AND = nlg.getKeyword("and", lang);
+                        String AND = getKeyword("and", lang);
                         if (StringUtil.emptyString(AND))
                             AND = "+";
                         int nAdded = 0;
                         boolean addAll = (nArgsSet == 0);
                         int nToAdd = (addAll ? (argsToPrint.length - 1) : nArgsSet);
-                        for (int i = 1 ; i < argsToPrint.length ; i++) {
+                        for (int i = 1; i < argsToPrint.length; i++) {
                             if (addAll || argsToPrint[i]) {
                                 if (nAdded >= 1) {
                                     if (nToAdd == 2) {
                                         sb.append(" ");
                                         sb.append(AND);
                                         sb.append(" ");
-                                    }
-                                    else {
+                                    } else {
                                         sb.append(delim);
                                         sb.append(" ");
                                     }
@@ -654,7 +677,7 @@ public class NLGUtils implements Serializable {
                         if (p1 < slen) {
                             p2 = strFormat.indexOf("%*", p1);
                             if (p2 == -1) {
-                                sb.append(strFormat.substring(p1, slen));
+                                sb.append(strFormat, p1, slen);
                                 break;
                             }
                         }
@@ -664,14 +687,15 @@ public class NLGUtils implements Serializable {
                     }
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        if (! problems.isEmpty()) {
+        if (!problems.isEmpty()) {
             String errStr = KBmanager.getMgr().getError();
             String str = null;
-            if (errStr == null) { errStr = ""; }
+            if (errStr == null) {
+                errStr = "";
+            }
             Iterator<String> it = problems.iterator();
             while (it.hasNext()) {
                 str = it.next();
@@ -691,13 +715,10 @@ public class NLGUtils implements Serializable {
      * true.
      *
      * @param htmlParaphrase Any String, but assumed to be a Formula
-     * paraphrase with HTML markup
-     *
-     * @param addFullStop If true, this method will try to add a full
-     * stop symbol to the result String.
-     *
-     * @param language The language of the paraphrase String.
-     *
+     *                       paraphrase with HTML markup
+     * @param addFullStop    If true, this method will try to add a full
+     *                       stop symbol to the result String.
+     * @param language       The language of the paraphrase String.
      * @return String
      */
     public static String upcaseFirstVisibleChar(String htmlParaphrase,
@@ -746,7 +767,7 @@ public class NLGUtils implements Serializable {
                         }
                     }
                     if (addFullStop) {
-                        String fs = nlg.getKeyword(".", language);
+                        String fs = getKeyword(".", language);
                         if (StringUtil.isNonEmptyString(fs)) {
                             String ss = "";
                             sbLen = sb.length();
@@ -773,8 +794,7 @@ public class NLGUtils implements Serializable {
                     ans = sb.toString();
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return ans;
@@ -785,8 +805,8 @@ public class NLGUtils implements Serializable {
      */
     public static boolean containsProcess(Collection<String> vals, KB kb) {
 
-        for (String val : vals)  {
-            if (val.equals("Process") || kb.isSubclass(val, "Process"))  {
+        for (String val : vals) {
+            if (val.equals("Process") || kb.isSubclass(val, "Process")) {
                 return true;
             }
         }
