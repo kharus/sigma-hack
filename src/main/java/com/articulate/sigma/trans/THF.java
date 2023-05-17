@@ -1,4 +1,4 @@
-/*** The KIF2THF converter file is a contribution by Christoph Benzmueller
+/** The KIF2THF converter file is a contribution by Christoph Benzmueller
  */
 package com.articulate.sigma.trans;
 import java.io.BufferedWriter;

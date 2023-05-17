@@ -39,7 +39,7 @@ public class Sentence {
     private Multimap<CaseRole, String> caseRolesScratchpad;
 
 
-    /**************************************************************************************
+    /**
      * Constructor.
      * @param roles
      * @param process
@@ -57,7 +57,7 @@ public class Sentence {
         entityProperties = properties;
     }
 
-    /**************************************************************************************
+    /**
      * Get all the entities playing a given role in this process.
      * @param role
      * @param roles
@@ -68,7 +68,7 @@ public class Sentence {
     }
 
 
-    /**************************************************************************************************************
+    /**
      *
      * @return
      */
@@ -76,7 +76,7 @@ public class Sentence {
         return subject;
     }
 
-    /**************************************************************************************************************
+    /**
      *
      * @param subject
      */
@@ -84,7 +84,7 @@ public class Sentence {
         this.subject = subject;
     }
 
-    /**************************************************************************************************************
+    /**
      *
      * @return
      */
@@ -92,7 +92,7 @@ public class Sentence {
         return verb;
     }
 
-    /**************************************************************************************************************
+    /**
      *
      * @param verb
      */
@@ -100,7 +100,7 @@ public class Sentence {
         this.verb = verb;
     }
 
-    /**************************************************************************************************************
+    /**
      *
      * @return
      */
@@ -108,7 +108,7 @@ public class Sentence {
         return directObject;
     }
 
-    /**************************************************************************************************************
+    /**
      *
      * @param directObject
      */
@@ -116,7 +116,7 @@ public class Sentence {
         this.directObject = directObject;
     }
 
-    /**************************************************************************************************************
+    /**
      *
      * @return
      */
@@ -124,7 +124,7 @@ public class Sentence {
         return indirectObjects;
     }
 
-    /**************************************************************************************************************
+    /**
      *
      * @param indirectObjects
      */
@@ -132,7 +132,7 @@ public class Sentence {
         this.indirectObjects = indirectObjects;
     }
 
-    /**************************************************************************************************************
+    /**
      * Return the case roles scratchpad.
      * @return
      */
@@ -140,7 +140,7 @@ public class Sentence {
         return caseRolesScratchpad;
     }
 
-    /**************************************************************************************************************
+    /**
      * Set the case roles scratch pad with the given case roles.
      * @param roles
      */
@@ -148,7 +148,7 @@ public class Sentence {
         this.caseRolesScratchpad = HashMultimap.create(roles);
     }
 
-    /**************************************************************************************************************
+    /**
      * Attempt to perform natural language generation on this object.
      * @return
      *   a sentence in natural language, or empty string on failure
@@ -177,7 +177,7 @@ public class Sentence {
         return cleanedStr.replaceAll("\\s+", " ").trim();
     }
 
-    /**************************************************************************************************************
+    /**
      * Reset all fields so that we can retry natural language generation.
      */
     private void reset() {
@@ -188,7 +188,7 @@ public class Sentence {
         setCaseRolesScratchpad(caseRoles);
     }
 
-    /**************************************************************************************************************
+    /**
      *
      */
     private String concatenateIndirectObjects() {
@@ -201,7 +201,7 @@ public class Sentence {
         return sBuild.toString().trim();
     }
 
-    /**************************************************************************************************************
+    /**
      * Put the "indirect object" of this process into natural language.
      */
     void formulateNaturalIndirectObject() {
@@ -224,7 +224,7 @@ public class Sentence {
     }
 
 
-    /**************************************************************************************************************
+    /**
      * Put the "direct object" of this process into natural language.
      */
     void formulateNaturalDirectObject() {
@@ -256,7 +256,7 @@ public class Sentence {
         element.setSurfaceForm(sBuild.toString().replaceAll("\\s+", " ").trim());
     }
 
-    /**************************************************************************************************************
+    /**
      *
      */
     void formulateNaturalVerb() {
@@ -264,7 +264,7 @@ public class Sentence {
     }
 
 
-    /**************************************************************************************************************
+    /**
      * Put the subject of this process into natural language.
      */
     void formulateNaturalSubject( ) {
@@ -285,7 +285,7 @@ public class Sentence {
         subject.setSurfaceForm(sBuild.toString().replaceAll("\\s+", " ").trim());
     }
 
-    /**************************************************************************************************************
+    /**
      * Return all the entities of the given role in the correct case.
      * Assumes the role will be some kind of noun.
      * @param role
@@ -319,7 +319,7 @@ public class Sentence {
         return NLGStringUtils.concatenateWithCommas(fixedNouns);
     }
 
-    /**************************************************************************************************************
+    /**
      * Add properties like adjectives to the given noun.
      * @param noun
      * @return
@@ -336,7 +336,7 @@ public class Sentence {
         return retVal;
     }
 
-    /**************************************************************************************************************
+    /**
      * If we haven't managed to create a subject, try creating one with Patient. The result will be "experiences" +
      * the process verb in a noun form. This can be seen as a precursor of correct passive voice.
      *

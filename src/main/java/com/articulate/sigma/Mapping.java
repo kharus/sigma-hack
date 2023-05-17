@@ -656,7 +656,7 @@ public class Mapping {
         //System.out.println(m.normalize("Philippe_Mex-s"));
         //System.out.println(m.normalize("AntiguaAndBarbuda"));
         //System.out.println(m.normalize("SUMO"));
-/***
+/**
         try {
             convertYAGO("TypeExtractor.txt","citizen");
         } 

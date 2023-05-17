@@ -108,7 +108,7 @@ public class KbIntegrationTest extends IntegrationTestBase {
         assertTrue(!f.isHigherOrder(SigmaTestBase.kb));
     }
 
-    /****************************************************************
+    /**
      */
     @Test
     public void testIsHigherOrder4() {

@@ -12,7 +12,7 @@ August 9, Acapulco, Mexico. see also
 http://sigmakee.sourceforge.net 
 */
 
-/*************************************************************************************************/
+/**/
 package com.articulate.sigma.trans;
 
 import com.articulate.sigma.Formula;

@@ -15,7 +15,7 @@ public class SigmaTestBase {
 
     protected static KB kb;
 
-    /****************************************************************
+    /**
      * Performs the KB load.
      * @param reader
      */
@@ -41,7 +41,7 @@ public class SigmaTestBase {
         checkConfiguration();
     }
 
-    /***************************************************************
+    /**
      * */
     protected static void checkConfiguration() {
 
@@ -77,7 +77,7 @@ public class SigmaTestBase {
         }
     }
 
-    /****************************************************************
+    /**
      * Gets a BufferedReader for the xml file that is this test's configuration.
      * @param path
      * @param theClass
@@ -113,7 +113,7 @@ public class SigmaTestBase {
         return xmlReader;
     }
 
-    /***************************************************************
+    /**
      * */
     public static <T> void displayCollectionStringDiffs(Collection<T> coll1, Collection<T> coll2) {
 

@@ -13,7 +13,7 @@ August 9, Acapulco, Mexico. see also
 http://sigmakee.sourceforge.net 
 */
 
-/*************************************************************************************************/
+/**/
 package com.articulate.sigma;
 import java.io.*;
 import java.net.HttpURLConnection;

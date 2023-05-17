@@ -64,7 +64,7 @@ public class IntegrationTestBase extends SigmaTestBase {
         }
     }
 
-    /****************************************************************
+    /**
      * Undo all parts of the state that have anything to do with user assertions made during inference.
      * @throws IOException
      */

@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class NLGStringUtils {
 
-    /******************************************************************
+    /**
      * Assemble the input list together into a single string with "and" separating the penultimate and the last
      * item, and commas separating the other items.
      * @param input
@@ -36,7 +36,7 @@ public class NLGStringUtils {
         return sBuilder.toString();
     }
 
-    /*****************************************************************
+    /**
      * Stolen from WordNetUtilities and put here so that some unit tests can work without WordNet loaded.
      * @param c
      * @return
@@ -49,7 +49,7 @@ public class NLGStringUtils {
             return false;
     }
 
-    /**************************************************************************************************************
+    /**
      * Is input string a variable (i.e., does it start with a question mark)?
      * @param str
      * @return

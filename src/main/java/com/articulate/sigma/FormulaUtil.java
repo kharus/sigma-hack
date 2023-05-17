@@ -103,7 +103,7 @@ public class FormulaUtil {
             return false;
     }
 
-    /*******************************************************************************************
+    /**
      * Generates all permutations of the given size which are valid according to the given callback function.
      */
     public static List<int[]> getPermutations(int size, BiPredicate<Integer, Integer> validateFn) {
@@ -145,7 +145,7 @@ public class FormulaUtil {
         }
     }
 
-    /****************************************************************
+    /**
      * Returns a new ArrayList formed by extracting in order the
      * top-level members of kifListAsString, which is assumed to be
      * the String representation of a SUO-KIF (LISP) list.
@@ -169,7 +169,7 @@ public class FormulaUtil {
         return ans;
     }
 
-    /****************************************************************
+    /**
      * Performs a depth-first search of tree, replacing all terms
      * matching oldPattern with newTerm.
      *
@@ -235,7 +235,7 @@ public class FormulaUtil {
             this.f2 = f2;
         }
 
-        /*******************************************************************************
+        /**
          */
         @Override
         public boolean equals(Object o) {
@@ -261,7 +261,7 @@ public class FormulaUtil {
             return result;
         }
 
-        /***********************************************************************************************
+        /**
          */
         @Override
         public String toString() {

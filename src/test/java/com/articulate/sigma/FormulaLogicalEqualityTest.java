@@ -17,7 +17,7 @@ import java.util.ListIterator;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/***************************************************************
+/**
  * Created by sserban on 3/1/15.
  */
 @RunWith(Parameterized.class)
@@ -35,7 +35,7 @@ public class FormulaLogicalEqualityTest extends UnitTestBase {
     @Parameterized.Parameter(value= 2)
     public boolean areEqual;
 
-    /***************************************************************
+    /**
      */
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> loadParamteres() {
@@ -66,7 +66,7 @@ public class FormulaLogicalEqualityTest extends UnitTestBase {
         return result;
     }
 
-    /***************************************************************
+    /**
      */
     @After
     public void performanceReport() {
@@ -77,7 +77,7 @@ public class FormulaLogicalEqualityTest extends UnitTestBase {
                " milisecond execution time per test.\n");
     }
 
-    /***************************************************************
+    /**
      */
     @Test
     public void test() {

@@ -22,7 +22,7 @@ public class SUMOtoTFAKBTest extends IntegrationTestBase {
 
     private static SUMOKBtoTFAKB skbtfakb = null;
 
-    /****************************************************************
+    /**
      */
     @BeforeClass
     public static void init() {

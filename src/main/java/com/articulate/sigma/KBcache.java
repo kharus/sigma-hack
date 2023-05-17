@@ -24,7 +24,7 @@ being present in the ontology in order to function as intended.  They are:
   TransitiveRelation
 */
 
-/*************************************************************************************************/
+/**/
 
 package com.articulate.sigma;
 
@@ -139,14 +139,14 @@ public class KBcache implements Serializable {
     /** Errors found during processing formulas */
     public static TreeSet<String> errors = new TreeSet<String>();
 
-    /****************************************************************
+    /**
      * empty constructor for testing only
      */
     public KBcache() {
 
     }
 
-    /****************************************************************
+    /**
      */
     public KBcache(KB kbin) {
 
@@ -169,7 +169,7 @@ public class KBcache implements Serializable {
         this.kb = kbin;
     }
 
-    /****************************************************************
+    /**
      */
     public KBcache(KBcache kbCacheIn, KB kbIn) {
 
@@ -244,7 +244,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /**************************************************************
+    /**
      * An ArrayList utility method
      */
     public int getArity(String rel) {

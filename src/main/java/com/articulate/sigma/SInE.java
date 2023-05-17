@@ -92,7 +92,7 @@ public class SInE extends InferenceEngine {
     }    
 
     ArrayList<String> formulas;
-    /***
+    /**
      * These formulas will be always selected.
      * Actually formulas which contain no symbols are put here.
      */
@@ -100,7 +100,7 @@ public class SInE extends InferenceEngine {
     Hashtable<String, Set<String>> formSymbols;
     Hashtable<String, Integer> degrees;
     
-    /***
+    /**
      * Relation between symbols and formulas which represents the fact that 
      * a formula (axiom) defines meaning of a symbol.
      * 

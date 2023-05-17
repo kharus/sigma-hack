@@ -60,7 +60,7 @@ public class SVOGrammar {
 //        specialVerbBehaviorMap.put("help", svoList);
     }
 
-    /**************************************************************************************************************
+    /**
      * Return the case roles most appropriate for a given grammar role and a verb. Returns default values if there
      * are no special rules for the given verb.
      * @param verb

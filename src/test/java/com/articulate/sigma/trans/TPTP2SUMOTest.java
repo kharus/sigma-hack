@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class TPTP2SUMOTest {
 
-    /****************************************************************
+    /**
      */
     @BeforeClass
     public static void init() {

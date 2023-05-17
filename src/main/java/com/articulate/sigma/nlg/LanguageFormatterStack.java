@@ -20,7 +20,7 @@ public class LanguageFormatterStack {
 
     private VerbProperties.Polarity polarity = VerbProperties.Polarity.AFFIRMATIVE;
 
-    /********************************************************************************
+    /**
      * Getter and setter for polarity field.
      * @return
      */
@@ -32,13 +32,13 @@ public class LanguageFormatterStack {
         this.polarity = polarity;
     }
 
-    /********************************************************************************
+    /**
      * Get the topmost StackElement.
      * @return
      */
     private StackElement getTop()   { return theStack.get(theStack.size() - 1);}
 
-    /********************************************************************************
+    /**
      * Pop the top element of the stack if it is inElement.
      * @param inElement
      * throws IllegalStateException if the topmost element is not inElement, or if the
@@ -55,13 +55,13 @@ public class LanguageFormatterStack {
         }
     }
 
-    /********************************************************************************
+    /**
      * Is the stack empty?
      * @return
      */
      public boolean isEmpty()    { return theStack.isEmpty(); }
 
-    /********************************************************************************
+    /**
      * Push a new element onto the stack.
      */
     public void pushNew() {
@@ -72,7 +72,7 @@ public class LanguageFormatterStack {
         theStack.add(inElement);
     }
 
-    /********************************************************************************
+    /**
      * Return the topmost stack element
      * @return
      *  the topmost stack element; or null if the stack is empty
@@ -85,7 +85,7 @@ public class LanguageFormatterStack {
         return null;
     }
 
-    /********************************************************************************
+    /**
      * Return the stack element that is second from the top
      * @return
      *  the 2nd from the top stack element; or null if the stack has fewer than 2 elements
@@ -98,7 +98,7 @@ public class LanguageFormatterStack {
         return null;
     }
 
-    /********************************************************************************
+    /**
      * Return the Map<String, SumoProcessCollector> for the top element of the stack.
      * @return
      */
@@ -112,7 +112,7 @@ public class LanguageFormatterStack {
         return retVal;
     }
 
-    /********************************************************************************
+    /**
      * Insert the given formula arguments into the topmost element of the stack.
      * @param formula
      */
@@ -126,7 +126,7 @@ public class LanguageFormatterStack {
         }
     }
 
-    /********************************************************************************
+    /**
      * Mark the given formula argument as having been processed. Note that this method
      * is called when the relevant args are not held at top of stack, but at top - 1.
      * @param theArg
@@ -141,7 +141,7 @@ public class LanguageFormatterStack {
         }
     }
 
-    /********************************************************************************
+    /**
      * Set the state for the formula arg of the given argument.
      * @param theArg
      * @param state
@@ -161,7 +161,7 @@ public class LanguageFormatterStack {
         return retVal;
     }
 
-    /********************************************************************************
+    /**
      * Read the given list of FormulaArgs for a given argument.
      * @param formulaArgs
      * @param theArg
@@ -178,7 +178,7 @@ public class LanguageFormatterStack {
         return null;
     }
 
-    /********************************************************************************
+    /**
      * Are all the formula arguments processed in some way? Note that this method
      * is called when the relevant args are not held at top of stack, but at top - 1.
      * @return
@@ -196,7 +196,7 @@ public class LanguageFormatterStack {
         return retVal;
     }
 
-    /********************************************************************************
+    /**
      * Have all the formula arguments for the given stack element been processed in some way?
      * @param stackElement
      * @return
@@ -222,7 +222,7 @@ public class LanguageFormatterStack {
         return retVal;
     }
 
-    /********************************************************************************
+    /**
      * Generate natural language from the contents of the top element of the stack.
      * Returns empty string if the top element's formula arguments have not all been processed.
      * @return
@@ -255,7 +255,7 @@ public class LanguageFormatterStack {
         return output;
     }
 
-    /********************************************************************************
+    /**
      * Top-level method call for informal NLG after all the elements of the formula have been processed.
      */
     public String doStatementLevelNatlLanguageGeneration() {
@@ -269,7 +269,7 @@ public class LanguageFormatterStack {
         return output;
     }
 
-    /********************************************************************************
+    /**
      * If the top stack element has been translated, then find the given arg in the previous stack element
      * and mark the corresponding formula argument as translated.
      * @param arg
@@ -309,7 +309,7 @@ public class LanguageFormatterStack {
         }
     }
 
-    /********************************************************************************
+    /**
      * For the current stack element, iterate through the List<FormulaArgs> and collect their translations into a single list.
      * @return
      *  the curr element's formula args, or empty list if any formula arg has not been translated into informal NLG
@@ -340,7 +340,7 @@ public class LanguageFormatterStack {
         return translations;
     }
 
-    /********************************************************************************
+    /**
      * If the curr stack element has just two formula args--the first having a state of QUANTIFIED_VARS, the
      * second having a state of TRANSLATED--mark the curr stack element as Translated.
      */
@@ -352,7 +352,7 @@ public class LanguageFormatterStack {
         }
     }
 
-    /********************************************************************************
+    /**
      * Has the current clause been processed? This tells us whether we can eliminate quantifier
      * variable lists from informal NLG. We can do so when the stack has only two elements whose states
      * are QUANTIFIED_VARS and TRANSLATED.
@@ -381,7 +381,7 @@ public class LanguageFormatterStack {
         return retVal;
     }
 
-    /********************************************************************************
+    /**
      * If possible, translate the process instantiation and insert the translation into the topmost
      * stack element.
      * @param kb
@@ -406,7 +406,7 @@ public class LanguageFormatterStack {
         }
     }
 
-    /********************************************************************************
+    /**
      * Push the current element's sumoProcessMap down into the previous element.
      * If the sumoProcessCollector already exists in the lower element of the stack,
      * merge the current element's sumo process elements into the lower element's.
@@ -431,7 +431,7 @@ public class LanguageFormatterStack {
     }
 
 
-    /********************************************************************************
+    /**
      * Handle pushing the translation down into the stack for "not" clauses.
      * @param statement
      */
@@ -485,7 +485,7 @@ public class LanguageFormatterStack {
         }
     }
 
-    /********************************************************************************
+    /**
      * Add the given key - property pair to the properties of the current stack element.
      * @param key
      * @param property

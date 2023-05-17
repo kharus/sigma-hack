@@ -20,7 +20,7 @@ public class THFtest extends IntegrationTestBase {
     private static THF thf = null;
     private static KB kb = null;
 
-    /****************************************************************
+    /**
      */
     @BeforeClass
     public static void init() {

@@ -95,7 +95,7 @@ public class LanguageFormatter {
         }
     }
 
-    /*******************************************************************************
+    /**
      * @param stmt The statement to be formatted.
      * @param phraseMap kb.getFormatMap() for this language
      * @param termMap kb.getTermFormatMap() for this language
@@ -120,7 +120,7 @@ public class LanguageFormatter {
         init();
     }
 
-    /***********************************************************************************
+    /**
      */
     private void init() {
 
@@ -156,7 +156,7 @@ public class LanguageFormatter {
         }
     }
 
-    /***********************************************************************************
+    /**
      * Hyperlink terms in a natural language format string.  This assumes that
      * terms to be hyperlinked are in the form &%termName$termString , where
      * termName is the name of the term to be browsed in the knowledge base and
@@ -237,7 +237,7 @@ public class LanguageFormatter {
         return nlFormat;
     }
 
-    /******************************************************************
+    /**
      * Create a natural language paraphrase of a logical statement.
      *  @param stmt The statement to be paraphrased.
      *  @param isNegMode Whether the statement is negated.
@@ -374,7 +374,7 @@ public class LanguageFormatter {
         return ans;
     }
 
-    /*****************************************************************
+    /**
      * Modify the given variable map so that given key is mapped to a surface form for the entity which includes
      * the given property.
      * @param variableMap
@@ -395,7 +395,7 @@ public class LanguageFormatter {
         }
     }
 
-    /*****************************************************************
+    /**
      * Insert the give case role into the current element's process map; or, if the SumoProcess already exists
      * there, update it with the new information.
      * @param formula

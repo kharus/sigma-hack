@@ -23,7 +23,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
 
     private static SUMOKBtoTFAKB skbtfakb = null;
 
-    /****************************************************************
+    /**
      */
     @BeforeClass
     public static void init() {
@@ -293,7 +293,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /****************************************************************
+    /**
      */
     @Test
     public void testFloorFn() {
@@ -321,7 +321,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /****************************************************************
+    /**
      */
     @Test
     public void testNumericSubclass() {
@@ -351,7 +351,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /****************************************************************
+    /**
      */
     @Test
     public void testElimUnitaryLogops() {
@@ -374,7 +374,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /****************************************************************
+    /**
      */
     @Ignore // can't process ListFn
     @Test
@@ -414,7 +414,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /****************************************************************
+    /**
      */
     @Ignore // can't process ListFn
     @Test
@@ -458,7 +458,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /****************************************************************
+    /**
      */
     @Test
     public void testPredVarArity() {
@@ -524,7 +524,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
     }
 
 
-    /****************************************************************
+    /**
      */
     @Ignore // can't process ListFn
     @Test
@@ -569,7 +569,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
     }
 
 
-    /****************************************************************
+    /**
      */
     @Test
     public void testInstNum() {
@@ -605,7 +605,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /****************************************************************
+    /**
      */
     @Test
     public void testTypeConflict() {
@@ -628,7 +628,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(inc);
     }
 
-    /****************************************************************
+    /**
      */
     @Test
     public void testTypeConflict2() {
@@ -653,7 +653,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /****************************************************************
+    /**
      * nonsense axiom just to check types
      */
     @Test
@@ -675,7 +675,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(inc);
     }
 
-    /****************************************************************
+    /**
      */
     @Ignore
     @Test
@@ -697,7 +697,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(StringUtil.emptyString(result));
     }
 
-    /****************************************************************
+    /**
      */
     @Test
     public void testPropertyFn() {

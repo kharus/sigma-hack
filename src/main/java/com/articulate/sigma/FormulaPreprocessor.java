@@ -457,7 +457,7 @@ public class FormulaPreprocessor {
         return null;
     }
 
-    /*****************************************************************
+    /**
      * Collect the types of any variables that are specifically defined
      * in the antecedent of a rule with an instance or subclass expression.
      * TODO: This may ultimately require CNF conversion and then checking negative
@@ -476,7 +476,7 @@ public class FormulaPreprocessor {
         return findExplicitTypes(kb,antecedent);
     }
 
-    /*****************************************************************
+    /**
      * Collect the types of any variables that are specifically defined
      * in the antecedent of a rule with an instance expression;
      * Collect the super classes of any variables that are specifically
@@ -510,7 +510,7 @@ public class FormulaPreprocessor {
         return f;
     }
 
-    /*****************************************************************
+    /**
      * Collect variable names and their types from instance or subclass
      * expressions. subclass restrictions are marked with a '+'.
      *
@@ -532,7 +532,7 @@ public class FormulaPreprocessor {
         return varExplicitTypes;
     }
 
-    /*****************************************************************
+    /**
      * Collect variable names and their types from instance or subclass
      * expressions.
      *
@@ -549,7 +549,7 @@ public class FormulaPreprocessor {
         findExplicitTypesRecurse(kb, form, false, varExplicitTypes, varExplicitClasses);
     }
 
-    /*****************************************************************
+    /**
      * Recursively collect a variable name and its types.
      */
     public static void findExplicitTypesRecurse(KB kb, Formula form, boolean isNegativeLiteral,
@@ -622,7 +622,7 @@ public class FormulaPreprocessor {
         }
     }
 
-    /*****************************************************************
+    /**
      * This method returns a HashMap that maps each String variable in
      * this the names of types (classes) of which the variable must be
      * an instance or the names of types of which the variable must be

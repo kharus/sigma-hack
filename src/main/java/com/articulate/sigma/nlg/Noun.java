@@ -9,7 +9,7 @@ import com.articulate.sigma.KB;
 public class Noun {
 
 
-    /**************************************************************************************************************
+    /**
      * Look at first letter of input to determine whether it should be preceded by "a" or "an".
      * @param input
      * @return
@@ -28,7 +28,7 @@ public class Noun {
         return article;
     }
 
-    /**************************************************************************************************************
+    /**
      * Determine whether the given noun requires an indefinite article ("a"/"an").
      * @param noun
      * @param kb

@@ -249,7 +249,7 @@ public class ProofProcessor {
     	 System.out.println(removeNestedAnswerClause(stmt));
      }
 
-	 /****************************************************************
+	 /**
       * Tally the number of appearances of a particular axiom label in
       * a file.  This is intended to be used to analyse E output that
       * looks for contradictions, with the intuition that axioms that

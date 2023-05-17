@@ -13,7 +13,7 @@ import static junit.framework.TestCase.assertEquals;
 
 public class WSDwKBtest extends IntegrationTestBase {
 
-    /****************************************************************
+    /**
      */
     @Before
     public void setUpInterpreter() throws IOException {
@@ -23,7 +23,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         System.out.println("INFO in WSDwKBtest.setUpInterpreter(): done initializing");
     }
 
-    /****************************************************************
+    /**
      */
     @Test
     public void testHyundai() {

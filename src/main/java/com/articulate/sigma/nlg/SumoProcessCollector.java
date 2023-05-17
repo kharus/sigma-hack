@@ -24,7 +24,7 @@ public class SumoProcessCollector {
 
     private Multimap<String, SumoProcessEntityProperty> entityProperties = TreeMultimap.create();
 
-    /**************************************************************************************
+    /**
      * Construct a SumoProcessCollector.
      * @param kb
      * @param role
@@ -69,7 +69,7 @@ public class SumoProcessCollector {
     }
 
 
-    /**************************************************************************************
+    /**
      *
      * @return
      */
@@ -77,7 +77,7 @@ public class SumoProcessCollector {
         return sumoProcess;
     }
 
-    /**************************************************************************************
+    /**
      * Getter and setter for polarity field.
      *
      */
@@ -90,7 +90,7 @@ public class SumoProcessCollector {
         this.sumoProcess.setPolarity(polarity);
     }
 
-    /**************************************************************************************
+    /**
      * Add a new role/entity pair to this event.
      * @param role
      * @param arg
@@ -105,7 +105,7 @@ public class SumoProcessCollector {
     }
 
 
-    /**************************************************************************************
+    /**
      * Get all the roles and their entities for this event.
      * @return
      */
@@ -117,7 +117,7 @@ public class SumoProcessCollector {
     }
 
 
-    /**************************************************************************************************************
+    /**
      * Return a defensive copy of our case roles.
      * @return
      */
@@ -126,7 +126,7 @@ public class SumoProcessCollector {
     }
 
 
-    /**************************************************************************************
+    /**
      * Retain capitalization of names and reified instances by lower-casing if the entity is an Entity.
      * @param entity
      * @return
@@ -147,7 +147,7 @@ public class SumoProcessCollector {
     }
 
 
-    /**************************************************************************************************************
+    /**
      * Write out a string representing all the fields in this object.
      * @return
      */
@@ -167,7 +167,7 @@ public class SumoProcessCollector {
     }
 
 
-    /**************************************************************************************************************
+    /**
      * Translate this process and its case roles into natural language.
      * @return
      *  a natural language translation, or empty string if one is not possible
@@ -177,7 +177,7 @@ public class SumoProcessCollector {
         return sentence.toNaturalLanguage();
     }
 
-    /**************************************************************************************************************
+    /**
      * Translate this process and its case roles into natural language.
      * @return
      *  a natural language translation, or empty string if one is not possible
@@ -188,7 +188,7 @@ public class SumoProcessCollector {
         entityProperties = properties;
     }
 
-    /**************************************************************************************************************
+    /**
      * Merge the roles of the given SumoProcessCollector into this object.
      * If new SumoProcessCollector's polarity is Negative, set this object's to the same.
      * @param newProcessCollector

@@ -780,7 +780,7 @@ public class NLGUtils implements Serializable {
         return ans;
     }
 
-    /**************************************************************************************************************
+    /**
      * Return true if the given list includes "Process", or if one of its elements is a subclass of Process.
      */
     public static boolean containsProcess(Collection<String> vals, KB kb) {

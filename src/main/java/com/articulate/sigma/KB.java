@@ -13,7 +13,7 @@ August 9, Acapulco, Mexico. see also
 http://sigmakee.sourceforge.net
 */
 
-/*************************************************************************************************/
+/**/
 package com.articulate.sigma;
 
 import com.articulate.sigma.tp.Vampire;
@@ -138,7 +138,7 @@ public class KB implements Serializable {
 
     public static boolean debug = false;
 
-    /***************************************************************
+    /**
      * Constructor which takes the name of the KB and the location where KBs preprocessed
      * for EProver should be placed.
      */
@@ -160,7 +160,7 @@ public class KB implements Serializable {
         }
     }
 
-    /***************************************************************
+    /**
      */
     public KB(String n, String dir, boolean visibility) {
 
@@ -168,7 +168,7 @@ public class KB implements Serializable {
         isVisible = visibility;
     }
 
-    /***************************************************************
+    /**
      * Perform a deep copy of the kb input
      *
      * @param kbIn
@@ -219,13 +219,13 @@ public class KB implements Serializable {
             this.celt = new CELT();
     }
 
-    /***************************************************************
+    /**
      */
     public boolean isVisible() {
         return isVisible;
     }
 
-    /***************************************************************
+    /**
      * Constructor
      */
     public KB(String n) {
@@ -246,7 +246,7 @@ public class KB implements Serializable {
         }
     }
 
-    /**************************************************************
+    /**
      * Returns a SortedSet of Strings, which are all the terms in the KB.
      */
     public SortedSet<String> getTerms() {
@@ -255,7 +255,7 @@ public class KB implements Serializable {
     }
 
 
-    /***************************************************
+    /**
      * Only called in
      * BrowseBody.jsp when a single match is found. Purpose is to simplify a
      * RegEx to its only matching term
@@ -271,7 +271,7 @@ public class KB implements Serializable {
         return term;
     }
 
-    /****************************************************
+    /**
      * Takes a term
      * (interpreted as a Regular Expression) and returns true if any term in the
      * KB has a match with the RE.
@@ -285,7 +285,7 @@ public class KB implements Serializable {
         return (getREMatch(term,ignoreCaps).size() > 0 ? true : false);
     }
 
-    /****************************************************
+    /**
      * Takes a term
      * (interpreted as a Regular Expression) and returns an ArrayList containing
      * every term in the KB that has a match with the RE.
@@ -317,7 +317,7 @@ public class KB implements Serializable {
         }
     }
 
-    /**************************************************************
+    /**
      * Sets the synchronized SortedSet of all the terms in the KB to be kbTerms.
      */
     public void setTerms(SortedSet<String> newTerms) {
@@ -330,7 +330,7 @@ public class KB implements Serializable {
         return;
     }
 
-    /***************************************************************
+    /**
      * Get an ArrayList of Strings containing the language identifiers of available
      * natural language formatting templates.
      *
@@ -355,7 +355,7 @@ public class KB implements Serializable {
         return al;
     }
 
-    /***************************************************************
+    /**
      * Remove from the given set any item which is a superclass of another item in the set.
      */
     public Set<String> removeSuperClasses(Set<String> set) {
@@ -375,7 +375,7 @@ public class KB implements Serializable {
         return returnSet;
     }
 
-    /***************************************************************
+    /**
      * Arity errors should already have been trapped in addConstituent() unless a
      * relation is used before it is defined. This routine is a comprehensive
      * re-check.
@@ -404,7 +404,7 @@ public class KB implements Serializable {
         System.out.println("KB.checkArity(): seconds: " + (System.currentTimeMillis() - millis) / 1000);
     }
 
-    /***************************************************************
+    /**
      * Returns the
      * type (SUO-KIF Class name) for any argument in argPos position of an
      * assertion formed with the SUO-KIF Relation reln. If no argument type
@@ -429,7 +429,7 @@ public class KB implements Serializable {
         return className;
     }
 
-    /***************************************************************
+    /**
      * Returns the
      * type (SUO-KIF Class name) for any argument in argPos position of an
      * assertion formed with the SUO-KIF Relation reln. If no argument type
@@ -452,7 +452,7 @@ public class KB implements Serializable {
         return className;
     }
 
-    /***************************************************************
+    /**
      * Determine whether a particular term is an immediate instance, which has a statement
      * of the form (instance term otherTerm). Note that this does not count for
      * terms such as Attribute(s) and Relation(s), which may be defined as
@@ -467,7 +467,7 @@ public class KB implements Serializable {
         return askWithRestriction(1, term, 0, "instance");
     }
 
-    /***************************************************************
+    /**
      * Get all instances of a given term
      */
     public Set<String> instances(String term) {
@@ -480,7 +480,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /***************************************************************
+    /**
      * Returns
      * true if i is an instance of c, else returns false.
      *
@@ -495,7 +495,7 @@ public class KB implements Serializable {
         return kbCache.isInstanceOf(i, c);
     }
 
-    /***************************************************************
+    /**
      * Returns
      * true if i is an Attribute, else returns false.
      *
@@ -509,7 +509,7 @@ public class KB implements Serializable {
         return kbCache.isInstanceOf(i, "Attribute");
     }
 
-    /***************************************************************
+    /**
      * Returns
      * true if i is c, is an instance of c, or is subclass of c, or is
      * subAttribute of c, else returns false. Note that every class is
@@ -524,7 +524,7 @@ public class KB implements Serializable {
         return i.equals(c) || isInstanceOf(i, c) || isSubclass(i, c) || isSubAttribute(i, c);
     }
 
-    /***************************************************************
+    /**
      * Returns true if i is an instance of Function, else returns false.
      *
      * @param i A String denoting a constant.
@@ -538,7 +538,7 @@ public class KB implements Serializable {
         return false;
     }
 
-    /***************************************************************
+    /**
      * Returns true if argument is functional expression, else returns
      * false.
      *
@@ -578,7 +578,7 @@ public class KB implements Serializable {
         return true;
     }
 
-    /***************************************************************
+    /**
      * @param i A String denoting an instance.
      * @return true or false.
      */
@@ -589,7 +589,7 @@ public class KB implements Serializable {
         return false;
     }
 
-    /***************************************************************
+    /**
      * Returns
      * true if i is an instance of c in any loaded KB, else returns false.
      *
@@ -611,7 +611,7 @@ public class KB implements Serializable {
         return false;
     }
 
-    /***************************************************************
+    /**
      */
     public boolean isInstance(String term) {
 
@@ -619,7 +619,7 @@ public class KB implements Serializable {
         return (al != null && al.size() > 0);
     }
 
-    /***************************************************************
+    /**
      * Determine
      * whether a particular class or instance "child" is a child of the given
      * "parent".
@@ -641,7 +641,7 @@ public class KB implements Serializable {
         return false;
     }
 
-    /***************************************************************
+    /**
      * Returns
      * true if the subclass cache supports the conclusion that c1 is a subclass
      * of c2, else returns false.  Note that classes are also subclasses of
@@ -670,7 +670,7 @@ public class KB implements Serializable {
         return false;
     }
 
-    /***************************************************************
+    /**
      * Returns
      * true if the KB cache supports the conclusion that c1 is a subAttribute of
      * c2, else returns false.
@@ -687,7 +687,7 @@ public class KB implements Serializable {
         return false;
     }
 
-    /***************************************************************
+    /**
      * Converts
      * all Formula objects in the input List to ArrayList tuples.
      *
@@ -730,7 +730,7 @@ public class KB implements Serializable {
         return ans;
     }
 
-    /***************************************************************
+    /**
      * Converts a
      * literal (List object) to a String.
      *
@@ -752,7 +752,7 @@ public class KB implements Serializable {
         return b.toString();
     }
 
-    /***************************************************************
+    /**
      * Converts a
      * literal (List object) to a Formula.
      *
@@ -770,7 +770,7 @@ public class KB implements Serializable {
         return f;
     }
 
-    /***************************************************************
+    /**
      * Returns an
      * ArrayList containing the terms (Strings) that correspond to targetArgnum
      * in the Formulas obtained from the method call askWithRestriction(argnum1,
@@ -800,7 +800,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /***************************************************************
+    /**
      * Returns an
      * ArrayList containing the terms (Strings) that correspond to targetArgnum
      * in the Formulas obtained from the method call askWithRestriction(argnum1,
@@ -815,7 +815,7 @@ public class KB implements Serializable {
         return getTermsViaAskWithRestriction(argnum1, term1, argnum2, term2, targetArgnum, null);
     }
 
-    /***************************************************************
+    /**
      * Returns the
      * first term found that corresponds to targetArgnum in the Formulas
      * obtained from the method call askWithRestriction(argnum1, term1, argnum2,
@@ -833,7 +833,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /***************************************************************
+    /**
      * @return an ArrayList of Formulas in which the two terms provided appear
      * in the indicated argument positions. If there are no Formula(s)
      * matching the given terms and respective argument positions,
@@ -880,7 +880,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /***************************************************************
+    /**
      * Returns an
      * ArrayList of Formulas in which the two terms provided appear in the
      * indicated argument positions. If there are no Formula(s) matching the
@@ -970,7 +970,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /***************************************************************
+    /**
      * Returns an
      * ArrayList containing the SUO-KIF terms that match the request.
      *
@@ -990,7 +990,7 @@ public class KB implements Serializable {
         return ans;
     }
 
-    /***************************************************************
+    /**
      * Returns the
      * first SUO-KIF terms that matches the request, or null.
      *
@@ -1006,7 +1006,7 @@ public class KB implements Serializable {
         return ans;
     }
 
-    /***************************************************************
+    /**
      * Returns an
      * ArrayList containing the terms (Strings) that correspond to targetArgnum
      * in the ground atomic Formulae in which knownArg is in the argument
@@ -1033,7 +1033,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /***************************************************************
+    /**
      */
     private ArrayList<Formula> stringsToFormulas(ArrayList<String> strings) {
 
@@ -1050,7 +1050,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /***************************************************************
+    /**
      * Returns an ArrayList containing the Formulas that match the request.
      *
      * @param kind   May be one of "ant", "cons", "stmt", or "arg"
@@ -1089,7 +1089,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /***************************************************************
+    /**
      * Returns an
      * ArrayList containing the Formulae retrieved, possibly via multiple asks
      * that recursively use relation and all of its subrelations. Note that the
@@ -1140,7 +1140,7 @@ public class KB implements Serializable {
         return ans;
     }
 
-    /***************************************************************
+    /**
      * Returns an
      * ArrayList containing SUO-KIF constants, possibly retrieved via multiple
      * asks that recursively use relation and all of its subrelations.
@@ -1214,7 +1214,7 @@ public class KB implements Serializable {
         return ans;
     }
 
-    /***************************************************************
+    /**
      * Returns an
      * ArrayList containing SUO-KIF constants, possibly retrieved via multiple
      * asks that recursively use relation and all of its subrelations.
@@ -1240,7 +1240,7 @@ public class KB implements Serializable {
         return getTermsViaPredicateSubsumption(relation, idxArgnum, idxTerm, targetArgnum, useInverses, null);
     }
 
-    /***************************************************************
+    /**
      * Returns the
      * first SUO-KIF constant found via asks using relation and its
      * subrelations.
@@ -1275,7 +1275,7 @@ public class KB implements Serializable {
         return ans;
     }
 
-    /***************************************************************
+    /**
      * Returns an
      * ArrayList containing the transitive closure of relation starting from
      * idxTerm in position idxArgnum. The result does not contain idxTerm.
@@ -1316,7 +1316,7 @@ public class KB implements Serializable {
         return ans;
     }
 
-    /***************************************************************
+    /**
      * Add all members of one collection to another.  If the argument
      * is null, do nothing.
      */
@@ -1326,7 +1326,7 @@ public class KB implements Serializable {
             c1.addAll(c2);
     }
 
-    /***************************************************************
+    /**
      * Get all children of the given term following instance and
      * subclass relations as well as the indicated rel
      */
@@ -1355,7 +1355,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /***************************************************************
+    /**
      * Merges a
      * KIF object containing a single formula into the current KB.
      *
@@ -1420,7 +1420,7 @@ public class KB implements Serializable {
         return formulasPresent;
     }
 
-    /***************************************************************
+    /**
      * Rename
      * term2 as term1 throughout the knowledge base. This is an operation with
      * side effects - the term names in the KB are changed.
@@ -1440,7 +1440,7 @@ public class KB implements Serializable {
         }
     }
 
-    /***************************************************************
+    /**
      * Writes a
      * single user assertion (String) to the end of a file.
      *
@@ -1498,7 +1498,7 @@ public class KB implements Serializable {
         }
     }
 
-    /***************************************************************
+    /**
      * Adds a formula to the knowledge base.
      *
      * @param input The String representation of a SUO-KIF Formula.
@@ -1611,7 +1611,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /***************************************************************
+    /**
      * Submits a
      * query to the inference engine.
      *
@@ -1659,7 +1659,7 @@ public class KB implements Serializable {
         return eprover;
     }
 
-    /***************************************************************
+    /**
      * Submits a
      * query to the inference engine.
      *
@@ -1733,7 +1733,7 @@ public class KB implements Serializable {
         return leo;
     }
 
-    /***************************************************************
+    /**
      * Submits a
      * query to the inference engine.
      *
@@ -1812,7 +1812,7 @@ public class KB implements Serializable {
         return null;
     }
 
-    /***************************************************************
+    /**
      * Return a SUMO-formatted proof string
      */
     public String askVampireFormat(String suoKifFormula, int timeout, int maxAnswers) {
@@ -1829,7 +1829,7 @@ public class KB implements Serializable {
         return sb.toString();
     }
 
-    /***************************************************************
+    /**
      * Submits a
      * query to the inference engine. Returns a list of answers from inference
      * engine. If no proof is found, return null;
@@ -1915,7 +1915,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /**************************************************************
+    /**
      * Submits a query to the SInE inference engine. Returns an XML formatted String that
      * contains the response of the inference engine. It should be in the form
      * "<queryResponse>...</queryResponse>".
@@ -1947,7 +1947,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /**************************************************************
+    /**
      * Submits a query to the LEO inference engine. Returns an XML formatted String that
      * contains the response of the inference engine. It should be in the form
      * "<queryResponse>...</queryResponse>".
@@ -2060,7 +2060,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /*****************************************************************
+    /**
      * Count the number of "levels" deep the term is in taxonomic
      * relations from Entity.  Remove trailing '+' signs.  Also handle
      * a composite term like (UnionFn A B) with a warning
@@ -2098,7 +2098,7 @@ public class KB implements Serializable {
         return 0;
     }
 
-    /*****************************************************************
+    /**
      */
     public HashSet<String> immediateParents(String term) {
 
@@ -2122,7 +2122,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /*****************************************************************
+    /**
      * Analogous to compareTo(), return -1,0 or 1 depending on whether
      * the first term is "smaller", equal to or "greater" than the
      * second, respectively.  A term that is the parent of another
@@ -2155,7 +2155,7 @@ public class KB implements Serializable {
         return -1;
     }
 
-    /*****************************************************************
+    /**
      * Find the most specific term in a collection using compareTermDepth()
      */
     public String mostGeneralType(Collection<String> terms) {
@@ -2176,7 +2176,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /*****************************************************************
+    /**
      * Find the most specific term in a collection using compareTermDepth()
      */
     public String mostSpecificType(Collection<String> terms) {
@@ -2197,7 +2197,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /*****************************************************************
+    /**
      * Find the most specific term in a collection using compareTermDepth()
      */
     public String mostSpecificTerm(Collection<String> terms) {
@@ -2225,7 +2225,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /*****************************************************************
+    /**
      * Takes a term and returns true if the term occurs in the KB.
      *
      * @param term A String.
@@ -2242,7 +2242,7 @@ public class KB implements Serializable {
         return false;
     }
 
-    /*****************************************************************
+    /**
      * Takes a filename without path and returns true if it occurs in the KB.
      *
      * @param fname A String.
@@ -2260,7 +2260,7 @@ public class KB implements Serializable {
         return false;
     }
 
-    /*****************************************************************
+    /**
      * Takes a formula string and returns true if the corresponding Formula occurs in
      * the KB.
      *
@@ -2272,7 +2272,7 @@ public class KB implements Serializable {
         return formulaMap.containsKey(formula.intern());
     }
 
-    /*****************************************************************
+    /**
      * Count the number of terms in the knowledge base in order to
      * present statistics to the user.
      *
@@ -2283,7 +2283,7 @@ public class KB implements Serializable {
         return getTerms().size();
     }
 
-    /*****************************************************************
+    /**
      * Count the number of relations in the knowledge base in order to present statistics
      * to the user.
      *
@@ -2294,7 +2294,7 @@ public class KB implements Serializable {
         return kbCache.relations.size();
     }
 
-    /*****************************************************************
+    /**
      * Count the number of formulas in the knowledge base in order to present statistics
      * to the user.
      *
@@ -2305,7 +2305,7 @@ public class KB implements Serializable {
         return formulaMap.size();
     }
 
-    /*****************************************************************
+    /**
      * An accessor providing a TreeSet of un-preProcessed String representations of
      * Formulae.
      *
@@ -2316,7 +2316,7 @@ public class KB implements Serializable {
         return new TreeSet<String>(formulaMap.keySet());
     }
 
-    /*****************************************************************
+    /**
      * An accessor providing a Formula
      */
     public Formula getFormulaByKey(String key) {
@@ -2328,7 +2328,7 @@ public class KB implements Serializable {
         return f;
     }
 
-    /*****************************************************************
+    /**
      * Count the number of rules in the knowledge base in order to present statistics to
      * the user. Note that the number of rules is a subset of the number of
      * formulas.
@@ -2347,7 +2347,7 @@ public class KB implements Serializable {
         return count;
     }
 
-    /*****************************************************************
+    /**
      * Create an ArrayList of the specific size, filled with empty strings.
      */
     private ArrayList<String> arrayListWithBlanks(int size) {
@@ -2393,7 +2393,7 @@ public class KB implements Serializable {
         return al;
     }
 
-    /*****************************************************************
+    /**
      * Get the alphabetically nearest terms to the given term, which is not in the KB.
      * Elements 0-14 should be alphabetically lesser and 15-29 alphabetically
      * greater. If the term is at the beginning or end of the alphabet, fill in
@@ -2404,7 +2404,7 @@ public class KB implements Serializable {
         return getNearestKTerms(term, 15);
     }
 
-    /*****************************************************************
+    /**
      * Get the neighbors of this initial uppercase term (class or function).
      */
     public ArrayList<String> getNearestRelations(String term) {
@@ -2413,7 +2413,7 @@ public class KB implements Serializable {
         return getNearestTerms(term);
     }
 
-    /*****************************************************************
+    /**
      * Get the neighbors of this initial lowercase term (relation).
      */
     public ArrayList<String> getNearestNonRelations(String term) {
@@ -2422,7 +2422,7 @@ public class KB implements Serializable {
         return getNearestTerms(term);
     }
 
-    /*****************************************************************
+    /**
      * Get the alphabetically num lower neighbor of this initial term, which must exist
      * in the current KB otherwise an empty string is returned.
      */
@@ -2444,7 +2444,7 @@ public class KB implements Serializable {
         return (String) tal.get(i);
     }
 
-    /*****************************************************************
+    /**
      * Get the alphabetically num higher neighbor of this initial term, which must exist
      * in the current KB otherwise an empty string is returned.
      */
@@ -2466,7 +2466,7 @@ public class KB implements Serializable {
         return (String) tal.get(i);
     }
 
-    /****************************************************************
+    /**
      * This List is used to limit the number of warning messages logged by
      * loadFormatMaps(lang). If an attempt to load format or termFormat values
      * for lang is unsuccessful, the list is checked for the presence of lang.
@@ -2477,7 +2477,7 @@ public class KB implements Serializable {
      */
     protected ArrayList<String> loadFormatMapsAttempted = new ArrayList<String>();
 
-    /****************************************************************
+    /**
      * Populates the format maps for language lang.
      *
      * see termFormatMap is a HashMap of language keys and HashMap values. The
@@ -2526,7 +2526,7 @@ public class KB implements Serializable {
         language = lang;
     }
 
-    /*****************************************************************
+    /**
      * Clears all loaded format and termFormat maps, for all languages.
      */
     protected void clearFormatMaps() {
@@ -2553,7 +2553,7 @@ public class KB implements Serializable {
         return;
     }
 
-    /*****************************************************************
+    /**
      * This method creates a dictionary (Map) of SUO-KIF term symbols -- the keys --
      * and a natural language string for each key that is the preferred name for
      * the term -- the values -- in the context denoted by lang. If the Map has
@@ -2575,7 +2575,7 @@ public class KB implements Serializable {
         return (HashMap<String, String>) termFormatMap.get(lang);
     }
 
-    /*****************************************************************
+    /**
      * This method creates an association list (Map) of the natural language format
      * string and the relation name for which that format string applies. If the
      * map has already been built and the language hasn't changed, just return
@@ -2596,7 +2596,7 @@ public class KB implements Serializable {
         return formatMap.get(lang);
     }
 
-    /*****************************************************************
+    /**
      * Get the termFormat entry for a given term and language
      */
     public String getTermFormat(String lang, String term) {
@@ -2605,7 +2605,7 @@ public class KB implements Serializable {
         return langFormatMap.get(term);
     }
 
-    /*****************************************************************
+    /**
      * Deletes user assertions, both in the files and in the constituents list.
      */
     public void deleteUserAssertions() throws IOException {
@@ -2623,7 +2623,7 @@ public class KB implements Serializable {
         }
     }
 
-    /*****************************************************************
+    /**
      * Deletes the user assertions key in the constituents map, and then reloads the
      * KBs.
      */
@@ -2646,7 +2646,7 @@ public class KB implements Serializable {
         }
     }
 
-    /***************************************************************
+    /**
      */
     public KIF readConstituent(String filename) {
 
@@ -2681,7 +2681,7 @@ public class KB implements Serializable {
         return file;
     }
 
-    /***************************************************************
+    /**
      * A a formula or formulas into the KB
      */
     public void addConstituentInfo(KIF file) {
@@ -2730,7 +2730,7 @@ public class KB implements Serializable {
             constituents.add(file.filename);
     }
 
-    /***************************************************************
+    /**
      * Add a new KB constituent by reading in the file, and then merging the formulas with
      * the existing set of formulas.
      *
@@ -2749,7 +2749,7 @@ public class KB implements Serializable {
 
     }
 
-    /*****************************************************************
+    /**
      * Reload all the KB constituents.
      */
     public String reload() {
@@ -2799,7 +2799,7 @@ public class KB implements Serializable {
         return "";
     }
 
-    /*****************************************************************
+    /**
      * Write a KIF file consisting of all the formulas in the knowledge base.
      *
      * @param fname
@@ -2844,7 +2844,7 @@ public class KB implements Serializable {
         }
     }
 
-    /***************************************************************
+    /**
      * Create the XML configuration element.
      */
     public SimpleElement writeConfiguration() {
@@ -2861,13 +2861,13 @@ public class KB implements Serializable {
         return se;
     }
 
-    /***************************************************************
+    /**
      * A HashMap for holding compiled regular expression patterns. The map is initialized
      * by calling compilePatterns().
      */
     private static HashMap<String, ArrayList> REGEX_PATTERNS = null;
 
-    /*****************************************************************
+    /**
      * This method returns a compiled regular expression Pattern object indexed by
      * key.
      *
@@ -2887,7 +2887,7 @@ public class KB implements Serializable {
         return null;
     }
 
-    /*****************************************************************
+    /**
      * This method returns the int value that identifies the regular expression
      * binding group to be returned when there is a match.
      *
@@ -2907,7 +2907,7 @@ public class KB implements Serializable {
         return -1;
     }
 
-    /*****************************************************************
+    /**
      * This method compiles and stores regular expression Pattern objects and binding
      * group indexes as two cell ArrayList objects. Each ArrayList is indexed by
      * a String retrieval key.
@@ -2941,7 +2941,7 @@ public class KB implements Serializable {
         return;
     }
 
-    /*****************************************************************
+    /**
      * This method finds regular expression matches in an input string using a
      * compiled Pattern and binding group index retrieved with patternKey. If
      * the ArrayList accumulator is provided, match results are added to it and
@@ -2991,7 +2991,7 @@ public class KB implements Serializable {
         return ans;
     }
 
-    /*****************************************************************
+    /**
      * This method finds regular expression matches in an input string using a
      * compiled Pattern and binding group index retrieved with patternKey, and
      * returns the results, if any, in an ArrayList.
@@ -3009,7 +3009,7 @@ public class KB implements Serializable {
         return KB.getMatches(input, patternKey, null);
     }
 
-    /*****************************************************************
+    /**
      * This method retrieves Formulas by asking the query expression queryLit, and
      * returns the results, if any, in an ArrayList.
      *
@@ -3081,7 +3081,7 @@ public class KB implements Serializable {
         return ans;
     }
 
-    /*****************************************************************
+    /**
      * This method retrieves formulas by asking the query expression queryLit, and
      * returns the results, if any, in an ArrayList.
      *
@@ -3101,7 +3101,7 @@ public class KB implements Serializable {
         return askWithLiteral(input);
     }
 
-    /*****************************************************************
+    /**
      * This method retrieves the upward transitive closure of all Class names
      * contained in the input set. The members of the input set are not included
      * in the result set.
@@ -3122,7 +3122,7 @@ public class KB implements Serializable {
         return ans;
     }
 
-    /*****************************************************************
+    /**
      * This method retrieves all instances of the classes named in the input set.
      * TODO: Deprecated since it seems to do the opposite of what it should.
      * @param classNames
@@ -3140,7 +3140,7 @@ public class KB implements Serializable {
         return ans;
     }
 
-    /*****************************************************************
+    /**
      * This method retrieves all instances of the class named in the input String.
      *
      * @param className
@@ -3157,7 +3157,7 @@ public class KB implements Serializable {
         return new TreeSet<String>();
     }
 
-    /*****************************************************************
+    /**
      * This method tries to find or compute a valence for the input relation.
      *
      * @param relnName
@@ -3180,7 +3180,7 @@ public class KB implements Serializable {
             return kbCache.valences.get(relnName);
     }
 
-    /*****************************************************************
+    /**
      *
      * @return an ArrayList containing all predicates in this KB.
      */
@@ -3189,7 +3189,7 @@ public class KB implements Serializable {
         return new ArrayList<String>(kbCache.instanceOf.get("Predicate"));
     }
 
-    /*****************************************************************
+    /**
      *
      * @param obj
      *            Any object
@@ -3201,7 +3201,7 @@ public class KB implements Serializable {
         return (StringUtil.isNonEmptyString(obj) && Formula.empty((String) obj));
     }
 
-    /*****************************************************************
+    /**
      * A static utility method.
      *
      * @param obj
@@ -3216,7 +3216,7 @@ public class KB implements Serializable {
         return false;
     }
 
-    /*****************************************************************
+    /**
      * A static utility method.
      *
      * @param obj
@@ -3228,7 +3228,7 @@ public class KB implements Serializable {
         return (StringUtil.isNonEmptyString(obj) && (obj.equals("forall") || obj.equals("exists")));
     }
 
-    /*****************************************************************
+    /**
      * A static utility method.
      *
      * @param obj
@@ -3241,7 +3241,7 @@ public class KB implements Serializable {
         return (StringUtil.isNonEmptyString(obj) && (obj.equals("and") || obj.equals("or")));
     }
 
-    /***************************************************************
+    /**
      * Hyperlink "[from Wikipedia]" if it occurs
      */
     public String formatWikipedia(String documentation) {
@@ -3255,7 +3255,7 @@ public class KB implements Serializable {
                 "\">from Wikipedia]</a>");
     }
 
-    /***************************************************************
+    /**
      * Hyperlink terms identified with '&%' to the URL that brings up that term in the
      * browser. Handle (and ignore) suffixes on the term. For example
      * "&%Processes" would get properly linked to the term "Process", if present
@@ -3312,7 +3312,7 @@ public class KB implements Serializable {
         return formatted;
     }
 
-    /***************************************************************
+    /**
      * Save the contents of the current KB to a file.
      */
     public String writeInferenceEngineFormulas(TreeSet<String> forms) {
@@ -3360,7 +3360,7 @@ public class KB implements Serializable {
         return filename;
     }
 
-    /***************************************************************
+    /**
      * Creates InferenceEngine and loads all of the constituents into it.
      *
      * @param factory
@@ -3390,7 +3390,7 @@ public class KB implements Serializable {
         return res;
     }
 
-    /***************************************************************
+    /**
      * Checks for a Vampire executable, preprocesses all of the constituents
      */
     public void loadVampire() {
@@ -3445,7 +3445,7 @@ public class KB implements Serializable {
         }
         return;
     }
-    /***************************************************************
+    /**
      * Checks for a Leo executable, preprocesses all of the constituents
      */
     public void loadLeo() {
@@ -3470,7 +3470,7 @@ public class KB implements Serializable {
         return;
     }
 
-    /***************************************************************
+    /**
      * Starts EProver and collects, preprocesses and loads all of the constituents into
      * it.
      */
@@ -3515,7 +3515,7 @@ public class KB implements Serializable {
         return;
     }
 
-    /*****************************************************************
+    /**
      * Preprocess the knowledge base to TPTP. This includes "holds" prefixing,
      * ticking nested formulas, expanding row variables, and translating
      * mathematical relation operators. All the real work is done in
@@ -3579,7 +3579,7 @@ public class KB implements Serializable {
         return newTreeSet;
     }
 
-    /*****************************************************************
+    /**
      * @return a defensive copy of loadFormatMapsAttempted.
      */
     public ArrayList<String> getLoadFormatMapsAttempted() {
@@ -3587,7 +3587,7 @@ public class KB implements Serializable {
         return Lists.newArrayList(loadFormatMapsAttempted);
     }
 
-    /*****************************************************************
+    /**
      */
     public List<Pair> getSortedTermFrequency() {
 
@@ -3599,7 +3599,7 @@ public class KB implements Serializable {
         return termFrequencies;
     }
 
-    /*****************************************************************
+    /**
      */
     public TPTP3ProofProcessor runProver(String[] args, int timeout) {
 
@@ -3621,7 +3621,7 @@ public class KB implements Serializable {
         return tpp;
     }
 
-    /*****************************************************************
+    /**
      * Keep a count of axioms
      */
     public static void addToAxiomCount(HashMap<String,Integer> currentCount,
@@ -3635,7 +3635,7 @@ public class KB implements Serializable {
         }
     }
 
-    /*****************************************************************
+    /**
      * add to term format map
      * HashMap<String, HashMap<String, String>>();
      */
@@ -3651,7 +3651,7 @@ public class KB implements Serializable {
         forLang.put(term,format);
     }
 
-    /*****************************************************************
+    /**
      * Attempt to provide guidance on the likely cause of a contradiction
      * by removing the axioms involved in a contradiction one-by-one and trying
      * again. @see contradictionHelp()
@@ -3670,7 +3670,7 @@ public class KB implements Serializable {
         return sourceAxioms;
     }
 
-    /*****************************************************************
+    /**
      */
     private static void deletedOldInfFiles(String filename, String prefix) {
 
@@ -3681,7 +3681,7 @@ public class KB implements Serializable {
         FileUtil.delete(prefix + "tempt-stmt.tptp");
     }
 
-    /*****************************************************************
+    /**
      * Attempt to provide guidance on the likely cause of a contradiction
      * by removing the axioms involved in a contradiction one-by-one and trying
      * again.
@@ -3742,7 +3742,7 @@ public class KB implements Serializable {
                 FormulaUtil.formatCollection(removalSuccess));
     }
 
-    /***************************************************************
+    /**
      */
     public static void test() {
 
