@@ -1,8 +1,8 @@
 package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.KB;
-import com.articulate.sigma.wordNet.WordNet;
-import com.articulate.sigma.wordNet.WordNetUtilities;
+import com.articulate.sigma.wordnet.WordNet;
+import com.articulate.sigma.wordnet.WordNetUtilities;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;

@@ -13,7 +13,7 @@ Adam Pease apease@articulatesoftware.com
 import com.articulate.sigma.tp.Vampire;
 import com.articulate.sigma.trans.TPTP3ProofProcessor;
 import com.articulate.sigma.utils.StringUtil;
-import com.articulate.sigma.wordNet.WordNet;
+import com.articulate.sigma.wordnet.WordNet;
 
 public class PythonAPI {
 

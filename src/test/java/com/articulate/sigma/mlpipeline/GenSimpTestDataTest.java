@@ -4,7 +4,7 @@ import com.articulate.sigma.KBmanager;
 import com.articulate.sigma.nlg.LanguageFormatter;
 import com.articulate.sigma.utils.AVPair;
 import com.articulate.sigma.utils.StringUtil;
-import com.articulate.sigma.wordNet.WordNetUtilities;
+import com.articulate.sigma.wordnet.WordNetUtilities;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;

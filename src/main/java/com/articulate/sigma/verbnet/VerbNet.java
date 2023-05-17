@@ -18,7 +18,7 @@ import com.articulate.sigma.KBmanager;
 import com.articulate.sigma.SimpleDOMParser;
 import com.articulate.sigma.SimpleElement;
 import com.articulate.sigma.utils.StringUtil;
-import com.articulate.sigma.wordNet.WordNet;
+import com.articulate.sigma.wordnet.WordNet;
 
 import java.io.BufferedReader;
 import java.io.File;

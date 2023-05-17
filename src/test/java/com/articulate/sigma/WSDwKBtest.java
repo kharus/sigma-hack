@@ -1,8 +1,8 @@
 package com.articulate.sigma;
 
-import com.articulate.sigma.wordNet.WSD;
-import com.articulate.sigma.wordNet.WordNet;
-import com.articulate.sigma.wordNet.WordNetUtilities;
+import com.articulate.sigma.wordnet.WSD;
+import com.articulate.sigma.wordnet.WordNet;
+import com.articulate.sigma.wordnet.WordNetUtilities;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
