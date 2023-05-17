@@ -24,7 +24,7 @@ being present in the ontology in order to function as intended.  They are:
   TransitiveRelation
 */
 
-/*************************************************************************************************/
+/**/
 
 package com.articulate.sigma;
 
@@ -139,14 +139,14 @@ public class KBcache implements Serializable {
     /** Errors found during processing formulas */
     public static TreeSet<String> errors = new TreeSet<String>();
 
-    /****************************************************************
+    /**
      * empty constructor for testing only
      */
     public KBcache() {
 
     }
 
-    /****************************************************************
+    /**
      */
     public KBcache(KB kbin) {
 
@@ -169,7 +169,7 @@ public class KBcache implements Serializable {
         this.kb = kbin;
     }
 
-    /****************************************************************
+    /**
      */
     public KBcache(KBcache kbCacheIn, KB kbIn) {
 
@@ -244,7 +244,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /**************************************************************
+    /**
      * An ArrayList utility method
      */
     public int getArity(String rel) {
@@ -260,7 +260,7 @@ public class KBcache implements Serializable {
         return valences.get(rel);
     }
 
-    /** ***************************************************************
+    /**
      * An ArrayList utility method
      */
     private void arrayListReplace(ArrayList<String> al, int index, String newEl) {
@@ -274,7 +274,7 @@ public class KBcache implements Serializable {
         al.add(index,newEl);
     }
     
-    /** ***************************************************************
+    /**
      * Find whether the given child has the given parent for the given
      * transitive relation.  Return false if they are equal
      */
@@ -302,7 +302,7 @@ public class KBcache implements Serializable {
             return false;
     }
 
-    /** *************************************************************
+    /**
      * Returns true if i is an instance of c, else returns false.
      *
      * @param i A String denoting an instance.
@@ -326,7 +326,7 @@ public class KBcache implements Serializable {
             return false;
     }
 
-    /** ***************************************************************
+    /**
      * Find whether the given instance has the given parent class.  
      * Include paths the have transitive relations between instances such
      * as an Attribute that is a subAttribute of another instance, which
@@ -342,7 +342,7 @@ public class KBcache implements Serializable {
             return false;
     }
     
-    /** ***************************************************************
+    /**
      * Find whether the given class has the given parent class.  
      */
     public boolean subclassOf(String child, String parent) {
@@ -358,7 +358,7 @@ public class KBcache implements Serializable {
     	return false;
     }
 
-    /** ***************************************************************
+    /**
      * Find whether the given class is the subAttribute of the given parent class.
      */
     public boolean subAttributeOf(String child, String parent) {
@@ -374,7 +374,7 @@ public class KBcache implements Serializable {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      */
     public void addInstance(String child, String parent) {
 
@@ -386,7 +386,7 @@ public class KBcache implements Serializable {
         is.add(child);
     }
 
-    /** ***************************************************************
+    /**
      * Add a new instance from an existing one plus a suffix, updating the caches
      */
     public void extendInstance(String term, String suffix) {
@@ -452,7 +452,7 @@ public class KBcache implements Serializable {
             functions.add(newTerm);
     }
 
-    /** ***************************************************************
+    /**
      * Record instances and their explicitly defined parent classes
      */
     public void buildDirectInstances() {
@@ -474,7 +474,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Add transitive relationships to instances in the "instances" map
      */
     public void addTransitiveInstances() {
@@ -486,7 +486,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public void buildDisjointRelationsMap() {
 
@@ -514,7 +514,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * build a disjoint-relations-map which were explicitly defined in
      * "partition", "exhaustiveDecomposition", "disjointDecomposition"
      * and "disjoint" expressions;
@@ -556,7 +556,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * cache the transitive closure of disjoint relations
      */
     public void buildDisjointMap() {
@@ -587,7 +587,7 @@ public class KBcache implements Serializable {
         //        + " seconds to process " + disjoint.size() + " entries");
     }
 
-    /** ***************************************************************
+    /**
      * check if there are any two types in typeSet are disjoint or not;
      */
     public boolean checkDisjoint(KB kb, HashSet<String> typeSet) {
@@ -607,7 +607,7 @@ public class KBcache implements Serializable {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      * check if rel1 and rel2 are disjoint
      * return true if rel1 and rel2 are disjoint; otherwise return false.
      */
@@ -667,7 +667,7 @@ public class KBcache implements Serializable {
          **/
     }
 
-    /** ***************************************************************
+    /**
      * return true if rel1 and rel2 are explicitly defined as disjoint
      * relations; otherwise return false.
      */
@@ -684,7 +684,7 @@ public class KBcache implements Serializable {
             return false;
     }
 
-    /** ***************************************************************
+    /**
      * Cache whether a given instance has a given parent class.  
      * Include paths the have transitive relations between instances such
      * as an Attribute that is a subAttribute of another instance, which
@@ -747,7 +747,7 @@ public class KBcache implements Serializable {
         buildDirectInstances();
     }
 
-    /** ***************************************************************
+    /**
      * since domains are collected before we know the instances of
      * VariableArityRelation we need to go back and correct valences
      */
@@ -761,7 +761,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * @return the most specific parent of a set of classes
      */
     public String mostSpecificParent(HashSet<String> p1) {
@@ -783,7 +783,7 @@ public class KBcache implements Serializable {
         return countIndex.first().value;
     }
 
-    /** ***************************************************************
+    /**
      * @return the most specific parent of the two parameters or null if
      * there is no common parent.  TODO: Take into
      * account that there are instances, classes, relations, and attributes,
@@ -821,7 +821,7 @@ public class KBcache implements Serializable {
         return mostSpecificParent(p1);
     }
 
-    /** ***************************************************************
+    /**
      */
     public String getCommonChild(HashSet<String> t2) {
 
@@ -836,7 +836,7 @@ public class KBcache implements Serializable {
         return common;
     }
 
-    /** ***************************************************************
+    /**
      * return parent classes for the given cl from subclass expressions.
      */
     public Set<String> getParentClasses(String cl) {
@@ -848,7 +848,7 @@ public class KBcache implements Serializable {
             return null;
     }
 
-    /** ***************************************************************
+    /**
      * return child relations for the given rel from subrelation expressions.
      */
     public HashSet<String> getChildRelations(String rel) {
@@ -860,7 +860,7 @@ public class KBcache implements Serializable {
             return null;
     }
 
-    /** ***************************************************************
+    /**
      * return child classes for the given cl from subclass expressions.
      */
     public HashSet<String> getChildClasses(String cl) {
@@ -872,7 +872,7 @@ public class KBcache implements Serializable {
             return null;
     }
 
-    /** ***************************************************************
+    /**
      * return child term for the given cl from rel expressions.
      */
     public HashSet<String> getChildTerms(String cl, String rel) {
@@ -884,7 +884,7 @@ public class KBcache implements Serializable {
             return null;
     }
 
-    /** ***************************************************************
+    /**
      * return child classes for the given cl from subclass expressions.
      */
     public HashSet<String> getChildInstances(String cl) {
@@ -903,7 +903,7 @@ public class KBcache implements Serializable {
             return null;
     }
 
-    /** ***************************************************************
+    /**
      * return classes for the given instance cl.
      *
      * For example, if we know (instance UnitedStates Nation), then
@@ -919,7 +919,7 @@ public class KBcache implements Serializable {
             return new HashSet<String>();
     }
 
-    /** ***************************************************************
+    /**
      * Get all instances for the given input class
      *
      * For example, given the class "Nation", getInstancesForType(Nation)
@@ -971,14 +971,14 @@ public class KBcache implements Serializable {
         return instancesForType2;
     }
 
-    /** ***************************************************************
+    /**
      */
     public ArrayList<String> getSignature(String rel) {
 
         return signatures.get(rel);
     }
 
-    /** ***************************************************************
+    /**
      * Get the range (return type) of a Function.
      * @return null if argument is not a function
      */
@@ -992,7 +992,7 @@ public class KBcache implements Serializable {
         return sig.get(0);
     }
 
-    /** ***************************************************************
+    /**
      * Get the HashSet of the given arguments from an ArrayList of Formulas.
      */
     public static HashSet<String> collectArgFromFormulas(int arg, List<Formula> forms) {
@@ -1007,7 +1007,7 @@ public class KBcache implements Serializable {
         return subs;
     }
    
-    /** ***************************************************************
+    /**
      * Do a proper search for relations (including Functions), utilizing
      * the formal definitions, rather than the convention of initial
      * lower case letter.  This means getting any instance of Relation
@@ -1041,7 +1041,7 @@ public class KBcache implements Serializable {
         }
     }
     
-    /** ***************************************************************
+    /**
      * Do a proper search for relations (including Functions), utilizing
      * the formal definitions, rather than the convention of initial
      * lower case letter.  This means getting any instance of Relation
@@ -1079,7 +1079,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public void buildFunctionsSet() {
 
@@ -1091,7 +1091,7 @@ public class KBcache implements Serializable {
                 predicates.add(s);
     }
 
-    /** ***************************************************************
+    /**
      * Find the parent "roots" of any transitive relation - terms that
      * appear only as argument 2
      */
@@ -1107,7 +1107,7 @@ public class KBcache implements Serializable {
         return result;
     }
     
-    /** ***************************************************************
+    /**
      * Find the child "roots" of any transitive relation - terms that
      * appear only as argument 1
      */
@@ -1122,7 +1122,7 @@ public class KBcache implements Serializable {
         return result;
     }
     
-    /** ***************************************************************
+    /**
      * Build "parent" relations based on breadth first search algorithm.
      */
     private void breadthFirstBuildParents(String root, String rel) {
@@ -1168,7 +1168,7 @@ public class KBcache implements Serializable {
         }
     }
     
-    /** ***************************************************************
+    /**
      * Build "children" relations based on breadth first search algorithm.
      * Note that this routine expects to build "up" from the leaves.
      */
@@ -1218,11 +1218,11 @@ public class KBcache implements Serializable {
         insts.addAll(relChildren.keySet());
     }
 
-    /** ***************************************************************
+    /**
      */
     private HashSet<String> visited = new HashSet<>();
 
-    /** ***************************************************************
+    /**
      * Build "children" relations recursively from the root
      */
     private HashSet<String> buildChildrenNew(String term, String rel) {
@@ -1262,7 +1262,7 @@ public class KBcache implements Serializable {
         return collectedChildren;
     }
 
-    /** ***************************************************************
+    /**
      * Find all instances
      */
     public void buildInsts() {
@@ -1282,7 +1282,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * For each transitive relation, find its transitive closure.  If
      * rel is transitive, and (rel A B) and (rel B C) then the entry for
      * rel is a HashMap where the key A has value ArrayList of {B,C}.
@@ -1305,7 +1305,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * For each transitive relation, find its transitive closure.  If
      * rel is transitive, and (rel A B) and (rel B C) then the entry for
      * rel is a HashMap where the key A has value ArrayList of {B,C}. Note
@@ -1330,7 +1330,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Fill an array of String with the specified String up to but
      * not including the index, starting from the 1st argument and
      * ignoring the 0th argument.
@@ -1342,7 +1342,7 @@ public class KBcache implements Serializable {
                 ar[i] = st;        
     }
     
-    /** ***************************************************************
+    /**
      * Fill an array of String with the specified String up to but
      * not including the index, starting from the end of the array
      */
@@ -1353,7 +1353,7 @@ public class KBcache implements Serializable {
                 ar.add(st);        
     }
     
-    /** ***************************************************************
+    /**
      * Build the argument type list for every relation. If the argument
      * is a domain subclass, append a "+" to the argument type.  If
      * no domain is defined for the given relation and argument position,
@@ -1436,7 +1436,7 @@ public class KBcache implements Serializable {
         inheritDomains();
     }
     
-    /** ***************************************************************
+    /**
      * Note that this routine forces child relations to have arguments
      * that are the same or more specific than their parent relations.
      */
@@ -1490,7 +1490,7 @@ public class KBcache implements Serializable {
         }
     }
     
-    /** *************************************************************
+    /**
      * Delete and writes the cache .kif file then call addConstituent() so
      * that the file can be processed and loaded by the inference engine.
      * This is not needed since we have storeCacheAsFormulas()
@@ -1554,7 +1554,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /** *************************************************************
+    /**
      * Add the cached formulas as though there were from a file
      * There's no need to write the file since if it hasn't been created,
      * it must be created new.  If it has been created already, then it
@@ -1602,7 +1602,7 @@ public class KBcache implements Serializable {
         System.out.println("KBcache.storeCacheAsFormulas(): cached statements: " + cacheCount);
     }
 
-    /** ***************************************************************
+    /**
      * Find domain and domainSubclass definitions that impact a child
      * relation.  If the type of an argument is less specific than
      * the same type of a parent's argument, use that of the parent.
@@ -1617,7 +1617,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Compile the set of transitive relations that are between instances  
      */
     public void buildInstTransRels() {
@@ -1647,7 +1647,7 @@ public class KBcache implements Serializable {
         }        
     }
     
-    /** ***************************************************************
+    /**
      * Main entry point for the class.  
      */
     public void buildCaches() {
@@ -1707,7 +1707,7 @@ public class KBcache implements Serializable {
         initialized = true;
     }
 
-    /** ***************************************************************
+    /**
      * Copy all relevant information from a VariableArityRelation to a new
      * predicate that is a particular fixed arity. Fill the signature from
      * final argument type in the predicate
@@ -1733,7 +1733,7 @@ public class KBcache implements Serializable {
         kb.terms.add(pred);
     }
 
-    /** ***************************************************************
+    /**
      * @return the type of the last argument to the given relation,
      * which will be the type of all the expanded row variables
      */
@@ -1746,7 +1746,7 @@ public class KBcache implements Serializable {
         return type;
     }
 
-    /** *************************************************************
+    /**
      */
     public static void showState(KBcache nkbc) {
 
@@ -1826,7 +1826,7 @@ public class KBcache implements Serializable {
             System.out.println(inst + ": " + nkbc.instances.get(inst));
     }
 
-    /** *************************************************************
+    /**
      */
     public static void showAll(KBcache nkbc) {
 
@@ -1841,7 +1841,7 @@ public class KBcache implements Serializable {
         System.out.println("KBcache.showAll(): FormOfGovernment: " + nkbc.getInstancesForType("FormOfGovernment"));
     }
 
-    /** *************************************************************
+    /**
      */
     public static void showChildren(KBcache nkbc) {
 
@@ -1877,7 +1877,7 @@ public class KBcache implements Serializable {
                 classes);
     }
 
-    /** *************************************************************
+    /**
      * Informational routine to show the sizes of the caches as a way
      * to determine what might be the best sizes to pre-allocate, relative
      * to the number of statements in a knowledge base
@@ -1912,7 +1912,7 @@ public class KBcache implements Serializable {
         System.out.println("KBcache.showSizes(): disjointRelations size: " + nkbc.disjointRelations.size());
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void printHelp() {
 
@@ -1925,7 +1925,7 @@ public class KBcache implements Serializable {
         System.out.println("  -t - show complete sTate of cache");
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void main(String[] args) {
 

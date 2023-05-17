@@ -33,7 +33,7 @@ public class CELT {
     private BufferedWriter _writer; 
     private BufferedReader _error; 
 
-    /** *************************************************************
+    /**
      * Create a running instance of CELT.
      *
      * @throws IOException should not normally be thrown unless either
@@ -96,7 +96,7 @@ public class CELT {
         } while (line == null || !line.equalsIgnoreCase("Done initializing."));
     }
 
-    /** *************************************************************
+    /**
      * Submit a sentence, terminated by a period or question mark and
      * return a KIF formula that is equivalent.
      *
@@ -162,7 +162,7 @@ public class CELT {
         }        
     }
 
-    /** *************************************************************
+    /**
      */
     public static void main(String[] args) {
 

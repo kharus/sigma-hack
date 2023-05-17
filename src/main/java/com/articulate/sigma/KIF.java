@@ -28,7 +28,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 
-/******************************************************************
+/**
  * A class designed to read a file in SUO-KIF format into memory. See
  * <http://sigmakee.cvs.sourceforge.net/viewvc/sigmakee/sigma/suo-kif.pdf> for a
  * language specification. readFile() and writeFile() are the primary entry
@@ -38,14 +38,14 @@ import java.util.*;
  */
 public class KIF {
 
-    /*****************************************************************
+    /**
      * A numeric constant denoting normal parse mode, in which syntax constraints are
      * enforced.
      */
     public static final int NORMAL_PARSE_MODE = 1;
     public static int count = 0;
 
-    /****************************************************************
+    /**
      * A numeric constant denoting relaxed parse mode, in which fewer syntax constraints
      * are enforced than in NORMAL_PARSE_MODE.
      */
@@ -85,12 +85,12 @@ public class KIF {
     /** errors generated during parsing */
     public TreeSet<String> errorSet = new TreeSet<String>();
 
-    /*****************************************************************
+    /**
      */
     public KIF() {
     }
 
-    /*****************************************************************
+    /**
      * Pre-allocate space for hashes, based on file size
      */
     public KIF(String fname) {
@@ -104,7 +104,7 @@ public class KIF {
         filename = fname;
     }
 
-    /*****************************************************************
+    /**
      * @return long file size in bytes handling any errors
      */
     public long getKIFFileSize(String filename) {
@@ -124,7 +124,7 @@ public class KIF {
         return 0;
     }
 
-    /*****************************************************************
+    /**
      * @return int Returns an integer value denoting the current parse mode.
      */
     public int getParseMode() {
@@ -132,7 +132,7 @@ public class KIF {
         return this.parseMode;
     }
 
-    /***************************************************************** 
+    /** 
      * Sets the current parse mode to the input value mode.
      *
      * @param mode
@@ -144,7 +144,7 @@ public class KIF {
         this.parseMode = mode;
     }
 
-    /****************************************************************
+    /**
      * This routine sets up the StreamTokenizer_s so that it parses SUO-KIF. = < >
      * are treated as word characters, as are normal alphanumerics. ; is the
      * line comment character and " is the quote character.
@@ -170,7 +170,7 @@ public class KIF {
         st.eolIsSignificant(true);
     }
 
-    /*****************************************************************
+    /**
      */
     private void display(StreamTokenizer_s st, boolean inRule, boolean inAntecedent, boolean inConsequent,
                          int argumentNum, int parenLevel, String key) {
@@ -197,7 +197,7 @@ public class KIF {
         result.append(key);
     }
 
-    /*****************************************************************
+    /**
      * This method has the side effect of setting the contents of formulaMap and
      * formulas as it parses the file. It throws a ParseException with file line
      * numbers if fatal errors are encountered during parsing. Keys in variable
@@ -433,7 +433,7 @@ public class KIF {
         return warningSet;
     }
 
-    /*****************************************************************
+    /**
      * This routine creates a key that relates a token in a logical statement to the
      * entire statement. It prepends to the token a string indicating its
      * position in the statement. The key is of the form type-[num]-term, where
@@ -486,7 +486,7 @@ public class KIF {
         return (key);
     }
 
-    /****************************************************************
+    /**
      * Read a KIF file.
      *
      * @param fname - the full pathname of the file.
@@ -529,7 +529,7 @@ public class KIF {
         return;
     }
 
-    /****************************************************************
+    /**
      * Write a KIF file.
      *
      * @param fname - the name of the file to write, including full path.
@@ -562,7 +562,7 @@ public class KIF {
         return;
     }
 
-    /*****************************************************************
+    /**
      * Return an ArrayList of Formula in the same lexical order as their
      * source file
      */
@@ -574,7 +574,7 @@ public class KIF {
         return ordered;
     }
 
-    /*****************************************************************
+    /**
      * Parse a single formula.
      */
     public String parseStatement(String formula) {
@@ -596,7 +596,7 @@ public class KIF {
         return null;
     }
 
-    /*****************************************************************
+    /**
      * Writes the TPTP output to a file.
      */
     public static void tptpOutputTest(String filename) throws IOException {
@@ -647,7 +647,7 @@ public class KIF {
         }
     }
 
-    /*****************************************************************
+    /**
      * Test method for this class.
      */
     public static void test() {
@@ -669,7 +669,7 @@ public class KIF {
         System.out.println(f.car());
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showHelp() {
 
@@ -681,7 +681,7 @@ public class KIF {
         System.out.println("  t - run a test");
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void main(String[] args) throws IOException {
 

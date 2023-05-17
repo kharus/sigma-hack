@@ -7,11 +7,11 @@ public class Derivation implements Serializable {
     public String operator = "input";
     public ArrayList<Formula> parents = new ArrayList<>();
 
-    /** ***************************************************************
+    /**
      */
     public Derivation() {}
 
-    /** ***************************************************************
+    /**
      */
     public Derivation(String op, ArrayList<Formula> par) {
 
@@ -20,7 +20,7 @@ public class Derivation implements Serializable {
             parents.addAll(par);
     }
 
-    /** ***************************************************************
+    /**
      */
     public Derivation deepCopy() {
 
@@ -34,7 +34,7 @@ public class Derivation implements Serializable {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * Return a string for the derivation
      */
     public String toString() {
@@ -52,7 +52,7 @@ public class Derivation implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Return a list of all derived objects that are used in this
      * derivation.
      */

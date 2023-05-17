@@ -32,7 +32,7 @@ public class WSD {
     public static int gap = 5;
     public static boolean debug = false;
 
-    /** ***************************************************************
+    /**
      * Collect all the SUMO terms that are found in the sentence.
      */
     public static ArrayList<String> collectSUMOFromWords(String sentence) {
@@ -48,7 +48,7 @@ public class WSD {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static boolean polysemous(String word) {
 
@@ -60,7 +60,7 @@ public class WSD {
         return true;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static boolean polysemous(String word, int pos) {
 
@@ -86,7 +86,7 @@ public class WSD {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      * Collect all the synsets that represent the best guess at
      * meanings for all the words in a text given a larger linguistic
      * context.  
@@ -136,7 +136,7 @@ public class WSD {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * Return the best guess at the synset for the given word in the
      * context of the sentence.  @return the 9-digit synset but only
      * if there's a reasonable amount of data, otherwise return the most
@@ -186,7 +186,7 @@ public class WSD {
             return getBestDefaultSenseWithDomain(word,sumo);
     }
 
-    /** ***************************************************************
+    /**
      * Return the best guess at the synset for the given word in the
      * context of the sentence.  @return the 9-digit synset but only
      * if there's a reasonable amount of data, otherwise return the most
@@ -220,7 +220,7 @@ public class WSD {
             return getBestDefaultSense(word);
     }
 
-    /** ***************************************************************
+    /**
      * Return the best guess at the synset for the given word in the
      * context of the sentence with the given POS.
      * @param word - word to disambiguate
@@ -266,7 +266,7 @@ public class WSD {
             return getBestDefaultSense(word,pos);
     }
 
-    /** ***************************************************************
+    /**
      * Check if a sense has been created from a domain ontology and give
      * it priority.  Returns an ArrayList consisting of
      * a 9-digit WordNet synset, and the score
@@ -305,7 +305,7 @@ public class WSD {
         return null;
     }
         
-    /** ***************************************************************
+    /**
      * Return a list of scored guesses at the synset for the given word in the
      * context of the sentence.  Returns a TreeSet consisting AVPairs of
      * the key score reflecting the quality of the guess the given synset is the right one
@@ -388,7 +388,7 @@ public class WSD {
         */
     }
     
-    /** ***************************************************************
+    /**
      * Get the SUMO term that represents the best guess at
      * meaning for a word.  This method attempts to convert to root form.
      */
@@ -420,7 +420,7 @@ public class WSD {
         return "";
     }
 
-    /** ***************************************************************
+    /**
      * Get the SUMO term that represents the best guess at
      * meaning for a word.
      */
@@ -445,7 +445,7 @@ public class WSD {
         return "";
     }
 
-    /** ***************************************************************
+    /**
      * Get the POS-prefixed synset that represents the best guess at
      * meaning for a word.  If there is no wordFrequency entry for the
      * given word then it returns any sense. @return a 9 digit synset number.
@@ -516,14 +516,14 @@ public class WSD {
         return "";
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String getBestDefaultSense(String word) {
 
         return getBestDefaultSenseWithDomain(word,"");
     }
     
-    /** ***************************************************************
+    /**
      * Get the POS-prefixed synset that represents the best guess at
      * meaning for a word with a given part of speech.  It picks the
      * most frequent sense for the word in the Brown Corpus.
@@ -596,7 +596,7 @@ public class WSD {
         return synset;
     }
 
-    /** ***************************************************************
+    /**
      *  @return each line of a file into an array.  The first element of
      *  each interior array is the whole line, and subsequent elements
      *  are the individual words.
@@ -633,7 +633,7 @@ public class WSD {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      *  @return each line of a file into an array of String.
      */
     public static ArrayList<String> readFile(String filename) {
@@ -663,7 +663,7 @@ public class WSD {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      *  Extract SUMO terms from a file assuming one sentence per line
      *  @return a Map of SUMO term keys and integer counts of their
      *  appearance
@@ -710,7 +710,7 @@ public class WSD {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      *  Extract SUMO terms from a file assuming one sentence per line
      *  print SUMO term keys and integer counts of their
      *  appearance
@@ -725,7 +725,7 @@ public class WSD {
         }
     }
 
-    /** ***************************************************************
+    /**
      *  Extract SUMO terms from a file assuming one sentence per line
      *  @return a Map of SUMO term keys and integer counts of their
      *  appearance
@@ -761,7 +761,7 @@ public class WSD {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      *  A method used only for testing.  It should not be called
      *  during normal operation.
      */
@@ -778,7 +778,7 @@ public class WSD {
         System.out.println("INFO in WSD.testWordWSD(): " + WSD.getBestDefaultSense("kick"));
     }
     
-    /** ***************************************************************
+    /**
      *  A method used only for testing.  It should not be called
      *  during normal operation.
      */
@@ -812,7 +812,7 @@ public class WSD {
             System.out.println("INFO in WSD.testSentenceWSD(): word: " + s + " SUMO: " + WSD.getBestDefaultSUMO(s));
     }
 
-    /** ***************************************************************
+    /**
      *  A method used only for testing.  It should not be called
      *  during normal operation.
      */
@@ -835,7 +835,7 @@ public class WSD {
             System.out.println("INFO in WSD.testSentenceWSD(): word: " + s + " SUMO: " + WSD.getBestDefaultSUMO(s));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void interactive() {
 
@@ -856,7 +856,7 @@ public class WSD {
         }
     }
 
-    /** ***************************************************************
+    /**
      *  A main method, used only for testing.  It should not be called
      *  during normal operation.
      */

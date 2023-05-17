@@ -46,7 +46,7 @@ public class Verb {
 
     public HashSet<Frame> frames = new HashSet<>();
 
-    /** *************************************************************
+    /**
      */
     public Member readMember(SimpleElement mem) {
 
@@ -72,7 +72,7 @@ public class Verb {
         return m;
     }
 
-    /** *************************************************************
+    /**
      */
     public void readMembers(SimpleElement verb) {
 
@@ -89,7 +89,7 @@ public class Verb {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static ArrayList<AVPair> readSelrestrs(SimpleElement selrestrs) {
 
@@ -118,7 +118,7 @@ public class Verb {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     public Role readThemeRole(SimpleElement themrole) {
 
@@ -136,7 +136,7 @@ public class Verb {
         return r;
     }
 
-    /** *************************************************************
+    /**
      */
     public void readThemeRoles(SimpleElement themrole) {
 
@@ -154,7 +154,7 @@ public class Verb {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public void readFrames(SimpleElement verb) {
 
@@ -173,7 +173,7 @@ public class Verb {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public void readSubclasses(SimpleElement verb) {
 
@@ -188,7 +188,7 @@ public class Verb {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public Verb readVerb(SimpleElement verb) {
 

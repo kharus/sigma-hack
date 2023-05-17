@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 
 public class MultiWordsTest extends UnitTestBase {
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testVerbMultiWordKickBucket1() {
@@ -43,7 +43,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals("200358431", s);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testVerbMultiWordKickBucket2() {
@@ -55,7 +55,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals("200358431", s);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testVerbMultiWordCatsAndDogs1() {
@@ -68,7 +68,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals(0, synset.size());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testVerbMultiWordCatsAndDogs2() {
@@ -81,7 +81,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals(1, synset.size());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testVerbMultiWordCatsAndDogs3() {
@@ -95,7 +95,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals("202758033", synset.get(0));
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testVerbMultiWordCatsAndDogs4() {
@@ -109,7 +109,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals(0, synset.size());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testVerbMultiWordCatsAndDogs5() {
@@ -123,7 +123,7 @@ public class MultiWordsTest extends UnitTestBase {
         //WordNet.wn.getSUMO
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testNounMultiWord1() {
@@ -137,7 +137,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals(0, synset.size());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testNounMultiWord2() {

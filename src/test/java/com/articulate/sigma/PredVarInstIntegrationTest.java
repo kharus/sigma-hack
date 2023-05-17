@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class PredVarInstIntegrationTest extends IntegrationTestBase {
 
-    /** ***************************************************************
+    /**
      */
     @Ignore
     public void testInstantiatePredVars1() {
@@ -1411,7 +1411,7 @@ public class PredVarInstIntegrationTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindPredVarTypesStmt3() {

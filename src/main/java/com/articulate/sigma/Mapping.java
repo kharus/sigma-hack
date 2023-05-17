@@ -38,7 +38,7 @@ public class Mapping {
         new TreeMap<String,TreeMap<Integer,String>>();
     public static char termSeparator = '!';
 
-    /** *************************************************************
+    /**
      *  Write synonymousExternalConcept expressions for term pairs
      *  given in cbset.  They are strings of the form
      *  [checkbox|subcheckbox]_[T_]name1-name2
@@ -118,7 +118,7 @@ public class Mapping {
         return "Wrote: " + filename;
     }
 
-    /** *************************************************************
+    /**
      *  rename terms in KB kbname2 to conform to names in kbname1
      *  @return error messages if necessary
      */
@@ -184,7 +184,7 @@ public class Mapping {
         return "Successful renaming of terms in " + kbname2 + " to those in " + kbname1;
     }
 
-    /** *************************************************************
+    /**
     *   Convert a YAGO file into KIF
      */
     public static void convertYAGO(String file, String relName) throws IOException {
@@ -213,7 +213,7 @@ public class Mapping {
         }
     }
 
-    /** *************************************************************
+    /**
     *   Get the termFormat label for a term.  Return only the first
     *   such label.  Return null if no label.
      */
@@ -231,7 +231,7 @@ public class Mapping {
         return null;
     }
 
-    /** *************************************************************
+    /**
     *   @return the minimum of two ints
      */
     private static int min(int n1, int n2) {
@@ -243,7 +243,7 @@ public class Mapping {
     }
 
 
-    /** *************************************************************
+    /**
      */
     private static int stringMatch(String t1, String t2, String matchMethod) {
 
@@ -254,7 +254,7 @@ public class Mapping {
         return getSubstringDistance(t1,t2);
     }
 
-    /** *************************************************************
+    /**
      * Map ontologies through 4 methods:
      * (1) identical term names
      * (2) substrings of term names are equal
@@ -350,7 +350,7 @@ public class Mapping {
         mappings = result;
     }
 
-    /** *************************************************************
+    /**
      *   check whether a term is valid (worthy of being compared)
      */
     public static boolean isValidTerm(String term) {
@@ -358,7 +358,7 @@ public class Mapping {
         return term.length() > 2 && !Formula.isLogicalOperator(term);
     }
 
-    /** *************************************************************
+    /**
      *   Normalize a string by replacing all non-letter, non-digit
      *   characters with spaces, adding spaces on capitalization
      *   boundaries, and then converting to lower case
@@ -386,7 +386,7 @@ public class Mapping {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Substring Mapping Method: returns 1 if the two strings
      *  are identical, scores >1 if one string is a substring of
      *  the other, and Integer.MAX_VALUE if there is no substring
@@ -413,7 +413,7 @@ public class Mapping {
     }
 
 
-    /** *************************************************************
+    /**
      */
     private static int minimum(int a, int b, int c) {
         int ans = a;
@@ -422,7 +422,7 @@ public class Mapping {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      *  LevenshteinDistance(char s[1..m], char t[1..n])
      *  courtesy of Wikipedia
      *  http://en.wikipedia.org/wiki/Levenshtein_distance
@@ -462,7 +462,7 @@ public class Mapping {
         return d[m-1][n-1];
      }
 
-    /** *************************************************************
+    /**
      *  Jaro-Winkler Mapping Method
      *  implemented by Gerard de Melo
      */
@@ -550,7 +550,7 @@ public class Mapping {
         return (int) (SCALING_FACTOR * (1.0 - jaroWinklerScore));
     }    
 
-    /** *************************************************************
+    /**
      * A test method.
      */
     private static void timingTest() {
@@ -607,7 +607,7 @@ public class Mapping {
         System.out.println("Substring: " + ((System.currentTimeMillis() - t1) / 1000.0) + " seconds");
     }
 
-    /** *************************************************************
+    /**
      * A test method.
      */
     private static void printTest(String s1, String s2) {
@@ -624,7 +624,7 @@ public class Mapping {
         System.out.println();
     }
 
-    /** *************************************************************
+    /**
      * A test method.
      */
     public static void main(String args[]) {
@@ -656,7 +656,7 @@ public class Mapping {
         //System.out.println(m.normalize("Philippe_Mex-s"));
         //System.out.println(m.normalize("AntiguaAndBarbuda"));
         //System.out.println(m.normalize("SUMO"));
-/***
+/**
         try {
             convertYAGO("TypeExtractor.txt","citizen");
         } 

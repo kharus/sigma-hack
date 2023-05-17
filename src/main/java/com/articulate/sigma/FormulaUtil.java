@@ -9,7 +9,7 @@ import com.articulate.sigma.utils.*;
  */
 public class FormulaUtil {
 
-    /** ***************************************************************
+    /**
      * Get the antecedent of an implication.  If not a rule, return null
      */
     public static String antecedent (Formula f) {
@@ -19,7 +19,7 @@ public class FormulaUtil {
         return f.getStringArgument(1);
     }
 
-    /** ***************************************************************
+    /**
      * Get the consequent of an implication.  If not a rule, return null
      */
     public static String consequent (Formula f) {
@@ -29,7 +29,7 @@ public class FormulaUtil {
         return f.getStringArgument(2);
     }
 
-    /** ***************************************************************
+    /**
      * Must check that this is a simple clause before calling!
      */
     public static String toProlog(Formula f) {
@@ -55,7 +55,7 @@ public class FormulaUtil {
         return sb.toString();
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String formatCollection(Collection<Formula> c) {
 
@@ -65,7 +65,7 @@ public class FormulaUtil {
         return sb.toString();
     }
 
-    /** ***************************************************************
+    /**
      * @return a string consisting of a literal with the given predicate
      * that also contains a row variable, or null otherwise
      */
@@ -85,7 +85,7 @@ public class FormulaUtil {
         return null;
     }
 
-    /** ***************************************************************
+    /**
      * Test whether a forumula is suitable for theorem proving or if
      * it's just a documentation statement
      */
@@ -103,7 +103,7 @@ public class FormulaUtil {
             return false;
     }
 
-    /*******************************************************************************************
+    /**
      * Generates all permutations of the given size which are valid according to the given callback function.
      */
     public static List<int[]> getPermutations(int size, BiPredicate<Integer, Integer> validateFn) {
@@ -117,7 +117,7 @@ public class FormulaUtil {
         return result;
     }
 
-    /** ***************************************************************************************
+    /**
      */
     private static void permutation(int[] prefix, int[] array, List<int[]> permutations,
                                     BiPredicate<Integer, Integer> validateFn) {
@@ -145,7 +145,7 @@ public class FormulaUtil {
         }
     }
 
-    /****************************************************************
+    /**
      * Returns a new ArrayList formed by extracting in order the
      * top-level members of kifListAsString, which is assumed to be
      * the String representation of a SUO-KIF (LISP) list.
@@ -169,7 +169,7 @@ public class FormulaUtil {
         return ans;
     }
 
-    /****************************************************************
+    /**
      * Performs a depth-first search of tree, replacing all terms
      * matching oldPattern with newTerm.
      *
@@ -216,7 +216,7 @@ public class FormulaUtil {
         return result;
     }
 
-    /** ********************************************************************************************
+    /**
      * Factory method for the memo map
      */
     public static FormulaMatchMemoMapKey createFormulaMatchMemoMapKey(String s1, String s2) {
@@ -235,7 +235,7 @@ public class FormulaUtil {
             this.f2 = f2;
         }
 
-        /*******************************************************************************
+        /**
          */
         @Override
         public boolean equals(Object o) {
@@ -251,7 +251,7 @@ public class FormulaUtil {
             return true;
         }
 
-        /** ******************************************************************************************
+        /**
          */
         @Override
         public int hashCode() {
@@ -261,7 +261,7 @@ public class FormulaUtil {
             return result;
         }
 
-        /***********************************************************************************************
+        /**
          */
         @Override
         public String toString() {

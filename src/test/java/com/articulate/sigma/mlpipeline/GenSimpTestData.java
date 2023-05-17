@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** ***************************************************************
+/**
  * This code generates language-logic pairs designed for training
  * a machine learning system.  Several approaches are used
  * - instantiate relations with arguments of appropriate types
@@ -88,7 +88,7 @@ public class GenSimpTestData {
     public static ArrayList<String> others = new ArrayList<>(); // when next noun is same as a previous one
     public static HashMap<String,String> prepPhrase = new HashMap<>();
 
-    /** ***************************************************************
+    /**
      */
     public GenSimpTestData() {
 
@@ -101,7 +101,7 @@ public class GenSimpTestData {
         genProcTable();
     }
 
-    /** ***************************************************************
+    /**
      * estimate the number of sentences that will be produced
      */
     public static void initNumbers() {
@@ -119,7 +119,7 @@ public class GenSimpTestData {
         numbers.add("ten");
     }
 
-    /** ***************************************************************
+    /**
      * Politeness wrappers for imperatives
      */
     public static void initRequests() {
@@ -132,7 +132,7 @@ public class GenSimpTestData {
         requests.add("Please ");
     }
 
-    /** ***************************************************************
+    /**
      * Politeness wrappers for imperatives
      */
     public static void initEndings() {
@@ -142,7 +142,7 @@ public class GenSimpTestData {
         endings.add("for me");
     }
 
-    /** ***************************************************************
+    /**
      * Politeness wrappers for imperatives
      */
     public static void initOthers() {
@@ -152,7 +152,7 @@ public class GenSimpTestData {
         others.add("the other ");
     }
 
-    /** ***************************************************************
+    /**
      * Politeness wrappers for imperatives
      */
     public static void initPrepPhrase() {
@@ -175,7 +175,7 @@ public class GenSimpTestData {
         prepPhrase.put("wading","in ");
     }
 
-    /** ***************************************************************
+    /**
      * estimate the number of sentences that will be produced
      */
     public static String printTense(int t) {
@@ -193,7 +193,7 @@ public class GenSimpTestData {
         return "";
     }
 
-    /** ***************************************************************
+    /**
      * estimate the number of sentences that will be produced
      */
     public static long estimateSentCount(LFeatures lfeat) {
@@ -210,7 +210,7 @@ public class GenSimpTestData {
         return count;
     }
 
-    /** ***************************************************************
+    /**
      * handle the case where the argument type is a subclass
      */
     public static String handleClass(String t, HashMap<String, ArrayList<String>> instMap) {
@@ -234,7 +234,7 @@ public class GenSimpTestData {
         return arg;
     }
 
-    /** ***************************************************************
+    /**
      * generate new SUMO statements for relations using the set of
      * available instances for each argument type and output English
      * paraphrase
@@ -293,7 +293,7 @@ public class GenSimpTestData {
         return formsList;
     }
 
-    /** ***************************************************************
+    /**
      * handle quantities
      */
     public static void handleQuantity(String t, HashMap<String, ArrayList<String>> instMap) {
@@ -320,7 +320,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * handle the case where the argument type is not a subclass
      */
     public static void handleNonClass(String t, HashMap<String, ArrayList<String>> instMap) {
@@ -360,7 +360,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("handleNonClass(): instMap: " + instMap);
     }
 
-    /** ***************************************************************
+    /**
      * generate new SUMO statements for relations and output English
      * paraphrase
      */
@@ -370,7 +370,7 @@ public class GenSimpTestData {
                 kb.getTermFormatMap("EnglishLanguage"), kb, "EnglishLanguage");
     }
 
-    /** ***************************************************************
+    /**
      * generate new SUMO termFormat statements for constants in a file
      */
     public static void genTermFormatFromNames(String fname) {
@@ -394,7 +394,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * generate new SUMO termFormat and instance statements for names
      */
     public static HashMap<String,String> readHumans() {
@@ -411,7 +411,7 @@ public class GenSimpTestData {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * generate new SUMO termFormat and instance statements for names
      */
     public static void generateAllHumans() {
@@ -430,7 +430,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * generate new SUMO statements for names
      */
     public String genSUMOForHuman(LFeatures lfeat, String name, String var) {
@@ -448,7 +448,7 @@ public class GenSimpTestData {
         return sb.toString();
     }
 
-    /** ***************************************************************
+    /**
      * generate missing SUMO termFormat statements
      */
     public static void genMissingTermFormats() {
@@ -467,7 +467,7 @@ public class GenSimpTestData {
             }
         }
     }
-    /** ***************************************************************
+    /**
      * generate new SUMO statements for relations and output English
      * paraphrase
      */
@@ -510,7 +510,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * generate English for all ground relation statements
      */
     public static void handleGroundStatements(HashMap<String, String> formatMap ) {
@@ -526,7 +526,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Generate arguments for all relations and output their English
      * paraphrase
      */
@@ -545,7 +545,7 @@ public class GenSimpTestData {
         genStatements(formatMap);
     }
 
-    /** ***************************************************************
+    /**
      * print all SUMO axioms in the current knowledge base along with
      * their natural language paraphrases
      */
@@ -565,7 +565,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void progressPrint() {
 
@@ -578,7 +578,7 @@ public class GenSimpTestData {
         if (debug) System.out.println();
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void testProgressPrint() {
 
@@ -589,7 +589,7 @@ public class GenSimpTestData {
         } while (true);
     }
 
-    /** ***************************************************************
+    /**
      */
     public class Preposition {
         public String procType = null;
@@ -600,7 +600,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Information about a process
      */
     public class ProcInfo {
@@ -610,7 +610,7 @@ public class GenSimpTestData {
         public String noun = null;
     }
 
-    /** ***************************************************************
+    /**
      * @return objects
      */
     public void addArguments(Collection<String> col, Collection<Preposition> objects) {
@@ -623,7 +623,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Initialize the grammatical forms of propositional attitudes
      */
     public void initAttitudes() {
@@ -638,7 +638,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Collect capability axioms of a specific form: Antecedent must be
      * a single (instance ?X ?Y) literal.  Consequent must be a single
      * (capability ?A ?B ?X) literal.  Returns ?Y - class of the thing,
@@ -716,7 +716,7 @@ public class GenSimpTestData {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * @return modifications to the parameter as a side effect
      */
     public void constrainTerms(Collection<String> terms) {
@@ -740,7 +740,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public class Word {
         public String term = null;
@@ -755,7 +755,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public class Capability {
 
@@ -773,7 +773,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * @param terms a collection of SUMO terms
      * @return an ArrayList of AVPair with a value of log of frequency
      *          derived from the equivalent synsets the terms map to. Attribute
@@ -808,7 +808,7 @@ public class GenSimpTestData {
         return avpList;
     }
 
-    /** ***************************************************************
+    /**
      * Create action sentences from a subject, preposition, direct object,
      * preposition and indirect object.  Indirect object and its preposition
      * can be left out.  Actions will eventually be past and future tense or
@@ -831,7 +831,7 @@ public class GenSimpTestData {
         genAttitudes(lfeat);
     }
 
-    /** ***************************************************************
+    /**
      * also return true if there's no termFormat for the process
      */
     public boolean compoundVerb(String term) {
@@ -844,7 +844,7 @@ public class GenSimpTestData {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      * return true if the tense is past progressive, present progressive,
      * or future progressive
      */
@@ -856,7 +856,7 @@ public class GenSimpTestData {
             return false;
     }
 
-    /** ***************************************************************
+    /**
      * @return the correct version of the copula for tense, number and
      * negation including randomized contractions of negation
      */
@@ -881,7 +881,7 @@ public class GenSimpTestData {
         return cop + " ";
     }
 
-    /** ***************************************************************
+    /**
      * Handle the auxilliary construction of "play X" when X is a Game
      * @param term is a SUMO term
      */
@@ -1023,7 +1023,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * @param term is a SUMO term
      * @return English in the attribute and SUMO in the value
      */
@@ -1059,7 +1059,7 @@ public class GenSimpTestData {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * @param term is a SUMO term
      * @param avp is a hack to return whether there was a plural, and its count
      */
@@ -1142,7 +1142,7 @@ public class GenSimpTestData {
         return capital("a ") + word;
     }
 
-    /** ***************************************************************
+    /**
      * Generate a boolean true value randomly num out of max times.
      * So biasedBoolean(8,10) generates a true most of the time
      * (8 out of 10 times on average)
@@ -1158,7 +1158,7 @@ public class GenSimpTestData {
         return Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }
 
-    /** ***************************************************************
+    /**
      * Generate a boolean true value randomly num out of max times.
      * So biasedBoolean(8,10) generates a true most of the time
      * (8 out of 10 times on average)
@@ -1169,7 +1169,7 @@ public class GenSimpTestData {
         return val < num;
     }
 
-    /** ***************************************************************
+    /**
      * Add SUMO content about a plural noun
      * @param prop is the formula to append to
      * @param term is the SUMO type of the noun
@@ -1184,7 +1184,7 @@ public class GenSimpTestData {
         prop.append("(memberCount " + var + " " + plural.value + ") ");
     }
 
-    /** ***************************************************************
+    /**
      * Add SUMO content about a plural noun
      * @param prop is the formula to append to
      */
@@ -1200,7 +1200,7 @@ public class GenSimpTestData {
         prop.append("(possesses ?H ?O) ");
     }
 
-    /** ***************************************************************
+    /**
      * Generate the subject of the sentence conforming to the verb frame
      * for a human
      */
@@ -1274,7 +1274,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("generateHumanSubject(2): startOfSentence: " + startOfSentence);
     }
 
-    /** ***************************************************************
+    /**
      */
     public void removeFrameSubject(LFeatures lfeat) {
 
@@ -1292,7 +1292,7 @@ public class GenSimpTestData {
             lfeat.framePart = lfeat.framePart.substring(9);
     }
 
-    /** ***************************************************************
+    /**
      * Generate the subject of the sentence conforming to the verb frame
      * for a thing
      */
@@ -1335,7 +1335,7 @@ public class GenSimpTestData {
         startOfSentence = false;
     }
 
-    /** ***************************************************************
+    /**
      */
     public boolean questionWord(String q) {
 
@@ -1343,7 +1343,7 @@ public class GenSimpTestData {
                 q.equalsIgnoreCase("did") || q.equalsIgnoreCase("where did") || q.equalsIgnoreCase("why did");
     }
 
-    /** ***************************************************************
+    /**
      * Generate the subject of the sentence conforming to the verb frame
      */
     public void generateSubject(StringBuffer english, StringBuffer prop,
@@ -1370,7 +1370,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("generateSubject(): startOfSentence: " + startOfSentence);
     }
 
-    /** ***************************************************************
+    /**
      */
     public void generateVerb(boolean negated,StringBuffer english, StringBuffer prop,
                                 String proc, String word, LFeatures lfeat) {
@@ -1426,7 +1426,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("generateVerb(): lfeat.framePart: " + lfeat.framePart);
     }
 
-    /** ***************************************************************
+    /**
      * How many occurrences remaining in the frame of 'something' and 'someone'
      */
     public int countSomes(String frame) {
@@ -1437,7 +1437,7 @@ public class GenSimpTestData {
         return (str.split(something,-1).length-1) + (str.split(somebody,-1).length-1);
     }
 
-    /** ***************************************************************
+    /**
      * Get a person or thing.  Fill in directName, directtype, preposition
      * as a side effect in lfeat
      */
@@ -1503,7 +1503,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("getDirect(2): lfeat.prep: " + lfeat.directPrep);
     }
 
-    /** ***************************************************************
+    /**
      */
     public void addSecondVerb(StringBuffer english, StringBuffer prop,
                                      LFeatures lfeat) {
@@ -1515,7 +1515,7 @@ public class GenSimpTestData {
         prop.append("(refers ?DO ?V2) ");
     }
 
-    /** ***************************************************************
+    /**
      * @param prop will be empty on return if the sentence so far is rejected
      */
     public void generateDirectObject(StringBuffer english, StringBuffer prop,
@@ -1602,7 +1602,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("generateDirectObject(5): lfeat.framePart: " + lfeat.framePart);
     }
 
-    /** ***************************************************************
+    /**
      */
     private String closeParens(LFeatures lfeat) {
 
@@ -1623,7 +1623,7 @@ public class GenSimpTestData {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * extract prepositions and auxiliaries from a verb frame.  Put in the right
      * direct or indirect preposition field in lfeat
      * 15-19, 30, 31 are preps to indirect objects
@@ -1651,7 +1651,7 @@ public class GenSimpTestData {
             return;
     }
 
-    /** ***************************************************************
+    /**
      * extract prepositions and auxiliaries from a verb frame
      */
     public static String getCaseRoleFromPrep(String prep) {
@@ -1669,7 +1669,7 @@ public class GenSimpTestData {
         return "involvedInEvent";
     }
 
-    /** ***************************************************************
+    /**
      * Also handle the INFINITIVE verb frame
      */
     public boolean generateIndirectObject(int indCount,
@@ -1825,7 +1825,7 @@ public class GenSimpTestData {
         return onceWithoutInd;
     }
 
-    /** ***************************************************************
+    /**
      */
     public boolean excludedVerb(String v) {
 
@@ -1842,7 +1842,7 @@ public class GenSimpTestData {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      */
     public ArrayList<String> getVerbFramesForTerm(String term) {
 
@@ -1864,7 +1864,7 @@ public class GenSimpTestData {
         return frames;
     }
 
-    /** ***************************************************************
+    /**
      * Get a person or thing
      */
     public void getIndirect(LFeatures lfeat) {
@@ -1885,7 +1885,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("getIndirect(): type: " + lfeat.indirectType);
     }
 
-    /** ***************************************************************
+    /**
      * Strip tense in some frames
      */
     public String stripTenseFromFrame(String frame) {
@@ -1895,7 +1895,7 @@ public class GenSimpTestData {
         return frame;
     }
 
-    /** ***************************************************************
+    /**
      * Skip frames not currently handled
      */
     public boolean skipFrame(String frame) {
@@ -1906,7 +1906,7 @@ public class GenSimpTestData {
             return false;
     }
 
-    /** ***************************************************************
+    /**
      * @return the word part of 9-digit synset concatenated with a "-" and root of the verb
      */
     private String getWordPart(String s) {
@@ -1918,7 +1918,7 @@ public class GenSimpTestData {
         return s.substring(10);
     }
 
-    /** ***************************************************************
+    /**
      * @return the synset part of 9-digit synset concatenated with a "-" and root of the verb
      */
     private String getSynsetPart(String s) {
@@ -1930,7 +1930,7 @@ public class GenSimpTestData {
         return s.substring(0,9);
     }
 
-    /** ***************************************************************
+    /**
      * Get a randomized next verb
      * @return an AVPair with an attribute of the SUMO term and the value
      * of the 9-digit synset concatenated with a "-" and root of the verb
@@ -1975,7 +1975,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String getFormattedDate(LocalDate date) {
 
@@ -1994,7 +1994,7 @@ public class GenSimpTestData {
         return "d'th' 'of' MMMM yyyy";
     }
 
-    /** ***************************************************************
+    /**
      * Create action sentences from a subject, preposition, direct object,
      * preposition and indirect object based on WordNet verb frames
      */
@@ -2051,7 +2051,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("addTimeDate() startOfSentence: " + startOfSentence);
     }
 
-    /** ***************************************************************
+    /**
      */
     private void getFrame(LFeatures lfeat) {
 
@@ -2069,7 +2069,7 @@ public class GenSimpTestData {
         lfeat.frame = frame;
     }
 
-    /** ***************************************************************
+    /**
      * Create action sentences from a subject, preposition, direct object,
      * preposition and indirect object based on WordNet verb frames
      */
@@ -2140,7 +2140,7 @@ public class GenSimpTestData {
         lfeat.framePart = lfeat.frame;  // recreate frame destroyed during generation
     }
 
-    /** ***************************************************************
+    /**
      * Generate a person's name, or a SocialRole, or the diectic "You"
      *
      * @param english the English for the named human or role, as a
@@ -2205,7 +2205,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("GenSimpTestData.generateHuman(): english: " + english);
     }
 
-    /** ***************************************************************
+    /**
      * Create action sentences from a subject, preposition, direct object,
      * preposition and indirect object.  Indirect object and its preposition
      * can be left out.  Actions can be past and future tense or
@@ -2232,7 +2232,7 @@ public class GenSimpTestData {
             } while (tryCount++ < 10 && prop1.equals(""));
         }
     }
-    /** ***************************************************************
+    /**
      */
     public void genWithHumans(StringBuffer english,
                               StringBuffer prop,
@@ -2257,7 +2257,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * use None, knows, believes, says, desires for attitudes
      */
     public void genAttitudes(LFeatures lfeat) {
@@ -2302,7 +2302,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public String negatedModal(String modal,boolean negated) {
 
@@ -2313,7 +2313,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Create action sentences from a subject, preposition, direct object,
      * preposition and indirect object.  Indirect object and its preposition
      * can be left out.  Actions will eventually be past and future tense or
@@ -2352,7 +2352,7 @@ public class GenSimpTestData {
         } while (tryCount++ < 10 && prop1.equals(""));
     }
 
-    /** ***************************************************************
+    /**
      * negated, proc, object, caserole, prep, mustTrans, mustNotTrans, canTrans
      */
     public void genProcTable() {
@@ -2366,7 +2366,7 @@ public class GenSimpTestData {
         extendCapabilities(caps);
     }
 
-    /** ***************************************************************
+    /**
      * generate subclasses for each capability
      */
     public void extendCapabilities(Collection<Capability> caps) {
@@ -2394,7 +2394,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      * negated, proc, object, caserole, prep, mustTrans, mustNotTrans, canTrans
      * @return true if ok
      */
@@ -2435,7 +2435,7 @@ public class GenSimpTestData {
         return true;
     }
 
-    /** ***************************************************************
+    /**
      * find attributes in SUMO that have equivalences to WordNet
      */
     public void showAttributes() {
@@ -2447,7 +2447,7 @@ public class GenSimpTestData {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showHelp() {
 
@@ -2464,7 +2464,7 @@ public class GenSimpTestData {
         System.out.println("  -u - other utility");
     }
 
-    /** ***************************************************************
+    /**
      * init and call main routine.
      */
     public static void main(String args[]) {

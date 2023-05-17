@@ -1,4 +1,4 @@
-/*** The KIF2THF converter file is a contribution by Christoph Benzmueller
+/** The KIF2THF converter file is a contribution by Christoph Benzmueller
  */
 package com.articulate.sigma.trans;
 import java.io.BufferedWriter;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 
 import com.articulate.sigma.*;
 
-/** ************************************************************
+/**
  * This class handles the conversion of problems (= axioms + queries)
  * from their KIF representation into a THF representation; THF is the 
  * TPTP standard for classical higher-order logic, i.e. Church's simple
@@ -85,7 +85,7 @@ public class THF {
     private static int axcounter = 1;
     private static int concounter = 1;
 
-    /** ***************************************************************
+    /**
      * reset the axiom counters
      */
     public THF() {
@@ -93,13 +93,13 @@ public class THF {
         concounter = 1;
     }
 
-    /** ***************************************************************
+    /**
      * THFdebug: variable for enabling/diabling debugging mode; when set then 
      * there will be useful information printed
      */
     private static Boolean debug = false;
 
-    /** ***************************************************************
+    /**
      * A debug print function (uses variable THFdebug)
      */
     private static String THFdebugOut (String str) {
@@ -111,43 +111,43 @@ public class THF {
         return "";
     }
 
-    /** ***************************************************************
+    /**
      * A string builder containing the dynamically modified 
      * KIF formula during the KIF2THF transformation process
      */
     private StringBuilder kifFormula = new StringBuilder();
 
-    /** ***************************************************************
+    /**
      * A map containing relevant information on the dynamically changing 
      * set of constant symbols during the KIF2THF transformation. This
      * is used in the 'tagging' of constant symbols with type information.
      */
     private HashMap subst = new HashMap();
 
-    /** ***************************************************************
+    /**
      * Two maps from THF constant symbols to THF types as built up by the 
      * KIF2THF transformation
      */
     private HashMap localsig = new HashMap();
     private HashMap overallsig = new HashMap();
 
-    /** ***************************************************************
+    /**
      * A map from THF (sub-)terms to types as exploited by the KIF2THF
      * transformation
      */
     private HashMap terms = new HashMap();
 
-    /** ***************************************************************
+    /**
      * A variable that defines the THF type delimiter (cf. $i > $o)
      */
     private static final String typeDelimiter = ">";
 
-    /** ***************************************************************
+    /**
      * A variable that defines the THF 'not translated' string
      */
     private static final String notTranslatedStr   = "%%% notTranslated: ";
 
-    /** ***************************************************************
+    /**
      * Declaration of some special THF types used in the KIF2THF translation.
      * In the final translation only the THF base types $i (individuals) and
      * $o (Booleans) should be occuring.
@@ -158,11 +158,11 @@ public class THF {
     private static final String unknownTp = "uknTP"; // the 'unknown' help type, kind of polymorphic
     private static final String problemTp = "probTp"; // the 'problem' help type, for real type clashes
 
-    /** ***************************************************************
+    /**
      */
     private List<String> numericOps = new ArrayList<String>();
 
-    /** ***************************************************************
+    /**
      * A function that checks whether a given term-to-type mapping
      * such as 'terms' or 'localsig' above contain some type information
      * involving the 'unkownTp'.
@@ -182,7 +182,7 @@ public class THF {
         return found;   
     }
 
-    /** ***************************************************************
+    /**
      * A special function that replaces all occurences of key by 
      * keysubst in a formula string str. The special aspects here is that we do
      * not want to replace substrings of constants, e.g.
@@ -208,7 +208,7 @@ public class THF {
         return str;
     }
 
-    /** ***************************************************************
+    /**
      */
     private boolean hasMathOp(Formula f, KB kb) {
 
@@ -221,7 +221,7 @@ public class THF {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      */
     private LinkedHashSet<Formula> expandAxioms(Collection<Formula> col, boolean isQuery, KB kb) {
 
@@ -239,7 +239,7 @@ public class THF {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      */
     public String oneKIF2THF(Formula form, boolean conjecture, KB kb) {
 
@@ -352,7 +352,7 @@ public class THF {
         }
     }
 
-    /** ***************************************************************
+    /**
      * The main function to convert KIF problems into TPTP THF representation;
      * see the explanation at top of this file.
      * This is the only public function of THF.java so far.
@@ -418,7 +418,7 @@ public class THF {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * A function that clears a given term-to-type mapping for a given
      * formula string. The returned term-to-type only contains the entries
      * from the original mapping that are actually occuring in the string.
@@ -449,7 +449,7 @@ public class THF {
         return copyMap;
     }
 
-    /** ***************************************************************
+    /**
      * A function that clears a given term-to-type mapping for all
      * entries that do not contain the _THFTPTP_ substring
      *
@@ -471,7 +471,7 @@ public class THF {
         return copyMap;
     }
 
-    /** ***************************************************************
+    /**
      * A function that converts a SUMO 'type' information into a THF type
      *
      * @param intype is the SUMO type 
@@ -543,7 +543,7 @@ public class THF {
         return res;
     }
 
-    /** ***************************************************************
+    /**
      * A predicate that checks whether a THF type is a base type
      *
      * @param intype is the THF type 
@@ -558,7 +558,7 @@ public class THF {
         return res;
     }
 
-    /** ***************************************************************
+    /**
      * A function that grounds a THF type, that is replaces all occurences
      * of 'unknownTp' by $iinformation into a THF type
      *
@@ -599,7 +599,7 @@ public class THF {
         return res;
     }
 
-    /** ***************************************************************
+    /**
      * A predicate that checks whether some symbol string represents 
      * a KIF variable
      *
@@ -616,7 +616,7 @@ public class THF {
         }
     }
 
-    /** ***************************************************************
+    /**
      * A predicate that checks whether some symbol string represents 
      * a KIF variable
      *
@@ -633,7 +633,7 @@ public class THF {
         }
     }
 
-    /** ***************************************************************
+    /**
      * A function that converts a KIF variable into a THF variable
      *
      * @param var  is the KIF variable
@@ -645,7 +645,7 @@ public class THF {
         return res.substring(1).toUpperCase();
     }
 
-    /** ***************************************************************
+    /**
      * A function that converts a KIF constant symbol into a THF constant
      *
      * @param sym is the KIF constant symbol
@@ -667,7 +667,7 @@ public class THF {
         return res;
     }
 
-    /** ***************************************************************
+    /**
      * A help function for toTHF1; this help function addresses the THF
      * conversion of formulas with logical or arithmetic connective
      * at head position
@@ -723,7 +723,7 @@ public class THF {
         return  resTerm.toString();
     }
 
-    /** ***************************************************************
+    /**
      * A help function for toTHF2; this help function addresses the THF
      * conversion of formulas with logical or arithmetic connective
      * at head position.
@@ -787,7 +787,7 @@ public class THF {
         return 	resTerm.toString();
     }
 
-    /** ***************************************************************
+    /**
      * A help function for toTHF1; this help function addresses the THF
      * conversion of quantified formulas 
      *
@@ -831,7 +831,7 @@ public class THF {
         return resTerm.toString();
     }
 
-    /** ***************************************************************
+    /**
      * A help function for toTHF1; this help function addresses the THF
      * conversion of KappaFN formulas 
      *
@@ -859,7 +859,7 @@ public class THF {
         return resTerm.toString();
     }
 
-    /** ***************************************************************
+    /**
      * A help function for toTHF2; this help function addresses the THF
      * conversion of quantified formulas 
      *
@@ -898,7 +898,7 @@ public class THF {
         return resTerm.toString();
     }
 
-    /** ***************************************************************
+    /**
      * A help function for toTHF1; this help function addresses the THF
      * conversion of KappaFN formulas 
      *
@@ -928,7 +928,7 @@ public class THF {
         return resTerm.toString();
     }
 
-    /** ***************************************************************
+    /**
      * A function that computes the arity of THF types
      *
      * @param thfTp is the THF type
@@ -949,7 +949,7 @@ public class THF {
         return res;
     }
 
-    /** ***************************************************************
+    /**
      * A help function that concatenates a string to the last string
      * argument of a list of strings
      *
@@ -975,7 +975,7 @@ public class THF {
         return reslist;
     }
 
-    /** ***************************************************************
+    /**
      * A function that translates a THF type into a list of its subtypes
      * whereas the goaltype is put first into the result list;
      * e.g. "$i>($i>$i)>$o" is converted into ["$o","$i","($i>$)"]
@@ -1003,7 +1003,7 @@ public class THF {
         return res; 
     }
 
-    /** ***************************************************************
+    /**
      * A help function for toTHFList above; this is actually a little 
      * automaton that that needs to correctly parse bracketed THF type 
      * strings
@@ -1095,7 +1095,7 @@ public class THF {
         return reslist;	
     }
 
-    /** ***************************************************************
+    /**
      * A function that creates a function type over unknownTp with 
      * specified arity
      * e.g. for int 3 it computes "uknownTp>uknownTp>uknownTp" 
@@ -1118,7 +1118,7 @@ public class THF {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * A function that computes a new 'compromise' type for two conflicting 
      * type informations for one and the same THF term
      *
@@ -1153,7 +1153,7 @@ public class THF {
         return res;
     }
 
-    /** ***************************************************************
+    /**
      * A predicate that checks whether a a term-to-type map contains some
      * 'useful' information for a given symbol
      *
@@ -1180,7 +1180,7 @@ public class THF {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * A recursive function that turns a SUMO formula into a THF representation
      * which may still contain occurrences of the 'unknownTp'
      *
@@ -1455,7 +1455,7 @@ public class THF {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * A function that translates semantic type information from the KB
      * as maintained in relTpInfo and translates into a THF type string
      *
@@ -1476,7 +1476,7 @@ public class THF {
         return res;
     }
 
-    /** ***************************************************************
+    /**
      * A help function for toTHFTp
      *
      * @param l is a list of KIF type strings
@@ -1506,7 +1506,7 @@ public class THF {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * A function that computes a suffix for a THF constant name that
      * suitably encodes some given THF type information (one problem is 
      * that '$' is not allowed in THF constant names).
@@ -1526,7 +1526,7 @@ public class THF {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * A function that computes a new name for a given constant name.
      * It computes and appends a suffix for the constant name that
      * suitably encodes some given THF type information (one problem is 
@@ -1551,7 +1551,7 @@ public class THF {
         return res;
     }
 
-    /** ***************************************************************
+    /**
      * A recursive function that turns a SUMO formula into a THF string.
      * It works structurally similar to toTHF1 but it cares about the 
      * 'unknownTp' information leftover by toTHF1; several calls to THF2
@@ -1798,7 +1798,7 @@ public class THF {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      */
     private SortedSet<Formula> sortFormulas(Collection formulas) {
 
@@ -1827,7 +1827,7 @@ public class THF {
         return resL;
     }
 
-    /** ***************************************************************
+    /**
      * A test method.
      */
     public static void writeTHF(KB kb) {
@@ -1852,7 +1852,7 @@ public class THF {
         }
     }
 
-    /** ***************************************************************
+    /**
      * A test method.
      */
     public static void main(String[] args) {

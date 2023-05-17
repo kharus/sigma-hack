@@ -17,19 +17,19 @@ public class RandSet {
     public static boolean avoidDup = false;
     public Random rand = new Random();
 
-    /** ***************************************************************
+    /**
      */
     public int size() {
         return terms.size();
     }
 
-    /** ***************************************************************
+    /**
      */
     public void clearReturns() {
         returned.clear();
     }
 
-    /** ***************************************************************
+    /**
      */
     public String getNext() {
 
@@ -45,7 +45,7 @@ public class RandSet {
         return terms.get(index);
     }
 
-    /** ***************************************************************
+    /**
      * Create a list, in the global variable terms, in which String terms
      * appear as many times as the log of their frequency + 1 in the input.
      * This list is used by the method getNext() to provide a random term
@@ -81,7 +81,7 @@ public class RandSet {
         return r;
     }
 
-    /** ***************************************************************
+    /**
      * Convert a list into a RandSet that assumes a frequency count of
      * one for each element
      */

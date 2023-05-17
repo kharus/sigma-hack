@@ -31,7 +31,7 @@ public class SumoProcess {
         this.kb = kb;
     }
 
-    /**************************************************************************************************************
+    /**
      * Indirectly invoked by SumoProcessCollector.toString( ).
      * @return
      */
@@ -40,7 +40,7 @@ public class SumoProcess {
         return verb;
     }
 
-    /**************************************************************************************************************
+    /**
      *
      * @return
      */
@@ -48,7 +48,7 @@ public class SumoProcess {
         return surfaceForm;
     }
 
-    /**************************************************************************************************************
+    /**
      *
      * @param surfaceForm
      */
@@ -56,7 +56,7 @@ public class SumoProcess {
         this.surfaceForm = surfaceForm;
     }
 
-    /**************************************************************************************************************
+    /**
      * Try to phrase the verb into natural language, setting this object's internal state appropriately.
      * @param sentence
      */
@@ -79,7 +79,7 @@ public class SumoProcess {
         }
     }
 
-    /**************************************************************************************************************
+    /**
      * Return the correct prefix for negative sentences--"don't" or "doesn't". For affirmatives return empty string.
      * @param polarity
      * @param singularPlural
@@ -99,7 +99,7 @@ public class SumoProcess {
         return "don't ";
     }
 
-    /**************************************************************************************************************
+    /**
      * For a process which does not have a language representation, get a reasonable way of paraphrasing it.
      * Sets both verb and direct object of the sentence.
      */
@@ -142,7 +142,7 @@ public class SumoProcess {
         sentence.getDirectObject().addConsumedCaseRole(CaseRole.PATIENT);
     }
 
-    /**************************************************************************************************************
+    /**
      *
      * @return
      */
@@ -150,7 +150,7 @@ public class SumoProcess {
         return verb;
     }
 
-    /**************************************************************************************
+    /**
      * Getter and setter for polarity field.
      *
      */
@@ -163,7 +163,7 @@ public class SumoProcess {
     }
 
 
-    /**************************************************************************************************************
+    /**
      *
      * @param verbRoot
      * @return
@@ -173,7 +173,7 @@ public class SumoProcess {
         return WordNetUtilities.verbPlural(verbRoot);
     }
 
-    /**************************************************************************************************************
+    /**
      * Get the root of the given verb.
      * @param gerund
      *   the verb in gerund (-ing) form.

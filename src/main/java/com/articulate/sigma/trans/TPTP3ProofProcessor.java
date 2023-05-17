@@ -49,12 +49,12 @@ public class TPTP3ProofProcessor {
 	public HashMap<String,Integer> idTable = new HashMap<>();
 	private int idCounter = 0;
 
-	/** ***************************************************************
+	/**
 	 */
 	public TPTP3ProofProcessor() {
 	}
 
-	/** ***************************************************************
+	/**
 	 * Convert bindings in list to string
 	 */
 	public String toString () {
@@ -77,7 +77,7 @@ public class TPTP3ProofProcessor {
 		return sb.toString();
 	}
 
-	/** ***************************************************************
+	/**
 	 * Join TPTP3 proof statements that are formatted over multiple lines. Note
 	 * that comment lines are left unchanged.
 	 */
@@ -103,7 +103,7 @@ public class TPTP3ProofProcessor {
 		return outputs;
 	}
 
-	/** ***************************************************************
+	/**
 	 * Join TPTP3 proof statements that are formatted over multiple lines and
 	 * reverse them for Vampire, which presents proofs in reverse order. Note
 	 * that comment lines are left unchanged.
@@ -143,7 +143,7 @@ public class TPTP3ProofProcessor {
 		return result;
 	}
 
-	/** ***************************************************************
+	/**
 	 * return the predicate and arguments to a valid prolog expression p(a1,a2...an)
 	 * where a1..an are an atom, a string or a prolog expression
 	 */
@@ -208,7 +208,7 @@ public class TPTP3ProofProcessor {
 		return result;
 	}
 
-	/** ***************************************************************
+	/**
 	 */
 	public String getInferenceType(String supportId) {
 
@@ -232,7 +232,7 @@ public class TPTP3ProofProcessor {
 		return inferenceType;
 	}
 
-	/** ***************************************************************
+	/**
 	 * Parse support / proof statements in the response
 	 */
 	public ArrayList<Integer> supportIdToInts(ArrayList<String> supportIds) {
@@ -243,7 +243,7 @@ public class TPTP3ProofProcessor {
 		return prems;
 	}
 
-	/** ***************************************************************
+	/**
 	 * Parse support / proof statements in the response
      */
 	public ArrayList<Integer> parseSupports(String supportId) {
@@ -294,7 +294,7 @@ public class TPTP3ProofProcessor {
 		return prems;
 	}
 
-	/** ***************************************************************
+	/**
 	 * Parse a step like the following into its constituents
 	 *   fof(c_0_5, axiom, (s__subclass(s__Artifact,s__Object)), c_0_3).
 	 *
@@ -357,7 +357,7 @@ public class TPTP3ProofProcessor {
 		return ps;
 	}
 
-	/** ***************************************************************
+	/**
 	 * Return bindings from TPTP3 answer tuples
 	 */
 	public void processAnswers(String line) {
@@ -394,7 +394,7 @@ public class TPTP3ProofProcessor {
 		if (debug) System.out.println("INFO in processAnswers(): returning bindings: " + bindings);
 	}
 
-	/** ***************************************************************
+	/**
 	 * Return the answer clause, or null if not present
 	 */
 	public Formula extractAnswerClause(Formula ax) {
@@ -434,7 +434,7 @@ public class TPTP3ProofProcessor {
 		return null;
 	}
 
-	/** ***************************************************************
+	/**
 	 * Remove duplicates in an Array without changing the order
 	 */
 	public ArrayList<String> removeDupInArray(ArrayList<String> input) {
@@ -446,7 +446,7 @@ public class TPTP3ProofProcessor {
 		return result;
 	}
 
-	/** ***************************************************************
+	/**
 	 * Put bindings from TPTP3 proof answer variables into bindingMap
 	 */
 	public void processAnswersFromProof(StringBuffer qlist, String query) {
@@ -494,7 +494,7 @@ public class TPTP3ProofProcessor {
 		if (debug) System.out.println("processAnswersFromProof(): bindingMap: " + bindingMap);
 	}
 
-	/** ***************************************************************
+	/**
 	 * Return the most specific type for skolem variable.
 	 *
 	 * @param kb The knowledge base used to find skolem term's types
@@ -566,7 +566,7 @@ public class TPTP3ProofProcessor {
 		return result;
 	}
 
-	/** ***************************************************************
+	/**
 	 * Input: s__Arc13_1
 	 * Output: Arc13_1
 	 */
@@ -577,7 +577,7 @@ public class TPTP3ProofProcessor {
 			return false;
 	}
 
-	/** ***************************************************************
+	/**
 	 * remove skolem symbol with arity n
 	 *
 	 * For example,
@@ -595,7 +595,7 @@ public class TPTP3ProofProcessor {
 		return line;
 	}
 
-	/** ***************************************************************
+	/**
 	 * Input: s__Arc13_1
 	 * Output: Arc13_1
 	 */
@@ -609,7 +609,7 @@ public class TPTP3ProofProcessor {
 			return st;
 	}
 
-	/** ***************************************************************
+	/**
 	 * Print out prover's bindings
 	 */
 	public void printAnswers () {
@@ -619,7 +619,7 @@ public class TPTP3ProofProcessor {
 			System.out.println(bindings.get(i));
 	}
 
-	/** ***************************************************************
+	/**
 	 * Compute bindings and proof from theorem prover's response
 	 */
 	public void parseProofOutput (LineNumberReader lnr, KB kb) {
@@ -638,7 +638,7 @@ public class TPTP3ProofProcessor {
 		parseProofOutput(lines,"",kb,new StringBuffer());
 	}
 
-    /** ***************************************************************
+    /**
 	 * Compute binding and proof from the theorem prover's response. Leave
 	 * out the statements of relation sorts that is part of the TFF proof output.
 	 * @param qlist is the list of quantifiers in order of the original query,
@@ -732,7 +732,7 @@ public class TPTP3ProofProcessor {
 		if (debug) System.out.println("TPTP3ProofProcess.parseProofOutput(): returning bindings: " + bindings);
     }
     
-	/** ***************************************************************
+	/**
 	 * Return a list of answers if prover finds bindings for wh- queries.
 	 * Return "Proof Found" if prover finds contradiction for boolean queries.
 	 *
@@ -757,7 +757,7 @@ public class TPTP3ProofProcessor {
 		return bindings;
 	}
 
-	/** ***************************************************************
+	/**
 	 */
 	public void parseProofOutput (String st, KB kb) {
 
@@ -766,7 +766,7 @@ public class TPTP3ProofProcessor {
 		parseProofOutput(lnr, kb);
 	}
 
-	/** ***************************************************************
+	/**
 	 */
 	public void parseProofFromFile (String filename, KB kb) {
 
@@ -784,7 +784,7 @@ public class TPTP3ProofProcessor {
 		}
 	}
 
-	/** ***************************************************************
+	/**
 	 */
 	private static void printPrologTerm (PrologTerm pt, String indent) {
 
@@ -801,14 +801,14 @@ public class TPTP3ProofProcessor {
 		}
 	}
 
-	/** ***************************************************************
+	/**
 	 */
 	public static void printPrologTerm (PrologTerm pt) {
 
 		printPrologTerm(pt,"");
 	}
 
-	/** ***************************************************************
+	/**
 	 * @return an int from the idTable or add a new id to the table and
 	 * give it a new number
 	 */
@@ -821,7 +821,7 @@ public class TPTP3ProofProcessor {
 		return idTable.get(id);
 	}
 
-	/** ***************************************************************
+	/**
 	 */
 	private ArrayList<Integer> getSupports (PrologTerm pt) {
 
@@ -845,7 +845,7 @@ public class TPTP3ProofProcessor {
 		return supports;
 	}
 
-	/** ***************************************************************
+	/**
 	 */
 	private ArrayList<Integer> getSupports (String input) {
 
@@ -860,7 +860,7 @@ public class TPTP3ProofProcessor {
 		return supports;
 	}
 
-	/** *************************************************************
+	/**
 	 */
 	private ArrayList<String> createProofDotGraphBody() {
 
@@ -913,7 +913,7 @@ public class TPTP3ProofProcessor {
 		return lines;
 	}
 
-	/** *************************************************************
+	/**
 	 */
 	private void createProofDotGraphImage(String filename) throws IOException {
 
@@ -935,7 +935,7 @@ public class TPTP3ProofProcessor {
 		}
 	}
 
-	/** *************************************************************
+	/**
 	 * Create a proof
 	 * in a format suitable for GraphViz' input format
 	 * http://www.graphviz.org/
@@ -981,7 +981,7 @@ public class TPTP3ProofProcessor {
 		return link;
 	}
 
-	/** ***************************************************************
+	/**
 	 * Print proof removing some steps based on proof level
 	 * 1 = full proof
 	 * 2 = remove steps with single support
@@ -1003,7 +1003,7 @@ public class TPTP3ProofProcessor {
 		}
 	}
 
-	/** ***************************************************************
+	/**
 	 */
 	private void testPrologParser () {
 
@@ -1029,7 +1029,7 @@ public class TPTP3ProofProcessor {
 			System.out.println(getSupports(pt));
 	}
 
-	/** ***************************************************************
+	/**
 	 */
 	public static void showHelp() {
 
@@ -1041,7 +1041,7 @@ public class TPTP3ProofProcessor {
 		System.out.println("  h - show this help");
 	}
 
-	/** ***************************************************************
+	/**
 	 */
 	public static void main(String[] args) throws IOException {
 

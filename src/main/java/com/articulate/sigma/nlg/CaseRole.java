@@ -15,7 +15,7 @@ import java.util.Collection;
 public enum CaseRole {
     AGENT, ATTENDS, DESTINATION, DIRECTION, EVENTPARTLYLOCATED, EXPERIENCER, INSTRUMENT, MOVES, ORIGIN, PATH, PATIENT, RESOURCE, OTHER;
 
-    /******************************************************************
+    /**
      * Is the input string a valid case role?
      * Note that this method is case-sensitive.
      * @param input
@@ -31,7 +31,7 @@ public enum CaseRole {
         return true;
     }
 
-    /******************************************************************
+    /**
      * From the input list, return the first string that is a valid case role.
      * @param list
      * @return
@@ -47,7 +47,7 @@ public enum CaseRole {
         return null;
     }
 
-    /******************************************************************
+    /**
      * Return a valid case role based on the string input. If string does not match any case role,
      * return OTHER.
      * @param input

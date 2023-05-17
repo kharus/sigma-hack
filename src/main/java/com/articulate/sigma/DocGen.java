@@ -9,7 +9,7 @@ Pease, A., (2003). The Sigma Ontology Development Environment, in Working
 Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
 August 9, Acapulco, Mexico.  See also http://sigmakee.sourceforge.net
 */
-/*************************************************************************************************/
+/**/
 
 package com.articulate.sigma;
 import java.io.BufferedOutputStream;
@@ -45,7 +45,7 @@ import com.articulate.sigma.utils.StringUtil;
 /** A class to generate simplified HTML-based documentation for SUO-KIF terms. */
 public class DocGen {
 
-    /** *************************************************************
+    /**
      * This String token denotes Sigma's "simple" HTML layout, and is
      * used as a flag in the HTML generation code to switch between
      * full and simple modes.
@@ -76,7 +76,7 @@ public class DocGen {
     }
     protected static final String SP2 = "  ";
 
-    /** *************************************************************
+    /**
      * The default base plus file suffix name for the main index file
      * for a set of HTML output files.
      */
@@ -102,7 +102,7 @@ public class DocGen {
         return inst;
     }
 
-    /** *************************************************************
+    /**
      */
     public static DocGen getInstance(String compositeKey) {
 
@@ -143,7 +143,7 @@ public class DocGen {
         return inst;
     }
 
-    /** *************************************************************
+    /**
      */
     public static DocGen getInstance(KB kb, String ontology) {
 
@@ -164,7 +164,7 @@ public class DocGen {
         return inst;
     }
 
-    /** *************************************************************
+    /**
      * To obtain an instance of DocGen, use the static factory method
      * getInstance().
      */
@@ -178,12 +178,12 @@ public class DocGen {
         lineSeparator = ls;
         return;
     }
-    /** *****************************************************************
+    /**
      * A int value representing the bit values that control the file
      * generation process.
      */
     protected int docGenControlBits = 0;
-    /** *****************************************************************
+    /**
      * Returns the int value that represents the bit values used to
      * guide aspects of the document generation process for this
      * DocGen instance.
@@ -193,7 +193,7 @@ public class DocGen {
     public int getDocGenControlBits() {
         return docGenControlBits;
     }
-    /** *****************************************************************
+    /**
      * Sets to 0 the int value that represents the bit values used to
      * guide aspects of the document generation process for this
      * DocGen instance.
@@ -202,7 +202,7 @@ public class DocGen {
         docGenControlBits = 0;
         return;
     }
-    /** *****************************************************************
+    /**
      * Adds val via bitwise OR to the int value that represents the
      * bit values used to control the document generation process for
      * this DocGen instance.
@@ -216,7 +216,7 @@ public class DocGen {
         docGenControlBits = (docGenControlBits | val);
         return docGenControlBits;
     }
-    /** *****************************************************************
+    /**
      * Adds via bitwise OR the bit value corresponding to token to the
      * int value that represents the bit values used to control the
      * document generation process for this DocGen instance.
@@ -230,7 +230,7 @@ public class DocGen {
         int bitVal = getControlBitValue(token);
         return addDocGenControlBits(bitVal);
     }
-    /** *****************************************************************
+    /**
      * Returns true if the bit values represented by valToTest are
      * among the control bits represented for this DocGen instance.
      *
@@ -256,7 +256,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *****************************************************************
+    /**
      * Returns true if the bit values corresponding to token are among
      * the control bits represented for this DocGen instance.
      *
@@ -269,7 +269,7 @@ public class DocGen {
         return testDocGenControlBits(bitVal);
     }
 
-    /** **************************************************************
+    /**
      * Returns a List of String tokens that determine how the output
      * should be formatted.  The List could be empty.
      *
@@ -302,7 +302,7 @@ public class DocGen {
         return tokens;
     }
 
-    /** **************************************************************
+    /**
      * Returns the first String token retrieved from ontology in kb
      * that denotes an HTML output format.  Such tokens may be the
      * third element in statements for which the predicate is
@@ -322,7 +322,7 @@ public class DocGen {
 
     protected String defaultNamespace = "";
 
-    /** *****************************************************************
+    /**
      * Returns the String denoting the default namespace
      * associated with this DocGen object.
      *
@@ -350,7 +350,7 @@ public class DocGen {
         return this.defaultNamespace;
     }
 
-    /** *****************************************************************
+    /**
      * Sets the default namespace for this DocGen object.
      */
     public void setDefaultNamespace(String namespace) {
@@ -358,13 +358,13 @@ public class DocGen {
         return;
     }
 
-    /** *****************************************************************
+    /**
      * The default namespace for predicates in the ontology associated
      * with this DocGen object
      */
     protected String defaultPredicateNamespace = "";
 
-    /** *****************************************************************
+    /**
      * Returns the String denoting the default namespace for
      * predicates in the ontology associated with this DocGen
      * object.
@@ -396,7 +396,7 @@ public class DocGen {
         return this.defaultPredicateNamespace;
     }
 
-    /** *****************************************************************
+    /**
      * Sets the default namespace for predicates in the ontology
      * associated with this DB object.
      *
@@ -407,13 +407,13 @@ public class DocGen {
         return;
     }
 
-    /** *****************************************************************
+    /**
      * The ontology associated with this DocGen object, and for
      * which the DocGen object is used to generate files.
      */
     protected String ontology = null;
 
-    /** *****************************************************************
+    /**
      */
     public void setOntology(String term) {
 
@@ -421,7 +421,7 @@ public class DocGen {
         return;
     }
 
-    /** *****************************************************************
+    /**
      * Returns a term denoting the default Ontology for this DocGen
      * object if an Ontology has been set, and tries very hard to find
      * a relevant Ontology if one has not been set.
@@ -444,7 +444,7 @@ public class DocGen {
         return this.ontology;
     }
 
-    /** *****************************************************************
+    /**
      * Returns a term denoting the default Ontology for this DocGen
      * object if an Ontology has been set, and tries very hard to find
      * a relevant Ontology if one has not been set.
@@ -522,12 +522,12 @@ public class DocGen {
         return onto;
     }
 
-    /** *****************************************************************
+    /**
      * The KB associated with this DocGen object.
      */
     protected KB kb = null;
 
-    /** *****************************************************************
+    /**
      */
     public void setKB(KB kb) {
 
@@ -535,19 +535,19 @@ public class DocGen {
         return;
     }
 
-    /** *****************************************************************
+    /**
      *
      */
     public KB getKB() {
         return this.kb;
     }
 
-    /** *************************************************************
+    /**
      * A Set of Strings.
      */
     protected Set codedIdentifiers = null;
 
-    /** **************************************************************
+    /**
      * Collects and returns the Set containing all known coded
      * identifiers in kb, including ISO code values stated to be such.
      * 
@@ -587,7 +587,7 @@ public class DocGen {
     /** The document title text to be used for HTML generation */
     protected String titleText = "";
 
-    /** *************************************************************
+    /**
      * Sets the title text to be used during HTML document generation.
      *
      * @param titlestr A String that will be used as the HTML document
@@ -599,7 +599,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Returns the String that will be used as the title text for HTML
      * document generation, else returns an empty String if no title
      * text value has been set.
@@ -612,7 +612,7 @@ public class DocGen {
     protected String footerText = "";
     //"Produced by <a href=\"http://www.articulatesoftware.com\"> " + "Articulate Software</a> and its partners";
 
-    /** *************************************************************
+    /**
      * Sets the footer text String to be used during HTML document
      * generation.
      *
@@ -625,7 +625,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Returns the String that will be used as the footer text for
      * HTML document generation, else returns an empty String if no
      * footer text value has been set.
@@ -637,7 +637,7 @@ public class DocGen {
 
     protected String styleSheet = "simple.css";
 
-    /** *************************************************************
+    /**
      * Sets the base name plus suffix filename of the Cascading Style
      * Sheet file to be referenced during HTML document generation.
      *
@@ -650,7 +650,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Returns the base filename plus filename suffix form of the
      * Cascading Style Sheet file to be referenced during HTML
      * document generation, else returns an empty String if no value
@@ -665,7 +665,7 @@ public class DocGen {
 
     protected String defaultImageFile = "articulate_logo.gif";
 
-    /** *************************************************************
+    /**
      * Sets the base name plus suffix filename of the logo image file
      * to be referenced during HTML document generation.
      *
@@ -679,7 +679,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Returns the base filename plus filename suffix form of the logo
      * image file to be referenced during HTML document generation,
      * else returns an empty String if no value has been set.
@@ -694,7 +694,7 @@ public class DocGen {
 
     protected String defaultImageFileMarkup = "articulate_logo.gif";
 
-    /** *************************************************************
+    /**
      * Sets the base name plus suffix filename of the logo image file
      * to be referenced during HTML document generation.
      *
@@ -708,7 +708,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Returns the base filename plus filename suffix form of the logo
      * image file, wrapped in any additional markup required for the
      * intended rendering of the image.
@@ -722,7 +722,7 @@ public class DocGen {
 
     protected String outputDirectoryPath = "";
 
-    /** *************************************************************
+    /**
      * Sets the canonical pathname String of the current directory in
      * which output files will be (are being) saved.
      *
@@ -734,7 +734,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Returns the canonical pathname String of the current directory
      * in which output files will be (are being) saved.
      */
@@ -742,7 +742,7 @@ public class DocGen {
         return this.outputDirectoryPath;
     }
 
-    /** *************************************************************
+    /**
      * A Map containing String replacement pairs.  This is to provide
      * adequate ASCII translations for HTML character entities, in
      * circumstances where occurrences of the entities might cause
@@ -750,7 +750,7 @@ public class DocGen {
      *
      */
     protected Map stringReplacementMap = null;
-    /** *************************************************************
+    /**
      * Sets the Map to be used for HTML character entity to ASCII 
      * replacements.
      */
@@ -759,7 +759,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Returns the Map to be used for HTML character entity to ASCII
      * replacements, attempting to build it from
      * docGenCodeMapTranslation statements found in the KB if the Map
@@ -798,7 +798,7 @@ public class DocGen {
         return this.stringReplacementMap;
     }
 
-    /** *************************************************************
+    /**
      * Returns the String replacement for fromString, if one can be
      * located, else just returns fromString.
      *
@@ -827,7 +827,7 @@ public class DocGen {
     /** A set of the predicates that should not be displayed to the user. */
     protected Set inhibitDisplayRelations = null;
 
-    /** *************************************************************
+    /**
      * Sets the predicates for which diplay should be suppressed to
      * those contained in relations.
      *
@@ -839,7 +839,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Returns a Set containing the names of those predicates for
      * which diplay should be suppressed, and tries to create the Set
      * from docGenInhibitDisplayRelations statements found in the
@@ -874,13 +874,13 @@ public class DocGen {
         return inhibitDisplayRelations;
     }
 
-    /** *************************************************************
+    /**
      * The header to be used for the the table of contents (or index
      * list) section during HTML generation.
      */
     protected String tocHeader = "";
 
-    /** *************************************************************
+    /**
      * Sets the String header to be used in generated HTML files to
      * header.
      */
@@ -889,7 +889,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Returns the String header to be used in generated HTML files.
      */
     public String getTocHeader() {
@@ -926,13 +926,13 @@ public class DocGen {
         return StringUtil.getSafeNamespaceDelimiter();
     }
 
-    /** *************************************************************
+    /**
      * If true, a termFormat value obtained for term will be displayed
      * rather than the term name itself.
      */
     protected boolean simplified = false;
 
-    /** *************************************************************
+    /**
      * Returns true if a termFormat value obtained for term will be
      * displayed during HTML rendering rather than the term name
      * itself.
@@ -941,7 +941,7 @@ public class DocGen {
         return this.simplified;
     }
 
-    /** *************************************************************
+    /**
      * Sets this.simplified to val.  If this.simplified is true, the
      * statements in Sigma's KB will be rendered in a simple
      * frame-like HTML format rather than as SUO-KIF Formulas.
@@ -951,7 +951,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * A Map in which each key is a KB name and the corresponding
      * value is a List of the Predicates defined in the KB.
      */
@@ -960,7 +960,7 @@ public class DocGen {
         return relationsByKB;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String consisting of str concatenated indent times.
      *
      * @param str The String to be concatentated with itself
@@ -979,13 +979,13 @@ public class DocGen {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * The parent directory for target subdirectories of HTML, XSD,
      * and other types of files generated by this DocGen object.
      */
     protected File outputParentDir = null;  // new File(KBmanager.getMgr().getPref("baseDir"));
 
-    /** *************************************************************
+    /**
      * Sets the parent directory in which subdirectories for different
      * types of output files will be created to the File obj, and
      * tries to create the directory pathname if it does not already
@@ -1020,7 +1020,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Sets to pathname the parent directory in which subdirectories
      * for different types of output files will be created, and tries
      * to create the directory pathname if it does not already exist.
@@ -1040,7 +1040,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Sets the parent directory in which subdirectories for different
      * types of output files will be created to the File obj, and
      * tries to create the directory pathname if it does not already
@@ -1079,7 +1079,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Sets the parent directory in which subdirectories for different
      * types of output files will be created to the abstract pathname
      * represented by a statement in kb formed with the predicate
@@ -1126,7 +1126,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Returns a File object representing the directory in which the
      * subdirectories for the various types of output files will be
      * located.
@@ -1136,7 +1136,7 @@ public class DocGen {
     }
 
     public interface DisplayFilter {
-        /** ***************************************************************
+        /**
          * Returns true if suoKifTerm may be displayed or included in the
          * particular UI text or other output generated by the DocGen
          * object dg.
@@ -1154,14 +1154,14 @@ public class DocGen {
         public boolean isLegalForDisplay (DocGen dg, String suoKifTerm);
     }
 
-    /** *************************************************************
+    /**
      * The DisplayFilter which, if present, determines if a given
      * SUO-KIF object may be displayed or output by this DocGen
      * object.
      */
     protected DisplayFilter displayFilter = null;
 
-    /** *************************************************************
+    /**
      * Sets the DisplayFilter associated with this DocGen object to
      * filterObj.
      *
@@ -1172,7 +1172,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Returns the DisplayFilter object associated with this DocGen
      * object, or null if no DisplayFilter has been set.
      */
@@ -1227,7 +1227,7 @@ public class DocGen {
             return ans;
         }
         
-        /** ***************************************************************
+        /**
          * should never be called so throw an error.
          */   
         public int hashCode() {
@@ -1237,7 +1237,7 @@ public class DocGen {
         
     } // end of PresentationNameComparator
 
-    /** *************************************************************
+    /**
      *  Rebuilds the TreeSet containing all terms in kb, and forces
      *  the new TreeSet to sort according to each term's presentation
      *  name.
@@ -1268,7 +1268,7 @@ public class DocGen {
         return kb.getTerms();
     }
 
-    /** *************************************************************
+    /**
      *  A TreeMap of TreeMaps of ArrayLists where the keys are
      *  uppercase single characters (of term formats or headwords) and
      *  the values are TreeMaps with a key of the term formats or
@@ -1284,7 +1284,7 @@ public class DocGen {
      */
     protected TreeMap alphaList = new TreeMap(String.CASE_INSENSITIVE_ORDER);
 
-    /** *************************************************************
+    /**
      *  @return a TreeMap of TreeMaps of ArrayLists where the keys
      *          are uppercase single characters (of term formats or
      *          headwords) and the values are TreeMaps with a key of
@@ -1313,7 +1313,7 @@ public class DocGen {
         return alphaList;
     }
 
-    /** *************************************************************
+    /**
      *  Clears the alphaList for this DocGen object.
      */
     public void clearAlphaList() {
@@ -1329,7 +1329,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      *  @return a TreeMap of TreeMaps of ArrayLists where the keys
      *          are uppercase single characters (of term formats or
      *          headwords) and the values are TreeMaps with a key of
@@ -1415,7 +1415,7 @@ public class DocGen {
         return alphaList;
     }
 
-    /** **************************************************************
+    /**
      * Returns true if term is an instance or subclass of
      * CompositeContentBearingObject in kb, else returns false.
      *
@@ -1439,7 +1439,7 @@ public class DocGen {
         return ans;
     }
 
-    /** **************************************************************
+    /**
      * Returns an ArrayList of Strings extracted from the range
      * argument (arg2) of the first retrieved statement formed with
      * predicate.  If no statement can be retrieved, the ArrayList
@@ -1479,7 +1479,7 @@ public class DocGen {
         return rangeList;
     }
 
-    /** **************************************************************
+    /**
      * Tries to use the values obtained from kb and ontology to set
      * some of the parameter values used for HTML generation.
      *
@@ -1572,7 +1572,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Returns a List of the names of all client ontologies currently
      * represented in any loaded KB.
      */
@@ -1593,7 +1593,7 @@ public class DocGen {
         return clientOntologyNames;
     }
 
-    /** *************************************************************
+    /**
      * Create an HTML page that lists information about a particular
      * composite term, which is a representation of an XML
      * structure.
@@ -1845,7 +1845,7 @@ public class DocGen {
         return markup;
     }
 
-    /** *************************************************************
+    /**
      * Create an HTML page that lists information about a particular term,
      * with a limit on how many statements of each type should be
      * displayed.
@@ -1966,7 +1966,7 @@ public class DocGen {
         return output;
     }
 
-    /** *************************************************************
+    /**
      * Returns an ArrayList of namespace delimiter Strings gathered
      * from all loaded KBs, obtained by collecting statements formed
      * with the predicate docGenNamespaceDelimiter.
@@ -1997,7 +1997,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String of HTML markup for the start of a document,
      * using title as the document title String.
      *
@@ -2050,7 +2050,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String of HTML markup encoding the footer section of
      * an HTML document, and using footerText as the text to be
      * displayed at the bottom of the page.
@@ -2093,7 +2093,7 @@ public class DocGen {
         return result;
     }
 
-    /** **************************************************************
+    /**
      * Returns true if statements that include term and occur in the
      * kb and ontology associated with this DocGen object may be
      * displayed or output (at all, in any form).
@@ -2115,7 +2115,7 @@ public class DocGen {
         return ans;
     }
 
-    /** **************************************************************
+    /**
      * Returns a List of all SUO-KIF terms denoting those namespaces
      * containing terms that are defined in, or occur in, statements
      * in ontology.  An association (correspondence) between a
@@ -2149,7 +2149,7 @@ public class DocGen {
         return ans;
     }
                 
-    /** **************************************************************
+    /**
      * Returns a List of all Strings used as namespace delimiters in
      * terms defined or referred to in ontology, as specified by
      * statements formed with the SUO-KIF predicate
@@ -2183,12 +2183,12 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * A List of currently known namespace prefixes.
      */
     protected ArrayList<String> namespacePrefixes = new ArrayList<String>();
 
-    /** **************************************************************
+    /**
      * Returns an ArrayList of all known namespace prefixes sorted by
      * length, from longest to shortest.
      *
@@ -2238,12 +2238,12 @@ public class DocGen {
         return namespacePrefixes;
     }
 
-    /** *************************************************************
+    /**
      * A List of currently known namespaces.
      */
     protected ArrayList<String> namespaces = new ArrayList<String>();
                 
-    /** **************************************************************
+    /**
      * Returns a List of all SUO-KIF terms that denote namespaces in
      * any loaded KB, obtained by gathering statements formed with the
      * predicates inNamespace and ontologyNamespace as well as
@@ -2281,7 +2281,7 @@ public class DocGen {
         return namespaces;
     }
 
-    /** **************************************************************
+    /**
      * Returns a List of all SUO-KIF terms denoting namespaces in kb
      * or in ontology, using the predicates inNamespace and
      * ontologyNamespace.
@@ -2362,7 +2362,7 @@ public class DocGen {
         return namespaces;
     }
 
-    /** **************************************************************
+    /**
      * Returns the namespace prefix of term based on the namespaces
      * known in kb, else returns the empty String if term appears to
      * have no namespace prefix.
@@ -2386,7 +2386,7 @@ public class DocGen {
         return ans;
     }
 
-    /** **************************************************************
+    /**
      * Returns term without its namespace prefix if it appears to have
      * one in kb, else just returns term.
      */
@@ -2405,7 +2405,7 @@ public class DocGen {
         return ans;
     }
 
-    /** **************************************************************
+    /**
      * Returns a SUO-KIF term denoting a namespace.
      *
      * @param kb The KB in which to determine if term is an namespace
@@ -2447,7 +2447,7 @@ public class DocGen {
         return ans;
     }
 
-    /** **************************************************************
+    /**
      * Removes namespace prefixes from all SUO-KIF terms to be
      * hyperlinked in text.
      *
@@ -2480,7 +2480,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      *  Collects and returns a List of all Predicates in kb.
      *
      * @param kb The KB from which to gather all terms that are
@@ -2609,7 +2609,7 @@ public class DocGen {
         return cached;
     }
 
-    /** *************************************************************
+    /**
      * Returns true if term has syntactic subcomponents such as XML
      * elements or XML attributes in kb, else returns false.
      *
@@ -2633,7 +2633,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns a List containing those terms that are immediate
      * syntactic subordinates of term in kb.
      *
@@ -2662,7 +2662,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns a List containing those terms that are immediate
      * syntactic superiors or "containers" of term in kb.
      *
@@ -2691,7 +2691,7 @@ public class DocGen {
         return ans;
     }
  
-    /** *************************************************************
+    /**
      * Returns a String that is the first termFormat value obtained
      * for term in kb, else returns null if no termFormat value
      * exists.
@@ -2746,7 +2746,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns the first documentation String obtained for term in kb,
      * using the List of namespaces or other contextualizing terms in
      * contexts.
@@ -2811,7 +2811,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns the first containing Class that can be found for term
      * in kb.
      * 
@@ -2882,7 +2882,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns the first purely "subsuming" entity that can be found
      * for term in kb, assuming that term denotes a Class or a
      * Relation.
@@ -2920,7 +2920,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns the first containing, subsuming, or superordinate
      * entity that can be found for term in kb.
      * 
@@ -2963,7 +2963,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns a List of the first containing, subsuming, or
      * superordinate entities found for term in kb.
      * 
@@ -3003,7 +3003,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns a List of the first instances or syntactic subordinate
      * entities that can be found for term in kb.
      * 
@@ -3042,7 +3042,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns a List of the entities that are immediate syntactic
      * subordinates of term in kb.
      * 
@@ -3086,7 +3086,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns a List of the entities that are immediate instances of
      * term in kb.
      * 
@@ -3119,7 +3119,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns a SUO-KIF constant that denotes the first containing
      * Class of term obtained in kb.
      * 
@@ -3138,7 +3138,7 @@ public class DocGen {
                                                       2,
                                                       true);
     }
-    /** *************************************************************
+    /**
      * Returns a List containing the immediate SUO-KIF subclasses of
      * term in kb.
      * 
@@ -3171,7 +3171,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String consisting of HTML markup for a documentation
      * String for term obtained from kb and indexed by language.
      * 
@@ -3220,7 +3220,7 @@ public class DocGen {
         return markup;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing the HTML markup for the Comment
      * field in a page displaying the definition of term in kb.
      * 
@@ -3281,7 +3281,7 @@ public class DocGen {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for the synonym field
      * of an HTML page displaying the definition of term in kb.
      * 
@@ -3392,7 +3392,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for the Display Labels
      * field of an HTML page displaying statements about term in kb.
      * 
@@ -3490,7 +3490,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for the Has Same
      * Components As field of an HTML page displaying the definition
      * of term in kb.
@@ -3560,7 +3560,7 @@ public class DocGen {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for the Composites
      * Using Same Components field of an HTML page displaying the
      * definition of term in kb.
@@ -3647,7 +3647,7 @@ public class DocGen {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for the Parents field
      * of an HTML page displaying the definition of term in kb.
      * 
@@ -3759,7 +3759,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for the Children field
      * of an HTML page displaying the definition of term in kb.
      * 
@@ -3838,7 +3838,7 @@ public class DocGen {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for the Instances
      * section of an HTML page displaying the definition of term in
      * kb.
@@ -3971,7 +3971,7 @@ public class DocGen {
         return markup;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for a SUO-KIF Formula.
      * 
      * @param kb The KB in which formula occurs
@@ -4081,7 +4081,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for the Relations
      * section of an HTML page displaying the definition of term in
      * kb.
@@ -4233,7 +4233,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for the Cardinality
      * field of an HTML page displaying the definition of term in kb.
      * 
@@ -4308,7 +4308,7 @@ public class DocGen {
         return cardVal;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for a single table row
      * in the Composite Component section of an HTML page displaying
      * the partial definition of term in kb.
@@ -4427,7 +4427,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Returns the termFormat entry for term in kb and language,
      * otherwise returns the termFormat entry for term in English,
      * otherwise just returns the term name.
@@ -4463,7 +4463,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns the termFormat entry for term in kb and language,
      * otherwise returns the termFormat entry for term in English,
      * otherwise just returns the term name.
@@ -4484,7 +4484,7 @@ public class DocGen {
         return showTermName(kb, term, language, false);
     }
 */
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for a hierarchy or tree
      * display of terms that denote nested composite components.
      * 
@@ -4530,7 +4530,7 @@ public class DocGen {
         return markup;
     }
 
-    /** *************************************************************
+    /**
      * Recursively computes and then returns a List that constitutes
      * the graph containing those XML elements and attributes
      * syntactically subordinate to term in kb.
@@ -4592,7 +4592,7 @@ public class DocGen {
         return pair;
     }
 
-    /** *************************************************************
+    /**
      * Returns a List that constitutes the graph containing those XML
      * elements and attributes syntactically subordinate to term in
      * kb.
@@ -4634,7 +4634,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for a row displaying a
      * contained component in an HTML page displaying the partial
      * definition of instance in kb.
@@ -4734,7 +4734,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      *  Given the SUO-KIF statements:
      * 
      * (hasXmlElement PartyDescriptor LocalInstance_2_459)
@@ -4795,7 +4795,7 @@ public class DocGen {
         return resultStr;
     }
 
-    /** *************************************************************
+    /**
      * Returns true if term should be skipped over during printing,
      * else returns false.
      *
@@ -4813,7 +4813,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Travels up the HasXmlElement and HasXmlAttribute relation
      * hierarchies to collect all parents, and returns them in an
      * ArrayList.
@@ -4838,7 +4838,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for the Belongs to Class
      * section of an HTML page displaying the partial
      * definition of term in kb.
@@ -4911,7 +4911,7 @@ public class DocGen {
         return markup;
     }
 
-    /** *************************************************************
+    /**
      * Returns a String containing HTML markup for the Belongs to Class
      * section of an HTML page displaying the partial
      * definition of term in kb.
@@ -4939,7 +4939,7 @@ public class DocGen {
         return createBelongsToClass(kb, kbHref, term, language, null);
     }
 
-    /** *************************************************************
+    /**
      * Returns an ArrayList holding the composite entities (Elements)
      * that contain term, or returns an empty ArrayList.
      * 
@@ -4990,7 +4990,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Create an HTML page that lists information about a particular term,
      * with a limit on how many statements of each type should be
      * displayed.
@@ -5143,7 +5143,7 @@ public class DocGen {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Generate an alphabetic HTML list that points to the
      *  individual index pages (which collect all terms starting
      *  with a particular letter.
@@ -5185,7 +5185,7 @@ public class DocGen {
         return markup;
     }
 
-    /** *************************************************************
+    /**
      *  Generate an alphabetic HTML list that points to the
      *  individual index pages (which collect all terms or term
      *  formats) starting with a particular letter.
@@ -5283,7 +5283,7 @@ public class DocGen {
         return getTocHeader();
     }
 
-    /** *************************************************************
+    /**
      *  Generate an HTML page that lists term name and its
      *  documentation
      * 
@@ -5377,7 +5377,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Generate and save all the index pages that link to the
      * individual term pages.
      *
@@ -5455,7 +5455,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      *  Save pages below the KBs directory in a directory called
      *  HTML.  If that already exists, use HTML1, HTML2 etc.
      */
@@ -5517,7 +5517,7 @@ public class DocGen {
         return;
     }
 
-    /** **************************************************************
+    /**
      * Creates a subdirectory of SIGMA_HOME/files/, in which output
      * files of the type specified by token are saved.  token is also
      * used, along with the value returned by this.getKB() and the
@@ -5603,7 +5603,7 @@ public class DocGen {
         return outdir;
     }
 
-    /** *************************************************************
+    /**
      * @param alphaList a TreeMap of TreeMaps of ArrayLists.  @see
      *                   createAlphaList()
      */
@@ -5681,7 +5681,7 @@ public class DocGen {
         return pageList;
     }
 
-    /** *************************************************************
+    /**
      * Generate simplified HTML pages for all terms.  Output is a
      * set of HTML files sent to the directory specified in
      * makeOutputDir()
@@ -5761,7 +5761,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Generate a single HTML page showing all terms.
      *
      * @param alphaList a TreeMap of TreeMaps of ArrayLists.
@@ -5895,7 +5895,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      */
     public void generateSingleHTML(KB kb, String language, boolean simplified) 
         throws IOException {
@@ -5906,7 +5906,7 @@ public class DocGen {
         generateSingleHTML(kb, dirpath, alphaList, language, simplified);
     }
 
-    /** *************************************************************
+    /**
      * Returns a List containing the subordinate XmlAttributes of
      * kifTerm, else return an empty List.
      */
@@ -5943,7 +5943,7 @@ public class DocGen {
         return attrs;
     }
 
-    /** *************************************************************
+    /**
      * Returns a List containing the subordinate XmlElements of
      * kifTerm, else return an empty List.
      */
@@ -5989,7 +5989,7 @@ public class DocGen {
         return elems;
     }
 
-    /** *************************************************************
+    /**
      * 
      */
     protected ArrayList getSyntacticExtensionTerms(KB kb, 
@@ -6053,7 +6053,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * 
      */
     protected ArrayList getSyntacticUnionTerms(KB kb, String term, int targetArgnum) {
@@ -6084,7 +6084,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * 
      */
     protected ArrayList getSyntacticCompositeTerms(KB kb, String term, int targetArgnum) {
@@ -6115,7 +6115,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * 
      */
     protected String getClosestXmlDataType(KB kb, String term) {
@@ -6136,12 +6136,12 @@ public class DocGen {
         return xmlType;
     }
 
-    /** *************************************************************
+    /**
      * Supports memoization for isInstanceOf(kb, c1, c2).
      */
     protected static Map isInstanceOfCache = new HashMap();
 
-    /** *************************************************************
+    /**
      * Returns true if i is an instance of c, else returns false.
      *
      * @param kb A KB object
@@ -6154,7 +6154,7 @@ public class DocGen {
         return kb.kbCache.instanceOf.get(i).contains(c);
     }
 
-    /** *************************************************************
+    /**
      * 
      */
     protected String getFirstDatatype(KB kb, String term) {
@@ -6174,7 +6174,7 @@ public class DocGen {
         return dtype;
     }
 
-    /** *************************************************************
+    /**
      * 
      */
     protected ArrayList getDatatypeTerms(KB kb, String term, int targetArgnum) {
@@ -6198,7 +6198,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * 
      */
     protected boolean isDataType(KB kb, String term) {
@@ -6223,7 +6223,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * 
      */
     public String getTermPresentationName(KB kb, String term) {
@@ -6242,7 +6242,7 @@ public class DocGen {
         return name;
     }
 
-    /** *************************************************************
+    /**
      * 
      */
     public String getTermPresentationName(KB kb, 
@@ -6251,7 +6251,7 @@ public class DocGen {
         return getTermPresentationName(kb, namespace, term, false);
     }
 
-    /** *************************************************************
+    /**
      * 
      */
     public String getTermPresentationName(KB kb, 
@@ -6301,7 +6301,7 @@ public class DocGen {
         return name;
     }
 
-    /** *************************************************************
+    /**
      * Sorts stringList in place by the presentation name of each its
      * terms, which could be very different from the raw term name.
      *
@@ -6370,7 +6370,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * Sorts the List terms by the length of the Strings it contains,
      * from longest to shortest.
      */
@@ -6401,7 +6401,7 @@ public class DocGen {
         return;
     }
 
-    /** *************************************************************
+    /**
      * 
      */
     public String getTermNamespace(KB kb, String term) {
@@ -6431,7 +6431,7 @@ public class DocGen {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * 
      * 
      * @param isXmlDoc If true, HTML character entities will be
@@ -6549,7 +6549,7 @@ public class DocGen {
         return ans;
     }
 
-    /** *************************************************************
+    /**
      * Writes a List of Strings to an OutputStream.
      *
      * @param data A List of String objects
@@ -6584,28 +6584,28 @@ public class DocGen {
         return;
     }
 
-    /** *******************************************************************
+    /**
      */
     public static boolean emptyString(String s) {
 
         return StringUtil.emptyString(s);
     }
 
-    /** *******************************************************************
+    /**
      */
     public static boolean isNonEmptyString(String s) {
 
         return StringUtil.isNonEmptyString(s);
     }
 
-    /** *******************************************************************
+    /**
      * */
     public ArrayList<ArrayList<String>> readSpreadsheetFile(String inpath,
                                                             char delimiter) {
         return readSpreadsheetFile(inpath, delimiter, 0, null);
     }
 
-    /** *******************************************************************
+    /**
      * Parses a file of delimited fields into an ArrayList of
      * ArrayLists.  If rowFlags contains any Strings, the method
      * concatenates sequential lines that do not start with one of the
@@ -6717,7 +6717,7 @@ public class DocGen {
         return result;
     }
 
-    /** *******************************************************************
+    /**
      * Converts a List of char-delimited Strings to a List of Lists
      * (i.e., an array) representing a spreadsheet.
      * 
@@ -6776,7 +6776,7 @@ public class DocGen {
         return result;
     }
 
-    /** *******************************************************************
+    /**
      * Counts the number of field delimiters in line and returns the
      * count, ignoring delimiters that are inside Strings.
      * 
@@ -6810,7 +6810,7 @@ public class DocGen {
         return count;
     }
 
-    /** *************************************************************
+    /**
      * 
      */
     public static void main (String[] args) {

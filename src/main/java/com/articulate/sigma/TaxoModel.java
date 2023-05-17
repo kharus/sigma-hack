@@ -16,7 +16,7 @@ in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
 August 9, Acapulco, Mexico.  See also http://sigmakee.sourceforge.net
 */
 
-/** ***************************************************************
+/**
  * A model for an expandable tree widget
  */
 public class TaxoModel {
@@ -29,7 +29,7 @@ public class TaxoModel {
     public static HashMap<String,TaxoNode> nodeMap = new HashMap<String,TaxoNode>();
     public static HashMap<String,TaxoNode> rootList = new HashMap<String,TaxoNode>();
 
-    /** ***************************************************************
+    /**
      * Remove the old tree and start over from termName.
      */
     public static void newTree (String termName) {
@@ -42,7 +42,7 @@ public class TaxoModel {
         nodeMap.put(key,n);
     }
 
-    /** ***************************************************************
+    /**
      * Remove any cached formulas from a list.
      */
     public static ArrayList<Formula> removeCached (ArrayList<Formula> forms) {
@@ -61,7 +61,7 @@ public class TaxoModel {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * Remove the parents of this node.
      */
     public static void collapseParentNodes (String nodeName) {
@@ -84,7 +84,7 @@ public class TaxoModel {
         rootList.put(key,n);
     }
 
-    /** ***************************************************************
+    /**
      * Gather information from the knowledge base to create the data for
      * the parents of this node.
      */
@@ -117,7 +117,7 @@ public class TaxoModel {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Remove the children of this node.Called as the result of an &contract=term
      * parameter sent to TreeView.jsp
      */
@@ -145,7 +145,7 @@ public class TaxoModel {
         n.children = new ArrayList();
     }
 
-    /** ***************************************************************
+    /**
      * Gather information from the knowledge base to create the data for
      * the children of this node.  Called as the result of an &expand=term
      * parameter sent to TreeView.jsp
@@ -175,7 +175,7 @@ public class TaxoModel {
         }
     }
 
-    /** ***************************************************************
+    /**
      * If the given name is already displayed, do nothing, otherwise
      * create a new tree with that one node.
      */
@@ -192,7 +192,7 @@ public class TaxoModel {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String toHTML(String kbHref) {
 

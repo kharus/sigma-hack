@@ -26,7 +26,7 @@ import edu.stanford.nlp.ling.CoreLabel;
 
 import java.util.*;
 
-/** ***************************************************************
+/**
  *  A class that handles the generation of natural language from logic.
  *
  *  @author Adam Pease - apease [at] articulatesoftware [dot] com, with thanks
@@ -95,7 +95,7 @@ public class LanguageFormatter {
         }
     }
 
-    /*******************************************************************************
+    /**
      * @param stmt The statement to be formatted.
      * @param phraseMap kb.getFormatMap() for this language
      * @param termMap kb.getTermFormatMap() for this language
@@ -120,7 +120,7 @@ public class LanguageFormatter {
         init();
     }
 
-    /***********************************************************************************
+    /**
      */
     private void init() {
 
@@ -156,7 +156,7 @@ public class LanguageFormatter {
         }
     }
 
-    /***********************************************************************************
+    /**
      * Hyperlink terms in a natural language format string.  This assumes that
      * terms to be hyperlinked are in the form &%termName$termString , where
      * termName is the name of the term to be browsed in the knowledge base and
@@ -237,7 +237,7 @@ public class LanguageFormatter {
         return nlFormat;
     }
 
-    /******************************************************************
+    /**
      * Create a natural language paraphrase of a logical statement.
      *  @param stmt The statement to be paraphrased.
      *  @param isNegMode Whether the statement is negated.
@@ -374,7 +374,7 @@ public class LanguageFormatter {
         return ans;
     }
 
-    /*****************************************************************
+    /**
      * Modify the given variable map so that given key is mapped to a surface form for the entity which includes
      * the given property.
      * @param variableMap
@@ -395,7 +395,7 @@ public class LanguageFormatter {
         }
     }
 
-    /*****************************************************************
+    /**
      * Insert the give case role into the current element's process map; or, if the SumoProcess already exists
      * there, update it with the new information.
      * @param formula
@@ -455,7 +455,7 @@ public class LanguageFormatter {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Uses variableToInstanceMap and variableTypes to resolve a given variable.
      * If more than one entry is in the map, currently takes the first one returned by the iterator.
      * @param input
@@ -477,7 +477,7 @@ public class LanguageFormatter {
         return retVal;
     }
 
-    /** ***************************************************************
+    /**
      * Create a natural language paraphrase for statements involving the logical operators.
      * @param stmt The logical statement for which we want to paraphrase the operator, arg 0.
      * @param isNegMode Is the expression negated?
@@ -577,7 +577,7 @@ public class LanguageFormatter {
         return "";
     }
 
-    /** ***************************************************************
+    /**
      */
     public String generateFormalNaturalLanguage(List<String> args, String pred, boolean isNegMode) {
 
@@ -763,7 +763,7 @@ public class LanguageFormatter {
         return "";
     }
 
-    /** ***************************************************************
+    /**
      * Create a natural language paraphrase of a logical statement, where the
      * predicate is not a logical operator.  Use a printf-like format string to generate
      * the paraphrase.
@@ -886,7 +886,7 @@ public class LanguageFormatter {
         return strFormat;
     }
 
-    /** ***************************************************************
+    /**
      * Process an atom into an appropriate NL string.  If a URL, add
      * spaces for readability.  Return variable unaltered.  Add
      * term format string to all other atoms.
@@ -931,7 +931,7 @@ public class LanguageFormatter {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * Return the NL format of an individual word.
      */
     public static String translateWord(Map<String,String> termMap, String word) {
@@ -950,7 +950,7 @@ public class LanguageFormatter {
         return ans;
     }
 
-    /** ***************************************************************
+    /**
      * Remove the type declarations from the text
      */
     public static String removePreamble(String input) {
@@ -960,7 +960,7 @@ public class LanguageFormatter {
         return input;
     }
 
-    /** ***************************************************************
+    /**
      * create a map from numbered tokens to their types
      */
     private static void createObjectMap(String form) {
@@ -1051,7 +1051,7 @@ public class LanguageFormatter {
         if (debug) System.out.println("LanguageFormatter.createObjectMap(): result " + outputMap);
     }
 
-    /** **************************************************************
+    /**
      * Replace variables with types, and articles appropriate to how many times
      * they have occurred.
      *
@@ -1144,7 +1144,7 @@ public class LanguageFormatter {
         return result;
     }
 
-    /** **************************************************************
+    /**
      * Replace variables in a formula with paraphrases expressing their
      * type.
      */
@@ -1185,7 +1185,7 @@ public class LanguageFormatter {
         return result;
     }
 
-    /** **************************************************************
+    /**
      */
     public static void test1() {
 
@@ -1206,7 +1206,7 @@ public class LanguageFormatter {
         System.out.println();
     }
 
-    /** **************************************************************
+    /**
      */
     public static void test2() {
 
@@ -1274,7 +1274,7 @@ public class LanguageFormatter {
         System.out.println();
     }
 
-    /** **************************************************************
+    /**
      */
     public static void test3() {
 
@@ -1302,7 +1302,7 @@ public class LanguageFormatter {
         System.out.println();
     }
 
-    /** ***************************************************************
+    /**
      * generate English paraphrase
      */
     public static String toEnglish(String form) {
@@ -1311,7 +1311,7 @@ public class LanguageFormatter {
                 kb.getTermFormatMap("EnglishLanguage"), kb, "EnglishLanguage") + "\n";
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showHelp() {
 
@@ -1322,7 +1322,7 @@ public class LanguageFormatter {
         System.out.println("  -g \"<formula>\" - generate English from formula");
     }
 
-    /** ***************************************************************
+    /**
      * A test method.
      */
     public static void main(String[] args) {

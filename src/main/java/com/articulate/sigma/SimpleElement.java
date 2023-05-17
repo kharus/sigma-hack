@@ -1,4 +1,4 @@
-/** *****************************************************************
+/**
  * @(#)SimpleDOMParser.java
  * From DevX
  * http://www.devx.com/xml/Article/10114
@@ -86,7 +86,7 @@ public class SimpleElement {
         return childElements;
     }
 
-    /** *****************************************************************
+    /**
      * @return the first child with the given tag name, null if none
      */
      public SimpleElement getChildByFirstTag(String tag) {
@@ -101,7 +101,7 @@ public class SimpleElement {
          return null;
      }
 
-    /** *****************************************************************
+    /**
     */
     public String toString(int indent, boolean forFile) {
 
@@ -143,20 +143,20 @@ public class SimpleElement {
         return result.toString();
     }
 
-    /** *****************************************************************
+    /**
     */
     public String toString() {
 
         return toString(0,false);
     }
 
-    /** *****************************************************************
+    /**
     */
     public String toFileString() {
 
         return toString(0,true);
     }
-    /** *****************************************************************
+    /**
     */
     public String toFileString(int indent) {
 

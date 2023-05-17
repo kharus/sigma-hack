@@ -26,7 +26,7 @@ public abstract class InferenceEngine {
 		public abstract InferenceEngine createFromKBFile(String kbFileName);
 	}
 	
-    /** *************************************************************
+    /**
      * Submit a query.
      *
      * @param formula query in the KIF syntax
@@ -38,7 +38,7 @@ public abstract class InferenceEngine {
     public abstract String submitQuery (String formula,int timeLimit,int bindingsLimit) 
         throws IOException;
 
-    /** *************************************************************
+    /**
      * Add an assertion.
      *
      * @param formula asserted formula in the KIF syntax
@@ -47,7 +47,7 @@ public abstract class InferenceEngine {
      */
     public abstract String assertFormula(String formula) throws IOException;
     
-    /** *************************************************************
+    /**
      * Terminates this instance of InferenceEngine. 
      * <font color='red'><b>Warning:</b></font>After calling this functions
      * no further assertions or queries can be done.

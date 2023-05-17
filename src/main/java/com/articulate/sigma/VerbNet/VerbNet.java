@@ -42,7 +42,7 @@ public class VerbNet {
 
     public static boolean disable = false;
 
-    /** *************************************************************
+    /**
      */
     public static void initOnce() {
 
@@ -74,7 +74,7 @@ public class VerbNet {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static void readVerbFiles() {
 
@@ -108,7 +108,7 @@ public class VerbNet {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static void processVerbs() {
 
@@ -127,7 +127,7 @@ public class VerbNet {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     private static String formatForSynset(String synset) {
 
@@ -142,7 +142,7 @@ public class VerbNet {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * @param tm Map of words with their corresponding synset numbers
      */
     public static String formatVerbsList(TreeMap<String,ArrayList<String>> tm) {
@@ -169,7 +169,7 @@ public class VerbNet {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * @param tm Map of words with their corresponding synset numbers
      */
     public static String formatVerbs(TreeMap<String,String> tm) {
@@ -193,7 +193,7 @@ public class VerbNet {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
     */
     public static void main(String[] args) {
 

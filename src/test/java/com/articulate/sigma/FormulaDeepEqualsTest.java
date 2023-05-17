@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class FormulaDeepEqualsTest extends UnitTestBase{
 
-    /***************************************************************
+    /**
      */
     @Test
     public void testDeepEquals() {
@@ -85,7 +85,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase{
 
     }
 
-    /***************************************************************
+    /**
      */
     @Test
     public void testDeepEquals2() {
@@ -126,7 +126,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase{
         Formula.debug = false;
     }
 
-    /***************************************************************
+    /**
      */
     @Test
     public void testDeepEqualsErrorCases(){
@@ -148,7 +148,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase{
         assertTrue(f.deepEquals(f));
     }
 
-    /***************************************************************
+    /**
      */
     @Test
     public void testLogicallyEqualsErrorCases() {
@@ -170,7 +170,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase{
         assertTrue(f.logicallyEquals(f));
     }
 
-    /***************************************************************
+    /**
      */
     @Test
     public void testUnifyWith() {
@@ -244,7 +244,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase{
 
     }
 
-    /***************************************************************
+    /**
      * Formula.unifyWith is deprecated
      */
     @Ignore
@@ -267,7 +267,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase{
         System.out.println("Execution time (in microseconds): " + ((stop - start) / 1000));
    }
 
-    /***************************************************************
+    /**
      */
     @Test
     public void testLogicallyEqualsPerformance() {

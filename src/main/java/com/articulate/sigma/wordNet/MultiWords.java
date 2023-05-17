@@ -41,7 +41,7 @@ public class MultiWords implements Serializable {
 
     public static boolean debug = false;
 
-    /** ***************************************************************
+    /**
      * Add a multi-word string to the multiWord member variable.  Convert
      * the wordDelimit to underscores
      */
@@ -63,7 +63,7 @@ public class MultiWords implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Add a multi-word string to the multiWord member variable.
      */
     public void addMultiWord(String word) {
@@ -71,7 +71,7 @@ public class MultiWords implements Serializable {
         addMultiWord(word,'_');
     }
 
-    /** ***************************************************************
+    /**
      */
     public String findMultiWord(List<String> text) {
 
@@ -88,7 +88,7 @@ public class MultiWords implements Serializable {
         return sb.toString();
     }
 
-    /** ***************************************************************
+    /**
      * Find the synset for a multi-word string, if it exists.
      *
      * @param text is an array of String words.
@@ -106,7 +106,7 @@ public class MultiWords implements Serializable {
                 text.subList(startIndex + 1, text.size()), synset);
     }
 
-    /** ***************************************************************
+    /**
      * @param nonRoot is the non root form of the potential multiword headword.
      *                We need to try both the root form and the original form,
      *                which includes capitalized and lower case versions.
@@ -152,7 +152,7 @@ public class MultiWords implements Serializable {
         return 0;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String rootFormOf(String word) {
 

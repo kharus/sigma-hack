@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Stack;
 
-/** *****************************************************************   
+/**   
  * <code>SimpleDOMParser</code> is a highly-simplified XML DOM
  * parser.
  */
@@ -33,7 +33,7 @@ public class SimpleDOMParser {
     private boolean skipProlog = true;
     public void setSkipProlog(boolean b) { skipProlog = b; }
 
-    /** *****************************************************************
+    /**
     */
     public SimpleDOMParser() {
 
@@ -41,7 +41,7 @@ public class SimpleDOMParser {
         currentElement = null;
     }
 
-    /** *****************************************************************
+    /**
      * Read the full path of an XML file and returns the SimpleElement 
      * object that corresponds to its parsed format.
     */
@@ -75,7 +75,7 @@ public class SimpleDOMParser {
         return result;
     }
 
-    /** *****************************************************************
+    /**
     */
     public SimpleElement parse(Reader reader) throws IOException {
 
@@ -200,7 +200,7 @@ public class SimpleDOMParser {
         }
     }
 
-    /** *****************************************************************
+    /**
     */
     private int peek() throws IOException {
 
@@ -211,7 +211,7 @@ public class SimpleDOMParser {
         return result;
     }
 
-    /** *****************************************************************
+    /**
     */
     private void peek(int[] buffer) throws IOException {
 
@@ -222,7 +222,7 @@ public class SimpleDOMParser {
         reader.reset();
     }
 
-    /** *****************************************************************
+    /**
     */
     private void skipWhitespace() throws IOException {
 
@@ -231,7 +231,7 @@ public class SimpleDOMParser {
         }
     }
 
-    /** *****************************************************************
+    /**
     */
     private void skipProlog() throws IOException {
         
@@ -249,7 +249,7 @@ public class SimpleDOMParser {
         }
     }
 
-    /** *****************************************************************
+    /**
     */
     private void skipPrologs() throws IOException {
 
@@ -266,7 +266,7 @@ public class SimpleDOMParser {
         }
     }
 
-    /** *****************************************************************
+    /**
     */
     private String readTag() throws IOException {
 
@@ -291,7 +291,7 @@ public class SimpleDOMParser {
         return sb.toString();
     }
 
-    /** ***************************************************************** 
+    /** 
      * Convert ampersand character elements to reserved characters.
      */
     public static String convertToReservedCharacters(String input) {
@@ -303,7 +303,7 @@ public class SimpleDOMParser {
         return input;
     }
 
-    /** ***************************************************************** 
+    /** 
      * Convert reserved characters to ampersand character elements.
      */
     public static String convertFromReservedCharacters(String input) {
@@ -315,7 +315,7 @@ public class SimpleDOMParser {
         return input;
     }
 
-    /** *****************************************************************
+    /**
     */
     private String readText() throws IOException {
 
@@ -342,7 +342,7 @@ public class SimpleDOMParser {
         return sb.toString();
     }
 
-    /** *****************************************************************
+    /**
     */
     private boolean compareIntArrays(int[] a1, int[] a2) {
 
@@ -355,7 +355,7 @@ public class SimpleDOMParser {
         return true;
     }
 
-    /** *****************************************************************
+    /**
     */
     public static void main(String[] args) {
 

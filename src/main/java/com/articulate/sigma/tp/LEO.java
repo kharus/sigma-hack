@@ -42,7 +42,7 @@ public class LEO {
     public static int axiomIndex = 0;
     public static boolean debug = false;
 
-    /** *************************************************************
+    /**
      */
     public String toString() {
 
@@ -52,7 +52,7 @@ public class LEO {
         return sb.toString();
     }
 
-    /** *************************************************************
+    /**
      */
     private static String[] createCommandList(File executable, int timeout, File kbFile) {
 
@@ -62,7 +62,7 @@ public class LEO {
         return optar;
     }
 
-    /** *************************************************************
+    /**
      * Add an assertion for inference.
      *
      * @param userAssertionTPTP asserted formula in the TPTP/TFF/THF syntax
@@ -125,7 +125,7 @@ public class LEO {
         return allAdded;
     }
 
-    /** *************************************************************
+    /**
      * Creates a running instance of Leo.
      *
      * @param kbFile A File object denoting the initial knowledge base
@@ -166,7 +166,7 @@ public class LEO {
         System.out.println("Leo.run() done executing");
     }
 
-    /** ***************************************************************
+    /**
      * Write the THF statements to the temp-stmt.thf file
      */
     public void writeStatements(HashSet<String> stmts, String type) {
@@ -201,7 +201,7 @@ public class LEO {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public void catFiles(String f1, String f2, String fout) throws Exception {
 
@@ -225,7 +225,7 @@ public class LEO {
         pw.close();
     }
 
-    /** *************************************************************
+    /**
      */
     public List<String> getUserAssertions(KB kb) {
 
@@ -239,7 +239,7 @@ public class LEO {
             return new ArrayList<String>();
     }
 
-    /** *************************************************************
+    /**
      * Creates a running instance of LEO-III adding a set of statements
      * in THF language to a file and then calling LEO.
      * Note that any query must be given as a "conjecture"
@@ -274,7 +274,7 @@ public class LEO {
         run(comb,timeout);
     }
 
-    /** *************************************************************
+    /**
      */
     public static void main (String[] args) throws Exception {
 

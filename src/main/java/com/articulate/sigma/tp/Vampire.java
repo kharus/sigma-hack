@@ -43,7 +43,7 @@ public class Vampire {
     public static ModeType mode = ModeType.CASC;
     public static boolean debug = false;
 
-    /** *************************************************************
+    /**
      */
     public String toString() {
 
@@ -53,7 +53,7 @@ public class Vampire {
         return sb.toString();
     }
 
-    /** *************************************************************
+    /**
      */
     private static String[] createCommandList(File executable, int timeout, File kbFile) {
 
@@ -72,7 +72,7 @@ public class Vampire {
         return cmds;
     }
 
-    /** *************************************************************
+    /**
      * Add an assertion for inference.
      *
      * @param userAssertionTPTP asserted formula in the TPTP/TFF syntax
@@ -137,7 +137,7 @@ public class Vampire {
         return allAdded;
     }
 
-    /** *************************************************************
+    /**
      * Creates a running instance of Vampire.
      *
      * @param kbFile A File object denoting the initial knowledge base
@@ -178,7 +178,7 @@ public class Vampire {
         System.out.println("Vampire.run() done executing");
     }
 
-    /** ***************************************************************
+    /**
      */
     public void writeStatements(HashSet<String> stmts, String type) {
 
@@ -212,7 +212,7 @@ public class Vampire {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Read in two files and write their contents to a new file
      */
     public void catFiles(String f1, String f2, String fout) throws Exception {
@@ -236,7 +236,7 @@ public class Vampire {
         pw.close();
     }
 
-    /** *************************************************************
+    /**
      */
     public List<String> getUserAssertions(KB kb) {
 
@@ -252,7 +252,7 @@ public class Vampire {
             return new ArrayList<String>();
     }
 
-    /** *************************************************************
+    /**
      * Creates a running instance of Vampire adding a set of statements
      * in TFF or TPTP language to a file and then calling Vampire.
      * Note that any query must be given as a "conjecture"
@@ -284,7 +284,7 @@ public class Vampire {
         run(comb,timeout);
     }
 
-    /** *************************************************************
+    /**
      */
     public static void main (String[] args) throws Exception {
 

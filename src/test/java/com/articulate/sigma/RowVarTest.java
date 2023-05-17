@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  */
 public class RowVarTest extends UnitTestBase  {
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindRowVars() {
@@ -37,7 +37,7 @@ public class RowVarTest extends UnitTestBase  {
         assertTrue(vars.contains("@ARGS") && vars.size() == 1);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testRowVarRels() {
@@ -66,7 +66,7 @@ public class RowVarTest extends UnitTestBase  {
         assertTrue(rels.get("@ARGS").contains("links"));
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testLinks() {
@@ -100,7 +100,7 @@ public class RowVarTest extends UnitTestBase  {
         assertEquals(3, rowVarMaxArities.get("@ARGS").intValue());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testLinks2() {
@@ -138,7 +138,7 @@ public class RowVarTest extends UnitTestBase  {
         assertEquals(expected,result);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testRowVarExp() {

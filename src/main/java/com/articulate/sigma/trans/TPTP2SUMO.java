@@ -12,7 +12,7 @@ August 9, Acapulco, Mexico. see also
 http://sigmakee.sourceforge.net 
 */
 
-/*************************************************************************************************/
+/**/
 package com.articulate.sigma.trans;
 
 import com.articulate.sigma.Formula;
@@ -25,7 +25,7 @@ public class TPTP2SUMO {
 
     public static boolean debug = false;
 
-  /** ***************************************************************
+  /**
    * Remove binary cascading or's and and's and consolidate as single
    * connectives with more arguments.  For example
    * (and (and A B) C) becomes (and A B C)
@@ -76,7 +76,7 @@ public class TPTP2SUMO {
       return newForm;
   }
 
-  /** ***************************************************************
+  /**
    */
   private static String addIndent (int indent, int indented) {
 
@@ -86,7 +86,7 @@ public class TPTP2SUMO {
       return res;    
   }
 
-  /** ***************************************************************
+  /**
    * remove dollar sign, for special tptp terms such as $false and $true
    */
   private static String removeDollarSign (String argument) {
@@ -100,7 +100,7 @@ public class TPTP2SUMO {
       return "";
   }
   
-  /** ***************************************************************
+  /**
    * remove termVariablePrefix
    */
   private static String transformVariable (String variable) {
@@ -108,7 +108,7 @@ public class TPTP2SUMO {
       return variable.replace(Formula.termVariablePrefix, "");
   } 
 
-  /** ***************************************************************
+  /**
    * remove termSymbolPrefix and termMentionSuffix
    */
   public static String transformTerm (String term) {
@@ -120,7 +120,7 @@ public class TPTP2SUMO {
       return term;
   }
 
-    /** ***************************************************************
+    /**
      * Convert a TPTP formula (without metadata) to SUMO, by wrapping
      * it with dummy metadata
      */
@@ -143,7 +143,7 @@ public class TPTP2SUMO {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * Convert a TPTP formula (with metadata) to SUMO
      */
     public static String toSUMO (String clause) {
@@ -164,7 +164,7 @@ public class TPTP2SUMO {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showHelp() {
 
@@ -176,7 +176,7 @@ public class TPTP2SUMO {
         System.out.println("  -f <fname> - convert file to SUO-KIF");
     }
 
-  /** ***************************************************************
+  /**
    */
   public static void main (String args[]) {
 

@@ -69,26 +69,26 @@ public class KBmanager implements Serializable {
 
     public Prover prover = Prover.VAMPIRE;
 
-    /** ***************************************************************
+    /**
      */
     public KBmanager() {
     }
 
-    /** ***************************************************************
+    /**
      * Set an error string for file loading.
      */
     public void setError(String er) {
         error = er;
     }
 
-    /** ***************************************************************
+    /**
      * Get the error string for file loading.
      */
     public String getError() {
         return error;
     }
 
-    /** ***************************************************************
+    /**
      *  Check whether sources are newer than serialized version.
      */
     public static boolean serializedExists() {
@@ -99,7 +99,7 @@ public class KBmanager implements Serializable {
         return serfile.exists();
     }
 
-    /** ***************************************************************
+    /**
      *  Check whether sources are newer than serialized version.
      */
     public static boolean serializedOld(SimpleElement configuration) {
@@ -128,7 +128,7 @@ public class KBmanager implements Serializable {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      *  Check whether config file or any .kif constituent is newer than its
      *  corresponding TPTP/TFF/THF file
      */
@@ -158,7 +158,7 @@ public class KBmanager implements Serializable {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      *  Check whether config file or any .kif constituent is newer than its
      *  corresponding TPTP/TFF/THF file
      */
@@ -171,7 +171,7 @@ public class KBmanager implements Serializable {
         return infFileOld(lang);
     }
 
-    /** ***************************************************************
+    /**
      *  Load the most recently saved serialized version.
      */
     public static boolean loadSerialized() {
@@ -203,7 +203,7 @@ public class KBmanager implements Serializable {
         return true;
     }
 
-    /** ***************************************************************
+    /**
      *  save serialized version.
      */
     public static void serialize() {
@@ -225,7 +225,7 @@ public class KBmanager implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Set default attribute values if not in the configuration file.
      */
     public void setDefaultAttributes() {
@@ -317,7 +317,7 @@ public class KBmanager implements Serializable {
         return;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static CCheckStatus initiateCCheck(KB kb, String chosenEngine, String systemChosen, String location,
             String language, int timeout) {
@@ -334,7 +334,7 @@ public class KBmanager implements Serializable {
         //return HTMLformatter.formatConsistencyCheck(msg, ccheckManager.ccheckResults(kb.name), language, page);
     }
 
-    /** ***************************************************************
+    /**
      */
     private void preferencesFromXML(SimpleElement configuration) {
 
@@ -360,7 +360,7 @@ public class KBmanager implements Serializable {
                 preferences.keySet().size());
     }
 
-    /** ***************************************************************
+    /**
      * Note that filenames that are not full paths are prefixed with the
      * value of preference kbDir
      */
@@ -406,7 +406,7 @@ public class KBmanager implements Serializable {
             System.out.println("Error in KBmanager.kbsFromXML(): no SUMO kb.  Some Sigma functions will not work.");
     }
 
-    /** ***************************************************************
+    /**
      * Note that filenames that are not full paths are prefixed with the
      * value of preference kbDir
      */
@@ -449,7 +449,7 @@ public class KBmanager implements Serializable {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      */
     public void loadKBforInference(KB kb) {
 
@@ -466,7 +466,7 @@ public class KBmanager implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public boolean loadKB(String kbName, List<String> constituents) {
 
@@ -504,7 +504,7 @@ public class KBmanager implements Serializable {
         return true;
     }
 
-    /** ***************************************************************
+    /**
      */
     private void fromXML(SimpleElement configuration) {
 
@@ -552,7 +552,7 @@ public class KBmanager implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Read an XML-formatted configuration file. The method initializeOnce()
      * sets the preferences based on the contents of the configuration file.
      * This routine has the side effect of setting the variable
@@ -577,7 +577,7 @@ public class KBmanager implements Serializable {
         return;
     }
 
-    /** ***************************************************************
+    /**
      * Reads an XML configuration file from the directory
      * configDirPath, and tries to find a configuration file elsewhere
      * if configDirPath is null.  The method initializeOnce() sets the
@@ -626,7 +626,7 @@ public class KBmanager implements Serializable {
         return configuration;
     }
 
-    /** ***************************************************************
+    /**
      * Reads in the KBs and other parameters defined in the XML
      * configuration file, or uses the default parameters.
      */
@@ -639,7 +639,7 @@ public class KBmanager implements Serializable {
         return;
     }
 
-    /** ***************************************************************
+    /**
      * Reads in the KBs and other parameters defined in the XML
      * configuration file, or uses the default parameters.  If
      * configFileDir is not null and a configuration file can be read
@@ -722,7 +722,7 @@ public class KBmanager implements Serializable {
         return;
     }
 
-    /** ***************************************************************
+    /**
      * Sets instance fields by reading the xml found in the configuration file.
      * @param configuration
      */
@@ -764,7 +764,7 @@ public class KBmanager implements Serializable {
                 preferences.keySet().size());
     }
 
-    /** ***************************************************************
+    /**
      * Double the backslash in a filename so that it can be saved to a text
      * file and read back properly.
      */
@@ -784,7 +784,7 @@ public class KBmanager implements Serializable {
         return newstring.toString();
     }
 
-    /** ***************************************************************
+    /**
      * Create a new empty KB with a name.
      * @param name - the name of the KB
      */
@@ -798,7 +798,7 @@ public class KBmanager implements Serializable {
         kbs.put(name.intern(),kb);
     }
 
-    /** ***************************************************************
+    /**
      * Remove a knowledge base.
      * @param name - the name of the KB
      */
@@ -826,7 +826,7 @@ public class KBmanager implements Serializable {
         return "KB " + name + " successfully removed.";
     }
 
-    /** ***************************************************************
+    /**
      * Write the current configuration of the system.  Call
      * writeConfiguration() on each KB object to write its manifest.
      */
@@ -875,7 +875,7 @@ public class KBmanager implements Serializable {
         return;
     }
 
-    /** ***************************************************************
+    /**
      * Get the KB that has the given name.
      */
     public KB getKB(String name) {
@@ -885,7 +885,7 @@ public class KBmanager implements Serializable {
         return kbs.get(name);
     }
 
-    /** ***************************************************************
+    /**
      * Returns true if a KB with the given name exists.
      */
     public boolean existsKB(String name) {
@@ -893,7 +893,7 @@ public class KBmanager implements Serializable {
         return kbs.containsKey(name);
     }
 
-    /** ***************************************************************
+    /**
      * Remove the KB that has the given name.
      */
     public void remove(String name) {
@@ -901,7 +901,7 @@ public class KBmanager implements Serializable {
         kbs.remove(name);
     }
 
-    /** ***************************************************************
+    /**
      * Get the one instance of KBmanager from its class variable.
      */
     public static KBmanager getMgr() {
@@ -911,7 +911,7 @@ public class KBmanager implements Serializable {
         return manager;
     }
 
-    /** ***************************************************************
+    /**
      * Get the Set of KB names in this manager.
      */
     public HashSet<String> getKBnames() {
@@ -926,7 +926,7 @@ public class KBmanager implements Serializable {
         return names;
     }
 
-    /** ***************************************************************
+    /**
      * Get the the complete list of languages available in all KBs
      */
     public ArrayList<String> allAvailableLanguages() {
@@ -941,7 +941,7 @@ public class KBmanager implements Serializable {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * Print all preferences to stdout
      */
     public void printPrefs() {
@@ -955,7 +955,7 @@ public class KBmanager implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Get the preference corresponding to the given key
      */
     public String getPref(String key) {
@@ -970,7 +970,7 @@ public class KBmanager implements Serializable {
         return ans;
     }
 
-    /** ***************************************************************
+    /**
      * Safer than getPref().equals() since it can check for null
      */
     public boolean prefEquals(String key, String value) {
@@ -987,7 +987,7 @@ public class KBmanager implements Serializable {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      * Set the preference to the given value.
      */
     public void setPref(String key, String value) {
@@ -999,7 +999,7 @@ public class KBmanager implements Serializable {
         preferences.put(key,value);
     }
 
-    /** ***************************************************************
+    /**
      * Create an server-based interface for Python to call the KB object.
      * https://pypi.python.org
      *
@@ -1022,7 +1022,7 @@ public class KBmanager implements Serializable {
         System.out.println("KBmanager.pythonServer(): completed initialization, server running");
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void printHelp() {
 
@@ -1033,7 +1033,7 @@ public class KBmanager implements Serializable {
         System.out.println("  with no arguments show this help screen an execute a test");
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void main(String[] args) {
 

@@ -30,7 +30,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComputeVariableTypesNames()     {
@@ -48,7 +48,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComputeVariableTypesInstance()     {
@@ -72,7 +72,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      * Result shows that the method does not implicitly ID the agent of a Driving as a human or an entity.
      */
     @Test
@@ -96,7 +96,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComputeVariableTypesInstanceAgentInstrument()     {
@@ -122,7 +122,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComputeVariableTypesElementSet()     {
@@ -149,7 +149,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComputeVariableTypesSubclass()     {
@@ -167,7 +167,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComputeVariableTypesMonthFn()     {
@@ -187,7 +187,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComputeVariableTypesGovFn()     {
@@ -208,7 +208,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComputeVariableTypesSubclassIf()     {
@@ -228,7 +228,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComputeVariableTypesLowTerrain() {
@@ -246,7 +246,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
 
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComputeVariableTypesIfAndOnlyIfTransitiveRelation() {
@@ -267,7 +267,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         assertEquals(expected, actualMap);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComputeVariableTypesForAllElementSet() {
@@ -289,7 +289,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase  {
         assertEquals(expected, actualMap);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComputeVariableTypesAwake() {

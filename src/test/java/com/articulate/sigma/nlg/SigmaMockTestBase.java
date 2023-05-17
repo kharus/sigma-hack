@@ -13,7 +13,7 @@ import org.junit.BeforeClass;
 import java.io.File;
 import java.util.*;
 
-/****************************************************************
+/**
  * Class mocks KB and KBcache so that unit tests can be run independently and without long initialization.
  * Add processes and case roles to the static final lists as necessary.
  */
@@ -104,7 +104,7 @@ public class SigmaMockTestBase {
 
     private static final HashMap<String, String> termFormatMap = Maps.newHashMap();
 
-    /****************************************************************
+    /**
      */
     static  {
         termFormatMap.put("Automobile", "automobile");
@@ -146,7 +146,7 @@ public class SigmaMockTestBase {
         termFormatMap.put("Entity", "entity");
     }
 
-    /****************************************************************
+    /**
      * Mock of KB.
      */
     protected class KBMock extends KB {
@@ -178,7 +178,7 @@ public class SigmaMockTestBase {
         }
     }
 
-    /****************************************************************
+    /**
      * Mock of KBcache.
      */
     protected class KBcacheMock extends KBcache {
@@ -199,7 +199,7 @@ public class SigmaMockTestBase {
         }
     }
 
-    /****************************************************************
+    /**
      */
     @BeforeClass
     public static void setUp() {
@@ -218,7 +218,7 @@ public class SigmaMockTestBase {
         WordNet.wn.verbSynsetHash = hash;
     }
 
-    /****************************************************************
+    /**
      */
     @AfterClass
     public static void tearDown() {

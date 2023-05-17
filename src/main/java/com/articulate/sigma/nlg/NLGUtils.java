@@ -20,7 +20,7 @@ public class NLGUtils implements Serializable {
     public static HashMap<String,CoreLabel> outputMap = new HashMap<>();
     public static boolean debug = false;
 
-    /** *************************************************************
+    /**
      */
     public static void init(String kbDir) {
 
@@ -31,7 +31,7 @@ public class NLGUtils implements Serializable {
         nlg.readKeywordMap(kbDir);
     }
 
-    /** ***************************************************************
+    /**
      *  Check whether sources are newer than serialized version.
      */
     public static boolean serializedExists() {
@@ -42,7 +42,7 @@ public class NLGUtils implements Serializable {
         return serfile.exists();
     }
 
-    /** ***************************************************************
+    /**
      *  Check whether sources are newer than serialized version.
      */
     public static boolean serializedOld() {
@@ -61,7 +61,7 @@ public class NLGUtils implements Serializable {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      *  Load the most recently save serialized version.
      */
     public static void loadSerialized() {
@@ -93,7 +93,7 @@ public class NLGUtils implements Serializable {
         }
     }
 
-    /** ***************************************************************
+    /**
      *  save serialized version.
      */
     public static void serialize() {
@@ -116,7 +116,7 @@ public class NLGUtils implements Serializable {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     static String prettyPrint(String term) {
 
@@ -139,7 +139,7 @@ public class NLGUtils implements Serializable {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * Resolve the "format specifiers" in the given printf type of statement.
      * @param template
      * @param href
@@ -212,7 +212,7 @@ public class NLGUtils implements Serializable {
         return sb.toString();
     }
 
-    /** ***************************************************************
+    /**
      * Format a list of variables which are not enclosed by parens.
      * Formatting includes inserting the appropriate separator between the elements (usually a comma), as well as
      * inserting the conjunction ("and" or its equivalent in another language) if the conjunction doesn't already exist.
@@ -255,7 +255,7 @@ public class NLGUtils implements Serializable {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      */
     static boolean logicalOperator(String word) {
 
@@ -263,7 +263,7 @@ public class NLGUtils implements Serializable {
         return logops.contains(word);
     }
 
-    /** ***************************************************************
+    /**
      *  Read a set of standard words and phrases in several languages.
      *  Each phrase must appear on a new line with alternatives separated by '|'.
      *  The first entry should be a set of two letter language identifiers.
@@ -354,7 +354,7 @@ public class NLGUtils implements Serializable {
         return;
     }
 
-    /** **************************************************************
+    /**
      * Generate a linguistic article appropriate to how many times in a
      * paraphrase a particular type has already occurred.
      * @param occurrence is the number of times a variables of a
@@ -423,7 +423,7 @@ public class NLGUtils implements Serializable {
             return ordinal;
     }
 
-    /** **************************************************************
+    /**
      * Collect all the variables occurring in a formula in order.  Return
      * an ArrayList of Strings.
      */
@@ -457,7 +457,7 @@ public class NLGUtils implements Serializable {
         return result;
     }
 
-    /** **************************************************************
+    /**
      */
     public static HashMap<String, HashMap<String, String>> getKeywordMap() {
 
@@ -467,7 +467,7 @@ public class NLGUtils implements Serializable {
         return NLGUtils.nlg.keywordMap;
     }
 
-    /** **************************************************************
+    /**
      */
     public static void setKeywordMap(HashMap<String, HashMap<String, String>> themap) {
 
@@ -476,7 +476,7 @@ public class NLGUtils implements Serializable {
         NLGUtils.nlg.keywordMap = themap;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String getKeyword(String englishWord, String language) {
 
@@ -494,7 +494,7 @@ public class NLGUtils implements Serializable {
         return ans;
     }
 
-    /** **************************************************************
+    /**
      * Hyperlink terms in a natural language format string.  This assumes that
      * terms to be hyperlinked are in the form &%termName$termString , where
      * termName is the name of the term to be browsed in the knowledge base and
@@ -515,7 +515,7 @@ public class NLGUtils implements Serializable {
         return languageFormatter.htmlParaphrase(href);
     }
 
-    /** ***************************************************************
+    /**
      * This method expands all "star" (asterisk) directives in the input
      * format string, and returns a new format string with individually
      * numbered argument pointers.
@@ -684,7 +684,7 @@ public class NLGUtils implements Serializable {
         return result;
     }
 
-    /** **************************************************************
+    /**
      * Capitalizes the first visible char of htmlParaphrase, if
      * possible, and adds the full stop symbol for language at a
      * workable place near the end of htmlParaphrase if addFullStop is
@@ -780,7 +780,7 @@ public class NLGUtils implements Serializable {
         return ans;
     }
 
-    /**************************************************************************************************************
+    /**
      * Return true if the given list includes "Process", or if one of its elements is a subclass of Process.
      */
     public static boolean containsProcess(Collection<String> vals, KB kb) {

@@ -30,7 +30,7 @@ import com.google.common.collect.*;
 
 import static com.articulate.sigma.wordNet.WSD.readFileIntoArray;
 
-/** ***************************************************************
+/**
  *  @author Adam Pease
  */
 
@@ -43,7 +43,7 @@ public class WordNetUtilities {
     public static int errorCount = 0;
     public static int patternNum = 18; // sense key patten
 
-    /** ***************************************************************
+    /**
      *  Get a SUMO term minus its &% prefix and one character mapping
      * suffix.
      */
@@ -62,7 +62,7 @@ public class WordNetUtilities {
             return term;
     }
 
-    /** ***************************************************************
+    /**
      * Check whether a synset format is valid
      */
     public static boolean isValidSynset8(String synset) {
@@ -75,7 +75,7 @@ public class WordNetUtilities {
             return true;
     }
 
-    /** ***************************************************************
+    /**
      * get the number of the verb frame
      */
     public static int verbFrameNum(String frame) {
@@ -83,7 +83,7 @@ public class WordNetUtilities {
         return WordNet.wn.VerbFrames.indexOf(frame);
     }
 
-    /** ***************************************************************
+    /**
      * Check whether a synset format is valid
      */
     public static boolean isValidSynset9(String synset) {
@@ -96,7 +96,7 @@ public class WordNetUtilities {
             return true;
     }
 
-    /** ***************************************************************
+    /**
      * Check whether a sense key format is valid
      */
     public static boolean isValidKey(String senseKey) {
@@ -105,7 +105,7 @@ public class WordNetUtilities {
         return senseKey.matches(m);
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String posAlphaKeyToWord(String alphaKey) {
 
@@ -116,7 +116,7 @@ public class WordNetUtilities {
         return "adjective_satellite";
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String posWordToAlphaKey(String word) {
 
@@ -127,7 +127,7 @@ public class WordNetUtilities {
         return "AS";
     }
 
-    /** ***************************************************************
+    /**
      * Extract the POS from a word_POS_num sense key.  Should be an
      * alpha key, such as "VB".
      */
@@ -142,7 +142,7 @@ public class WordNetUtilities {
         return senseKey.substring(lastUS - 2, lastUS);
     }
 
-    /** ***************************************************************
+    /**
      * Extract the word from a word_POS_num sense key.
      */
     public static String getWordFromKey (String senseKey) {
@@ -156,7 +156,7 @@ public class WordNetUtilities {
         return senseKey.substring(0, lastUS - 3);
     }
 
-    /** ***************************************************************
+    /**
      * Extract the sense number from a word_POS_num sense key.
      */
     public static String getNumFromKey (String senseKey) {
@@ -170,7 +170,7 @@ public class WordNetUtilities {
         return senseKey.substring(lastUS + 1,senseKey.length());
     }
 
-    /** ***************************************************************
+    /**
      * Extract the synset corresponding to a word_POS_num sense key.
      */
     public static String getSenseFromKey (String senseKey) {
@@ -180,7 +180,7 @@ public class WordNetUtilities {
         return POSnum + WordNet.wn.senseIndex.get(senseKey);
     }
 
-    /** ***************************************************************
+    /**
      * Extract the info in a word%num:num:num sense key.
      *     colonp = Pattern.compile("([^%]+)%([^:]*):([^:]*):([^:]*):([^:]*)");
      */
@@ -202,7 +202,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * Extract the word from a word%num:num:num sense key.
      */
     public static String getWordFromColonKey (String key) {
@@ -216,7 +216,7 @@ public class WordNetUtilities {
         return result.get(0);
     }
 
-    /** ***************************************************************
+    /**
      * Extract the sense number from a word%num:num:num sense key.
      */
     public static String getPOSNumFromColonKey (String key) {
@@ -230,7 +230,7 @@ public class WordNetUtilities {
         return result.get(1);
     }
 
-    /** ***************************************************************
+    /**
      * Extract the synset corresponding to a word%num:num:num sense key.
      */
     public static String getSenseFromColonKey (String key) {
@@ -247,7 +247,7 @@ public class WordNetUtilities {
         return POSnum + WordNet.wn.senseIndex.get(senseKey);
     }
 
-    /** ***************************************************************
+    /**
      * Get the word_POS_num sense key corresponding to a 9 digit synset.
      * Note that some adjective keys are listed as "adjuncts" with id
      * '3' instead of '5' so we try that too in case of failure.
@@ -272,7 +272,7 @@ public class WordNetUtilities {
             return key;
     }
 
-    /** ***************************************************************
+    /**
      * Extract the nine digit synset ID corresponding to a word-POS.num sense key.
      * see nlp.corpora.OntoNotes
      */
@@ -307,14 +307,14 @@ public class WordNetUtilities {
             return POSnum + WordNet.wn.senseIndex.get(senseKey);
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String removeTermPrefixes (String formula) {
 
         return formula.replaceAll("&%", "");
     }
 
-    /** ***************************************************************
+    /**
      * Convert a list of Terms in the format "&%term1 &%term2" to an ArrayList
      * of bare term Strings
      */
@@ -330,7 +330,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      *  Get a SUMO term mapping suffix.
      */
     public static char getSUMOMappingSuffix (String term) {
@@ -341,7 +341,7 @@ public class WordNetUtilities {
             return ' ';
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String convertWordNetPointer(String ptr) {
 
@@ -374,7 +374,7 @@ public class WordNetUtilities {
         return ptr;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static char posLetterToNumber(char POS) {
 
@@ -389,7 +389,7 @@ public class WordNetUtilities {
         return '1';
     }
 
-    /** ***************************************************************
+    /**
      */
     public static char posNumberToLetter(char POS) {
 
@@ -404,7 +404,7 @@ public class WordNetUtilities {
         return 'n';
     }
 
-    /** ***************************************************************
+    /**
      */
     public static char posPennToNumber(String penn) {
 
@@ -450,7 +450,7 @@ public class WordNetUtilities {
         return '0';
     }
 
-    /** ***************************************************************
+    /**
      * Convert a part of speech number to the two letter format used by
      * the WordNet sense index code.  Defaults to noun "NN".
      */
@@ -465,7 +465,7 @@ public class WordNetUtilities {
         return "NN";
     }
 
-    /** ***************************************************************
+    /**
      * Convert a part of speech number to the two letter format used by
      * the WordNet sense index code.  Defaults to noun "NN".
      */
@@ -481,7 +481,7 @@ public class WordNetUtilities {
         return "1";
     }
 
-    /** ***************************************************************
+    /**
      * Take a WordNet sense identifier, and return the integer part of
      * speech code.
      */
@@ -515,7 +515,7 @@ public class WordNetUtilities {
         return 0;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String mappingCharToName(char mappingType) {
 
@@ -537,7 +537,7 @@ public class WordNetUtilities {
         return mapping;
     }
 
-    /** ***************************************************************
+    /**
      *  A utility function that mimics the functionality of the perl
      *  substitution feature (s/match/replacement/).  Note that only
      *  one replacement is made, not a global replacement.
@@ -556,7 +556,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      *  A utility function that mimics the functionality of the perl
      *  substitution feature (s/match/replacement/) but rather than
      *  returning the result of the substitution, just tests whether the
@@ -586,7 +586,7 @@ public class WordNetUtilities {
             return false;
     }
 
-    /** ***************************************************************
+    /**
      */
     private static boolean isVowel(char c) {
 
@@ -596,7 +596,7 @@ public class WordNetUtilities {
             return false;
     }
 
-    /** ***************************************************************
+    /**
      * Return the plural form of the verb.  Handle multi-word phrases
      * to modify only the first word.
      */
@@ -627,7 +627,7 @@ public class WordNetUtilities {
         return word + remainder;
     }
 
-    /** ***************************************************************
+    /**
      * Return the plural form of the noun.  Handle multi-word phrases
      * to modify only the last word.
      */
@@ -651,7 +651,7 @@ public class WordNetUtilities {
         return word;
     }
 
-    /** ***************************************************************
+    /**
      * HTML format a TreeMap of word senses and their associated synset
      */
     public static String formatWords(TreeMap<String,String> words, String kbName) {
@@ -680,7 +680,7 @@ public class WordNetUtilities {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * HTML format a TreeMap of ArrayLists word senses
      */
     public static String formatWordsList(TreeMap<String,ArrayList<String>> words, String kbName) {
@@ -714,7 +714,7 @@ public class WordNetUtilities {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * Routine called by mergeUpdates which does the bulk of the work.
      * Should not be called during normal interactive running of Sigma.
      */
@@ -772,7 +772,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Read in a file with a nine-digit synset number followed by a space
      * and a SUMO term.  If the term is more specific than the current
      * mapping for that synset, replace the old term. This is a utility
@@ -812,7 +812,7 @@ public class WordNetUtilities {
         processMergers(hm,fileName,pattern,posNum);
     }
 
-    /** ***************************************************************
+    /**
      * Given a POS-prefixed synset that is not mapped to SUMO, go up the hypernym
      * links to try to find a synset that is linked.  Return the SUMO term with its
      * mapping type suffix and &% prefix. Note that in cases where there are
@@ -852,7 +852,7 @@ public class WordNetUtilities {
         return null;
     }
 
-    /** ***************************************************************
+    /**
      * This is a utility routine that should not be called during
      * normal Sigma operation.  It does most of the actual work for
      * deduceMissingLinks()
@@ -914,7 +914,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Use the WordNet hyper-/hypo-nym links to deduce a likely link
      * for a SUMO term that has not yet been manually linked.
      * This is a utility routine that should not be called during
@@ -940,7 +940,7 @@ public class WordNetUtilities {
         processMissingLinks(fileName,pattern,posNum);
     }
 
-    /** ***************************************************************
+    /**
      * This is a utility routine that should not be called during
      * normal Sigma operation.  It does most of the actual work for
      * updateWNversion().  The output is a set of WordNet data files
@@ -1009,7 +1009,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Read the version mapping files and store in the HashMap
      * called "mappings".
      * Note that the "old" synset should be the second element of each line
@@ -1046,7 +1046,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Note that the "old" synset should be the second element of each line
      */
     public static void updateWNversionReading(String path, String versionPair) throws IOException {
@@ -1069,7 +1069,7 @@ public class WordNetUtilities {
         readWNversionMap(fileName,pattern,posNum);
     }
 
-    /** ***************************************************************
+    /**
      * Port the mappings from one version of WordNet to another. It
      * calls updateWNversionReading to do most of the work. It assumes
      * that the mapping file has the new synset first and the old one
@@ -1110,7 +1110,7 @@ public class WordNetUtilities {
         updateWNversionProcess(fileName,pattern,posNum);
     }
 
-    /** ***************************************************************
+    /**
      * @return the number of synsets in WordNet for the given part of
      * speech
      */
@@ -1126,7 +1126,7 @@ public class WordNetUtilities {
         return 0;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String printStatistics() {
 
@@ -1229,7 +1229,7 @@ public class WordNetUtilities {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      *  Import links from www.image-net.org that are linked to
      *  WordNet and links them to SUMO terms when the synset has a
      *  directly equivalent SUMO term
@@ -1269,7 +1269,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private static boolean excludedStringsForMeronymy(String s1, String s2) {
 
@@ -1288,7 +1288,7 @@ public class WordNetUtilities {
             return false;
     }
 
-    /** ***************************************************************
+    /**
      *  A utility to extract meronym relations as relations between
      *  SUMO terms.  Filter out relations between genus and species,
      *  which shouldn't be meronyms
@@ -1323,7 +1323,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** *************************************************************
+    /**
      * Take a file of <id>tab<timestamp>tab<string> and calculate
      * the average Levenshtein distance for each ID.
      */
@@ -1373,7 +1373,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static void commentSentiment(String fileWithPath) {
 
@@ -1399,7 +1399,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private static void writeTPTPWordNetClassDefinitions(PrintWriter pw) throws IOException {
 
@@ -1424,7 +1424,7 @@ public class WordNetUtilities {
                 ",axiom,(s__documentation(s__VerbFrame,s__EnglishLanguage,\"A string template showing allowed form of use of a verb.\"))).");
     }
 
-    /** ***************************************************************
+    /**
      */
     private static void writeTPTPVerbFrames(PrintWriter pw) throws IOException {
 
@@ -1446,7 +1446,7 @@ public class WordNetUtilities {
             "domain_usage", "member_usage", "entailment", "cause", "also_see",
             "verb_group", "similar_to", "participle", "pertainym"));
 
-    /** ***************************************************************
+    /**
      */
     private static void writeTPTPWordNetRelationDefinitions(PrintWriter pw) throws IOException {
 
@@ -1524,7 +1524,7 @@ public class WordNetUtilities {
                    "describes the use of the verb in a sentence.\"))).");
     }
 
-    /** ***************************************************************
+    /**
      * Write TPTP format for SUMO-WordNet mappings.
      * @param synset is a POS prefixed synset number
      */
@@ -1571,7 +1571,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private static void writeTPTPWordNetExceptions(PrintWriter pw) throws IOException {
 
@@ -1603,7 +1603,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private static void writeTPTPOneWordToSenses(PrintWriter pw, String word) {
 
@@ -1626,7 +1626,7 @@ public class WordNetUtilities {
             System.out.println("Error in WordNetUtilities.writeTPTPOneWordToSenses(): no senses for word: " + word);
     }
 
-    /** ***************************************************************
+    /**
      */
     private static void writeTPTPWordsToSenses(PrintWriter pw) throws IOException {
 
@@ -1637,7 +1637,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private static void writeTPTPSenseIndex(PrintWriter pw) throws IOException {
 
@@ -1668,7 +1668,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private static void writeTPTPWordNetHeader(PrintWriter pw) {
 
@@ -1680,7 +1680,7 @@ public class WordNetUtilities {
         pw.println("#Produced on date: " + d.toString());
     }
 
-    /** ***************************************************************
+    /**
      * Write TPTP format for WordNet
      */
     public static void writeTPTPWordNet(PrintWriter pw) throws IOException {
@@ -1702,7 +1702,7 @@ public class WordNetUtilities {
         writeTPTPSenseIndex(pw);
     }
 
-    /** ***************************************************************
+    /**
      * Find all the leaf nodes for a particular relation in WordNet.
      * Note that the leaf must have a link from another node to be a
      * leaf.  No isolated nodes can be considered leaves.
@@ -1738,7 +1738,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * Find the complete path from a given synset.  If multiple
      * inheritance results in multiple paths, return them all.
      */
@@ -1772,7 +1772,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      */
     private static String lowestCommonParentInner(ArrayList<String> path,
                                                   ArrayList<ArrayList<String>> paths, int cursor) {
@@ -1794,7 +1794,7 @@ public class WordNetUtilities {
         return null;
     }
 
-    /** ***************************************************************
+    /**
      */
     private static String lowestCommonParent(ArrayList<ArrayList<String>> paths1,
                                             ArrayList<ArrayList<String>> paths2, int cursor) {
@@ -1809,7 +1809,7 @@ public class WordNetUtilities {
         return bestSyn;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String lowestCommonParent(String s1, String s2) {
 
@@ -1829,7 +1829,7 @@ public class WordNetUtilities {
         return bestSyn;
     }
 
-    /** ***************************************************************
+    /**
      * Find all the leaf nodes for a particular relation in WordNet.
      * Note that a node may be a leaf simply because it has no such
      * link to another node.
@@ -1853,7 +1853,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showAllLeaves() {
 
@@ -1878,7 +1878,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showAllRoots() {
 
@@ -1903,7 +1903,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      * @return POS-prefixed synsets
      */
     public static HashSet<String> wordsToSynsets(String word) {
@@ -1925,7 +1925,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String synsetToOneWord(String s) {
 
@@ -1933,7 +1933,7 @@ public class WordNetUtilities {
     }
 
 
-    /** ***************************************************************
+    /**
      * Is the given 9 digit sysnset one constructed from SUMO termFormat
      * expressions?
      */
@@ -1955,7 +1955,7 @@ public class WordNetUtilities {
             return false;
     }
 
-    /** ***************************************************************
+    /**
      */
     private static void addSenseSet(Hashtable<String,String> SUMOhash,
                                    String prefix, HashMap<String,HashSet<String>> SUMOs) {
@@ -1974,7 +1974,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      * @return a Set of Sets where each interior Set consists of
      * WordNet word senses that all map to a single SUMO term.
      * The goal is to provide a way to collapse WordNet synsets that
@@ -1994,7 +1994,7 @@ public class WordNetUtilities {
         return SUMOs;
     }
 
-    /** ***************************************************************
+    /**
      * @return all the hyponyms of a given POS-prefixed synset
      */
     public static HashSet<String> getAllHyponyms(String s) {
@@ -2013,7 +2013,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * @return all the hyponyms of a given POS-prefixed synset
      */
     public static HashSet<String> getAllHyponymsTransitive(String s) {
@@ -2037,7 +2037,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * @return whether the word is a possible hyponym of a given POS-prefixed synset
      */
     public static boolean isHyponymousWord(String word, HashSet<String> synsets) {
@@ -2063,7 +2063,7 @@ public class WordNetUtilities {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      * Generate sets of all hyponymous words for each synset in a file
      */
     public static void generateHyponymSets (String filename) {
@@ -2111,21 +2111,21 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Generate notional SUMO terms from WordNet
      */
     public static void generateSUMOfromWNsubtree(String synset, String sumo) {
 
     }
 
-    /** ***************************************************************
+    /**
      * Generate notional SUMO terms from WordNet
      */
     public static void generateSUMOfromWN(String synset, String sumo) {
 
     }
 
-    /** ***************************************************************
+    /**
      * Generate notional SUMO terms from WordNet.  Start with an equivalence
      * Make each synset a notional SUMO term with its parent either the
      * synset parent or the equivalence.
@@ -2155,7 +2155,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      * get all synsets corresponding to a SUMO term
      */
     public static ArrayList<String> getSynsetsFromSUMO(String sumo) {
@@ -2163,7 +2163,7 @@ public class WordNetUtilities {
         return WordNet.wn.SUMOHash.get(sumo);
     }
 
-    /** ***************************************************************
+    /**
      * Convert verb frame indexes as Strings into actual vrb frame strings.
      * For example "1" becomes "Something ----s"
      */
@@ -2177,7 +2177,7 @@ public class WordNetUtilities {
         return res;
     }
 
-    /** ***************************************************************
+    /**
      * get all verb frames corresponding to a synset.
      * @param synset is a 9-digit synset
      * Note! The verb frame key takes an 8-digit synset
@@ -2193,7 +2193,7 @@ public class WordNetUtilities {
         return convertVerbFrameNumbersToFrames(numbers);
     }
 
-    /** ***************************************************************
+    /**
      * get all verb frames corresponding to a word in a synset.  Include
      * verb frames common to all words in the synset.
      * @param synset is a 9-digit synset
@@ -2213,7 +2213,7 @@ public class WordNetUtilities {
         return convertVerbFrameNumbersToFrames(res);
     }
 
-    /** ***************************************************************
+    /**
      * get all verb frames corresponding to a word in a synset.
      * @param map is a set of word keys and the values are the verb frames
      * @param words are all the words in a given synset
@@ -2247,7 +2247,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * get all verb frames corresponding to a synset.
      * @param synset is a 9-digit synset
      * Note! The verb frame key takes an 8-digit synset
@@ -2269,7 +2269,7 @@ public class WordNetUtilities {
         return res;
     }
 
-    /** ***************************************************************
+    /**
      * get all verb frames corresponding to a synset.
      * @param synset is a 9-digit synset
      * Note! The verb frame key takes an 8-digit synset
@@ -2301,7 +2301,7 @@ public class WordNetUtilities {
         return sb.toString();
     }
 
-    /** ***************************************************************
+    /**
      * get all verb synsets corresponding to a SUMO term that are equivalence links
      */
     public static ArrayList<String> getEquivalentVerbSynsetsFromSUMO(String sumo) {
@@ -2331,7 +2331,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * get all verb synsets corresponding to a SUMO term
      */
     public static ArrayList<String> getVerbSynsetsFromSUMO(String sumo) {
@@ -2356,7 +2356,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * get all synsets corresponding to a SUMO term that are equivalence links
      */
     public static ArrayList<String> getEquivalentSynsetsFromSUMO(String sumo) {
@@ -2381,7 +2381,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * get all synsets corresponding to a list of SUMO terms
      */
     public static HashSet<String> getSynsetsFromSUMOList(Collection<String> sumo) {
@@ -2395,7 +2395,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * get all words corresponding to a list of synsets
      */
     public static HashSet<String> getWordsFromSynsetList(Collection<String> synsets) {
@@ -2409,7 +2409,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String rootFormOf(String word) {
 
@@ -2427,7 +2427,7 @@ public class WordNetUtilities {
         return rootWord;
     }
 
-    /** ***************************************************************
+    /**
      * Find all words which are more than one list of words pertaining
      * to a given human sense (as well as a list of emotions and a list
      * of thought words)
@@ -2453,7 +2453,7 @@ public class WordNetUtilities {
         return synesthesiaWords;
     }
 
-    /** ***************************************************************
+    /**
      * result is a side effect on "orig"
      */
     private static void addTermAndSubs(KB kb, HashSet<String> orig, String term) {
@@ -2470,7 +2470,7 @@ public class WordNetUtilities {
 
     public static boolean withThoughtEmotion = false;
 
-    /** ***************************************************************
+    /**
      * Find all words associated with sensory, psychological and
      * emotional concepts.  Return a set of words with String keys
      * as to the human sense plus "emotion" and "thought"
@@ -2548,7 +2548,7 @@ public class WordNetUtilities {
         return words;
     }
 
-    /** ***************************************************************
+    /**
      * Find all the words that exhibit links to multiple sensory modes
      * in SUMO
      */
@@ -2561,7 +2561,7 @@ public class WordNetUtilities {
         return synWords;
     }
 
-    /** ***************************************************************
+    /**
      */
     private static String removeIsh(String s) {
 
@@ -2574,7 +2574,7 @@ public class WordNetUtilities {
             return s;
     }
 
-    /** ***************************************************************
+    /**
      * Compare Lievers list of synesthetic words with those derived from
      * SUMO-WordNet
      */
@@ -2641,7 +2641,7 @@ public class WordNetUtilities {
         System.out.println("count: " + lievers.size());
     }
 
-    /** ***************************************************************
+    /**
      *  A method used only for testing.  It should not be called
      *  during normal operation.
      */
@@ -2690,7 +2690,7 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      * test if a word is sensory or mental and return true if so
      */
     public static boolean sensoryOrMentalWord(String word) {
@@ -2737,7 +2737,7 @@ public class WordNetUtilities {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      */
     private static HashSet<String> readDomain(String domain) {
 
@@ -2754,7 +2754,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * print out legal synsets and SUMO mappings
      */
     private static void lawDomainInfo() {
@@ -2772,11 +2772,11 @@ public class WordNetUtilities {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private static boolean testWordDebug = false;
 
-    /** ***************************************************************
+    /**
      */
     public static void testWord() {
 
@@ -2787,7 +2787,7 @@ public class WordNetUtilities {
         sensoryOrMentalWord("pianola");
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void testSynesthesia() {
 
@@ -2796,7 +2796,7 @@ public class WordNetUtilities {
         synesthesiaCompare(sensoryWords,synwords);
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void testGetPOS() {
 
@@ -2806,7 +2806,7 @@ public class WordNetUtilities {
         System.out.println("testGetPOS(): "  + s + " " + POS + " " + posWord);
     }
 
-    /** ***************************************************************
+    /**
      *  A method used only for testing.  It should not be called
      *  during normal operation.
      */
@@ -2815,7 +2815,7 @@ public class WordNetUtilities {
         System.out.println("INFO in WordNetUtilities.testIsValidKey(): " + isValidKey("morale_NN_1"));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showHelp() {
 
@@ -2826,7 +2826,7 @@ public class WordNetUtilities {
         System.out.println("  t \"term\" - get words from SUMO Term");
     }
 
-    /** ***************************************************************
+    /**
      *  A main method, used only for testing.  It should not be called
      *  during normal operation.
      */

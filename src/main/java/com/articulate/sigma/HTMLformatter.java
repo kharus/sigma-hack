@@ -50,7 +50,7 @@ public class HTMLformatter {
 
     public static boolean debug = false;
 
-    /** *************************************************************
+    /**
      *  Create the HTML for the labeled divider between the sections
      *  of the term display.  Each section displays a sorted list of
      *  the Formulae for which a term appears in a specified argument
@@ -103,7 +103,7 @@ public class HTMLformatter {
         return result;
     }
 
-    /** *************************************************************
+    /**
      *  Create the HTML for a kb link.
      */
     public static String createKBHref(String kbName, String language) {
@@ -111,7 +111,7 @@ public class HTMLformatter {
         return createHrefStart() + "/sigma/Browse.jsp?lang=" + language + "&kb=" + kbName;
     }
 
-    /** *************************************************************
+    /**
      *  Create the HTML for a link, taking care of http/https, hostname and port
      */
     public static String createHrefStart() {
@@ -131,7 +131,7 @@ public class HTMLformatter {
         return https + "://" + hostname + ":" + port;
     }
 
-    /** *************************************************************
+    /**
      *  Create the text for a single step in a proof.
      */
     public static String proofTextFormat(String query, ProofStep step, String kbName, String language) {
@@ -186,7 +186,7 @@ public class HTMLformatter {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Create the HTML for a single step in a proof.
      */
     public static String proofTableFormat(String query, TPTPFormula step, String kbName, String language) {
@@ -266,7 +266,7 @@ public class HTMLformatter {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      */
     public static String processFormalLanguage(String flang) {
 
@@ -276,7 +276,7 @@ public class HTMLformatter {
             return flang;
     }
 
-    /** *************************************************************
+    /**
      */
     public static String processNaturalLanguage(String lang, KB kb) {
 
@@ -286,7 +286,7 @@ public class HTMLformatter {
             return lang;
     }
 
-    /** *************************************************************
+    /**
      *  Show a hyperlinked list of terms.
      */
     public static String termList(ArrayList<String> terms, String kbHref) {
@@ -301,7 +301,7 @@ public class HTMLformatter {
         return show.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Show knowledge base statistics
      */
     public static String showStatistics(KB kb) {
@@ -335,7 +335,7 @@ public class HTMLformatter {
         return show.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Show knowledge base statistics
      */
     public static String showLanguageStats(KB kb, String lang) {
@@ -347,7 +347,7 @@ public class HTMLformatter {
         return show.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Show a map if coordinates are given in the kb
      */
     public static String showMap(KB kb, String term) {
@@ -375,7 +375,7 @@ public class HTMLformatter {
         return result;
     }
 
-    /** *************************************************************
+    /**
      *  Show knowledge base pictures
      */
     public static String showPictures(KB kb, String term) {
@@ -383,7 +383,7 @@ public class HTMLformatter {
         return showNumberPictures(kb,term,4);
     }
 
-    /** *************************************************************
+    /**
      *  Show knowledge base pictures
      */
     public static String showNumberPictures(KB kb, String term, int count) {
@@ -422,13 +422,13 @@ public class HTMLformatter {
         return show.toString();
     }
 
-    /** *************************************************************
+    /**
      */
     public static String showNeighborTerms(KB kb, String term) {
     	return HTMLformatter.showNeighborTerms(kb, term, term);
     }
 
-    /** *************************************************************
+    /**
      *  Show alphabetic list of neighbor terms
      */
     public static String showNeighborTerms(KB kb, String nonRelTerm, String relTerm) {
@@ -475,7 +475,7 @@ public class HTMLformatter {
         return markup;
     }
 
-    /** *****************************************************
+    /**
     */
     public static ArrayList<String> getAllRelTerms(KB kb, ArrayList<String> matchesList) {
         
@@ -486,7 +486,7 @@ public class HTMLformatter {
         return result;
     }
     
-    /** *****************************************************
+    /**
     */
     public static ArrayList<String> getAllNonRelTerms(KB kb, ArrayList<String> matchesList) {
         
@@ -497,7 +497,7 @@ public class HTMLformatter {
         return result;
     }
    
-    /** *****************************************************
+    /**
     * Show list of 30 relation & nonRelation terms that contain a match to the input RE term. The inputed Strings 
     * relREmatch and nonRelREmatch are the two relation and nonRelation terms respectively that are the first terms
     * at the top of the list. They are passed into the method to keep track of what 30 terms are being viewed. 
@@ -560,7 +560,7 @@ public class HTMLformatter {
         return markup;
     }
       
-    /** *************************************************************
+    /**
      *  Show a hyperlinked list of term mappings from WordNet.
      */
     public static String termMappingsList(String terms, String kbHref) {
@@ -588,7 +588,7 @@ public class HTMLformatter {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Show a hyperlinked list of WordNet synsets.
      */
     public static String synsetList(ArrayList<String> synsets, String kbHref) {
@@ -608,7 +608,7 @@ public class HTMLformatter {
         return show.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Create the HTML for a section of the Sigma term browser page.
      *  Needs a <table>...</table> enclosure to format HTML properly.
      */
@@ -684,7 +684,7 @@ public class HTMLformatter {
         return show.toString();
     }
 
-    /** *************************************************************
+    /**
      * Launch the jEdit editor with the cursor at the specified line
      * number.  Edit the file in the specified editDir, which should
      * be different from Sigma's KBs directory.  Recommended practice
@@ -721,7 +721,7 @@ public class HTMLformatter {
         }
     }
 
-    /** *************************************************************
+    /**
      *  Create the HTML for a section of the Sigma term browser page.
      */
     public static String browserSectionFormatLimit(String term, String header, KB kb,
@@ -755,7 +755,7 @@ public class HTMLformatter {
         return show.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Create the HTML for a section of the Sigma term browser page.
      */
     public static String browserSectionFormat(String term, String header,
@@ -764,7 +764,7 @@ public class HTMLformatter {
         return browserSectionFormatLimit(term, header,kb, language, flang, 0, 50, arg,type);
     }
 
-    /** *************************************************************
+    /**
      *  Change spaces to "%20" along with many other URL codes. (for passing regex expressions through hyperlinks)
      */
     public static String encodeForURL(String s) {
@@ -785,7 +785,7 @@ public class HTMLformatter {
         return s;
     }
 
-    /** *************************************************************
+    /**
      *  Change spaces to "%20"
      */
     public static String decodeFromURL(String s) {
@@ -793,7 +793,7 @@ public class HTMLformatter {
         return s.replaceAll("%20"," ");
     }
 
-    /** *************************************************************
+    /**
      *  change reserved characters from '&' tags
      */
     public static String encodeForHTML(String s) {
@@ -803,7 +803,7 @@ public class HTMLformatter {
         return s;
     }
 
-    /** *************************************************************
+    /**
      *  change reserved characters to '&' tags
      */
     public static String decodeFromHTML(String s) {
@@ -813,7 +813,7 @@ public class HTMLformatter {
         return s;
     }
 
-    /** *************************************************************
+    /**
      *  Create an HTML menu, given an ArrayList of Strings where the
      *  value(s) are String representations of int(s) but the displayed
      *  menu items are String(s).
@@ -841,7 +841,7 @@ public class HTMLformatter {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Create an HTML menu, given an ArrayList of Strings.
      */
     public static String createMenu(String menuName, String selectedOption, ArrayList<String> options) {
@@ -850,7 +850,7 @@ public class HTMLformatter {
         return createMenu(menuName, selectedOption, options, params);
     }
     
-    /** *************************************************************
+    /**
      *  Create an HTML menu of KB names
      */
     public static String createKBMenu(String kbName) {
@@ -860,7 +860,7 @@ public class HTMLformatter {
     	return(HTMLformatter.createMenu("kb",kbName,kbnames));
     }
     
-    /** *************************************************************
+    /**
      * hyperlink formulas in error messages.  It assumes that the errors
      * are in and TreeSet of Strings in kb.errors.  It further
      * assumes that the error message is given first, followed by
@@ -894,7 +894,7 @@ public class HTMLformatter {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Create an HTML menu with an ID, given an ArrayList of
      *  Strings, and possibly multiple selections.
      */
@@ -926,7 +926,7 @@ public class HTMLformatter {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Create an HTML menu with an ID, given an ArrayList of Strings.
      */
     public static String createMenu(String menuName, String selectedOption, 
@@ -962,7 +962,7 @@ public class HTMLformatter {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * Create HTML formatted output for a TPTP3 proof
      */    
     public static String formatTPTP3ProofResult(TPTP3ProofProcessor tpp, String stmt,
@@ -1016,7 +1016,7 @@ public class HTMLformatter {
     	return html.toString();
     }
 
-    /** *************************************************************
+    /**
      */    
     public static String formatConsistencyCheck(String msg, String ccheckResult, 
     		String language, int page) {
@@ -1131,7 +1131,7 @@ public class HTMLformatter {
     	return html.toString();
     }
     
-    /** *************************************************************
+    /**
      */    
     public static void main(String[] args) {
     	

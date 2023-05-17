@@ -24,7 +24,7 @@ public class UnitTestBase extends SigmaTestBase {
 
     static Long totalKbMgrInitTime = Long.MAX_VALUE;
 
-    /***************************************************************
+    /**
      * Write out a meaningful error message if the config file path is bad.
      * */
     private static final BufferedReader xmlReader;
@@ -33,7 +33,7 @@ public class UnitTestBase extends SigmaTestBase {
         xmlReader = SigmaTestBase.getXmlReader(CONFIG_FILE_PATH, CLASS);
     }
 
-    /***************************************************************
+    /**
      * */
     @BeforeClass
     public static void setup()  {
@@ -49,7 +49,7 @@ public class UnitTestBase extends SigmaTestBase {
         }
     }
 
-    /***************************************************************
+    /**
      * */
     @AfterClass
     public static void checkKBCount() {

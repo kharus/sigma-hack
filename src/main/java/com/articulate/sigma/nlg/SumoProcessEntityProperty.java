@@ -16,7 +16,7 @@ public class SumoProcessEntityProperty implements Comparable {
     private final String predicate;
     private List<String> arguments = Lists.newArrayList();
 
-    /***********************************************************************************
+    /**
      *
      * @param form
      */
@@ -30,7 +30,7 @@ public class SumoProcessEntityProperty implements Comparable {
         arguments = Arrays.asList(formAsString.split(" "));
     }
 
-    /***********************************************************************************
+    /**
      * For a given property, combine it with the given noun into a natural-sounding expression. E.g.,
      * "hat" + black-attribute -> "black hat"; "hat" + location-on-dresser-attribute -> "hat on the dresser".
      * @param noun
@@ -50,7 +50,7 @@ public class SumoProcessEntityProperty implements Comparable {
         return noun;
     }
 
-    /***********************************************************************************
+    /**
      *
      * @return
      */
@@ -59,7 +59,7 @@ public class SumoProcessEntityProperty implements Comparable {
         return formula.getFormula();
     }
 
-    /***********************************************************************************
+    /**
      * Allows sortable collections of these objects.
      * @param o
      * @return

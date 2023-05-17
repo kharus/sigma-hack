@@ -46,7 +46,7 @@ public class StackElement {
 
     private String translation = "";
 
-    /********************************************************************************
+    /**
      * Instantiate a StackElement with a sumoProcess map and a list of formula args.
      *
      * @param spcMap
@@ -57,7 +57,7 @@ public class StackElement {
         init(args);
     }
 
-    /********************************************************************************
+    /**
      * Init the formulaArgs and translated for this StackElement.
      * @param args
      */
@@ -70,7 +70,7 @@ public class StackElement {
         }
     }
 
-    /********************************************************************************
+    /**
      * Init the formulaArgs for this StackElement. The formula parameter is used to set valid
      * formulaArgs to states other than UNPROCESSED.
      * @param formula
@@ -100,7 +100,7 @@ public class StackElement {
         }
     }
 
-    /********************************************************************************
+    /**
      * Mark this stack element as having been translated.
      * @param translation
      * @param translated
@@ -110,7 +110,7 @@ public class StackElement {
         this.translated = translated;
     }
 
-    /********************************************************************************
+    /**
      * Set the polarity of current stack element's process.
      * @param predicate
      * @param polarity
@@ -122,7 +122,7 @@ public class StackElement {
         }
     }
 
-    /********************************************************************************
+    /**
      * Set polarity.
      * @param polarity
      */
@@ -134,7 +134,7 @@ public class StackElement {
         setProcessPolarity(singleKey, polarity);
     }
 
-    /********************************************************************************
+    /**
      * Getter and setter for translated field.
      * @return
      */
@@ -146,7 +146,7 @@ public class StackElement {
         return translation;
     }
 
-    /********************************************************************************
+    /**
      * Getter and setter for translated field.
      * @return
      */
@@ -158,7 +158,7 @@ public class StackElement {
         this.entityProperties = entityProperties;
     }
 
-    /********************************************************************************
+    /**
      *
      * @return
      */

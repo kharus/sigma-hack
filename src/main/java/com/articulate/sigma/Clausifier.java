@@ -21,7 +21,7 @@ import java.util.*;
 
 import com.articulate.sigma.utils.StringUtil;
 
-/** **************************************************************
+/**
  *  The code in the section below implements an algorithm for
  *    translating SUO-KIF expressions to clausal form.  The
  *    public methods are:
@@ -48,7 +48,7 @@ public class Clausifier  {
 
     public static boolean resetSkolem = false;
 
-    /** ***************************************************************
+    /**
      */
     public Clausifier(String s) {
 
@@ -60,14 +60,14 @@ public class Clausifier  {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public String toString() {
 
         return thisFormula.getFormula();
     }
     
-    /** ***************************************************************
+    /**
      *  Turn a conjunction into an ArrayList of separate statements
      */
     public ArrayList<Formula> separateConjunctions() {
@@ -88,7 +88,7 @@ public class Clausifier  {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     public static ArrayList<Formula> separateConjunctions(Formula f) {
@@ -97,7 +97,7 @@ public class Clausifier  {
         return temp.separateConjunctions();
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     public static Formula clausify(Formula f) {
@@ -106,7 +106,7 @@ public class Clausifier  {
         return temp.clausify();
     }
 
-    /** ***************************************************************
+    /**
      * Note this returns a List of mixed types!  Fixme!
      * 
      * @return an ArrayList that contains three items: The new
@@ -147,7 +147,7 @@ public class Clausifier  {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * TODO: Note mixed types in return List!  Fixme!
      * 
      * This method converts the SUO-KIF Formula to an ArrayList of
@@ -262,7 +262,7 @@ public class Clausifier  {
         return ans;
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     public static ArrayList toNegAndPosLitsWithRenameInfo(Formula f) {
@@ -271,7 +271,7 @@ public class Clausifier  {
         return temp.toNegAndPosLitsWithRenameInfo();
     }
 
-    /** ***************************************************************
+    /**
      * This method converts the SUO-KIF Formula to a canonical version
      * of clausal (resolution, conjunctive normal) form with Skolem
      * functions, following the procedure described in Logical
@@ -350,7 +350,7 @@ public class Clausifier  {
         return ans;
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     public static Formula toCanonicalClausalForm(Formula f) {
@@ -359,7 +359,7 @@ public class Clausifier  {
         return temp.toCanonicalClausalForm();
     }
 
-    /** ***************************************************************
+    /**
      * <p>This method returns an open Formula that constitutes a KIF
      * query expression, which is generated from the canonicalized
      * negation of the original Formula.  The original Formula is
@@ -405,7 +405,7 @@ public class Clausifier  {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * This method returns a canonical version of this Formula,
      * assumed to be a KIF "special" form, in which all internal
      * first-order KIF formulae are replaced by their canonical
@@ -479,7 +479,7 @@ public class Clausifier  {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     private static Formula toCanonicalKifSpecialForm(Formula f, boolean preserveSharedVariables) {
@@ -488,7 +488,7 @@ public class Clausifier  {
         return temp.toCanonicalKifSpecialForm(preserveSharedVariables);
     }
 
-    /** ***************************************************************
+    /**
      * Returns a String in which all variables and row variables have
      * been normalized -- renamed, in depth-first order of occurrence,
      * starting from index 1 -- to support comparison of Formulae for
@@ -507,7 +507,7 @@ public class Clausifier  {
         return normalizeVariables(input, false);
     }
 
-    /** ***************************************************************
+    /**
      * Returns a String in which all variables and row variables have
      * been normalized -- renamed, in depth-first order of occurrence,
      * starting from index 1 -- to support comparison of Formulae for
@@ -535,7 +535,7 @@ public class Clausifier  {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * An internal helper method for normalizeVariables(String input).
      *
      * @see normalizeVariables();
@@ -594,7 +594,7 @@ public class Clausifier  {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * This method converts every occurrence of '<=>' in the Formula
      * to a conjunct with two occurrences of '=>'.
      * 
@@ -635,7 +635,7 @@ public class Clausifier  {
         return ans;
     }
 
-    /** ***************************************************************
+    /**
      * This method converts every occurrence of '(=> LHS RHS' in the
      * Formula to a disjunct of the form '(or (not LHS) RHS)'.
      * 
@@ -675,7 +675,7 @@ public class Clausifier  {
         return ans;
     }
 
-    /** ***************************************************************
+    /**
      * This method 'pushes in' all occurrences of 'not', so that each
      * occurrence has the narrowest possible scope, and also removes
      * from the Formula all occurrences of '(not (not ...))'.
@@ -697,7 +697,7 @@ public class Clausifier  {
         return ans;
     }
 
-    /** ***************************************************************
+    /**
      * This method is used in negationsIn().  It recursively 'pushes
      * in' all occurrences of 'not', so that each occurrence has the
      * narrowest possible scope, and also removes from the Formula all
@@ -774,7 +774,7 @@ public class Clausifier  {
         return thisFormula;
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     private static Formula negationsIn_1(Formula f) {  
@@ -782,7 +782,7 @@ public class Clausifier  {
         return temp.negationsIn_1();
     }
 
-    /** ***************************************************************
+    /**
      * This method augments each element of the Formula by
      * concatenating optional Strings before and after the element.
      *
@@ -825,7 +825,7 @@ public class Clausifier  {
         return ans;
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     private static Formula listAll(Formula f, String before, String after) {  
@@ -834,7 +834,7 @@ public class Clausifier  {
         return temp.listAll(before,after);
     }
 
-    /** ***************************************************************
+    /**
      * This method increments VAR_INDEX and then returns the new int
      * value.  If VAR_INDEX is already at Integer.MAX_VALUE, then
      * VAR_INDEX is reset to 0.
@@ -851,7 +851,7 @@ public class Clausifier  {
         return VAR_INDEX;
     }
 
-    /** ***************************************************************
+    /**
      * This method increments SKOLEM_INDEX and then returns the new int
      * value.  If SKOLEM_INDEX is already at Integer.MAX_VALUE, then
      * SKOLEM_INDEX is reset to 0.
@@ -868,7 +868,7 @@ public class Clausifier  {
         return SKOLEM_INDEX;
     }
 
-    /** ***************************************************************
+    /**
      * This method returns a new SUO-KIF variable String, modifying
      * any digit suffix to ensure that the variable will be unique.
      *
@@ -896,7 +896,7 @@ public class Clausifier  {
         return (base + varIdx);
     }
 
-    /** ***************************************************************
+    /**
      * This method returns a new SUO-KIF variable String, adding a
      * digit suffix to ensure that the variable will be unique.
      *
@@ -906,7 +906,7 @@ public class Clausifier  {
         return newVar(null);
     }
 
-    /** ***************************************************************
+    /**
      * This method returns a new SUO-KIF row variable String,
      * modifying any digit suffix to ensure that the variable will be
      * unique.
@@ -917,7 +917,7 @@ public class Clausifier  {
         return newVar(Formula.RVAR);
     }
 
-    /** ***************************************************************
+    /**
      *  Replace term2 with term1
      */
     public Formula rename(String term2, String term1) {
@@ -943,7 +943,7 @@ public class Clausifier  {
         return newFormula;
     }
 
-    /** ***************************************************************
+    /**
      *  Replace variables with a value as given by the map argument
      */
     public Formula substituteVariables(Map<String,String> m) {
@@ -972,7 +972,7 @@ public class Clausifier  {
         return newFormula;
     }
 
-    /** ***************************************************************
+    /**
      *  Extract all variables in a list
      */
     public static Set<String> extractVariables(Formula f) {
@@ -982,7 +982,7 @@ public class Clausifier  {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      *  Extract all variables in a list
      */
     private static void extractVariablesRecursively(Formula f, Set<String> vars) {
@@ -1001,13 +1001,13 @@ public class Clausifier  {
         }
     }
 
-    /** **************************************************************
+    /**
      *  Counter for instantiateVariables() to make sure generated
      *  symbols are unique.
      */
     private static int GENSYM_COUNTER = 0;
 
-    /** **************************************************************
+    /**
      *  Create constants to fill variables.
 
     public Formula instantiateVariables() {
@@ -1026,7 +1026,7 @@ public class Clausifier  {
         return f.substituteVariables(vars);
     }
 */
-    /** ***************************************************************
+    /**
      * This method returns a new Formula in which all variables have
      * been renamed to ensure uniqueness.
      *
@@ -1043,7 +1043,7 @@ public class Clausifier  {
         return renameVariables(topLevelVars, scopedRenames, allRenames);
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     public static Formula renameVariables(Formula f) {  
@@ -1052,7 +1052,7 @@ public class Clausifier  {
         return temp.renameVariables();
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     public static Formula renameVariables(Formula f, Map topLevelVars, Map scopedRenames, Map allRenames) {  
@@ -1061,7 +1061,7 @@ public class Clausifier  {
         return temp.renameVariables(topLevelVars,scopedRenames,allRenames);
     }
 
-    /** ***************************************************************
+    /**
      * This method returns a new Formula in which all variables have
      * been renamed to ensure uniqueness.
      *
@@ -1139,7 +1139,7 @@ public class Clausifier  {
         return thisFormula;
     }
 
-    /** ***************************************************************
+    /**
      * This method returns a new, unique skolem term with each
      * invocation.
      *
@@ -1170,7 +1170,7 @@ public class Clausifier  {
         return ans;
     }      
 
-    /** ***************************************************************
+    /**
      * This method returns a new Formula in which all existentially
      * quantified variables have been replaced by Skolem terms.
      *
@@ -1203,7 +1203,7 @@ public class Clausifier  {
         return existentialsOut(evSubs, iUQVs, scopedUQVs);
     }
 
-    /** ***************************************************************
+    /**
      * This method returns a new Formula in which all existentially
      * quantified variables have been replaced by Skolem terms.
      *
@@ -1287,7 +1287,7 @@ public class Clausifier  {
         return thisFormula;
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     private static Formula existentialsOut(Formula f, Map evSubs, TreeSet iUQVs, TreeSet scopedUQVs) {  
@@ -1296,7 +1296,7 @@ public class Clausifier  {
         return temp.existentialsOut(evSubs, iUQVs, scopedUQVs);
     }
 
-    /** ***************************************************************
+    /**
      * This method collects all variables in Formula that appear to be
      * only implicitly universally quantified and adds them to the
      * TreeSet iuqvs.  Note the iuqvs must be passed in.
@@ -1343,7 +1343,7 @@ public class Clausifier  {
         }
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     private static void collectIUQVars(Formula f, TreeSet iuqvs, TreeSet scopedVars) {  
@@ -1352,7 +1352,7 @@ public class Clausifier  {
         temp.collectIUQVars(iuqvs,scopedVars);
     }
 
-    /** ***************************************************************
+    /**
      * This method returns a new Formula in which explicit univeral
      * quantifiers have been removed.
      *
@@ -1379,7 +1379,7 @@ public class Clausifier  {
         return thisFormula;
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     public static Formula universalsOut(Formula f) {  
@@ -1388,7 +1388,7 @@ public class Clausifier  {
         return temp.universalsOut();
     }
 
-    /** ***************************************************************
+    /**
      * This method returns a new Formula in which nested 'and', 'or',
      * and 'not' operators have been unnested:
      *
@@ -1420,7 +1420,7 @@ public class Clausifier  {
         return ans;
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     private static Formula nestedOperatorsOut(Formula f) {  
@@ -1429,7 +1429,7 @@ public class Clausifier  {
         return temp.nestedOperatorsOut();
     }
 
-    /** ***************************************************************
+    /**
      * @see clausify()
      * @see nestedOperatorsOut_1()
      *
@@ -1489,7 +1489,7 @@ public class Clausifier  {
         return thisFormula;
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     private static Formula nestedOperatorsOut_1(Formula f) {  
@@ -1498,7 +1498,7 @@ public class Clausifier  {
         return temp.nestedOperatorsOut_1();
     }
 
-    /** ***************************************************************
+    /**
      * This method returns a new Formula in which all occurrences of
      * 'or' have been accorded the least possible scope.
      *
@@ -1522,7 +1522,7 @@ public class Clausifier  {
         return ans;
     }
  
-    /** ***************************************************************
+    /**
      * @see clausify()
      * @see disjunctionsIn()
      *
@@ -1582,7 +1582,7 @@ public class Clausifier  {
         return thisFormula;
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     private static Formula disjunctionsIn_1(Formula f) {  
@@ -1591,7 +1591,7 @@ public class Clausifier  {
         return temp.disjunctionsIn_1();
     }
 
-    /** ***************************************************************
+    /**
      * This method returns an ArrayList of clauses.  Each clause is a
      * LISP list (really, a Formula) containing one or more Formulas.
      * The LISP list is assumed to be a disjunction, but there is no
@@ -1644,7 +1644,7 @@ public class Clausifier  {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * This method returns a Formula in which variables for separate
      * clauses have been 'standardized apart'.
      *
@@ -1659,7 +1659,7 @@ public class Clausifier  {
         return standardizeApart(thisFormula,reverseRenames);
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     private static Formula standardizeApart(Formula f, Map<String, String> renameMap) {  
@@ -1668,7 +1668,7 @@ public class Clausifier  {
         return temp.standardizeApart(renameMap);
     }
 
-    /** ***************************************************************
+    /**
      * This method returns a Formula in which variables for separate
      * clauses have been 'standardized apart'.
      *
@@ -1734,7 +1734,7 @@ public class Clausifier  {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * This is a helper method for standardizeApart(renameMap).  It
      * assumes that the Formula will be a single clause.
      *
@@ -1774,7 +1774,7 @@ public class Clausifier  {
         return ans;
     }
 
-    /** ***************************************************************
+    /**
      *  convenience method
      */
     private static Formula standardizeApart_1(Formula f, Map<String, String> renames, Map<String, String> reverseRenames) {  
@@ -1783,7 +1783,7 @@ public class Clausifier  {
         return temp.standardizeApart_1(renames, reverseRenames);
     }
 
-    /** ***************************************************************
+    /**
      * This method finds the original variable that corresponds to a new
      * variable.  Note that the clausification algorithm has two variable
      * renaming steps, and that after variables are standardized apart an
@@ -1814,7 +1814,7 @@ public class Clausifier  {
         return ans;
     }
 
-    /** ***************************************************************
+    /**
      * This method converts the SUO-KIF Formula to a version of
      * clausal (resolution, conjunctive normal) form with Skolem
      * functions, following the procedure described in Logical
@@ -1856,7 +1856,7 @@ public class Clausifier  {
         return thisFormula;
     }
     
-    /** ***************************************************************
+    /**
      * A test method.
      */
     public static void test1() {
@@ -1868,7 +1868,7 @@ public class Clausifier  {
         System.out.println("INFO in Clausifier.test1(): output formula: " + clausalForm);
     }
 
-    /** ***************************************************************
+    /**
      * A test method.
      */
     public static void testClausifier(String[] args) {
@@ -1935,7 +1935,7 @@ public class Clausifier  {
     }
 
     
-    /** ***************************************************************
+    /**
      */
     private static void testRemoveImpEq() {
     
@@ -1971,7 +1971,7 @@ public class Clausifier  {
         System.out.println();
     }
 
-    /** ***************************************************************
+    /**
      */
     private static void testMoveQuantifiersLeft() {
         
@@ -2023,7 +2023,7 @@ public class Clausifier  {
     */    
     } 
 
-    /** ***************************************************************
+    /**
      */
     private static void testMoveNegationIn() {
         
@@ -2091,7 +2091,7 @@ public class Clausifier  {
           
     } 
 
-    /** ***************************************************************
+    /**
      */
     private static void testStandardizeVariables() {
         
@@ -2113,7 +2113,7 @@ public class Clausifier  {
         */     
     }
     
-    /** ***************************************************************
+    /**
      */
     private static void testSkolemization() {
         
@@ -2126,7 +2126,7 @@ public class Clausifier  {
         System.out.println();
     }
     
-    /** ***************************************************************
+    /**
      */
     private static void testDistribute() {
         
@@ -2159,7 +2159,7 @@ public class Clausifier  {
         System.out.println();
     }
     
-    /** ***************************************************************
+    /**
      */
     private static void testClausificationSteps(String s) {
 
@@ -2212,7 +2212,7 @@ public class Clausifier  {
         System.out.println("after separation: " + forms);
     }
     
-    /** ***************************************************************
+    /**
      */
     private static void testClausification() {
                 
@@ -2220,7 +2220,7 @@ public class Clausifier  {
         testClausificationSteps("(![Fluent]:(![Time]:(((holdsAt(Fluent, Time)&(~releasedAt(Fluent, plus(Time, n1))))&(~(?[Event]:(happens(Event, Time)&terminates(Event, Fluent, Time)))))=>holdsAt(Fluent, plus(Time, n1)))))).");
     }
     
-    /** ***************************************************************
+    /**
      */
     private static void testClausificationSimple() {
         
@@ -2244,7 +2244,7 @@ public class Clausifier  {
         System.out.println(result);  
     }
     
-    /** ***************************************************************
+    /**
      */
     public static void main(String[] args) {
         
