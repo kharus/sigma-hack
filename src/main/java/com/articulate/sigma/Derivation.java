@@ -8,10 +8,13 @@ public class Derivation implements Serializable {
     public ArrayList<Formula> parents = new ArrayList<>();
 
     /**
+     *
      */
-    public Derivation() {}
+    public Derivation() {
+    }
 
     /**
+     *
      */
     public Derivation(String op, ArrayList<Formula> par) {
 
@@ -21,6 +24,7 @@ public class Derivation implements Serializable {
     }
 
     /**
+     *
      */
     public Derivation deepCopy() {
 
@@ -45,9 +49,9 @@ public class Derivation implements Serializable {
             StringBuffer sb = new StringBuffer();
             sb.append("inference(" + operator + ", ");
             for (Formula f : parents) {
-                sb.append(f.getFormula().toString());
+                sb.append(f.getFormula());
                 sb.append(":" + f.derivation.toString() + ")");
-            };
+            }
             return sb.toString();
         }
     }

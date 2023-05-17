@@ -2,13 +2,14 @@ package com.articulate.sigma;
 
 import org.junit.Test;
 
-import java.util.*;
+import java.util.Map;
 
 import static junit.framework.TestCase.assertTrue;
 
 public class FormatTest extends IntegrationTestBase {
 
     /**
+     *
      */
     @Test
     public void testNegativePositiveFormat() {
@@ -16,13 +17,13 @@ public class FormatTest extends IntegrationTestBase {
         Map<String, String> phraseMap = SigmaTestBase.kb.getFormatMap("EnglishLanguage");
 
         StringBuilder problems = new StringBuilder("\n");
-        for (Map.Entry<String, String> entry : phraseMap.entrySet())   {
+        for (Map.Entry<String, String> entry : phraseMap.entrySet()) {
             String value = entry.getValue();
-            if (value.matches(".*%(p|n)\\(.*"))  {
+            if (value.matches(".*%(p|n)\\(.*")) {
                 problems.append("Syntax error. '").append(entry.getKey()).append("' has a p (pos) or n (neg) followed by a left paren instead of a left curly brace: '").append(value).append("'\n");
             }
             // Note use of ? for non-greedy matching.
-            if (value.matches(".*%(p|n)\\{[^\\}]+?\\).*"))  {
+            if (value.matches(".*%(p|n)\\{[^\\}]+?\\).*")) {
                 problems.append("Syntax error. '").append(entry.getKey()).append("' has a p (pos) or n (neg) followed by a right paren instead of a right curly brace: '").append(value).append("'\n");
             }
         }
@@ -32,6 +33,7 @@ public class FormatTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testFormatMatchingCharacters() {

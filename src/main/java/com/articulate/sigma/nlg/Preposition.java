@@ -31,6 +31,8 @@ public class Preposition {
     private static final List<String> PATH_PREPOSITIONS = Lists.newArrayList("along");
 
     private static final List<String> RESOURCE_PREPOSITIONS = Lists.newArrayList("out of", "from");
+    // Mappings for verbs that fall out of the default preposition-case role behavior.
+    private static final Map<String, Multimap<CaseRole, String>> specialVerbPrepositionBehaviorMap = Maps.newHashMap();
 
     // Insert default mappings into the multimap.
     static {
@@ -42,9 +44,6 @@ public class Preposition {
         defaultPrepositions.putAll(CaseRole.PATH, PATH_PREPOSITIONS);
         defaultPrepositions.putAll(CaseRole.RESOURCE, RESOURCE_PREPOSITIONS);
     }
-
-    // Mappings for verbs that fall out of the default preposition-case role behavior.
-    private static final Map<String, Multimap<CaseRole, String>> specialVerbPrepositionBehaviorMap = Maps.newHashMap();
     // FIXME: Uncomment when benefits is made a CaseRole
 //    static {
 //        // "The benefits role for the verb 'help' does not take a preposition."
@@ -53,20 +52,20 @@ public class Preposition {
 //        specialVerbPrepositionBehaviorMap.put("help", prepsForCaseRole);
 //    }
 
-    public static List<String> getPrepositionForCaseRole(String verb, CaseRole caseRole)   {
+    public static List<String> getPrepositionForCaseRole(String verb, CaseRole caseRole) {
         // The default is empty string--no preposition.
         List<String> retList = Lists.newArrayList("");
 
         // First try exception list.
-        if (specialVerbPrepositionBehaviorMap.containsKey(verb) && specialVerbPrepositionBehaviorMap.get(verb).containsKey(caseRole))    {
+        if (specialVerbPrepositionBehaviorMap.containsKey(verb) && specialVerbPrepositionBehaviorMap.get(verb).containsKey(caseRole)) {
             Multimap<CaseRole, String> mm = specialVerbPrepositionBehaviorMap.get(verb);
             retList = Lists.newArrayList(mm.get(caseRole));
         }
         // Use the default.
-        else    {
+        else {
             retList = Lists.newArrayList(defaultPrepositions.get(caseRole));
             // If retList is empty, insert empty string into the first element, representing no preposition.
-            if (retList.isEmpty())  {
+            if (retList.isEmpty()) {
                 retList.add("");
             }
         }

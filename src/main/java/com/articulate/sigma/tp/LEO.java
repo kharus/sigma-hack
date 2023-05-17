@@ -1,15 +1,16 @@
-/** This code is copyright Articulate Software (c) 2003.  Some
-portions copyright Teknowledge (c) 2003 and reused under the terms of the GNU license.
-This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
-Users of this code also consent, by use of this code, to credit Articulate Software
-and Teknowledge in any writings, briefings, publications, presentations, or 
-other representations of any software which incorporates, builds on, or uses this 
-code.  Please cite the following article in any publication with references:
-
-Pease, A., (2003). The Sigma Ontology Development Environment, 
-in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
-August 9, Acapulco, Mexico.  See also sigmakee.sourceforge.net
-*/
+/**
+ * This code is copyright Articulate Software (c) 2003.  Some
+ * portions copyright Teknowledge (c) 2003 and reused under the terms of the GNU license.
+ * This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
+ * Users of this code also consent, by use of this code, to credit Articulate Software
+ * and Teknowledge in any writings, briefings, publications, presentations, or
+ * other representations of any software which incorporates, builds on, or uses this
+ * code.  Please cite the following article in any publication with references:
+ * <p>
+ * Pease, A., (2003). The Sigma Ontology Development Environment,
+ * in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
+ * August 9, Acapulco, Mexico.  See also sigmakee.sourceforge.net
+ */
 
 package com.articulate.sigma.tp;
 
@@ -17,7 +18,6 @@ import com.articulate.sigma.Formula;
 import com.articulate.sigma.FormulaPreprocessor;
 import com.articulate.sigma.KB;
 import com.articulate.sigma.KBmanager;
-import com.articulate.sigma.trans.SUMOKBtoTPTPKB;
 import com.articulate.sigma.trans.SUMOformulaToTPTPformula;
 import com.articulate.sigma.trans.THF;
 import com.articulate.sigma.trans.TPTP3ProofProcessor;
@@ -37,27 +37,17 @@ import java.util.*;
 
 public class LEO {
 
-    public StringBuffer qlist = null; // quantifier list in order for answer extraction
-    public ArrayList<String> output = new ArrayList<>();
     public static int axiomIndex = 0;
     public static boolean debug = false;
-
-    /**
-     */
-    public String toString() {
-
-        StringBuffer sb = new StringBuffer();
-        for (String s : output)
-            sb.append(s + "\n");
-        return sb.toString();
-    }
+    public StringBuffer qlist = null; // quantifier list in order for answer extraction
+    public ArrayList<String> output = new ArrayList<>();
 
     /**
      */
     private static String[] createCommandList(File executable, int timeout, File kbFile) {
 
         String opts = "";
-        opts = executable.toString() + " " + kbFile.toString() + " -t " + Integer.toString(timeout) + " -p";
+        opts = executable.toString() + " " + kbFile.toString() + " -t " + timeout + " -p";
         String[] optar = opts.split(" ");
         return optar;
     }
@@ -75,7 +65,7 @@ public class LEO {
      * directly add assertion into opened inference engine (e_ltb_runner)
      */
     public static boolean assertFormula(String userAssertionTPTP, KB kb,
-                                 ArrayList<Formula> parsedFormulas, boolean tptp) {
+                                        ArrayList<Formula> parsedFormulas, boolean tptp) {
 
         if (debug) System.out.println("INFO in Leo.assertFormula(2):writing to file " + userAssertionTPTP);
         boolean allAdded = false;
@@ -86,7 +76,7 @@ public class LEO {
             for (Formula parsedF : parsedFormulas) {
                 processedFormulas.clear();
                 FormulaPreprocessor fp = new FormulaPreprocessor();
-                processedFormulas.addAll(fp.preProcess(parsedF,false, kb));
+                processedFormulas.addAll(fp.preProcess(parsedF, false, kb));
                 if (processedFormulas.isEmpty())
                     allAdded = false;
                 else {   // 2. Translate to THF.
@@ -94,7 +84,7 @@ public class LEO {
                     if (tptp) {
                         THF thf = new THF();
                         for (Formula p : processedFormulas) {
-                            String tptpStr = thf.oneKIF2THF(p,false,kb);
+                            String tptpStr = thf.oneKIF2THF(p, false, kb);
                             if (debug) System.out.println("INFO in LEO.assertFormula(2): formula " + tptpStr);
                             tptpFormulas.add(tptpStr);
                         }
@@ -105,24 +95,81 @@ public class LEO {
                         pw.println(",axiom,(" + theTPTPFormula + ")).");
                         String tptpstring = SUMOformulaToTPTPformula.lang + "(kb_" + kb.name + "_UserAssertion" +
                                 "_" + axiomIndex + ",axiom,(" + theTPTPFormula + ")).";
-                        if (debug) System.out.println("INFO in LEO.assertFormula(2): TPTP for user assertion = " + tptpstring);
+                        if (debug)
+                            System.out.println("INFO in LEO.assertFormula(2): TPTP for user assertion = " + tptpstring);
                     }
                     pw.flush();
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 if (pw != null) pw.close();
-            }
-            catch (Exception ioe) {
+            } catch (Exception ioe) {
                 ioe.printStackTrace();
             }
         }
         return allAdded;
+    }
+
+    /**
+     */
+    public static void main(String[] args) throws Exception {
+
+        KBmanager.getMgr().initializeOnce();
+        String kbName = KBmanager.getMgr().getPref("sumokbname");
+        KB kb = KBmanager.getMgr().getKB(kbName);
+        String dir = KBmanager.getMgr().getPref("kbDir") + File.separator;
+        String lang = "thf";
+        String outfile = dir + "temp-comb." + lang;
+        String stmtFile = dir + "temp-stmt." + lang;
+        File f1 = new File(outfile);
+        f1.delete();
+        File f2 = new File(stmtFile);
+        f2.delete();
+        File f3 = new File(dir + kbName + KB._userAssertionsString);
+        f3.delete();
+        File f4 = new File(dir + kbName + KB._userAssertionsTPTP);
+        f4.delete();
+        File kbFile = new File(dir + kbName + "." + lang);
+        System.out.println("Leo.main(): first test");
+        HashSet<String> query = new HashSet<>();
+        query.add("thf(conj1,conjecture,?[V__X:$i, V__Y:$i] : (subclass_THFTYPE_IiioI @ V__X @ V__Y)).");
+        System.out.println("Leo.main(): calling Leo with: " + kbFile + ", 30, " + query);
+        LEO leo = new LEO();
+        leo.run(kb, kbFile, 30, query);
+        System.out.println("----------------\nLeo output\n");
+        for (String l : leo.output)
+            System.out.println(l);
+        String queryStr = "(subclass ?X ?Y)";
+        TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
+        tpp.parseProofOutput(leo.output, queryStr, kb, leo.qlist);
+        for (TPTPFormula step : tpp.proof) {
+            System.out.println(":: " + step);
+            Formula f = new Formula(step.sumo);
+            System.out.println(f.format("", "  ", "\n"));
+        }
+        System.out.println("Leo.main(): bindings: " + tpp.bindings);
+        //System.out.println("Leo.main(): proof: " + tpp.proof);
+        System.out.println("-----------------\n");
+        System.out.println("\n");
+/*
+        System.out.println("Leo.main(): second test");
+        System.out.println(kb.askLeo("(subclass ?X Entity)",30,1));
+
+ */
+
+    }
+
+    /**
+     */
+    public String toString() {
+
+        StringBuffer sb = new StringBuffer();
+        for (String s : output)
+            sb.append(s + "\n");
+        return sb.toString();
     }
 
     /**
@@ -181,13 +228,11 @@ public class LEO {
             pw = new PrintWriter(fw);
             for (String s : stmts)
                 pw.println(s);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error in Leo.writeStatements(): " + e.getMessage());
             System.out.println("Error writing file " + dir + File.separator + fname + "\n" + e.getMessage());
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 if (pw != null) {
                     pw.close();
@@ -195,8 +240,7 @@ public class LEO {
                 if (fw != null) {
                     fw.close();
                 }
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
             }
         }
     }
@@ -234,7 +278,7 @@ public class LEO {
         String fname = dir + File.separator + userAssertionTPTP;
         File ufile = new File(fname);
         if (ufile.exists())
-            return FileUtil.readLines(dir + File.separator + userAssertionTPTP,false);
+            return FileUtil.readLines(dir + File.separator + userAssertionTPTP, false);
         else
             return new ArrayList<String>();
     }
@@ -269,57 +313,8 @@ public class LEO {
         writeStatements(stmts, lang);
         if (!kbFile.exists() || KBmanager.getMgr().infFileOld("thf"))
             THF.writeTHF(kb);
-        catFiles(kbFile.toString(),stmtFile,outfile);
+        catFiles(kbFile.toString(), stmtFile, outfile);
         File comb = new File(outfile);
-        run(comb,timeout);
-    }
-
-    /**
-     */
-    public static void main (String[] args) throws Exception {
-
-        KBmanager.getMgr().initializeOnce();
-        String kbName = KBmanager.getMgr().getPref("sumokbname");
-        KB kb = KBmanager.getMgr().getKB(kbName);
-        String dir = KBmanager.getMgr().getPref("kbDir") + File.separator;
-        String lang = "thf";
-        String outfile = dir + "temp-comb." + lang;
-        String stmtFile = dir + "temp-stmt." + lang;
-        File f1 = new File(outfile);
-        f1.delete();
-        File f2 = new File(stmtFile);
-        f2.delete();
-        File f3 = new File(dir + kbName + KB._userAssertionsString);
-        f3.delete();
-        File f4 = new File(dir + kbName + KB._userAssertionsTPTP);
-        f4.delete();
-        File kbFile = new File(dir + kbName + "." + lang);
-        System.out.println("Leo.main(): first test");
-        HashSet<String> query = new HashSet<>();
-        query.add("thf(conj1,conjecture,?[V__X:$i, V__Y:$i] : (subclass_THFTYPE_IiioI @ V__X @ V__Y)).");
-        System.out.println("Leo.main(): calling Leo with: " + kbFile + ", 30, " + query);
-        LEO leo = new LEO();
-        leo.run(kb, kbFile, 30, query);
-        System.out.println("----------------\nLeo output\n");
-        for (String l : leo.output)
-            System.out.println(l);
-        String queryStr = "(subclass ?X ?Y)";
-        TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
-        tpp.parseProofOutput(leo.output,queryStr,kb,leo.qlist);
-        for (TPTPFormula step : tpp.proof) {
-            System.out.println(":: " + step);
-            Formula f = new Formula(step.sumo);
-            System.out.println(f.format("","  ","\n"));
-        }
-        System.out.println("Leo.main(): bindings: " + tpp.bindings);
-        //System.out.println("Leo.main(): proof: " + tpp.proof);
-        System.out.println("-----------------\n");
-        System.out.println("\n");
-/*
-        System.out.println("Leo.main(): second test");
-        System.out.println(kb.askLeo("(subclass ?X Entity)",30,1));
-
- */
-
+        run(comb, timeout);
     }
 }

@@ -1,19 +1,23 @@
-/** This code is copyright Articulate Software (c) 2003.  Some
-portions copyright Teknowledge (c) 2003 and reused under the terms of the GNU license.
-This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
-Users of this code also consent, by use of this code, to credit Articulate Software
-and Teknowledge in any writings, briefings, publications, presentations, or 
-other representations of any software which incorporates, builds on, or uses this 
-code.  Please cite the following article in any publication with references:
-
-Pease, A., (2003). The Sigma Ontology Development Environment, 
-in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
-August 9, Acapulco, Mexico.  See also sigmakee.sourceforge.net
-*/
+/**
+ * This code is copyright Articulate Software (c) 2003.  Some
+ * portions copyright Teknowledge (c) 2003 and reused under the terms of the GNU license.
+ * This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
+ * Users of this code also consent, by use of this code, to credit Articulate Software
+ * and Teknowledge in any writings, briefings, publications, presentations, or
+ * other representations of any software which incorporates, builds on, or uses this
+ * code.  Please cite the following article in any publication with references:
+ * <p>
+ * Pease, A., (2003). The Sigma Ontology Development Environment,
+ * in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
+ * August 9, Acapulco, Mexico.  See also sigmakee.sourceforge.net
+ */
 
 package com.articulate.sigma.tp;
 
-import com.articulate.sigma.*;
+import com.articulate.sigma.Formula;
+import com.articulate.sigma.FormulaPreprocessor;
+import com.articulate.sigma.KB;
+import com.articulate.sigma.KBmanager;
 import com.articulate.sigma.trans.SUMOKBtoTPTPKB;
 import com.articulate.sigma.trans.SUMOformulaToTPTPformula;
 import com.articulate.sigma.trans.TPTP3ProofProcessor;
@@ -28,7 +32,6 @@ import java.util.*;
  * A previous version invoked the KIF version of Vampire from Java
  * but that's 15 years old now.  The current Vampire does TPTP3 output
  * instead of XML.
- 
  * @author Andrei Voronkov
  * @since 14/08/2003, Acapulco
  * @author apease
@@ -36,22 +39,13 @@ import java.util.*;
 
 public class Vampire {
 
-    public StringBuffer qlist = null; // quantifier list in order for answer extraction
-    public ArrayList<String> output = new ArrayList<>();
     public static int axiomIndex = 0;
-    public enum ModeType {AVATAR, CASC}; // Avatar is faster but doesn't provide answer variables
     public static ModeType mode = ModeType.CASC;
     public static boolean debug = false;
+    public StringBuffer qlist = null; // quantifier list in order for answer extraction
 
-    /**
-     */
-    public String toString() {
-
-        StringBuffer sb = new StringBuffer();
-        for (String s : output)
-            sb.append(s + "\n");
-        return sb.toString();
-    }
+    // Avatar is faster but doesn't provide answer variables
+    public ArrayList<String> output = new ArrayList<>();
 
     /**
      */
@@ -65,10 +59,9 @@ public class Vampire {
         String[] optar = opts.split(" ");
         String[] cmds = new String[optar.length + 3];
         cmds[0] = executable.toString();
-        for (int i = 0; i < optar.length; i++)
-            cmds[i+1] = optar[i];
-        cmds[optar.length+1] = Integer.toString(timeout);
-        cmds[optar.length+2] = kbFile.toString();
+        System.arraycopy(optar, 0, cmds, 1, optar.length);
+        cmds[optar.length + 1] = Integer.toString(timeout);
+        cmds[optar.length + 2] = kbFile.toString();
         return cmds;
     }
 
@@ -85,7 +78,7 @@ public class Vampire {
      * directly add assertion into opened inference engine (e_ltb_runner)
      */
     public static boolean assertFormula(String userAssertionTPTP, KB kb,
-                                 ArrayList<Formula> parsedFormulas, boolean tptp) {
+                                        ArrayList<Formula> parsedFormulas, boolean tptp) {
 
         if (debug) System.out.println("INFO in Vampire.assertFormula(2):writing to file " + userAssertionTPTP);
         boolean allAdded = false;
@@ -96,7 +89,7 @@ public class Vampire {
             for (Formula parsedF : parsedFormulas) {
                 processedFormulas.clear();
                 FormulaPreprocessor fp = new FormulaPreprocessor();
-                processedFormulas.addAll(fp.preProcess(parsedF,false, kb));
+                processedFormulas.addAll(fp.preProcess(parsedF, false, kb));
                 if (processedFormulas.isEmpty())
                     allAdded = false;
                 else {   // 2. Translate to TPTP/TFF.
@@ -105,7 +98,7 @@ public class Vampire {
                         SUMOformulaToTPTPformula stptp = new SUMOformulaToTPTPformula();
                         for (Formula p : processedFormulas) {
                             if (!p.isHigherOrder(kb)) {
-                                String tptpStr = stptp.tptpParseSUOKIFString(p.getFormula(), false);
+                                String tptpStr = SUMOformulaToTPTPformula.tptpParseSUOKIFString(p.getFormula(), false);
                                 if (debug) System.out.println("INFO in Vampire.assertFormula(2): formula " + tptpStr);
                                 tptpFormulas.add(tptpStr);
                             }
@@ -117,24 +110,91 @@ public class Vampire {
                         pw.println(",axiom,(" + theTPTPFormula + ")).");
                         String tptpstring = SUMOformulaToTPTPformula.lang + "(kb_" + kb.name + "_UserAssertion" +
                                 "_" + axiomIndex + ",axiom,(" + theTPTPFormula + ")).";
-                        if (debug) System.out.println("INFO in Vampire.assertFormula(2): TPTP for user assertion = " + tptpstring);
+                        if (debug)
+                            System.out.println("INFO in Vampire.assertFormula(2): TPTP for user assertion = " + tptpstring);
                     }
                     pw.flush();
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 if (pw != null) pw.close();
-            }
-            catch (Exception ioe) {
+            } catch (Exception ioe) {
                 ioe.printStackTrace();
             }
         }
         return allAdded;
+    }
+
+    /**
+     */
+    public static void main(String[] args) throws Exception {
+
+        /*
+        String initialDatabase = "SUMO-v.kif";
+        Vampire vampire = Vampire.getNewInstance(initialDatabase);
+        System.out.print(vampire.submitQuery("(holds instance ?X Relation)",5,2));
+
+        // System.out.print(vampire.assertFormula("(human Socrates)"));
+        // System.out.print(vampire.assertFormula("(holds instance Adam Human)"));
+        // System.out.print(vampire.submitQuery("(human ?X)", 1, 2));
+        // System.out.print(vampire.submitQuery("(holds instance ?X Human)", 5, 2));
+        vampire.terminate();
+        */
+        KBmanager.getMgr().initializeOnce();
+        String kbName = KBmanager.getMgr().getPref("sumokbname");
+        KB kb = KBmanager.getMgr().getKB(kbName);
+        String dir = KBmanager.getMgr().getPref("kbDir") + File.separator;
+        String lang = "tff";
+        if (SUMOKBtoTPTPKB.lang.equals("fof"))
+            lang = "tptp";
+        String outfile = dir + "temp-comb." + lang;
+        String stmtFile = dir + "temp-stmt." + lang;
+        File f1 = new File(outfile);
+        f1.delete();
+        File f2 = new File(stmtFile);
+        f2.delete();
+        File f3 = new File(dir + kbName + KB._userAssertionsString);
+        f3.delete();
+        File f4 = new File(dir + kbName + KB._userAssertionsTPTP);
+        f4.delete();
+        File s = new File(dir + kbName + "." + lang);
+        if (!s.exists())
+            System.out.println("Vampire.main(): no such file: " + s);
+        else {
+            System.out.println("Vampire.main(): first test");
+            HashSet<String> query = new HashSet<>();
+            query.add("tff(conj1,conjecture,?[V__X, V__Y] : (s__subclass(V__X,V__Y))).");
+            System.out.println("Vampire.main(): calling Vampire with: " + s + ", 30, " + query);
+            Vampire vampire = new Vampire();
+            vampire.run(kb, s, 30, query);
+            System.out.println("----------------\nVampire output\n");
+            for (String l : vampire.output)
+                System.out.println(l);
+            String queryStr = "(subclass ?X ?Y)";
+            TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
+            tpp.parseProofOutput(vampire.output, queryStr, kb, vampire.qlist);
+            System.out.println("Vampire.main(): bindings: " + tpp.bindings);
+            System.out.println("Vampire.main(): proof: " + tpp.proof);
+            System.out.println("-----------------\n");
+            System.out.println("\n");
+
+            System.out.println("Vampire.main(): second test");
+            System.out.println(kb.askVampire("(subclass ?X Entity)", 30, 1));
+            //vampire.terminate();
+        }
+    }
+
+    /**
+     */
+    public String toString() {
+
+        StringBuffer sb = new StringBuffer();
+        for (String s : output)
+            sb.append(s + "\n");
+        return sb.toString();
     }
 
     /**
@@ -192,13 +252,11 @@ public class Vampire {
             pw = new PrintWriter(fw);
             for (String s : stmts)
                 pw.println(s);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error in writeStatements(): " + e.getMessage());
             System.out.println("Error writing file " + dir + File.separator + fname + "\n" + e.getMessage());
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 if (pw != null) {
                     pw.close();
@@ -206,8 +264,7 @@ public class Vampire {
                 if (fw != null) {
                     fw.close();
                 }
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
             }
         }
     }
@@ -247,7 +304,7 @@ public class Vampire {
         String fname = dir + File.separator + userAssertionTPTP;
         File ufile = new File(fname);
         if (ufile.exists())
-            return FileUtil.readLines(dir + File.separator + userAssertionTPTP,false);
+            return FileUtil.readLines(dir + File.separator + userAssertionTPTP, false);
         else
             return new ArrayList<String>();
     }
@@ -279,67 +336,10 @@ public class Vampire {
             return;
         }
         writeStatements(stmts, lang);
-        catFiles(kbFile.toString(),stmtFile,outfile);
+        catFiles(kbFile.toString(), stmtFile, outfile);
         File comb = new File(outfile);
-        run(comb,timeout);
+        run(comb, timeout);
     }
 
-    /**
-     */
-    public static void main (String[] args) throws Exception {
-
-        /*
-        String initialDatabase = "SUMO-v.kif";
-        Vampire vampire = Vampire.getNewInstance(initialDatabase);
-        System.out.print(vampire.submitQuery("(holds instance ?X Relation)",5,2));
-
-        // System.out.print(vampire.assertFormula("(human Socrates)"));
-        // System.out.print(vampire.assertFormula("(holds instance Adam Human)"));
-        // System.out.print(vampire.submitQuery("(human ?X)", 1, 2));
-        // System.out.print(vampire.submitQuery("(holds instance ?X Human)", 5, 2));
-        vampire.terminate();
-        */
-        KBmanager.getMgr().initializeOnce();
-        String kbName = KBmanager.getMgr().getPref("sumokbname");
-        KB kb = KBmanager.getMgr().getKB(kbName);
-        String dir = KBmanager.getMgr().getPref("kbDir") + File.separator;
-        String lang = "tff";
-        if (SUMOKBtoTPTPKB.lang.equals("fof"))
-            lang = "tptp";
-        String outfile = dir + "temp-comb." + lang;
-        String stmtFile = dir + "temp-stmt." + lang;
-        File f1 = new File(outfile);
-        f1.delete();
-        File f2 = new File(stmtFile);
-        f2.delete();
-        File f3 = new File(dir + kbName + KB._userAssertionsString);
-        f3.delete();
-        File f4 = new File(dir + kbName + KB._userAssertionsTPTP);
-        f4.delete();
-        File s = new File(dir + kbName + "." + lang);
-        if (!s.exists())
-            System.out.println("Vampire.main(): no such file: " + s);
-        else {
-            System.out.println("Vampire.main(): first test");
-            HashSet<String> query = new HashSet<>();
-            query.add("tff(conj1,conjecture,?[V__X, V__Y] : (s__subclass(V__X,V__Y))).");
-            System.out.println("Vampire.main(): calling Vampire with: " + s + ", 30, " + query);
-            Vampire vampire = new Vampire();
-            vampire.run(kb, s, 30, query);
-            System.out.println("----------------\nVampire output\n");
-            for (String l : vampire.output)
-                System.out.println(l);
-            String queryStr = "(subclass ?X ?Y)";
-            TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
-            tpp.parseProofOutput(vampire.output,queryStr,kb,vampire.qlist);
-            System.out.println("Vampire.main(): bindings: " + tpp.bindings);
-            System.out.println("Vampire.main(): proof: " + tpp.proof);
-            System.out.println("-----------------\n");
-            System.out.println("\n");
-
-            System.out.println("Vampire.main(): second test");
-            System.out.println(kb.askVampire("(subclass ?X Entity)",30,1));
-            //vampire.terminate();
-        }
-    }
+    public enum ModeType {AVATAR, CASC}
 }

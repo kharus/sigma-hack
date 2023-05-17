@@ -1,15 +1,8 @@
 package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.UnitTestBase;
-import com.google.common.collect.Sets;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Set;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-
-import static org.junit.Assert.*;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

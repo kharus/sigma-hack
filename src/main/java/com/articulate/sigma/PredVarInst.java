@@ -1,18 +1,19 @@
 package com.articulate.sigma;
 
-/** This code is copyright Articulate Software (c) 2014. Infosys 2019-
- This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
- Users of this code also consent, by use of this code, to credit Articulate Software
- and Teknowledge in any writings, briefings, publications, presentations, or
- other representations of any software which incorporates, builds on, or uses this
- code.  Please cite the following article in any publication with references:
-
- Pease, A., (2003). The Sigma Ontology Development Environment,
- in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
- August 9, Acapulco, Mexico.  See also sigmakee.sourceforge.net
-
- Note that relations that are automatically created by SUMOKBtoTFAKB are excluded
- and this depends on double underscore in the names of those predicates
+/**
+ * This code is copyright Articulate Software (c) 2014. Infosys 2019-
+ * This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
+ * Users of this code also consent, by use of this code, to credit Articulate Software
+ * and Teknowledge in any writings, briefings, publications, presentations, or
+ * other representations of any software which incorporates, builds on, or uses this
+ * code.  Please cite the following article in any publication with references:
+ * <p>
+ * Pease, A., (2003). The Sigma Ontology Development Environment,
+ * in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
+ * August 9, Acapulco, Mexico.  See also sigmakee.sourceforge.net
+ * <p>
+ * Note that relations that are automatically created by SUMOKBtoTFAKB are excluded
+ * and this depends on double underscore in the names of those predicates
  */
 
 import com.articulate.sigma.trans.SUMOtoTFAform;
@@ -21,21 +22,17 @@ import com.articulate.sigma.utils.StringUtil;
 import java.util.*;
 
 public class PredVarInst {
-    
+
     // The implied arity of a predicate variable from its use in a Formula
-    public static HashMap<String,Integer> predVarArity = new HashMap<String,Integer>();
-    
-    // All predicates that meet that class membership and arity constraints for the given variable
-    private static HashMap<String,HashSet<String>> candidatePredicates = new HashMap<String,HashSet<String>>();
-
-    //The list of logical terms that not related to arity check, will skip these predicates
-    private static List<String> logicalTerms = Arrays.asList(new String[]{"forall","exists","=>","and","or","<=>","not", "equal"});
-
+    public static HashMap<String, Integer> predVarArity = new HashMap<String, Integer>();
     public static boolean debug = false;
-
     // a debugging option to reject formulas with more than one predicate variable, to save time
     public static boolean rejectDoubles = false;
     public static boolean doublesHandled = false;
+    // All predicates that meet that class membership and arity constraints for the given variable
+    private static HashMap<String, HashSet<String>> candidatePredicates = new HashMap<String, HashSet<String>>();
+    //The list of logical terms that not related to arity check, will skip these predicates
+    private static final List<String> logicalTerms = Arrays.asList("forall", "exists", "=>", "and", "or", "<=>", "not", "equal");
 
     /**
      */
@@ -61,11 +58,11 @@ public class PredVarInst {
      *
      * @return add explicit type condition into types
      */
-    protected static HashMap<String,HashSet<String>> addExplicitTypes(KB kb, Formula input, HashMap<String,HashSet<String>> types) {
-        
-        HashMap<String,HashSet<String>> result = new HashMap<String,HashSet<String>>();
+    protected static HashMap<String, HashSet<String>> addExplicitTypes(KB kb, Formula input, HashMap<String, HashSet<String>> types) {
+
+        HashMap<String, HashSet<String>> result = new HashMap<String, HashSet<String>>();
         FormulaPreprocessor fp = new FormulaPreprocessor();
-    	HashMap<String,HashSet<String>> explicit = fp.findExplicitTypesInAntecedent(kb,input);
+        HashMap<String, HashSet<String>> explicit = fp.findExplicitTypesInAntecedent(kb, input);
         if (explicit == null || explicit.keySet() == null || explicit.keySet().size() == 0)
             return types;
         Iterator<String> it = explicit.keySet().iterator();
@@ -85,9 +82,7 @@ public class PredVarInst {
      */
     private static boolean isTypeExpansion(String rel) {
 
-        if (rel.indexOf("__") == -1)
-            return false;
-        return true;
+        return rel.indexOf("__") != -1;
     }
 
     /**
@@ -110,8 +105,8 @@ public class PredVarInst {
         if (debug) System.out.println("PredVarInst.handleDouble1(): " + origForm);
         Set<Formula> result = new HashSet<Formula>();
         for (String s : kb.kbCache.disjointRelations) {
-            String arg1 = s.substring(0,s.indexOf("\t"));
-            String arg2 = s.substring(s.indexOf("\t")+1);
+            String arg1 = s.substring(0, s.indexOf("\t"));
+            String arg2 = s.substring(s.indexOf("\t") + 1);
             int arity1 = kb.kbCache.getArity(arg1);
             int arity2 = kb.kbCache.getArity(arg2);
             if (arity1 != arity2)
@@ -150,7 +145,8 @@ public class PredVarInst {
         Set<Formula> result = new HashSet<Formula>();
         for (String r1 : kb.kbCache.relations) {
             if (debug) System.out.println("handleDouble2(): relation: " + r1);
-            if (debug) System.out.println("handleDouble2(): subrelation children: " + kb.kbCache.children.get("subrelation"));
+            if (debug)
+                System.out.println("handleDouble2(): subrelation children: " + kb.kbCache.children.get("subrelation"));
             if (debug) System.out.println("handleDouble2(): in function set " + kb.kbCache.functions.contains(r1));
             if (debug) System.out.println("handleDouble2(): is function " + kb.isFunction(r1));
             if (kb.kbCache.functions.contains(r1)) // || kb.isFunction(r1))
@@ -213,20 +209,19 @@ public class PredVarInst {
 
         if (debug) System.out.println("instantiatePredVars(): input: " + input);
         Set<Formula> result = new HashSet<Formula>();
-        HashSet<String> predVars = gatherPredVars(kb,input);
+        HashSet<String> predVars = gatherPredVars(kb, input);
         if (predVars.size() > 1) {
             if (rejectDoubles) {
                 SUMOtoTFAform.filterMessage = "reject axioms with more than one predicate variable";
-                if (debug) System.out.println("instantiatePredVars(): reject axioms with more than one predicate variable: \n" + input);
+                if (debug)
+                    System.out.println("instantiatePredVars(): reject axioms with more than one predicate variable: \n" + input);
                 return null;
-            }
-            else {
+            } else {
                 if (!doublesHandled) {
                     SUMOtoTFAform.filterMessage = "axiom with more than one predicate variable";
                     if (debug) System.out.println("instantiatePredVars(): should handle: \n" + input);
                     return handleDoubles(kb);
-                }
-                else {
+                } else {
                     SUMOtoTFAform.filterMessage = "axiom with more than one predicate variable";
                     if (debug) System.out.println("instantiatePredVars(): should have already handled: \n" + input);
                     return null;
@@ -235,19 +230,19 @@ public class PredVarInst {
         }
 
         if (debug) System.out.println("instantiatePredVars(): predVars: " + predVars);
-        if (predVars == null )
+        if (predVars == null)
             return null;
         if (predVars.size() == 0)   // Return empty if input does not have predicate variables
             return result;
         // 1. get types for predicate variables from domain definitions
-        HashMap<String,HashSet<String>> varTypes = findPredVarTypes(input,kb);
+        HashMap<String, HashSet<String>> varTypes = findPredVarTypes(input, kb);
         // 2. add explicitly defined types for predicate variables
-        varTypes = addExplicitTypes(kb,input,varTypes);
+        varTypes = addExplicitTypes(kb, input, varTypes);
         if (debug) System.out.println("instantiatePredVars(): types: " + varTypes);
         for (String var : varTypes.keySet()) {
             if (predVarArity == null || var == null || predVarArity.get(var) == null)
                 System.out.println("instantiatePredVars(): pred var arity null for: " + var +
-                    " in " + input);
+                        " in " + input);
             // 3.1 check: predVarArity should match arity of substituted relation
             Collection<String> rels = kb.kbCache.predicates;
             if (varTypes.get(var).contains("Function"))
@@ -266,7 +261,8 @@ public class PredVarInst {
                     if (debug) System.out.println("instantiatePredVars(): type expansion of relation: " + rel);
                     continue;
                 }
-                if (predVarArity == null || var == null) System.out.println("instantiatePredVars(): pred var arity null for: " + var);
+                if (predVarArity == null || var == null)
+                    System.out.println("instantiatePredVars(): pred var arity null for: " + var);
                 Integer arityInteger = predVarArity.get(var);
                 int arity = 0;
                 if (arityInteger != null)
@@ -278,16 +274,17 @@ public class PredVarInst {
                         //if (debug) System.out.println("instantiatePredVars(): checking whether relation: " + rel + " is an instance of " + varType);
                         // 3.2 check: candidate relation should be the instance of predicate variables' types
                         if (!kb.isInstanceOf(rel, varType)) {
-                            if (debug) System.out.println("instantiatePredVars(): checking relation: " + rel + " is not an instance of " + varType);
-                            if (debug) System.out.println("instantiatePredVars(): cache is null: " + (kb.kbCache == null));
+                            if (debug)
+                                System.out.println("instantiatePredVars(): checking relation: " + rel + " is not an instance of " + varType);
+                            if (debug)
+                                System.out.println("instantiatePredVars(): cache is null: " + (kb.kbCache == null));
                             ok = false;
                             break;
-                        }
-                        else
-                            if (debug) System.out.println("instantiatePredVars(): relation: " + rel + " is an instance of " + varType);
+                        } else if (debug)
+                            System.out.println("instantiatePredVars(): relation: " + rel + " is an instance of " + varType);
                     }
                     // 4. If ok, instantiate the predicate variable using the candidate relation
-                    if (ok == true) {
+                    if (ok) {
                         if (debug) System.out.println("instantiatePredVars(): replacing: " + var + " with " + rel);
                         Formula f = input.deepCopy();
                         f = f.replaceVar(var, rel);
@@ -309,7 +306,7 @@ public class PredVarInst {
         }
         return result;
     }
-     
+
     /**
      * @return null if correct arity, otherwise return a message
      */
@@ -334,11 +331,10 @@ public class PredVarInst {
             String res = hasCorrectArityRecurse(p, kb);
             if (!StringUtil.emptyString(res))
                 return res;
-        }
-        else {
+        } else {
             Integer intval = null;
             if (kb.kbCache != null && kb.kbCache.valences != null)
-                intval= kb.kbCache.valences.get(rel);
+                intval = kb.kbCache.valences.get(rel);
             if (intval != null)
                 val = intval.intValue();
             else {
@@ -361,14 +357,13 @@ public class PredVarInst {
                 //check if the clause has function clause and check arity of function clause
                 for (Formula arg : argList) {
                     if ((arg.atom() && kb.isFunction(arg.getFormula())) ||
-                            (arg.listP() && kb.isFunctional(arg)))   {
+                            (arg.listP() && kb.isFunctional(arg))) {
                         String result = hasCorrectArityRecurse(new Formula(arg), kb);
                         if (!StringUtil.emptyString(result))
                             return result;
                     }
                 }
-            }
-            else {
+            } else {
                 //if quantified, just check the third argument
                 if (Formula.isQuantifier(f.car()))
                     return hasCorrectArityRecurse(f.cddrAsFormula(), kb);
@@ -383,7 +378,7 @@ public class PredVarInst {
         }
         return null;
     }
-    
+
     /**
      * If arity is correct, return null, otherwise, return the predicate
      * that has its arity violated in the given formula.
@@ -392,10 +387,9 @@ public class PredVarInst {
 
         String res = null;
         try {
-            res = hasCorrectArityRecurse(f,kb);
-        }
-        catch (IllegalArgumentException e){
-            System.out.printf("FileName:%s\nLine number:%d\n",f.getSourceFile(),f.startLine);
+            res = hasCorrectArityRecurse(f, kb);
+        } catch (IllegalArgumentException e) {
+            System.out.printf("FileName:%s\nLine number:%d\n", f.getSourceFile(), f.startLine);
             return e.getMessage();
         }
         return res;
@@ -411,13 +405,13 @@ public class PredVarInst {
         return false;
     }
 
-     /**
+    /**
      * Get a set of all the predicate variables in the formula.  If
-      * the argument list has a row variable, return 0 as the value, meaning
-      * any possible arity of 1 - maxArity
+     * the argument list has a row variable, return 0 as the value, meaning
+     * any possible arity of 1 - maxArity
      */
     protected static HashSet<String> gatherPredVarRecurse(KB kb, Formula f) {
-        
+
         HashSet<String> ans = new HashSet<String>();
         if (debug) System.out.println("INFO in PredVarInst.gatherPredVarRecurse(): " + f);
         if (f == null || f.empty() || Formula.atom(f.getFormula()) || f.isVariable())
@@ -432,30 +426,28 @@ public class PredVarInst {
                             " with arglist: " + arglist);
                     ans.add(arg0.getFormula());
                     if (containsRowVariable(arglist))
-                        predVarArity.put(arg0.getFormula(),0);  // note that when expanding row vars we expand them to Formula.MAX_ARITY
+                        predVarArity.put(arg0.getFormula(), 0);  // note that when expanding row vars we expand them to Formula.MAX_ARITY
                     else
-                        predVarArity.put(arg0.getFormula(),Integer.valueOf(arglist.size()));
-                }
-                else {
-                    if (debug) System.out.println("INFO in PredVarInst.gatherPredVarRecurse(): not a predicate var: " + arg0);
+                        predVarArity.put(arg0.getFormula(), Integer.valueOf(arglist.size()));
+                } else {
+                    if (debug)
+                        System.out.println("INFO in PredVarInst.gatherPredVarRecurse(): not a predicate var: " + arg0);
                 }
             }
-        }
-        else if (Formula.isQuantifier(f.car())) {
+        } else if (Formula.isQuantifier(f.car())) {
             if (debug) System.out.println("INFO in PredVarInst.gatherPredVarRecurse(): found quantifier: " + f);
             Formula f2 = f.cddrAsFormula();
-            ans.addAll(gatherPredVarRecurse(kb,f2));
-        }
-        else {
+            ans.addAll(gatherPredVarRecurse(kb, f2));
+        } else {
             if (debug) System.out.println("INFO in PredVarInst.gatherPredVarRecurse(): not simple or quant: " + f);
-            ans.addAll(gatherPredVarRecurse(kb,f.carAsFormula()));
-            ans.addAll(gatherPredVarRecurse(kb,f.cdrAsFormula()));
+            ans.addAll(gatherPredVarRecurse(kb, f.carAsFormula()));
+            ans.addAll(gatherPredVarRecurse(kb, f.cdrAsFormula()));
         }
         if (debug) System.out.println("INFO in PredVarInst.gatherPredVarRecurse(): returning: " + ans);
         return ans;
     }
 
-     /**
+    /**
      * Get a set of all the types for predicate variables in the formula.
      *
      * @return a HashMap in which the keys are predicate variables,
@@ -466,15 +458,15 @@ public class PredVarInst {
      * must logically be instances (of class Relation).
      */
     protected static HashMap<String, HashSet<String>> findPredVarTypes(Formula f, KB kb) {
-        
-        HashSet<String> predVars = gatherPredVars(kb,f);
+
+        HashSet<String> predVars = gatherPredVars(kb, f);
         if (debug) System.out.println("findPredVarTypes(): predVars: " + predVars);
         FormulaPreprocessor fp = new FormulaPreprocessor();
         //HashMap<String,HashSet<String>> typeMap = fp.computeVariableTypes(f, kb);  // <- this skips explicit types
         //HashMap<String,HashSet<String>> typeMap = fp.findTypeRestrictions(f, kb);  // <- won't get instance relations
-        HashMap<String,HashSet<String>> typeMap = fp.findAllTypeRestrictions(f, kb);
+        HashMap<String, HashSet<String>> typeMap = fp.findAllTypeRestrictions(f, kb);
         if (debug) System.out.println("findPredVarTypes(): typeMap: " + typeMap);
-        HashMap<String,HashSet<String>> result = new HashMap<String,HashSet<String>>();
+        HashMap<String, HashSet<String>> result = new HashMap<String, HashSet<String>>();
         for (String var : predVars) {
             if (typeMap.containsKey(var))
                 result.put(var, typeMap.get(var));
@@ -482,7 +474,7 @@ public class PredVarInst {
         if (debug) System.out.println("findPredVarTypes(): " + result);
         return result;
     }
-    
+
     /**
      * Collect and return all predicate variables for the given formula
      */
@@ -494,89 +486,88 @@ public class PredVarInst {
             return f.predVarCache;
         }
         HashSet<String> varlist = null;
-        HashMap<String,HashSet<String>> ans = new HashMap<String,HashSet<String>>();
+        HashMap<String, HashSet<String>> ans = new HashMap<String, HashSet<String>>();
         if (!StringUtil.emptyString(f.getFormula())) {
-            varlist = gatherPredVarRecurse(kb,f);
+            varlist = gatherPredVarRecurse(kb, f);
         }
         f.predVarCache = varlist;
         return varlist;
     }
 
-     /**
+    /**
      */
     public static void arityTest() {
-        
+
         KBmanager.getMgr().initializeOnce();
         KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
         System.out.println("INFO in PredVarInst.test(): completed loading KBs");
         String formStr = "(=> " +
-        "(and " +
-        "(instance ?SOUND RadiatingSound) " +
-        "(agent ?SOUND ?OBJ) " +
-        "(attribute ?SOUND Audible)) " +
-        "(exists (?HUMAN) " +
-        "(and " +
-        "(instance ?HUMAN Human) " +
-        "(capability " +
-        "(KappaFn ?HEAR " +
-        "(and " +
-        "(instance ?HEAR Hearing) " +
-        "(agent ?HEAR ?HUMAN) " +
-        "(destination ?HEAR ?HUMAN) " +
-        "(origin ?HEAR ?OBJ))) agent ?HUMAN)))) ";
+                "(and " +
+                "(instance ?SOUND RadiatingSound) " +
+                "(agent ?SOUND ?OBJ) " +
+                "(attribute ?SOUND Audible)) " +
+                "(exists (?HUMAN) " +
+                "(and " +
+                "(instance ?HUMAN Human) " +
+                "(capability " +
+                "(KappaFn ?HEAR " +
+                "(and " +
+                "(instance ?HEAR Hearing) " +
+                "(agent ?HEAR ?HUMAN) " +
+                "(destination ?HEAR ?HUMAN) " +
+                "(origin ?HEAR ?OBJ))) agent ?HUMAN)))) ";
         Formula f = new Formula(formStr);
         System.out.println("INFO in PredVarInst.arityTest(): formula: " + f);
-        System.out.println("INFO in PredVarInst.arityTest(): correct arity: " + hasCorrectArity(f,kb));
+        System.out.println("INFO in PredVarInst.arityTest(): correct arity: " + hasCorrectArity(f, kb));
     }
-    
+
     /**
      */
     public static void test() {
-        
+
         KBmanager.getMgr().initializeOnce();
         KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
         System.out.println("INFO in PredVarInst.test(): completed loading KBs");
-        if (kb.kbCache.transInstOf("exhaustiveAttribute","VariableArityRelation")) {
+        if (kb.kbCache.transInstOf("exhaustiveAttribute", "VariableArityRelation")) {
             System.out.println("INFO in PredVarInst.test() variable arity: ");
-        }
-        else
+        } else
             System.out.println("INFO in PredVarInst.test() not variable arity: ");
         System.out.println("INFO in PredVarInst.test(): " + kb.kbCache.instanceOf.get("partition"));
         System.out.println("INFO in PredVarInst.test(): " + kb.kbCache.insts.contains("partition"));
         //String formStr = "(=> (inverse ?REL1 ?REL2) (forall (?INST1 ?INST2) (<=> (?REL1 ?INST1 ?INST2) (?REL2 ?INST2 ?INST1))))";
         String formStr = "(<=> (instance ?REL TransitiveRelation) " +
-        "(forall (?INST1 ?INST2 ?INST3) " +
-        "(=> (and (?REL ?INST1 ?INST2) " +
-        "(?REL ?INST2 ?INST3)) (?REL ?INST1 ?INST3))))";
+                "(forall (?INST1 ?INST2 ?INST3) " +
+                "(=> (and (?REL ?INST1 ?INST2) " +
+                "(?REL ?INST2 ?INST3)) (?REL ?INST1 ?INST3))))";
         //Formula f = kb.formulaMap.get(formStr);
         Formula f = new Formula(formStr);
         System.out.println("Formula: " + f);
-        System.out.println("Pred vars: " + gatherPredVars(kb,f));
-        System.out.println("Pred vars with types: " + findPredVarTypes(f,kb));
+        System.out.println("Pred vars: " + gatherPredVars(kb, f));
+        System.out.println("Pred vars with types: " + findPredVarTypes(f, kb));
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        System.out.println("Explicit types: " + fp.findExplicitTypesInAntecedent(kb,f));
-        System.out.println("Instantiated: " + instantiatePredVars(f,kb));
+        System.out.println("Explicit types: " + fp.findExplicitTypesInAntecedent(kb, f));
+        System.out.println("Instantiated: " + instantiatePredVars(f, kb));
         System.out.println();
-        
+
         formStr = "(=> " +
-        "(instance ?JURY Jury) " +
-        "(holdsRight " +
-        "(exists (?DECISION) " +
-        "(and " +
-        "(instance ?DECISION LegalDecision) " +
-        "(agent ?DECISION ?JURY))) ?JURY))";
+                "(instance ?JURY Jury) " +
+                "(holdsRight " +
+                "(exists (?DECISION) " +
+                "(and " +
+                "(instance ?DECISION LegalDecision) " +
+                "(agent ?DECISION ?JURY))) ?JURY))";
         //f = kb.formulaMap.get(formStr);
         f = new Formula(formStr);
         System.out.println("Formula: " + f);
-        System.out.println("Pred vars: " + gatherPredVars(kb,f));
-        System.out.println("Instantiated: " + instantiatePredVars(f,kb));
-        
+        System.out.println("Pred vars: " + gatherPredVars(kb, f));
+        System.out.println("Instantiated: " + instantiatePredVars(f, kb));
+
     }
-    
+
     /**
      */
     public static void main(String[] args) {
-        
+
         //arityTest();
         test();
         /*

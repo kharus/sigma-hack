@@ -5,11 +5,12 @@ package com.articulate.sigma;
 // Copyright 2019 Infosys, 2020- Articulate Software
 // apease@articulatesoftware.com
 
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -19,7 +20,7 @@ import static org.junit.Assert.*;
  * TODO: See how relevant the line "if (kb.kbCache.transInstOf("exhaustiveAttribute","VariableArityRelation"))"
  * at the start of the original PredVarInst.test( ) method is. Should these tests somehow reflect that?
  */
-public class PredVarInstTest extends UnitTestBase  {
+public class PredVarInstTest extends UnitTestBase {
 
     private static final String stmt1 = "(<=> (instance ?REL TransitiveRelation) " +
             "(forall (?INST1 ?INST2 ?INST3) " +
@@ -37,13 +38,14 @@ public class PredVarInstTest extends UnitTestBase  {
     private static final String stmt3 = "(=> (instance ?R TransitiveRelation) (=> (and (?R ?A ?B) (?R ?B ?C)) (?R ?A ?C)))";
 
     /**
+     *
      */
     @Test
     public void testGatherPredVarsStmt1() {
 
         Formula f = new Formula();
         f.read(PredVarInstTest.stmt1);
-        Set<String> actual = PredVarInst.gatherPredVars(SigmaTestBase.kb,f);
+        Set<String> actual = PredVarInst.gatherPredVars(SigmaTestBase.kb, f);
         Set<String> expected = Sets.newHashSet("?REL");
         System.out.println("\n--------------------");
         System.out.println("testGatherPredVarsStmt1() actual: " + actual);
@@ -56,13 +58,14 @@ public class PredVarInstTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testGatherPredVarsStmt2() {
 
         Formula f = new Formula();
         f.read(PredVarInstTest.stmt2);
-        Set<String> actual = PredVarInst.gatherPredVars(SigmaTestBase.kb,f);
+        Set<String> actual = PredVarInst.gatherPredVars(SigmaTestBase.kb, f);
         Set<String> expected = Sets.newHashSet();
         System.out.println("\n--------------------");
         System.out.println("testGatherPredVarsStmt2() actual: " + actual);
@@ -75,13 +78,14 @@ public class PredVarInstTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testGatherPredVarsStmt3() {
 
         Formula f = new Formula();
         f.read(PredVarInstTest.stmt3);
-        Set<String> actual = PredVarInst.gatherPredVars(SigmaTestBase.kb,f);
+        Set<String> actual = PredVarInst.gatherPredVars(SigmaTestBase.kb, f);
         Set<String> expected = Sets.newHashSet("?R");
         System.out.println("\n--------------------");
         System.out.println("testGatherPredVarsStmt3() actual: " + actual);
@@ -94,6 +98,7 @@ public class PredVarInstTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testInstantiatePredStmt2() {
@@ -113,15 +118,16 @@ public class PredVarInstTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testInstantiatePredStmt3() {
 
         String stmt = "(=> " +
                 "(and " +
-                  "(minValue ?R ?ARG ?N) " +
-                  "(?R @ARGS) " +
-                  "(equal ?VAL (ListOrderFn (ListFn @ARGS) ?ARG))) " +
+                "(minValue ?R ?ARG ?N) " +
+                "(?R @ARGS) " +
+                "(equal ?VAL (ListOrderFn (ListFn @ARGS) ?ARG))) " +
                 "(greaterThan ?VAL ?N))";
         Formula f = new Formula();
         f.read(stmt);
@@ -139,6 +145,7 @@ public class PredVarInstTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testPredVarArity() {
@@ -148,7 +155,7 @@ public class PredVarInstTest extends UnitTestBase  {
         Formula f = new Formula();
         f.read(stmt);
         System.out.println("\n--------------------");
-        HashSet<String>  actual = PredVarInst.gatherPredVarRecurse(SigmaTestBase.kb,f);
+        HashSet<String> actual = PredVarInst.gatherPredVarRecurse(SigmaTestBase.kb, f);
 
         HashSet<String> expected = new HashSet<>();
         expected.add("?REL");
@@ -166,10 +173,11 @@ public class PredVarInstTest extends UnitTestBase  {
             System.out.println("testPredVarArity(): success!");
         else
             System.out.println("testPredVarArity(): failure");
-        assertEquals(2,PredVarInst.predVarArity.get("?REL").intValue());
+        assertEquals(2, PredVarInst.predVarArity.get("?REL").intValue());
     }
 
     /**
+     *
      */
     @Test
     public void testPredVarArity2() {
@@ -187,7 +195,7 @@ public class PredVarInstTest extends UnitTestBase  {
         System.out.println("\n--------------------");
         String var = "?REL";
         System.out.println("PredVarInstTest.testPredVarArity2(): formula: " + f);
-        HashSet<String> actual = PredVarInst.gatherPredVarRecurse(SigmaTestBase.kb,f);
+        HashSet<String> actual = PredVarInst.gatherPredVarRecurse(SigmaTestBase.kb, f);
         System.out.println("PredVarInstTest.testPredVarArity2(): actual pred vars: " + actual);
         int arity = PredVarInst.predVarArity.get(var).intValue();
         int expectedArity = 2;
@@ -197,10 +205,11 @@ public class PredVarInstTest extends UnitTestBase  {
         expected.add(var);
         System.out.println("PredVarInstTest.testPredVarArity2(): expected pred vars: " + expected);
         assertEquals(expected, actual);
-        assertEquals(expectedArity,arity);
+        assertEquals(expectedArity, arity);
     }
 
     /**
+     *
      */
     @Test
     public void testTVRPredVars() {
@@ -238,6 +247,7 @@ public class PredVarInstTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testTVRArity() {
@@ -277,6 +287,7 @@ public class PredVarInstTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testTVRTypes() {
@@ -305,9 +316,9 @@ public class PredVarInstTest extends UnitTestBase  {
         f.read(stmt);
         System.out.println("\n--------------------");
         System.out.println("PredVarInstTest.testTVRTypes(): formula: " + f);
-        HashMap<String,HashSet<String>> varTypes = PredVarInst.findPredVarTypes(f,kb);
+        HashMap<String, HashSet<String>> varTypes = PredVarInst.findPredVarTypes(f, kb);
         System.out.println("PredVarInstTest.testTVRTypes(): types from domains: " + varTypes);
-        varTypes = PredVarInst.addExplicitTypes(kb,f,varTypes);
+        varTypes = PredVarInst.addExplicitTypes(kb, f, varTypes);
         System.out.println("PredVarInstTest.testTVRTypes(): with explicit types: " + varTypes);
         HashSet<String> types = varTypes.get("?REL");
         System.out.println("PredVarInstTest.testTVRTypes(): types: " + types);
@@ -322,6 +333,7 @@ public class PredVarInstTest extends UnitTestBase  {
 
 
     /**
+     *
      */
     @Test
     public void testPredVarCount() {
@@ -332,7 +344,7 @@ public class PredVarInstTest extends UnitTestBase  {
         f.read(stmt);
         System.out.println("\n--------------------");
         System.out.println("PredVarInstTest.testPredVarCount(): formula: " + f);
-        HashSet<String> predVars = PredVarInst.gatherPredVars(kb,f);
+        HashSet<String> predVars = PredVarInst.gatherPredVars(kb, f);
         System.out.println("PredVarInstTest.testPredVarCount(): predVars: " + predVars);
         System.out.println("PredVarInstTest.testPredVarCount(): expected: ?REL1 ?REL2");
         if (predVars.contains("?REL1") && predVars.contains("?REL2") && predVars.size() == 2)
@@ -343,6 +355,7 @@ public class PredVarInstTest extends UnitTestBase  {
     }
 
     /**
+     *
      */
     @Test
     public void testArity() {
@@ -352,11 +365,11 @@ public class PredVarInstTest extends UnitTestBase  {
         f.read(stmt);
         System.out.println("\n--------------------");
         System.out.println("PredVarInstTest.testArity(): formula: " + f);
-        String hasCorrectArity = PredVarInst.hasCorrectArity(f,kb);
+        String hasCorrectArity = PredVarInst.hasCorrectArity(f, kb);
         if (hasCorrectArity == null)
             System.out.println("PredVarInstTest.testPredVarCount(): pass");
         else
             System.out.println("PredVarInstTest.testPredVarCount(): fail");
-        assertTrue(hasCorrectArity == null);
+        assertNull(hasCorrectArity);
     }
 }

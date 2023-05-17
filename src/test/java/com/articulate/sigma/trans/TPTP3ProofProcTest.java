@@ -1,20 +1,24 @@
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.*;
+import com.articulate.sigma.Formula;
+import com.articulate.sigma.KB;
+import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.UnitTestBase;
 import com.articulate.sigma.utils.StringUtil;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-import org.junit.BeforeClass;
-
 /**
+ *
  */
 public class TPTP3ProofProcTest extends UnitTestBase {
 
     /**
+     *
      */
     @BeforeClass
     public static void init() {
@@ -22,6 +26,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     public void test(String input, String expected, String label) {
 
@@ -29,7 +34,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         System.out.println("TPTP3ProofProcTest: " + label);
         System.out.println();
         TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
-        String actual = tpp.getPrologArgs(input).toString();
+        String actual = TPTP3ProofProcessor.getPrologArgs(input).toString();
         System.out.println("Expected: " + expected);
         if (!StringUtil.emptyString(actual) && actual.equals(expected))
             System.out.println(label + " : Success");
@@ -39,6 +44,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testGetPrologArgs1() {
@@ -48,10 +54,11 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         System.out.println("TPTP3ProofProcTest: " + label);
         String input = "fof(c_0_5, axiom, (s__subclass(s__Artifact,s__Object)), c_0_3).";
         String expected = "[fof, c_0_5,  axiom,  (s__subclass(s__Artifact,s__Object)),  c_0_3]";
-        test(input,expected,"testGetPrologArgs1");
+        test(input, expected, "testGetPrologArgs1");
     }
 
     /**
+     *
      */
     @Test
     public void testGetPrologArgs2() {
@@ -63,10 +70,11 @@ public class TPTP3ProofProcTest extends UnitTestBase {
                 "inference(assume_negation,[status(cth)],[inference(add_answer_literal,[status(thm)],[c_0_0, theory(answers)])])).";
         String expected = "[fof, c_0_2,  negated_conjecture, (~(?[X1]:(s__subclass(X1,s__Object)&~$answer(esk1_1(X1))))), " +
                 "inference(assume_negation,[status(cth)],[inference(add_answer_literal,[status(thm)],[c_0_0, theory(answers)])])]";
-        test(input,expected,"testGetPrologArgs2");
+        test(input, expected, "testGetPrologArgs2");
     }
 
     /**
+     *
      */
     @Test
     public void testGetPrologArgs3() {
@@ -75,14 +83,15 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         String label = "testGetPrologArgs3";
         System.out.println("TPTP3ProofProcTest: " + label);
         String input = "cnf(c_0_14,negated_conjecture,($false), " +
-                    "inference(eval_answer_literal,[status(thm)], " +
-                    "[inference(spm,[status(thm)],[c_0_12, c_0_13, theory(equality)]), theory(answers)]), ['proof']).";
+                "inference(eval_answer_literal,[status(thm)], " +
+                "[inference(spm,[status(thm)],[c_0_12, c_0_13, theory(equality)]), theory(answers)]), ['proof']).";
         String expected = "[cnf, c_0_14, negated_conjecture, ($false),  inference(eval_answer_literal,[status(thm)], " +
-                    "[inference(spm,[status(thm)],[c_0_12, c_0_13, theory(equality)]), theory(answers)]),  ['proof']]";
-        test(input,expected,"testGetPrologArgs3");
+                "[inference(spm,[status(thm)],[c_0_12, c_0_13, theory(equality)]), theory(answers)]),  ['proof']]";
+        test(input, expected, "testGetPrologArgs3");
     }
 
     /**
+     *
      */
     @Test
     public void testGetPrologArgs4() {
@@ -91,17 +100,18 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         String label = "testGetPrologArgs4";
         System.out.println("TPTP3ProofProcTest: " + label);
         String input = "fof(f185,conjecture,(" +
-                    "  ? [X15] : s__subclass(X15,s__Entity))," +
-                    "  file('/home/apease/.sigmakee/KBs/temp-comb.tptp',unknown)).";
+                "  ? [X15] : s__subclass(X15,s__Entity))," +
+                "  file('/home/apease/.sigmakee/KBs/temp-comb.tptp',unknown)).";
         String expected = "[fof, f185, conjecture, (  ? [X15] : s__subclass(X15,s__Entity)),   " +
                 "file('/home/apease/.sigmakee/KBs/temp-comb.tptp',unknown)]";
-        test(input,expected,"testGetPrologArgs4");
+        test(input, expected, "testGetPrologArgs4");
     }
 
     /**
+     *
      */
     @Test
-    public void testParseProofStep () {
+    public void testParseProofStep() {
 
         System.out.println("========================");
         String label = "testParseProofStep";
@@ -132,14 +142,14 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         tpp.idTable.put("c_0_3", Integer.valueOf(1));
         tpp.idTable.put("c_0_12", Integer.valueOf(2));
         tpp.idTable.put("c_0_13", Integer.valueOf(3));
- //       System.out.println(tpp.parseProofStep(ps1));
+        //       System.out.println(tpp.parseProofStep(ps1));
         System.out.println();
- //       System.out.println(tpp.parseProofStep(ps2));
+        //       System.out.println(tpp.parseProofStep(ps2));
         System.out.println();
- //       System.out.println(tpp.parseProofStep(ps3));
+        //       System.out.println(tpp.parseProofStep(ps3));
         System.out.println();
         tpp.idTable.put("f185", Integer.valueOf(4));
- //       System.out.println(tpp.parseProofStep(ps4));
+        //       System.out.println(tpp.parseProofStep(ps4));
         System.out.println();
         String result = tpp.parseProofStep(ps5).toString();
         System.out.println(result);
@@ -147,9 +157,10 @@ public class TPTP3ProofProcTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
-    public void testParseAnswers () {
+    public void testParseAnswers() {
 
         System.out.println("========================");
         String label = "testParseAnswers";
@@ -170,7 +181,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
 
         line = "% SZS answers Tuple [[s__A,s__B]|_] for temp-comb";
         tpp = new TPTP3ProofProcessor();
-        tpp.processAnswers(line.substring(20,line.lastIndexOf(']')+1).trim());
+        tpp.processAnswers(line.substring(20, line.lastIndexOf(']') + 1).trim());
         actual = tpp.bindings.toString();
         expected = "[A, B]";
         System.out.println("Actual: " + actual);
@@ -183,9 +194,10 @@ public class TPTP3ProofProcTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
-    public void testExtractAnswerClause () {
+    public void testExtractAnswerClause() {
 
         System.out.println("========================");
         String label = "testExtractAnswerClause";
@@ -196,7 +208,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         Formula ans = tpp.extractAnswerClause(new Formula(input));
         if (ans == null)
             System.out.println("Fail ans == null");
-        assertFalse(ans == null);
+        assertNotNull(ans);
         String actual = ans.toString();
         String expected = "(ans0 ?X0)";
         System.out.println("Actual: " + actual);
@@ -209,9 +221,10 @@ public class TPTP3ProofProcTest extends UnitTestBase {
     }
 
     /**
+     *
      */
     @Test
-    public void testProcessAnswersFromProof () {
+    public void testProcessAnswersFromProof() {
 
         System.out.println("========================");
         String label = "testProcessAnswersFromProof";
@@ -236,8 +249,8 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         String query = "(instance ?X Relation)";
         KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
         StringBuffer sb = new StringBuffer("X0");
-        tpp.parseProofOutput(input,query,kb,sb);
-        tpp.processAnswersFromProof(new StringBuffer("X"),query);
+        tpp.parseProofOutput(input, query, kb, sb);
+        tpp.processAnswersFromProof(new StringBuffer("X"), query);
         String actual = tpp.bindingMap.toString();
         String expected = "{X=TransitFn}";
         System.out.println("Actual: " + actual);

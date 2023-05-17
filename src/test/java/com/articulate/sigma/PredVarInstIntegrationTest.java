@@ -2,18 +2,19 @@ package com.articulate.sigma;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import org.junit.Ignore;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class PredVarInstIntegrationTest extends IntegrationTestBase {
 
     /**
+     *
      */
     @Ignore
     public void testInstantiatePredVars1() {
@@ -1412,6 +1413,7 @@ public class PredVarInstIntegrationTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testFindPredVarTypesStmt3() {

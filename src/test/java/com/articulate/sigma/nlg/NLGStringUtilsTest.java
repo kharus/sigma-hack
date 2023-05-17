@@ -11,9 +11,9 @@ import static org.junit.Assert.assertEquals;
 public class NLGStringUtilsTest {
 
     @Test
-    public void testConcatenateNoInput()   {
+    public void testConcatenateNoInput() {
         String expected = "";
-        String actual = NLGStringUtils.concatenateWithCommas(Lists.<String>newArrayList());
+        String actual = NLGStringUtils.concatenateWithCommas(Lists.newArrayList());
         assertEquals(expected, actual);
 
         expected = "";
@@ -22,28 +22,28 @@ public class NLGStringUtilsTest {
     }
 
     @Test
-    public void testOneItem()   {
+    public void testOneItem() {
         String expected = "one";
         String actual = NLGStringUtils.concatenateWithCommas(Lists.newArrayList("one"));
         assertEquals(expected, actual);
     }
 
     @Test
-    public void testTwoItems()   {
+    public void testTwoItems() {
         String expected = "one and two";
         String actual = NLGStringUtils.concatenateWithCommas(Lists.newArrayList("one", "two"));
         assertEquals(expected, actual);
     }
 
     @Test
-    public void testThreeItems()   {
+    public void testThreeItems() {
         String expected = "one, two and three";
         String actual = NLGStringUtils.concatenateWithCommas(Lists.newArrayList("one", "two", "three"));
         assertEquals(expected, actual);
     }
 
     @Test
-    public void testSixItems()   {
+    public void testSixItems() {
         String expected = "one, two, three, four, five and six";
         String actual = NLGStringUtils.concatenateWithCommas(Lists.newArrayList("one", "two", "three", "four", "five", "six"));
         assertEquals(expected, actual);

@@ -23,10 +23,11 @@ public class InferenceTest {
 
     private static KB kb;
 
-    @Parameterized.Parameter(value= 0)
+    @Parameterized.Parameter(value = 0)
     public String fInput;
 
     /**
+     *
      */
     @BeforeClass
     public static void setKB() {
@@ -44,14 +45,15 @@ public class InferenceTest {
     }
 
     /**
+     *
      */
-    @Parameterized.Parameters(name="{0}")
+    @Parameterized.Parameters(name = "{0}")
     public static <T> Collection<T> prepare() {
 
         String testDataDirectoryPath = "test/corpus/java/resources/InferenceTestData";
         boolean enableIncludeTestsList = false;   // If enableIncludeTestsList=true, only run test files in includeTestsList
         boolean enableExcludeTestsList = false;   // If enableIncludeTestsList=false & enableExcludeTestsList=true, only run test files NOT in excludeTestsLists
-                                                  // If enableIncludeTestsList=false & enableExcludeTestsList=false, run all test files in InferenceTestData
+        // If enableIncludeTestsList=false & enableExcludeTestsList=false, run all test files in InferenceTestData
         ArrayList<String> includeTestsList = Lists.newArrayList("QA1");
         ArrayList<String> excludeTestsList = Lists.newArrayList("TQG2", "TQG4", "TQG10");
         return getTestFiles(testDataDirectoryPath, includeTestsList, enableIncludeTestsList,
@@ -59,10 +61,11 @@ public class InferenceTest {
     }
 
     /**
+     *
      */
     public static <T> Collection<T> getTestFiles(String testDataDirectoryPath,
-                  ArrayList<String> includeTestsList, boolean enableIncludeTestsList,
-                  ArrayList<String> excludeTestsList, boolean enableExcludeTestsList) {
+                                                 ArrayList<String> includeTestsList, boolean enableIncludeTestsList,
+                                                 ArrayList<String> excludeTestsList, boolean enableExcludeTestsList) {
 
         Collection<T> result = Lists.newArrayList();
         File folder = new File(testDataDirectoryPath);
@@ -75,21 +78,18 @@ public class InferenceTest {
                             String path = fileEntry.getCanonicalPath();
                             result.add((T) new Object[]{path});
                         }
-                    }
-                    else if (enableExcludeTestsList) {  // only consider files NOT in excludeTestsList
+                    } else if (enableExcludeTestsList) {  // only consider files NOT in excludeTestsList
                         if (!excludeTestsList.contains(filename)) {
                             String path = fileEntry.getCanonicalPath();
                             result.add((T) new Object[]{path});
                         }
-                    }
-                    else {                              // consider all files in InferenceTestData directory
+                    } else {                              // consider all files in InferenceTestData directory
                         String path = fileEntry.getCanonicalPath();
                         result.add((T) new Object[]{path});
                     }
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Error in InferenceTest.getTestFiles(): using path: " + testDataDirectoryPath);
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -98,6 +98,7 @@ public class InferenceTest {
     }
 
     /**
+     *
      */
     @Test
     public void test() {
@@ -106,7 +107,7 @@ public class InferenceTest {
         ArrayList<String> expectedAnswers = new ArrayList<>();
         ArrayList<String> actualAnswers = new ArrayList<>();
         InferenceTestSuite its = new InferenceTestSuite();
-        InferenceTestSuite.InfTestData itd = its.inferenceUnitTest(fInput,kb);
+        InferenceTestSuite.InfTestData itd = its.inferenceUnitTest(fInput, kb);
         System.out.println("expected: " + itd.expectedAnswers);
         System.out.println("actual: " + itd.actualAnswers);
         if (itd.inconsistent)

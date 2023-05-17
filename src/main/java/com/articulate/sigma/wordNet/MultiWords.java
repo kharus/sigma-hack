@@ -33,13 +33,30 @@ import java.util.List;
 
 public class MultiWords implements Serializable {
 
-    /** A Multimap of String keys and String values.
+    public static boolean debug = false;
+    /**
+     * A Multimap of String keys and String values.
      * The String key is the first word of a multi-word WordNet "word", such as "table_tennis",
      * where words are separated by underscores.  The values are
-     * the whole multi-word. The same head word can appear in many multi-words.*/
+     * the whole multi-word. The same head word can appear in many multi-words.
+     */
     public Multimap<String, String> multiWord = HashMultimap.create();
 
-    public static boolean debug = false;
+    /**
+     *
+     */
+    public static String rootFormOf(String word) {
+
+        String rootWord = word;
+        String nounroot = WordNet.wn.nounRootForm(word, word.toLowerCase());
+        String verbroot = WordNet.wn.verbRootForm(word, word.toLowerCase());
+        if (!Strings.isNullOrEmpty(nounroot) && !nounroot.equals(word))
+            rootWord = nounroot;
+        else if (!Strings.isNullOrEmpty(verbroot) && !verbroot.equals(word)) {
+            rootWord = verbroot;
+        }
+        return rootWord;
+    }
 
     /**
      * Add a multi-word string to the multiWord member variable.  Convert
@@ -54,10 +71,9 @@ public class MultiWords implements Serializable {
         }
         if (word.indexOf(wordDelimit) >= 0) {
             String firstWord = word.substring(0, word.indexOf(wordDelimit));
-            String newWord = word.replace(wordDelimit,'_');
+            String newWord = word.replace(wordDelimit, '_');
             multiWord.put(firstWord, newWord);
-        }
-        else {
+        } else {
             System.out.println("Error in MultiWords.addMultiWord(): Not a multi-word: " + word);
             Thread.dumpStack();
         }
@@ -68,10 +84,11 @@ public class MultiWords implements Serializable {
      */
     public void addMultiWord(String word) {
 
-        addMultiWord(word,'_');
+        addMultiWord(word, '_');
     }
 
     /**
+     *
      */
     public String findMultiWord(List<String> text) {
 
@@ -91,10 +108,10 @@ public class MultiWords implements Serializable {
     /**
      * Find the synset for a multi-word string, if it exists.
      *
-     * @param text is an array of String words.
+     * @param text       is an array of String words.
      * @param startIndex is the first word in the array to look at
-     * @param synset is an array of only one element, if a synset is found
-     * and empty otherwise
+     * @param synset     is an array of only one element, if a synset is found
+     *                   and empty otherwise
      * @return the index into the next word to be checked, in text,
      * which could be the same as startIndex, if no multi-word was found
      */
@@ -128,42 +145,24 @@ public class MultiWords implements Serializable {
                             synset.add(sense);
                             return wordIndex + 2;
                         }
-                    }
-                    else if (candidate.startsWith(foundMultiWord)) {
+                    } else if (candidate.startsWith(foundMultiWord)) {
                         newCandidates.add(candidate);
                     }
                 }
                 if (newCandidates.size() > 0) {
                     if (wordIndex > multiWordTail.size() - 1) {
                         candidates = new ArrayList<String>();  // ran out of words, trigger an exit
-                    }
-                    else {
+                    } else {
                         candidates = newCandidates;
                         wordIndex++;
                         if (wordIndex < multiWordTail.size())
                             foundMultiWord = foundMultiWord + "_" + multiWordTail.get(wordIndex);
                     }
-                }
-                else {
+                } else {
                     candidates = new ArrayList<String>();
                 }
             }
         }
         return 0;
-    }
-
-    /**
-     */
-    public static String rootFormOf(String word) {
-
-        String rootWord = word;
-        String nounroot = WordNet.wn.nounRootForm(word, word.toLowerCase());
-        String verbroot = WordNet.wn.verbRootForm(word, word.toLowerCase());
-        if (!Strings.isNullOrEmpty(nounroot) && !nounroot.equals(word))
-            rootWord = nounroot;
-        else if (!Strings.isNullOrEmpty(verbroot) && !verbroot.equals(word)) {
-            rootWord = verbroot;
-        }
-        return rootWord;
     }
 }

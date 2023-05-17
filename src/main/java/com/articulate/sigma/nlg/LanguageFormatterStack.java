@@ -2,6 +2,8 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.KB;
+import com.articulate.sigma.nlg.StackElement.FormulaArg;
+import com.articulate.sigma.nlg.StackElement.StackState;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -9,8 +11,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-
-import com.articulate.sigma.nlg.StackElement.*;
 
 /**
  * The stack which LanguageFormatter uses in its recursive operations.
@@ -21,7 +21,51 @@ public class LanguageFormatterStack {
     private VerbProperties.Polarity polarity = VerbProperties.Polarity.AFFIRMATIVE;
 
     /**
+     * Read the given list of FormulaArgs for a given argument.
+     *
+     * @param formulaArgs
+     * @param theArg
+     * @return the formula arg corresponding to the given argument; or null if not found
+     */
+    public static FormulaArg getFormulaArg(List<FormulaArg> formulaArgs, String theArg) {
+
+        for (FormulaArg fArg : formulaArgs) {
+            if (fArg.argument.equals(theArg)) {
+                return fArg;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Have all the formula arguments for the given stack element been processed in some way?
+     *
+     * @param stackElement
+     * @return return true if all the clause arguments have been marked as Processed;
+     * return false if they have not or no arguments exist
+     */
+    public static boolean areFormulaArgsProcessed(StackElement stackElement) {
+
+        boolean retVal = false;
+
+        List<FormulaArg> stackArgs = stackElement.formulaArgs;
+        if (stackArgs != null && !stackArgs.isEmpty()) {
+            boolean isComplete = true;
+            for (FormulaArg fArg : stackArgs) {
+                EnumSet enumSet = EnumSet.of(StackState.PROCESSED, StackState.TRANSLATED, StackState.QUANTIFIED_VARS);
+                if (!enumSet.contains(fArg.state)) {
+                    isComplete = false;
+                    break;
+                }
+            }
+            retVal = isComplete;
+        }
+        return retVal;
+    }
+
+    /**
      * Getter and setter for polarity field.
+     *
      * @return
      */
     public VerbProperties.Polarity getPolarity() {
@@ -34,15 +78,18 @@ public class LanguageFormatterStack {
 
     /**
      * Get the topmost StackElement.
+     *
      * @return
      */
-    private StackElement getTop()   { return theStack.get(theStack.size() - 1);}
+    private StackElement getTop() {
+        return theStack.get(theStack.size() - 1);
+    }
 
     /**
      * Pop the top element of the stack if it is inElement.
-     * @param inElement
-     * throws IllegalStateException if the topmost element is not inElement, or if the
-     * stack cannot be popped
+     *
+     * @param inElement throws IllegalStateException if the topmost element is not inElement, or if the
+     *                  stack cannot be popped
      */
     public void pop(StackElement inElement) {
 
@@ -50,16 +97,19 @@ public class LanguageFormatterStack {
         if (theStack.indexOf(inElement) != (theStack.size() - 1)) {
             throw new IllegalStateException("Current element of stack is not the top element.");
         }
-        if (! theStack.remove(inElement))   {
+        if (!theStack.remove(inElement)) {
             throw new IllegalStateException("Unable to pop the stack.");
         }
     }
 
     /**
      * Is the stack empty?
+     *
      * @return
      */
-     public boolean isEmpty()    { return theStack.isEmpty(); }
+    public boolean isEmpty() {
+        return theStack.isEmpty();
+    }
 
     /**
      * Push a new element onto the stack.
@@ -74,12 +124,12 @@ public class LanguageFormatterStack {
 
     /**
      * Return the topmost stack element
-     * @return
-     *  the topmost stack element; or null if the stack is empty
+     *
+     * @return the topmost stack element; or null if the stack is empty
      */
     public StackElement getCurrStackElement() {
 
-        if (! isEmpty()) {
+        if (!isEmpty()) {
             return getTop();
         }
         return null;
@@ -87,8 +137,8 @@ public class LanguageFormatterStack {
 
     /**
      * Return the stack element that is second from the top
-     * @return
-     *  the 2nd from the top stack element; or null if the stack has fewer than 2 elements
+     *
+     * @return the 2nd from the top stack element; or null if the stack has fewer than 2 elements
      */
     public StackElement getPrevStackElement() {
 
@@ -100,12 +150,13 @@ public class LanguageFormatterStack {
 
     /**
      * Return the Map<String, SumoProcessCollector> for the top element of the stack.
+     *
      * @return
      */
     public Map<String, SumoProcessCollector> getCurrProcessMap() {
 
         Map<String, SumoProcessCollector> retVal = Maps.newHashMap();
-        if (! isEmpty())    {
+        if (!isEmpty()) {
             StackElement element = getTop();
             retVal = element.getSumoProcessMap();
         }
@@ -114,12 +165,13 @@ public class LanguageFormatterStack {
 
     /**
      * Insert the given formula arguments into the topmost element of the stack.
+     *
      * @param formula
      */
     public void insertFormulaArgs(Formula formula) {
 
         List<String> args = formula.complexArgumentsToArrayListString(1);
-        if (! isEmpty() && args != null) {
+        if (!isEmpty() && args != null) {
             // Put the args list into the stack for later reference.
             StackElement element = getTop();
             element.argsInit(formula, args);
@@ -129,6 +181,7 @@ public class LanguageFormatterStack {
     /**
      * Mark the given formula argument as having been processed. Note that this method
      * is called when the relevant args are not held at top of stack, but at top - 1.
+     *
      * @param theArg
      * @return
      */
@@ -143,15 +196,15 @@ public class LanguageFormatterStack {
 
     /**
      * Set the state for the formula arg of the given argument.
+     *
      * @param theArg
      * @param state
-     * @return
-     *  true if successful; else false
+     * @return true if successful; else false
      */
     private boolean setFormulaArgState(List<FormulaArg> stackArgs, String theArg, StackState state) {
 
         boolean retVal = false;
-        if (stackArgs != null && ! stackArgs.isEmpty()) {
+        if (stackArgs != null && !stackArgs.isEmpty()) {
             FormulaArg fArg = LanguageFormatterStack.getFormulaArg(stackArgs, theArg);
             if (fArg != null) {
                 retVal = true;
@@ -162,25 +215,9 @@ public class LanguageFormatterStack {
     }
 
     /**
-     * Read the given list of FormulaArgs for a given argument.
-     * @param formulaArgs
-     * @param theArg
-     * @return
-     *  the formula arg corresponding to the given argument; or null if not found
-     */
-    public static FormulaArg getFormulaArg(List<FormulaArg> formulaArgs, String theArg) {
-
-        for (FormulaArg fArg : formulaArgs)   {
-            if (fArg.argument.equals(theArg))   {
-                return fArg;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Are all the formula arguments processed in some way? Note that this method
      * is called when the relevant args are not held at top of stack, but at top - 1.
+     *
      * @return
      */
     public boolean areFormulaArgsProcessed() {
@@ -197,36 +234,10 @@ public class LanguageFormatterStack {
     }
 
     /**
-     * Have all the formula arguments for the given stack element been processed in some way?
-     * @param stackElement
-     * @return
-     *  return true if all the clause arguments have been marked as Processed;
-     *  return false if they have not or no arguments exist
-     */
-    public static boolean areFormulaArgsProcessed(StackElement stackElement) {
-
-        boolean retVal = false;
-
-        List<FormulaArg> stackArgs = stackElement.formulaArgs;
-        if (stackArgs != null && ! stackArgs.isEmpty()) {
-            boolean isComplete = true;
-            for (FormulaArg fArg : stackArgs) {
-                EnumSet enumSet = EnumSet.of(StackState.PROCESSED, StackState.TRANSLATED, StackState.QUANTIFIED_VARS);
-                if (! enumSet.contains(fArg.state)) {
-                    isComplete = false;
-                    break;
-                }
-            }
-            retVal = isComplete;
-        }
-        return retVal;
-    }
-
-    /**
      * Generate natural language from the contents of the top element of the stack.
      * Returns empty string if the top element's formula arguments have not all been processed.
-     * @return
-     *  the NLG if top element can be processed; else empty string
+     *
+     * @return the NLG if top element can be processed; else empty string
      */
     public String doProcessLevelNatlLanguageGeneration() {
 
@@ -272,6 +283,7 @@ public class LanguageFormatterStack {
     /**
      * If the top stack element has been translated, then find the given arg in the previous stack element
      * and mark the corresponding formula argument as translated.
+     *
      * @param arg
      */
     public void pushCurrTranslatedStateDown(String arg) {
@@ -279,40 +291,36 @@ public class LanguageFormatterStack {
         StackElement curr = getCurrStackElement();
 
         StackElement prev = getPrevStackElement();
-        if (prev == null)  {
+        if (prev == null) {
             return;
         }
 
         FormulaArg prevFormulaArg = LanguageFormatterStack.getFormulaArg(prev.formulaArgs, arg);
-        if (prevFormulaArg == null)  {
+        if (prevFormulaArg == null) {
             return;
         }
 
-        if (curr.getTranslated())  {
-            if (curr.getTranslation() == null || curr.getTranslation().isEmpty())  {
+        if (curr.getTranslated()) {
+            if (curr.getTranslation() == null || curr.getTranslation().isEmpty()) {
                 throw new IllegalStateException("Current stack element state is Translated, but translation is null or empty.");
             }
 
             prevFormulaArg.state = StackState.TRANSLATED;
             prevFormulaArg.translation = curr.getTranslation();
-        }
-        else if (prevFormulaArg.state.equals(StackState.QUANTIFIED_VARS))   {
+        } else if (prevFormulaArg.state.equals(StackState.QUANTIFIED_VARS)) {
             // This is set in initialization of the formula, and we don't want to change it.
-            return;
-        }
-        else    {
-            if (! curr.getTranslation().isEmpty())  {
+        } else {
+            if (!curr.getTranslation().isEmpty()) {
                 throw new IllegalStateException("Current stack element state is not Translated, but translation is not empty.");
             }
 
-            return;
         }
     }
 
     /**
      * For the current stack element, iterate through the List<FormulaArgs> and collect their translations into a single list.
-     * @return
-     *  the curr element's formula args, or empty list if any formula arg has not been translated into informal NLG
+     *
+     * @return the curr element's formula args, or empty list if any formula arg has not been translated into informal NLG
      */
     public List<String> getCurrStackFormulaArgs() {
 
@@ -320,7 +328,7 @@ public class LanguageFormatterStack {
 
         // Collect the translations.
         List<String> translations = Lists.newArrayList();
-        for (FormulaArg formula : element.formulaArgs)   {
+        for (FormulaArg formula : element.formulaArgs) {
             // If any element has not been translated, do nothing.
             // FIXME: Also allow processed?
 //            if (! formula.state.equals(StackState.TRANSLATED) )   {
@@ -332,7 +340,7 @@ public class LanguageFormatterStack {
 //                translations.add(formula.translation);
 //            }
 
-            if (! formula.state.equals(StackState.TRANSLATED))   {
+            if (!formula.state.equals(StackState.TRANSLATED)) {
                 return Lists.newArrayList();
             }
             translations.add(formula.translation);
@@ -346,7 +354,7 @@ public class LanguageFormatterStack {
      */
     public void setCurrTranslatedIfQuantified() {
 
-        if (isQuantifiedClauseProcessed())    {
+        if (isQuantifiedClauseProcessed()) {
             String translation = getCurrStackElement().formulaArgs.get(1).translation;
             getCurrStackElement().setTranslation(translation, true);
         }
@@ -356,6 +364,7 @@ public class LanguageFormatterStack {
      * Has the current clause been processed? This tells us whether we can eliminate quantifier
      * variable lists from informal NLG. We can do so when the stack has only two elements whose states
      * are QUANTIFIED_VARS and TRANSLATED.
+     *
      * @return
      */
     boolean isQuantifiedClauseProcessed() {
@@ -366,15 +375,14 @@ public class LanguageFormatterStack {
         boolean foundQuantified = false;
         boolean foundTranslated = false;
         if (element.formulaArgs.size() == 2) {
-            for (FormulaArg arg : element.formulaArgs)   {
-                if (arg.state.equals(StackState.QUANTIFIED_VARS))    {
+            for (FormulaArg arg : element.formulaArgs) {
+                if (arg.state.equals(StackState.QUANTIFIED_VARS)) {
                     foundQuantified = true;
-                }
-                else if (arg.state.equals(StackState.TRANSLATED))  {
+                } else if (arg.state.equals(StackState.TRANSLATED)) {
                     foundTranslated = true;
                 }
             }
-            if (foundQuantified && foundTranslated)  {
+            if (foundQuantified && foundTranslated) {
                 retVal = true;
             }
         }
@@ -384,22 +392,22 @@ public class LanguageFormatterStack {
     /**
      * If possible, translate the process instantiation and insert the translation into the topmost
      * stack element.
+     *
      * @param kb
-     * @param formula
-     *   a formula for the instantiation of a process, e.g. (instance ?event Classifying)
+     * @param formula a formula for the instantiation of a process, e.g. (instance ?event Classifying)
      */
     public void translateCurrProcessInstantiation(KB kb, Formula formula) {
 
         // Expecting the instantiation of a process, e.g. (instance ?FLY FlyingAircraft)
         String process = formula.complexArgumentsToArrayListString(2).get(0);
-        if (kb.isSubclass(process, "IntentionalProcess"))  {
+        if (kb.isSubclass(process, "IntentionalProcess")) {
             String kbForm = kb.getTermFormatMap("EnglishLanguage").get(process);
-            if(kbForm == null)  {
+            if (kbForm == null) {
                 // For some reason the formatted version of the term is not in the KBs. Maybe we'll have luck with the process name in the original formula.
                 kbForm = process;
             }
             String simpleForm = SumoProcess.getVerbRootForm(kbForm);
-            if (simpleForm != null && ! simpleForm.isEmpty())  {
+            if (simpleForm != null && !simpleForm.isEmpty()) {
                 simpleForm = SumoProcess.verbRootToThirdPersonSingular(simpleForm);
                 getCurrStackElement().setTranslation("someone " + simpleForm, true);
             }
@@ -416,14 +424,13 @@ public class LanguageFormatterStack {
         StackElement currElement = getCurrStackElement();
         StackElement prevElement = getPrevStackElement();
         Map<String, SumoProcessCollector> prevSumoMap = prevElement.getSumoProcessMap();
-        for (Map.Entry<String, SumoProcessCollector> currProcessEntry : currElement.getSumoProcessMap().entrySet())   {
+        for (Map.Entry<String, SumoProcessCollector> currProcessEntry : currElement.getSumoProcessMap().entrySet()) {
             String key = currProcessEntry.getKey();
-            if (prevSumoMap.containsKey(key))    {
+            if (prevSumoMap.containsKey(key)) {
                 // Merge.
                 SumoProcessCollector prevCollector = prevSumoMap.get(key);
                 prevCollector.merge(currProcessEntry.getValue());
-            }
-            else    {
+            } else {
                 // Insert.
                 prevSumoMap.put(key, currProcessEntry.getValue());
             }
@@ -433,22 +440,23 @@ public class LanguageFormatterStack {
 
     /**
      * Handle pushing the translation down into the stack for "not" clauses.
+     *
      * @param statement
      */
     public void pushTranslationDownToNotLevel(String statement) {
         String translation = getCurrStackElement().getTranslation();
 
-        if (translation.isEmpty())  {
+        if (translation.isEmpty()) {
             return;
         }
 
         // Iterate through the stack from top down, looking for a "(not ..." formula arg.
         ListIterator<StackElement> iterator = theStack.listIterator(theStack.size());
-        while(iterator.hasPrevious())   {
+        while (iterator.hasPrevious()) {
             StackElement element = iterator.previous();
 
-            for (FormulaArg formulaArg : element.formulaArgs)   {
-                if (formulaArg.argument.equals(statement))   {
+            for (FormulaArg formulaArg : element.formulaArgs) {
+                if (formulaArg.argument.equals(statement)) {
                     // Set the formula arg.
                     formulaArg.translation = translation;
                     formulaArg.state = StackState.TRANSLATED;
@@ -467,11 +475,11 @@ public class LanguageFormatterStack {
         Formula formula = new Formula(statement);
         statement = formula.cdrAsFormula().car();
         iterator = theStack.listIterator(theStack.size());
-        while(iterator.hasPrevious())   {
+        while (iterator.hasPrevious()) {
             StackElement element = iterator.previous();
 
-            for (FormulaArg formulaArg : element.formulaArgs)   {
-                if (formulaArg.argument.equals(statement))   {
+            for (FormulaArg formulaArg : element.formulaArgs) {
+                if (formulaArg.argument.equals(statement)) {
                     // Set the formula arg.
                     formulaArg.translation = translation;
                     formulaArg.state = StackState.TRANSLATED;
@@ -487,6 +495,7 @@ public class LanguageFormatterStack {
 
     /**
      * Add the given key - property pair to the properties of the current stack element.
+     *
      * @param key
      * @param property
      */

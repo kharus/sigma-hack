@@ -10,11 +10,10 @@ Authors:
 Adam Pease apease@articulatesoftware.com
 */
 
-import com.articulate.sigma.*;
 import com.articulate.sigma.tp.Vampire;
 import com.articulate.sigma.trans.TPTP3ProofProcessor;
-import com.articulate.sigma.wordNet.*;
-import com.articulate.sigma.utils.*;
+import com.articulate.sigma.utils.StringUtil;
+import com.articulate.sigma.wordNet.WordNet;
 
 public class PythonAPI {
 
@@ -25,7 +24,7 @@ public class PythonAPI {
     }
 
     public String getAllSub(String term, String rel) {
-        return kb.kbCache.getChildTerms(term,rel).toString();
+        return kb.kbCache.getChildTerms(term, rel).toString();
     }
 
     public String getWords(String term) {
@@ -39,12 +38,12 @@ public class PythonAPI {
         Vampire vamp = kb.askVampire(q, timeout, 1);
         System.out.println("KB.main(): completed query with result: " + StringUtil.arrayListToCRLFString(vamp.output));
         tpp = new TPTP3ProofProcessor();
-        tpp.parseProofOutput(vamp.output, q, kb,vamp.qlist);
+        tpp.parseProofOutput(vamp.output, q, kb, vamp.qlist);
         return tpp.bindings + "\n\n" + tpp.proof;
     }
 
     public String formula(String kind, int argnum, String term) {
-        return kb.ask(kind,argnum,term).toString();
+        return kb.ask(kind, argnum, term).toString();
     }
 
     public String tell(String form) {

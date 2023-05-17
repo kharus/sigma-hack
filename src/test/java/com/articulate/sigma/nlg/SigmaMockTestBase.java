@@ -21,10 +21,6 @@ public class SigmaMockTestBase {
 
     private static final String SIGMA_HOME = System.getenv("SIGMA_HOME");
     private static final String KB_PATH = (new File(SIGMA_HOME, "KBs")).getAbsolutePath();
-    private static HashMap<String, HashSet<String>> oldWordNetSynSetTable;
-
-    protected final KB kbMock = new KBMock("dummyString");
-
     private static final ImmutableList<String> RECOGNIZED_PROCESSES = ImmutableList.of(
             "Drinking",
             "Driving",
@@ -34,19 +30,16 @@ public class SigmaMockTestBase {
             "Reading",
             "Seeing",
             "Transportation");
-
     private static final ImmutableList<String> RECOGNIZED_CASE_ROLES = ImmutableList.of(
             "agent",
-     //       "benefactive",
+            //       "benefactive",
             "destination",
             "experiencer",
             "goal",
             "instrument",
             "patient");
-
     // FIXME: not sure if instance should be here, or not
     private static final ImmutableList<String> RECOGNIZED_VARIABLE_ARITY_RELATIONS = ImmutableList.of("");
-
     // Add an item to one of these two lists--RECOGNIZED_SUBSTANCES or RECOGNIZED_CORPUSCULAR_OBJECTS--
     // if it is a "participant" in a process and
     // the NL output has it capitalized.
@@ -56,7 +49,7 @@ public class SigmaMockTestBase {
             "Coffee",
             "Food",
             "Tea"
-            );
+    );
     private static final ImmutableList<String> RECOGNIZED_CORPUSCULAR_OBJECTS = ImmutableList.of(
             "Bell",
             "Book",
@@ -66,26 +59,20 @@ public class SigmaMockTestBase {
             "Taxi",
             "Telephone",
             "Truck");
-
     private static final Map<String, List<String>> recognizedMap = Maps.newHashMap();
-
     private static final ArrayList<String> INSTANCE_SIGNATURES = Lists.newArrayList(
             "",
             "Entity",
             "Class");
-
     private static final ArrayList<String> AGENT_SIGNATURES = Lists.newArrayList(
             "",
             "Process",
             "Agent");
-
     private static final ArrayList<String> NAMES_SIGNATURES = Lists.newArrayList(
             "",
             "SymbolicString",
             "Entity");
-
     private static final HashMap<String, ArrayList<String>> signaturesMap = Maps.newHashMap();
-
     private static final ArrayList<Formula> LANG_FORMAT_MAP_COLS = Lists.newArrayList(
             new Formula("(format EnglishLanguage agent \"%2 is %n an &%agent of %1\")"),
             new Formula("(format EnglishLanguage attribute \"%2 is %n an &%attribute of %1\")"),
@@ -100,13 +87,13 @@ public class SigmaMockTestBase {
             new Formula("(format EnglishLanguage subCollection \"%1 is %n a proper &%sub-collection of %2\")"),
             new Formula("(format EnglishLanguage subList \"%1 is %n a &%sublist of %2\")"),
             new Formula("(format EnglishLanguage transported \"%2 is %n &%transported during %1\")")
-            );
-
+    );
     private static final HashMap<String, String> termFormatMap = Maps.newHashMap();
+    private static HashMap<String, HashSet<String>> oldWordNetSynSetTable;
 
     /**
      */
-    static  {
+    static {
         termFormatMap.put("Automobile", "automobile");
         termFormatMap.put("City", "city");
         termFormatMap.put("Clean", "clean");
@@ -146,12 +133,42 @@ public class SigmaMockTestBase {
         termFormatMap.put("Entity", "entity");
     }
 
+    protected final KB kbMock = new KBMock("dummyString");
+
+    /**
+     *
+     */
+    @BeforeClass
+    public static void setUp() {
+
+        NLGUtils.readKeywordMap(KB_PATH);
+
+        HashMap<String, HashSet<String>> hash = new HashMap<>();
+        hash.put("drink", null);
+        hash.put("drive", null);
+        hash.put("eat", null);
+        hash.put("give", null);
+        hash.put("read", null);
+        hash.put("go", null);
+
+        oldWordNetSynSetTable = WordNet.wn.verbSynsetHash;
+        WordNet.wn.verbSynsetHash = hash;
+    }
+
+    /**
+     *
+     */
+    @AfterClass
+    public static void tearDown() {
+        WordNet.wn.verbSynsetHash = oldWordNetSynSetTable;
+    }
+
     /**
      * Mock of KB.
      */
     protected class KBMock extends KB {
 
-         public KBMock(String dummyStr) {
+        public KBMock(String dummyStr) {
             super(dummyStr);
             kbCache = new KBcacheMock(this);
         }
@@ -160,11 +177,7 @@ public class SigmaMockTestBase {
         public boolean isSubclass(String c1, String c2) {
             List<String> list = recognizedMap.get(c2);
 
-            if (list != null && list.contains(c1)) {
-                return true;
-            }
-
-            return false;
+            return list != null && list.contains(c1);
         }
 
         @Override
@@ -173,7 +186,7 @@ public class SigmaMockTestBase {
         }
 
         @Override
-        public HashMap<String,String> getTermFormatMap(String lang)    {
+        public HashMap<String, String> getTermFormatMap(String lang) {
             return termFormatMap;
         }
     }
@@ -189,39 +202,10 @@ public class SigmaMockTestBase {
         }
 
         @Override
-        public boolean isInstanceOf(String i, String c)    {
+        public boolean isInstanceOf(String i, String c) {
             List<String> list = recognizedMap.get(c);
 
-            if (list.contains(i))    {
-                return true;
-            }
-            return false;
+            return list.contains(i);
         }
-    }
-
-    /**
-     */
-    @BeforeClass
-    public static void setUp() {
-
-        NLGUtils.readKeywordMap(KB_PATH);
-
-        HashMap<String,HashSet<String>> hash = new HashMap<>();
-        hash.put("drink", null);
-        hash.put("drive", null);
-        hash.put("eat", null);
-        hash.put("give", null);
-        hash.put("read", null);
-        hash.put("go", null);
-
-        oldWordNetSynSetTable = WordNet.wn.verbSynsetHash;
-        WordNet.wn.verbSynsetHash = hash;
-    }
-
-    /**
-     */
-    @AfterClass
-    public static void tearDown() {
-        WordNet.wn.verbSynsetHash = oldWordNetSynSetTable;
     }
 }

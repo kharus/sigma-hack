@@ -1,8 +1,8 @@
 package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.SigmaTestBase;
-import com.articulate.sigma.utils.StringUtil;
 import com.articulate.sigma.UnitTestBase;
+import com.articulate.sigma.utils.StringUtil;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -10,9 +10,12 @@ import com.google.common.collect.Sets;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * LanguageFormatter tests NOT targeted toward the htmlParaphrase( ) method.

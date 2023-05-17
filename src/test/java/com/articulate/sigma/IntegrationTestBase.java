@@ -4,8 +4,6 @@ import org.junit.BeforeClass;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * Base class for unit tests which are closer to integration tests because they require a large KB configuration.
@@ -13,17 +11,16 @@ import java.net.URISyntaxException;
 
 public class IntegrationTestBase extends SigmaTestBase {
 
-    //private static final String CONFIG_FILE_PATH = "resources/config_all.xml";
-    private static final Class CLASS = IntegrationTestBase.class;
-    static Long totalKbMgrInitTime = Long.MAX_VALUE;
-    protected static KB kbBackup;
-
     /**
      * File object pointing to this test's resources directory.
      */
     public static final File RESOURCES_DIR;
+    //private static final String CONFIG_FILE_PATH = "resources/config_all.xml";
+    private static final Class CLASS = IntegrationTestBase.class;
+    protected static KB kbBackup;
+    static Long totalKbMgrInitTime = Long.MAX_VALUE;
 
-    static  {
+    static {
         String d = null;
         try {
             d = System.getenv("SIGMA_SRC") + File.separator + "test/integration/java/resources";
@@ -31,8 +28,7 @@ public class IntegrationTestBase extends SigmaTestBase {
             File f = new File(d);
             if (!f.exists())
                 throw new Exception();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error in IntegrationTestBase initialization with dir: " + d);
             e.printStackTrace();
         }
@@ -46,6 +42,7 @@ public class IntegrationTestBase extends SigmaTestBase {
 //    }
 
     /**
+     *
      */
     @BeforeClass
     public static void setup() throws IOException {
@@ -66,6 +63,7 @@ public class IntegrationTestBase extends SigmaTestBase {
 
     /**
      * Undo all parts of the state that have anything to do with user assertions made during inference.
+     *
      * @throws IOException
      */
     public static void resetAllForInference() throws IOException {
@@ -75,7 +73,7 @@ public class IntegrationTestBase extends SigmaTestBase {
         kb.deleteUserAssertions();
 
         // Remove the assertions in the files.
-        File userAssertionsFile = new File(KB_PATH, KBmanager.getMgr().getPref("sumokbname") + kb._userAssertionsString);
+        File userAssertionsFile = new File(KB_PATH, KBmanager.getMgr().getPref("sumokbname") + KB._userAssertionsString);
         if (userAssertionsFile.exists()) {
             userAssertionsFile.delete();
             userAssertionsFile.createNewFile();

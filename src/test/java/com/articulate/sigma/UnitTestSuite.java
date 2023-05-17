@@ -1,18 +1,12 @@
 package com.articulate.sigma;
 
-import com.google.common.collect.Sets;
-import com.articulate.sigma.trans.SUMOformulaToTPTPformulaTest;
-import org.junit.Test;
 import com.articulate.sigma.nlg.UnitNLGTestSuite;
+import com.articulate.sigma.trans.SUMOformulaToTPTPformulaTest;
+import com.articulate.sigma.trans.TPTP3ProofProcTest;
 import com.articulate.sigma.wordNet.MultiWordsTest;
-import java.util.ArrayList;
-import java.util.Set;
+import com.articulate.sigma.wordNet.WordNetTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import com.articulate.sigma.wordNet.*;
-import com.articulate.sigma.trans.*;
-
-import static org.junit.Assert.*;
 
 //This software is released under the GNU Public License
 //<http://www.gnu.org/copyleft/gpl.html>.

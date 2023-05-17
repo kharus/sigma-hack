@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 public class FormulaTest {
 
     /**
+     *
      */
     @Test
     public void testFormulaRead() {
@@ -32,6 +33,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testRecursiveCdrSimple() {
@@ -61,6 +63,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testRecursiveCdrComplex() {
@@ -184,7 +187,9 @@ public class FormulaTest {
         assertFalse(f1.isSimpleClause());
     }
 */
+
     /**
+     *
      */
     @Test
     public void testCollectQuantifiedVariables() {
@@ -218,6 +223,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testCollectAllVariables() {
@@ -249,6 +255,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testUnquantifiedVariables() {
@@ -279,6 +286,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testTerms() {
@@ -313,6 +321,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testReplaceVar() {
@@ -328,6 +337,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexVarsDuringWhenFn1() {
@@ -341,6 +351,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexVarsDuringWhenFn2() {
@@ -354,6 +365,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexVarsInstance1() {
@@ -367,6 +379,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexVarsInstance2() {
@@ -380,6 +393,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexVarsInstanceGovernmentFn1() {
@@ -393,6 +407,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexVarsInstanceGovernmentFn2() {
@@ -406,6 +421,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testBigArgs() {
@@ -425,6 +441,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testArgumentsToArrayListGivenComplex0() {
@@ -439,10 +456,11 @@ public class FormulaTest {
 
         ArrayList<String> actual = f.argumentsToArrayListString(0);
 
-        assertEquals(null, actual);
+        assertNull(actual);
     }
 
     /**
+     *
      */
     @Test
     public void testArgumentsToArrayListGivenComplex1() {
@@ -457,10 +475,11 @@ public class FormulaTest {
 
         ArrayList<String> actual = f.argumentsToArrayListString(1);
 
-        assertEquals(null, actual);
+        assertNull(actual);
     }
 
     /**
+     *
      */
     @Test
     public void testArgumentsToArrayListAnd0() {
@@ -474,10 +493,11 @@ public class FormulaTest {
 
         ArrayList<String> actual = f.argumentsToArrayListString(0);
 
-        assertEquals(null, actual);
+        assertNull(actual);
     }
 
     /**
+     *
      */
     @Test
     public void testArgumentsToArrayInstance0() {
@@ -493,6 +513,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexArgumentsToArrayListDriving0() {
@@ -516,6 +537,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexArgumentsToArrayListDriving1() {
@@ -539,6 +561,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexArgumentsToArrayListDriving2() {
@@ -562,6 +585,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexArgumentsToArrayListDriving3() {
@@ -576,10 +600,11 @@ public class FormulaTest {
 
         ArrayList<String> actual = f.complexArgumentsToArrayListString(3);
 
-        assertEquals(null, actual);
+        assertNull(actual);
     }
 
     /**
+     *
      */
     @Test
     public void testComplexArgumentsToArrayListAnd0() {
@@ -598,6 +623,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexArgumentsToArrayListAnd1() {
@@ -616,6 +642,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexArgumentsToArrayListAnd2() {
@@ -634,6 +661,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexArgumentsToArrayListAnd3() {
@@ -652,6 +680,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexArgumentsToArrayListAnd4() {
@@ -665,10 +694,11 @@ public class FormulaTest {
 
         ArrayList<String> actual = f.complexArgumentsToArrayListString(4);
 
-        assertEquals(null, actual);
+        assertNull(actual);
     }
 
     /**
+     *
      */
     @Test
     public void testComplexArgumentsToArrayListAbsolute() {
@@ -684,6 +714,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testComplexArgumentsToArrayList2() {
@@ -694,15 +725,16 @@ public class FormulaTest {
         ArrayList<Formula> l = f.complexArgumentsToArrayList(1);
         System.out.println("testComplexArgumentsToArrayList2(): actual: " + l.size());
         System.out.println("testComplexArgumentsToArrayList2(): expected: " + 3);
-        assertEquals(l.size(),3);
+        assertEquals(l.size(), 3);
     }
 
     /**
+     *
      */
     @Test
     public void testGetArg() {
 
-        List<String> expected = Lists.newArrayList("during","?Y", "(WhenFn ?H)");
+        List<String> expected = Lists.newArrayList("during", "?Y", "(WhenFn ?H)");
         ArrayList<String> actual = new ArrayList<>();
         Formula f1 = new Formula();
         f1.read("(during ?Y (WhenFn ?H))");
@@ -722,6 +754,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testGetArg2() {
@@ -736,11 +769,12 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testGetArgString() {
 
-        List<String> expected = Lists.newArrayList("during","?Y", "(WhenFn ?H)");
+        List<String> expected = Lists.newArrayList("during", "?Y", "(WhenFn ?H)");
         ArrayList<String> actual = new ArrayList<>();
         Formula f1 = new Formula();
         f1.read("(during ?Y (WhenFn ?H))");
@@ -760,6 +794,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testGetArgString2() {
@@ -774,6 +809,7 @@ public class FormulaTest {
     }
 
     /**
+     *
      */
     @Test
     public void testReplaceQuantifierVars() throws Exception {

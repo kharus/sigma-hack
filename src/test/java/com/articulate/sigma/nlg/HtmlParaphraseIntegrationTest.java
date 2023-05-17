@@ -3,7 +3,8 @@ package com.articulate.sigma.nlg;
 import com.articulate.sigma.IntegrationTestBase;
 import com.articulate.sigma.SigmaTestBase;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,8 +18,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
      * Ideal: "The oldest customer enters an invalid card."
      */
     @Test
-    public void testOldestCustomerEntersCard()     {
-        String stmt =   "(exists \n" +
+    public void testOldestCustomerEntersCard() {
+        String stmt = "(exists \n" +
                 "                  (?card ?customer ?event ?salesperson) \n" +
                 "                  (and \n" +
                 "                    (forall \n" +
@@ -53,8 +54,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
      */
     @Test
     @Ignore
-    public void testHtmlParaphraseBellCreateTelephone()     {
-        String stmt =   "(exists \n" +
+    public void testHtmlParaphraseBellCreateTelephone() {
+        String stmt = "(exists \n" +
                 "              (?event ?telephone) \n" +
                 "              (and \n" +
                 "                (instance Bell Human) \n" +
@@ -74,8 +75,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
      * Ideal: "Bell created the telephone."; also "The telephone was created by Bell."
      */
     @Test
-    public void testHtmlParaphraseBlankenshipCreateTelephone()     {
-        String stmt =   "(exists \n" +
+    public void testHtmlParaphraseBlankenshipCreateTelephone() {
+        String stmt = "(exists \n" +
                 "              (?event ?telephone) \n" +
                 "              (and \n" +
                 "                (instance Blankenship Human) \n" +
@@ -101,8 +102,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseBlankenshipProcessTelephone()     {
-        String stmt =   "(exists \n" +
+    public void testHtmlParaphraseBlankenshipProcessTelephone() {
+        String stmt = "(exists \n" +
                 "              (?event ?telephone) \n" +
                 "              (and \n" +
                 "                (instance Blankenship Human) \n" +
@@ -131,8 +132,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
      * Ideal: "If Mary gives John a book then he reads it."
      */
     @Test
-    public void testHtmlParaphraseIfMaryGivesBookJohnThenHeReads()     {
-        String stmt =   "(forall \n" +
+    public void testHtmlParaphraseIfMaryGivesBookJohnThenHeReads() {
+        String stmt = "(forall \n" +
                 "              (?book ?event1) \n" +
                 "              (=> \n" +
                 "                (and \n" +
@@ -175,8 +176,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
      * Ideal: "An old, tall, hungry and thirsty man went to the shop."
      */
     @Test
-    public void testHtmlParaphraseManGoToShop()     {
-        String stmt =   "(exists \n" +
+    public void testHtmlParaphraseManGoToShop() {
+        String stmt = "(exists \n" +
                 "              (?event ?man ?shop) \n" +
                 "              (and \n" +
                 "                (instance ?event Transportation) \n" +
@@ -209,8 +210,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
      */
     @Test
     @Ignore
-    public void testWaiterPoursSoupBowl()     {
-        String stmt =   "(exists \n" +
+    public void testWaiterPoursSoupBowl() {
+        String stmt = "(exists \n" +
                 "              (?bowl ?event ?soup ?waiter) \n" +
                 "              (and \n" +
                 "                (instance ?bowl Artifact) \n" +
@@ -240,8 +241,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
      * Ideal: "The man John arrives."
      */
     @Test
-    public void testManJohnArrives()     {
-        String stmt =   "(exists (?event)\n" +
+    public void testManJohnArrives() {
+        String stmt = "(exists (?event)\n" +
                 "              (and\n" +
                 "               (instance ?event Arriving)\n" +
                 "               (attribute John-1 Male)\n" +
@@ -267,8 +268,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
      * Ideal: "John arrives."
      */
     @Test
-    public void testJohnArrives()     {
-        String stmt =   "(exists (?event)\n" +
+    public void testJohnArrives() {
+        String stmt = "(exists (?event)\n" +
                 "              (and\n" +
                 "               (instance ?event Arriving)\n" +
                 "               (instance John-1 Human)\n" +
@@ -293,8 +294,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
      *
      */
     @Test
-    public void testFishingFishIf()     {
-        String stmt =   "(=>\n" +
+    public void testFishingFishIf() {
+        String stmt = "(=>\n" +
                 "           (and\n" +
                 "               (instance ?FISHING Fishing)\n" +
                 "               (patient ?FISHING ?TARGET)\n" +
@@ -313,8 +314,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
      * Ideal: FoodForFn animal is an industry product type of food manufacturing
      */
     @Test
-    public void testFoodManufacturing()     {
-        String stmt =   "(industryProductType FoodManufacturing\n" +
+    public void testFoodManufacturing() {
+        String stmt = "(industryProductType FoodManufacturing\n" +
                 "           (FoodForFn Animal))";
 
 
@@ -326,8 +327,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    public void testAnimalShellIf()     {
-        String stmt =   "(=>\n" +
+    public void testAnimalShellIf() {
+        String stmt = "(=>\n" +
                 "           (and\n" +
                 "               (instance ?A Animal)\n" +
                 "               (instance ?S AnimalShell)\n" +
@@ -345,8 +346,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    public void testPlaintiff()     {
-        String stmt =   "(exists (?P ?H)\n" +
+    public void testPlaintiff() {
+        String stmt = "(exists (?P ?H)\n" +
                 "           (and\n" +
                 "               (instance ?P LegalAction)\n" +
                 "               (instance ?H Human)\n" +
@@ -367,8 +368,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    public void testFlyingAircraft()     {
-        String stmt =   "(=>\n" +
+    public void testFlyingAircraft() {
+        String stmt = "(=>\n" +
                 "           (instance ?FLY FlyingAircraft)\n" +
                 "           (exists (?CRAFT)\n" +
                 "               (and\n" +
@@ -390,8 +391,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    public void testWadingWater()     {
-        String stmt =   "(=>\n" +
+    public void testWadingWater() {
+        String stmt = "(=>\n" +
                 "           (instance ?P Wading)\n" +
                 "           (exists (?W)\n" +
                 "               (and\n" +
@@ -416,8 +417,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
 
 
     @Test
-    public void testAnimalBathes()     {
-        String stmt =   "(=>\n" +
+    public void testAnimalBathes() {
+        String stmt = "(=>\n" +
                 "           (and\n" +
                 "               (instance ?B Bathing)\n" +
                 "               (patient ?B ?A))\n" +
@@ -442,8 +443,8 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
      * Ideal: "A clean city was built."
      */
     @Test
-    public void testHtmlParaphraseCleanCityBeBuilt()     {
-        String stmt =   "(exists \n" +
+    public void testHtmlParaphraseCleanCityBeBuilt() {
+        String stmt = "(exists \n" +
                 "              (?agent ?city ?event) \n" +
                 "              (and \n" +
                 "                (instance ?agent Agent) \n" +

@@ -1,30 +1,32 @@
-/** This code is copyright Articulate Software (c) 2003-2007.  Some portions
-copyright Teknowledge (c) 2003 and reused under the terms of the GNU license.
-This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
-Users of this code also consent, by use of this code, to credit Articulate Software
-and Teknowledge in any writings, briefings, publications, presentations, or
-other representations of any software which incorporates, builds on, or uses this
-code.  Please cite the following article in any publication with references:
-
-Pease, A., (2003). The Sigma Ontology Development Environment,
-in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
-August 9, Acapulco, Mexico.  See also http://sigmakee.sourceforge.net
-
- Authors:
- Adam Pease
- Infosys LTD.
+/**
+ * This code is copyright Articulate Software (c) 2003-2007.  Some portions
+ * copyright Teknowledge (c) 2003 and reused under the terms of the GNU license.
+ * This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
+ * Users of this code also consent, by use of this code, to credit Articulate Software
+ * and Teknowledge in any writings, briefings, publications, presentations, or
+ * other representations of any software which incorporates, builds on, or uses this
+ * code.  Please cite the following article in any publication with references:
+ * <p>
+ * Pease, A., (2003). The Sigma Ontology Development Environment,
+ * in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
+ * August 9, Acapulco, Mexico.  See also http://sigmakee.sourceforge.net
+ * <p>
+ * Authors:
+ * Adam Pease
+ * Infosys LTD.
  */
 
 package com.articulate.sigma.wordNet;
 
-import java.io.*;
-import java.util.*;
-
-import com.articulate.sigma.*;
+import com.articulate.sigma.KB;
+import com.articulate.sigma.KBmanager;
 import com.articulate.sigma.utils.AVPair;
 import com.articulate.sigma.utils.MapUtils;
 import com.articulate.sigma.utils.StringUtil;
 import com.google.common.collect.Lists;
+
+import java.io.*;
+import java.util.*;
 
 public class WSD {
 
@@ -55,9 +57,7 @@ public class WSD {
         ArrayList<String> values = WordNet.wn.wordsToSenseKeys.get(word);
         if (values == null || values.size() == 0)
             return false;
-        if (values.size() == 1)
-            return false;
-        return true;
+        return values.size() != 1;
     }
 
     /**
@@ -103,26 +103,24 @@ public class WSD {
         ArrayList<String> al = WordNet.splitToArrayList(text);
         ArrayList<String> alcon = WordNet.splitToArrayList(context);
         for (int i = 0; i < al.size(); i++) {
-            String word = (String) al.get(i);
+            String word = al.get(i);
             //ArrayList<String> multiWordResult = new ArrayList<String>();
             //int wordIndex = WordNet.wn.getMultiWords().findMultiWord(al, i, multiWordResult);
-            List<String> sublist = al.subList(i,al.size());
+            List<String> sublist = al.subList(i, al.size());
             String multiWord = WordNet.wn.getMultiWords().findMultiWord(sublist);
             if (!StringUtil.emptyString(multiWord)) {
                 //String theMultiWord = WordNet.wn.synsetsToWords.get(multiWordResult.get(0)).get(0);
                 Collection<String> synsets = WordNetUtilities.wordsToSynsets(multiWord);
                 if (synsets != null && synsets.size() > 0)
                     result.add(synsets.iterator().next());
-                i = i + StringUtil.countChars(multiWord,'_');
-            }
-            else {
+                i = i + StringUtil.countChars(multiWord, '_');
+            } else {
                 if (!WordNet.wn.isStopWord(word)) {
-                    String synset = findWordSenseInContext(word,alcon);
+                    String synset = findWordSenseInContext(word, alcon);
                     //System.out.println("INFO in WordNet.collectWordSenses(): sense in context: " + synset);
                     if (!StringUtil.emptyString(synset)) {
                         result.add(synset);
-                    }
-                    else {
+                    } else {
                         synset = getBestDefaultSense(word);
                         //System.out.println("INFO in WordNet.collectWordSenses(): default sense: " + synset);
                         if (!StringUtil.emptyString(synset)) {
@@ -159,9 +157,9 @@ public class WSD {
         for (int i = 1; i <= 4; i++) {
             String newWord = "";
             if (i == 1)
-                newWord = WordNet.wn.nounRootForm(word,word.toLowerCase());
+                newWord = WordNet.wn.nounRootForm(word, word.toLowerCase());
             if (i == 2)
-                newWord = WordNet.wn.verbRootForm(word,word.toLowerCase());
+                newWord = WordNet.wn.verbRootForm(word, word.toLowerCase());
             if (newWord != null && newWord != "")
                 word = newWord;
             al.addAll(findWordSensePOS(word, words, i));
@@ -173,7 +171,7 @@ public class WSD {
                 AVPair avp = synsetIt.next();
                 String foundSUMO = WordNet.wn.getSUMOMapping(avp.value);
                 int score = Integer.parseInt(avp.attribute);
-                if (StringUtil.emptyString(sumo) || kb.isChildOf(foundSUMO,sumo)) {
+                if (StringUtil.emptyString(sumo) || kb.isChildOf(foundSUMO, sumo)) {
                     bestScore = score;
                     bestSynset = avp.value;
                     done = true;
@@ -183,7 +181,7 @@ public class WSD {
         if (bestScore > 5)
             return bestSynset;
         else
-            return getBestDefaultSenseWithDomain(word,sumo);
+            return getBestDefaultSenseWithDomain(word, sumo);
     }
 
     /**
@@ -200,9 +198,9 @@ public class WSD {
         for (int i = 1; i <= 4; i++) {
             String newWord = "";
             if (i == 1)
-                newWord = WordNet.wn.nounRootForm(word,word.toLowerCase());
+                newWord = WordNet.wn.nounRootForm(word, word.toLowerCase());
             if (i == 2)
-                newWord = WordNet.wn.verbRootForm(word,word.toLowerCase());
+                newWord = WordNet.wn.verbRootForm(word, word.toLowerCase());
             if (newWord != null && newWord != "")
                 word = newWord;
             TreeSet<AVPair> al = findWordSensePOS(word, words, i);
@@ -263,7 +261,7 @@ public class WSD {
         if (bestScore > threshold && (bestScore - nextBestScore) > gap)
             return bestSynset;
         else
-            return getBestDefaultSense(word,pos);
+            return getBestDefaultSense(word, pos);
     }
 
     /**
@@ -279,15 +277,14 @@ public class WSD {
         ArrayList<String> result = new ArrayList<String>();
         TreeSet<AVPair> senselist = WordNet.wn.wordFrequencies.get(word);
         if (senselist == null) {
-            if (WordNet.wn.caseMap.keySet().contains(word.toUpperCase())) {
+            if (WordNet.wn.caseMap.containsKey(word.toUpperCase())) {
                 word = WordNet.wn.caseMap.get(word.toUpperCase());
                 if (debug) System.out.println("INFO in WSD.termFormatBypass(): word: " + word);
                 senselist = WordNet.wn.wordFrequencies.get(word);
                 if (debug) System.out.println("INFO in WSD.termFormatBypass(): senselist: " + senselist);
                 if (senselist == null)
                     return null;
-            }
-            else
+            } else
                 return null;
         }
         if (debug) System.out.println("INFO in WSD.termFormatBypass(): senselist: " + senselist);
@@ -298,13 +295,13 @@ public class WSD {
                 result.add("99999");
                 String SUMO = WordNet.wn.getSUMOMapping(synset);
                 if (debug) System.out.println("INFO in WSD.termFormatBypass(): word, avp, synset, sumo: " +
-                       word + ", " + avp + ", " + synset + ", " + SUMO);
+                        word + ", " + avp + ", " + synset + ", " + SUMO);
                 return result;
             }
         }
         return null;
     }
-        
+
     /**
      * Return a list of scored guesses at the synset for the given word in the
      * context of the sentence.  Returns a TreeSet consisting AVPairs of
@@ -347,23 +344,22 @@ public class WSD {
         int bestSense = -1;
         int bestTotal = -1;
         for (int i = 0; i < senseKeys.size(); i++) {
-            String senseKey = (String) senseKeys.get(i);
+            String senseKey = senseKeys.get(i);
             String synset = WordNetUtilities.getSenseFromKey(senseKey);
             if (WordNetUtilities.sensePOS(senseKey) == POS) {
-                HashMap<String,Integer> senseAssoc = WordNet.wn.wordCoFrequencies.get(senseKey.intern());
+                HashMap<String, Integer> senseAssoc = WordNet.wn.wordCoFrequencies.get(senseKey.intern());
                 if (senseAssoc != null) {
                     int total = 0;
                     for (int j = 0; j < words.size(); j++) {
-                        String lowercase = ((String) words.get(j)).toLowerCase().intern();
-                        if (senseAssoc.containsKey(lowercase)) 
-                            total = total + ((Integer) senseAssoc.get(lowercase)).intValue();                        
+                        String lowercase = words.get(j).toLowerCase().intern();
+                        if (senseAssoc.containsKey(lowercase))
+                            total = total + senseAssoc.get(lowercase).intValue();
                     }
                     AVPair score = new AVPair();
                     score.attribute = StringUtil.integerToPaddedString(total);
                     score.value = synset;
                     result.add(score);
-                }
-                else {
+                } else {
                     AVPair score = new AVPair();
                     score.attribute = StringUtil.integerToPaddedString(0);
                     score.value = synset;
@@ -387,7 +383,7 @@ public class WSD {
         }
         */
     }
-    
+
     /**
      * Get the SUMO term that represents the best guess at
      * meaning for a word.  This method attempts to convert to root form.
@@ -397,25 +393,22 @@ public class WSD {
         //System.out.println("WSD.getBestDefaultSUMOSense(): " + word);
         String newWord = word;
         if (pos == 1)
-            newWord = WordNet.wn.nounRootForm(word,word.toLowerCase());
+            newWord = WordNet.wn.nounRootForm(word, word.toLowerCase());
         if (pos == 2)
-            newWord = WordNet.wn.verbRootForm(word,word.toLowerCase());
+            newWord = WordNet.wn.verbRootForm(word, word.toLowerCase());
         if (StringUtil.emptyString(newWord))
             newWord = word;
-        String sense = getBestDefaultSense(newWord,pos);
+        String sense = getBestDefaultSense(newWord, pos);
         if (StringUtil.emptyString(sense))
             return "";
         if (pos == 1) {
             return WordNet.wn.nounSUMOHash.get(sense.substring(1));
-        }
-        else if (pos == 2) {
-            return WordNet.wn.verbSUMOHash.get(sense.substring(1));           
-        }
-        else if (pos == 3) {
-            return WordNet.wn.adjectiveSUMOHash.get(sense.substring(1));   
-        }
-        else if (pos == 4) {
-            return WordNet.wn.adverbSUMOHash.get(sense.substring(1));  
+        } else if (pos == 2) {
+            return WordNet.wn.verbSUMOHash.get(sense.substring(1));
+        } else if (pos == 3) {
+            return WordNet.wn.adjectiveSUMOHash.get(sense.substring(1));
+        } else if (pos == 4) {
+            return WordNet.wn.adverbSUMOHash.get(sense.substring(1));
         }
         return "";
     }
@@ -432,15 +425,12 @@ public class WSD {
             return "";
         if (sense.charAt(0) == '1') {
             return WordNet.wn.nounSUMOHash.get(sense.substring(1));
-        }
-        else if (sense.charAt(0) == '2') {
-            return WordNet.wn.verbSUMOHash.get(sense.substring(1));           
-        }
-        else if (sense.charAt(0) == '3') {
-            return WordNet.wn.adjectiveSUMOHash.get(sense.substring(1));   
-        }
-        else if (sense.charAt(0) == '4') {
-            return WordNet.wn.adverbSUMOHash.get(sense.substring(1));  
+        } else if (sense.charAt(0) == '2') {
+            return WordNet.wn.verbSUMOHash.get(sense.substring(1));
+        } else if (sense.charAt(0) == '3') {
+            return WordNet.wn.adjectiveSUMOHash.get(sense.substring(1));
+        } else if (sense.charAt(0) == '4') {
+            return WordNet.wn.adverbSUMOHash.get(sense.substring(1));
         }
         return "";
     }
@@ -465,9 +455,9 @@ public class WSD {
             if (debug) System.out.println("INFO in WSD.getBestDefaultSense(): pos: " + pos);
             String newWord = "";
             if (pos == 1)
-                newWord = WordNet.wn.nounRootForm(word,word.toLowerCase());
+                newWord = WordNet.wn.nounRootForm(word, word.toLowerCase());
             if (pos == 2)
-                newWord = WordNet.wn.verbRootForm(word,word.toLowerCase());
+                newWord = WordNet.wn.verbRootForm(word, word.toLowerCase());
             if (newWord == "")
                 newWord = word;
             if (debug) System.out.println("INFO in WSD.getBestDefaultSense(): word: " + newWord + " POS: " + pos);
@@ -478,17 +468,18 @@ public class WSD {
                     while (it.hasNext()) {
                         AVPair avp = it.next();
                         String foundSUMO = WordNet.wn.getSUMOMapping(avp.value);
-                        String numPOS = avp.value.substring(0,1);
+                        String numPOS = avp.value.substring(0, 1);
                         int count = Integer.parseInt(avp.attribute.trim());
                         if (Integer.toString(pos).equals(numPOS) && count > bestScore &&
-                                (StringUtil.emptyString(sumo) || kb.isChildOf(foundSUMO,sumo))) {
+                                (StringUtil.emptyString(sumo) || kb.isChildOf(foundSUMO, sumo))) {
                             bestSense = avp.value;
                             bestScore = count;
                         }
                     }
                 }
             }
-            if (debug) System.out.println("INFO in WSD.getBestDefaultSense(): best sense: " + bestSense + " best score: " + bestScore);
+            if (debug)
+                System.out.println("INFO in WSD.getBestDefaultSense(): best sense: " + bestSense + " best score: " + bestScore);
         }
         if (StringUtil.emptyString(bestSense)) {
             ArrayList<String> al = WordNet.wn.wordsToSenseKeys.get(word);
@@ -504,12 +495,11 @@ public class WSD {
                     String result = numPOS + WordNet.wn.senseIndex.get(key);
                     String foundSUMO = WordNet.wn.getSUMOMapping(result);
                     if (debug) System.out.println("INFO in WSD.getBestDefaultSense(): returning: " + result);
-                    if (StringUtil.emptyString(sumo) || kb.isChildOf(foundSUMO,sumo))
+                    if (StringUtil.emptyString(sumo) || kb.isChildOf(foundSUMO, sumo))
                         return result;
                 }
             }
-        }
-        else {
+        } else {
             if (debug) System.out.println("INFO in WSD.getBestDefaultSense(): returning: " + bestSense);
             return bestSense;
         }
@@ -520,9 +510,9 @@ public class WSD {
      */
     public static String getBestDefaultSense(String word) {
 
-        return getBestDefaultSenseWithDomain(word,"");
+        return getBestDefaultSenseWithDomain(word, "");
     }
-    
+
     /**
      * Get the POS-prefixed synset that represents the best guess at
      * meaning for a word with a given part of speech.  It picks the
@@ -537,9 +527,9 @@ public class WSD {
         String synset = "";
         String newWord = "";
         if (pos == 1)
-            newWord = WordNet.wn.nounRootForm(word,word.toLowerCase());
+            newWord = WordNet.wn.nounRootForm(word, word.toLowerCase());
         if (pos == 2)
-            newWord = WordNet.wn.verbRootForm(word,word.toLowerCase());
+            newWord = WordNet.wn.verbRootForm(word, word.toLowerCase());
         if (StringUtil.emptyString(newWord))
             newWord = word;
         //System.out.println("WSD.getBestDefaultSense(): word: " + newWord);
@@ -551,13 +541,13 @@ public class WSD {
                 while (it.hasNext()) {
                     AVPair avp = it.next();
                     //String POS = WordNetUtilities.getPOSfromKey(avp.value);
-                    String numPOS = avp.value.substring(0,1);
+                    String numPOS = avp.value.substring(0, 1);
                     String POS = Character.toString(avp.value.charAt(0));
                     //if (Integer.toString(pos).equals(numPOS))
                     //    return numPOS + WordNet.wn.senseIndex.get(avp.value);
                     if (Integer.toString(pos).equals(numPOS))
                         return avp.value;
-                }        
+                }
             }
         }
         // if none of the sensekeys are the right pos, fall through to here
@@ -568,22 +558,26 @@ public class WSD {
             al = new ArrayList<String>();
             HashSet<String> synsets = null;
             switch (pos) {
-                case 1: synsets = WordNet.wn.nounSynsetHash.get(newWord);                        
-                        break;
-                case 2: synsets = WordNet.wn.verbSynsetHash.get(newWord);  
-                        break;
-                case 3: synsets = WordNet.wn.adjectiveSynsetHash.get(newWord); 
-                        break;
-                case 4: synsets = WordNet.wn.adverbSynsetHash.get(newWord); 
-                        break;
+                case 1:
+                    synsets = WordNet.wn.nounSynsetHash.get(newWord);
+                    break;
+                case 2:
+                    synsets = WordNet.wn.verbSynsetHash.get(newWord);
+                    break;
+                case 3:
+                    synsets = WordNet.wn.adjectiveSynsetHash.get(newWord);
+                    break;
+                case 4:
+                    synsets = WordNet.wn.adverbSynsetHash.get(newWord);
+                    break;
             }
-            if (!StringUtil.emptyString(synsets)) 
+            if (!StringUtil.emptyString(synsets))
                 al.addAll(synsets);
             //System.out.println("WSD.getBestDefaultSense(): al: " + al);
             if (al == null || al.size() == 0)
                 return "";
             else
-                return Integer.toString(pos) + al.get(0);
+                return pos + al.get(0);
         }
         Iterator<String> it = al.iterator();
         while (it.hasNext()) {
@@ -592,7 +586,7 @@ public class WSD {
             String numPOS = WordNetUtilities.posLettersToNumber(POS);
             if (Integer.toString(pos).equals(numPOS))
                 return numPOS + WordNet.wn.senseIndex.get(key);
-        }  
+        }
         return synset;
     }
 
@@ -624,8 +618,7 @@ public class WSD {
                 al.addAll(Arrays.asList(ls));
                 result.add(al);
             }
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error in WSD.readSick()");
             System.out.println(ex.getMessage());
             ex.printStackTrace();
@@ -654,8 +647,7 @@ public class WSD {
             while ((line = lr.readLine()) != null) {
                 result.add(line);
             }
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error in WSD.readSick()");
             System.out.println(ex.getMessage());
             ex.printStackTrace();
@@ -668,9 +660,9 @@ public class WSD {
      *  @return a Map of SUMO term keys and integer counts of their
      *  appearance
      */
-    public static Map<String,Integer> collectSUMOFromFile(String filename) {
+    public static Map<String, Integer> collectSUMOFromFile(String filename) {
 
-        HashMap<String,Integer> result = new HashMap<>();
+        HashMap<String, Integer> result = new HashMap<>();
         ArrayList<ArrayList<String>> far = readFileIntoArray(filename);
         for (ArrayList<String> line : far) {
             String fullsent = line.get(0);
@@ -684,8 +676,7 @@ public class WSD {
                     if (!result.containsKey(synset)) {
                         result.put(synset, 1);
                         System.out.println("new synset: " + synset);
-                    }
-                    else {
+                    } else {
                         Integer val = result.get(synset);
                         //System.out.println("adding to synset: " + synset + " : " + (val + 1));
                         result.put(synset, val.intValue() + 1);
@@ -693,9 +684,9 @@ public class WSD {
                 }
             }
         }
-        TreeMap<String,HashSet<String>> reversed = new TreeMap<>();
+        TreeMap<String, HashSet<String>> reversed = new TreeMap<>();
         for (String key : result.keySet())
-            MapUtils.addToMap(reversed,StringUtil.integerToPaddedString(result.get(key)),key);
+            MapUtils.addToMap(reversed, StringUtil.integerToPaddedString(result.get(key)), key);
         for (String key : reversed.keySet()) {
             HashSet<String> values = reversed.get(key);
             for (String synset : values) {
@@ -717,7 +708,7 @@ public class WSD {
      */
     public static void printSUMOFromFileByLine(String filename) {
 
-        HashMap<String,Integer> result = new HashMap<>();
+        HashMap<String, Integer> result = new HashMap<>();
         ArrayList<String> far = readFile(filename);
         for (String line : far) {
             System.out.println("\n" + line);
@@ -730,11 +721,11 @@ public class WSD {
      *  @return a Map of SUMO term keys and integer counts of their
      *  appearance
      */
-    public static Map<String,Integer> collectSUMOFromString(String lineStr) {
+    public static Map<String, Integer> collectSUMOFromString(String lineStr) {
 
         ArrayList<String> line = new ArrayList<String>();
         line.addAll(Arrays.asList(lineStr.split(" ")));
-        HashMap<String,Integer> result = new HashMap<>();
+        HashMap<String, Integer> result = new HashMap<>();
         for (int i = 1; i < line.size(); i++) {
             String synset = findWordSenseInContext(line.get(i), line);
             if (synset == "")
@@ -746,8 +737,7 @@ public class WSD {
                 if (!result.containsKey(synset)) {
                     result.put(SUMO, 1);
                     if (debug) System.out.println("new SUMO: " + SUMO);
-                }
-                else {
+                } else {
                     Integer val = result.get(SUMO);
                     result.put(SUMO, val.intValue() + 1);
                 }
@@ -766,28 +756,26 @@ public class WSD {
      *  during normal operation.
      */
     public static void testWordWSD() {
-    
+
         try {
             KBmanager.getMgr().initializeOnce();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         WordNet.initOnce();
         System.out.println("INFO in WSD.testWordWSD(): " + WSD.getBestDefaultSense("India"));
         System.out.println("INFO in WSD.testWordWSD(): " + WSD.getBestDefaultSense("kick"));
     }
-    
+
     /**
      *  A method used only for testing.  It should not be called
      *  during normal operation.
      */
     public static void testSentenceWSD() {
-        
+
         try {
             KBmanager.getMgr().initializeOnce();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         WordNet.initOnce();
@@ -804,9 +792,9 @@ public class WSD {
         System.out.println("INFO in WSD.testSentenceWSD(): " + WSD.collectWordSenses(sentence));
         sentence = "A four stroke engine is a beautiful thing.";
         System.out.println("INFO in WSD.testSentenceWSD(): " + sentence);
-        System.out.println("INFO in WSD.testSentenceWSD(): " + WSD.collectWordSenses(sentence));     
-        System.out.println("INFO in WSD.testSentenceWSD(): " + WordNet.wn.sumoSentenceDisplay(sentence,sentence,""));
-        ArrayList<String> sentar = Lists.newArrayList("John","kicks","the","cart");
+        System.out.println("INFO in WSD.testSentenceWSD(): " + WSD.collectWordSenses(sentence));
+        System.out.println("INFO in WSD.testSentenceWSD(): " + WordNet.wn.sumoSentenceDisplay(sentence, sentence, ""));
+        ArrayList<String> sentar = Lists.newArrayList("John", "kicks", "the", "cart");
         System.out.println("INFO in WSD.testSentenceWSD(): " + sentar);
         for (String s : sentar)
             System.out.println("INFO in WSD.testSentenceWSD(): word: " + s + " SUMO: " + WSD.getBestDefaultSUMO(s));
@@ -820,8 +808,7 @@ public class WSD {
 
         try {
             KBmanager.getMgr().initializeOnce();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         WordNet.initOnce();
@@ -849,8 +836,7 @@ public class WSD {
                 if (!line.equals("quit"))
                     System.out.println(collectSUMOFromString(line));
             }
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             System.out.println("error in TimeBank.interactive()");
         }
@@ -860,7 +846,7 @@ public class WSD {
      *  A main method, used only for testing.  It should not be called
      *  during normal operation.
      */
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         //testWordWSD();
         //testSentenceWSD();
@@ -870,20 +856,16 @@ public class WSD {
         if (args != null && args.length > 0 && (args[0].equals("-f"))) {
             KBmanager.getMgr().initializeOnce();
             collectSUMOFromFile(args[1]);
-        }
-        else if (args != null && args.length > 0 && (args[0].equals("-fp"))) {
+        } else if (args != null && args.length > 0 && (args[0].equals("-fp"))) {
             KBmanager.getMgr().initializeOnce();
             printSUMOFromFileByLine(args[1]);
-        }
-        else if (args != null && args.length > 0 && (args[0].equals("-p"))) {
+        } else if (args != null && args.length > 0 && (args[0].equals("-p"))) {
             KBmanager.getMgr().initializeOnce();
             System.out.println(collectSUMOFromString(StringUtil.removeEnclosingQuotes(args[1])));
-        }
-        else if (args != null && args.length > 0 && (args[0].equals("-i"))) {
+        } else if (args != null && args.length > 0 && (args[0].equals("-i"))) {
             KBmanager.getMgr().initializeOnce();
             interactive();
-        }
-        else if (args != null || args.length == 0 || (args.length > 0 && args[0].equals("-h"))) {
+        } else if (args != null || args.length == 0 || (args.length > 0 && args[0].equals("-h"))) {
             System.out.println("Word Sense Disambiguation");
             System.out.println("  options:");
             System.out.println("  -h - show this help screen");

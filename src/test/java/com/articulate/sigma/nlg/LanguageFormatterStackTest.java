@@ -2,11 +2,9 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.KB;
-import com.articulate.sigma.nlg.LanguageFormatterStack;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.Stack;
 
 import static org.junit.Assert.*;
 
@@ -66,7 +64,7 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
     }
 
 
-    @Test(expected=IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void testIllegalTranslatedState() {
         String string1 = "(exists (?D ?H)\n" +
                 "               (and\n" +

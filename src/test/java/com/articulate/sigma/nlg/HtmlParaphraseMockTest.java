@@ -2,7 +2,8 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.KB;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,8 +15,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
     private final KB kb = kbMock;
 
     @Test
-    public void testHtmlParaphraseDriving1()     {
-        String stmt =       "(exists (?D ?H)\n" +
+    public void testHtmlParaphraseDriving1() {
+        String stmt = "(exists (?D ?H)\n" +
                 "               (and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
@@ -29,14 +30,13 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseDrivingNot1()     {
-        String stmt =       "(not \n" +
+    public void testHtmlParaphraseDrivingNot1() {
+        String stmt = "(not \n" +
                 "               (exists (?D ?H)\n" +
                 "                   (and\n" +
                 "                       (instance ?D Driving)\n" +
                 "                       (instance ?H Human)\n" +
                 "                       (agent ?D ?H))))";
-
 
 
         LanguageFormatter languageFormatter = new LanguageFormatter(stmt, kb.getFormatMap("EnglishLanguage"),
@@ -55,8 +55,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseDrivingHarryReified()     {
-        String stmt =       "(exists (?D)\n" +
+    public void testHtmlParaphraseDrivingHarryReified() {
+        String stmt = "(exists (?D)\n" +
                 "               (and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance Harry Human)\n" +
@@ -70,8 +70,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseDrivingHarryReifiedNot()     {
-        String stmt =       "(not\n" +
+    public void testHtmlParaphraseDrivingHarryReifiedNot() {
+        String stmt = "(not\n" +
                 "               (exists (?D)\n" +
                 "                   (and\n" +
                 "                       (instance ?D Driving)\n" +
@@ -94,8 +94,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseDriving2()     {
-        String stmt =   "(exists (?D ?H)\n" +
+    public void testHtmlParaphraseDriving2() {
+        String stmt = "(exists (?D ?H)\n" +
                 "           (and\n" +
                 "           (instance ?D Driving)\n" +
                 "           (instance ?H Human)\n" +
@@ -111,8 +111,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseDrivingNot2()     {
-        String stmt =   "(not\n" +
+    public void testHtmlParaphraseDrivingNot2() {
+        String stmt = "(not\n" +
                 "           (exists (?D ?H)\n" +
                 "               (and\n" +
                 "                   (instance ?D Driving)\n" +
@@ -140,8 +140,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
      * Ideal: "A human travels to (the) Sudan."
      */
     @Test
-    public void testHumanTravels()     {
-        String stmt =   "(exists (?he ?event)\n" +
+    public void testHumanTravels() {
+        String stmt = "(exists (?he ?event)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Transportation)\n" +
                 "                    (instance ?he Human)\n" +
@@ -158,8 +158,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
      * Ideal: "A human travels to (the) Sudan."
      */
     @Test
-    public void testHumanTravelsSudan()     {
-        String stmt =   "(exists (?he ?event)\n" +
+    public void testHumanTravelsSudan() {
+        String stmt = "(exists (?he ?event)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Transportation)\n" +
                 "                    (instance ?he Human)\n" +
@@ -177,8 +177,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
      * Ideal: "He travels to (the) Sudan."
      */
     @Test
-    public void testHeTravelsSudan()     {
-        String stmt =   "(exists (?he ?event)\n" +
+    public void testHeTravelsSudan() {
+        String stmt = "(exists (?he ?event)\n" +
                 "                  (and\n" +
                 "                    (instance ?event Transportation)\n" +
                 "                    (attribute ?he Male)\n" +
@@ -198,8 +198,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
      */
     @Test
     @Ignore
-    public void testHtmlParaphraseBellCreateTelephone()     {
-        String stmt =   "(exists \n" +
+    public void testHtmlParaphraseBellCreateTelephone() {
+        String stmt = "(exists \n" +
                 "              (?event ?telephone) \n" +
                 "              (and \n" +
                 "                (instance Bell Human) \n" +
@@ -219,8 +219,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
      * Ideal: "Blankenship created the telephone."; also "The telephone was created by Blankenship."
      */
     @Test
-    public void testHtmlParaphraseBlankenshipCreateTelephone()     {
-        String stmt =   "(exists \n" +
+    public void testHtmlParaphraseBlankenshipCreateTelephone() {
+        String stmt = "(exists \n" +
                 "              (?event ?telephone) \n" +
                 "              (and \n" +
                 "                (instance Blankenship Human) \n" +
@@ -240,8 +240,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
      * Ideal: "Bob eats and drinks on the desk."
      */
     @Test
-    public void testHtmlParaphraseBobEatsDrinksDesk()     {
-        String stmt =   "(exists \n" +
+    public void testHtmlParaphraseBobEatsDrinksDesk() {
+        String stmt = "(exists \n" +
                 "              (?desk ?event1 ?event2) \n" +
                 "              (and \n" +
                 "                   (attribute Robert-1 Male) \n" +
@@ -269,8 +269,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
      * Ideal: "If Mary gives John a book then he reads it."
      */
     @Test
-    public void testHtmlParaphraseIfMaryGivesBookJohnThenHeReads()     {
-        String stmt =   "(forall \n" +
+    public void testHtmlParaphraseIfMaryGivesBookJohnThenHeReads() {
+        String stmt = "(forall \n" +
                 "              (?book ?event1) \n" +
                 "              (=> \n" +
                 "                (and \n" +
@@ -304,8 +304,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
      * Ideal: "If Mary gives John a book then he doesn't read it."
      */
     @Test
-    public void testHtmlParaphraseIfMaryGivesBookJohnThenHeReadsNot()     {
-        String stmt =   "(forall \n" +
+    public void testHtmlParaphraseIfMaryGivesBookJohnThenHeReadsNot() {
+        String stmt = "(forall \n" +
                 "              (?book ?event1) \n" +
                 "              (=> \n" +
                 "                (and \n" +
@@ -346,8 +346,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
     }
 
     @Test
-    public void testHtmlParaphraseDrivingThenSeeingIf()     {
-        String stmt =       "(=> \n" +
+    public void testHtmlParaphraseDrivingThenSeeingIf() {
+        String stmt = "(=> \n" +
                 "               (and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
@@ -369,8 +369,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
      * We use this to test how much the antecedent and the consequent affect each other.
      */
     @Test
-    public void testHtmlParaphraseDrivingThenTransportedIf()     {
-        String stmt =       "(=> \n" +
+    public void testHtmlParaphraseDrivingThenTransportedIf() {
+        String stmt = "(=> \n" +
                 "               (and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
@@ -394,8 +394,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
     }
 
     @Test
-    public void testDrivingToCleanCity()     {
-        String stmt =   "(exists \n" +
+    public void testDrivingToCleanCity() {
+        String stmt = "(exists \n" +
                 "              (?agent ?city ?event) \n" +
                 "              (and \n" +
                 "                (instance ?agent Agent) \n" +
@@ -425,8 +425,8 @@ public class HtmlParaphraseMockTest extends SigmaMockTestBase {
      */
     @Test
     @Ignore
-    public void testWaiterGivesTeaDoctor()     {
-        String stmt =   "(exists \n" +
+    public void testWaiterGivesTeaDoctor() {
+        String stmt = "(exists \n" +
                 "              (?doctor ?event ?tea ?waiter) \n" +
                 "              (and \n" +
                 "                (instance ?doctor MedicalDoctor) \n" +

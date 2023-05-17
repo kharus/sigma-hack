@@ -5,7 +5,9 @@ import com.google.common.collect.Sets;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,14 +19,14 @@ public class FormulaPreprocessorIntegrationTest extends IntegrationTestBase {
     /**
      * NOTE: If this test fails, you need to load Mid-level-ontology.kif. One way to do this would be to edit
      * your config.xml file by putting this line under "<kb name="SUMO" >":
-     *    <constituent filename=".../Mid-level-ontology.kif" />
+     * <constituent filename=".../Mid-level-ontology.kif" />
      */
     @Test
     public void testComputeVariableTypesTypicalPart() {
 
-        String stmt =   "(=> " +
-                            "(typicalPart ?X ?Y) " +
-                            "(subclass ?Y Object))";
+        String stmt = "(=> " +
+                "(typicalPart ?X ?Y) " +
+                "(subclass ?Y Object))";
 
         Formula f = new Formula();
         f.read(stmt);
@@ -41,6 +43,7 @@ public class FormulaPreprocessorIntegrationTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testFindTypes2() {
@@ -67,6 +70,7 @@ public class FormulaPreprocessorIntegrationTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Ignore
     @Test
@@ -94,11 +98,12 @@ public class FormulaPreprocessorIntegrationTest extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
     public void testComputeVariableTypesPlaintiff() {
 
-        String stmt =   "(exists (?P ?H)\n" +
+        String stmt = "(exists (?P ?H)\n" +
                 "           (and\n" +
                 "               (instance ?P LegalAction)\n" +
                 "               (instance ?H Human)\n" +

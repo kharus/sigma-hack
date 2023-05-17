@@ -3,7 +3,8 @@ package com.articulate.sigma;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
 
 import static org.junit.Assert.fail;
 
@@ -13,6 +14,7 @@ import static org.junit.Assert.fail;
 
 public class UnitTestBase extends SigmaTestBase {
 
+    public static final int NUM_KIF_FILES = 3;
     private static final String SIGMA_SRC = System.getenv("SIGMA_SRC");
     public static final String CONFIG_FILE_DIR = SIGMA_SRC + File.separator +
             "target/test-classes";
@@ -20,23 +22,21 @@ public class UnitTestBase extends SigmaTestBase {
             "config_topOnly.xml";
     //private static final String CONFIG_FILE_PATH = System.getenv("SIGMA_HOME") + "/KBs/config.xml";
     private static final Class CLASS = UnitTestBase.class;
-    public static final int NUM_KIF_FILES = 3;
-
-    static Long totalKbMgrInitTime = Long.MAX_VALUE;
-
     /**
      * Write out a meaningful error message if the config file path is bad.
-     * */
+     */
     private static final BufferedReader xmlReader;
+    static Long totalKbMgrInitTime = Long.MAX_VALUE;
 
-    static  {
+    static {
         xmlReader = SigmaTestBase.getXmlReader(CONFIG_FILE_PATH, CLASS);
     }
 
     /**
-     * */
+     *
+     */
     @BeforeClass
-    public static void setup()  {
+    public static void setup() {
 
         System.out.println("UnitTestBase.setup(): reading test config file: " + CONFIG_FILE_PATH);
         System.out.println("***** UnitTestBase.setup(): warning! Note that only KB files in the test config file will be loaded! ***** ");
@@ -50,7 +50,8 @@ public class UnitTestBase extends SigmaTestBase {
     }
 
     /**
-     * */
+     *
+     */
     @AfterClass
     public static void checkKBCount() {
 

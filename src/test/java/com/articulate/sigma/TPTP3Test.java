@@ -3,21 +3,22 @@ package com.articulate.sigma;
 import com.articulate.sigma.tp.EProver;
 import com.articulate.sigma.tp.Vampire;
 import com.articulate.sigma.trans.TPTP3ProofProcessor;
+import com.articulate.sigma.utils.StringUtil;
+import org.junit.Test;
 
 import java.io.FileReader;
 import java.io.LineNumberReader;
 import java.io.StringReader;
 
-import com.articulate.sigma.utils.StringUtil;
-import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TPTP3Test extends IntegrationTestBase {
 
     /**
+     *
      */
     @Test
-    public void testParseProofFile () {
+    public void testParseProofFile() {
 
         System.out.println("-----------------------testParseProofFile--------------------------");
         KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
@@ -26,8 +27,7 @@ public class TPTP3Test extends IntegrationTestBase {
             FileReader r = new FileReader(System.getProperty("user.home") + "/Programs/E/PROVER/eltb_out.txt");
             LineNumberReader lnr = new LineNumberReader(r);
             tpp.parseProofOutput(lnr, kb);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         String result = tpp.proof.toString().trim();
@@ -36,15 +36,16 @@ public class TPTP3Test extends IntegrationTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertTrue(!StringUtil.emptyString(result));
-        assertEquals(tpp.proof.size(),22);
+        assertFalse(StringUtil.emptyString(result));
+        assertEquals(tpp.proof.size(), 22);
         System.out.println("\n\n");
     }
 
     /**
+     *
      */
     @Test
-    public void testE () {
+    public void testE() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.EPROVER;
         try {
@@ -72,21 +73,21 @@ public class TPTP3Test extends IntegrationTestBase {
                 System.out.println("Success");
             else
                 System.out.println("FAIL");
-            assertEquals(bindExpect,tpp.bindings.toString());
-            assertTrue(!StringUtil.emptyString(result));
-            assertEquals(6,tpp.proof.size());
+            assertEquals(bindExpect, tpp.bindings.toString());
+            assertFalse(StringUtil.emptyString(result));
+            assertEquals(6, tpp.proof.size());
             eprover.terminate();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.println("\n\n");
     }
 
     /**
+     *
      */
     @Test
-    public void testVampireAvatar () {
+    public void testVampireAvatar() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
         System.out.println("-------------------testVampireAvatar------------------------------");
@@ -95,28 +96,28 @@ public class TPTP3Test extends IntegrationTestBase {
             KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
             Vampire.mode = Vampire.ModeType.AVATAR;
             String query = "(subclass ?X Entity)";
-            Vampire vampire = kb.askVampire(query,30,1);
+            Vampire vampire = kb.askVampire(query, 30, 1);
             TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
             tpp.parseProofOutput(vampire.output, query, kb, vampire.qlist);
-            System.out.println(vampire.toString());
+            System.out.println(vampire);
             String result = tpp.proof.toString().trim();
             System.out.println("Result: " + result);
             if (!StringUtil.emptyString(result) && (tpp.proof.size() == 4))
                 System.out.println("Success");
             else
                 System.out.println("FAIL");
-            assertEquals(4,tpp.proof.size());
-        }
-        catch (Exception e) {
+            assertEquals(4, tpp.proof.size());
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.println("\n\n");
     }
 
     /**
+     *
      */
     @Test
-    public void testVampireCASC () {
+    public void testVampireCASC() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
         System.out.println("-------------------testVampireCASC------------------------------");
@@ -125,10 +126,10 @@ public class TPTP3Test extends IntegrationTestBase {
             KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
             Vampire.mode = Vampire.ModeType.CASC;
             String query = "(subclass ?X Entity)";
-            Vampire vampire = kb.askVampire(query,30,1);
+            Vampire vampire = kb.askVampire(query, 30, 1);
             TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
             tpp.parseProofOutput(vampire.output, query, kb, vampire.qlist);
-            System.out.println(vampire.toString());
+            System.out.println(vampire);
             String result = tpp.proof.toString().trim();
             String expected = "[PositiveInteger]";
             System.out.println("Result: " + result);
@@ -138,27 +139,27 @@ public class TPTP3Test extends IntegrationTestBase {
                 System.out.println("Success");
             else
                 System.out.println("FAIL");
-            assertEquals(10,tpp.proof.size());
+            assertEquals(10, tpp.proof.size());
             System.out.println("answers: " + result);
-            assertEquals("false",tpp.proof.get(7).sumo);
+            assertEquals("false", tpp.proof.get(7).sumo);
             result = tpp.bindings.toString();
             System.out.println("answers: " + result);
             if (!StringUtil.emptyString(result) && result.equals(expected))
                 System.out.println("Success");
             else
                 System.out.println("FAIL");
-            assertEquals(expected,result);
-        }
-        catch (Exception e) {
+            assertEquals(expected, result);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.println("\n\n");
     }
 
     /**
+     *
      */
     @Test
-    public void testVampireCASCBindings () {
+    public void testVampireCASCBindings() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
         System.out.println("-------------------testVampireCASCBindings------------------------------");
@@ -167,9 +168,9 @@ public class TPTP3Test extends IntegrationTestBase {
             KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
             Vampire.mode = Vampire.ModeType.CASC;
             String query = "(subclass ?X Entity)";
-            Vampire vampire = kb.askVampire(query,30,1);
+            Vampire vampire = kb.askVampire(query, 30, 1);
             TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
-            tpp.parseProofOutput(vampire.output, query,kb, vampire.qlist);
+            tpp.parseProofOutput(vampire.output, query, kb, vampire.qlist);
             String expected = "[PositiveInteger]";
             System.out.println("expected: " + expected);
             String result = tpp.bindings.toString();
@@ -178,18 +179,18 @@ public class TPTP3Test extends IntegrationTestBase {
                 System.out.println("Success");
             else
                 System.out.println("FAIL");
-            assertEquals(expected,result);
-        }
-        catch (Exception e) {
+            assertEquals(expected, result);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.println("\n\n");
     }
 
     /**
+     *
      */
     @Test
-    public void testVampireCASCBindings2 () {
+    public void testVampireCASCBindings2() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
         System.out.println("-------------------testVampireCASCBindings2------------------------------");
@@ -199,7 +200,7 @@ public class TPTP3Test extends IntegrationTestBase {
 
             Vampire.mode = Vampire.ModeType.CASC;
             String query = "(subclass ?X ?Y)";
-            Vampire vampire = kb.askVampire(query,30,1);
+            Vampire vampire = kb.askVampire(query, 30, 1);
             TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
             tpp.parseProofOutput(vampire.output, query, kb, vampire.qlist);
 
@@ -211,18 +212,18 @@ public class TPTP3Test extends IntegrationTestBase {
                 System.out.println("Success");
             else
                 System.out.println("FAIL");
-            assertEquals(expected,result);
-        }
-        catch (Exception e) {
+            assertEquals(expected, result);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.println("\n\n");
     }
 
     /**
+     *
      */
     @Test
-    public void testParseProofStep () {
+    public void testParseProofStep() {
 
         String ps1 = "fof(c_0_5, axiom, (s__subclass(s__Artifact,s__Object)), c_0_3).";
         String ps2 = "fof(c_0_2, negated_conjecture,(~(?[X1]:(s__subclass(X1,s__Object)&~$answer(esk1_1(X1)))))," +
@@ -238,7 +239,7 @@ public class TPTP3Test extends IntegrationTestBase {
         String result = tpp.parseProofStep(ps1).toString().trim();
         System.out.println(tpp.parseProofStep(ps1));
         String expected = "0. (subclass Artifact Object) [1] null";
-        assertEquals(expected,result);
+        assertEquals(expected, result);
         System.out.println();
 
         expected = "2. (not\n" +
@@ -254,7 +255,7 @@ public class TPTP3Test extends IntegrationTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected,result);
+        assertEquals(expected, result);
         System.out.println();
 
         expected = "3. false [2, 3] eval_answer_literal";
@@ -264,14 +265,15 @@ public class TPTP3Test extends IntegrationTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected,result);
+        assertEquals(expected, result);
         System.out.println("\n\n");
     }
 
     /**
+     *
      */
     @Test
-    public void testParseProofStep2 () {
+    public void testParseProofStep2() {
 
         String ps1 = "fof(f852,plain,(\n" +
                 "  $false),\n" +
@@ -289,13 +291,14 @@ public class TPTP3Test extends IntegrationTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
+     *
      */
     @Test
-    public void testParseProofStep3 () {
+    public void testParseProofStep3() {
 
         String ps1 = "fof(f559,plain,(\n" +
                 "  s__subclass(s__Abstract,s__Entity)),\n" +
@@ -312,13 +315,14 @@ public class TPTP3Test extends IntegrationTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
+     *
      */
     @Test
-    public void testParseProofStep4 () {
+    public void testParseProofStep4() {
 
         String ps1 = "fof(f324,plain,(\n" +
                 "  $false),\n" +
@@ -336,18 +340,19 @@ public class TPTP3Test extends IntegrationTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
+     *
      */
     @Test
-    public void testParseProofStep5 () {
+    public void testParseProofStep5() {
 
         String ps1 = "cnf(c_0_8, negated_conjecture, ($false), " +
                 "inference(cn,[status(thm)]," +
-                  "[inference(rw,[status(thm)]," +
-                    "[inference(rw,[status(thm)],[c_0_5, c_0_6]), c_0_7])])," +
+                "[inference(rw,[status(thm)]," +
+                "[inference(rw,[status(thm)],[c_0_5, c_0_6]), c_0_7])])," +
                 " ['proof']).\n";
         //ps1 = ps1.replaceAll("\n","");
         TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
@@ -363,13 +368,14 @@ public class TPTP3Test extends IntegrationTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
+     *
      */
     @Test
-    public void testParseProofStep6 () {
+    public void testParseProofStep6() {
 
         String ps1 = "fof(f16682,plain,(\n" +
                 "  ! [X0] : (? [X1] : (s__member(X1,X0) & s__instance(X1,s__Object)) => " +
@@ -386,12 +392,14 @@ public class TPTP3Test extends IntegrationTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
+
     /**
+     *
      */
     @Test
-    public void testExtractAnswerClauseVamp () {
+    public void testExtractAnswerClauseVamp() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
         System.out.println("========================");
@@ -410,9 +418,10 @@ public class TPTP3Test extends IntegrationTestBase {
     }
 
     /**
+     *
      */
     @Test
-    public void testExtractAnswerClauseE () {
+    public void testExtractAnswerClauseE() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.EPROVER;
         System.out.println("========================");
@@ -428,6 +437,6 @@ public class TPTP3Test extends IntegrationTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 }

@@ -9,15 +9,16 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by qingqingcai on 3/9/15.
- *
+ * <p>
  * requires
- *     <constituent filename="Merge.kif" />
- *     <constituent filename="Mid-level-ontology.kif" />
- *     <constituent filename="FinancialOntology.kif" />
+ * <constituent filename="Merge.kif" />
+ * <constituent filename="Mid-level-ontology.kif" />
+ * <constituent filename="FinancialOntology.kif" />
  */
 public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestBase {
 
     /**
+     *
      */
     public void test(String label, String stmt, String expected) {
 
@@ -43,6 +44,7 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
     }
 
     /**
+     *
      */
     @Test
     public void testAddTypeRestrictions1() {
@@ -60,10 +62,11 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
                 "      (and\n" +
                 "         (instance ?LOOP GraphLoop)\n" +
                 "         (graphPart ?LOOP ?GRAPH))))";
-        test("testAddTypeRestrictions1",stmt,expected);
+        test("testAddTypeRestrictions1", stmt, expected);
     }
 
     /**
+     *
      */
     @Test
     public void testAddTypeRestrictions2() {
@@ -95,10 +98,11 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
                 "        (arcWeight ?AA (MeasureFn ?N ?M)) )\n" +
                 "      (measure ?PA (MeasureFn ?N ?M)) ))";
 
-        test("testAddTypeRestrictions2",stmt,expected);
+        test("testAddTypeRestrictions2", stmt, expected);
     }
 
     /**
+     *
      */
     @Test
     public void testAddTypeRestrictions3() {
@@ -140,10 +144,11 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
                 "              (measure ?PART (MeasureFn ?MEASURE2 ?UNIT))\n" +
                 "              (greaterThan ?MEASURE1 ?MEASURE2) )))))))";
 
-        test("testAddTypeRestrictions3()",stmt,expected);
+        test("testAddTypeRestrictions3()", stmt, expected);
     }
 
     /**
+     *
      */
     @Test
     public void testAddTypeRestrictions4() {
@@ -164,10 +169,11 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
                 "    (not (instance ?SUBSTANCE Mixture) ))\n" +
                 "  (instance ?SUBSTANCE PureSubstance) ))";
 
-        test("testAddTypeRestrictions4()",stmt,expected);
+        test("testAddTypeRestrictions4()", stmt, expected);
     }
 
     /**
+     *
      */
     @Test
     public void testAddTypeRestrictions5() {
@@ -204,10 +210,11 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
                 "              (subProcess ?R2 ?R)\n" +
                 "              (experiencer ?R2 ?AXIS) )))))))";
 
-        test("testAddTypeRestrictions5",stmt,expected);
+        test("testAddTypeRestrictions5", stmt, expected);
     }
 
     /**
+     *
      */
     @Ignore  // serviceFee is in Financial ontology not merge or MILO
     @Test
@@ -236,10 +243,11 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
                 "        (causes ?Action ?Fee)\n" +
                 "        (amountCharged ?Fee ?Amount) ))))";
 
-        test("testAddTypeRestrictions6",stmt,expected);
+        test("testAddTypeRestrictions6", stmt, expected);
     }
 
     /**
+     *
      */
     @Test
     public void testAddTypeRestrictions7() {
@@ -262,10 +270,11 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
                 "          (element ?ELEMENT ?SET2)) )\n" +
                 "    (equal ?SET1 ?SET2) ))";
 
-        test("testAddTypeRestrictions7",stmt,expected);
+        test("testAddTypeRestrictions7", stmt, expected);
     }
 
     /**
+     *
      */
     @Ignore
     @Test
@@ -318,10 +327,11 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
                 "                (part ?X ?Z)))))))\n" +
                 "    (greaterThan ?PARTPROB ?NOTPARTPROB)))";
 
-        test("testAddTypeRestrictions8",stmt,expected);
+        test("testAddTypeRestrictions8", stmt, expected);
     }
 
     /**
+     *
      */
     @Ignore
     @Test
@@ -343,10 +353,11 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
                 "      (located ?PHYS ?LOC)\n" +
                 "      (time ?PHYS ?TIME))))";
 
-        test("testAddTypeRestrictions9",stmt,expected);
+        test("testAddTypeRestrictions9", stmt, expected);
     }
 
     /**
+     *
      */
     @Test
     public void testAddTypeRestrictions10() {
@@ -371,10 +382,11 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
                 "            (member ?MEMB ?GROUP)\n" +
                 "            (believes ?MEMB ?BELIEF) ))))))";
 
-        test("testAddTypeRestrictions10",stmt,expected);
+        test("testAddTypeRestrictions10", stmt, expected);
     }
 
     /**
+     *
      */
     @Test
     public void testAddTypeRestrictions11() {
@@ -399,10 +411,11 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
                 "          (MereologicalSumFn ?PART1 ?PART2))\n" +
                 "        (connected ?PART1 ?PART2) ))))";
 
-        test("testAddTypeRestrictions11",stmt,expected);
+        test("testAddTypeRestrictions11", stmt, expected);
     }
 
     /**
+     *
      */
     @Ignore
     @Test
@@ -437,6 +450,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
                 "      (instance ?SEA BodyOfWater)\n" +
                 "      (inhabits ?X ?SEA)))))";
 
-        test("testAddTypeRestrictions12",stmt,expected);
+        test("testAddTypeRestrictions12", stmt, expected);
     }
 }

@@ -1,38 +1,31 @@
 package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.KB;
+import com.articulate.sigma.nlg.SVOElement.SVOGrammarPosition;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 
 import java.util.List;
 import java.util.Set;
-import com.articulate.sigma.nlg.SVOElement.*;
-import com.google.common.collect.Sets;
 
 /**
  * A structure allowing one Subject-Verb-Object element in a sentence to "know" about the others.
  */
 public class Sentence {
     private final KB kb;
-
-    // TODO: consider having SVOElement and SumoProcess implement an interface; right now they all share one
-    // method--getSurfaceForm( )
-    private SVOElement subject = new SVOElement(SVOGrammarPosition.SUBJECT);
-
-    private SumoProcess verb;
-
-    private SVOElement directObject = new SVOElement(SVOGrammarPosition.DIRECT_OBJECT);
-
-    private List<SVOElement> indirectObjects = Lists.newArrayList();
-
     private final Multimap<String, SumoProcessEntityProperty> entityProperties;
-
     /**
      * A list of the sentence's case roles.
      */
     private final Multimap<CaseRole, String> caseRoles;
-
+    // TODO: consider having SVOElement and SumoProcess implement an interface; right now they all share one
+    // method--getSurfaceForm( )
+    private SVOElement subject = new SVOElement(SVOGrammarPosition.SUBJECT);
+    private SumoProcess verb;
+    private SVOElement directObject = new SVOElement(SVOGrammarPosition.DIRECT_OBJECT);
+    private List<SVOElement> indirectObjects = Lists.newArrayList();
     /**
      * A modifiable copy of the caseRoles object.
      */
@@ -41,12 +34,13 @@ public class Sentence {
 
     /**
      * Constructor.
+     *
      * @param roles
      * @param process
      * @param inKB
      * @param properties
      */
-    public Sentence(Multimap<CaseRole, String> roles, SumoProcess process, KB inKB, Multimap<String, SumoProcessEntityProperty> properties)   {
+    public Sentence(Multimap<CaseRole, String> roles, SumoProcess process, KB inKB, Multimap<String, SumoProcessEntityProperty> properties) {
         caseRoles = HashMultimap.create(roles);
         setCaseRolesScratchpad(roles);
 
@@ -59,17 +53,17 @@ public class Sentence {
 
     /**
      * Get all the entities playing a given role in this process.
+     *
      * @param role
      * @param roles
      * @return
      */
-    static Set<String> getRoleEntities(CaseRole role, Multimap<CaseRole, String> roles)   {
+    static Set<String> getRoleEntities(CaseRole role, Multimap<CaseRole, String> roles) {
         return Sets.newTreeSet(roles.get(role));
     }
 
 
     /**
-     *
      * @return
      */
     public SVOElement getSubject() {
@@ -77,7 +71,6 @@ public class Sentence {
     }
 
     /**
-     *
      * @param subject
      */
     public void setSubject(SVOElement subject) {
@@ -85,7 +78,6 @@ public class Sentence {
     }
 
     /**
-     *
      * @return
      */
     public SumoProcess getVerb() {
@@ -93,7 +85,6 @@ public class Sentence {
     }
 
     /**
-     *
      * @param verb
      */
     public void setVerb(SumoProcess verb) {
@@ -101,7 +92,6 @@ public class Sentence {
     }
 
     /**
-     *
      * @return
      */
     public SVOElement getDirectObject() {
@@ -109,7 +99,6 @@ public class Sentence {
     }
 
     /**
-     *
      * @param directObject
      */
     public void setDirectObject(SVOElement directObject) {
@@ -117,7 +106,6 @@ public class Sentence {
     }
 
     /**
-     *
      * @return
      */
     public List<SVOElement> getIndirectObjects() {
@@ -125,7 +113,6 @@ public class Sentence {
     }
 
     /**
-     *
      * @param indirectObjects
      */
     public void setIndirectObjects(List<SVOElement> indirectObjects) {
@@ -134,6 +121,7 @@ public class Sentence {
 
     /**
      * Return the case roles scratchpad.
+     *
      * @return
      */
     Multimap<CaseRole, String> getCaseRolesScratchpad() {
@@ -142,6 +130,7 @@ public class Sentence {
 
     /**
      * Set the case roles scratch pad with the given case roles.
+     *
      * @param roles
      */
     public void setCaseRolesScratchpad(Multimap<CaseRole, String> roles) {
@@ -150,8 +139,8 @@ public class Sentence {
 
     /**
      * Attempt to perform natural language generation on this object.
-     * @return
-     *   a sentence in natural language, or empty string on failure
+     *
+     * @return a sentence in natural language, or empty string on failure
      */
     public String toNaturalLanguage() {
 
@@ -160,13 +149,13 @@ public class Sentence {
         formulateNaturalDirectObject();
         formulateNaturalIndirectObject();
 
-        if (subject.getSurfaceForm().isEmpty())   {
+        if (subject.getSurfaceForm().isEmpty()) {
             reset();
             doPassiveVoice();
         }
 
         // If no subject, perform no NLG.
-        if (subject.getSurfaceForm().isEmpty())   {
+        if (subject.getSurfaceForm().isEmpty()) {
             return "";
         }
 
@@ -194,7 +183,7 @@ public class Sentence {
     private String concatenateIndirectObjects() {
         StringBuilder sBuild = new StringBuilder();
 
-        for(SVOElement element : indirectObjects)   {
+        for (SVOElement element : indirectObjects) {
             sBuild.append(element.getSurfaceForm()).append(" ");
         }
 
@@ -212,7 +201,7 @@ public class Sentence {
         for (CaseRole role : caseRolesToUse) {
             SVOElement element = new SVOElement(SVOGrammarPosition.INDIRECT_OBJECT);
             String obj = formulateNounPhraseForCaseRole(role, element, kb);
-            if (! obj.isEmpty()) {
+            if (!obj.isEmpty()) {
                 List<String> preps = verbProperties.getPrepositionForCaseRole(verb, role);
                 // TODO: for time being, take just the first one in the list
                 String prep = preps.get(0);
@@ -238,7 +227,7 @@ public class Sentence {
         // precede any objects formulated here with a prefix, and add the data to the indirect object list.
         String prefix = "";
         SVOElement element = directObject;
-        if (! directObject.getSurfaceForm().isEmpty())  {
+        if (!directObject.getSurfaceForm().isEmpty()) {
             prefix = "on ";
             element = new SVOElement(SVOGrammarPosition.INDIRECT_OBJECT);
             indirectObjects.add(element);
@@ -246,7 +235,7 @@ public class Sentence {
 
         for (CaseRole role : caseRolesToUse) {
             String obj = formulateNounPhraseForCaseRole(role, directObject, kb);
-            if (! obj.isEmpty()) {
+            if (!obj.isEmpty()) {
                 sBuild.append(prefix).append(" ").append(obj).append(" ");
                 getCaseRolesScratchpad().removeAll(role);
                 break;
@@ -267,7 +256,7 @@ public class Sentence {
     /**
      * Put the subject of this process into natural language.
      */
-    void formulateNaturalSubject( ) {
+    void formulateNaturalSubject() {
         StringBuilder sBuild = new StringBuilder();
 
         VerbProperties verbProperties = new VerbPropertiesSimpleImpl();
@@ -275,7 +264,7 @@ public class Sentence {
 
         for (CaseRole role : caseRolesToUse) {
             String obj = formulateNounPhraseForCaseRole(role, subject, kb);
-            if (! obj.isEmpty()) {
+            if (!obj.isEmpty()) {
                 sBuild.append(" ").append(obj).append(" ");
                 getCaseRolesScratchpad().removeAll(role);
                 break;
@@ -288,13 +277,14 @@ public class Sentence {
     /**
      * Return all the entities of the given role in the correct case.
      * Assumes the role will be some kind of noun.
+     *
      * @param role
      * @param element
      * @param kb
      * @return
      */
     private String formulateNounPhraseForCaseRole(CaseRole role, SVOElement element, KB kb) {
-        if (! getCaseRolesScratchpad().containsKey(role))    {
+        if (!getCaseRolesScratchpad().containsKey(role)) {
             return "";
         }
         Set<String> rawNouns = Sentence.getRoleEntities(role, getCaseRolesScratchpad());
@@ -303,9 +293,9 @@ public class Sentence {
         // We're assuming that only names and reified objects are in uppercase.
         for (String noun : rawNouns) {
             String temp = noun;
-            if (! NLGStringUtils.isVariable(noun)) {
+            if (!NLGStringUtils.isVariable(noun)) {
                 temp = addProperties(noun);
-                if  (Noun.takesIndefiniteArticle(noun, kb)) {
+                if (Noun.takesIndefiniteArticle(noun, kb)) {
                     temp = Noun.aOrAn(temp) + " " + temp;
                 }
                 // Replace the noun with its SUMO representation if it has one.
@@ -321,6 +311,7 @@ public class Sentence {
 
     /**
      * Add properties like adjectives to the given noun.
+     *
      * @param noun
      * @return
      */
@@ -330,7 +321,7 @@ public class Sentence {
         }
 
         String retVal = noun;
-        for (SumoProcessEntityProperty prop : entityProperties.get(noun))   {
+        for (SumoProcessEntityProperty prop : entityProperties.get(noun)) {
             retVal = prop.getSurfaceFormForNoun(retVal, kb);
         }
         return retVal;
@@ -339,7 +330,6 @@ public class Sentence {
     /**
      * If we haven't managed to create a subject, try creating one with Patient. The result will be "experiences" +
      * the process verb in a noun form. This can be seen as a precursor of correct passive voice.
-     *
      */
     private void doPassiveVoice() {
         List<CaseRole> caseRolesToUse = Lists.newArrayList(CaseRole.EXPERIENCER, CaseRole.MOVES, CaseRole.PATIENT, CaseRole.RESOURCE, CaseRole.ATTENDS);
@@ -348,7 +338,7 @@ public class Sentence {
         StringBuilder sBuild = new StringBuilder();
         for (CaseRole role : caseRolesToUse) {
             String obj = formulateNounPhraseForCaseRole(role, subject, kb);
-            if (! obj.isEmpty()) {
+            if (!obj.isEmpty()) {
                 sBuild.append(" ").append(obj).append(" ");
                 getCaseRolesScratchpad().removeAll(role);
                 break;
