@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-/** ***************************************************************
+/**
  * Base class for unit tests which are closer to integration tests because they require a large KB configuration.
  */
 
@@ -18,7 +18,7 @@ public class IntegrationTestBase extends SigmaTestBase {
     static Long totalKbMgrInitTime = Long.MAX_VALUE;
     protected static KB kbBackup;
 
-    /** ***************************************************************
+    /**
      * File object pointing to this test's resources directory.
      */
     public static final File RESOURCES_DIR;
@@ -45,7 +45,7 @@ public class IntegrationTestBase extends SigmaTestBase {
 //        xmlReader = SigmaTestBase.getXmlReader(CONFIG_FILE_PATH, CLASS);
 //    }
 
-    /** ***************************************************************
+    /**
      */
     @BeforeClass
     public static void setup() throws IOException {

@@ -39,7 +39,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
     public static final String TFF_RAT = "$rat";
     public static final String TFF_ENTITY = "$i";
 
-    /** *************************************************************
+    /**
      */
     public void initOnce() {
 
@@ -79,7 +79,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         initialized = true;
     }
 
-    /** *************************************************************
+    /**
      * Test whether the given relation has an argument that is a subclass
      * of Quantity
      */
@@ -94,7 +94,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Test whether the given relation has an argument that could be
      * a number
      */
@@ -109,7 +109,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Test whether the given relation has an argument that is a subclass
      * of Quantity or the special case kludge of AssignmentFn
      */
@@ -126,7 +126,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Test whether the term is a subclass of Quantity but not a
      * subclass of one of the three TFF built-in types of $int, $rat
      * and $real
@@ -143,7 +143,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * Test whether the term is a subclass of Quantity but not a
      * one of the three TFF built-in types of $int, $rat
      * and $real or subclass
@@ -160,7 +160,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * Test whether the term
      * one of the three TFF built-in types of $int, $rat
      * and $real or subclass
@@ -175,7 +175,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * Translate SUMO class names to their appropriate TFF sort
      */
     public static String translateSort(KB kb, String s) {
@@ -200,7 +200,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return "$i";
     }
 
-    /** *************************************************************
+    /**
      */
     public static String translateName(String s) {
 
@@ -214,7 +214,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Write signatures for relations
      */
     public void writeRelationSort(String t, PrintWriter pw) {
@@ -261,7 +261,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static boolean alreadyExtended(String t) {
 
@@ -273,7 +273,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * Create all possible combinations of argument types for Integer
      * RationalNumber and RealNumber for argument types that are
      * Entity(s) (which is everything)
@@ -336,7 +336,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         if (debug) System.out.println("SUMOKBtoTFAKB.processRelationSort(): allsig: " + allsig);
     }
 
-    /** *************************************************************
+    /**
      * Copy an existing signature overwriting any argument types
      * as specified by the new suffix
      * @param e is the type suffix of a new relation built on the old one
@@ -370,7 +370,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         kb.kbCache.signatures.put(newRel,combinedSig);
     }
 
-    /** *************************************************************
+    /**
      * Create polymorphic comparison and math relations.
      * The result is a side effect on toExtend
      */
@@ -393,7 +393,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     private boolean expandableArg(String rel, int argnum, ArrayList<String> sig) {
 
@@ -416,7 +416,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
             return false;
     }
 
-    /** *************************************************************
+    /**
      *  ListFn is a special special case.  Lists can hold any type and
      *  ListFn is a VariableArityPredicate, so we need to provide all
      *  permutations of TFF types in a list as signatures.
@@ -450,7 +450,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
             MapUtils.addToMap(toExtend, "ListFn", suffix);
     }
 
-    /** *************************************************************
+    /**
      * VariableArityRelations are special cases since the different
      * versions only get expanded when axioms are processed but
      * we need to create the different sorts up front.  The current
@@ -508,7 +508,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         }
     }
 
-    /** *************************************************************
+    /**
      * Check if the relation has a numeric argument that isn't completely
      * specific, so that it needs special treatment to create versions
      * for integers, reals and rationals
@@ -555,7 +555,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         pw.println("% SUMOKBtoTFAKB.writeSorts(): finished");
     }
 
-    /** *************************************************************
+    /**
      */
     public static void main(String[] args) {
 

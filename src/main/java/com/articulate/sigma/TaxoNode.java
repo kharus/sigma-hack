@@ -16,7 +16,7 @@ in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
 August 9, Acapulco, Mexico.  See also http://sigmakee.sourceforge.net
 */
 
-/** ***************************************************************
+/**
  * Class that holds information about each node in the tree.
  * A node may either display all its children, or just one, which leads
  * to a particular child node the user is interested in.
@@ -29,7 +29,7 @@ public class TaxoNode {
     public boolean childrenExpanded = false;
     public TaxoNode oneChild = null;                // only one child may be displayed
 
-    /** ***************************************************************
+    /**
      */
     public String toHTML(String kbHref, int indentLevel) {
 

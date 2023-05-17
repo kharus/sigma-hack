@@ -58,7 +58,7 @@ public class DB {
     public static HashSet<String> amenityTerms = new HashSet<String>();
     public static HashSet<String> stopConcepts = new HashSet<String>();
 
-    /** ***************************************************************
+    /**
      *  Print statistics in a summary form for TPTP test run
      *  data
      */
@@ -91,7 +91,7 @@ public class DB {
         return byProver;
     }
 
-    /** ***************************************************************
+    /**
      *  Reorganize statistics in a summary form for TPTP test run
      *  data
      */
@@ -122,7 +122,7 @@ public class DB {
         return byProver;
     }
 
-    /** ***************************************************************
+    /**
      *  Read statistics for TPTP test run data
      */
     public HashMap processTPTPData() throws IOException {
@@ -160,7 +160,7 @@ public class DB {
         return problemSet;
     }
 
-    /** ***************************************************************
+    /**
      * This procedure is called by @see generateDB().  It generates
      * SQL statements of some of the following forms:
      *
@@ -191,7 +191,7 @@ public class DB {
         }
     }
 
-    /** ***************************************************************
+    /**
      *  Generate an SQL database from the knowledge base
      *  Tables must be defined as instances of &%DatabaseTable and
      *  must have &%localDocumentation and &%HasDatabaseColumn
@@ -209,7 +209,7 @@ public class DB {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Parse the input from a Reader for a CSV file into an ArrayList
      * of ArrayLists.  If lineStartTokens is a non-empty list, all
      * lines not starting with one of the String tokens it contains
@@ -331,7 +331,7 @@ public class DB {
         return rows;
     }
 
-    /** ***************************************************************
+    /**
      * Parse a CSV file into an ArrayList of ArrayLists.  If
      * lineStartTokens is a non-empty list, all lines not starting
      * with one of the String tokens it contains will be concatenated.
@@ -361,7 +361,7 @@ public class DB {
         return rows;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static ArrayList<ArrayList<String>> readSpreadsheet(String fname, List lineStartTokens,
             boolean quote) {
@@ -369,7 +369,7 @@ public class DB {
     	return readSpreadsheet(fname,lineStartTokens,quote,',');
     }
     
-    /** ***************************************************************
+    /**
      */
     private static boolean isInteger(String input) {
 
@@ -382,7 +382,7 @@ public class DB {
        }
     }
 
-    /** ***************************************************************
+    /**
      * @param quote signifies whether to quote entries from the spreadsheet
      */
     public static String writeSpreadsheetLine(ArrayList<String> al, boolean quote) {
@@ -401,7 +401,7 @@ public class DB {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * @param quote signifies whether to quote entries from the spreadsheet
      */
     public static String writeSpreadsheet(ArrayList<ArrayList<String>> values, boolean quote) {
@@ -414,7 +414,7 @@ public class DB {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * Parse an input stream Reader from a Data Interchange Format
      * (.dif) file into an ArrayList of ArrayLists.
      *
@@ -537,7 +537,7 @@ public class DB {
         return rows;
     }
 
-    /** ***************************************************************
+    /**
      * Parse and load a Data Interchange Format (.dif) file into an
      * ArrayList of ArrayLists.
      *
@@ -560,7 +560,7 @@ public class DB {
         return rows;
     }
 
-    /** ***************************************************************
+    /**
      */
     private void processForRDFExport(ArrayList rows) {
 
@@ -592,7 +592,7 @@ public class DB {
         System.out.println("</rdf:RDF>");
     }
 
-    /** ***************************************************************
+    /**
      */
     public static int writeSuoKifStatements(Set statements, PrintWriter pw) {
 
@@ -625,7 +625,7 @@ public class DB {
         return n;
     }
 
-    /** ***************************************************************
+    /**
      * Writes to sourceFilePath all Formulae in kb that have
      * sourceFilePath as source file.
      *
@@ -690,7 +690,7 @@ public class DB {
         return count;
     }
 
-    /** ***************************************************************
+    /**
      *  Collect relations in the knowledge base
      *
      *  @return The set of relations in the knowledge base.
@@ -708,7 +708,7 @@ public class DB {
         return relations;
     }
 
-    /** ***************************************************************
+    /**
      * Print a comma-delimited matrix.  The values of the rows
      * are TreeMaps, whose values in turn are Strings.  The ArrayList of
      * relations forms the column headers, which are Strings.
@@ -749,7 +749,7 @@ public class DB {
         return;
     }
 
-    /** ***************************************************************
+    /**
      * Export a comma-delimited table of all the ground binary
      * statements in the knowledge base.  Only the relations that are
      * actually used are included in the header.
@@ -793,7 +793,7 @@ public class DB {
         printSpreadsheet(rows,usedRelations);
     }
 
-    /** ***************************************************************
+    /**
      */
     private String replaceStringWithID(int counter, String arg, HashMap stringMap) {
 
@@ -802,19 +802,19 @@ public class DB {
         return id;
     }
 
-    /** *******************************************************************
+    /**
      */
     public static String wordWrap(String input, int length) {
         return StringUtil.wordWrap(input, length);
     }
 
-    /** *******************************************************************
+    /**
      */
     public static boolean emptyString(String input) {
         return StringUtil.emptyString(input);
     }
 
-    /** *******************************************************************
+    /**
      */
     public static void RearDBtoKIF() {
 
@@ -930,7 +930,7 @@ public class DB {
         }
     }
 
-    /** *******************************************************************
+    /**
      */
     public static String parseCuisines(String cuisine, String RST_RESTAURANTNAME, String RST_RESTAURANTID) {
 
@@ -945,7 +945,7 @@ public class DB {
         return result.toString();
     }
     
-    /** *************************************************************
+    /**
      * Excludes cases of where the mapping is to multiple SUMO terms
      *
      * @return a list of attribute value pairs where the count is in
@@ -1004,7 +1004,7 @@ public class DB {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * @return a map of all the word senses used in the reviews and
      * a count of their appearances
      */
@@ -1037,7 +1037,7 @@ public class DB {
         return countMap;
     }
 
-    /** *************************************************************
+    /**
      * @return a side effect on reviews of setting the SUMO list
      */
     public static void SUMOReviews(ArrayList<Hotel> reviews) {
@@ -1059,7 +1059,7 @@ public class DB {
         }
     }
 
-    /** *************************************************************
+    /**
      * @param hotels an ArrayList of Hotel with reviews as text
      * @return set synset values as a side effect
      */
@@ -1091,7 +1091,7 @@ public class DB {
         System.out.println();
     }
 
-    /** *******************************************************************
+    /**
      */
     public static String processTimeDate(String timeDate) {
 
@@ -1115,7 +1115,7 @@ public class DB {
         " (YearFn " + calendar.get(Calendar.YEAR) + "))))))";
     }
 
-    /** *******************************************************************
+    /**
      */
     public static HashMap<String,String> readStateAbbrevs() {
 
@@ -1130,7 +1130,7 @@ public class DB {
         return result;
     }
 
-    /** *******************************************************************
+    /**
      */
     public static ArrayList<String> fill(String value, int count) {
 
@@ -1140,7 +1140,7 @@ public class DB {
         return line;
     }
 
-    /** *******************************************************************
+    /**
      */
     public static void DiningDBImport() {
 
@@ -1186,7 +1186,7 @@ public class DB {
         }
     }
 
-    /** *******************************************************************
+    /**
      * @return a list of SUMO terms that are the best guess at classes for
      * each word
      */
@@ -1208,7 +1208,7 @@ public class DB {
         return result;
     }
 
-    /** *******************************************************************
+    /**
      * @return a list of SUMO terms that are the best guess at classes for
      * each word
      */
@@ -1252,7 +1252,7 @@ public class DB {
         return result;
     }
 
-    /** *******************************************************************
+    /**
      */
     public static HashSet<String> parseRest(String menu, String placename, String price,
             String address, String latitude, String longitude, String phone) {
@@ -1318,7 +1318,7 @@ public class DB {
         return axioms;
     }
 
-    /** *************************************************************
+    /**
      */
     public static HashSet<String> getAllRest() {
 
@@ -1338,7 +1338,7 @@ public class DB {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Call Google's geocode API to convert an address string into a
      * lat/lon, which is returned as an ArrayList of two String elements
      * containing a real-number format latitude and longitude.
@@ -1403,7 +1403,7 @@ public class DB {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     public static String printTopSUMOInReviews(ArrayList<AVPair> topSUMO) {
 
@@ -1415,7 +1415,7 @@ public class DB {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * A test method.
      * @param fname has no file extension or directory
      */
@@ -1485,7 +1485,7 @@ public class DB {
         return parseRest(menu,placename,price,address,latitude,longitude,phone);
     }
 
-    /** *************************************************************
+    /**
      *  Fill out from a CSV file a set of concepts that should be ignored
      *  during content extraction
         @return void side effect on static variable "stopConcept"
@@ -1504,7 +1504,7 @@ public class DB {
         }
     }
 
-    /** *************************************************************
+    /**
      *  Fill out from a CSV file a map of word keys, and values broken down by POS,
         listing whether it's a positive or negative word interior hash map keys are
         type, POS, stemmed, polarity
@@ -1529,7 +1529,7 @@ public class DB {
         }
     }
 
-    /** *************************************************************
+    /**
      * Calculate an integer sentiment value for a string of words.
      */
     public static int computeSentiment(String input) {
@@ -1543,7 +1543,7 @@ public class DB {
         return total;
     }
 
-    /** *************************************************************
+    /**
      * Find the sentiment value for a given word, after finding the root
      * form of the word.
      */
@@ -1579,7 +1579,7 @@ public class DB {
         return 0;
     }
 
-    /** *************************************************************
+    /**
      * Add new scores to existing scores.  Note the side effect on scores.
      * @return a map of concept keys and integer sentiment score values
      */
@@ -1598,7 +1598,7 @@ public class DB {
         }
         return scores;
     }
-    /** *************************************************************
+    /**
      * Associate individual concepts with a sentiment score
      * @return a map of concept keys and integer sentiment score values
      */
@@ -1629,7 +1629,7 @@ public class DB {
         return result;
     }
     
-    /** *************************************************************
+    /**
      * Associate individual concepts with a sentiment score
      * @return a map of concept keys and integer sentiment score values
      */
@@ -1654,7 +1654,7 @@ public class DB {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     public static void readAmenities() {
 
@@ -1666,7 +1666,7 @@ public class DB {
         }
     }
     
-    /** *************************************************************
+    /**
      * Add the Integer values of two HashMaps that have corresponding String keys
      */
     private static HashMap<String,Integer> addSentiment(HashMap<String,Integer>totalSent, 
@@ -1686,7 +1686,7 @@ public class DB {
     	return result;
     }
     
-    /** *************************************************************
+    /**
      */
     public static void textSentimentByPeriod() {
 
@@ -1727,7 +1727,7 @@ public class DB {
         System.out.println(totalSent);
     }
 
-    /** *************************************************************
+    /**
      */
     public static void textSentiment() {
 
@@ -1748,7 +1748,7 @@ public class DB {
         System.out.println(totalSent);
     }
     
-    /** *************************************************************
+    /**
      * Compute sentiment for each line of a text file and output as CSV.
      */
     public static void textFileSentiment(String fname, boolean neg) {
@@ -1791,7 +1791,7 @@ public class DB {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static void testSentiment() {
         readSentimentArray();
@@ -1825,7 +1825,7 @@ public class DB {
         }
     }
     
-    /** *************************************************************
+    /**
      */
     public static void testSentimentCorpus() {
         
@@ -1840,7 +1840,7 @@ public class DB {
         textFileSentiment("rt-polarity.neg",true);        
     }
     
-    /** *************************************************************
+    /**
      */
     public static void guessGender(String fname) {
        
@@ -1868,7 +1868,7 @@ public class DB {
         System.out.println(DB.writeSpreadsheet(dat, true));
     }
     
-    /** *************************************************************
+    /**
      * A test method
      */
     public static void main (String args[]) {

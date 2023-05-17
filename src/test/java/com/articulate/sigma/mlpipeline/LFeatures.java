@@ -116,7 +116,7 @@ public class LFeatures {
     }
 
 
-    /** ***************************************************************
+    /**
      */
     public ArrayList<AVPair> initModals() {
 

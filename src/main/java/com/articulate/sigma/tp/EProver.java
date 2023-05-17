@@ -33,7 +33,7 @@ public class EProver {
     public ArrayList<String> output = new ArrayList<>();
     public StringBuffer qlist = null;
 
-    /** *************************************************************
+    /**
      */
     public String toString() {
 
@@ -43,7 +43,7 @@ public class EProver {
         return sb.toString();
     }
 
-    /** *************************************************************
+    /**
      * Create a new batch specification file.
      *
      * e_ltb_runner processes a batch specification file; it contains
@@ -81,7 +81,7 @@ public class EProver {
         }
     }
 
-    /** *************************************************************
+    /**
      * Update batch specification file.
      *
      * "inputFilename" is added into existing batch specification file
@@ -147,7 +147,7 @@ public class EProver {
         }
     }
     
-    /** *************************************************************
+    /**
      * Create a new batch specification file, and create a new running
      * instance of EProver.
      *
@@ -195,7 +195,7 @@ public class EProver {
         _writer = new BufferedWriter(new OutputStreamWriter(_eprover.getOutputStream()));
     }
 
-    /** *************************************************************
+    /**
      * Create a running instance of EProver based on existing batch
      * specification file.
      *
@@ -234,7 +234,7 @@ public class EProver {
     }
     
     
-    /** *************************************************************
+    /**
      * Create a running instance of EProver based on existing batch
      * specification file.
      *
@@ -273,7 +273,7 @@ public class EProver {
         _writer = new BufferedWriter(new OutputStreamWriter(_eprover.getOutputStream()));
     }
 
-    /** *************************************************************
+    /**
      * Add an assertion for inference.
      *
      * @param formula asserted formula in the KIF syntax
@@ -311,7 +311,7 @@ public class EProver {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Add an assertion for inference.
      *
      * @param userAssertionTPTP asserted formula in the TPTP syntax
@@ -376,7 +376,7 @@ public class EProver {
         return allAdded;
     }
 
-    /** *************************************************************
+    /**
      * Terminate this instance of EProver. After calling this function
      * no further assertions or queries can be done.
      *
@@ -404,7 +404,7 @@ public class EProver {
         }
     }
 
-    /** *************************************************************
+    /**
      * Submit a query.
      *
      * @param formula query in the KIF syntax
@@ -454,7 +454,7 @@ public class EProver {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * A simple test. Works as follows: 
      * <ol>
      *   <li>start E;</li>

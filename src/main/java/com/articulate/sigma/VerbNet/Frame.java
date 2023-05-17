@@ -35,7 +35,7 @@ public class Frame {
         HashSet<AVPair> restrict = new HashSet<>();
     }
 
-    /** *************************************************************
+    /**
      */
     public void readDesc(SimpleElement desc) {
 
@@ -50,7 +50,7 @@ public class Frame {
         if (echo) System.out.println("xtag: " + xtag);
     }
 
-    /** *************************************************************
+    /**
      */
     public void readEx(SimpleElement ex) {
 
@@ -69,7 +69,7 @@ public class Frame {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public HashSet<AVPair> readSynrestrs(SimpleElement syn) {
 
@@ -92,7 +92,7 @@ public class Frame {
         return restr;
     }
 
-    /** *************************************************************
+    /**
      */
     public void readSyn(SimpleElement syn) {
 
@@ -187,7 +187,7 @@ public class Frame {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public HashSet<AVPair> readArgs(SimpleElement pred) {
 
@@ -212,7 +212,7 @@ public class Frame {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     public Tuple readPred(SimpleElement pred) {
 
@@ -233,7 +233,7 @@ public class Frame {
         return t;
     }
 
-    /** *************************************************************
+    /**
      */
     public void readSem(SimpleElement sem) {
 
@@ -250,7 +250,7 @@ public class Frame {
     }
 
 
-    /** *************************************************************
+    /**
      */
     public void readFrame(SimpleElement element) {
 

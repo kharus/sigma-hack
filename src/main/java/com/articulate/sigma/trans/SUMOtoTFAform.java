@@ -60,7 +60,7 @@ public class SUMOtoTFAform {
 
     public static HashSet<String> errors = new HashSet<>();
 
-    /** *************************************************************
+    /**
      * comparison ops are EQUAL, GT, GTET, LT, LTET
      */
     public static boolean isComparisonOperator(String s) {
@@ -75,7 +75,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * math ops are PLUSFN, MINUSFN, TIMESFN, DIVIDEFN, FLOORFN
      */
     public static boolean isMathFunction(String s) {
@@ -88,7 +88,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * math ops are PLUSFN, MINUSFN, TIMESFN, DIVIDEFN, FLOORFN
      */
     public static boolean isEqualTypeOp(String s) {
@@ -98,7 +98,7 @@ public class SUMOtoTFAform {
         return (isComparisonOperator(s) || isMathFunction(s)) && !s.equals(Formula.FLOORFN);
     }
 
-    /** *************************************************************
+    /**
      */
     public static String withoutSuffix(String s) {
 
@@ -110,7 +110,7 @@ public class SUMOtoTFAform {
         return s.substring(0,under);
     }
 
-    /** *************************************************************
+    /**
      * Set the cached information of automatically generated functions
      * and relations needed to cover the polymorphic type signatures
      * of build-in TFF terms
@@ -132,7 +132,7 @@ public class SUMOtoTFAform {
         }
     }
 
-    /** *************************************************************
+    /**
      * Fill the indicated elements with "Entity", starting at start and ending
      * at end-1
      */
@@ -141,7 +141,7 @@ public class SUMOtoTFAform {
         fill(ar,start,end,"Entity");
     }
 
-    /** *************************************************************
+    /**
      * Fill the indicated elements with the given string, starting at start and ending
      * at end-1
      */
@@ -155,7 +155,7 @@ public class SUMOtoTFAform {
                 ar.set(i,fillStr);
     }
 
-    /** *************************************************************
+    /**
      * If there's no such element index, fill the previous elements
      * with Entity
      */
@@ -166,7 +166,7 @@ public class SUMOtoTFAform {
         ar.set(index,val);
     }
 
-    /** *************************************************************
+    /**
      * Return the full signature
      */
     protected static ArrayList<String> relationExtractNonNumericSig(String rel) {
@@ -182,7 +182,7 @@ public class SUMOtoTFAform {
         return sig;
     }
 
-    /** *************************************************************
+    /**
      */
     private static String suffixToType(String type) {
 
@@ -200,7 +200,7 @@ public class SUMOtoTFAform {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     private static String typeToSuffix(String type) {
 
@@ -218,7 +218,7 @@ public class SUMOtoTFAform {
         }
     }
 
-    /** *************************************************************
+    /**
      * Extract modifications to the relation signature from annotations
      * embedded in the suffixes to its name.  Note that the first argument
      * to a relation is number 1, so getting the 0th argument of the
@@ -250,7 +250,7 @@ public class SUMOtoTFAform {
         return sig;
     }
 
-    /** *************************************************************
+    /**
      * Extract modifications to the relation signature from annotations
      * embedded in the suffixes to its name.  Note that the first argument
      * to a relation is number 1, so getting the 0th argument of the
@@ -278,7 +278,7 @@ public class SUMOtoTFAform {
         return sig;
     }
 
-    /** *************************************************************
+    /**
      * Embed the type signature for TFF numeric types into the name of
      * the relation.  This is used for when a relation's signature is
      * modified from its authored original
@@ -301,7 +301,7 @@ public class SUMOtoTFAform {
         return sb.toString();
     }
 */
-    /** *************************************************************
+    /**
 
     private static void constrainVarsFromFunct(ArrayList<String> sig, String typeStr) {
 
@@ -340,7 +340,7 @@ public class SUMOtoTFAform {
         }
     }
 */
-    /** *************************************************************
+    /**
      * Recurse through the formula giving numeric and comparison
      * operators a suffix if they operate on
      * numbers.
@@ -444,7 +444,7 @@ public class SUMOtoTFAform {
         return f;
     }
 */
-    /** *************************************************************
+    /**
      */
     private static String processQuant(Formula f, Formula car, String parentType, String op,
                                        ArrayList<String> args) {
@@ -488,7 +488,7 @@ public class SUMOtoTFAform {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     private static String processConjDisj(Formula f, Formula car, String parentType,
                                        ArrayList<String> args) {
@@ -510,7 +510,7 @@ public class SUMOtoTFAform {
         return sb.toString();
     }
 
-    /** *************************************************************
+    /**
      */
     private static String processLogOp(Formula f, Formula car, String parentType,
                                         ArrayList<String> args) {
@@ -555,7 +555,7 @@ public class SUMOtoTFAform {
         return "";
     }
 
-    /** *************************************************************
+    /**
      * @return whether the constant is a TFF built in numeric
      * type or a subclass of one of those types
      */
@@ -573,7 +573,7 @@ public class SUMOtoTFAform {
         else
             return true;
     }
-    /** *************************************************************
+    /**
      * @return whether the constant is a TFF built in numeric
      * type or a subclass of one of those types
      */
@@ -589,7 +589,7 @@ public class SUMOtoTFAform {
             return true;
     }
 
-    /** *************************************************************
+    /**
      */
     private static boolean allBuiltInNumericTypes(ArrayList<String> args) {
 
@@ -604,7 +604,7 @@ public class SUMOtoTFAform {
         return true;
     }
 
-    /** *************************************************************
+    /**
      */
     private static boolean allOfType(ArrayList<String> args, String type) {
 
@@ -617,7 +617,7 @@ public class SUMOtoTFAform {
         return true;
     }
 
-    /** *************************************************************
+    /**
      * Specify the TFF types in the name of a predicate, as given by
      * the SUMO types listed in @param argTypeMap
      */
@@ -676,7 +676,7 @@ public class SUMOtoTFAform {
         return result.toString() + suffix;
     }
 
-    /** *************************************************************
+    /**
      * Generate the TFF relation corresponding to an appearance of
      * any superclass of the TFF number types by naming the
      * type-specific relations using makePredFromArgTypes()
@@ -721,7 +721,7 @@ public class SUMOtoTFAform {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * Generate the TFF function corresponding to an appearance of
      * SUMO's ListFn, naming the type-specific ListFn using
      * makePredFromArgTypes()
@@ -752,7 +752,7 @@ public class SUMOtoTFAform {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * equal is a special case since it needs translation to '='
      * regardless of argument types since it's polymorphic on $i also.
      * @param args includes the relation as arg 0
@@ -830,7 +830,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * When the arguments to quotient are mixed, promote the more
      * specific type to the more general type
      */
@@ -870,7 +870,7 @@ public class SUMOtoTFAform {
                     promote + "(" + processRecurse(rhs,parentType) + "))";
     }
 
-    /** *************************************************************
+    /**
      *  PLUSFN, MINUSFN, TIMESFN, DIVIDEFN, FLOORFN
      */
     private static String processMathOp(Formula f, Formula car,
@@ -928,7 +928,7 @@ public class SUMOtoTFAform {
         return "";
     }
 
-    /** *************************************************************
+    /**
      * @param f is the formula
      * @param car is the car of the formula, which is usually the predicate name
      * @param parentType is the type restriction that any enclosing formula imposes on this present formula
@@ -993,7 +993,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * The arg type list requires expansion since it contains a superclass
      * of Integer, and therefore could be used with more than one
      * TF) numerical type.
@@ -1006,7 +1006,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * @return the TF0-relevant type of the term whether it's a literal
      * number, variable with a numeric type or function
      */
@@ -1045,7 +1045,7 @@ public class SUMOtoTFAform {
         return "Entity";
     }
 
-    /** *************************************************************
+    /**
      * a number, a variable with a numeric type or a function symbol
      * or function with a numeric type
      */
@@ -1058,7 +1058,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      */
     public static boolean isNumericType(String s) {
 
@@ -1067,7 +1067,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      */
     public static boolean isBuiltInNumericType(String s) {
 
@@ -1077,7 +1077,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * Check if at least one of the types in the list is a numeric type
      */
     public static boolean hasNumeric(ArrayList<String> argTypes) {
@@ -1088,7 +1088,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * Check if type signatures of SUMO would be equivalent TFF signatures.
      * @param pred is used just to give a meaningful error message
      */
@@ -1111,7 +1111,7 @@ public class SUMOtoTFAform {
         return true;
     }
 
-    /** *************************************************************
+    /**
      * if the formula is a numeric atom or variable or a function with
      * a number range and that type is more specific that the parentType,
      * promote it with $to_real or &to_rat
@@ -1136,7 +1136,7 @@ public class SUMOtoTFAform {
         return null;
     }
 
-    /** *************************************************************
+    /**
      * process a formula into TF0
      * @param f the formula to process
      * @param parentType is the type restriction that applies to this
@@ -1188,7 +1188,7 @@ public class SUMOtoTFAform {
             return processOtherRelation(f,car,parentType,args,argTypes);
     }
 
-    /** *************************************************************
+    /**
      * result is a side effect on varmap
      */
     private static HashMap<String,HashSet<String>> cloneVarmap() {
@@ -1202,7 +1202,7 @@ public class SUMOtoTFAform {
         return newVarmap;
     }
 
-    /** *************************************************************
+    /**
      * check if t is one of the fundamental types of $int, $rat, $real
      * or SUMO types that are subtypes of Integer, RationalNumber or
      * RealNumber
@@ -1218,7 +1218,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * check if t is one of the fundamental types of $int, $rat, $real
      * or SUMO types that are subtypes of Integer, RationalNumber or
      * RealNumber and return the TFF type
@@ -1234,7 +1234,7 @@ public class SUMOtoTFAform {
         return "$i";
     }
 
-    /** *************************************************************
+    /**
      * check if t is a subtype of Integer, RationalNumber or
      * RealNumber
      */
@@ -1249,7 +1249,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * @param suf is the current suffix to add to
      * @param op is the relation
      * @param t is the type of the actual argument to op
@@ -1275,7 +1275,7 @@ public class SUMOtoTFAform {
         return suf + Integer.toString(arg) + suffix;
     }
 
-    /** *************************************************************
+    /**
      * Find the types of each argument.  If a variable, look up in
      * varmap and if a numeric type, use the most specific type.
      * If a function, check its return type.
@@ -1328,7 +1328,7 @@ public class SUMOtoTFAform {
         return types;
     }
 
-    /** *************************************************************
+    /**
      */
     private static String getOpType(String op) {
 
@@ -1344,7 +1344,7 @@ public class SUMOtoTFAform {
         return kb.mostSpecificTerm(sig);
     }
 
-    /** *************************************************************
+    /**
      * Constrain a list of arguments to be the best type
      */
     private static void constrainVars(ArrayList<String> argTypes, ArrayList<String> args) {
@@ -1370,7 +1370,7 @@ public class SUMOtoTFAform {
         }
     }
 
-    /** *************************************************************
+    /**
      * Constrain a list of arguments to be a given type
      */
     private static ArrayList<String> constrainArgs(String type, ArrayList<String> argTypes) {
@@ -1383,7 +1383,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * for numerical and comparison operators, ensure their arguments
      * are all the same type and that it's the most specific type.  If
      * no types are found in the suffix, return the empty string.
@@ -1414,7 +1414,7 @@ public class SUMOtoTFAform {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * for numerical and comparison operators, ensure their arguments
      * are all the same type and that it's the most general numeric type.  If
      * no types are found, return the empty string.  For
@@ -1445,7 +1445,7 @@ public class SUMOtoTFAform {
         return greatest;
     }
 
-    /** *************************************************************
+    /**
      * if the operator already has a suffix, revise it with the new
      * suffix in the case where the new argument type is more
      * specific
@@ -1470,7 +1470,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Create a specialized version of KB.mostSpecificTerm() that
      * biases the results for TFF.  Prefer a built-in numeric type
      * (equivalents to $int, $rat, $real) over any more specific
@@ -1501,7 +1501,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Promote type to the most specific number that is a TFF type or superclass
      */
     public static String promoteToBuiltIn(String t) {
@@ -1515,7 +1515,7 @@ public class SUMOtoTFAform {
         return t;
     }
 
-    /** *************************************************************
+    /**
      * Pick the most specific number type that is a TFF type or superclass
      */
     public static String constrainPair(String t1, String t2) {
@@ -1559,7 +1559,7 @@ public class SUMOtoTFAform {
             return newt2;
     }
 
-    /** *************************************************************
+    /**
      * Pick the most general number among two numbers or the most
      * specific term otherwise
      */
@@ -1592,7 +1592,7 @@ public class SUMOtoTFAform {
         }
     }
 
-    /** *************************************************************
+    /**
      * Constrain a type based on a second type.  If the second type is
      * built-in type and first is not, pick the built-in type.  If the
      * second type and first type are both built-in types, pick the
@@ -1626,7 +1626,7 @@ public class SUMOtoTFAform {
             return t2;
     }
 
-    /** *************************************************************
+    /**
      * Find the most specific TFF type or superclass at every argument position
      */
     public static ArrayList<String> mostSpecificSignature(ArrayList<String> args1,
@@ -1655,7 +1655,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Find the best type at every argument position
      */
     public static ArrayList<String> bestSignature(ArrayList<String> args1,
@@ -1683,7 +1683,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Create a specialized version of KB.mostSpecificTerm() that
      * biases the results for TFF.  Prefer the most specific type but
      * no subclasses of a built-in numeric type
@@ -1712,7 +1712,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Create a specialized version of KB.mostSpecificTerm() that
      * biases the results for TFF.  Prefer a built-in numeric type
      * (equivalents to $int, $rat, $real) over any more specific
@@ -1747,7 +1747,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     private static String getOpReturnType(String arg) {
 
@@ -1772,7 +1772,7 @@ public class SUMOtoTFAform {
         return "Entity";
     }
 
-    /** *************************************************************
+    /**
      * Given two lists of types, return the bigger list, or create a
      * new list from two of equal size that has the most specific type
      * at each index.
@@ -1799,7 +1799,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     private static void setAll(ArrayList<String> sig, String best) {
 
@@ -1807,7 +1807,7 @@ public class SUMOtoTFAform {
             sig.set(i,best);
     }
 
-    /** *************************************************************
+    /**
      * @param f    is a formula that has an operator to constrain
      * @param args is a list of arguments of formula f, starting with
      *             an empty first argument for the relation
@@ -1890,7 +1890,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     private static String constrainFunctVarsRecurse(Formula f, String parentType) {
 
@@ -1930,7 +1930,7 @@ public class SUMOtoTFAform {
         }
     }
 
-    /** *************************************************************
+    /**
      * Only constrain the element of the varmap if the new type is more specific
      * @result is the new varmap as a side effect
      */
@@ -1962,7 +1962,7 @@ public class SUMOtoTFAform {
         //if (debug) System.out.println("SUMOtoTFAform.constrainTypeRestriction(): new varmap: " + varmap);
     }
 
-    /** *************************************************************
+    /**
      * result is a side effect on varmap and the formula
      */
     private static Formula constrainFunctVars(Formula f) {
@@ -1981,7 +1981,7 @@ public class SUMOtoTFAform {
         return f;
     }
 
-    /** *************************************************************
+    /**
      * Recursive routine to eliminate occurrences of '=>', 'and' and 'or' that
      * have only one or zero arguments
      * @return the corrected formula as a string
@@ -2012,7 +2012,7 @@ public class SUMOtoTFAform {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      * Substitute the values of numeric constants for their names.
      * Note that this is risky since it must be kept up to date
      * with the content of the knowledge base.  TODO: generalize this
@@ -2038,7 +2038,7 @@ public class SUMOtoTFAform {
         return f;
     }
 
-    /** *************************************************************
+    /**
      * When predicate variable substitution occurs it can result
      * in an argument to the predicate being defined as a particular
      * type.  If that type is numeric, it will conflict with TFF's
@@ -2099,7 +2099,7 @@ public class SUMOtoTFAform {
         return s;
     }
 
-    /** *************************************************************
+    /**
      * Check whether variables have multiple mutually exclusive types
      */
     public static boolean inconsistentVarTypes() {
@@ -2123,7 +2123,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      */
     private static boolean typeConflict(Formula f, String type) {
 
@@ -2144,7 +2144,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * Check for a type conflict between the given type and each type in a set
      * @param types the set of types to check
      * @param type the type to check against the set
@@ -2166,7 +2166,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * Reject formulas that wind up with type conflicts despite all
      * attempts to resolve them
      */
@@ -2222,7 +2222,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /** *************************************************************
+    /**
      * Create a sort spec from the relation name with embedded types
      */
     public static String sortFromRelation(String rel) {
@@ -2255,7 +2255,7 @@ public class SUMOtoTFAform {
             return(rel + " : ( " + sigStr + " ) > $o ");
     }
 
-    /** *************************************************************
+    /**
      * @return a list of TFF relation sort definitions to cover
      * ListFn statements that have diverse sorts
      */
@@ -2273,7 +2273,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * This is the primary method of the class.  It takes a SUO-KIF
      * formula and returns a TFF formula.
      */
@@ -2347,7 +2347,7 @@ public class SUMOtoTFAform {
         return "";
     }
 
-    /** *************************************************************
+    /**
      */
     public static String process(String s, boolean query) {
 
@@ -2361,7 +2361,7 @@ public class SUMOtoTFAform {
         return process(f,query);
     }
 
-    /** *************************************************************
+    /**
      */
     public static Collection<String> processList(Collection<Formula> l) {
 
@@ -2371,7 +2371,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * if the precondition of a rule is of the form (instance ?X term)
      * @return the name of the variable in the instance statement
      * (without the leading question mark)
@@ -2397,7 +2397,7 @@ public class SUMOtoTFAform {
         return null;
     }
 
-    /** *************************************************************
+    /**
      * if all or part of a consequent of a rule is of the form (instance ?X term)
      * @return the name of the type in the instance statement
      */
@@ -2418,7 +2418,7 @@ public class SUMOtoTFAform {
         return null;
     }
 
-    /** *************************************************************
+    /**
      * if all or part of a rule is of the form (instance ?X term)
      * @return the name of the type in the instance statement
      */
@@ -2451,7 +2451,7 @@ public class SUMOtoTFAform {
         return null;
     }
 
-    /** *************************************************************
+    /**
      * remove statements of the form (instance ?X term) if 'term' is
      * Integer or RealNumber and ?X is already of that type in the
      * quantifier list for the formula
@@ -2479,7 +2479,7 @@ public class SUMOtoTFAform {
         return f.getFormula();
     }
 
-    /** *************************************************************
+    /**
      * replace type statements of the form (instance ?X term), where
      * term is a subtype of Integer or RealNumber with a constraint
      * that defines that type
@@ -2521,7 +2521,7 @@ public class SUMOtoTFAform {
         return f.getFormula();
     }
 
-    /** *************************************************************
+    /**
      * Since SUMO has subtypes of numbers but TFF doesn't allow
      * subtypes, we need to capture all the rules that say things
      * like non negative integers are greater than 0 so they
@@ -2572,7 +2572,7 @@ public class SUMOtoTFAform {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static void initNumericConstantTypes() {
 
@@ -2582,7 +2582,7 @@ public class SUMOtoTFAform {
         numericConstantTypes.put("Pi","RealNumber");
         numericConstantValues.put("Pi","3.141592653589793");
     }
-    /** *************************************************************
+    /**
      */
     public static void initOnce() {
 
@@ -2599,7 +2599,7 @@ public class SUMOtoTFAform {
         initialized = true;
     }
 
-    /** *************************************************************
+    /**
      */
     public static void test1() {
 
@@ -2609,7 +2609,7 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.test1(): " + processRecurse(f,"Entity"));
     }
 
-    /** *************************************************************
+    /**
      */
     public static void test2() {
 
@@ -2620,7 +2620,7 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.test2(): " + process(f,false));
     }
 
-    /** *************************************************************
+    /**
      */
     public static void test3() {
 
@@ -2629,7 +2629,7 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.test3(): " + process(f,false));
     }
 
-    /** *************************************************************
+    /**
      */
     public static void test4() {
 
@@ -2637,7 +2637,7 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.test4(): " + process(f,false));
     }
 
-    /** *************************************************************
+    /**
      */
     public static void test5() {
 
@@ -2648,7 +2648,7 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.test5(): " + modifyTypesToConstraints(f));
     }
 
-    /** *************************************************************
+    /**
      */
     public static void test6() {
 
@@ -2665,7 +2665,7 @@ public class SUMOtoTFAform {
                 "V__NUMBER1 => s__RemainderFn(V__NUMBER1, V__NUMBER2) = V__NUMBER)))).");
     }
 
-    /** *************************************************************
+    /**
      */
     public static void test7() {
 
@@ -2683,7 +2683,7 @@ public class SUMOtoTFAform {
                 "V__NUMBER2 = $difference(0.0 ,V__NUMBER1) => s__AbsoluteValueFn__0Re1ReFn(V__NUMBER1) = V__NUMBER2)).");
     }
 
-    /** *************************************************************
+    /**
      */
     public static void test8() {
 
@@ -2699,7 +2699,7 @@ public class SUMOtoTFAform {
                 "s__LastFn(V__LIST) = V__ITEM)))).");
     }
 
-    /** *************************************************************
+    /**
      */
     public static void test9() {
 
@@ -2718,7 +2718,7 @@ public class SUMOtoTFAform {
                 "s__AbsoluteValueFn(V__NUMBER1) = V__NUMBER2)))).");
     }
 
-    /** *************************************************************
+    /**
      */
     public static void test10() {
 
@@ -2736,7 +2736,7 @@ public class SUMOtoTFAform {
                 "V__NUMBER2 = $difference(0.0 ,V__NUMBER1) => s__AbsoluteValueFn__0Re1ReFn(V__NUMBER1) = V__NUMBER2)))).");
     }
 
-    /** *************************************************************
+    /**
      */
     public static void testRelEmbed() {
 
@@ -2748,7 +2748,7 @@ public class SUMOtoTFAform {
         kb.kbCache.signatures.put(rel + "__" + "1Re",sig);
     }
 
-    /** *************************************************************
+    /**
      */
     public static void testRelExtract() {
 
@@ -2756,7 +2756,7 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.testRelExtract(): new name: " + relationExtractSigFromName(rel));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showHelp() {
 
@@ -2767,7 +2767,7 @@ public class SUMOtoTFAform {
         System.out.println("  h - show this help");
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void main(String[] args) throws IOException {
 

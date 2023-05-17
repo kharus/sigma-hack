@@ -12,7 +12,7 @@ import java.util.*;
 public class VerbNetTest extends IntegrationTestBase {
 
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void testTerm() {
@@ -25,7 +25,7 @@ public class VerbNetTest extends IntegrationTestBase {
         assertTrue(!StringUtil.emptyString(verbs));
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void testWordList() {

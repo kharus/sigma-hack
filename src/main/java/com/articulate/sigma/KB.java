@@ -2358,7 +2358,7 @@ public class KB implements Serializable {
         return al;
     }
 
-    /** ***************************************************************
+    /**
      * Get the alphabetically nearest terms to the given term, which is not in the KB.
      * Elements 0-(k-1) should be alphabetically lesser and k-(2*k-1)
      * alphabetically greater. If the term is at the beginning or end of the
@@ -3794,7 +3794,7 @@ public class KB implements Serializable {
          */
     }
 
-    /** ***************************************************************
+    /**
      */
     public String toString() {
 
@@ -3806,7 +3806,7 @@ public class KB implements Serializable {
         return sb.toString();
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showHelp() {
 
@@ -3831,7 +3831,7 @@ public class KB implements Serializable {
         System.out.println("  s - show statistics");
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void main(String[] args) throws IOException {
 

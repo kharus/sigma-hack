@@ -14,7 +14,7 @@ public class RowVars {
     public static boolean DEBUG = false;
     public static final int MAX_ARITY = 5;
 
-    /** ***************************************************************
+    /**
      * @return a HashSet, possibly empty, containing row variable
      * names, each of which will start with the row variable
      * designator '@'.
@@ -46,7 +46,7 @@ public class RowVars {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * given in @param ar which is a list for each variable of all the
      * predicates in which it appears as an argument, find the minimum
      * arity allowed by predicate arities, as given by 
@@ -83,7 +83,7 @@ public class RowVars {
         return arities;
     }
 
-    /** ***************************************************************
+    /**
      * @param ar a list for each variable of all the predicates in
      *           which it appears as an argument
      * @result the maximum arity allowed by predicate arities, as given by
@@ -138,7 +138,7 @@ public class RowVars {
         return arities;
     }
 
-    /** ***************************************************************
+    /**
      * @param ar a list for each variable of all the predicates in
      *           which it appears as an argument
      * @result the minimum arity allowed by predicate arities, as given by
@@ -204,7 +204,7 @@ public class RowVars {
         return arities;
     }
 
-    /** ***************************************************************
+    /**
      * Merge the key,value pairs for a multiple value ArrayList
      */
     private static HashMap<String,HashSet<String>> 
@@ -224,7 +224,7 @@ public class RowVars {
         return result;
     }
     
-    /** ***************************************************************
+    /**
      * Add a key,value pair for a multiple value ArrayList
      */
     private static HashMap<String,HashSet<String>> 
@@ -238,7 +238,7 @@ public class RowVars {
         return ar;
     }
     
-    /** ***************************************************************
+    /**
      */
     private static HashMap<String,HashSet<String>> getRowVarRelLogOps(Formula f, String pred) {
     
@@ -276,7 +276,7 @@ public class RowVars {
         return result;
     }
     
-    /** ***************************************************************
+    /**
      * Recurse through the formula looking for row variables.  If found,
      * add it to a map that has row variables as keys and a set of 
      * predicate names as values. 
@@ -320,7 +320,7 @@ public class RowVars {
         return result;
     }
     
-    /** ***************************************************************
+    /**
      * Expand row variables, keeping the information about the original
      * source formula.  Each variable is treated like a macro that
      * expands to up to seven regular variables.  For example
@@ -419,7 +419,7 @@ public class RowVars {
         return formresult;
     }
 
-    /** ***************************************************************
+    /**
      * */
     public static void main(String[] args) {
         

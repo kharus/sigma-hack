@@ -57,7 +57,7 @@ public class ProofStep {
       *  numbers returned directly from the inference engine. */
     public ArrayList<Integer> premises = new ArrayList();
     
-    /** ***************************************************************
+    /**
      * Take an ArrayList of ProofSteps and renumber them consecutively
      * starting at 1.  Update the ArrayList of premises so that they
      * reflect the renumbering.
@@ -99,7 +99,7 @@ public class ProofStep {
         return proofSteps;
     }
 
-    /** ***************************************************************
+    /**
      * Remove duplicate statements in the proof
      */
     public static ArrayList<ProofStep> removeDuplicates(ArrayList<ProofStep> proofSteps) {
@@ -165,7 +165,7 @@ public class ProofStep {
         return newProofSteps;
     }
 
-    /** ***************************************************************
+    /**
      * created by qingqing
      * remove unnecessary steps, which should not appear in proof
      * Unnecessary steps could be:
@@ -200,7 +200,7 @@ public class ProofStep {
         return results;
     }
 
-    /** ***************************************************************
+    /**
      */
     public String toString() {
 

@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class FormulaTest {
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFormulaRead() {
@@ -31,7 +31,7 @@ public class FormulaTest {
 
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testRecursiveCdrSimple() {
@@ -60,7 +60,7 @@ public class FormulaTest {
         assertEquals("()", cdrF.getFormula());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testRecursiveCdrComplex() {
@@ -184,7 +184,7 @@ public class FormulaTest {
         assertFalse(f1.isSimpleClause());
     }
 */
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testCollectQuantifiedVariables() {
@@ -217,7 +217,7 @@ public class FormulaTest {
         assertEquals(expected, result);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testCollectAllVariables() {
@@ -248,7 +248,7 @@ public class FormulaTest {
         assertEquals(expected, f1.collectAllVariables());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testUnquantifiedVariables() {
@@ -278,7 +278,7 @@ public class FormulaTest {
         assertEquals(expected, f1.collectUnquantifiedVariables());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testTerms() {
@@ -312,7 +312,7 @@ public class FormulaTest {
         assertEquals(expected, f1.collectTerms());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testReplaceVar() {
@@ -327,7 +327,7 @@ public class FormulaTest {
         assertEquals(expected, f1.replaceVar("?REL", "part"));
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexVarsDuringWhenFn1() {
@@ -340,7 +340,7 @@ public class FormulaTest {
         assertEquals(expected, f1.complexArgumentsToArrayListString(1));
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexVarsDuringWhenFn2() {
@@ -353,7 +353,7 @@ public class FormulaTest {
         assertEquals(expected, f1.complexArgumentsToArrayListString(2));
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexVarsInstance1() {
@@ -366,7 +366,7 @@ public class FormulaTest {
         assertEquals(expected, f1.complexArgumentsToArrayListString(1));
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexVarsInstance2() {
@@ -379,7 +379,7 @@ public class FormulaTest {
         assertEquals(expected, f1.complexArgumentsToArrayListString(2));
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexVarsInstanceGovernmentFn1() {
@@ -392,7 +392,7 @@ public class FormulaTest {
         assertEquals(expected, f1.complexArgumentsToArrayListString(1));
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexVarsInstanceGovernmentFn2() {
@@ -405,7 +405,7 @@ public class FormulaTest {
         assertEquals(expected, f1.complexArgumentsToArrayListString(2));
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testBigArgs() {
@@ -424,7 +424,7 @@ public class FormulaTest {
         assertEquals(expected, f1.validArgs());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testArgumentsToArrayListGivenComplex0() {
@@ -442,7 +442,7 @@ public class FormulaTest {
         assertEquals(null, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testArgumentsToArrayListGivenComplex1() {
@@ -460,7 +460,7 @@ public class FormulaTest {
         assertEquals(null, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testArgumentsToArrayListAnd0() {
@@ -477,7 +477,7 @@ public class FormulaTest {
         assertEquals(null, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testArgumentsToArrayInstance0() {
@@ -492,7 +492,7 @@ public class FormulaTest {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexArgumentsToArrayListDriving0() {
@@ -515,7 +515,7 @@ public class FormulaTest {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexArgumentsToArrayListDriving1() {
@@ -538,7 +538,7 @@ public class FormulaTest {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexArgumentsToArrayListDriving2() {
@@ -561,7 +561,7 @@ public class FormulaTest {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexArgumentsToArrayListDriving3() {
@@ -579,7 +579,7 @@ public class FormulaTest {
         assertEquals(null, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexArgumentsToArrayListAnd0() {
@@ -597,7 +597,7 @@ public class FormulaTest {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexArgumentsToArrayListAnd1() {
@@ -615,7 +615,7 @@ public class FormulaTest {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexArgumentsToArrayListAnd2() {
@@ -633,7 +633,7 @@ public class FormulaTest {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexArgumentsToArrayListAnd3() {
@@ -651,7 +651,7 @@ public class FormulaTest {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexArgumentsToArrayListAnd4() {
@@ -668,7 +668,7 @@ public class FormulaTest {
         assertEquals(null, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexArgumentsToArrayListAbsolute() {
@@ -683,7 +683,7 @@ public class FormulaTest {
         assertEquals(expected, actual.toString());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testComplexArgumentsToArrayList2() {
@@ -697,7 +697,7 @@ public class FormulaTest {
         assertEquals(l.size(),3);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testGetArg() {
@@ -721,7 +721,7 @@ public class FormulaTest {
         assertEquals(e, a.toString());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testGetArg2() {
@@ -735,7 +735,7 @@ public class FormulaTest {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testGetArgString() {
@@ -759,7 +759,7 @@ public class FormulaTest {
         assertEquals(e, a);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testGetArgString2() {
@@ -773,7 +773,7 @@ public class FormulaTest {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testReplaceQuantifierVars() throws Exception {

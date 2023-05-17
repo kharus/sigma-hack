@@ -17,20 +17,20 @@ public class SUMOformulaToTPTPformula {
     public static String lang = "fof"; // or "tff"
     public static StringBuffer qlist;
 
-    /** ***************************************************************
+    /**
      */
     public SUMOformulaToTPTPformula () {
 
     }
 
-    /** ***************************************************************
+    /**
      */
     public SUMOformulaToTPTPformula (String l) {
 
         lang = l;
     }
 
-    /** ***************************************************************
+    /**
      * Encapsulates translateWord_1, which translates the logical
      * operators and inequalities in SUO-KIF to their TPTP
      * equivalents.
@@ -71,7 +71,7 @@ public class SUMOformulaToTPTPformula {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * Convert the logical operators and inequalities in SUO-KIF to
      * their TPTP equivalents
      * @param st is the StreamTokenizer_s that contains the current token
@@ -178,7 +178,7 @@ public class SUMOformulaToTPTPformula {
             return(Formula.termSymbolPrefix + term);
     }
 
-    /** ***************************************************************
+    /**
      * @param st is the StreamTokenizer_s that contains the current token
      * for which the arity is desired
      *
@@ -204,14 +204,14 @@ public class SUMOformulaToTPTPformula {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private static void incrementTOS(Stack<Integer> countStack) {
 
         countStack.push(Integer.valueOf((Integer) countStack.pop() + 1));
     }
 
-    /** ***************************************************************
+    /**
      * Add the current token, if a variable, to the list of variables
      * @param variables is the list of variables
      */
@@ -224,7 +224,7 @@ public class SUMOformulaToTPTPformula {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     private static String processQuant(Formula f, Formula car, String op,
                                        ArrayList<String> args) {
@@ -261,7 +261,7 @@ public class SUMOformulaToTPTPformula {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     private static String processConjDisj(Formula f, Formula car,
                                           ArrayList<String> args) {
@@ -283,7 +283,7 @@ public class SUMOformulaToTPTPformula {
         return sb.toString();
     }
 
-    /** *************************************************************
+    /**
      */
     public static String processLogOp(Formula f, Formula car, ArrayList<String> args) {
 
@@ -333,7 +333,7 @@ public class SUMOformulaToTPTPformula {
         return "";
     }
 
-    /** *************************************************************
+    /**
      */
     public static String processEquals(Formula f, Formula car, ArrayList<String> args) {
 
@@ -350,7 +350,7 @@ public class SUMOformulaToTPTPformula {
         return "";
     }
 
-    /** *************************************************************
+    /**
      */
     public static String processRecurse(Formula f) {
 
@@ -397,7 +397,7 @@ public class SUMOformulaToTPTPformula {
         }
     }
 
-    /** *************************************************************
+    /**
      * This is the primary method of the class.  It takes a SUO-KIF
      * formula and returns a TPTP formula.
      */
@@ -413,7 +413,7 @@ public class SUMOformulaToTPTPformula {
             qlist.deleteCharAt(qlist.length() - 1);  // delete final comma
     }
 
-    /** ***************************************************************
+    /**
      * Parse a single formula into TPTP format
      */
     public static String tptpParseSUOKIFString(String suoString, boolean query) {
@@ -438,7 +438,7 @@ public class SUMOformulaToTPTPformula {
         return "( " + process(new Formula(suoString),query) + " )";
     }
 
-    /** *************************************************************
+    /**
      * This is the primary method of the class.  It takes a SUO-KIF
      * formula and returns a TPTP formula.
      */
@@ -467,7 +467,7 @@ public class SUMOformulaToTPTPformula {
         return (f.getFormula());
     }
 
-    /** ***************************************************************
+    /**
      * Parse formulae into TPTP format
      * Result is returned in _f.theTptpFormulas
      */
@@ -520,7 +520,7 @@ public class SUMOformulaToTPTPformula {
         return;
     }
 
-    /** ***************************************************************
+    /**
      * Parse formulae into TPTP format
      */
     @Deprecated
@@ -530,7 +530,7 @@ public class SUMOformulaToTPTPformula {
         return _f.theTptpFormulas;
     }
     
-    /** ***************************************************************
+    /**
      * A test method.
      */
     public static void testTptpParse() {
@@ -543,7 +543,7 @@ public class SUMOformulaToTPTPformula {
         System.out.println(SUMOformulaToTPTPformula.tptpParseSUOKIFString(teststr,false));
     }
 
-    /** ***************************************************************
+    /**
      * A test method.
      */
     public static void testTptpParse2() {
@@ -560,7 +560,7 @@ public class SUMOformulaToTPTPformula {
         System.out.println(SUMOformulaToTPTPformula.tptpParseSUOKIFString(teststr, false));
     }
 
-    /** ***************************************************************
+    /**
      * A test method.
      */
     public static void testTptpParse3() {
@@ -572,7 +572,7 @@ public class SUMOformulaToTPTPformula {
         System.out.println(SUMOformulaToTPTPformula.tptpParseSUOKIFString(teststr, false));
     }
 
-    /** ***************************************************************
+    /**
      * A test method.
      */
     public static void main(String[] args) {

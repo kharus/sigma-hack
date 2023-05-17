@@ -29,7 +29,7 @@ import java.util.List;
 
 public class TPTPutil {
 
-    /** ***************************************************************
+    /**
      *  Remove enclosing meta-information from a TPTP axiom.
      */
     private static String extractTPTPaxiom(String t) {
@@ -37,7 +37,7 @@ public class TPTPutil {
         return t.substring(1,t.length()-1).trim();
     }
 
-    /** ***************************************************************
+    /**
      *  Remove enclosing meta-information from a TPTP axiom.
      */
     private static String removeTPTPSuffix(String t) {
@@ -48,7 +48,7 @@ public class TPTPutil {
             return t;
     }
 
-    /** ***************************************************************
+    /**
      *  Remove enclosing meta-information from a TPTP axiom.
      */
     private static String returnAndIndent(int level) {
@@ -60,7 +60,7 @@ public class TPTPutil {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * Format a formula for either text or HTML presentation by inserting
      * the proper hyperlink code, characters for indentation and end of line.
      * A standard LISP-style pretty printing is employed where an open
@@ -193,7 +193,7 @@ public class TPTPutil {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * Is the axiom in a proof a source authored axiom from SUMO,
      * rather than one automatically derived or introduced by a
      * theorem prover
@@ -205,7 +205,7 @@ public class TPTPutil {
         return ps.supports.size() == 0 && !ps.infRule.startsWith("introduced");
     }
 
-    /** ***************************************************************
+    /**
      * Is there a citation as a containsFormula relation for this
      * axiom?
      */
@@ -227,7 +227,7 @@ public class TPTPutil {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      * Is there a citation as a containsFormula relation for this
      * axiom?
      */
@@ -251,7 +251,7 @@ public class TPTPutil {
         return "";
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void test() {
 
@@ -263,7 +263,7 @@ public class TPTPutil {
         System.out.println(TPTPutil.htmlTPTPFormat(f,"http://sigma.ontologyportal.org:4040/sigma?kb=SUMO&term=",false));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showHelp() {
 
@@ -275,7 +275,7 @@ public class TPTPutil {
         System.out.println("  h - show this help");
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void main(String[] args) throws IOException {
 

@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class TPTP3Test extends IntegrationTestBase {
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testParseProofFile () {
@@ -41,7 +41,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testE () {
@@ -83,7 +83,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testVampireAvatar () {
@@ -113,7 +113,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testVampireCASC () {
@@ -155,7 +155,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testVampireCASCBindings () {
@@ -186,7 +186,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testVampireCASCBindings2 () {
@@ -219,7 +219,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testParseProofStep () {
@@ -268,7 +268,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testParseProofStep2 () {
@@ -292,7 +292,7 @@ public class TPTP3Test extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testParseProofStep3 () {
@@ -315,7 +315,7 @@ public class TPTP3Test extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testParseProofStep4 () {
@@ -339,7 +339,7 @@ public class TPTP3Test extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testParseProofStep5 () {
@@ -366,7 +366,7 @@ public class TPTP3Test extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testParseProofStep6 () {
@@ -388,7 +388,7 @@ public class TPTP3Test extends IntegrationTestBase {
             System.out.println("FAIL");
         assertEquals(expected,result);
     }
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testExtractAnswerClauseVamp () {
@@ -409,7 +409,7 @@ public class TPTP3Test extends IntegrationTestBase {
             System.out.println("FAIL");
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testExtractAnswerClauseE () {

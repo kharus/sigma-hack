@@ -49,7 +49,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void testExtractSig() {
@@ -69,7 +69,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(sorts.toString().equals("[RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber]"));
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void testExtractUpdateSig() {
@@ -89,7 +89,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(expectedRes.equals(result));
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void testExtractUpdateSig2() {
@@ -109,7 +109,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(expectedRes.equals(result));
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void testSorts() {
@@ -128,7 +128,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(expectedRes.equals(result));
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void testParents() {
@@ -154,7 +154,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes,result);
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void test1() {
@@ -173,7 +173,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes,result);
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void test1_5() {
@@ -192,7 +192,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes,result);
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void test2() {
@@ -218,7 +218,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void test3() {
@@ -243,7 +243,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void test4() {
@@ -267,7 +267,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected,result);
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void test5() {
@@ -722,7 +722,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(expected.equals(result));
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testMemberTypeCount() {
@@ -747,7 +747,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testTypeConflict4() {

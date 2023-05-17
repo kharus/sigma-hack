@@ -9,7 +9,7 @@ import com.articulate.sigma.utils.*;
  */
 public class FormulaUtil {
 
-    /** ***************************************************************
+    /**
      * Get the antecedent of an implication.  If not a rule, return null
      */
     public static String antecedent (Formula f) {
@@ -19,7 +19,7 @@ public class FormulaUtil {
         return f.getStringArgument(1);
     }
 
-    /** ***************************************************************
+    /**
      * Get the consequent of an implication.  If not a rule, return null
      */
     public static String consequent (Formula f) {
@@ -29,7 +29,7 @@ public class FormulaUtil {
         return f.getStringArgument(2);
     }
 
-    /** ***************************************************************
+    /**
      * Must check that this is a simple clause before calling!
      */
     public static String toProlog(Formula f) {
@@ -55,7 +55,7 @@ public class FormulaUtil {
         return sb.toString();
     }
 
-    /** ***************************************************************
+    /**
      */
     public static String formatCollection(Collection<Formula> c) {
 
@@ -65,7 +65,7 @@ public class FormulaUtil {
         return sb.toString();
     }
 
-    /** ***************************************************************
+    /**
      * @return a string consisting of a literal with the given predicate
      * that also contains a row variable, or null otherwise
      */
@@ -85,7 +85,7 @@ public class FormulaUtil {
         return null;
     }
 
-    /** ***************************************************************
+    /**
      * Test whether a forumula is suitable for theorem proving or if
      * it's just a documentation statement
      */
@@ -117,7 +117,7 @@ public class FormulaUtil {
         return result;
     }
 
-    /** ***************************************************************************************
+    /**
      */
     private static void permutation(int[] prefix, int[] array, List<int[]> permutations,
                                     BiPredicate<Integer, Integer> validateFn) {
@@ -216,7 +216,7 @@ public class FormulaUtil {
         return result;
     }
 
-    /** ********************************************************************************************
+    /**
      * Factory method for the memo map
      */
     public static FormulaMatchMemoMapKey createFormulaMatchMemoMapKey(String s1, String s2) {
@@ -251,7 +251,7 @@ public class FormulaUtil {
             return true;
         }
 
-        /** ******************************************************************************************
+        /**
          */
         @Override
         public int hashCode() {

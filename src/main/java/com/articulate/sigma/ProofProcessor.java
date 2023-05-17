@@ -35,7 +35,7 @@ public class ProofProcessor {
      /** An ArrayList of BasicXMLelement (s). */
     private ArrayList<BasicXMLelement> xml = null;
 
-    /** ***************************************************************
+    /**
      * Take an ArrayList of BasicXMLelement (s) and process them as
      * needed
      */
@@ -44,7 +44,7 @@ public class ProofProcessor {
     	xml = new ArrayList<BasicXMLelement>(xmlInput);
     }
     
-    /** ***************************************************************
+    /**
      * Compare the answer with the expected answer.  Note that this method
      * is very unforgiving in that it requires the exact same format for the 
      * expected answer, including the order of variables.
@@ -78,7 +78,7 @@ public class ProofProcessor {
     	return result.toString().equalsIgnoreCase(expectedAnswer);
     }
 
-    /** ***************************************************************
+    /**
      * Looks for skolem function from proofsteps if query is not given.
      * There are two types of skolem functions:
      * one with arguments, for instance: (sk0 Human123) or
@@ -109,7 +109,7 @@ public class ProofProcessor {
     	return null;
     }
 
-    /** ***************************************************************
+    /**
      * if the answer clause is found, return null
      */
     private static Formula removeNestedAnswerClauseRecurse(Formula f) {
@@ -164,7 +164,7 @@ public class ProofProcessor {
     	return result;
     }
     
-    /** ***************************************************************
+    /**
      * Remove the $answer clause that eProver returns, including any
      * surrounding connective.
      */
@@ -184,7 +184,7 @@ public class ProofProcessor {
     }
 
 
-    /** ***************************************************************
+    /**
      * Return the number of answers contained in this proof.
      */
     public int numAnswers() {
@@ -200,7 +200,7 @@ public class ProofProcessor {
     	return 0;
     }
 
-    /** ***************************************************************
+    /**
      * Convert XML proof to TPTP format
      */
     public static String tptpProof(ArrayList<ProofStep> proofSteps) {
@@ -237,7 +237,7 @@ public class ProofProcessor {
     	return(result.toString());
     }
 
-     /** ***************************************************************
+     /**
       */
      public static void testRemoveAnswer() {
 
@@ -310,7 +310,7 @@ public class ProofProcessor {
          return;
 	 }
 
-	  /** ***************************************************************
+	  /**
        */
       public static void testFormatProof() {
 
@@ -332,7 +332,7 @@ public class ProofProcessor {
     	  }
       }
 
-	/** ***************************************************************
+	/**
 	 */
 	public static void testFormatProof2(String filename) {
 
@@ -353,7 +353,7 @@ public class ProofProcessor {
 		}
 	}
 
-	/** ***************************************************************
+	/**
 	 */
 	public static void showHelp() {
 
@@ -363,7 +363,7 @@ public class ProofProcessor {
 		System.out.println("  h - show this help");
 	}
 
-	/** ***************************************************************
+	/**
 	*  A main method, used only for testing.  It should not be called
 	*  during normal operation.
 	*/

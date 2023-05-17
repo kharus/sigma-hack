@@ -33,7 +33,7 @@ import com.google.common.collect.Sets;
 import org.json.simple.JSONAware;
 import org.json.simple.JSONValue;
 
-/** *****************************************************************
+/**
  *  Contains utility methods for KBs
  */
 public class KButilities {
@@ -46,32 +46,32 @@ public class KButilities {
     /** Warnings found during processing formulas */
     public static TreeSet<String> warnings = new TreeSet<String>();
 
-    /** *************************************************************
+    /**
      */
     public static boolean isRelation(KB kb, String term) {
         
         return kb.isInstanceOf(term,"Relation");
     }
 
-    /** *************************************************************
+    /**
      */
     public static boolean isFunction(KB kb, String term) {
         return kb.isInstanceOf(term,"Function");        
     }
     
-    /** *************************************************************
+    /**
      */
     public static boolean isAttribute(KB kb, String term) {
         return kb.isInstanceOf(term,"Attribute");
     }
 
-    /** *************************************************************
+    /**
      */
     public static void clearErrors() {
         errors = new TreeSet<>();
     }
 
-    /** *************************************************************
+    /**
      */
     public static boolean hasCorrectTypes(KB kb, Formula f) {
 
@@ -97,7 +97,7 @@ public class KButilities {
         return true;
     }
 
-    /** *************************************************************
+    /**
      */
     public static boolean isValidFormula(KB kb, String form) {
 
@@ -130,28 +130,28 @@ public class KButilities {
         return true;
     }
 
-    /** *************************************************************
+    /**
      */
     public static boolean isClass(KB kb, String term) {
 
         return kb.isInstanceOf(term,"Class");
     }
     
-    /** *************************************************************
+    /**
      */
     public static boolean isInstance(KB kb, String term) {
 
         return !kb.isInstanceOf(term,"Class");
     }
 
-    /** *************************************************************
+    /**
      */
     public static boolean isVariableArity(KB kb, String term) {
 
         return kb.isInstanceOf(term,"VariableArityRelation");
     }
 
-    /** *************************************************************
+    /**
      */
     public static String getDocumentation(KB kb, String term) {
 
@@ -166,7 +166,7 @@ public class KButilities {
         return form.getStringArgument(3);
     }
 
-    /** *************************************************************
+    /**
      * Get count of all the termFormat strings for the given language
      */
     public static int getCountTermFormats(KB kb, String lang) {
@@ -175,7 +175,7 @@ public class KButilities {
         return forms.size();
     }
 
-    /** *************************************************************
+    /**
      * Get count of all the termFormat strings for unique SUMO terms
      * for the given language.  So if a term has more than one
      * termFormat, only count one
@@ -192,7 +192,7 @@ public class KButilities {
     }
 
 
-    /** *************************************************************
+    /**
      * Get count of all the different kinds of formulas as to their
      * logical expressivity
      */
@@ -229,7 +229,7 @@ public class KButilities {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * Generate default synonymousExternalConcept statements for a .tsv
      */
     public static void genSynLinks(String fname) {
@@ -245,7 +245,7 @@ public class KButilities {
         }
     }
 
-    /** *************************************************************
+    /**
      * convert the numerical result of compare() to text
      */
     public static String eqNum2Text(int val) {
@@ -258,7 +258,7 @@ public class KButilities {
         return "error bad value from KButilities.eqNum2Text()";
     }
 
-    /** *************************************************************
+    /**
      * Get all formulas that contain both terms. 
      */
     public static ArrayList<Formula> termIntersection(KB kb, String term1, String term2) {
@@ -291,7 +291,7 @@ public class KButilities {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     public static void countRelations(KB kb) {
 
@@ -306,7 +306,7 @@ public class KButilities {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static boolean isCacheFile(String filename) {
 
@@ -318,7 +318,7 @@ public class KButilities {
             return false;
     }
 
-    /** *************************************************************
+    /**
      */
     public static void countProcesses(KB kb) {
 
@@ -337,7 +337,7 @@ public class KButilities {
         System.out.println("SUMO Process synsets: " + wncount);
     }
 
-    /** *************************************************************
+    /**
      */
     private static boolean uRLexists(String URLName){
 
@@ -355,7 +355,7 @@ public class KButilities {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static void checkURLs(KB kb) {
 
@@ -369,7 +369,7 @@ public class KButilities {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static void validatePictureList() {
 
@@ -419,7 +419,7 @@ public class KButilities {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public class GraphArc implements JSONAware, Comparable {
 
@@ -467,7 +467,7 @@ public class KButilities {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public String semnetAsJSON3(KB kb, boolean cached, boolean strings) {
 
@@ -483,7 +483,7 @@ public class KButilities {
         return sb.toString();
     }
 
-    /** *************************************************************
+    /**
      */
     public Set<GraphArc> generateSemNetNeighbors(KB kb, boolean cached, boolean strings, boolean links, String term, int count) {
 
@@ -561,7 +561,7 @@ public class KButilities {
         return resultSet;
     }
 
-    /** *************************************************************
+    /**
      *  Turn SUMO into a semantic network by extracting all ground
      *  binary relations, turning all higher arity relations into a
      *  set of binary relations, and making all term co-occurring in
@@ -614,7 +614,7 @@ public class KButilities {
         return resultSet;
     }
 
-    /** *************************************************************
+    /**
      */
     private static String semnetAsDot(Set<String> triples) {
 
@@ -628,7 +628,7 @@ public class KButilities {
         return sb.toString();
     }
 
-    /** *************************************************************
+    /**
      * A basic use of the JSON Graph Format http://jsongraphformat.info/
      */
     private static String semnetAsJSON(Set<String> triples, KB kb,String language) {
@@ -680,7 +680,7 @@ public class KButilities {
         return sb.toString();
     }
 
-    /** *************************************************************
+    /**
      * A basic use of the JSON Graph Format http://jsongraphformat.info/
      */
     private static void semnetAsJSON2(Set<String> triples, KB kb,String language) {
@@ -745,7 +745,7 @@ public class KButilities {
         }
     }
 
-    /** *************************************************************
+    /**
      * A basic use of the JSON Graph Format http://jsongraphformat.info/
      */
     private static void semnetAsTriples(Set<String> triples, KB kb,String language) {
@@ -792,7 +792,7 @@ public class KButilities {
         }
     }
 
-    /** *************************************************************
+    /**
      * A basic use of the JSON Graph Format http://jsongraphformat.info/
      */
     private static void semnetAsSQLGraph(Set<String> triples, KB kb,String language) {
@@ -847,7 +847,7 @@ public class KButilities {
         }
     }
 
-    /** *************************************************************
+    /**
      * Generate line pairs of formula and NL paraphrase of formula
      */
     public static String generateAllNL(KB kb) {
@@ -861,7 +861,7 @@ public class KButilities {
         return result.toString();
     }
 
-    /** *************************************************************
+    /**
      *  Find all cases of where (instance A B) (instance B C) as
      *  well as all cases of where (instance A B) (instance B C)
      *  (instance C D).  Report true if any such cases are found,
@@ -896,7 +896,7 @@ public class KButilities {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     public static void writeDisplayText(KB kb, String displayFormatPredicate, String displayTermPredicate, 
             String language, String fname) throws IOException {
@@ -970,7 +970,7 @@ public class KButilities {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static void generateTPTPTestAssertions() {
         
@@ -1008,7 +1008,7 @@ public class KButilities {
         }
     }
     
-    /** *************************************************************
+    /**
      * Note this simply assumes that initial lower case terms are relations.
      */
     public static void generateRelationList() {
@@ -1028,7 +1028,7 @@ public class KButilities {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static int getCountNonLinguisticAxioms(KB kb) {
 
@@ -1046,7 +1046,7 @@ public class KButilities {
         return counter;
     }
 
-    /** *************************************************************
+    /**
      * Count the number of words in all the strings in a knowledge base
      */
     public static void countStringWords(KB kb) {
@@ -1073,7 +1073,7 @@ public class KButilities {
         System.out.println(total);
     }
 
-    /** *************************************************************
+    /**
      *  Find all formulas in which the SUMO term is involved.  
      */
     public static Set<Formula> getAllFormulasOfTerm(KB kb, String term) {
@@ -1089,7 +1089,7 @@ public class KButilities {
 		return result;
 	}
 
-    /** *************************************************************
+    /**
      *  Find all formulas in which the SUMO term is involved.
      */
     public static String generateFormulasAndDoc(KB kb) {
@@ -1109,7 +1109,7 @@ public class KButilities {
         return sb.toString();
     }
 
-    /** *************************************************************
+    /**
      * List all the terms and their termFormat expressions.
      */
     public static String termFormatIndex(KB kb) {
@@ -1125,7 +1125,7 @@ public class KButilities {
         return sb.toString();
     }
 
-    /** ***************************************************************
+    /**
      * utility method to merge two HashMaps of String keys and a values
      * of an HashSet of Strings.  Note that parent classes in the set of
      * classes will be removed
@@ -1147,7 +1147,7 @@ public class KButilities {
         return result;
     }
 
-    /** ***************************************************************
+    /**
     */
     public static void showHelp() {
 
@@ -1168,7 +1168,7 @@ public class KButilities {
         System.out.println("  -t - generate a table of termFormat(s)");
     }
 
-    /** *************************************************************
+    /**
      */
     public static void main(String[] args) {
 

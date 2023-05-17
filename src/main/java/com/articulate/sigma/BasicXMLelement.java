@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-/** ***************************************************************
+/**
  * A class designed to mirror the information in a basic XML tag.
  */
 public class BasicXMLelement {
@@ -35,7 +35,7 @@ public class BasicXMLelement {
     public String contents = "";
 
 
-    /** ***************************************************************
+    /**
      * Convert the XML element to a String.
      */
     public String toString() {

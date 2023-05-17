@@ -27,14 +27,14 @@ public class SUMOKBtoTPTPKB {
     // maps TPTP axiom IDs to SUMO formulas
     public static HashMap<String,Formula> axiomKey = new HashMap<>();
 
-    /** *************************************************************
+    /**
      */
     public SUMOKBtoTPTPKB() {
 
         buildExcludedPredicates();
     }
 
-    /** *************************************************************
+    /**
      * define a set of predicates which will not be used for inference
      */
     public static HashSet<String> buildExcludedPredicates() {
@@ -54,7 +54,7 @@ public class SUMOKBtoTPTPKB {
         return excludedPredicates;
     }
 
-    /** *************************************************************
+    /**
      */
     public String getSanitizedKBname() {
 
@@ -62,7 +62,7 @@ public class SUMOKBtoTPTPKB {
         return sanitizedKBName;
     }
 
-    /** *************************************************************
+    /**
      */
     public static String langToExtension(String l) {
 
@@ -71,7 +71,7 @@ public class SUMOKBtoTPTPKB {
         return l;
     }
 
-    /** *************************************************************
+    /**
      */
     public static String extensionToLang(String l) {
 
@@ -80,7 +80,7 @@ public class SUMOKBtoTPTPKB {
         return l;
     }
 
-    /** *************************************************************
+    /**
      */
     public String getInfFilename() {
 
@@ -90,7 +90,7 @@ public class SUMOKBtoTPTPKB {
         return filename;
     }
 
-    /** *************************************************************
+    /**
      */
     public String copyFile(String fileName) {
 
@@ -123,7 +123,7 @@ public class SUMOKBtoTPTPKB {
         return outputPath;
     }
 
-    /** *************************************************************
+    /**
      */
     public static void addToFile (String fileName, ArrayList<String> axioms, String conjecture) {
 
@@ -156,7 +156,7 @@ public class SUMOKBtoTPTPKB {
         return;
     }
 
-    /** ***************************************************************
+    /**
      * @param relationMap is a Map of String keys and values where
      *                    the key is the renamed relation and the
      *                    value is the original name.
@@ -179,7 +179,7 @@ public class SUMOKBtoTPTPKB {
             }
         }
     }
-    /** ***************************************************************
+    /**
      * Print the sorts of any numeric constants encountered during processing.
      * They are stored in SUMOtoTFAform.numericConstantTypes
      */
@@ -203,7 +203,7 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    /** *************************************************************
+    /**
      *  Sets isQuestion and calls writeTPTPFile() below
 
     public String writeFile(String fileName,
@@ -213,7 +213,7 @@ public class SUMOKBtoTPTPKB {
         return writeFile(fileName,conjecture,isQuestion);
     }
 */
-    /** *************************************************************
+    /**
      *  Sets pw and calls writeTPTPFile() below
 
     public String writeFile(String fileName,
@@ -224,7 +224,7 @@ public class SUMOKBtoTPTPKB {
         return writeFile(fileName,conjecture,isQuestion,pw);
     }
 */
-    /** *************************************************************
+    /**
      */
     public class OrderedFormulae extends TreeSet<Formula> {
 
@@ -244,7 +244,7 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public void writeHeader(PrintWriter pw, String sanitizedKBName) {
 
@@ -257,7 +257,7 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    /** *************************************************************
+    /**
      *  Write all axioms in the KB to TPTP format.
      *
      * @param fileName - the full pathname of the file to write
@@ -414,7 +414,7 @@ public class SUMOKBtoTPTPKB {
         return result;
     }
 
-    /** *************************************************************
+    /**
      * @return true if the given formula is simple clause,
      *   and contains one of the excluded predicates;
      * otherwise return false;
@@ -427,7 +427,7 @@ public class SUMOKBtoTPTPKB {
         return pass;
     }
 
-    /** *************************************************************
+    /**
      */
     public boolean filterAxiom(Formula form, String tptp, PrintWriter pw) {
 
@@ -465,7 +465,7 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public static void main(String[] args) {
 

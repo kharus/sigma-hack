@@ -20,21 +20,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-/** *****************************************************************
+/**
  */
 public class VariableMapping {
 
     String var1;
     String var2;
 
-    /** *****************************************************************
+    /**
      */
     public VariableMapping(String v1, String v2) {
         var1 = v1;
         var2 = v2;
     }
 
-    /** *****************************************************************
+    /**
      */
     @Override
     public boolean equals(Object o) {
@@ -58,7 +58,7 @@ public class VariableMapping {
         return true;
     }
 
-    /** *****************************************************************
+    /**
      */
     @Override
     public int hashCode() {
@@ -68,7 +68,7 @@ public class VariableMapping {
         return result;
     }
 
-    /** *****************************************************************
+    /**
      */
     public static List<Set<VariableMapping>> intersect(List<Set<VariableMapping>> mapList1,
                                                        List<Set<VariableMapping>> mapList2) {
@@ -92,7 +92,7 @@ public class VariableMapping {
         return intersection;
     }
 
-    /** *****************************************************************
+    /**
      */
     public static List<Set<VariableMapping>> union(List<Set<VariableMapping>> mapList1,
                                                    List<Set<VariableMapping>> mapList2) {
@@ -113,7 +113,7 @@ public class VariableMapping {
         return union;
     }
 
-    /** *****************************************************************
+    /**
      */
     private static Set<VariableMapping> unify(Set<VariableMapping> set1, Set<VariableMapping> set2) {
 
@@ -135,7 +135,7 @@ public class VariableMapping {
         return result;
     }
 
-    /** *****************************************************************
+    /**
      */
     @Override
     public String toString() {

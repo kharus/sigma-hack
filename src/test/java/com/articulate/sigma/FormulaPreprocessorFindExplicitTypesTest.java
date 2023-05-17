@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesDomainNotRule() {
@@ -32,7 +32,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(null, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesDomainNotRule2() {
@@ -49,7 +49,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesNames() {
@@ -64,7 +64,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(null, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesNames2() {
@@ -81,7 +81,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesSubclass() {
@@ -96,7 +96,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(null, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesSubclass2() {
@@ -115,7 +115,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesSubclassInRule() {
@@ -136,7 +136,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesSubclassInRule2() {
@@ -157,7 +157,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTransitiveRelation() {
@@ -179,7 +179,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTransitiveRelation2() {
@@ -201,7 +201,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesIfJohnLikesSue() {
@@ -229,7 +229,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesIfJohnLikesSue2()     {
@@ -256,7 +256,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesIfAndOnlyIfEntity()     {
@@ -274,7 +274,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesIfAndOnlyIfEntity2()     {
@@ -292,7 +292,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesIfAndOnlyIfAutomobile()     {
@@ -310,7 +310,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesIfAndOnlyIfAutomobile2()     {
@@ -328,7 +328,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testTransitiveRelation()     {
@@ -348,7 +348,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testTransitiveRelation2()     {
@@ -368,7 +368,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesAgent()     {
@@ -383,7 +383,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(null, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesAgent2()     {
@@ -399,7 +399,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesHumanDriving()     {
@@ -418,7 +418,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(null, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypesHumanDriving2() {
@@ -440,7 +440,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes1() {
@@ -463,7 +463,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes2() {
@@ -485,7 +485,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes3() {
@@ -513,7 +513,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes4() {
@@ -534,7 +534,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes5() {
@@ -556,7 +556,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes6() {
@@ -586,7 +586,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes7() {
@@ -610,7 +610,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes8() {
@@ -632,7 +632,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes9() {
@@ -653,7 +653,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes10() {
@@ -679,7 +679,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes11() {
@@ -705,7 +705,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes12() {
@@ -734,7 +734,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase  {
         assertEquals(expected, actual);
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void testFindExplicitTypes13() {

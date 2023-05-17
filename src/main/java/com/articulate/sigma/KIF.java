@@ -669,7 +669,7 @@ public class KIF {
         System.out.println(f.car());
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showHelp() {
 
@@ -681,7 +681,7 @@ public class KIF {
         System.out.println("  t - run a test");
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void main(String[] args) throws IOException {
 

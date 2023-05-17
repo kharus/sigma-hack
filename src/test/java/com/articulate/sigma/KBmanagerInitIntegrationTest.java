@@ -15,7 +15,7 @@ public class KBmanagerInitIntegrationTest extends IntegrationTestBase {
 
     private static Set<String> kifSet = Sets.newHashSet();
 
-    /** ***************************************************************
+    /**
      */
     @BeforeClass
     public static void setKB() {
@@ -59,7 +59,7 @@ public class KBmanagerInitIntegrationTest extends IntegrationTestBase {
         //kifSet.add("WMD.kif");
      }
 
-    /** ***************************************************************
+    /**
      * Verify that you are running your tests with the expected configuration.
      */
     @Test
@@ -80,7 +80,7 @@ public class KBmanagerInitIntegrationTest extends IntegrationTestBase {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void filterExpectedKifs(List<String> actualKifFiles, Set<String> expectedKifFiles) {
 
@@ -100,7 +100,7 @@ public class KBmanagerInitIntegrationTest extends IntegrationTestBase {
         actualKifFiles.addAll(remainingActualKifFiles);
     }
 
-    /** ***************************************************************
+    /**
      * Verify how long the base class's KBmanager initialization took.
      */
     @Test

@@ -40,7 +40,7 @@ public class Infrastructure {
     public HashMap<String,Category> categories = new HashMap<>(); //id, category
     public HashMap<String, HashSet<String>> parents = new HashMap<>(); //parent name, list of categories
 
-    /** *************************************************************
+    /**
      */
     public class Product {
         public String SUMO = null;
@@ -59,7 +59,7 @@ public class Infrastructure {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public class Category {
         public String ID = null;
@@ -79,7 +79,7 @@ public class Infrastructure {
         }
     }
 
-    /** *************************************************************
+    /**
      * maps are old string ID keys and new (SUMO) id values
      */
     public class Mappings {
@@ -88,7 +88,7 @@ public class Infrastructure {
         public HashMap<String,String> units = new HashMap<>();
     }
 
-    /** *************************************************************
+    /**
      */
     private void processProductTypes(JSONArray arraypt) throws SQLException {
 
@@ -106,7 +106,7 @@ public class Infrastructure {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     private Mappings processMappings(JSONObject objm) {
 
@@ -132,7 +132,7 @@ public class Infrastructure {
         return mappings;
     }
 
-    /** *************************************************************
+    /**
      */
     private void processCategories(JSONArray arrayc,
                                    Mappings mappings) throws SQLException {
@@ -179,7 +179,7 @@ public class Infrastructure {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     private void processProduct(JSONObject jso,
                                 Mappings mappings) throws SQLException {
@@ -258,7 +258,7 @@ public class Infrastructure {
         products.put(p.ID,p);
     }
 
-    /** *************************************************************
+    /**
      */
     public void toSUMObyParent() throws SQLException {
 
@@ -285,7 +285,7 @@ public class Infrastructure {
         }
     }
 
-    /** *************************************************************
+    /**
      * A list of products can be very long so parse each JSON object
      * individually so as to provide a status.
      */
@@ -326,7 +326,7 @@ public class Infrastructure {
         System.out.println();
     }
 
-    /** *************************************************************
+    /**
      * process string measures into SUMO format
      */
     public String processValue(String val, String funcID) throws SQLException {
@@ -356,7 +356,7 @@ public class Infrastructure {
         return val;
     }
 
-    /** *************************************************************
+    /**
      * Parse a sample of products and their categories formatted in a JSON.
      * Uses JSON API at http://alex-public-doc.s3.amazonaws.com/json_simple-1.1/index.html
      * @param filenamep must be full path
@@ -451,7 +451,7 @@ public class Infrastructure {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public ArrayList<String> getProductTypes() {
 
@@ -460,7 +460,7 @@ public class Infrastructure {
         return al;
     }
 
-    /** *************************************************************
+    /**
      */
     public ArrayList<String> getProductTypesDB() {
 
@@ -483,7 +483,7 @@ public class Infrastructure {
         return al;
     }
 
-    /** *************************************************************
+    /**
      */
     public ArrayList<String> getCategories(String productType) {
 
@@ -502,7 +502,7 @@ public class Infrastructure {
         return al;
     }
 
-    /** *************************************************************
+    /**
      */
     public ArrayList<String> getCategoriesDB(String productType) {
 
@@ -527,7 +527,7 @@ public class Infrastructure {
         return al;
     }
 
-    /** *************************************************************
+    /**
      */
     public ArrayList<String> getSubCategories(String category) {
 
@@ -538,7 +538,7 @@ public class Infrastructure {
         return al;
     }
 
-    /** *************************************************************
+    /**
      */
     public ArrayList<String> getSubCategoriesDB(String category) throws SQLException {
 
@@ -563,7 +563,7 @@ public class Infrastructure {
         return al;
     }
 
-    /** *************************************************************
+    /**
      */
     public HashSet<String> getAllowedRelations(String subCategory) {
 
@@ -575,7 +575,7 @@ public class Infrastructure {
         return relsForType.get(subCategory);
     }
 
-    /** *************************************************************
+    /**
      */
     public HashSet<String> getAllowedRelationsDB(String subCategory) throws SQLException {
 
@@ -599,7 +599,7 @@ public class Infrastructure {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     public ArrayList<String> getAllowableValues(String subCategory, String rel) {
 
@@ -621,7 +621,7 @@ public class Infrastructure {
         return al;
     }
 
-    /** *************************************************************
+    /**
      */
     public ArrayList<String> getAllowableValuesDB(String subCategory, String rel) {
 
@@ -648,7 +648,7 @@ public class Infrastructure {
         return al;
     }
 
-    /** *************************************************************
+    /**
      */
     public ArrayList<String> getProducts(Map<String, String> params) {
 
@@ -690,7 +690,7 @@ public class Infrastructure {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     public ArrayList<String> getProductsByTypeDB(String subCat) {
 
@@ -712,7 +712,7 @@ public class Infrastructure {
         return al;
     }
 
-    /** *************************************************************
+    /**
      * @return a count of products
      */
     public int productCount() {
@@ -731,7 +731,7 @@ public class Infrastructure {
         return -1;
     }
 
-    /** *************************************************************
+    /**
      * @param params is a map of attribute value pairs of the features being searched for
      * @return a list of products
      */
@@ -794,7 +794,7 @@ public class Infrastructure {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     public static void initOnce() {
 
@@ -814,7 +814,7 @@ public class Infrastructure {
         initialized = true;
     }
 
-    /** *************************************************************
+    /**
      */
     public static void initOnceDB() {
 
@@ -843,7 +843,7 @@ public class Infrastructure {
         initialized = true;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showHelp() {
 
@@ -853,7 +853,7 @@ public class Infrastructure {
         System.out.println("  -i initialize");
     }
 
-    /** *************************************************************
+    /**
      */
     public static void main(String[] args) {
 

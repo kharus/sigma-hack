@@ -116,7 +116,7 @@ public class OWLtranslator {
     
     private static int _debugLevelCounter = 0;
 
-    /** ***************************************************************
+    /**
      */
     private static String processStringForXMLOutput(String s) {
 
@@ -128,7 +128,7 @@ public class OWLtranslator {
         return s;
     }
 
-    /** ***************************************************************
+    /**
      */
     private static String processStringForKIFOutput(String s) {
 
@@ -137,7 +137,7 @@ public class OWLtranslator {
         return s.replaceAll("\"","&quot;");
     }
 
-    /** ***************************************************************
+    /**
      *  Remove quotes around a string
      */
     public static String removeQuotes(String s) {
@@ -152,7 +152,7 @@ public class OWLtranslator {
         return s;
     }
 
-    /** ***************************************************************
+    /**
      *  Turn a function statement into an identifier.
      */
     private String instantiateFunction(String s) {
@@ -164,7 +164,7 @@ public class OWLtranslator {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      *  State definitional information for automatically defined
      *  terms that replace function statements.
      */
@@ -211,7 +211,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private static String getParentReference(SimpleElement se) {
 
@@ -237,7 +237,7 @@ public class OWLtranslator {
         return StringUtil.stringToKIFid(value);
     }
 
-    /** ***************************************************************
+    /**
      * Read OWL format and write out KIF.
      */
     private static void decode(PrintWriter pw, SimpleElement se, String parentTerm, 
@@ -447,7 +447,7 @@ public class OWLtranslator {
         //System.out.println("INFO in OWLtranslator().decode(): exiting decode with level: " + _debugLevelCounter);
     }
 
-    /** ***************************************************************
+    /**
      * Read OWL format.
      */
     public static void read(String filename) throws IOException {
@@ -476,7 +476,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Remove special characters in documentation.
      */
     private static String processDoc(String doc) {
@@ -490,7 +490,7 @@ public class OWLtranslator {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeTermFormat(PrintWriter pw, String term) {
 
@@ -508,7 +508,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeSynonymous(PrintWriter pw, String term, String termType) {
 
@@ -529,7 +529,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeAxiomLinks(PrintWriter pw, String term) {
 
@@ -547,7 +547,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeWordNetLink(PrintWriter pw, String term) {
 
@@ -581,7 +581,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void createAxiomMap() {
 
@@ -596,7 +596,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeAxioms(PrintWriter pw) {
 
@@ -619,7 +619,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeOneAxiom(PrintWriter pw, String id) {
 
@@ -640,7 +640,7 @@ public class OWLtranslator {
             System.out.println("Error in OWLtranslator.writeOneAxiom(): null or non-axiom for ID: " + id);        
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeDocumentation(PrintWriter pw, String term) {
 
@@ -660,7 +660,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeYAGOMapping(PrintWriter pw, String term) {
 
@@ -673,7 +673,7 @@ public class OWLtranslator {
         }                    
     }
 
-    /** ***************************************************************
+    /**
      * Write OWL format.
      */
     private void writeRelations(PrintWriter pw, String term) {
@@ -737,7 +737,7 @@ public class OWLtranslator {
         pw.println();
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeInstances(PrintWriter pw, String term, ArrayList instances) {
 
@@ -792,7 +792,7 @@ public class OWLtranslator {
         pw.println();
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeClasses(PrintWriter pw, String term, ArrayList classes, 
                               boolean isInstance) {
@@ -861,7 +861,7 @@ public class OWLtranslator {
         pw.println();
     }
 
-    /** ***************************************************************
+    /**
      * Read a mapping file from YAGO to SUMO terms and store in SUMOYAGOMap
      */
     private void readYAGOSUMOMappings() {
@@ -914,7 +914,7 @@ public class OWLtranslator {
         return;
     }
 
-    /** ***************************************************************
+    /**
      * Write OWL file header.
      */
     private void writeKBHeader(PrintWriter pw) {
@@ -947,7 +947,7 @@ public class OWLtranslator {
         pw.println("</owl:Ontology>");
     }
 
-    /** ***************************************************************
+    /**
      * Write OWL format.
      */
      public void writeSUMOTerm(PrintWriter pw, String term) {
@@ -971,14 +971,14 @@ public class OWLtranslator {
          }
      }
 
-    /** ***************************************************************
+    /**
      * Write OWL format.
      */
      public void writeKB() throws IOException {
          writeKB("");
      }
 
-    /** ***************************************************************
+    /**
      * Write OWL format.
      */
      public void writeKB(String path) throws IOException {
@@ -1002,7 +1002,7 @@ public class OWLtranslator {
          pw.close();
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeWordNetClassDefinitions(PrintWriter pw) throws IOException {
 
@@ -1038,7 +1038,7 @@ public class OWLtranslator {
         pw.println("</owl:Class>");
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeVerbFrames(PrintWriter pw) throws IOException {
 
@@ -1090,7 +1090,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeWordNetRelationDefinitions(PrintWriter pw) throws IOException {
 
@@ -1160,7 +1160,7 @@ public class OWLtranslator {
         pw.println("</owl:ObjectProperty>");
     }
 
-    /** ***************************************************************
+    /**
      * Write OWL format for SUMO-WordNet mappings.
      * @param synset is a POS prefixed synset number
      */
@@ -1208,7 +1208,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeWordNetExceptions(PrintWriter pw) throws IOException {
 
@@ -1238,7 +1238,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeOneWordToSenses(PrintWriter pw, String word) {
 
@@ -1262,7 +1262,7 @@ public class OWLtranslator {
         pw.println("</owl:Thing>");
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeWordsToSenses(PrintWriter pw) throws IOException {
 
@@ -1273,7 +1273,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeSenseIndex(PrintWriter pw) throws IOException {
 
@@ -1302,7 +1302,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     private void writeWordNetHeader(PrintWriter pw) {
 
@@ -1333,7 +1333,7 @@ public class OWLtranslator {
         pw.println("</owl:Ontology>");
     }
 
-    /** ***************************************************************
+    /**
      * Write OWL format for SUMO-WordNet mappings.
      */
     public void writeWordNet(PrintWriter pw) throws IOException {
@@ -1355,7 +1355,7 @@ public class OWLtranslator {
         pw.println("</rdf:RDF>");
     }
 
-    /** ***************************************************************
+    /**
      * Write OWL format for a SUMO or WordNet term.
      */
     public void writeTerm(PrintWriter pw, String term) {
@@ -1384,7 +1384,7 @@ public class OWLtranslator {
         pw.flush();
     }
 
-    /** ***************************************************************
+    /**
      * Write OWL format.
      */
     public void writeSUMOOWLDefs(PrintWriter pw) {
@@ -1398,7 +1398,7 @@ public class OWLtranslator {
         pw.println("</owl:ObjectProperty>");
     }
 
-    /** ***************************************************************
+    /**
      * Write OWL format.
      */
     public void writeDefsAsFiles() {
@@ -1478,7 +1478,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void initOnce(String kbName) {
    
@@ -1493,7 +1493,7 @@ public class OWLtranslator {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showHelp() {
 
@@ -1506,7 +1506,7 @@ public class OWLtranslator {
         System.out.println("  -y - translate and write OWL version of kb including YAGO mappings to stdout");
     }
 
-    /** *************************************************************
+    /**
      * A test method.
      */
     public static void main(String args[]) {

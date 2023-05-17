@@ -74,7 +74,7 @@ public class InferenceTestSuite {
     public static HashSet<String> metaPred = new HashSet(
             Arrays.asList("note", "time", "query", "answer"));
 
-    /** ***************************************************************
+    /**
      * Compare the expected answers to the returned answers.  Return
      * true if no answers are found or if any pair of answers
      * is different.  Return false otherwise.
@@ -108,7 +108,7 @@ public class InferenceTestSuite {
         return true;
     }
 
-    /** ***************************************************************
+    /**
      * Compare the expected answers to the returned answers.  Return
      * true if no answers are found or if any pair of answers
      * is different.  Return false otherwise.
@@ -132,7 +132,7 @@ public class InferenceTestSuite {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      */
     private static File setOutputDir() throws IOException {
 
@@ -143,7 +143,7 @@ public class InferenceTestSuite {
             return null;
     }
 
-    /** ***************************************************************
+    /**
      */
     private static void clearOutputDir(File outputDir) throws IOException {
 
@@ -157,7 +157,7 @@ public class InferenceTestSuite {
                 f.delete();
     }
 
-    /** ***************************************************************
+    /**
      *  Copy test files to the output directory so that they are visible
      *  to Sigma as a Tomcat application.
      */
@@ -179,7 +179,7 @@ public class InferenceTestSuite {
         }
     }
 
-    /** ***************************************************************
+    /**
      *  Note that 'files' variable is modified as a side effect.
      *  @return error messages, or null if none
      */
@@ -230,14 +230,14 @@ public class InferenceTestSuite {
         return null;  // Normal exit, with "files" modified as a side effect
     }
 
-    /** ***************************************************************
+    /**
      * Convenience method that sets default parameters
     */
     public String test(KB kb) throws IOException  {
         return test(kb, _DEFAULT_TIMEOUT, "");
     }
 
-    /** ***************************************************************
+    /**
      * Convenience method that sets some default parameters
      * @param timeout is a default timeout that is likely to be
      *                overwritten by a specification in the test
@@ -252,7 +252,7 @@ public class InferenceTestSuite {
         return test(kb, timeout, "");
     }
 
-    /** ***************************************************************
+    /**
      */
     public class InfTestData {
 
@@ -271,7 +271,7 @@ public class InferenceTestSuite {
         public String SZSstatus = "";
     }
 
-    /** ***************************************************************
+    /**
      * Check if the required SUO-KIF file set is loaded and return false and
      * print an error if not.  Also issue a warning if extra non-required
      * files are present.
@@ -293,7 +293,7 @@ public class InferenceTestSuite {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * skolem terms in a string are converted to 'sK1'
      */
     public static String normalizeSkolem(String s) {
@@ -304,7 +304,7 @@ public class InferenceTestSuite {
         return s;
     }
 
-    /** ***************************************************************
+    /**
      * parse answers
      */
     public static void parseAnswers(String s, InfTestData itd) {
@@ -330,7 +330,7 @@ public class InferenceTestSuite {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Read in a .tq inference test files and return an InfTestData
      * object or null if error
      * Note that if the expected answer is a skolem term, the function is converted to 'sK1'
@@ -379,7 +379,7 @@ public class InferenceTestSuite {
         return ifd;
     }
 
-    /** ***************************************************************
+    /**
      * Read in all the .tq inference test files from the given list
      */
     public ArrayList<InfTestData> readTestFiles(ArrayList<File> files) {
@@ -393,7 +393,7 @@ public class InferenceTestSuite {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      */
     public void saveTPTP(InfTestData itd) {
 
@@ -415,7 +415,7 @@ public class InferenceTestSuite {
         }
     }
 
-    /** ***************************************************************
+    /**
      */
     public void printResults(Collection<InfTestData> tests) {
 
@@ -431,7 +431,7 @@ public class InferenceTestSuite {
         }
     }
 
-    /** ***************************************************************
+    /**
      * The main method that controls running a set of tests and returning
      * the result as an HTML page showing test results and links to proofs.
      * Note that this procedure deletes any prior user assertions.
@@ -596,7 +596,7 @@ public class InferenceTestSuite {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * The method will be called in InferenceTest in unit test;
      * It takes a TQG file path, reading the kif statements and queries and expected answers;
      * It parses the theorem prover's inference output for actual answers;
@@ -689,7 +689,7 @@ public class InferenceTestSuite {
         return itd;
     }
 
-    /** ***************************************************************
+    /**
      * Test method
      */
     public void runPassing() {
@@ -701,7 +701,7 @@ public class InferenceTestSuite {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Test method
      */
     public boolean cmdLineTest(String filename) {
@@ -757,7 +757,7 @@ public class InferenceTestSuite {
             userAssertionsFile.delete();
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void showHelp() {
 
@@ -779,7 +779,7 @@ public class InferenceTestSuite {
         System.out.println("     o - override test timeout with global timeout of " + _DEFAULT_TIMEOUT + " sec");
     }
 
-     /** ***************************************************************
+     /**
      * Test method
      */
     public static void main(String[] args) {

@@ -31,7 +31,7 @@ public class CCheck implements Runnable {
     private String lineHtml = "<table ALIGN='LEFT' WIDTH='40%'><tr><TD BGCOLOR='#AAAAAA'>" + 
             "<IMG SRC='pixmaps/1pixel.gif' width=1 height=1 border=0></TD></tr></table><BR>\n";
     
-    /** *************************************************************
+    /**
      */
     public CCheck(KB kb, String filename) {
         
@@ -47,7 +47,7 @@ public class CCheck implements Runnable {
         }
     }
     
-    /** *************************************************************
+    /**
      */
     public CCheck(KB kb, String fileName, String chosenEngine, int timeout) throws Exception {
         
@@ -61,7 +61,7 @@ public class CCheck implements Runnable {
         }
     }
 
-    /** *************************************************************
+    /**
      */
     public CCheck(KB kb, String fileName, String chosenEngine, String systemChosen, String quietFlag,
                 String location, String language, int timeout) throws Exception {
@@ -75,7 +75,7 @@ public class CCheck implements Runnable {
                 ". Engine Chosen: " + chosenEngine);
     }
 
-    /** *************************************************************
+    /**
      * This sets the inference engine to be used for the consistency check.  
      * This particular method sets it if chosenEngine == 'SoTPTP'
      * 
@@ -119,7 +119,7 @@ public class CCheck implements Runnable {
         return false;
     }
     
-    /** *************************************************************
+    /**
      * This sets the inference engine to be used for the consistency check.  
      * It sends a test query to the inference engine to
      * ensure that the engine works.
@@ -155,13 +155,13 @@ public class CCheck implements Runnable {
         }
     }
     
-    /** *************************************************************
+    /**
      */
     public String getKBName() {
         return kb.name;
     }
 
-    /** *************************************************************
+    /**
      */
     private KB makeEmptyKB() {
         
@@ -196,7 +196,7 @@ public class CCheck implements Runnable {
         return empty;
     }
     
-    /** *************************************************************     
+    /**     
      */
     private void printReport(Formula query, String processedQ,
             String sourceFile, boolean syntaxError, String proof,
@@ -227,7 +227,7 @@ public class CCheck implements Runnable {
         pw.println("    </entry>");
     }
     
-    /** *************************************************************
+    /**
      * This method saves the answer and proof for detected redundancies 
      * or inconsistencies into the file.
      * 
@@ -267,7 +267,7 @@ public class CCheck implements Runnable {
         }
     }
     
-    /** *************************************************************
+    /**
      * This would save the error message for a formula in the CCheck results
      * file to inform the user that an error occurred while performing a
      * consistency check on one of the statements.
@@ -312,7 +312,7 @@ public class CCheck implements Runnable {
         }
     }
 
-    /** *************************************************************
+    /**
      * This initiates the consistency check
      */
     private void runConsistencyCheck() {
@@ -379,7 +379,7 @@ public class CCheck implements Runnable {
         }
     }
 
-    /** *************************************************************
+    /**
      * This initiates the consistency check
      */
     private void runConsistencyCheckNew() {
@@ -420,7 +420,7 @@ public class CCheck implements Runnable {
         }
     }
 
-    /** *************************************************************
+    /**
      * Picks the inference engine to use for the consistency check based on the
      * set-up inference engine.
      * 
@@ -460,7 +460,7 @@ public class CCheck implements Runnable {
         return result;
     }
 
-    /** *************************************************************
+    /**
      */
     @Override
     public void run() {

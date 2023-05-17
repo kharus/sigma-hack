@@ -34,7 +34,7 @@ public class SUMOtoTFAKBTest extends IntegrationTestBase {
         skbtfakb.initOnce();
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void testPartition() {
@@ -54,7 +54,7 @@ public class SUMOtoTFAKBTest extends IntegrationTestBase {
         assertTrue(expectedRes.equals(result));
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void testDynamicSortDef() {
@@ -73,7 +73,7 @@ public class SUMOtoTFAKBTest extends IntegrationTestBase {
         assertTrue(expectedRes.equals(result));
     }
 
-    /** *************************************************************
+    /**
      */
     @Test
     public void testMissingSort() {

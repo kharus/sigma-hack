@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 
 public class FormulaPreprocessor {
 
-    /** ***************************************************************
+    /**
      * For any given formula, stop generating new pred var instantiations
      * and row var expansions if this threshold value has been exceeded.
      * The default value is 2000.
@@ -40,7 +40,7 @@ public class FormulaPreprocessor {
 
     public static boolean addOnlyNonNumericTypes = false;
 
-    /** ***************************************************************
+    /**
      * A + is appended to the type if the parameter must be a class
      *
      * @return the type for each argument to the given predicate, where
@@ -52,7 +52,7 @@ public class FormulaPreprocessor {
         return kb.kbCache.signatures.get(pred);
     }
 
-    /** ***************************************************************
+    /**
      */
     private boolean hasFormulaType(Formula form,
                                    HashMap<String,HashSet<String>> varmap) {
@@ -69,7 +69,7 @@ public class FormulaPreprocessor {
         return false;
     }
 
-    /** ***************************************************************
+    /**
      * Find the argument type restriction for a given predicate and
      * argument number that is inherited from one of its super-relations.
      * A "+" is appended to the type if the parameter must be a class,
@@ -104,7 +104,7 @@ public class FormulaPreprocessor {
         return sig.get(numarg);
     }
 
-    /** ***************************************************************
+    /**
      * This method tries to remove all but the most specific relevant
      * classes from a List of sortal classes.
      *
@@ -144,7 +144,7 @@ public class FormulaPreprocessor {
         return;
     }
 
-    /** ***************************************************************
+    /**
      * Find all the type restrictions on the variables in a formula,
      * including constraints from relation argument typing as well as
      * explicitly stated types from instance and subclass expressions.
@@ -181,7 +181,7 @@ public class FormulaPreprocessor {
         return varmap;
     }
 
-    /** ***************************************************************
+    /**
      */
     public HashMap<String,HashSet<String>> findAllTypeRestrictions(Formula form, KB kb) {
 
@@ -216,7 +216,7 @@ public class FormulaPreprocessor {
         return varmap;
     }
 
-    /** ***************************************************************
+    /**
      * Add clauses for every variable in the antecedent to restrict its
      * type to the type restrictions defined on every relation in which
      * it appears.  For example
@@ -295,7 +295,7 @@ public class FormulaPreprocessor {
         return f;
     }
 
-    /** ***************************************************************
+    /**
      * Recursively add sortals for existentially quantified variables
      *
      * @param kb The KB used to add type restrictions.
@@ -396,7 +396,7 @@ public class FormulaPreprocessor {
         }
     }
 
-    /** ***************************************************************
+    /**
      * Collect variables from strings.
      *
      * For example,
@@ -423,7 +423,7 @@ public class FormulaPreprocessor {
         }
     }
 
-    /** ************************************************************************
+    /**
      * Get the most specific type for variables.
      *
      * @param kb The KB to be used for processing
@@ -493,7 +493,7 @@ public class FormulaPreprocessor {
         return varExplicitTypes;
     }
 
-    /** ***************************************************************
+    /**
      * Return a formula's antecedents
      */
     private static Formula findAntecedent(Formula f) {
@@ -652,7 +652,7 @@ public class FormulaPreprocessor {
         return computeVariableTypesRecurse(kb,form,result);
     }
 
-    /** ***************************************************************
+    /**
      * @param arg0 is a function
      * @param arg1 is a variable
      * @result is a side effect on the result map
@@ -670,7 +670,7 @@ public class FormulaPreprocessor {
         MapUtils.addToMap(result,arg1,type);
     }
 
-    /** ***************************************************************
+    /**
      *  @rparam input A HashMap of variable names and their types. Subclass
      *               restrictions are marked with a '+', meaning that a
      *               domainSubclass is defined for this argument in one of
@@ -757,7 +757,7 @@ public class FormulaPreprocessor {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * Pre-process a formula before sending it to the theorem prover.
      * This includes ignoring meta-knowledge like documentation strings,
      * translating mathematical operators, quoting higher-order formulas,
@@ -860,7 +860,7 @@ public class FormulaPreprocessor {
         return result.toString();
     }
 
-    /** ***************************************************************
+    /**
      * Tries to successively instantiate predicate variables and then
      * expand row variables in this Formula, looping until no new
      * Formulae are generated.
@@ -945,7 +945,7 @@ public class FormulaPreprocessor {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * Returns true if this Formula appears not to have any of the
      * characteristics that would cause it to be rejected during
      * translation to TPTP form, or cause problems during inference.
@@ -982,7 +982,7 @@ public class FormulaPreprocessor {
         return pass;
     }
 
-    /** ***************************************************************
+    /**
      * Adds statements of the form (instance <Entity> <Class>) if
      * they are not already in the KB.
      *
@@ -1053,7 +1053,7 @@ public class FormulaPreprocessor {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * Pre-process a formula before sending it to the theorem prover.
      * This includes ignoring meta-knowledge like documentation strings,
      * translating mathematical operators, quoting higher-order formulas,
@@ -1138,7 +1138,7 @@ public class FormulaPreprocessor {
         return results;
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void testFindTypes() {
 
@@ -1186,7 +1186,7 @@ public class FormulaPreprocessor {
         System.out.println("Explicit types: " + fp.findExplicitTypesInAntecedent(kb,f));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void testFindExplicit() {
 
@@ -1209,7 +1209,7 @@ public class FormulaPreprocessor {
         System.out.println("Explicit types: " + fp.findExplicitTypesInAntecedent(kb, f));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void testAddTypes() {
 
@@ -1244,7 +1244,7 @@ public class FormulaPreprocessor {
         System.out.println(fp.addTypeRestrictions(f,kb));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void testOne() {
 
@@ -1271,7 +1271,7 @@ public class FormulaPreprocessor {
         System.out.println(fp.preProcess(f,false,kb));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void testTwo() {
 
@@ -1289,7 +1289,7 @@ public class FormulaPreprocessor {
         System.out.println("testTwo(): equality: " + fp.preProcess(f,false,kb));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void testThree() {
 
@@ -1321,7 +1321,7 @@ public class FormulaPreprocessor {
         System.out.println("testThree(): " + fp.preProcess(f,false,kb));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void testFour() {
 
@@ -1348,7 +1348,7 @@ public class FormulaPreprocessor {
         System.out.println("testFour(): " + fp.addTypeRestrictions(f,kb));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void testFive() {
 
@@ -1366,7 +1366,7 @@ public class FormulaPreprocessor {
         System.out.println("testFive(): equality: " + fp.preProcess(f,false,kb));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void test6() {
 
@@ -1391,7 +1391,7 @@ public class FormulaPreprocessor {
         System.out.println("test6(): " + fp.preProcess(f,false,kb));
     }
 
-    /** ***************************************************************
+    /**
      */
     public static void main(String[] args) {
 

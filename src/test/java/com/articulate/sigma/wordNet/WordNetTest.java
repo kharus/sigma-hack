@@ -61,7 +61,7 @@ public class WordNetTest extends UnitTestBase {
         assertTrue(WordNetUtilities.isValidKey("stick_together_VB_1"));
     }
 
-    /** ***************************************************************
+    /**
      */
     @Test
     public void checkWordsToSenses() {

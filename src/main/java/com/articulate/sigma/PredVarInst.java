@@ -37,7 +37,7 @@ public class PredVarInst {
     public static boolean rejectDoubles = false;
     public static boolean doublesHandled = false;
 
-    /** ***************************************************************
+    /**
      */
     public static void init() {
 
@@ -46,7 +46,7 @@ public class PredVarInst {
         predVarArity = new HashMap<>();
     }
 
-    /** ***************************************************************
+    /**
      * There are two type conditions:
      * one type condition is extracted from domain expression;
      * second type condition is specifically define in the antecedent
@@ -81,7 +81,7 @@ public class PredVarInst {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      */
     private static boolean isTypeExpansion(String rel) {
 
@@ -90,7 +90,7 @@ public class PredVarInst {
         return true;
     }
 
-    /** ***************************************************************
+    /**
      * (=>
      *   (and
      *     (instance ?REL1 Predicate)
@@ -133,7 +133,7 @@ public class PredVarInst {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * (=>
      *   (and
      *     (subrelation ?REL1 ?REL2)
@@ -181,7 +181,7 @@ public class PredVarInst {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * A bit of a hack to produce the statements that would result from
      * the only two axioms in SUMO with two predicate variables
      */
@@ -200,7 +200,7 @@ public class PredVarInst {
         return result;
     }
 
-    /** ***************************************************************
+    /**
      * @param input formula
      * @param kb knowledge base
      * @return A list of formulas where predicate variables are instantiated;
@@ -310,7 +310,7 @@ public class PredVarInst {
         return result;
     }
      
-    /** ***************************************************************
+    /**
      * @return null if correct arity, otherwise return a message
      */
     private static String hasCorrectArityRecurse(Formula f, KB kb)
@@ -384,7 +384,7 @@ public class PredVarInst {
         return null;
     }
     
-    /** ***************************************************************
+    /**
      * If arity is correct, return null, otherwise, return the predicate
      * that has its arity violated in the given formula.
      */
@@ -401,7 +401,7 @@ public class PredVarInst {
         return res;
     }
 
-    /** ***************************************************************
+    /**
      */
     private static boolean containsRowVariable(ArrayList<Formula> arglist) {
 
@@ -411,7 +411,7 @@ public class PredVarInst {
         return false;
     }
 
-     /** ***************************************************************
+     /**
      * Get a set of all the predicate variables in the formula.  If
       * the argument list has a row variable, return 0 as the value, meaning
       * any possible arity of 1 - maxArity
@@ -455,7 +455,7 @@ public class PredVarInst {
         return ans;
     }
 
-     /** ***************************************************************
+     /**
      * Get a set of all the types for predicate variables in the formula.
      *
      * @return a HashMap in which the keys are predicate variables,
@@ -483,7 +483,7 @@ public class PredVarInst {
         return result;
     }
     
-    /** ***************************************************************
+    /**
      * Collect and return all predicate variables for the given formula
      */
     public static HashSet<String> gatherPredVars(KB kb, Formula f) {
@@ -502,7 +502,7 @@ public class PredVarInst {
         return varlist;
     }
 
-     /** ***************************************************************
+     /**
      */
     public static void arityTest() {
         
@@ -529,7 +529,7 @@ public class PredVarInst {
         System.out.println("INFO in PredVarInst.arityTest(): correct arity: " + hasCorrectArity(f,kb));
     }
     
-    /** ***************************************************************
+    /**
      */
     public static void test() {
         
@@ -573,7 +573,7 @@ public class PredVarInst {
         
     }
     
-    /** ***************************************************************
+    /**
      */
     public static void main(String[] args) {
         
