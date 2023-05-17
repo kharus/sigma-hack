@@ -106,12 +106,6 @@
                 <filtering>true</filtering>
             </testResource>
         </testResources>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -132,7 +126,7 @@
                     <configuration>
                         <environmentVariables>
                             <SIGMA_SRC>${project.basedir}</SIGMA_SRC>
-                            <SIGMA_ENV>${project.basedir}/../sigmakee-runtime</SIGMA_ENV>
+                            <SIGMA_HOME>${project.basedir}/../sigmakee-runtime</SIGMA_HOME>
                         </environmentVariables>
                     </configuration>
                 </plugin>
