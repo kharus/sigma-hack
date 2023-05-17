@@ -16,7 +16,7 @@
  * Infosys LTD.
  */
 
-package com.articulate.sigma.wordNet;
+package com.articulate.sigma.wordnet;
 
 import com.articulate.sigma.*;
 import com.articulate.sigma.utils.AVPair;
@@ -28,7 +28,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.articulate.sigma.wordNet.WordNetUtilities.isValidKey;
+import static com.articulate.sigma.wordnet.WordNetUtilities.isValidKey;
 
 /**
  *  This program finds and displays SUMO terms that are related in meaning to the English

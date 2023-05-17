@@ -12,7 +12,7 @@
  * Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
  * August 9, Acapulco, Mexico.  See also http://sigmakee.sourceforge.net.
  */
-package com.articulate.sigma.dataProc;
+package com.articulate.sigma.dataproc;
 
 import com.articulate.sigma.DB;
 import com.articulate.sigma.KBmanager;

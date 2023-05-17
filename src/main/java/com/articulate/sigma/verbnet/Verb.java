@@ -1,4 +1,4 @@
-package com.articulate.sigma.VerbNet;
+package com.articulate.sigma.verbnet;
 
 import com.articulate.sigma.SimpleElement;
 import com.articulate.sigma.utils.AVPair;

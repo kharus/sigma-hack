@@ -12,7 +12,7 @@
  * August 9, Acapulco, Mexico.
  */
 
-package com.articulate.sigma.wordNet;
+package com.articulate.sigma.wordnet;
 
 import com.articulate.sigma.*;
 import com.articulate.sigma.utils.AVPair;
@@ -24,7 +24,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.articulate.sigma.wordNet.WSD.readFileIntoArray;
+import static com.articulate.sigma.wordnet.WSD.readFileIntoArray;
 
 /**
  *  @author Adam Pease

@@ -1,4 +1,4 @@
-package com.articulate.sigma.dataProc;
+package com.articulate.sigma.dataproc;
 
 import com.articulate.sigma.HTMLformatter;
 import com.articulate.sigma.utils.MapUtils;

@@ -1,4 +1,4 @@
-package com.articulate.sigma.VerbNet;
+package com.articulate.sigma.verbnet;
 
 /**
  * This code is copyright Infosys 2019.
