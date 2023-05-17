@@ -25,7 +25,7 @@
             <url>https://repo1.maven.org/maven2</url>
         </repository>
         <repository>
-            <id>github1</id>
+            <id>github</id>
             <url>https://maven.pkg.github.com/kharus/hack-sigma-utils</url>
             <snapshots>
                 <enabled>true</enabled>
