@@ -66,3 +66,4 @@ jobs:
         uses: advanced-security/maven-dependency-submission-action@v3.0.1
         with:
           directory: ${{ github.workspace }}/sigma-hack
+          ignore-maven-wrapper: true
