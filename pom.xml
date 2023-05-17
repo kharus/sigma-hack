@@ -26,13 +26,6 @@
         </repository>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/kharus/hack-sigma-utils</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>github2</id>
             <url>https://maven.pkg.github.com/kharus/tptp-antlr-hack</url>
             <snapshots>
                 <enabled>true</enabled>
