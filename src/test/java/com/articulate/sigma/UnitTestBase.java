@@ -15,7 +15,7 @@ public class UnitTestBase extends SigmaTestBase {
 
     private static final String SIGMA_SRC = System.getenv("SIGMA_SRC");
     public static final String CONFIG_FILE_DIR = SIGMA_SRC + File.separator +
-            "test/unit/java/resources";
+            "target/test-classes";
     private static final String CONFIG_FILE_PATH = CONFIG_FILE_DIR + File.separator +
             "config_topOnly.xml";
     //private static final String CONFIG_FILE_PATH = System.getenv("SIGMA_HOME") + "/KBs/config.xml";

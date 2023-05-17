@@ -16,6 +16,7 @@
     <properties>
         <java.version>17</java.version>
         <spring-shell.version>3.0.3</spring-shell.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
         <repositories>
@@ -24,14 +25,7 @@
             <url>https://repo1.maven.org/maven2</url>
         </repository>
         <repository>
-            <id>github1</id>
-            <url>https://maven.pkg.github.com/kharus/hack-sigma-utils</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>github2</id>
+            <id>github</id>
             <url>https://maven.pkg.github.com/kharus/tptp-antlr-hack</url>
             <snapshots>
                 <enabled>true</enabled>
@@ -91,15 +85,47 @@
             <artifactId>stanford-corenlp</artifactId>
             <version>3.9.1</version>
         </dependency>
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
     </dependencies>
 
     <build>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <environmentVariables>
+                            <SIGMA_SRC>${project.basedir}</SIGMA_SRC>
+                            <SIGMA_HOME>${project.basedir}/../sigmakee-runtime</SIGMA_HOME>
+                        </environmentVariables>
+                    </configuration>
+                </plugin>
+            </plugins>
+            
+        </pluginManagement>
     </build>
 
 </project>

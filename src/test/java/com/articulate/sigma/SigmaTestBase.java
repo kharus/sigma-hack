@@ -5,6 +5,7 @@ import com.articulate.sigma.wordNet.WordNet;
 import com.google.common.collect.Lists;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class SigmaTestBase {
@@ -92,7 +93,7 @@ public class SigmaTestBase {
            // String contents = StringUtil.getContents(configFile);
             //contents = contents.replaceAll("\\$SIGMA_HOME", SIGMA_HOME);
             //xmlReader = new BufferedReader(new StringReader(path));
-            xmlReader = new BufferedReader(new FileReader(path));
+            xmlReader = new BufferedReader(new FileReader(path, StandardCharsets.UTF_8));
             //xmlReader = new BufferedReader(new InputStreamReader(theClass.getResourceAsStream(path)));
         }
         catch (Exception ex)  {
