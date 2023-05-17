@@ -46,7 +46,6 @@ jobs:
           tar -xf WordNet-3.0.tar.bz2
           cp WordNet-3.0/dict/* $SIGMA_HOME/KBs/WordNetMappings/
 
-      - uses: actions/checkout@v3
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
