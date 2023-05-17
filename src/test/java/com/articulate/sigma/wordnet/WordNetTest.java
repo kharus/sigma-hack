@@ -1,4 +1,4 @@
-package com.articulate.sigma.wordNet;
+package com.articulate.sigma.wordnet;
 
 import com.articulate.sigma.UnitTestBase;
 import org.junit.Test;

@@ -17,12 +17,12 @@
 /**/
 package com.articulate.sigma;
 
-import com.articulate.sigma.dataProc.Infrastructure;
+import com.articulate.sigma.dataproc.Infrastructure;
 import com.articulate.sigma.nlg.NLGUtils;
 import com.articulate.sigma.trans.SUMOtoTFAform;
 import com.articulate.sigma.utils.MapUtils;
 import com.articulate.sigma.utils.StringUtil;
-import com.articulate.sigma.wordNet.WordNet;
+import com.articulate.sigma.wordnet.WordNet;
 import com.google.common.collect.Sets;
 import org.json.simple.JSONAware;
 import org.json.simple.JSONValue;

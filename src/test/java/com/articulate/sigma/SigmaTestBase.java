@@ -1,7 +1,7 @@
 package com.articulate.sigma;
 
 import com.articulate.sigma.nlg.NLGUtils;
-import com.articulate.sigma.wordNet.WordNet;
+import com.articulate.sigma.wordnet.WordNet;
 import com.google.common.collect.Lists;
 
 import java.io.BufferedReader;

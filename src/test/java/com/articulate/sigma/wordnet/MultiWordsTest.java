@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  * MA  02111-1307 USA
  */
-package com.articulate.sigma.wordNet;
+package com.articulate.sigma.wordnet;
 
 import com.articulate.sigma.UnitTestBase;
 import com.google.common.collect.Lists;

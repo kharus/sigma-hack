@@ -16,7 +16,7 @@
  * Infosys LTD.
  */
 
-package com.articulate.sigma.wordNet;
+package com.articulate.sigma.wordnet;
 
 import com.articulate.sigma.KB;
 import com.articulate.sigma.KBmanager;

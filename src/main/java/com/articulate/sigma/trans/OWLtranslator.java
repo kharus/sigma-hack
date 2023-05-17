@@ -3,8 +3,8 @@ package com.articulate.sigma.trans;
 import com.articulate.sigma.*;
 import com.articulate.sigma.utils.AVPair;
 import com.articulate.sigma.utils.StringUtil;
-import com.articulate.sigma.wordNet.WordNet;
-import com.articulate.sigma.wordNet.WordNetUtilities;
+import com.articulate.sigma.wordnet.WordNet;
+import com.articulate.sigma.wordnet.WordNetUtilities;
 
 import java.io.*;
 import java.util.*;

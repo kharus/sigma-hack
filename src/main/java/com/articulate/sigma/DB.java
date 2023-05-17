@@ -13,12 +13,12 @@
 /**/
 package com.articulate.sigma;
 
-import com.articulate.sigma.dataProc.Hotel;
+import com.articulate.sigma.dataproc.Hotel;
 import com.articulate.sigma.utils.AVPair;
 import com.articulate.sigma.utils.StringUtil;
-import com.articulate.sigma.wordNet.WSD;
-import com.articulate.sigma.wordNet.WordNet;
-import com.articulate.sigma.wordNet.WordNetUtilities;
+import com.articulate.sigma.wordnet.WSD;
+import com.articulate.sigma.wordnet.WordNet;
+import com.articulate.sigma.wordnet.WordNetUtilities;
 
 import java.io.*;
 import java.net.MalformedURLException;

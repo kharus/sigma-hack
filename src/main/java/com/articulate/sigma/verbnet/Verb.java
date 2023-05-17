@@ -1,10 +1,10 @@
-package com.articulate.sigma.VerbNet;
+package com.articulate.sigma.verbnet;
 
 import com.articulate.sigma.SimpleElement;
 import com.articulate.sigma.utils.AVPair;
 import com.articulate.sigma.utils.StringUtil;
-import com.articulate.sigma.wordNet.WordNet;
-import com.articulate.sigma.wordNet.WordNetUtilities;
+import com.articulate.sigma.wordnet.WordNet;
+import com.articulate.sigma.wordnet.WordNetUtilities;
 
 import java.util.ArrayList;
 import java.util.HashMap;

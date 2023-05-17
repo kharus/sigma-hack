@@ -3,8 +3,8 @@ package com.articulate.sigma;
 import com.articulate.sigma.nlg.UnitNLGTestSuite;
 import com.articulate.sigma.trans.SUMOformulaToTPTPformulaTest;
 import com.articulate.sigma.trans.TPTP3ProofProcTest;
-import com.articulate.sigma.wordNet.MultiWordsTest;
-import com.articulate.sigma.wordNet.WordNetTest;
+import com.articulate.sigma.wordnet.MultiWordsTest;
+import com.articulate.sigma.wordnet.WordNetTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

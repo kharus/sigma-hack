@@ -19,7 +19,7 @@ import com.articulate.sigma.trans.TPTP3ProofProcessor;
 import com.articulate.sigma.trans.TPTPutil;
 import com.articulate.sigma.utils.FileUtil;
 import com.articulate.sigma.utils.StringUtil;
-import com.articulate.sigma.wordNet.WordNetUtilities;
+import com.articulate.sigma.wordnet.WordNetUtilities;
 import tptp_parser.TPTPFormula;
 
 import java.io.File;

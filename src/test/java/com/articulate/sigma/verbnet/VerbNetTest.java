@@ -1,9 +1,8 @@
 package com.articulate.sigma.verbnet;
 
 import com.articulate.sigma.IntegrationTestBase;
-import com.articulate.sigma.VerbNet.VerbNet;
 import com.articulate.sigma.utils.StringUtil;
-import com.articulate.sigma.wordNet.WordNet;
+import com.articulate.sigma.wordnet.WordNet;
 import org.junit.Test;
 
 import java.util.ArrayList;

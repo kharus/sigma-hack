@@ -19,7 +19,7 @@
  * MA  02111-1307 USA
  */
 
-package com.articulate.sigma.wordNet;
+package com.articulate.sigma.wordnet;
 
 import com.articulate.sigma.utils.StringUtil;
 import com.google.common.base.Strings;
