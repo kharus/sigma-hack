@@ -14,9 +14,7 @@ import static junit.framework.TestCase.assertEquals;
 
 public class WSDwKBtest extends IntegrationTestBase {
 
-    /**
-     *
-     */
+    
     @Before
     public void setUpInterpreter() throws IOException {
 
@@ -25,9 +23,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         System.out.println("INFO in WSDwKBtest.setUpInterpreter(): done initializing");
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testHyundai() {
 
@@ -41,9 +37,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         assertEquals("HyundaiEquus", sumo);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testWordWSD1() {
 
@@ -54,9 +48,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         assertEquals("India", sumo);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testWordWSD2() {
 
@@ -66,9 +58,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         assertEquals("201371756", s);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testSentenceWSD1() {
 
@@ -80,9 +70,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         assertEquals("201904930", senses.get(1));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testSentenceWSD2() {
 
@@ -96,9 +84,7 @@ public class WSDwKBtest extends IntegrationTestBase {
     }
 
 
-    /**
-     *
-     */
+    
     @Test
     public void testSentenceWSD3() {
 
@@ -112,9 +98,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         assertEquals("Computer", sumo);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testSentenceWSD4() {
 
@@ -128,9 +112,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         assertEquals("FourStrokeEngine", sumo);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testSentenceWSD5() {
 
@@ -145,9 +127,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         }
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testSentenceWSD6() {
 

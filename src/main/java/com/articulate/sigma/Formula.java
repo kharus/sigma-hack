@@ -233,9 +233,7 @@ public class Formula implements Comparable, Serializable {
         this.isGround = f.isGround;
     }
 
-    /**
-     *
-     */
+    
     public Formula() {
     }
 
@@ -900,9 +898,7 @@ public class Formula implements Comparable, Serializable {
         System.out.println(form.complexArgumentsToArrayList(0));
     }
 
-    /**
-     *
-     */
+    
     public static void showHelp() {
 
         System.out.println("KB class");
@@ -912,9 +908,7 @@ public class Formula implements Comparable, Serializable {
         System.out.println("  x \"<formula\" - format a formula");
     }
 
-    /**
-     *
-     */
+    
     public static void main(String[] args) throws IOException {
 
         System.out.println("INFO in Formula.main()");
@@ -964,9 +958,7 @@ public class Formula implements Comparable, Serializable {
         theFormula = f;
     }
 
-    /**
-     *
-     */
+    
     public void printCaches() {
 
         System.out.println("Formula: " + this);
@@ -1115,9 +1107,7 @@ public class Formula implements Comparable, Serializable {
         return new Formula(this);
     }
 
-    /**
-     *
-     */
+    
     public Formula deepCopy() {
         return copy();
     }
@@ -2831,34 +2821,26 @@ public class Formula implements Comparable, Serializable {
         return sb.toString();
     }
 
-    /**
-     *
-     */
+    
     public boolean isModal(KB kb) {
 
         return (this.isHigherOrder(kb) && this.getFormula().contains("modalAttribute"));
     }
 
-    /**
-     *
-     */
+    
     public boolean isEpistemic(KB kb) {
 
         return (this.isHigherOrder(kb) &&
                 (this.getFormula().contains("knows") || this.getFormula().contains("believes")));
     }
 
-    /**
-     *
-     */
+    
     public boolean isTemporal(KB kb) {
 
         return (this.isHigherOrder(kb) && this.getFormula().contains("holdsDuring"));
     }
 
-    /**
-     *
-     */
+    
     public boolean isOtherHOL(KB kb) {
 
         return (this.isHigherOrder(kb) && !this.isTemporal(kb) &&
@@ -3211,17 +3193,13 @@ public class Formula implements Comparable, Serializable {
         return newFormula;
     }
 
-    /**
-     *
-     */
+    
     public Formula negate() {
 
         return new Formula("(not " + theFormula + ")");
     }
 
-    /**
-     *
-     */
+    
     static class SortByLine implements Comparator<Formula> {
 
         public int compare(Formula a, Formula b) {

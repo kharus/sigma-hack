@@ -238,9 +238,7 @@ public class RowVars {
         return ar;
     }
 
-    /**
-     *
-     */
+    
     private static HashMap<String, HashSet<String>> getRowVarRelLogOps(Formula f, String pred) {
 
         if (DEBUG) System.out.println("Info in RowVars.getRowVarRelLogOps(): pred: " + pred + " f: " + f);
@@ -416,9 +414,7 @@ public class RowVars {
         return formresult;
     }
 
-    /**
-     *
-     */
+    
     public static void main(String[] args) {
 
         //String fstring = "(=> (and (subrelation ?REL1 ?REL2) (?REL1 @ROW)) (?REL2 @ROW))";

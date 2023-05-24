@@ -12,22 +12,16 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-/**
- *
- */
+
 public class TPTP3ProofProcTest extends UnitTestBase {
 
-    /**
-     *
-     */
+    
     @BeforeClass
     public static void init() {
 
     }
 
-    /**
-     *
-     */
+    
     public void test(String input, String expected, String label) {
 
         System.out.println("=============================");
@@ -43,9 +37,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testGetPrologArgs1() {
 
@@ -57,9 +49,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         test(input, expected, "testGetPrologArgs1");
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testGetPrologArgs2() {
 
@@ -73,9 +63,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         test(input, expected, "testGetPrologArgs2");
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testGetPrologArgs3() {
 
@@ -90,9 +78,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         test(input, expected, "testGetPrologArgs3");
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testGetPrologArgs4() {
 
@@ -107,9 +93,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         test(input, expected, "testGetPrologArgs4");
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testParseProofStep() {
 
@@ -156,9 +140,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         assertTrue(result.contains("inhabits"));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testParseAnswers() {
 
@@ -193,9 +175,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testExtractAnswerClause() {
 
@@ -220,9 +200,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testProcessAnswersFromProof() {
 

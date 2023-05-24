@@ -34,9 +34,7 @@ public class Verb {
     public HashSet<Verb> subclasses = new HashSet<>();
     public HashSet<Frame> frames = new HashSet<>();
 
-    /**
-     *
-     */
+    
     public static ArrayList<AVPair> readSelrestrs(SimpleElement selrestrs) {
 
         ArrayList<AVPair> result = new ArrayList<>();
@@ -62,9 +60,7 @@ public class Verb {
         return result;
     }
 
-    /**
-     *
-     */
+    
     public Member readMember(SimpleElement mem) {
 
         Member m = new Member();
@@ -90,9 +86,7 @@ public class Verb {
         return m;
     }
 
-    /**
-     *
-     */
+    
     public void readMembers(SimpleElement verb) {
 
         if (debug) System.out.println("VerbNet.readMembers()");
@@ -107,9 +101,7 @@ public class Verb {
         }
     }
 
-    /**
-     *
-     */
+    
     public Role readThemeRole(SimpleElement themrole) {
 
         Role r = new Role();
@@ -126,9 +118,7 @@ public class Verb {
         return r;
     }
 
-    /**
-     *
-     */
+    
     public void readThemeRoles(SimpleElement themrole) {
 
         if (debug) System.out.println("VerbNet.readThemeRoles()");
@@ -144,9 +134,7 @@ public class Verb {
         }
     }
 
-    /**
-     *
-     */
+    
     public void readFrames(SimpleElement verb) {
 
         if (debug) System.out.println("VerbNet.readFrames(): read frames ");
@@ -163,9 +151,7 @@ public class Verb {
         }
     }
 
-    /**
-     *
-     */
+    
     public void readSubclasses(SimpleElement verb) {
 
         if (debug) System.out.println("VerbNet.readSubclasses()");
@@ -179,9 +165,7 @@ public class Verb {
         }
     }
 
-    /**
-     *
-     */
+    
     public Verb readVerb(SimpleElement verb) {
 
         Verb v = new Verb();

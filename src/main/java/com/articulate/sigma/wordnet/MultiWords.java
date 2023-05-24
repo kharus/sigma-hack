@@ -42,9 +42,7 @@ public class MultiWords implements Serializable {
      */
     public Multimap<String, String> multiWord = HashMultimap.create();
 
-    /**
-     *
-     */
+    
     public static String rootFormOf(String word) {
 
         String rootWord = word;
@@ -87,9 +85,7 @@ public class MultiWords implements Serializable {
         addMultiWord(word, '_');
     }
 
-    /**
-     *
-     */
+    
     public String findMultiWord(List<String> text) {
 
         List<String> synset = new ArrayList<>();

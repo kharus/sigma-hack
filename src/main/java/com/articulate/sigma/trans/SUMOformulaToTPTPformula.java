@@ -16,16 +16,12 @@ public class SUMOformulaToTPTPformula {
     public static StringBuffer qlist;
     public Formula _f = null;
 
-    /**
-     *
-     */
+    
     public SUMOformulaToTPTPformula() {
 
     }
 
-    /**
-     *
-     */
+    
     public SUMOformulaToTPTPformula(String l) {
 
         lang = l;
@@ -206,9 +202,7 @@ public class SUMOformulaToTPTPformula {
         }
     }
 
-    /**
-     *
-     */
+    
     private static void incrementTOS(Stack<Integer> countStack) {
 
         countStack.push(Integer.valueOf(countStack.pop() + 1));
@@ -228,9 +222,7 @@ public class SUMOformulaToTPTPformula {
         }
     }
 
-    /**
-     *
-     */
+    
     private static String processQuant(Formula f, Formula car, String op,
                                        ArrayList<String> args) {
 
@@ -264,9 +256,7 @@ public class SUMOformulaToTPTPformula {
         }
     }
 
-    /**
-     *
-     */
+    
     private static String processConjDisj(Formula f, Formula car,
                                           ArrayList<String> args) {
 
@@ -287,9 +277,7 @@ public class SUMOformulaToTPTPformula {
         return sb.toString();
     }
 
-    /**
-     *
-     */
+    
     public static String processLogOp(Formula f, Formula car, ArrayList<String> args) {
 
         String op = car.getFormula();
@@ -335,9 +323,7 @@ public class SUMOformulaToTPTPformula {
         return "";
     }
 
-    /**
-     *
-     */
+    
     public static String processEquals(Formula f, Formula car, ArrayList<String> args) {
 
         String op = car.getFormula();
@@ -353,9 +339,7 @@ public class SUMOformulaToTPTPformula {
         return "";
     }
 
-    /**
-     *
-     */
+    
     public static String processRecurse(Formula f) {
 
         if (debug) System.out.println("SUMOformulaToTPTPformula.processRecurse(): " + f);

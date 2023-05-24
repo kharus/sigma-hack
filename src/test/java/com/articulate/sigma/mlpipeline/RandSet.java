@@ -63,23 +63,17 @@ public class RandSet {
         return r;
     }
 
-    /**
-     *
-     */
+    
     public int size() {
         return terms.size();
     }
 
-    /**
-     *
-     */
+    
     public void clearReturns() {
         returned.clear();
     }
 
-    /**
-     *
-     */
+    
     public String getNext() {
 
         if (this.terms.size() < 1) {

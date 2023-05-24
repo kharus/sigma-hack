@@ -18,9 +18,7 @@ public class THFtest extends IntegrationTestBase {
     private static THF thf = null;
     private static KB kb = null;
 
-    /**
-     *
-     */
+    
     @BeforeClass
     public static void init() {
 
@@ -29,9 +27,7 @@ public class THFtest extends IntegrationTestBase {
         kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
     }
 
-    /**
-     *
-     */
+    
     public void test(String msg, String f, String expected) {
 
         System.out.println();
@@ -46,9 +42,7 @@ public class THFtest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testTrans1() {
 

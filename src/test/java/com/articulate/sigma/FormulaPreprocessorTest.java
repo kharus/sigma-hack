@@ -30,9 +30,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class FormulaPreprocessorTest extends UnitTestBase {
 
-    /**
-     *
-     */
+    
     // TODO: Technically, this should to in the FormulaTest class, but the gatherRelationsWithArgTypes( ) method requires a KB
     // and none of the other tests in that class do. Maybe move the method to FormulaPreprocessor--it's the only Formula method
     // requiring a KB.
@@ -59,9 +57,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertEquals(expectedMap, actualMap);
     }
 
-    /**
-     *
-     */
+    
     // FIXME: test is waiting completion of Formula.logicallyEquals()
     @Ignore
     @Test
@@ -95,9 +91,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(expected.logicallyEquals(actual));
     }
 
-    /**
-     *
-     */
+    
     // FIXME: test is waiting completion of Formula.logicallyEquals()
     @Ignore
     @Test
@@ -127,9 +121,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(expected.logicallyEquals(actual));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testMergeToMap1() {
 
@@ -163,9 +155,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertEquals(expectedMap, actualMap);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void test4() {
 
@@ -202,9 +192,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(fExpected.deepEquals(fActual));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void test5() {
 
@@ -241,9 +229,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(fExpected.deepEquals(fActual));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void test6() {
 
@@ -274,9 +260,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void test7() {
 
@@ -307,9 +291,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertEquals(expected, actual.iterator().next().toString());
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testAbsolute() {
 
@@ -331,9 +313,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertEquals(expected, actual.toString());
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testInstantiatePredStmt4() {
 
@@ -362,9 +342,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(actual.size() > expectedSize);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testMinValuePreprocess() {
 
@@ -397,9 +375,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(actual.size() > expectedSize);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testArgNumsPreprocess() {
 
@@ -436,9 +412,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         System.out.println("testArgNumsPreprocess: forms: " + forms);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testTVRPreprocess() {
 
@@ -502,9 +476,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(actual.size() > expectedSize);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testFunctionVariable() {
 

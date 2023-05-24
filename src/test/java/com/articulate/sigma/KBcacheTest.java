@@ -10,9 +10,7 @@ import static org.junit.Assert.*;
 
 public class KBcacheTest extends IntegrationTestBase {
 
-    /**
-     *
-     */
+    
     @BeforeClass
     public static void requiredKB() {
 
@@ -26,9 +24,7 @@ public class KBcacheTest extends IntegrationTestBase {
         }
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsParentOf1() {
 
@@ -41,9 +37,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(SigmaTestBase.kb.kbCache.parents.get("subclass").get("Shirt").contains("WearableItem"));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testBuildParents() {
 
@@ -65,9 +59,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testBuildChildren() {
 
@@ -106,9 +98,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testBuildChildren2() {
 
@@ -139,9 +129,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testTransitiveRelations() {
 
@@ -175,9 +163,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsChildOf1() {
 
@@ -187,9 +173,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(SigmaTestBase.kb.isChildOf("CitizenryFn", "Function"));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsChildOf2() {
 
@@ -199,9 +183,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(SigmaTestBase.kb.isChildOf("Attorney", "Attribute"));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsChildOf3() {
 
@@ -213,9 +195,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(SigmaTestBase.kb.isChildOf("Shirt", "WearableItem"));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsChildOf4() {
 
@@ -227,9 +207,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertFalse(SigmaTestBase.kb.isChildOf("Shirt", "Process"));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsChildOf5() {
 
@@ -237,9 +215,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(SigmaTestBase.kb.isChildOf("Integer", "RealNumber"));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsChildOf6() {
 
@@ -248,9 +224,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
 
-    /**
-     *
-     */
+    
     @Test
     public void testTransitiveRelations2() {
 
@@ -306,9 +280,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(kb.kbCache.checkDisjoint(kb, classes));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testSignature() {
 
@@ -326,9 +298,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertEquals(actual, expected);
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testTransInst() {
 
@@ -341,9 +311,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(cache.transInstOf("Anger", "Entity"));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testRealization() {
 
@@ -359,9 +327,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(cache.isInstanceOf("realization", "AntisymmetricRelation"));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testFunctions() {
 
@@ -372,9 +338,7 @@ public class KBcacheTest extends IntegrationTestBase {
 
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testPredicates() {
 

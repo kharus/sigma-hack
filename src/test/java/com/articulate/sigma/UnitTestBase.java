@@ -32,9 +32,7 @@ public class UnitTestBase extends SigmaTestBase {
         xmlReader = SigmaTestBase.getXmlReader(CONFIG_FILE_PATH, CLASS);
     }
 
-    /**
-     *
-     */
+    
     @BeforeClass
     public static void setup() {
 
@@ -49,9 +47,7 @@ public class UnitTestBase extends SigmaTestBase {
         }
     }
 
-    /**
-     *
-     */
+    
     @AfterClass
     public static void checkKBCount() {
 

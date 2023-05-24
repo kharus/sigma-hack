@@ -8,9 +8,7 @@ import static org.junit.Assert.*;
 
 public class KbIntegrationTest extends IntegrationTestBase {
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsChildOf3() {
 
@@ -23,18 +21,14 @@ public class KbIntegrationTest extends IntegrationTestBase {
         assertTrue(SigmaTestBase.kb.isSubclass("Shirt", "WearableItem"));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testAskWithTwoRestrictionsDirect2() {
         ArrayList<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Boy", 2, "Man");
         assertNotEquals(0, actual.size());
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsSubclass1() {
 
@@ -46,9 +40,7 @@ public class KbIntegrationTest extends IntegrationTestBase {
         assertTrue(SigmaTestBase.kb.isSubclass("Boy", "Entity"));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsHigherOrder() {
 
@@ -62,9 +54,7 @@ public class KbIntegrationTest extends IntegrationTestBase {
         assertTrue(f.isHigherOrder(SigmaTestBase.kb));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsHigherOrder2() {
 
@@ -89,9 +79,7 @@ public class KbIntegrationTest extends IntegrationTestBase {
         assertFalse(f.isHigherOrder(SigmaTestBase.kb));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsHigherOrder3() {
 
@@ -112,9 +100,7 @@ public class KbIntegrationTest extends IntegrationTestBase {
         assertFalse(f.isHigherOrder(SigmaTestBase.kb));
     }
 
-    /**
-     *
-     */
+    
     @Test
     public void testIsHigherOrder4() {
 
