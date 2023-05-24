@@ -7,26 +7,17 @@ public class Derivation implements Serializable {
     public String operator = "input";
     public ArrayList<Formula> parents = new ArrayList<>();
 
-    /**
-     *
-     */
-    public Derivation() {
+        public Derivation() {
     }
 
-    /**
-     *
-     */
-    public Derivation(String op, ArrayList<Formula> par) {
+        public Derivation(String op, ArrayList<Formula> par) {
 
         operator = op;
         if (par != null)
             parents.addAll(par);
     }
 
-    /**
-     *
-     */
-    public Derivation deepCopy() {
+        public Derivation deepCopy() {
 
         Derivation result = new Derivation();
         result.operator = this.operator;

@@ -14,10 +14,7 @@ import static org.junit.Assert.assertTrue;
 public class VerbNetTest extends IntegrationTestBase {
 
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTerm() {
 
         String term = "SocialInteraction";
@@ -28,10 +25,7 @@ public class VerbNetTest extends IntegrationTestBase {
         assertFalse(StringUtil.emptyString(verbs));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testWordList() {
 
         TreeMap<String, ArrayList<String>> tm = WordNet.wn.getSenseKeysFromWord("object");

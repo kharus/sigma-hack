@@ -31,10 +31,7 @@ import static org.junit.Assert.assertEquals;
 
 public class MultiWordsTest extends UnitTestBase {
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVerbMultiWordKickBucket1() {
 
         List<String> input = Lists.newArrayList("kick", "the", "bucket");
@@ -44,10 +41,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals("200358431", s);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVerbMultiWordKickBucket2() {
 
         List<String> input = Lists.newArrayList("kick", "the", "bucket", "down", "the", "road");
@@ -57,10 +51,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals("200358431", s);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVerbMultiWordCatsAndDogs1() {
 
         List<String> input = Lists.newArrayList("many", "raining", "cats", "and", "dogs", "and", "sheep");
@@ -71,10 +62,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals(0, synset.size());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVerbMultiWordCatsAndDogs2() {
 
         List<String> input = Lists.newArrayList("many", "raining", "cats", "and", "dogs", "and", "sheep");
@@ -85,10 +73,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals(1, synset.size());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVerbMultiWordCatsAndDogs3() {
 
         ArrayList<String> input = Lists.newArrayList("cats", "and", "dogs", "and", "sheep");
@@ -100,10 +85,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals("202758033", synset.get(0));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVerbMultiWordCatsAndDogs4() {
 
         ArrayList<String> input = Lists.newArrayList("cats", "and", "dogs", "and", "sheep");
@@ -115,10 +97,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals(0, synset.size());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVerbMultiWordCatsAndDogs5() {
 
         ArrayList<String> input = Lists.newArrayList("raining", "cats", "and", "dogs", "and", "sheep");
@@ -130,10 +109,7 @@ public class MultiWordsTest extends UnitTestBase {
         //WordNet.wn.getSUMO
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testNounMultiWord1() {
 
         ArrayList<String> input = Lists.newArrayList("father");
@@ -145,10 +121,7 @@ public class MultiWordsTest extends UnitTestBase {
         assertEquals(0, synset.size());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testNounMultiWord2() {
 
         ArrayList<String> input = Lists.newArrayList("father");

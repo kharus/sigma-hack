@@ -28,10 +28,7 @@ public class SimpleDOMParser {
     private SimpleElement currentElement;
     private boolean skipProlog = true;
 
-    /**
-     *
-     */
-    public SimpleDOMParser() {
+        public SimpleDOMParser() {
 
         elements = new Stack();
         currentElement = null;
@@ -92,10 +89,7 @@ public class SimpleDOMParser {
         return input;
     }
 
-    /**
-     *
-     */
-    public static void main(String[] args) {
+        public static void main(String[] args) {
 
         SimpleDOMParser sdp = new SimpleDOMParser();
         String fname = "";
@@ -128,10 +122,7 @@ public class SimpleDOMParser {
         skipProlog = b;
     }
 
-    /**
-     *
-     */
-    public SimpleElement parse(Reader reader) throws IOException {
+        public SimpleElement parse(Reader reader) throws IOException {
 
         this.reader = reader;
         if (skipProlog) skipPrologs();          // skip xml declaration or DocTypes
@@ -244,10 +235,7 @@ public class SimpleDOMParser {
         }
     }
 
-    /**
-     *
-     */
-    private int peek() throws IOException {
+        private int peek() throws IOException {
 
         reader.mark(1);
         int result = reader.read();
@@ -256,10 +244,7 @@ public class SimpleDOMParser {
         return result;
     }
 
-    /**
-     *
-     */
-    private void peek(int[] buffer) throws IOException {
+        private void peek(int[] buffer) throws IOException {
 
         reader.mark(buffer.length);
         for (int i = 0; i < buffer.length; i++) {
@@ -268,20 +253,14 @@ public class SimpleDOMParser {
         reader.reset();
     }
 
-    /**
-     *
-     */
-    private void skipWhitespace() throws IOException {
+        private void skipWhitespace() throws IOException {
 
         while (Character.isWhitespace((char) peek())) {
             reader.read();
         }
     }
 
-    /**
-     *
-     */
-    private void skipProlog() throws IOException {
+        private void skipProlog() throws IOException {
 
         reader.skip(2);                        // skip "<?" or "<!"
         while (true) {
@@ -296,10 +275,7 @@ public class SimpleDOMParser {
         }
     }
 
-    /**
-     *
-     */
-    private void skipPrologs() throws IOException {
+        private void skipPrologs() throws IOException {
 
         while (true) {
             skipWhitespace();
@@ -314,10 +290,7 @@ public class SimpleDOMParser {
         }
     }
 
-    /**
-     *
-     */
-    private String readTag() throws IOException {
+        private String readTag() throws IOException {
 
         //skipWhitespace();
         StringBuffer sb = new StringBuffer();
@@ -340,10 +313,7 @@ public class SimpleDOMParser {
         return sb.toString();
     }
 
-    /**
-     *
-     */
-    private String readText() throws IOException {
+        private String readText() throws IOException {
 
         StringBuffer sb = new StringBuffer();
         int[] next = new int[cdata_start.length];
@@ -366,10 +336,7 @@ public class SimpleDOMParser {
         return sb.toString();
     }
 
-    /**
-     *
-     */
-    private boolean compareIntArrays(int[] a1, int[] a2) {
+        private boolean compareIntArrays(int[] a1, int[] a2) {
 
         if (a1.length != a2.length)
             return false;

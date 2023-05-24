@@ -11,10 +11,7 @@ import static org.junit.Assert.*;
 
 public class KBTest extends UnitTestBase {
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testMostSpecificTerm() {
 
         String t = SigmaTestBase.kb.mostSpecificTerm(Arrays.asList("Entity", "RealNumber"));
@@ -22,10 +19,7 @@ public class KBTest extends UnitTestBase {
         assertEquals("RealNumber", t);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testAskWithTwoRestrictionsDirect1() {
 
         ArrayList<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Driving", 2, "Guiding");
@@ -54,18 +48,12 @@ public class KBTest extends UnitTestBase {
         assertEquals(0, actual.size());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testIsSubclass2() {
         assertTrue(SigmaTestBase.kb.isSubclass("Driving", "Process"));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRemoveSuperClassesEmptyInput() {
 
         Set<String> inputSet = Sets.newHashSet();
@@ -74,10 +62,7 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRemoveSuperClassesOneElementInput() {
 
         Set<String> inputSet = Sets.newHashSet("nonsenseWord");
@@ -86,10 +71,7 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRemoveSuperClassesTwoElementIdenticalInput1() {
 
         Set<String> inputSet = Sets.newHashSet("Entity", "Entity");
@@ -98,10 +80,7 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRemoveSuperClassesTwoElementIdenticalInput2() {
 
         Set<String> inputSet = Sets.newHashSet("Process", "Process");
@@ -110,10 +89,7 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRemoveSuperClassesTwoElementIdenticalInput3() {
 
         Set<String> inputSet = Sets.newHashSet("Physical", "Physical");
@@ -122,10 +98,7 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRemoveSuperClassesTwoElementInput() {
 
         Set<String> inputSet = Sets.newHashSet("Man", "Human");
@@ -134,10 +107,7 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRemoveSuperClassesTwoElementInputReverse() {
 
         Set<String> inputSet = Sets.newHashSet("Human", "Man");
@@ -146,10 +116,7 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRemoveSuperClassesTwoElementInputNoSubclass() {
 
         Set<String> inputSet = Sets.newHashSet("Man", "Woman");
@@ -158,10 +125,7 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRemoveSuperClassesFiveElementInput() {
 
         Set<String> inputSet = Sets.newHashSet("Object", "CorpuscularObject", "Woman", "Human", "Man");

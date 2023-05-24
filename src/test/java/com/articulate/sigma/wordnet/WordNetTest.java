@@ -12,10 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 public class WordNetTest extends UnitTestBase {
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVerbRootFormGoing() {
 
         String actual = WordNet.wn.verbRootForm("going", "going");
@@ -23,10 +20,7 @@ public class WordNetTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVerbRootFormDriving() {
 
         String actual = WordNet.wn.verbRootForm("driving", "driving");
@@ -34,10 +28,7 @@ public class WordNetTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testGetSingularFormGo() {
 
         String actual = WordNetUtilities.verbPlural("go");
@@ -45,10 +36,7 @@ public class WordNetTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testGetSingularFormDrive() {
 
         String actual = WordNetUtilities.verbPlural("drive");
@@ -56,19 +44,13 @@ public class WordNetTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testIsValidKey() {
 
         assertTrue(WordNetUtilities.isValidKey("stick_together_VB_1"));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void checkWordsToSenses() {
 
         List<String> runs = WordNet.wn.wordsToSenseKeys.get("run");

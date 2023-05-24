@@ -14,10 +14,7 @@ import static junit.framework.TestCase.assertEquals;
 
 public class WSDwKBtest extends IntegrationTestBase {
 
-    /**
-     *
-     */
-    @Before
+        @Before
     public void setUpInterpreter() throws IOException {
 
         KBmanager.getMgr().initializeOnce();
@@ -25,10 +22,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         System.out.println("INFO in WSDwKBtest.setUpInterpreter(): done initializing");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testHyundai() {
 
         System.out.println("---------------------------");
@@ -41,10 +35,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         assertEquals("HyundaiEquus", sumo);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testWordWSD1() {
 
         System.out.println("---------------------------");
@@ -54,10 +45,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         assertEquals("India", sumo);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testWordWSD2() {
 
         System.out.println("---------------------------");
@@ -66,10 +54,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         assertEquals("201371756", s);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testSentenceWSD1() {
 
         System.out.println("---------------------------");
@@ -80,10 +65,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         assertEquals("201904930", senses.get(1));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testSentenceWSD2() {
 
         System.out.println("---------------------------");
@@ -96,10 +78,7 @@ public class WSDwKBtest extends IntegrationTestBase {
     }
 
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testSentenceWSD3() {
 
         System.out.println("---------------------------");
@@ -112,10 +91,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         assertEquals("Computer", sumo);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testSentenceWSD4() {
 
         System.out.println("---------------------------");
@@ -128,10 +104,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         assertEquals("FourStrokeEngine", sumo);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testSentenceWSD5() {
 
         System.out.println("---------------------------");
@@ -145,10 +118,7 @@ public class WSDwKBtest extends IntegrationTestBase {
         }
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testSentenceWSD6() {
 
         System.out.println("---------------------------");

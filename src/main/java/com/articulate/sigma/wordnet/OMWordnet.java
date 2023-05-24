@@ -189,10 +189,7 @@ public class OMWordnet implements Serializable {
         }
     }
 
-    /**
-     *
-     */
-    public static String codeToLanguage(String code) {
+        public static String codeToLanguage(String code) {
 
         if (lcodes.contains(code))
             return lnames.get(lcodes.indexOf(code));
@@ -200,10 +197,7 @@ public class OMWordnet implements Serializable {
             return "";
     }
 
-    /**
-     *
-     */
-    public static String languageToCode(String lang) {
+        public static String languageToCode(String lang) {
 
         if (lnames.contains(lang))
             return lcodes.get(lnames.indexOf(lang));
@@ -339,10 +333,7 @@ public class OMWordnet implements Serializable {
         System.out.println();
     }
 
-    /**
-     *
-     */
-    public static void generateOMWOWLformat(KB kb) {
+        public static void generateOMWOWLformat(KB kb) {
 
         String line;
         //System.out.println("INFO in WordNetUtilities.generateOMWformat(): writing file ");
@@ -405,10 +396,7 @@ public class OMWordnet implements Serializable {
         return result.toString();
     }
 
-    /**
-     *
-     */
-    private static String formatArrayList(ArrayList<String> al) {
+        private static String formatArrayList(ArrayList<String> al) {
 
         if (al == null) return "";
         StringBuffer sb = new StringBuffer();
@@ -419,10 +407,7 @@ public class OMWordnet implements Serializable {
         return sb.toString();
     }
 
-    /**
-     *
-     */
-    public static String displaySynset(String kbName, String synset, String params) {
+        public static String displaySynset(String kbName, String synset, String params) {
 
         StringBuffer sb = new StringBuffer();
         sb.append("<table>");

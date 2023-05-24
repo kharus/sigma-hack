@@ -6,10 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class FormulaUtilTest {
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testToProlog() {
 
         String stmt = "(birthplace ?animal ?LOC)";

@@ -17,10 +17,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class RowVarTest extends UnitTestBase {
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindRowVars() {
 
         System.out.println("\n=========== testFindRowVars =================");
@@ -39,10 +36,7 @@ public class RowVarTest extends UnitTestBase {
         assertTrue(vars.contains("@ARGS") && vars.size() == 1);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRowVarRels() {
 
         System.out.println("\n=========== testRowVarRels =================");
@@ -69,10 +63,7 @@ public class RowVarTest extends UnitTestBase {
         assertTrue(rels.get("@ARGS").contains("links"));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testLinks() {
 
         System.out.println("\n=========== testLinks =================");
@@ -104,10 +95,7 @@ public class RowVarTest extends UnitTestBase {
         assertEquals(3, rowVarMaxArities.get("@ARGS").intValue());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testLinks2() {
 
         System.out.println("\n=========== testLinks2 =================");
@@ -143,10 +131,7 @@ public class RowVarTest extends UnitTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRowVarExp() {
 
         System.out.println("\n=========== testRowVarExp =================");

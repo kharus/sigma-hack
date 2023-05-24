@@ -50,10 +50,7 @@ public class Clausifier {
     private static final int GENSYM_COUNTER = 0;
     private Formula thisFormula = null;
 
-    /**
-     *
-     */
-    public Clausifier(String s) {
+        public Clausifier(String s) {
 
         thisFormula = new Formula();
         thisFormula.read(s);
@@ -574,10 +571,7 @@ public class Clausifier {
      }
      */
 
-    /**
-     *
-     */
-    private static void testRemoveImpEq() {
+        private static void testRemoveImpEq() {
 
         System.out.println();
         System.out.println("================== testRemoveImpEq ======================");
@@ -611,10 +605,7 @@ public class Clausifier {
         System.out.println();
     }
 
-    /**
-     *
-     */
-    private static void testMoveQuantifiersLeft() {
+        private static void testMoveQuantifiersLeft() {
 
         System.out.println();
         System.out.println("================== testMoveQuantifiersLeft ======================");
@@ -664,10 +655,7 @@ public class Clausifier {
     */
     }
 
-    /**
-     *
-     */
-    private static void testMoveNegationIn() {
+        private static void testMoveNegationIn() {
 
         System.out.println();
         System.out.println("================== testMoveNegationIn ======================");
@@ -733,10 +721,7 @@ public class Clausifier {
 
     }
 
-    /**
-     *
-     */
-    private static void testStandardizeVariables() {
+        private static void testStandardizeVariables() {
 
         System.out.println();
         System.out.println("================== testStandardizeVariables ======================");
@@ -756,10 +741,7 @@ public class Clausifier {
         */
     }
 
-    /**
-     *
-     */
-    private static void testSkolemization() {
+        private static void testSkolemization() {
 
         System.out.println();
         System.out.println("================== testSkolemization ======================");
@@ -770,10 +752,7 @@ public class Clausifier {
         System.out.println();
     }
 
-    /**
-     *
-     */
-    private static void testDistribute() {
+        private static void testDistribute() {
 
         System.out.println();
         System.out.println("================== testDistribute ======================");
@@ -804,10 +783,7 @@ public class Clausifier {
         System.out.println();
     }
 
-    /**
-     *
-     */
-    private static void testClausificationSteps(String s) {
+        private static void testClausificationSteps(String s) {
 
         System.out.println();
         System.out.println("================== testClausification ======================");
@@ -858,19 +834,13 @@ public class Clausifier {
         System.out.println("after separation: " + forms);
     }
 
-    /**
-     *
-     */
-    private static void testClausification() {
+        private static void testClausification() {
 
         //testClausificationSteps("((((![X]:a(X))|b(X))|(?[X]:(?[Y]:p(X,f(Y)))))<=>q(g(a),X))");
         testClausificationSteps("(![Fluent]:(![Time]:(((holdsAt(Fluent, Time)&(~releasedAt(Fluent, plus(Time, n1))))&(~(?[Event]:(happens(Event, Time)&terminates(Event, Fluent, Time)))))=>holdsAt(Fluent, plus(Time, n1)))))).");
     }
 
-    /**
-     *
-     */
-    private static void testClausificationSimple() {
+        private static void testClausificationSimple() {
 
         System.out.println();
         System.out.println("================== testClausificationSimple ======================");
@@ -892,10 +862,7 @@ public class Clausifier {
         System.out.println(result);
     }
 
-    /**
-     *
-     */
-    public static void main(String[] args) {
+        public static void main(String[] args) {
 
         //testRemoveImpEq();
         //testMoveNegationIn();
@@ -908,10 +875,7 @@ public class Clausifier {
         //testClausifier(args);
     }
 
-    /**
-     *
-     */
-    public String toString() {
+        public String toString() {
 
         return thisFormula.getFormula();
     }

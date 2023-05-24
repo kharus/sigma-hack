@@ -42,10 +42,7 @@ public class FormulaPreprocessorIntegrationTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindTypes2() {
 
         Map<String, HashSet<String>> expected = Maps.newHashMap();
@@ -69,10 +66,7 @@ public class FormulaPreprocessorIntegrationTest extends IntegrationTestBase {
         assertEquals(expected, actualMap);
     }
 
-    /**
-     *
-     */
-    @Ignore
+        @Ignore
     @Test
     public void testAddTypes3() {
 
@@ -97,10 +91,7 @@ public class FormulaPreprocessorIntegrationTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesPlaintiff() {
 
         String stmt = "(exists (?P ?H)\n" +

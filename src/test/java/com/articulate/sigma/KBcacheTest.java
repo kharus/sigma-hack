@@ -10,10 +10,7 @@ import static org.junit.Assert.*;
 
 public class KBcacheTest extends IntegrationTestBase {
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void requiredKB() {
 
         List<String> reqFiles =
@@ -26,10 +23,7 @@ public class KBcacheTest extends IntegrationTestBase {
         }
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testIsParentOf1() {
 
         KBcache cache = SigmaTestBase.kb.kbCache;
@@ -41,10 +35,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(SigmaTestBase.kb.kbCache.parents.get("subclass").get("Shirt").contains("WearableItem"));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testBuildParents() {
 
         KBcache cache = SigmaTestBase.kb.kbCache;
@@ -65,10 +56,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testBuildChildren() {
 
         System.out.println("\n============= testBuildChildren ==================");
@@ -106,10 +94,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testBuildChildren2() {
 
         System.out.println("\n============= testBuildChildren2 ==================");
@@ -139,10 +124,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTransitiveRelations() {
 
         System.out.println("\n============= testTransitiveRelations ==================");
@@ -175,10 +157,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testIsChildOf1() {
 
         KBcache cache = SigmaTestBase.kb.kbCache;
@@ -187,10 +166,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(SigmaTestBase.kb.isChildOf("CitizenryFn", "Function"));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testIsChildOf2() {
 
         KBcache cache = SigmaTestBase.kb.kbCache;
@@ -199,10 +175,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(SigmaTestBase.kb.isChildOf("Attorney", "Attribute"));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testIsChildOf3() {
 
         KBcache cache = SigmaTestBase.kb.kbCache;
@@ -213,10 +186,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(SigmaTestBase.kb.isChildOf("Shirt", "WearableItem"));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testIsChildOf4() {
 
         KBcache cache = SigmaTestBase.kb.kbCache;
@@ -227,20 +197,14 @@ public class KBcacheTest extends IntegrationTestBase {
         assertFalse(SigmaTestBase.kb.isChildOf("Shirt", "Process"));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testIsChildOf5() {
 
         KBcache cache = SigmaTestBase.kb.kbCache;
         assertTrue(SigmaTestBase.kb.isChildOf("Integer", "RealNumber"));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testIsChildOf6() {
 
         KBcache cache = SigmaTestBase.kb.kbCache;
@@ -248,10 +212,7 @@ public class KBcacheTest extends IntegrationTestBase {
     }
 
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTransitiveRelations2() {
 
         System.out.println("\n============= testTransitiveRelations2 ==================");
@@ -306,10 +267,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(kb.kbCache.checkDisjoint(kb, classes));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testSignature() {
 
         System.out.println("\n============= testSignature ==================");
@@ -326,10 +284,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertEquals(actual, expected);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTransInst() {
 
         System.out.println("\n============= testTransInst ==================");
@@ -341,10 +296,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(cache.transInstOf("Anger", "Entity"));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRealization() {
 
         System.out.println("\n============= testRealization ==================");
@@ -359,10 +311,7 @@ public class KBcacheTest extends IntegrationTestBase {
         assertTrue(cache.isInstanceOf("realization", "AntisymmetricRelation"));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFunctions() {
 
         System.out.println("\n============= testFunctions ==================");
@@ -372,10 +321,7 @@ public class KBcacheTest extends IntegrationTestBase {
 
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testPredicates() {
 
         System.out.println("\n============= testPredicates ==================");

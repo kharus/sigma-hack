@@ -41,10 +41,7 @@ public class IntegrationTestBase extends SigmaTestBase {
 //        xmlReader = SigmaTestBase.getXmlReader(CONFIG_FILE_PATH, CLASS);
 //    }
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void setup() throws IOException {
 
         long startTime = System.currentTimeMillis();

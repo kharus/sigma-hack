@@ -25,10 +25,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
 
     private static SUMOKBtoTFAKB skbtfakb = null;
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void init() {
 
         SUMOtoTFAform.initOnce();
@@ -51,10 +48,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         }
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testExtractSig() {
 
         System.out.println();
@@ -72,10 +66,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals("[RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber]", sorts.toString());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testExtractUpdateSig() {
 
         System.out.println();
@@ -93,10 +84,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testExtractUpdateSig2() {
 
         System.out.println();
@@ -114,10 +102,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testSorts() {
 
         System.out.println();
@@ -134,10 +119,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testParents() {
 
         System.out.println();
@@ -161,10 +143,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test1() {
 
         System.out.println();
@@ -181,10 +160,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test1_5() {
 
         System.out.println();
@@ -201,10 +177,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test2() {
 
         System.out.println();
@@ -228,10 +201,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test3() {
 
         System.out.println();
@@ -254,10 +224,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test4() {
 
         System.out.println();
@@ -279,10 +246,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test5() {
 
         //SUMOtoTFAform.debug = true;
@@ -306,10 +270,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFloorFn() {
 
         System.out.println();
@@ -335,10 +296,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testNumericSubclass() {
 
         System.out.println();
@@ -366,10 +324,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testElimUnitaryLogops() {
 
         System.out.println();
@@ -390,10 +345,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Ignore // can't process ListFn
+        @Ignore // can't process ListFn
     @Test
     public void testVariableArity() {
 
@@ -431,10 +383,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Ignore // can't process ListFn
+        @Ignore // can't process ListFn
     @Test
     public void testVariableArity2() {
 
@@ -476,10 +425,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testPredVarArity() {
 
         System.out.println();
@@ -543,10 +489,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
     }
 
 
-    /**
-     *
-     */
-    @Ignore // can't process ListFn
+        @Ignore // can't process ListFn
     @Test
     public void testRemoveNumInst() {
 
@@ -589,10 +532,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
     }
 
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testInstNum() {
 
         SUMOtoTFAform.debug = true;
@@ -626,10 +566,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTypeConflict() {
 
         //SUMOtoTFAform.debug = true;
@@ -650,10 +587,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(inc);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTypeConflict2() {
 
         //SUMOtoTFAform.debug = true;
@@ -698,10 +632,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(inc);
     }
 
-    /**
-     *
-     */
-    @Ignore
+        @Ignore
     @Test
     public void testTransNum() {
 
@@ -721,10 +652,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(StringUtil.emptyString(result));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testPropertyFn() {
 
         SUMOtoTFAform.debug = true;
@@ -747,10 +675,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testMemberTypeCount() {
 
         SUMOtoTFAform.debug = true;
@@ -773,10 +698,7 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTypeConflict4() {
 
         // tff(kb_SUMO_283,axiom,(! [V__ROW1 : $i,V__ROW2 : $real,V__CLASS : $i,V__NUMBER : $int] : ((s__instance(V__ROW1, s__Human) & s__instance(V__CLASS, s__Class)) => (s__domain__2In(s__intelligenceQuotient__m, V__NUMBER, V__CLASS) & s__instance(s__intelligenceQuotient__m, s__Predicate) & s__intelligenceQuotient__2Re(V__ROW1, V__ROW2)) => s__instance(s__ListOrderFn__2InFn(s__ListFn__2ReFn(V__ROW1, V__ROW2), V__NUMBER), V__CLASS)))).

@@ -46,10 +46,7 @@ public class SigmaTestBase {
         checkConfiguration();
     }
 
-    /**
-     *
-     */
-    protected static void checkConfiguration() {
+        protected static void checkConfiguration() {
 
         List<String> problemList = Lists.newArrayList();
         if (NLGUtils.getKeywordMap() == null || NLGUtils.getKeywordMap().isEmpty()) {
@@ -119,10 +116,7 @@ public class SigmaTestBase {
         return xmlReader;
     }
 
-    /**
-     *
-     */
-    public static <T> void displayCollectionStringDiffs(Collection<T> coll1, Collection<T> coll2) {
+        public static <T> void displayCollectionStringDiffs(Collection<T> coll1, Collection<T> coll2) {
 
         for (T obj : coll1) {
             if (!coll2.contains(obj)) {

@@ -14,10 +14,7 @@ import static org.junit.Assert.*;
 
 public class TPTP3Test extends IntegrationTestBase {
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testParseProofFile() {
 
         System.out.println("-----------------------testParseProofFile--------------------------");
@@ -41,10 +38,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testE() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.EPROVER;
@@ -83,10 +77,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVampireAvatar() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
@@ -113,10 +104,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVampireCASC() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
@@ -155,10 +143,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVampireCASCBindings() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
@@ -186,10 +171,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVampireCASCBindings2() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
@@ -219,10 +201,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testParseProofStep() {
 
         String ps1 = "fof(c_0_5, axiom, (s__subclass(s__Artifact,s__Object)), c_0_3).";
@@ -269,10 +248,7 @@ public class TPTP3Test extends IntegrationTestBase {
         System.out.println("\n\n");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testParseProofStep2() {
 
         String ps1 = "fof(f852,plain,(\n" +
@@ -294,10 +270,7 @@ public class TPTP3Test extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testParseProofStep3() {
 
         String ps1 = "fof(f559,plain,(\n" +
@@ -318,10 +291,7 @@ public class TPTP3Test extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testParseProofStep4() {
 
         String ps1 = "fof(f324,plain,(\n" +
@@ -343,10 +313,7 @@ public class TPTP3Test extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testParseProofStep5() {
 
         String ps1 = "cnf(c_0_8, negated_conjecture, ($false), " +
@@ -371,10 +338,7 @@ public class TPTP3Test extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testParseProofStep6() {
 
         String ps1 = "fof(f16682,plain,(\n" +
@@ -395,10 +359,7 @@ public class TPTP3Test extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testExtractAnswerClauseVamp() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
@@ -417,10 +378,7 @@ public class TPTP3Test extends IntegrationTestBase {
             System.out.println("FAIL");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testExtractAnswerClauseE() {
 
         KBmanager.getMgr().prover = KBmanager.Prover.EPROVER;

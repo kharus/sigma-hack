@@ -259,10 +259,7 @@ public class HTMLformatter {
         return result.toString();
     }
 
-    /**
-     *
-     */
-    public static String processFormalLanguage(String flang) {
+        public static String processFormalLanguage(String flang) {
 
         if (!StringUtil.isNonEmptyString(flang) || !availableFormalLanguages.contains(flang))
             return "SUO-KIF";
@@ -270,10 +267,7 @@ public class HTMLformatter {
             return flang;
     }
 
-    /**
-     *
-     */
-    public static String processNaturalLanguage(String lang, KB kb) {
+        public static String processNaturalLanguage(String lang, KB kb) {
 
         if (kb == null || !kb.availableLanguages().contains(lang) || !StringUtil.isNonEmptyString(lang))
             return "EnglishLanguage";
@@ -415,10 +409,7 @@ public class HTMLformatter {
         return show.toString();
     }
 
-    /**
-     *
-     */
-    public static String showNeighborTerms(KB kb, String term) {
+        public static String showNeighborTerms(KB kb, String term) {
         return HTMLformatter.showNeighborTerms(kb, term, term);
     }
 
@@ -468,10 +459,7 @@ public class HTMLformatter {
         return markup;
     }
 
-    /**
-     *
-     */
-    public static ArrayList<String> getAllRelTerms(KB kb, ArrayList<String> matchesList) {
+        public static ArrayList<String> getAllRelTerms(KB kb, ArrayList<String> matchesList) {
 
         ArrayList<String> result = new ArrayList<String>();
         for (int i = 0; i < matchesList.size(); i++)
@@ -480,10 +468,7 @@ public class HTMLformatter {
         return result;
     }
 
-    /**
-     *
-     */
-    public static ArrayList<String> getAllNonRelTerms(KB kb, ArrayList<String> matchesList) {
+        public static ArrayList<String> getAllNonRelTerms(KB kb, ArrayList<String> matchesList) {
 
         ArrayList<String> result = new ArrayList<String>();
         for (int i = 0; i < matchesList.size(); i++)
@@ -1005,10 +990,7 @@ public class HTMLformatter {
         return html.toString();
     }
 
-    /**
-     *
-     */
-    public static String formatConsistencyCheck(String msg, String ccheckResult,
+        public static String formatConsistencyCheck(String msg, String ccheckResult,
                                                 String language, int page) {
 
         StringBuilder html = new StringBuilder();
@@ -1119,10 +1101,7 @@ public class HTMLformatter {
         return html.toString();
     }
 
-    /**
-     *
-     */
-    public static void main(String[] args) {
+        public static void main(String[] args) {
 
         try {
             KBmanager.getMgr().initializeOnce();

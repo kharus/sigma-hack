@@ -26,10 +26,7 @@ public class InferenceTest {
     @Parameterized.Parameter(value = 0)
     public String fInput;
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void setKB() {
 
         KBmanager.getMgr().initializeOnce();
@@ -44,10 +41,7 @@ public class InferenceTest {
         }
     }
 
-    /**
-     *
-     */
-    @Parameterized.Parameters(name = "{0}")
+        @Parameterized.Parameters(name = "{0}")
     public static <T> Collection<T> prepare() {
 
         String testDataDirectoryPath = "test/corpus/java/resources/InferenceTestData";
@@ -60,10 +54,7 @@ public class InferenceTest {
                 excludeTestsList, enableExcludeTestsList);
     }
 
-    /**
-     *
-     */
-    public static <T> Collection<T> getTestFiles(String testDataDirectoryPath,
+        public static <T> Collection<T> getTestFiles(String testDataDirectoryPath,
                                                  ArrayList<String> includeTestsList, boolean enableIncludeTestsList,
                                                  ArrayList<String> excludeTestsList, boolean enableExcludeTestsList) {
 
@@ -97,10 +88,7 @@ public class InferenceTest {
         return result;
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test() {
 
         System.out.println("InferenceTest.test(): " + fInput);

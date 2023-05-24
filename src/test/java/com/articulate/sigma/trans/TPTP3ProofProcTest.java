@@ -12,23 +12,14 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-/**
- *
- */
 public class TPTP3ProofProcTest extends UnitTestBase {
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void init() {
 
     }
 
-    /**
-     *
-     */
-    public void test(String input, String expected, String label) {
+        public void test(String input, String expected, String label) {
 
         System.out.println("=============================");
         System.out.println("TPTP3ProofProcTest: " + label);
@@ -43,10 +34,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testGetPrologArgs1() {
 
         System.out.println("=============================");
@@ -57,10 +45,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         test(input, expected, "testGetPrologArgs1");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testGetPrologArgs2() {
 
         System.out.println("=============================");
@@ -73,10 +58,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         test(input, expected, "testGetPrologArgs2");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testGetPrologArgs3() {
 
         System.out.println("=============================");
@@ -90,10 +72,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         test(input, expected, "testGetPrologArgs3");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testGetPrologArgs4() {
 
         System.out.println("=============================");
@@ -107,10 +86,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         test(input, expected, "testGetPrologArgs4");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testParseProofStep() {
 
         System.out.println("========================");
@@ -156,10 +132,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         assertTrue(result.contains("inhabits"));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testParseAnswers() {
 
         System.out.println("========================");
@@ -193,10 +166,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testExtractAnswerClause() {
 
         System.out.println("========================");
@@ -220,10 +190,7 @@ public class TPTP3ProofProcTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testProcessAnswersFromProof() {
 
         System.out.println("========================");

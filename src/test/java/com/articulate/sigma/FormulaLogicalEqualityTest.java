@@ -35,10 +35,7 @@ public class FormulaLogicalEqualityTest extends UnitTestBase {
     @Parameterized.Parameter(value = 2)
     public boolean areEqual;
 
-    /**
-     *
-     */
-    @Parameterized.Parameters(name = "{0}")
+        @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> loadParamteres() {
 
         File jsonTestFile = new File(UnitTestBase.CONFIG_FILE_DIR, TEST_FILE_NAME);
@@ -66,10 +63,7 @@ public class FormulaLogicalEqualityTest extends UnitTestBase {
         return result;
     }
 
-    /**
-     *
-     */
-    @After
+        @After
     public void performanceReport() {
 
         System.out.println("\nFormulaLogicalEqualityTest: \nA total of " +
@@ -78,10 +72,7 @@ public class FormulaLogicalEqualityTest extends UnitTestBase {
                 " milisecond execution time per test.\n");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test() {
 
         //Formula.debug = true;

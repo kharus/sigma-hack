@@ -135,10 +135,7 @@ public class SigmaMockTestBase {
 
     protected final KB kbMock = new KBMock("dummyString");
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void setUp() {
 
         NLGUtils.readKeywordMap(KB_PATH);
@@ -155,10 +152,7 @@ public class SigmaMockTestBase {
         WordNet.wn.verbSynsetHash = hash;
     }
 
-    /**
-     *
-     */
-    @AfterClass
+        @AfterClass
     public static void tearDown() {
         WordNet.wn.verbSynsetHash = oldWordNetSynSetTable;
     }

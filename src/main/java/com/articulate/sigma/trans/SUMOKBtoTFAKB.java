@@ -97,10 +97,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return "$i";
     }
 
-    /**
-     *
-     */
-    public static String translateName(String s) {
+        public static String translateName(String s) {
 
         //System.out.println("% translateName(): " + s);
         int ttype = s.charAt(0);
@@ -112,10 +109,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return result;
     }
 
-    /**
-     *
-     */
-    public static boolean alreadyExtended(String t) {
+        public static boolean alreadyExtended(String t) {
 
         String patternString = "__(\\d)(In|Re|Ra|En)+";
         Pattern pattern = Pattern.compile(patternString);
@@ -157,10 +151,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
             MapUtils.addToMap(toExtend, "ListFn", suffix);
     }
 
-    /**
-     *
-     */
-    public static void main(String[] args) {
+        public static void main(String[] args) {
 
         System.out.println("SUMOKBtoTFAKB.main():");
         SUMOKBtoTFAKB skbtfakb = new SUMOKBtoTFAKB();
@@ -187,10 +178,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         }
     }
 
-    /**
-     *
-     */
-    public void initOnce() {
+        public void initOnce() {
 
         if (!initialized) {
             KBmanager.getMgr().initializeOnce();
@@ -454,10 +442,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         }
     }
 
-    /**
-     *
-     */
-    private boolean expandableArg(String rel, int argnum, ArrayList<String> sig) {
+        private boolean expandableArg(String rel, int argnum, ArrayList<String> sig) {
 
         String type = "";
         if (argnum < sig.size())

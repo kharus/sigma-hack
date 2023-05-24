@@ -30,10 +30,7 @@ public class Frame {
     public ArrayList<Tuple> semantics = new ArrayList<>();
     private final boolean echo = false;
 
-    /**
-     *
-     */
-    public void readDesc(SimpleElement desc) {
+        public void readDesc(SimpleElement desc) {
 
         if (echo) System.out.println("Frame.readDesc()");
         descriptionNum = desc.getAttribute("descriptionNumber");
@@ -46,10 +43,7 @@ public class Frame {
         if (echo) System.out.println("xtag: " + xtag);
     }
 
-    /**
-     *
-     */
-    public void readEx(SimpleElement ex) {
+        public void readEx(SimpleElement ex) {
 
         if (echo) System.out.println("Frame.readEx()");
         for (int i = 0; i < ex.getChildElements().size(); i++) {
@@ -65,10 +59,7 @@ public class Frame {
         }
     }
 
-    /**
-     *
-     */
-    public HashSet<AVPair> readSynrestrs(SimpleElement syn) {
+        public HashSet<AVPair> readSynrestrs(SimpleElement syn) {
 
         HashSet<AVPair> restr = new HashSet<>();
         if (echo) System.out.println("Frame.readSynrestrs()");
@@ -88,10 +79,7 @@ public class Frame {
         return restr;
     }
 
-    /**
-     *
-     */
-    public void readSyn(SimpleElement syn) {
+        public void readSyn(SimpleElement syn) {
 
         HashMap<String, String> parts = new HashMap<>();
         if (echo) System.out.println("Frame.readSyn()");
@@ -173,10 +161,7 @@ public class Frame {
         }
     }
 
-    /**
-     *
-     */
-    public HashSet<AVPair> readArgs(SimpleElement pred) {
+        public HashSet<AVPair> readArgs(SimpleElement pred) {
 
         HashSet<AVPair> result = new HashSet<>();
         if (echo) System.out.println("Frame.readArgs()");
@@ -198,10 +183,7 @@ public class Frame {
         return result;
     }
 
-    /**
-     *
-     */
-    public Tuple readPred(SimpleElement pred) {
+        public Tuple readPred(SimpleElement pred) {
 
         Tuple t = new Tuple();
         if (echo) System.out.println("Frame.readPred()");
@@ -219,10 +201,7 @@ public class Frame {
         return t;
     }
 
-    /**
-     *
-     */
-    public void readSem(SimpleElement sem) {
+        public void readSem(SimpleElement sem) {
 
         if (echo) System.out.println("Frame.readSem()");
         for (int i = 0; i < sem.getChildElements().size(); i++) {
@@ -235,10 +214,7 @@ public class Frame {
         }
     }
 
-    /**
-     *
-     */
-    public void readFrame(SimpleElement element) {
+        public void readFrame(SimpleElement element) {
 
         for (int j = 0; j < element.getChildElements().size(); j++) {
             SimpleElement element2 = element.getChildElements().get(j);

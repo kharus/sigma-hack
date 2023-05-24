@@ -10,9 +10,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- *
- */
 public class NLGUtilsTest extends UnitTestBase {
     @Test(expected = IllegalArgumentException.class)
     public void testReadKeywordMapNull() {

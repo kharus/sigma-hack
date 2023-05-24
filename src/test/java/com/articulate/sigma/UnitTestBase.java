@@ -32,10 +32,7 @@ public class UnitTestBase extends SigmaTestBase {
         xmlReader = SigmaTestBase.getXmlReader(CONFIG_FILE_PATH, CLASS);
     }
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void setup() {
 
         System.out.println("UnitTestBase.setup(): reading test config file: " + CONFIG_FILE_PATH);
@@ -49,10 +46,7 @@ public class UnitTestBase extends SigmaTestBase {
         }
     }
 
-    /**
-     *
-     */
-    @AfterClass
+        @AfterClass
     public static void checkKBCount() {
 
         if (KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname")).constituents.size() > NUM_KIF_FILES) { // include cache file

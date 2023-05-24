@@ -37,10 +37,7 @@ public class SUMOKBtoTPTPKB {
 
     public SUMOKBtoTPTPKB() {}
 
-    /**
-     *
-     */
-    public static String langToExtension(String l) {
+        public static String langToExtension(String l) {
 
         if (l.equals("fof"))
             return "tptp";
@@ -81,19 +78,13 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    /**
-     *
-     */
-    public String getSanitizedKBname() {
+        public String getSanitizedKBname() {
 
         String sanitizedKBName = kb.name.replaceAll("\\W", "_");
         return sanitizedKBName;
     }
 
-    /**
-     *
-     */
-    public String getInfFilename() {
+        public String getInfFilename() {
 
         String sanitizedKBName = getSanitizedKBname();
         String filename = KBmanager.getMgr().getPref("kbDir") + File.separator +
@@ -101,10 +92,7 @@ public class SUMOKBtoTPTPKB {
         return filename;
     }
 
-    /**
-     *
-     */
-    public String copyFile(String fileName) {
+        public String copyFile(String fileName) {
 
         String outputPath = "";
         FileReader in = null;
@@ -180,10 +168,7 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    /**
-     *
-     */
-    public void writeHeader(PrintWriter pw, String sanitizedKBName) {
+        public void writeHeader(PrintWriter pw, String sanitizedKBName) {
         if (pw != null) {
             pw.println("% Articulate Software");
             pw.println("% www.ontologyportal.org www.articulatesoftware.com");
@@ -357,10 +342,7 @@ public class SUMOKBtoTPTPKB {
         return pass;
     }
 
-    /**
-     *
-     */
-    public boolean filterAxiom(Formula form, String tptp, PrintWriter pw) {
+        public boolean filterAxiom(Formula form, String tptp, PrintWriter pw) {
 
         //----Don't output ""ed ''ed and numbers
         if (tptp.matches(".*'[a-z][a-zA-Z0-9_]*\\(.*") &&
@@ -391,10 +373,7 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    /**
-     *
-     */
-    public class OrderedFormulae extends TreeSet<Formula> {
+        public class OrderedFormulae extends TreeSet<Formula> {
 
         public int compare(Object o1, Object o2) {
             Formula f1 = (Formula) o1;

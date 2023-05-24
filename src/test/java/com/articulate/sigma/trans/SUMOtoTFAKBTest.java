@@ -20,10 +20,7 @@ public class SUMOtoTFAKBTest extends IntegrationTestBase {
 
     private static SUMOKBtoTFAKB skbtfakb = null;
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void init() {
 
         SUMOtoTFAform.initOnce();
@@ -33,10 +30,7 @@ public class SUMOtoTFAKBTest extends IntegrationTestBase {
         skbtfakb.initOnce();
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testPartition() {
 
         System.out.println();
@@ -54,10 +48,7 @@ public class SUMOtoTFAKBTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testDynamicSortDef() {
 
         System.out.println();
@@ -74,10 +65,7 @@ public class SUMOtoTFAKBTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testMissingSort() {
 
         SUMOtoTFAform.debug = true;

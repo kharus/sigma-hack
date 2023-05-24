@@ -238,10 +238,7 @@ public class RowVars {
         return ar;
     }
 
-    /**
-     *
-     */
-    private static HashMap<String, HashSet<String>> getRowVarRelLogOps(Formula f, String pred) {
+        private static HashMap<String, HashSet<String>> getRowVarRelLogOps(Formula f, String pred) {
 
         if (DEBUG) System.out.println("Info in RowVars.getRowVarRelLogOps(): pred: " + pred + " f: " + f);
         HashMap<String, HashSet<String>> result = new HashMap<String, HashSet<String>>();
@@ -416,10 +413,7 @@ public class RowVars {
         return formresult;
     }
 
-    /**
-     *
-     */
-    public static void main(String[] args) {
+        public static void main(String[] args) {
 
         //String fstring = "(=> (and (subrelation ?REL1 ?REL2) (?REL1 @ROW)) (?REL2 @ROW))";
         String fstring = "(=> (and (contraryAttribute @ROW1) (identicalListItems (ListFn @ROW1) (ListFn @ROW2))) (contraryAttribute @ROW2))";

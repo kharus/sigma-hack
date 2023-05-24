@@ -63,24 +63,15 @@ public class RandSet {
         return r;
     }
 
-    /**
-     *
-     */
-    public int size() {
+        public int size() {
         return terms.size();
     }
 
-    /**
-     *
-     */
-    public void clearReturns() {
+        public void clearReturns() {
         returned.clear();
     }
 
-    /**
-     *
-     */
-    public String getNext() {
+        public String getNext() {
 
         if (this.terms.size() < 1) {
             System.out.println("RandSet.getNext(): empty set: " + terms);

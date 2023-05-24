@@ -290,10 +290,7 @@ public class HtmlParaphraseIntegrationTest extends IntegrationTestBase {
         assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFishingFishIf() {
         String stmt = "(=>\n" +
                 "           (and\n" +

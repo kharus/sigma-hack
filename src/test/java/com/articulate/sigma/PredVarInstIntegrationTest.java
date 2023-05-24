@@ -13,10 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class PredVarInstIntegrationTest extends IntegrationTestBase {
 
-    /**
-     *
-     */
-    @Ignore
+        @Ignore
     public void testInstantiatePredVars1() {
 
         String stmt1 = "(<=> (instance ?REL TransitiveRelation) " +
@@ -1412,10 +1409,7 @@ public class PredVarInstIntegrationTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindPredVarTypesStmt3() {
 
         String stmt3 = "(=> (playsRoleInEvent ?OBJ ?ROLE ?EVENT) (?ROLE ?EVENT ?OBJ))";

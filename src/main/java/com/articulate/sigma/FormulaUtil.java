@@ -56,10 +56,7 @@ public class FormulaUtil {
         return sb.toString();
     }
 
-    /**
-     *
-     */
-    public static String formatCollection(Collection<Formula> c) {
+        public static String formatCollection(Collection<Formula> c) {
 
         StringBuffer sb = new StringBuffer();
         for (Formula f : c)
@@ -116,10 +113,7 @@ public class FormulaUtil {
         return result;
     }
 
-    /**
-     *
-     */
-    private static void permutation(int[] prefix, int[] array, List<int[]> permutations,
+        private static void permutation(int[] prefix, int[] array, List<int[]> permutations,
                                     BiPredicate<Integer, Integer> validateFn) {
 
         int n = array.length;
@@ -226,10 +220,7 @@ public class FormulaUtil {
             this.f2 = f2;
         }
 
-        /**
-         *
-         */
-        @Override
+                @Override
         public boolean equals(Object o) {
 
             if (this == o) return true;
@@ -241,10 +232,7 @@ public class FormulaUtil {
             return Objects.equals(f2, that.f2);
         }
 
-        /**
-         *
-         */
-        @Override
+                @Override
         public int hashCode() {
 
             int result = f1 != null ? f1.hashCode() : 0;
@@ -252,10 +240,7 @@ public class FormulaUtil {
             return result;
         }
 
-        /**
-         *
-         */
-        @Override
+                @Override
         public String toString() {
 
             return "{" +

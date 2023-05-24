@@ -37,10 +37,7 @@ public class PredVarInstTest extends UnitTestBase {
 
     private static final String stmt3 = "(=> (instance ?R TransitiveRelation) (=> (and (?R ?A ?B) (?R ?B ?C)) (?R ?A ?C)))";
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testGatherPredVarsStmt1() {
 
         Formula f = new Formula();
@@ -57,10 +54,7 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testGatherPredVarsStmt2() {
 
         Formula f = new Formula();
@@ -77,10 +71,7 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testGatherPredVarsStmt3() {
 
         Formula f = new Formula();
@@ -97,10 +88,7 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testInstantiatePredStmt2() {
 
         Formula f = new Formula();
@@ -117,10 +105,7 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testInstantiatePredStmt3() {
 
         String stmt = "(=> " +
@@ -144,10 +129,7 @@ public class PredVarInstTest extends UnitTestBase {
         assertTrue(actual.size() > 100);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testPredVarArity() {
 
         String stmt = "(=> (and (instance ?REL CaseRole) (instance ?OBJ Object) " +
@@ -176,10 +158,7 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(2, PredVarInst.predVarArity.get("?REL").intValue());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testPredVarArity2() {
 
         String stmt = "(=>\n" +
@@ -208,10 +187,7 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expectedArity, arity);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTVRPredVars() {
 
         String stmt = "(<=>\n" +
@@ -246,10 +222,7 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTVRArity() {
 
         String stmt = "(<=>\n" +
@@ -286,10 +259,7 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expected, arity);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTVRTypes() {
 
         String stmt = "(<=>\n" +
@@ -332,10 +302,7 @@ public class PredVarInstTest extends UnitTestBase {
     }
 
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testPredVarCount() {
 
         String stmt = "(=> (and (instance ?REL1 Predicate) (instance ?REL2 Predicate) " +
@@ -354,10 +321,7 @@ public class PredVarInstTest extends UnitTestBase {
         assertTrue(predVars.contains("?REL1") && predVars.contains("?REL2") && predVars.size() == 2);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testArity() {
 
         String stmt = "(termFormat EnglishLanguage WestMakianLanguage \"west makian language\")";

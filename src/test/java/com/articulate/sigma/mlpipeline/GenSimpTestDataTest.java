@@ -23,10 +23,7 @@ public class GenSimpTestDataTest {
     public static LFeatures lfeat = null;
     public static GenSimpTestData gstd = new GenSimpTestData();
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void init() {
 
         System.out.println("GenSimpTestDataTest.init()");
@@ -48,10 +45,7 @@ public class GenSimpTestDataTest {
         }
     }
 
-    /**
-     *
-     */
-    public void testVerb(String term, boolean negated, int tense, String word,
+        public void testVerb(String term, boolean negated, int tense, String word,
                          boolean plural, String expected, LFeatures lfeat) {
 
         System.out.println();
@@ -73,10 +67,7 @@ public class GenSimpTestDataTest {
             System.out.println("Success");
     }
 
-    /**
-     *
-     */
-    public void testNoun(String term, String word,
+        public void testNoun(String term, String word,
                          boolean plural, String expected, LFeatures lfeat) {
 
         System.out.println();
@@ -94,10 +85,7 @@ public class GenSimpTestDataTest {
             System.out.println("Success");
     }
 
-    /**
-     *
-     */
-    public void testCapability(String proc, String role, String obj, boolean expected) {
+        public void testCapability(String proc, String role, String obj, boolean expected) {
 
         System.out.println();
         System.out.println("======================= ");
@@ -118,10 +106,7 @@ public class GenSimpTestDataTest {
             System.out.println("Success");
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVerbs() {
 
         System.out.println();
@@ -134,10 +119,7 @@ public class GenSimpTestDataTest {
         System.out.println("testVerb(): synsets size: " + synsets.size() + " for term: " + t);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTrespass() {
         testVerb("Trespassing", false, PRESENT, "trespass", false, "Trespasses", lfeat);
     }
@@ -276,43 +258,28 @@ public class GenSimpTestDataTest {
         testVerb("Interpreting", false, PROGRESSIVE, "rede", false, "is reding", lfeat);
     }
 
-    /**
-     *
-     */
-    @Ignore // it's randomly plural or singular which breaks the test
+        @Ignore // it's randomly plural or singular which breaks the test
     @Test
     public void testMonkey() {
         testNoun("Monkey", "monkey", true, "monkies", lfeat);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testEat1() {
         testCapability("Eating", "patient", "ArtWork", false);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testWading1() {
         testCapability("Wading", "patient", "Book", false);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testChimney1() {
         testCapability("Eating", "objectTransferred", "Chimney", false);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testSell() {
 
         System.out.println();
@@ -339,10 +306,7 @@ public class GenSimpTestDataTest {
         }
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTaste() {
 
         System.out.println();
@@ -368,10 +332,7 @@ public class GenSimpTestDataTest {
         }
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testVoteFor() {
 
         System.out.println();
@@ -397,10 +358,7 @@ public class GenSimpTestDataTest {
         }
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testNLG() {
 
         System.out.println();
@@ -414,20 +372,14 @@ public class GenSimpTestDataTest {
         System.out.println(actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testLFeatures() {
 
         System.out.println("GenSimpTestData.testLFeatures()");
         //System.out.println("testLFeatures(): objects: " + lfeat.objects.terms);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testGiving() {
 
         System.out.println();
@@ -440,10 +392,7 @@ public class GenSimpTestDataTest {
         System.out.println("testGiving(): synsets size: " + synsets.size() + " for term: " + t);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testToy() {
 
         System.out.println();
@@ -464,10 +413,7 @@ public class GenSimpTestDataTest {
         System.out.println("testToy(): present tense Walking/walking: " + gstd.verbForm("Walking", false, word, false, english, lfeat));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testPutting() {
 
         System.out.println();
@@ -481,10 +427,7 @@ public class GenSimpTestDataTest {
         System.out.println("testPutting(): synsets size: " + synsets.size() + " for term: " + t);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTypes() {
 
         System.out.println();

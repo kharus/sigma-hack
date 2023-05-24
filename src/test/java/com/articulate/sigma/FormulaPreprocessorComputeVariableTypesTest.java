@@ -30,10 +30,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesNames() {
         String stmt = "(names \"John\" ?H)";
         Formula f = new Formula();
@@ -49,10 +46,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesInstance() {
         String stmt = "(exists (?D ?H)\n" +
                 "           (and\n" +
@@ -98,10 +92,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesInstanceAgentInstrument() {
         String stmt = "(exists (?D ?H ?Car)\n" +
                 "           (and\n" +
@@ -125,10 +116,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesElementSet() {
         String stmt = "(=> " +
                 "           (forall (?ELEMENT) " +
@@ -153,10 +141,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesSubclass() {
         String stmt = "(subclass ?Cougar Feline)";
         Formula f = new Formula();
@@ -172,10 +157,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesMonthFn() {
         String stmt = "(exists (?M) " +
                 "           (time JohnsBirth (MonthFn ?M (YearFn 2000))))";
@@ -193,10 +175,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesGovFn() {
         String stmt = "(=> " +
                 "           (instance (GovernmentFn ?Place) StateGovernment) " +
@@ -215,10 +194,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesSubclassIf() {
         String stmt = "(=> " +
                 "           (subclass ?Cougar Feline) " +
@@ -236,10 +212,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesLowTerrain() {
         Map<String, HashSet<String>> expected = ImmutableMap.of("?ZONE", Sets.newHashSet("Object"),
                 "?SLOPE", Sets.newHashSet("RealNumber"), "?AREA", Sets.newHashSet("Object"));
@@ -255,10 +228,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
 
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesIfAndOnlyIfTransitiveRelation() {
         Map<String, HashSet<String>> expected = Maps.newHashMap();
         expected.put("?REL", Sets.newHashSet("Entity"));
@@ -277,10 +247,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
         assertEquals(expected, actualMap);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesForAllElementSet() {
         Map<String, HashSet<String>> expected = Maps.newHashMap();
         expected.put("?SET2", Sets.newHashSet("Set"));
@@ -300,10 +267,7 @@ public class FormulaPreprocessorComputeVariableTypesTest extends UnitTestBase {
         assertEquals(expected, actualMap);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComputeVariableTypesAwake() {
         Map<String, HashSet<String>> expected = Maps.newHashMap();
         expected.put("?HUMAN", Sets.newHashSet("AutonomousAgent"));

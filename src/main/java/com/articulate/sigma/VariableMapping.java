@@ -17,26 +17,17 @@ Systems, August 9, Acapulco, Mexico. See also http://github.com/ontologyportal
 
 import java.util.*;
 
-/**
- *
- */
 public class VariableMapping {
 
     String var1;
     String var2;
 
-    /**
-     *
-     */
-    public VariableMapping(String v1, String v2) {
+        public VariableMapping(String v1, String v2) {
         var1 = v1;
         var2 = v2;
     }
 
-    /**
-     *
-     */
-    public static List<Set<VariableMapping>> intersect(List<Set<VariableMapping>> mapList1,
+        public static List<Set<VariableMapping>> intersect(List<Set<VariableMapping>> mapList1,
                                                        List<Set<VariableMapping>> mapList2) {
 
         List<Set<VariableMapping>> intersection = new LinkedList<Set<VariableMapping>>();
@@ -58,10 +49,7 @@ public class VariableMapping {
         return intersection;
     }
 
-    /**
-     *
-     */
-    public static List<Set<VariableMapping>> union(List<Set<VariableMapping>> mapList1,
+        public static List<Set<VariableMapping>> union(List<Set<VariableMapping>> mapList1,
                                                    List<Set<VariableMapping>> mapList2) {
 
         List<Set<VariableMapping>> union = new LinkedList<Set<VariableMapping>>();
@@ -80,10 +68,7 @@ public class VariableMapping {
         return union;
     }
 
-    /**
-     *
-     */
-    private static Set<VariableMapping> unify(Set<VariableMapping> set1, Set<VariableMapping> set2) {
+        private static Set<VariableMapping> unify(Set<VariableMapping> set1, Set<VariableMapping> set2) {
 
         Set<VariableMapping> result = new HashSet<VariableMapping>();
         for (VariableMapping element : set1) {
@@ -103,10 +88,7 @@ public class VariableMapping {
         return result;
     }
 
-    /**
-     *
-     */
-    @Override
+        @Override
     public boolean equals(Object o) {
 
         if (this == o) {
@@ -124,10 +106,7 @@ public class VariableMapping {
         return Objects.equals(var2, that.var2);
     }
 
-    /**
-     *
-     */
-    @Override
+        @Override
     public int hashCode() {
 
         int result = var1 != null ? var1.hashCode() : 0;
@@ -135,10 +114,7 @@ public class VariableMapping {
         return result;
     }
 
-    /**
-     *
-     */
-    @Override
+        @Override
     public String toString() {
 
         return "VariableMapping{" +

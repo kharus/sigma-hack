@@ -30,10 +30,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class FormulaPreprocessorTest extends UnitTestBase {
 
-    /**
-     *
-     */
-    // TODO: Technically, this should to in the FormulaTest class, but the gatherRelationsWithArgTypes( ) method requires a KB
+        // TODO: Technically, this should to in the FormulaTest class, but the gatherRelationsWithArgTypes( ) method requires a KB
     // and none of the other tests in that class do. Maybe move the method to FormulaPreprocessor--it's the only Formula method
     // requiring a KB.
     @Test
@@ -59,10 +56,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertEquals(expectedMap, actualMap);
     }
 
-    /**
-     *
-     */
-    // FIXME: test is waiting completion of Formula.logicallyEquals()
+        // FIXME: test is waiting completion of Formula.logicallyEquals()
     @Ignore
     @Test
     public void testAddTypes1() {
@@ -95,10 +89,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(expected.logicallyEquals(actual));
     }
 
-    /**
-     *
-     */
-    // FIXME: test is waiting completion of Formula.logicallyEquals()
+        // FIXME: test is waiting completion of Formula.logicallyEquals()
     @Ignore
     @Test
     public void testAddTypes2() {
@@ -127,10 +118,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(expected.logicallyEquals(actual));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testMergeToMap1() {
 
         System.out.println("\n============= testMergeToMap1 ==================");
@@ -163,10 +151,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertEquals(expectedMap, actualMap);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test4() {
 
         System.out.println("\n============= test4 ==================");
@@ -202,10 +187,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(fExpected.deepEquals(fActual));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test5() {
 
         System.out.println("\n============= test5 ==================");
@@ -241,10 +223,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(fExpected.deepEquals(fActual));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test6() {
 
         System.out.println("\n============= test6 ==================");
@@ -274,10 +253,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test7() {
 
         System.out.println("\n============= test7 ==================");
@@ -307,10 +283,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertEquals(expected, actual.iterator().next().toString());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testAbsolute() {
 
         System.out.println("\n============= testAbsolute ==================");
@@ -331,10 +304,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertEquals(expected, actual.toString());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testInstantiatePredStmt4() {
 
         System.out.println("\n============= testInstantiatePredStmt4 ==================");
@@ -362,10 +332,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(actual.size() > expectedSize);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testMinValuePreprocess() {
 
         System.out.println("\n============= testMinValuePreprocess ==================");
@@ -397,10 +364,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(actual.size() > expectedSize);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testArgNumsPreprocess() {
 
         System.out.println("\n============= testArgNumsPreprocess ==================");
@@ -436,10 +400,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         System.out.println("testArgNumsPreprocess: forms: " + forms);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTVRPreprocess() {
 
         SUMOformulaToTPTPformula.lang = "tff";
@@ -502,10 +463,7 @@ public class FormulaPreprocessorTest extends UnitTestBase {
         assertTrue(actual.size() > expectedSize);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFunctionVariable() {
 
         System.out.println("\n============= testFunctionVariable ==================");

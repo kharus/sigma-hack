@@ -35,10 +35,7 @@ public class Infrastructure {
     public HashMap<String, Category> categories = new HashMap<>(); //id, category
     public HashMap<String, HashSet<String>> parents = new HashMap<>(); //parent name, list of categories
 
-    /**
-     *
-     */
-    public static void initOnce() {
+        public static void initOnce() {
 
         if (initialized)
             return;
@@ -55,10 +52,7 @@ public class Infrastructure {
         initialized = true;
     }
 
-    /**
-     *
-     */
-    public static void initOnceDB() {
+        public static void initOnceDB() {
 
         if (initialized)
             return;
@@ -84,10 +78,7 @@ public class Infrastructure {
         initialized = true;
     }
 
-    /**
-     *
-     */
-    public static void showHelp() {
+        public static void showHelp() {
 
         System.out.println("KButilities class");
         System.out.println("  options:");
@@ -95,10 +86,7 @@ public class Infrastructure {
         System.out.println("  -i initialize");
     }
 
-    /**
-     *
-     */
-    public static void main(String[] args) {
+        public static void main(String[] args) {
 
         if (args != null && args.length > 0 && args[0].equals("-h"))
             showHelp();
@@ -110,10 +98,7 @@ public class Infrastructure {
         }
     }
 
-    /**
-     *
-     */
-    private void processProductTypes(JSONArray arraypt) throws SQLException {
+        private void processProductTypes(JSONArray arraypt) throws SQLException {
 
         for (Object o : arraypt) {
             JSONObject jo = (JSONObject) o;
@@ -129,10 +114,7 @@ public class Infrastructure {
         }
     }
 
-    /**
-     *
-     */
-    private Mappings processMappings(JSONObject objm) {
+        private Mappings processMappings(JSONObject objm) {
 
         Mappings mappings = new Mappings();
         JSONArray terms = (JSONArray) objm.get("terms");
@@ -156,10 +138,7 @@ public class Infrastructure {
         return mappings;
     }
 
-    /**
-     *
-     */
-    private void processCategories(JSONArray arrayc,
+        private void processCategories(JSONArray arrayc,
                                    Mappings mappings) throws SQLException {
 
         for (Object o : arrayc) {
@@ -203,10 +182,7 @@ public class Infrastructure {
         }
     }
 
-    /**
-     *
-     */
-    private void processProduct(JSONObject jso,
+        private void processProduct(JSONObject jso,
                                 Mappings mappings) throws SQLException {
 
         JSONObject jso2 = (JSONObject) jso.get("_id");
@@ -282,10 +258,7 @@ public class Infrastructure {
         products.put(p.ID, p);
     }
 
-    /**
-     *
-     */
-    public void toSUMObyParent() throws SQLException {
+        public void toSUMObyParent() throws SQLException {
 
         System.out.println("toSUMObyParent(): ");
         for (String id : categories.keySet()) {
@@ -474,20 +447,14 @@ public class Infrastructure {
         }
     }
 
-    /**
-     *
-     */
-    public ArrayList<String> getProductTypes() {
+        public ArrayList<String> getProductTypes() {
 
         ArrayList<String> al = new ArrayList<>();
         al.addAll(productTypes.values());
         return al;
     }
 
-    /**
-     *
-     */
-    public ArrayList<String> getProductTypesDB() {
+        public ArrayList<String> getProductTypesDB() {
 
         System.out.println("getProductTypesDB()");
         ArrayList<String> al = new ArrayList<>();
@@ -507,10 +474,7 @@ public class Infrastructure {
         return al;
     }
 
-    /**
-     *
-     */
-    public ArrayList<String> getCategories(String productType) {
+        public ArrayList<String> getCategories(String productType) {
 
         HashSet<String> result = new HashSet<>();
         for (String s : categories.keySet()) {
@@ -527,10 +491,7 @@ public class Infrastructure {
         return al;
     }
 
-    /**
-     *
-     */
-    public ArrayList<String> getCategoriesDB(String productType) {
+        public ArrayList<String> getCategoriesDB(String productType) {
 
         System.out.println("getCategoriesDB(): subCategory: " + productType);
         if (StringUtil.emptyString(productType))
@@ -552,10 +513,7 @@ public class Infrastructure {
         return al;
     }
 
-    /**
-     *
-     */
-    public ArrayList<String> getSubCategories(String category) {
+        public ArrayList<String> getSubCategories(String category) {
 
         if (StringUtil.emptyString(category) || !parents.containsKey(category))
             return null;
@@ -564,10 +522,7 @@ public class Infrastructure {
         return al;
     }
 
-    /**
-     *
-     */
-    public ArrayList<String> getSubCategoriesDB(String category) throws SQLException {
+        public ArrayList<String> getSubCategoriesDB(String category) throws SQLException {
 
         System.out.println("getSubCategoriesDB(): category: " + category);
         if (StringUtil.emptyString(category))
@@ -589,10 +544,7 @@ public class Infrastructure {
         return al;
     }
 
-    /**
-     *
-     */
-    public HashSet<String> getAllowedRelations(String subCategory) {
+        public HashSet<String> getAllowedRelations(String subCategory) {
 
         if (StringUtil.emptyString(subCategory))
             return null;
@@ -602,10 +554,7 @@ public class Infrastructure {
         return relsForType.get(subCategory);
     }
 
-    /**
-     *
-     */
-    public HashSet<String> getAllowedRelationsDB(String subCategory) throws SQLException {
+        public HashSet<String> getAllowedRelationsDB(String subCategory) throws SQLException {
 
         if (StringUtil.emptyString(subCategory))
             return null;
@@ -626,10 +575,7 @@ public class Infrastructure {
         return result;
     }
 
-    /**
-     *
-     */
-    public ArrayList<String> getAllowableValues(String subCategory, String rel) {
+        public ArrayList<String> getAllowableValues(String subCategory, String rel) {
 
         if (StringUtil.emptyString(subCategory))
             return null;
@@ -649,10 +595,7 @@ public class Infrastructure {
         return al;
     }
 
-    /**
-     *
-     */
-    public ArrayList<String> getAllowableValuesDB(String subCategory, String rel) {
+        public ArrayList<String> getAllowableValuesDB(String subCategory, String rel) {
 
         if (StringUtil.emptyString(subCategory))
             return null;
@@ -676,10 +619,7 @@ public class Infrastructure {
         return al;
     }
 
-    /**
-     *
-     */
-    public ArrayList<String> getProducts(Map<String, String> params) {
+        public ArrayList<String> getProducts(Map<String, String> params) {
 
         System.out.println("getProducts(): params: " + params);
         ArrayList<String> result = new ArrayList<>();
@@ -719,10 +659,7 @@ public class Infrastructure {
         return result;
     }
 
-    /**
-     *
-     */
-    public ArrayList<String> getProductsByTypeDB(String subCat) {
+        public ArrayList<String> getProductsByTypeDB(String subCat) {
 
         ArrayList<String> al = new ArrayList<>();
         try {
@@ -820,10 +757,7 @@ public class Infrastructure {
         return result;
     }
 
-    /**
-     *
-     */
-    public class Product {
+        public class Product {
         public String SUMO = null;
         public String ID = null;
         public String name = null;
@@ -840,10 +774,7 @@ public class Infrastructure {
         }
     }
 
-    /**
-     *
-     */
-    public class Category {
+        public class Category {
         public String ID = null;
         public String SUMO = null;
         public String name = null;

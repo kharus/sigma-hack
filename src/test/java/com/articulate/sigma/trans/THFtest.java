@@ -18,10 +18,7 @@ public class THFtest extends IntegrationTestBase {
     private static THF thf = null;
     private static KB kb = null;
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void init() {
 
         thf = new THF();
@@ -29,10 +26,7 @@ public class THFtest extends IntegrationTestBase {
         kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
     }
 
-    /**
-     *
-     */
-    public void test(String msg, String f, String expected) {
+        public void test(String msg, String f, String expected) {
 
         System.out.println();
         System.out.println("\n======================== " + msg);
@@ -46,10 +40,7 @@ public class THFtest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTrans1() {
 
         String f = "(=> (and (instance ?ROW3 Language) (instance ?ROW1 SymbolicString)) " +

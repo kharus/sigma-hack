@@ -23,10 +23,7 @@ public class NLGUtils implements Serializable {
     private static NLGUtils nlg = null;
     private HashMap<String, HashMap<String, String>> keywordMap;
 
-    /**
-     *
-     */
-    public static void init(String kbDir) {
+        public static void init(String kbDir) {
 
         if (KBmanager.getMgr().getPref("loadLexicons").equals("false"))
             return;
@@ -115,10 +112,7 @@ public class NLGUtils implements Serializable {
         }
     }
 
-    /**
-     *
-     */
-    static String prettyPrint(String term) {
+        static String prettyPrint(String term) {
 
         if (term.endsWith("Fn"))
             term = term.substring(0, term.length() - 2);
@@ -253,10 +247,7 @@ public class NLGUtils implements Serializable {
         return result.toString();
     }
 
-    /**
-     *
-     */
-    static boolean logicalOperator(String word) {
+        static boolean logicalOperator(String word) {
 
         String logops = "if,then,=>,and,or,<=>,not,forall,exists,holds";
         return logops.contains(word);
@@ -476,10 +467,7 @@ public class NLGUtils implements Serializable {
         return result;
     }
 
-    /**
-     *
-     */
-    public static HashMap<String, HashMap<String, String>> getKeywordMap() {
+        public static HashMap<String, HashMap<String, String>> getKeywordMap() {
 
         if (NLGUtils.nlg == null || NLGUtils.nlg.keywordMap == null) {
             return null;
@@ -487,20 +475,14 @@ public class NLGUtils implements Serializable {
         return NLGUtils.nlg.keywordMap;
     }
 
-    /**
-     *
-     */
-    public static void setKeywordMap(HashMap<String, HashMap<String, String>> themap) {
+        public static void setKeywordMap(HashMap<String, HashMap<String, String>> themap) {
 
         if (NLGUtils.nlg == null)
             NLGUtils.nlg = new NLGUtils();
         NLGUtils.nlg.keywordMap = themap;
     }
 
-    /**
-     *
-     */
-    public static String getKeyword(String englishWord, String language) {
+        public static String getKeyword(String englishWord, String language) {
 
         String ans = "";
         if (getKeywordMap() == null) {

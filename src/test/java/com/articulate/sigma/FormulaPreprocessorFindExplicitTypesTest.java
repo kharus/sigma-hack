@@ -21,10 +21,7 @@ import static org.junit.Assert.assertNull;
  */
 public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesDomainNotRule() {
 
         String stmt = "(domain date 1 Physical)";
@@ -37,10 +34,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertNull(actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesDomainNotRule2() {
 
         String stmt = "(domain date 1 Physical)";
@@ -55,10 +49,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesNames() {
 
         String stmt = "(names \"John\" ?H)";
@@ -71,10 +62,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertNull(actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesNames2() {
 
         String stmt = "(names \"John\" ?H)";
@@ -89,10 +77,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesSubclass() {
 
         String stmt = "(subclass ?Cougar Feline)";
@@ -105,10 +90,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertNull(actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesSubclass2() {
 
         String stmt = "(subclass ?Cougar Feline)";
@@ -125,10 +107,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesSubclassInRule() {
 
         String stmt = "(=> " +
@@ -147,10 +126,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesSubclassInRule2() {
 
         String stmt = "(=> " +
@@ -169,10 +145,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTransitiveRelation() {
 
         String stmt = "(<=> (instance ?REL TransitiveRelation) " +
@@ -192,10 +165,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTransitiveRelation2() {
 
         String stmt = "(<=> (instance ?REL TransitiveRelation) " +
@@ -215,10 +185,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesIfJohnLikesSue() {
 
         String stmt = "(=>\n" +
@@ -244,10 +211,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesIfJohnLikesSue2() {
         String stmt = "(=>\n" +
                 "           (and\n" +
@@ -272,10 +236,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesIfAndOnlyIfEntity() {
         String stmt = "(<=> (instance ?PHYS Entity) (exists (?LOC ?TIME) (and (located ?PHYS ?LOC) (time ?PHYS ?TIME))))";
         Formula f = new Formula();
@@ -291,10 +252,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesIfAndOnlyIfEntity2() {
         String stmt = "(<=> (instance ?PHYS Entity) (exists (?LOC ?TIME) (and (located ?PHYS ?LOC) (time ?PHYS ?TIME))))";
         Formula f = new Formula();
@@ -310,10 +268,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesIfAndOnlyIfAutomobile() {
         String stmt = "(<=> (instance ?PHYS Automobile) (exists (?LOC ?TIME) (and (located ?PHYS ?LOC) (time ?PHYS ?TIME))))";
         Formula f = new Formula();
@@ -329,10 +284,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesIfAndOnlyIfAutomobile2() {
         String stmt = "(<=> (instance ?PHYS Automobile) (exists (?LOC ?TIME) (and (located ?PHYS ?LOC) (time ?PHYS ?TIME))))";
         Formula f = new Formula();
@@ -348,10 +300,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTransitiveRelation() {
         String stmt = "(<=> (instance ?REL TransitiveRelation) " +
                 "(forall (?INST1 ?INST2 ?INST3) " +
@@ -369,10 +318,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTransitiveRelation2() {
         String stmt = "(<=> (instance ?REL TransitiveRelation) " +
                 "(forall (?INST1 ?INST2 ?INST3) " +
@@ -390,10 +336,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesAgent() {
         String stmt = "(agent Leaving Human)";
 
@@ -406,10 +349,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertNull(actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesAgent2() {
         String stmt = "(agent Leaving Human)";
 
@@ -423,10 +363,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesHumanDriving() {
         String stmt = "(exists (?D ?H)\n" +
                 "           (and\n" +
@@ -443,10 +380,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertNull(actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypesHumanDriving2() {
         String stmt = "(exists (?D ?H)\n" +
                 "           (and\n" +
@@ -466,10 +400,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes1() {
         String stmt = "(=>\n" +
                 "    (subjectiveAttribute ?ENTITY ?ATTR ?AGENT)\n" +
@@ -490,10 +421,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes2() {
         String stmt = "(=>\n" +
                 "   (and\n" +
@@ -513,10 +441,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes3() {
         String stmt = "(=>\n" +
                 "    (instance ?ANIMAL Animal)\n" +
@@ -542,10 +467,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes4() {
         String stmt = "(=>\n" +
                 "   (and\n" +
@@ -564,10 +486,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes5() {
         String stmt = "(=>\n" +
                 "   (and\n" +
@@ -587,10 +506,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes6() {
         String stmt = "(=>\n" +
                 "   (instance ?CLOUD WaterCloud)\n" +
@@ -618,10 +534,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes7() {
         String stmt = "(=>\n" +
                 "   (and\n" +
@@ -643,10 +556,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes8() {
         String stmt = "(=>\n" +
                 "   (instance ?LANG ConstructedLanguage)\n" +
@@ -666,10 +576,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes9() {
         String stmt = "(=>\n" +
                 "   (and\n" +
@@ -688,10 +595,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes10() {
         String stmt = "(=>\n" +
                 "  (and\n" +
@@ -715,10 +619,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes11() {
         String stmt = "(=>\n" +
                 "   (and\n" +
@@ -742,10 +643,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes12() {
         String stmt = "(=>\n" +
                 "  (axis ?AXIS ?OBJ)\n" +
@@ -772,10 +670,7 @@ public class FormulaPreprocessorFindExplicitTypesTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFindExplicitTypes13() {
         String stmt = "(=>\n" +
                 "  (instance ?X BabyMonitoringSystem)\n" +

@@ -17,10 +17,7 @@ public class KBmanagerInitIntegrationTest extends IntegrationTestBase {
 
     private static final Set<String> kifSet = Sets.newHashSet();
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void setKB() {
 
         //kifSet.add("ArabicCulture.kif");
@@ -83,10 +80,7 @@ public class KBmanagerInitIntegrationTest extends IntegrationTestBase {
         }
     }
 
-    /**
-     *
-     */
-    private void filterExpectedKifs(List<String> actualKifFiles, Set<String> expectedKifFiles) {
+        private void filterExpectedKifs(List<String> actualKifFiles, Set<String> expectedKifFiles) {
 
         List<String> remainingActualKifFiles = Lists.newArrayList(actualKifFiles);
         for (String file : actualKifFiles) {

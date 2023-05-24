@@ -13,18 +13,12 @@ import static org.junit.Assert.assertTrue;
 
 public class TPTP2SUMOTest {
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void init() {
 
     }
 
-    /**
-     *
-     */
-    @Ignore
+        @Ignore
     @Test
     public void testPartition() {
 
@@ -50,10 +44,7 @@ public class TPTP2SUMOTest {
         }
     }
 
-    /**
-     *
-     */
-    @Ignore
+        @Ignore
     @Test
     public void testCollapse() {
 
@@ -68,10 +59,7 @@ public class TPTP2SUMOTest {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Ignore
+        @Ignore
     @Test
     public void testCollapse2() {
 
@@ -88,10 +76,7 @@ public class TPTP2SUMOTest {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testCollapse3() {
 
         KBmanager.prefOverride.put("loadLexicons", "false");

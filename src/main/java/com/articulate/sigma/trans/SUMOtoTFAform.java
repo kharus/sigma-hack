@@ -84,10 +84,7 @@ public class SUMOtoTFAform {
         return (isComparisonOperator(s) || isMathFunction(s)) && !s.equals(Formula.FLOORFN);
     }
 
-    /**
-     *
-     */
-    public static String withoutSuffix(String s) {
+        public static String withoutSuffix(String s) {
 
         if (StringUtil.emptyString(s))
             return s;
@@ -169,10 +166,7 @@ public class SUMOtoTFAform {
         return sig;
     }
 
-    /**
-     *
-     */
-    private static String suffixToType(String type) {
+        private static String suffixToType(String type) {
 
         if (type.equals("In"))
             return "Integer";
@@ -188,10 +182,7 @@ public class SUMOtoTFAform {
         }
     }
 
-    /**
-     *
-     */
-    private static String typeToSuffix(String type) {
+        private static String typeToSuffix(String type) {
 
         if (type.equals("Integer"))
             return "In";
@@ -433,10 +424,7 @@ public class SUMOtoTFAform {
      return f;
      }
      */
-    /**
-     *
-     */
-    private static String processQuant(Formula f, Formula car, String parentType, String op,
+        private static String processQuant(Formula f, Formula car, String parentType, String op,
                                        ArrayList<String> args) {
 
         //if (debug) System.out.println("SUMOtoTFAform.processQuant(): quantifier");
@@ -475,10 +463,7 @@ public class SUMOtoTFAform {
         }
     }
 
-    /**
-     *
-     */
-    private static String processConjDisj(Formula f, Formula car, String parentType,
+        private static String processConjDisj(Formula f, Formula car, String parentType,
                                           ArrayList<String> args) {
 
         String op = car.getFormula();
@@ -498,10 +483,7 @@ public class SUMOtoTFAform {
         return sb.toString();
     }
 
-    /**
-     *
-     */
-    private static String processLogOp(Formula f, Formula car, String parentType,
+        private static String processLogOp(Formula f, Formula car, String parentType,
                                        ArrayList<String> args) {
         String op = car.getFormula();
         if (debug) System.out.println("processLogOp(): f: " + f);
@@ -570,10 +552,7 @@ public class SUMOtoTFAform {
                 arg.equals("Integer");
     }
 
-    /**
-     *
-     */
-    private static boolean allBuiltInNumericTypes(ArrayList<String> args) {
+        private static boolean allBuiltInNumericTypes(ArrayList<String> args) {
 
         ArrayList<String> argtypes = collectArgTypes(args);
         for (String arg : argtypes) {
@@ -586,10 +565,7 @@ public class SUMOtoTFAform {
         return true;
     }
 
-    /**
-     *
-     */
-    private static boolean allOfType(ArrayList<String> args, String type) {
+        private static boolean allOfType(ArrayList<String> args, String type) {
 
         ArrayList<String> argtypes = collectArgTypes(args);
         for (String arg : argtypes) {
@@ -1044,18 +1020,12 @@ public class SUMOtoTFAform {
         return !StringUtil.emptyString(type) && (kb.isSubclass(type, "RealNumber") || type.equals("RealNumber"));
     }
 
-    /**
-     *
-     */
-    public static boolean isNumericType(String s) {
+        public static boolean isNumericType(String s) {
 
         return !StringUtil.emptyString(s) && (kb.isSubclass(s, "RealNumber") || s.equals("RealNumber"));
     }
 
-    /**
-     *
-     */
-    public static boolean isBuiltInNumericType(String s) {
+        public static boolean isBuiltInNumericType(String s) {
 
         return !StringUtil.emptyString(s) && (s.equals("Integer") ||
                 s.equals("RealNumber") || s.equals("RationalNumber"));
@@ -1308,10 +1278,7 @@ public class SUMOtoTFAform {
         return types;
     }
 
-    /**
-     *
-     */
-    private static String getOpType(String op) {
+        private static String getOpType(String op) {
 
         String type = "";
         int i = op.indexOf("__");
@@ -1724,10 +1691,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /**
-     *
-     */
-    private static String getOpReturnType(String arg) {
+        private static String getOpReturnType(String arg) {
 
         if (StringUtil.emptyString(arg) || !Formula.listP(arg))
             return "Entity";
@@ -1777,10 +1741,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /**
-     *
-     */
-    private static void setAll(ArrayList<String> sig, String best) {
+        private static void setAll(ArrayList<String> sig, String best) {
 
         for (int i = 0; i < sig.size(); i++)
             sig.set(i, best);
@@ -1869,10 +1830,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /**
-     *
-     */
-    private static String constrainFunctVarsRecurse(Formula f, String parentType) {
+        private static String constrainFunctVarsRecurse(Formula f, String parentType) {
 
         //if (debug) System.out.println("SUMOtoTFAform.constrainFunctVarsRecurse(): " + f);
         if (f == null) return "";
@@ -2104,10 +2062,7 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /**
-     *
-     */
-    private static boolean typeConflict(Formula f, String type) {
+        private static boolean typeConflict(Formula f, String type) {
 
         if (debug) System.out.println("SUMOtoTFAform.typeConflict(f,type): " + f + ", " + type);
         if (f == null)
@@ -2311,10 +2266,7 @@ public class SUMOtoTFAform {
         return "";
     }
 
-    /**
-     *
-     */
-    public static String process(String s, boolean query) {
+        public static String process(String s, boolean query) {
 
         filterMessage = "";
         if (s.contains("ListFn"))
@@ -2326,10 +2278,7 @@ public class SUMOtoTFAform {
         return process(f, query);
     }
 
-    /**
-     *
-     */
-    public static Collection<String> processList(Collection<Formula> l) {
+        public static Collection<String> processList(Collection<Formula> l) {
 
         ArrayList<String> result = new ArrayList<>();
         for (Formula f : l)
@@ -2539,10 +2488,7 @@ public class SUMOtoTFAform {
         }
     }
 
-    /**
-     *
-     */
-    public static void initNumericConstantTypes() {
+        public static void initNumericConstantTypes() {
 
         numericConstantTypes.clear();
         numericConstantTypes.put("NumberE", "RealNumber");
@@ -2551,10 +2497,7 @@ public class SUMOtoTFAform {
         numericConstantValues.put("Pi", "3.141592653589793");
     }
 
-    /**
-     *
-     */
-    public static void initOnce() {
+        public static void initOnce() {
 
         if (initialized)
             return;
@@ -2569,10 +2512,7 @@ public class SUMOtoTFAform {
         initialized = true;
     }
 
-    /**
-     *
-     */
-    public static void test1() {
+        public static void test1() {
 
         Formula f = new Formula("(equal ?X (AdditionFn__IntegerFn 1 2))");
         System.out.println("SUMOtoTFAform.test1(): " + processRecurse(f, "Entity"));
@@ -2580,10 +2520,7 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.test1(): " + processRecurse(f, "Entity"));
     }
 
-    /**
-     *
-     */
-    public static void test2() {
+        public static void test2() {
 
         Formula f = new Formula("(=> (and (equal (AbsoluteValueFn ?NUMBER1) ?NUMBER2) " +
                 "(instance ?NUMBER1 RealNumber) (instance ?NUMBER2 RealNumber)) " +
@@ -2592,29 +2529,20 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.test2(): " + process(f, false));
     }
 
-    /**
-     *
-     */
-    public static void test3() {
+        public static void test3() {
 
         Formula f = new Formula("(<=> (equal (RemainderFn ?NUMBER1 ?NUMBER2) ?NUMBER) " +
                 "(equal (AdditionFn (MultiplicationFn (FloorFn (DivisionFn ?NUMBER1 ?NUMBER2)) ?NUMBER2) ?NUMBER) ?NUMBER1))");
         System.out.println("SUMOtoTFAform.test3(): " + process(f, false));
     }
 
-    /**
-     *
-     */
-    public static void test4() {
+        public static void test4() {
 
         Formula f = new Formula("(<=> (greaterThanOrEqualTo ?NUMBER1 ?NUMBER2) (or (equal ?NUMBER1 ?NUMBER2) (greaterThan ?NUMBER1 ?NUMBER2)))");
         System.out.println("SUMOtoTFAform.test4(): " + process(f, false));
     }
 
-    /**
-     *
-     */
-    public static void test5() {
+        public static void test5() {
 
         Formula f = new Formula("(=>\n" +
                 "(measure ?QUAKE\n" +
@@ -2623,10 +2551,7 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.test5(): " + modifyTypesToConstraints(f));
     }
 
-    /**
-     *
-     */
-    public static void test6() {
+        public static void test6() {
 
         Formula f = new Formula("(<=> " +
                 "(equal (RemainderFn ?NUMBER1 ?NUMBER2) ?NUMBER) " +
@@ -2641,10 +2566,7 @@ public class SUMOtoTFAform {
                 "V__NUMBER1 => s__RemainderFn(V__NUMBER1, V__NUMBER2) = V__NUMBER)))).");
     }
 
-    /**
-     *
-     */
-    public static void test7() {
+        public static void test7() {
 
         Formula f = new Formula("(<=> (and (equal (AbsoluteValueFn ?NUMBER1) ?NUMBER2) " +
                 "(instance ?NUMBER1 RealNumber) (instance ?NUMBER2 RealNumber)) " +
@@ -2660,10 +2582,7 @@ public class SUMOtoTFAform {
                 "V__NUMBER2 = $difference(0.0 ,V__NUMBER1) => s__AbsoluteValueFn__0Re1ReFn(V__NUMBER1) = V__NUMBER2)).");
     }
 
-    /**
-     *
-     */
-    public static void test8() {
+        public static void test8() {
 
         Formula f = new Formula("(<=> (equal (LastFn ?LIST) ?ITEM) (exists (?NUMBER) " +
                 "(and (equal (ListLengthFn ?LIST) ?NUMBER) " +
@@ -2677,10 +2596,7 @@ public class SUMOtoTFAform {
                 "s__LastFn(V__LIST) = V__ITEM)))).");
     }
 
-    /**
-     *
-     */
-    public static void test9() {
+        public static void test9() {
 
         Formula f = new Formula("(<=> (and (equal (AbsoluteValueFn ?NUMBER1) ?NUMBER2) " +
                 "(instance ?NUMBER1 RealNumber) (instance ?NUMBER2 RealNumber)) " +
@@ -2697,10 +2613,7 @@ public class SUMOtoTFAform {
                 "s__AbsoluteValueFn(V__NUMBER1) = V__NUMBER2)))).");
     }
 
-    /**
-     *
-     */
-    public static void test10() {
+        public static void test10() {
 
         Formula f = new Formula("(<=> (and (equal (AbsoluteValueFn ?NUMBER1) ?NUMBER2) " +
                 "(instance ?NUMBER1 RealNumber) (instance ?NUMBER2 RealNumber)) " +
@@ -2716,10 +2629,7 @@ public class SUMOtoTFAform {
                 "V__NUMBER2 = $difference(0.0 ,V__NUMBER1) => s__AbsoluteValueFn__0Re1ReFn(V__NUMBER1) = V__NUMBER2)))).");
     }
 
-    /**
-     *
-     */
-    public static void testRelEmbed() {
+        public static void testRelEmbed() {
 
         String rel = "AbsoluteValueFn";
         ArrayList<String> sig = kb.kbCache.getSignature(rel);
@@ -2729,19 +2639,13 @@ public class SUMOtoTFAform {
         kb.kbCache.signatures.put(rel + "__" + "1Re", sig);
     }
 
-    /**
-     *
-     */
-    public static void testRelExtract() {
+        public static void testRelExtract() {
 
         String rel = "AbsoluteValueFn__1ReFn";
         System.out.println("SUMOtoTFAform.testRelExtract(): new name: " + relationExtractSigFromName(rel));
     }
 
-    /**
-     *
-     */
-    public static void showHelp() {
+        public static void showHelp() {
 
         System.out.println("KB class");
         System.out.println("  options (with a leading '-'):");
@@ -2750,10 +2654,7 @@ public class SUMOtoTFAform {
         System.out.println("  h - show this help");
     }
 
-    /**
-     *
-     */
-    public static void main(String[] args) throws IOException {
+        public static void main(String[] args) throws IOException {
 
         System.out.println("INFO in SUMOtoTFAform.main()");
         System.out.println("args:" + args.length + " : " + Arrays.toString(args));

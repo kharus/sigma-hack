@@ -112,10 +112,7 @@ public class LFeatures {
     }
 
 
-    /**
-     *
-     */
-    public ArrayList<AVPair> initModals() {
+        public ArrayList<AVPair> initModals() {
 
         ArrayList<AVPair> modals = new ArrayList<>();
         for (int i = 0; i < 50; i++)

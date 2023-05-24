@@ -50,10 +50,7 @@ public class TPTP3ProofProcessor {
     public HashMap<String, Integer> idTable = new HashMap<>();
     private int idCounter = 0;
 
-    /**
-     *
-     */
-    public TPTP3ProofProcessor() {
+        public TPTP3ProofProcessor() {
     }
 
     /**
@@ -188,10 +185,7 @@ public class TPTP3ProofProcessor {
         return s.startsWith("esk") || s.startsWith("sK");
     }
 
-    /**
-     *
-     */
-    private static void printPrologTerm(PrologTerm pt, String indent) {
+        private static void printPrologTerm(PrologTerm pt, String indent) {
 
         System.out.println(indent + pt.toString() + "\t" + pt.getType());
         if (pt.getType() == STRUCT) {
@@ -205,18 +199,12 @@ public class TPTP3ProofProcessor {
         }
     }
 
-    /**
-     *
-     */
-    public static void printPrologTerm(PrologTerm pt) {
+        public static void printPrologTerm(PrologTerm pt) {
 
         printPrologTerm(pt, "");
     }
 
-    /**
-     *
-     */
-    public static void showHelp() {
+        public static void showHelp() {
 
         System.out.println("TPTP3ProofProcessor class");
         System.out.println("  options (with a leading '-'):");
@@ -226,10 +214,7 @@ public class TPTP3ProofProcessor {
         System.out.println("  h - show this help");
     }
 
-    /**
-     *
-     */
-    public static void main(String[] args) throws IOException {
+        public static void main(String[] args) throws IOException {
 
         System.out.println("INFO in TPTP3ProofProcessor.main()");
         if (args == null)
@@ -298,10 +283,7 @@ public class TPTP3ProofProcessor {
         return sb.toString();
     }
 
-    /**
-     *
-     */
-    public String getInferenceType(String supportId) {
+        public String getInferenceType(String supportId) {
 
         String inferenceType = null;
         if (supportId.startsWith("inference(")) {
@@ -828,20 +810,14 @@ public class TPTP3ProofProcessor {
         return bindings;
     }
 
-    /**
-     *
-     */
-    public void parseProofOutput(String st, KB kb) {
+        public void parseProofOutput(String st, KB kb) {
 
         StringReader sr = new StringReader(st);
         LineNumberReader lnr = new LineNumberReader(sr);
         parseProofOutput(lnr, kb);
     }
 
-    /**
-     *
-     */
-    public void parseProofFromFile(String filename, KB kb) {
+        public void parseProofFromFile(String filename, KB kb) {
 
         try {
             File f = new File(filename);
@@ -869,10 +845,7 @@ public class TPTP3ProofProcessor {
         return idTable.get(id);
     }
 
-    /**
-     *
-     */
-    private ArrayList<Integer> getSupports(PrologTerm pt) {
+        private ArrayList<Integer> getSupports(PrologTerm pt) {
 
         if (debug) System.out.println("TPTP3ProofProcess.getSupports(PrologTerm): " + pt);
         if (debug) System.out.println("getSupports(): string,type: " + pt.toString() + "\t" + pt.getType());
@@ -893,10 +866,7 @@ public class TPTP3ProofProcessor {
         return supports;
     }
 
-    /**
-     *
-     */
-    private ArrayList<Integer> getSupports(String input) {
+        private ArrayList<Integer> getSupports(String input) {
 
         if (debug) System.out.println("TPTP3ProofProcess.getSupports(String): " + input);
         ArrayList<Integer> supports = new ArrayList<>();
@@ -909,10 +879,7 @@ public class TPTP3ProofProcessor {
         return supports;
     }
 
-    /**
-     *
-     */
-    private ArrayList<String> createProofDotGraphBody() {
+        private ArrayList<String> createProofDotGraphBody() {
 
         ArrayList<String> lines = new ArrayList<>();
         for (TPTPFormula ps : proof) {
@@ -962,10 +929,7 @@ public class TPTP3ProofProcessor {
         return lines;
     }
 
-    /**
-     *
-     */
-    private void createProofDotGraphImage(String filename) throws IOException {
+        private void createProofDotGraphImage(String filename) throws IOException {
 
         try {
             String graphVizDir = KBmanager.getMgr().getPref("graphVizDir");
@@ -1053,10 +1017,7 @@ public class TPTP3ProofProcessor {
         }
     }
 
-    /**
-     *
-     */
-    private void testPrologParser() {
+        private void testPrologParser() {
 
         //Reader reader = new StringReader("hello(world). some({1,2,3})."); // power(X,Y,Z) :- Z is X ** Y.");
         String input = "cnf(c_0_8, negated_conjecture, ($false), " +

@@ -17,15 +17,9 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- *
- */
 public class SUMOtoTFATest extends UnitTestBase {
 
-    /**
-     *
-     */
-    @BeforeClass
+        @BeforeClass
     public static void init() {
 
         System.out.println("============ SUMOtoTFATest.init()");
@@ -48,10 +42,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         SUMOtoTFAform.setNumericFunctionInfo();
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testBuildConstraints() {
 
         System.out.println("\n========= testBuildConstraints ==========\n");
@@ -68,10 +59,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test1() {
 
         System.out.println("\n========= test 1 ==========\n");
@@ -88,10 +76,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test2() {
 
         System.out.println("\n========= test 2 ==========\n");
@@ -108,10 +93,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test3() {
 
         System.out.println("\n========= test 3 ==========\n");
@@ -137,10 +119,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test4() {
 
         System.out.println("\n========= test 4 ==========\n");
@@ -171,10 +150,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test5() {
 
         System.out.println("\n========= test 5 ==========\n");
@@ -204,10 +180,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test6() {
 
         System.out.println("\n========= test 6 ==========\n");
@@ -238,10 +211,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test7() {
 
         System.out.println("\n========= test 7 ==========\n");
@@ -266,10 +236,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Ignore // includes ListFn
+        @Ignore // includes ListFn
     @Test
     public void test8() {
 
@@ -329,10 +296,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void test9() {
 
         System.out.println("\n========= test 9 ==========\n");
@@ -355,10 +319,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testElimLogops() {
 
         System.out.println("\n========= testElimLogops ==========\n");
@@ -388,10 +349,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertTrue(fExpected.deepEquals(fActual));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTemporalComp() {
 
         System.out.println("\n========= test testTemporalComp ==========\n");
@@ -413,10 +371,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testBigNumber() {
 
         System.out.println("\n========= test testBigNumber ==========\n");
@@ -438,10 +393,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testNumber() {
 
         System.out.println("\n========= test testNumber ==========\n");
@@ -464,20 +416,14 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testMostSpecific() {
 
         System.out.println("\n========= test testMostSpecific ==========\n");
         assertEquals("RealNumber", SUMOtoTFAform.mostSpecificType(Arrays.asList("RealNumber", "LengthMeasure")));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testTemporalComp2() {
 
         System.out.println("\n========= test testTemporalComp2 ==========\n");
@@ -499,10 +445,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testCeiling() {
 
         System.out.println("\n========= test testTemporalComp ==========\n");
@@ -526,10 +469,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Ignore // contains ListFn
+        @Ignore // contains ListFn
     @Test
     public void testInList() {
 
@@ -554,10 +494,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Ignore // contains ListFn
+        @Ignore // contains ListFn
     @Test
     public void testLeastCommon() {
 
@@ -580,10 +517,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testMult() {
 
         System.out.println("\n========= test testMult ==========\n");
@@ -604,10 +538,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testDay() {
 
         System.out.println("\n========= test testDay ==========\n");
@@ -628,10 +559,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testExponent() {
 
         System.out.println("\n========= test testExponent ==========\n");
@@ -651,10 +579,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testInstance() {
 
         System.out.println("\n========= test testInstance ==========\n");
@@ -676,10 +601,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testRadian() {
 
         //SUMOformulaToTPTPformula.debug = true;
@@ -703,10 +625,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testFloor() {
 
         //SUMOtoTFAform.debug = true;
@@ -729,10 +648,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testPrime() {
 
         //SUMOtoTFAform.debug = true;
@@ -756,10 +672,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Ignore // requires loading a new kif file
+        @Ignore // requires loading a new kif file
     @Test
     public void testAvgWork() {
 
@@ -792,10 +705,7 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testComposeSuffix() {
 
         //SUMOtoTFAform.debug = true;

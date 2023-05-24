@@ -34,10 +34,7 @@ public class Verb {
     public HashSet<Verb> subclasses = new HashSet<>();
     public HashSet<Frame> frames = new HashSet<>();
 
-    /**
-     *
-     */
-    public static ArrayList<AVPair> readSelrestrs(SimpleElement selrestrs) {
+        public static ArrayList<AVPair> readSelrestrs(SimpleElement selrestrs) {
 
         ArrayList<AVPair> result = new ArrayList<>();
         if (debug) System.out.println("VerbNet.readSelrestrs()");
@@ -62,10 +59,7 @@ public class Verb {
         return result;
     }
 
-    /**
-     *
-     */
-    public Member readMember(SimpleElement mem) {
+        public Member readMember(SimpleElement mem) {
 
         Member m = new Member();
         m.name = mem.getAttribute("name");
@@ -90,10 +84,7 @@ public class Verb {
         return m;
     }
 
-    /**
-     *
-     */
-    public void readMembers(SimpleElement verb) {
+        public void readMembers(SimpleElement verb) {
 
         if (debug) System.out.println("VerbNet.readMembers()");
         if (debug) System.out.println("read members: ");
@@ -107,10 +98,7 @@ public class Verb {
         }
     }
 
-    /**
-     *
-     */
-    public Role readThemeRole(SimpleElement themrole) {
+        public Role readThemeRole(SimpleElement themrole) {
 
         Role r = new Role();
         r.type = themrole.getAttribute("type");
@@ -126,10 +114,7 @@ public class Verb {
         return r;
     }
 
-    /**
-     *
-     */
-    public void readThemeRoles(SimpleElement themrole) {
+        public void readThemeRoles(SimpleElement themrole) {
 
         if (debug) System.out.println("VerbNet.readThemeRoles()");
         for (int i = 0; i < themrole.getChildElements().size(); i++) {
@@ -144,10 +129,7 @@ public class Verb {
         }
     }
 
-    /**
-     *
-     */
-    public void readFrames(SimpleElement verb) {
+        public void readFrames(SimpleElement verb) {
 
         if (debug) System.out.println("VerbNet.readFrames(): read frames ");
         for (int i = 0; i < verb.getChildElements().size(); i++) {
@@ -163,10 +145,7 @@ public class Verb {
         }
     }
 
-    /**
-     *
-     */
-    public void readSubclasses(SimpleElement verb) {
+        public void readSubclasses(SimpleElement verb) {
 
         if (debug) System.out.println("VerbNet.readSubclasses()");
         for (int i = 0; i < verb.getChildElements().size(); i++) {
@@ -179,10 +158,7 @@ public class Verb {
         }
     }
 
-    /**
-     *
-     */
-    public Verb readVerb(SimpleElement verb) {
+        public Verb readVerb(SimpleElement verb) {
 
         Verb v = new Verb();
         for (int i = 0; i < verb.getChildElements().size(); i++) {

@@ -11,10 +11,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class FormulaDeepEqualsTest extends UnitTestBase {
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testDeepEquals() {
 
         Formula f1 = new Formula();
@@ -86,10 +83,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase {
 
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testDeepEquals2() {
 
         System.out.println("============= FormulaDeepEqualsTest.testDeepEquals2 ==================");
@@ -128,10 +122,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase {
         Formula.debug = false;
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testDeepEqualsErrorCases() {
 
         Formula f = new Formula();
@@ -151,10 +142,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase {
         assertTrue(f.deepEquals(f));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testLogicallyEqualsErrorCases() {
 
         Formula f = new Formula();
@@ -174,10 +162,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase {
         assertTrue(f.logicallyEquals(f));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testUnifyWith() {
 
         Formula f1 = new Formula();
@@ -272,10 +257,7 @@ public class FormulaDeepEqualsTest extends UnitTestBase {
         System.out.println("Execution time (in microseconds): " + ((stop - start) / 1000));
     }
 
-    /**
-     *
-     */
-    @Test
+        @Test
     public void testLogicallyEqualsPerformance() {
 
         String stmt = "(=> (forall (?ELEMENT) (<=> (element ?ELEMENT ?SET1) " +
