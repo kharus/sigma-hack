@@ -310,9 +310,6 @@ public class KBmanager implements Serializable {
      * Get the one instance of KBmanager from its class variable.
      */
     public static KBmanager getMgr() {
-
-        //if (manager == null)
-        //    manager = new KBmanager();
         return manager;
     }
 
@@ -695,9 +692,7 @@ public class KBmanager implements Serializable {
      * configuration file, or uses the default parameters.
      */
     public void initializeOnce() {
-
         System.out.println("Info in KBmanager.initializeOnce()");
-        //Thread.dumpStack();
         String base = System.getenv("SIGMA_HOME");
         initializeOnce(base + File.separator + "KBs");
     }

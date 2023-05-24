@@ -1,3 +1,20 @@
+/**
+ * This code is copyright Articulate Software (c) 2003.  Some portions
+ * copyright Teknowledge (c) 2003 and reused under the terms of the GNU license.
+ * This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
+ * Users of this code also consent, by use of this code, to credit Articulate Software
+ * and Teknowledge in any writings, briefings, publications, presentations, or
+ * other representations of any software which incorporates, builds on, or uses this
+ * code.  Please cite the following article in any publication with references:
+ * <p>
+ * Pease, A., (2003). The Sigma Ontology Development Environment,
+ * in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
+ * August 9, Acapulco, Mexico.
+ * <p>
+ * Authors:
+ * Adam Pease
+ * Infosys LTD.
+ */
 package com.articulate.sigma.wordnet;
 
 import com.articulate.sigma.KB;
@@ -11,10 +28,9 @@ import static com.articulate.sigma.wordnet.WordNet.baseDir;
 public class OMWordnet implements Serializable {
 
     public static OMWordnet omw = new OMWordnet();
+
     public static boolean disable = false; // disable for debugging
-    /**
-     *
-     */
+
     public static ArrayList<String> lcodes = new ArrayList<String>(Arrays.asList(
             "als", "arb", "bul",
             "cat", "cow", "dan",
@@ -37,23 +53,7 @@ public class OMWordnet implements Serializable {
             "NorwegianBokmalLanguage", "PolishLanguage", "PortugueseLanguage",
             "TaiwanChineseLanguage", "SpanishLanguage", "SwedishLanguage",
             "ThaiLanguage", "MalayLanguage"));
-    /**
-     * This code is copyright Articulate Software (c) 2003.  Some portions
-     * copyright Teknowledge (c) 2003 and reused under the terms of the GNU license.
-     * This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
-     * Users of this code also consent, by use of this code, to credit Articulate Software
-     * and Teknowledge in any writings, briefings, publications, presentations, or
-     * other representations of any software which incorporates, builds on, or uses this
-     * code.  Please cite the following article in any publication with references:
-     * <p>
-     * Pease, A., (2003). The Sigma Ontology Development Environment,
-     * in Working Notes of the IJCAI-2003 Workshop on Ontology and Distributed Systems,
-     * August 9, Acapulco, Mexico.
-     * <p>
-     * Authors:
-     * Adam Pease
-     * Infosys LTD.
-     */
+
     // String key of language name
     // Interior key of a 9-digit WordNet synset and value of and ArrayList of
     // non-English synset Strings
@@ -64,9 +64,6 @@ public class OMWordnet implements Serializable {
     public HashMap<String, HashMap<String, ArrayList<String>>> examples =
             new HashMap<String, HashMap<String, ArrayList<String>>>();
 
-    /**
-     *
-     */
     private static char getOMWMappingSuffix(String SUMOmapping) {
 
         switch (WordNetUtilities.getSUMOMappingSuffix(SUMOmapping)) {
@@ -84,9 +81,6 @@ public class OMWordnet implements Serializable {
         return ' ';
     }
 
-    /**
-     *
-     */
     private static void generateOMWformat(String fileWithPath) {
 
         System.out.println("INFO in WordNetUtilities.generateOMWformat(): writing file " + fileWithPath);
@@ -133,9 +127,6 @@ public class OMWordnet implements Serializable {
         }
     }
 
-    /**
-     *
-     */
     private static void readOMWformat(String inputFileWithPath, String langName) {
 
         //System.out.println("INFO in WordNetUtilities.readOMWformat(): creating table entry for " + langName);

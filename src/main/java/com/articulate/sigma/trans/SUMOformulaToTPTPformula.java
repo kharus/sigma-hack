@@ -40,12 +40,6 @@ public class SUMOformulaToTPTPformula {
      * @return the String that is the translated token
      */
     public static String translateWord(String st, int type, boolean hasArguments) {
-
-        if (debug) System.out.println("SUMOformulaToTPTPformula.translateWord(): input: '" + st + "'");
-        if (debug)
-            System.out.println("SUMOformulaToTPTPformula.translateWord(): containsKey: " + SUMOtoTFAform.numericConstantValues.containsKey(st));
-        if (debug) System.out.println("SUMOformulaToTPTPformula.translateWord(): lang: " + lang);
-        if (debug) System.out.println("translateWord(): " + SUMOtoTFAform.numericConstantValues);
         String result = null;
         try {
             result = translateWord_1(st, type, hasArguments);

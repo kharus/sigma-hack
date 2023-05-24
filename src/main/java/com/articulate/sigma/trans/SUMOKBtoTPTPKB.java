@@ -14,39 +14,28 @@ public class SUMOKBtoTPTPKB {
     public static boolean removeNum = true; // remove numbers
     public static boolean debug = false;
     public static String lang = "fof"; // or thf
-    public static HashSet<String> excludedPredicates = new HashSet<>();
+    /**
+     * define a set of predicates which will not be used for inference
+     */
+    public static final Set<String> EXCLUDED_PREDICATES = Set.of(
+            "documentation",
+            "domain",
+            "format",
+            "termFormat",
+            "externalImage",
+            "relatedExternalConcept",
+            "relatedInternalConcept",
+            "formerName",
+            "abbreviation",
+            "conventionalShortName",
+            "conventionalLongName");
+
     // maps TPTP axiom IDs to SUMO formulas
     public static HashMap<String, Formula> axiomKey = new HashMap<>();
     public KB kb;
     public Set<String> alreadyWrittenTPTPs = new HashSet<>();
 
-    /**
-     *
-     */
-    public SUMOKBtoTPTPKB() {
-
-        buildExcludedPredicates();
-    }
-
-    /**
-     * define a set of predicates which will not be used for inference
-     */
-    public static HashSet<String> buildExcludedPredicates() {
-
-        excludedPredicates.add("documentation");
-        excludedPredicates.add("domain");
-        excludedPredicates.add("format");
-        excludedPredicates.add("termFormat");
-        excludedPredicates.add("externalImage");
-        excludedPredicates.add("relatedExternalConcept");
-        excludedPredicates.add("relatedInternalConcept");
-        excludedPredicates.add("formerName");
-        excludedPredicates.add("abbreviation");
-        excludedPredicates.add("conventionalShortName");
-        excludedPredicates.add("conventionalLongName");
-
-        return excludedPredicates;
-    }
+    public SUMOKBtoTPTPKB() {}
 
     /**
      *
@@ -57,10 +46,7 @@ public class SUMOKBtoTPTPKB {
             return "tptp";
         return l;
     }
-
-    /**
-     *
-     */
+    
     public static String extensionToLang(String l) {
 
         if (l.equals("tptp"))
@@ -68,9 +54,6 @@ public class SUMOKBtoTPTPKB {
         return l;
     }
 
-    /**
-     *
-     */
     public static void addToFile(String fileName, ArrayList<String> axioms, String conjecture) {
 
         DataOutputStream out = null;
@@ -96,31 +79,6 @@ public class SUMOKBtoTPTPKB {
                 ioe.printStackTrace();
             }
         }
-    }
-
-    /**
-     *
-     */
-    public static void main(String[] args) {
-
-        //debug = true;
-        KBmanager.getMgr().initializeOnce();
-
-        SUMOKBtoTPTPKB skbtptpkb = new SUMOKBtoTPTPKB();
-        String kbName = KBmanager.getMgr().getPref("sumokbname");
-        skbtptpkb.kb = KBmanager.getMgr().getKB(kbName);
-        String filename = KBmanager.getMgr().getPref("kbDir") + File.separator + kbName + SUMOKBtoTPTPKB.lang;
-        PrintWriter pw = null;
-        try {
-            pw = new PrintWriter(new BufferedWriter(new FileWriter(filename, true)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String fileWritten = skbtptpkb.writeFile(filename, null, false, pw);
-        if (StringUtil.isNonEmptyString(fileWritten))
-            System.out.println("File written: " + fileWritten + " with key: " + axiomKey);
-        else
-            System.out.println("Could not write " + filename);
     }
 
     /**
@@ -199,28 +157,6 @@ public class SUMOKBtoTPTPKB {
     }
 
     /**
-     *  Sets isQuestion and calls writeTPTPFile() below
-
-     public String writeFile(String fileName,
-     Formula conjecture) {
-
-     final boolean isQuestion = false;
-     return writeFile(fileName,conjecture,isQuestion);
-     }
-     */
-    /**
-     *  Sets pw and calls writeTPTPFile() below
-
-     public String writeFile(String fileName,
-     Formula conjecture,
-     boolean isQuestion) {
-
-     final PrintWriter pw = null;
-     return writeFile(fileName,conjecture,isQuestion,pw);
-     }
-     */
-
-    /**
      * Print the sorts of any numeric constants encountered during processing.
      * They are stored in SUMOtoTFAform.numericConstantTypes
      */
@@ -248,8 +184,7 @@ public class SUMOKBtoTPTPKB {
      *
      */
     public void writeHeader(PrintWriter pw, String sanitizedKBName) {
-
-        if (pw == null) {
+        if (pw != null) {
             pw.println("% Articulate Software");
             pw.println("% www.ontologyportal.org www.articulatesoftware.com");
             pw.println("% This software released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.");
@@ -418,7 +353,7 @@ public class SUMOKBtoTPTPKB {
 
         boolean pass = false;
         if (formula.isSimpleClause(kb))
-            pass = excludedPredicates.contains(formula.getArgument(0));
+            pass = EXCLUDED_PREDICATES.contains(formula.getArgument(0));
         return pass;
     }
 
