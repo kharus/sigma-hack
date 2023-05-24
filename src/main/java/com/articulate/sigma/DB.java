@@ -189,18 +189,12 @@ public class DB {
         return rows;
     }
 
-    /**
-     *
-     */
     public static ArrayList<ArrayList<String>> readSpreadsheet(String fname, List lineStartTokens,
                                                                boolean quote) {
 
         return readSpreadsheet(fname, lineStartTokens, quote, ',');
     }
 
-    /**
-     *
-     */
     private static boolean isInteger(String input) {
 
         try {
@@ -382,9 +376,6 @@ public class DB {
         return rows;
     }
 
-    /**
-     *
-     */
     public static int writeSuoKifStatements(Set statements, PrintWriter pw) {
 
         long t1 = System.currentTimeMillis();
@@ -475,23 +466,14 @@ public class DB {
         return count;
     }
 
-    /**
-     *
-     */
     public static String wordWrap(String input, int length) {
         return StringUtil.wordWrap(input, length);
     }
 
-    /**
-     *
-     */
     public static boolean emptyString(String input) {
         return StringUtil.emptyString(input);
     }
 
-    /**
-     *
-     */
     public static void RearDBtoKIF() {
 
         LineNumberReader lnr = null;
@@ -599,9 +581,6 @@ public class DB {
         }
     }
 
-    /**
-     *
-     */
     public static String parseCuisines(String cuisine, String RST_RESTAURANTNAME, String RST_RESTAURANTID) {
 
         StringBuffer result = new StringBuffer();
@@ -759,9 +738,6 @@ public class DB {
         System.out.println();
     }
 
-    /**
-     *
-     */
     public static String processTimeDate(String timeDate) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // "2009-03-19 17:30:00"
@@ -783,9 +759,6 @@ public class DB {
                 " (YearFn " + calendar.get(Calendar.YEAR) + "))))))";
     }
 
-    /**
-     *
-     */
     public static HashMap<String, String> readStateAbbrevs() {
 
         HashMap<String, String> result = new HashMap<String, String>();
@@ -799,9 +772,6 @@ public class DB {
         return result;
     }
 
-    /**
-     *
-     */
     public static ArrayList<String> fill(String value, int count) {
 
         ArrayList<String> line = new ArrayList<String>();
@@ -810,9 +780,6 @@ public class DB {
         return line;
     }
 
-    /**
-     *
-     */
     public static void DiningDBImport() {
 
         ArrayList<ArrayList<String>> f = DB.readSpreadsheet("dining.csv", null, false);
@@ -923,9 +890,6 @@ public class DB {
         return result;
     }
 
-    /**
-     *
-     */
     public static HashSet<String> parseRest(String menu, String placename, String price,
                                             String address, String latitude, String longitude, String phone) {
 
@@ -988,9 +952,6 @@ public class DB {
         return axioms;
     }
 
-    /**
-     *
-     */
     public static HashSet<String> getAllRest() {
 
         HashSet<String> result = new HashSet<String>();
@@ -1070,9 +1031,6 @@ public class DB {
         return result;
     }
 
-    /**
-     *
-     */
     public static String printTopSUMOInReviews(ArrayList<AVPair> topSUMO) {
 
         StringBuffer result = new StringBuffer();
@@ -1325,9 +1283,6 @@ public class DB {
         return result;
     }
 
-    /**
-     *
-     */
     public static void readAmenities() {
 
         ArrayList<ArrayList<String>> f = DB.readSpreadsheet(KBmanager.getMgr().getPref("kbDir") +
@@ -1358,9 +1313,6 @@ public class DB {
         return result;
     }
 
-    /**
-     *
-     */
     public static void textSentimentByPeriod() {
 
         // ArrayList by time period of an array of SUMO terms and sentiment values for that period
@@ -1399,9 +1351,6 @@ public class DB {
         System.out.println(totalSent);
     }
 
-    /**
-     *
-     */
     public static void textSentiment() {
 
         int period = 0;
@@ -1460,9 +1409,6 @@ public class DB {
         }
     }
 
-    /**
-     *
-     */
     public static void testSentiment() {
         readSentimentArray();
         String[] s = new String[24];
@@ -1495,9 +1441,6 @@ public class DB {
         }
     }
 
-    /**
-     *
-     */
     public static void testSentimentCorpus() {
 
         try {
@@ -1511,9 +1454,6 @@ public class DB {
         textFileSentiment("rt-polarity.neg", true);
     }
 
-    /**
-     *
-     */
     public static void guessGender(String fname) {
 
         ArrayList<ArrayList<String>> fn = DB.readSpreadsheet("FirstNames.csv", null, false, ',');
@@ -1778,9 +1718,6 @@ pw = new PrintWriter(fout);
         }
     }
 
-    /**
-     *
-     */
     private void processForRDFExport(ArrayList rows) {
 
         //System.out.println("<!-- Begin Export -->");
@@ -1911,9 +1848,6 @@ pw = new PrintWriter(fout);
         printSpreadsheet(rows, usedRelations);
     }
 
-    /**
-     *
-     */
     private String replaceStringWithID(int counter, String arg, HashMap stringMap) {
 
         String id = ("String" + counter);

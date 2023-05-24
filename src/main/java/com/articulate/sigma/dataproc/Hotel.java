@@ -33,9 +33,6 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- *
- */
 public class Hotel {
 
     public static final int geocodeLimit = 100;  // to avoid Google shutting us off
@@ -44,13 +41,9 @@ public class Hotel {
      * columns that should appear in the resulting CSV file.
      */
     private static final TreeSet<String> hotelColumns = new TreeSet<String>();
-    /**
-     *
-     */
+
     public static int geocodeCount = 0;
-    /**
-     *
-     */
+
     public static int level = 0;
     public String oID = "";
     public String nID = "";
@@ -103,9 +96,6 @@ public class Hotel {
     public HashMap<String, Integer> conceptSentiment = new HashMap<String, Integer>();
     public HashMap<String, String> values = new HashMap<String, String>();
 
-    /**
-     *
-     */
     public static String asCSVHeader() {
 
         String result = "id," +
@@ -120,9 +110,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     *
-     */
     public static String printAllHotels(ArrayList<Hotel> hotels) {
 
         System.out.println("INFO in Hotel.printAllHotels(): number: " + hotels.size());
@@ -133,9 +120,6 @@ public class Hotel {
         return sb.toString();
     }
 
-    /**
-     *
-     */
     public static void printAllHotelAmenitySentiment(ArrayList<Hotel> hotels) {
 
         StringBuffer sb = new StringBuffer();
@@ -434,9 +418,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     *
-     */
     public static ArrayList<String> generateSUMOColumns(Hotel h, ArrayList<String> SUMOheader) {
 
         ArrayList<String> result = DB.fill("", SUMOheader.size());
@@ -583,9 +564,6 @@ public class Hotel {
         return h;
     }
 
-    /**
-     *
-     */
     public static ArrayList<Hotel> readCSVHotels(String fname) {
 
         HashMap<String, String> abbrevs = DB.readStateAbbrevs();
@@ -855,9 +833,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     *
-     */
     public static Hotel parseOneTHotelReviewFile(String fname) {
 
         Hotel h = new Hotel();
@@ -948,9 +923,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     *
-     */
     public static void matchHotels(Hotel feedHotel, Hotel reviewsHotel) {
 
         //if (feedHotel.name.equals(reviewsHotel.name)) {
@@ -981,9 +953,6 @@ public class Hotel {
         */
     }
 
-    /**
-     *
-     */
     public static void mergeHotels(ArrayList<Hotel> feed, ArrayList<Hotel> reviews) {
 
         System.out.println("INFO in mergeHotels()");
@@ -1163,9 +1132,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     *
-     */
     public static ArrayList<Hotel> readOXMLhotels(String fname) {
 
         ArrayList<Hotel> hotels = new ArrayList<Hotel>();
@@ -1313,9 +1279,6 @@ public class Hotel {
         return index;
     }
 
-    /**
-     *
-     */
     public static Hotel convertJSON2Hotel(JSONElement js) {
 
         Hotel result = new Hotel();
@@ -1335,9 +1298,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     *
-     */
     public static Hotel parseOneJSONReviewFile(String fname) {
 
         Hotel h = new Hotel();
@@ -1373,9 +1333,6 @@ public class Hotel {
         return h;
     }
 
-    /**
-     *
-     */
     public static String normalizeSentiment(String value) {
 
         try {
@@ -1390,9 +1347,6 @@ public class Hotel {
         }
     }
 
-    /**
-     *
-     */
     public static void writeHotelAsXML(Hotel h, PrintWriter pw) {
 
         try {
@@ -1488,9 +1442,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     *
-     */
     public static void hotelSentiment(ArrayList<Hotel> hotels) {
 
         System.out.println("INFO in Hotel.hotelSentiment()");
@@ -1544,9 +1495,6 @@ public class Hotel {
         }
     }
 
-    /**
-     *
-     */
     public static void execJSON(String path) {
 
         //ArrayList<Hotel> hotels = readJSONHotels(path,false);
@@ -1556,9 +1504,6 @@ public class Hotel {
         System.out.println("INFO in Hotel.execJSON(): done computing sentiment in " + ((System.currentTimeMillis() - t1) / 1000.0) + " seconds");
     }
 
-    /**
-     *
-     */
     public static void main(String[] args) {
 
         if (args[0].equals("-help") || StringUtil.emptyString(args[0])) {
@@ -1604,9 +1549,6 @@ public class Hotel {
         //System.out.println(printAllHotels(al));
     }
 
-    /**
-     *
-     */
     public String asCSV() {
 
         StringBuffer result = new StringBuffer();
@@ -1642,9 +1584,6 @@ public class Hotel {
         return result.toString();
     }
 
-    /**
-     *
-     */
     public String toString() {
 
         StringBuffer result = new StringBuffer();
@@ -1665,9 +1604,6 @@ public class Hotel {
         return result.toString();
     }
 
-    /**
-     *
-     */
     public void addConceptSentiment(HashMap<String, Integer> conceptSent) {
 
         Iterator<String> it = conceptSent.keySet().iterator();
@@ -1683,9 +1619,6 @@ public class Hotel {
         }
     }
 
-    /**
-     *
-     */
     public void addAllSenses(HashMap<String, Integer> wnsenses) {
 
         Iterator<String> it = wnsenses.keySet().iterator();
@@ -1698,18 +1631,12 @@ public class Hotel {
         }
     }
 
-    /**
-     *
-     */
     public class JSONElement {
 
         String key = ""; // empty key signifies root element
         String value = "";
         ArrayList<JSONElement> subelements = new ArrayList<JSONElement>();
 
-        /**
-         *
-         */
         public String toString() {
 
             StringBuffer sb = new StringBuffer();
@@ -1735,9 +1662,6 @@ public class Hotel {
             return sb.toString();
         }
 
-        /**
-         *
-         */
         public JSONElement getElement(String key) {
 
             for (int i = 0; i < subelements.size(); i++) {
@@ -1749,9 +1673,6 @@ public class Hotel {
             return null;
         }
 
-        /**
-         *
-         */
         public String getElementValue(String key) {
 
             JSONElement js = getElement(key);

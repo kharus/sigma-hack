@@ -301,9 +301,6 @@ public class EProver {
         // System.out.print(eprover.submitQuery("(holds instance ?X Human)", 5, 2));
     }
 
-    /**
-     *
-     */
     public String toString() {
 
         StringBuffer sb = new StringBuffer();
