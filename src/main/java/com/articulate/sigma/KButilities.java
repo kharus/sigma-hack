@@ -51,38 +51,28 @@ public class KButilities {
      */
     public static TreeSet<String> warnings = new TreeSet<String>();
 
-    /**
-     *
-     */
+    
     public static boolean isRelation(KB kb, String term) {
 
         return kb.isInstanceOf(term, "Relation");
     }
 
-    /**
-     *
-     */
+    
     public static boolean isFunction(KB kb, String term) {
         return kb.isInstanceOf(term, "Function");
     }
 
-    /**
-     *
-     */
+    
     public static boolean isAttribute(KB kb, String term) {
         return kb.isInstanceOf(term, "Attribute");
     }
 
-    /**
-     *
-     */
+    
     public static void clearErrors() {
         errors = new TreeSet<>();
     }
 
-    /**
-     *
-     */
+    
     public static boolean hasCorrectTypes(KB kb, Formula f) {
 
         SUMOtoTFAform.initOnce();
@@ -107,9 +97,7 @@ public class KButilities {
         return true;
     }
 
-    /**
-     *
-     */
+    
     public static boolean isValidFormula(KB kb, String form) {
 
         SUMOtoTFAform.initOnce();
@@ -140,33 +128,25 @@ public class KButilities {
         return true;
     }
 
-    /**
-     *
-     */
+    
     public static boolean isClass(KB kb, String term) {
 
         return kb.isInstanceOf(term, "Class");
     }
 
-    /**
-     *
-     */
+    
     public static boolean isInstance(KB kb, String term) {
 
         return !kb.isInstanceOf(term, "Class");
     }
 
-    /**
-     *
-     */
+    
     public static boolean isVariableArity(KB kb, String term) {
 
         return kb.isInstanceOf(term, "VariableArityRelation");
     }
 
-    /**
-     *
-     */
+    
     public static String getDocumentation(KB kb, String term) {
 
         ArrayList<Formula> forms = kb.askWithRestriction(0, "documentation", 1, term);
@@ -306,9 +286,7 @@ public class KButilities {
         return result;
     }
 
-    /**
-     *
-     */
+    
     public static void countRelations(KB kb) {
 
         System.out.println("Relations: " + kb.getCountRelations());
@@ -322,9 +300,7 @@ public class KButilities {
         }
     }
 
-    /**
-     *
-     */
+    
     public static boolean isCacheFile(String filename) {
 
         if (StringUtil.emptyString(filename))
@@ -332,9 +308,7 @@ public class KButilities {
         return filename.endsWith("_Cache.kif");
     }
 
-    /**
-     *
-     */
+    
     public static void countProcesses(KB kb) {
 
         int count = 0;
@@ -352,9 +326,7 @@ public class KButilities {
         System.out.println("SUMO Process synsets: " + wncount);
     }
 
-    /**
-     *
-     */
+    
     private static boolean uRLexists(String URLName) {
 
         try {
@@ -371,9 +343,7 @@ public class KButilities {
         }
     }
 
-    /**
-     *
-     */
+    
     public static void checkURLs(KB kb) {
 
         URL u = null;
@@ -386,9 +356,7 @@ public class KButilities {
         }
     }
 
-    /**
-     *
-     */
+    
     public static void validatePictureList() {
 
         // (externalImage WaterVehicle "http://upload.wikimedia.org/wikipedia/commons/1/12/2003_LWGO_ubt.JPG") 
@@ -485,9 +453,7 @@ public class KButilities {
         return resultSet;
     }
 
-    /**
-     *
-     */
+    
     private static String semnetAsDot(Set<String> triples) {
 
         StringBuffer sb = new StringBuffer();
@@ -758,9 +724,7 @@ public class KButilities {
         return result;
     }
 
-    /**
-     *
-     */
+    
     public static void writeDisplayText(KB kb, String displayFormatPredicate, String displayTermPredicate,
                                         String language, String fname) throws IOException {
 
@@ -830,9 +794,7 @@ public class KButilities {
         }
     }
 
-    /**
-     *
-     */
+    
     public static void generateTPTPTestAssertions() {
 
         try {
@@ -887,9 +849,7 @@ public class KButilities {
         }
     }
 
-    /**
-     *
-     */
+    
     public static int getCountNonLinguisticAxioms(KB kb) {
 
         HashSet<String> rels = new HashSet<>();
@@ -1007,9 +967,7 @@ public class KButilities {
         return result;
     }
 
-    /**
-     *
-     */
+    
     public static void showHelp() {
 
         System.out.println("KButilities class");
@@ -1029,9 +987,7 @@ public class KButilities {
         System.out.println("  -t - generate a table of termFormat(s)");
     }
 
-    /**
-     *
-     */
+    
     public static void main(String[] args) {
 
         if (args != null && args.length > 0 && args[0].equals("-h"))
@@ -1095,9 +1051,7 @@ public class KButilities {
         }
     }
 
-    /**
-     *
-     */
+    
     public String semnetAsJSON3(KB kb, boolean cached, boolean strings) {
 
         Set<String> s = generateSemanticNetwork(kb, cached, strings);
@@ -1110,9 +1064,7 @@ public class KButilities {
         return JSONValue.toJSONString(al);
     }
 
-    /**
-     *
-     */
+    
     public Set<GraphArc> generateSemNetNeighbors(KB kb, boolean cached, boolean strings, boolean links, String term, int count) {
 
         if (debug) System.out.println("generateSemNetNeighbors(): term: " + term + " count: " + count);
@@ -1188,9 +1140,7 @@ public class KButilities {
         return resultSet;
     }
 
-    /**
-     *
-     */
+    
     public class GraphArc implements JSONAware, Comparable {
 
         public String source = "";

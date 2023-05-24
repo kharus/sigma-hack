@@ -34,9 +34,7 @@ public class PredVarInst {
     // All predicates that meet that class membership and arity constraints for the given variable
     private static HashMap<String, HashSet<String>> candidatePredicates = new HashMap<String, HashSet<String>>();
 
-    /**
-     *
-     */
+    
     public static void init() {
 
         doublesHandled = false;
@@ -78,9 +76,7 @@ public class PredVarInst {
         return result;
     }
 
-    /**
-     *
-     */
+    
     private static boolean isTypeExpansion(String rel) {
 
         return rel.indexOf("__") != -1;
@@ -394,9 +390,7 @@ public class PredVarInst {
         return res;
     }
 
-    /**
-     *
-     */
+    
     private static boolean containsRowVariable(ArrayList<Formula> arglist) {
 
         for (Formula s : arglist)
@@ -494,9 +488,7 @@ public class PredVarInst {
         return varlist;
     }
 
-    /**
-     *
-     */
+    
     public static void arityTest() {
 
         KBmanager.getMgr().initializeOnce();
@@ -522,9 +514,7 @@ public class PredVarInst {
         System.out.println("INFO in PredVarInst.arityTest(): correct arity: " + hasCorrectArity(f, kb));
     }
 
-    /**
-     *
-     */
+    
     public static void test() {
 
         KBmanager.getMgr().initializeOnce();
@@ -566,9 +556,7 @@ public class PredVarInst {
 
     }
 
-    /**
-     *
-     */
+    
     public static void main(String[] args) {
 
         //arityTest();

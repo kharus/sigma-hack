@@ -45,9 +45,7 @@ public class VerbNet {
     public static boolean disable = false;
     private static boolean initialized = false;
 
-    /**
-     *
-     */
+    
     public static void initOnce() {
 
         if (KBmanager.getMgr().getPref("loadLexicons").equals("false"))
@@ -78,9 +76,7 @@ public class VerbNet {
         }
     }
 
-    /**
-     *
-     */
+    
     public static void readVerbFiles() {
 
         SimpleElement configuration = null;
@@ -111,9 +107,7 @@ public class VerbNet {
         }
     }
 
-    /**
-     *
-     */
+    
     public static void processVerbs() {
 
         for (String fname : verbFiles.keySet()) {
@@ -131,9 +125,7 @@ public class VerbNet {
         }
     }
 
-    /**
-     *
-     */
+    
     private static String formatForSynset(String synset) {
 
         StringBuffer result = new StringBuffer();
@@ -198,9 +190,7 @@ public class VerbNet {
         return result.toString();
     }
 
-    /**
-     *
-     */
+    
     public static void main(String[] args) {
 
         KBmanager.getMgr().initializeOnce();

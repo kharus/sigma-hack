@@ -222,9 +222,7 @@ public class DocGen {
         return inst;
     }
 
-    /**
-     *
-     */
+    
     public static DocGen getInstance(String compositeKey) {
 
         // System.out.println("ENTER DocGen.getInstance(" + compositeKey + ")");
@@ -263,9 +261,7 @@ public class DocGen {
         return inst;
     }
 
-    /**
-     *
-     */
+    
     public static DocGen getInstance(KB kb, String ontology) {
 
         // System.out.println("ENTER DocGen.getInstance(" + kb.name + ", " + ontology + ")");
@@ -494,17 +490,13 @@ public class DocGen {
         }
     }
 
-    /**
-     *
-     */
+    
     public static boolean emptyString(String s) {
 
         return StringUtil.emptyString(s);
     }
 
-    /**
-     *
-     */
+    
     public static boolean isNonEmptyString(String s) {
 
         return StringUtil.isNonEmptyString(s);
@@ -710,9 +702,7 @@ public class DocGen {
         return this.ontology;
     }
 
-    /**
-     *
-     */
+    
     public void setOntology(String term) {
 
         this.ontology = term;
@@ -800,9 +790,7 @@ public class DocGen {
         return this.kb;
     }
 
-    /**
-     *
-     */
+    
     public void setKB(KB kb) {
 
         this.kb = kb;
@@ -5566,9 +5554,7 @@ public class DocGen {
                 + " seconds elapsed time");
     }
 
-    /**
-     *
-     */
+    
     public void generateSingleHTML(KB kb, String language, boolean simplified)
             throws IOException {
 
@@ -6148,9 +6134,7 @@ public class DocGen {
         return ans;
     }
 
-    /**
-     *
-     */
+    
     public ArrayList<ArrayList<String>> readSpreadsheetFile(String inpath,
                                                             char delimiter) {
         return readSpreadsheetFile(inpath, delimiter, 0, null);

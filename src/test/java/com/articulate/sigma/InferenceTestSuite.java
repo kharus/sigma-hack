@@ -131,9 +131,7 @@ public class InferenceTestSuite {
         return false;
     }
 
-    /**
-     *
-     */
+    
     private static File setOutputDir() throws IOException {
 
         String outputDirPath = KBmanager.getMgr().getPref("testOutputDir");
@@ -143,9 +141,7 @@ public class InferenceTestSuite {
             return null;
     }
 
-    /**
-     *
-     */
+    
     private static void clearOutputDir(File outputDir) throws IOException {
 
         if (outputDir == null) {
@@ -291,9 +287,7 @@ public class InferenceTestSuite {
             userAssertionsFile.delete();
     }
 
-    /**
-     *
-     */
+    
     public static void showHelp() {
 
         System.out.println("============== InferenceTestSuite class =============");
@@ -479,9 +473,7 @@ public class InferenceTestSuite {
         return result;
     }
 
-    /**
-     *
-     */
+    
     public void saveTPTP(InfTestData itd) {
 
         String name = FileUtil.noExt(FileUtil.noPath(itd.filename));
@@ -501,9 +493,7 @@ public class InferenceTestSuite {
         }
     }
 
-    /**
-     *
-     */
+    
     public void printResults(Collection<InfTestData> tests) {
 
         System.out.println();
@@ -810,9 +800,7 @@ public class InferenceTestSuite {
         return false;
     }
 
-    /**
-     *
-     */
+    
     public class InfTestData {
 
         public String filename = "";
