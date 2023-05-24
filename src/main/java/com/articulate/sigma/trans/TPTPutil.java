@@ -236,7 +236,7 @@ public class TPTPutil {
         return "";
     }
 
-    
+
     public static void test() {
 
         Formula f = new Formula();
@@ -247,7 +247,7 @@ public class TPTPutil {
         System.out.println(TPTPutil.htmlTPTPFormat(f, "http://sigma.ontologyportal.org:4040/sigma?kb=SUMO&term=", false));
     }
 
-    
+
     public static void showHelp() {
 
         System.out.println("TPTPutil class");
@@ -258,7 +258,7 @@ public class TPTPutil {
         System.out.println("  h - show this help");
     }
 
-    
+
     public static void main(String[] args) throws IOException {
 
         System.out.println("INFO in TPTPutil.main()");

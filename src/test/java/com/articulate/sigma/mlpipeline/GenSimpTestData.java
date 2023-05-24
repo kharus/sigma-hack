@@ -84,7 +84,7 @@ public class GenSimpTestData {
     public static ArrayList<String> others = new ArrayList<>(); // when next noun is same as a previous one
     public static HashMap<String, String> prepPhrase = new HashMap<>();
 
-    
+
     public GenSimpTestData() {
 
         initNumbers();
@@ -517,7 +517,7 @@ public class GenSimpTestData {
         kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
         System.out.println("generate(): # relations: " + kb.kbCache.relations.size());
         HashMap<String, String> formatMap = kb.getFormatMap("EnglishLanguage");
-        skipTypes.addAll(List.of("Formula"));
+        skipTypes.add("Formula");
         System.out.println("generate(): output existing ground statements ");
         handleGroundStatements(formatMap);
         System.out.println("generate(): create ground statements ");
@@ -544,7 +544,7 @@ public class GenSimpTestData {
         }
     }
 
-    
+
     public static void progressPrint() {
 
         if ((sentCount % 100) != 0) return;
@@ -556,7 +556,7 @@ public class GenSimpTestData {
         if (debug) System.out.println();
     }
 
-    
+
     public static void testProgressPrint() {
 
         estSentCount = 1000000;
@@ -654,7 +654,7 @@ public class GenSimpTestData {
         return "involvedInEvent";
     }
 
-    
+
     public static String getFormattedDate(LocalDate date) {
 
         int day = date.getDayOfMonth();
@@ -672,7 +672,7 @@ public class GenSimpTestData {
         return "d'th' 'of' MMMM yyyy";
     }
 
-    
+
     public static void showHelp() {
 
         System.out.println("Sentence generation");
@@ -1382,7 +1382,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("generateHumanSubject(2): startOfSentence: " + startOfSentence);
     }
 
-    
+
     public void removeFrameSubject(LFeatures lfeat) {
 
         if (lfeat.framePart.startsWith("Something is"))
@@ -1437,7 +1437,7 @@ public class GenSimpTestData {
         startOfSentence = false;
     }
 
-    
+
     public boolean questionWord(String q) {
 
         return q.equalsIgnoreCase("who") || q.equalsIgnoreCase("what") || q.equalsIgnoreCase("when did") ||
@@ -1470,7 +1470,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("generateSubject(): startOfSentence: " + startOfSentence);
     }
 
-    
+
     public void generateVerb(boolean negated, StringBuffer english, StringBuffer prop,
                              String proc, String word, LFeatures lfeat) {
 
@@ -1592,7 +1592,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("getDirect(2): lfeat.prep: " + lfeat.directPrep);
     }
 
-    
+
     public void addSecondVerb(StringBuffer english, StringBuffer prop,
                               LFeatures lfeat) {
 
@@ -1685,7 +1685,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("generateDirectObject(5): lfeat.framePart: " + lfeat.framePart);
     }
 
-    
+
     private String closeParens(LFeatures lfeat) {
 
         StringBuffer result = new StringBuffer();
@@ -1859,7 +1859,7 @@ public class GenSimpTestData {
         return onceWithoutInd;
     }
 
-    
+
     public boolean excludedVerb(String v) {
 
         if (debug) System.out.println("excludedVerb(): checking: " + v);
@@ -1875,7 +1875,7 @@ public class GenSimpTestData {
         return false;
     }
 
-    
+
     public ArrayList<String> getVerbFramesForTerm(String term) {
 
         ArrayList<String> frames = new ArrayList<>();
@@ -2061,7 +2061,7 @@ public class GenSimpTestData {
         if (debug) System.out.println("addTimeDate() startOfSentence: " + startOfSentence);
     }
 
-    
+
     private void getFrame(LFeatures lfeat) {
 
         String frame = null;
@@ -2240,7 +2240,7 @@ public class GenSimpTestData {
         }
     }
 
-    
+
     public void genWithHumans(StringBuffer english,
                               StringBuffer prop,
                               LFeatures lfeat) {
@@ -2309,7 +2309,7 @@ public class GenSimpTestData {
         }
     }
 
-    
+
     public String negatedModal(String modal, boolean negated) {
 
         if (!negated)
@@ -2452,7 +2452,7 @@ public class GenSimpTestData {
         }
     }
 
-    
+
     public class Preposition {
         public String procType = null;
         public String prep = null;
@@ -2473,7 +2473,7 @@ public class GenSimpTestData {
         public String noun = null;
     }
 
-    
+
     public class Word {
         public String term = null;
         public String root = null;
@@ -2490,7 +2490,7 @@ public class GenSimpTestData {
         }
     }
 
-    
+
     public class Capability {
 
         public boolean negated = false; // not a capability

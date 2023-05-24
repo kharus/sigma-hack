@@ -17,7 +17,7 @@ public class KBmanagerInitIntegrationTest extends IntegrationTestBase {
 
     private static final Set<String> kifSet = Sets.newHashSet();
 
-    
+
     @BeforeClass
     public static void setKB() {
 
@@ -81,7 +81,7 @@ public class KBmanagerInitIntegrationTest extends IntegrationTestBase {
         }
     }
 
-    
+
     private void filterExpectedKifs(List<String> actualKifFiles, Set<String> expectedKifFiles) {
 
         List<String> remainingActualKifFiles = Lists.newArrayList(actualKifFiles);

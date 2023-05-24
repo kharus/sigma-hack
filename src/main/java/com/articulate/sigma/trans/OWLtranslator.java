@@ -24,13 +24,14 @@ import java.util.*;
  * Infosys LTD.
  */
 
-/** Read and write OWL format from Sigma data structures.
+/**
+ * Read and write OWL format from Sigma data structures.
  */
 public class OWLtranslator {
-    public static OWLtranslator ot = new OWLtranslator();
-    public static boolean initNeeded = true;
-    /** Relations in SUMO that have a corresponding relation in
-     *  OWL and therefore require special treatment. */
+    /**
+     * Relations in SUMO that have a corresponding relation in
+     * OWL and therefore require special treatment.
+     */
     private static final ArrayList SUMOReservedRelations =
             new ArrayList(Arrays.asList("disjoint",                 // owl:disjointWith
                     "disjointDecomposition",    // owl:distinctMembers
@@ -75,11 +76,13 @@ public class OWLtranslator {
                     "owl:unionOf",              // not allowed in OWL-Lite
                     "owl:versionInfo"
             ));
-    /** OWL DL requires a pairwise separation between classes,
-     *  datatypes, datatype properties, object properties,
-     *  annotation properties, ontology properties (i.e., the import
-     *  and versioning stuff), individuals, data values and the
-     *  built-in vocabulary. */
+    /**
+     * OWL DL requires a pairwise separation between classes,
+     * datatypes, datatype properties, object properties,
+     * annotation properties, ontology properties (i.e., the import
+     * and versioning stuff), individuals, data values and the
+     * built-in vocabulary.
+     */
     private static final ArrayList OWLReservedClasses =
             new ArrayList(Arrays.asList("rdf:List",
                     "rdf:Property",
@@ -102,18 +105,25 @@ public class OWLtranslator {
                     "owl:Thing", // any instance - same as rdfs:Resource for OWL-Full
                     "owl:TransitiveProperty"
             ));
+    public static OWLtranslator ot = new OWLtranslator();
+    public static boolean initNeeded = true;
     private static String termPrefix = "";
     private static int _debugLevelCounter = 0;
-    public KB kb;
-    /** A map of functional statements and the automatically
-     *  generated term that is created for it. */
+    /**
+     * A map of functional statements and the automatically
+     * generated term that is created for it.
+     */
     private final HashMap functionTable = new HashMap();
-    /** Keys are SUMO term name Strings, values are YAGO/DBPedia
-     *  term name Strings. */
+    /**
+     * Keys are SUMO term name Strings, values are YAGO/DBPedia
+     * term name Strings.
+     */
     private final HashMap SUMOYAGOMap = new HashMap();
+    public KB kb;
     private TreeMap axiomMap = new TreeMap();
 
     /**
+     *
      */
     private static String processStringForXMLOutput(String s) {
 
@@ -126,6 +136,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private static String processStringForKIFOutput(String s) {
 
@@ -135,7 +146,7 @@ public class OWLtranslator {
     }
 
     /**
-     *  Remove quotes around a string
+     * Remove quotes around a string
      */
     public static String removeQuotes(String s) {
 
@@ -150,6 +161,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private static String getParentReference(SimpleElement se) {
 
@@ -418,6 +430,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     public static void initOnce(String kbName) {
 
@@ -433,6 +446,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     public static void showHelp() {
 
@@ -497,7 +511,7 @@ public class OWLtranslator {
     }
 
     /**
-     *  Turn a function statement into an identifier.
+     * Turn a function statement into an identifier.
      */
     private String instantiateFunction(String s) {
 
@@ -509,8 +523,8 @@ public class OWLtranslator {
     }
 
     /**
-     *  State definitional information for automatically defined
-     *  terms that replace function statements.
+     * State definitional information for automatically defined
+     * terms that replace function statements.
      */
     private void defineFunctionalTerms(PrintWriter pw) {
 
@@ -554,6 +568,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeTermFormat(PrintWriter pw, String term) {
 
@@ -572,6 +587,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeSynonymous(PrintWriter pw, String term, String termType) {
 
@@ -593,6 +609,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeAxiomLinks(PrintWriter pw, String term) {
 
@@ -611,6 +628,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeWordNetLink(PrintWriter pw, String term) {
 
@@ -665,6 +683,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void createAxiomMap() {
 
@@ -680,6 +699,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeAxioms(PrintWriter pw) {
 
@@ -703,6 +723,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeOneAxiom(PrintWriter pw, String id) {
 
@@ -723,6 +744,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeDocumentation(PrintWriter pw, String term) {
 
@@ -743,6 +765,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeYAGOMapping(PrintWriter pw, String term) {
 
@@ -820,6 +843,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeInstances(PrintWriter pw, String term, ArrayList instances) {
 
@@ -874,6 +898,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeClasses(PrintWriter pw, String term, ArrayList classes,
                               boolean isInstance) {
@@ -1077,6 +1102,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeWordNetClassDefinitions(PrintWriter pw) throws IOException {
 
@@ -1112,6 +1138,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeVerbFrames(PrintWriter pw) throws IOException {
 
@@ -1164,6 +1191,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeWordNetRelationDefinitions(PrintWriter pw) throws IOException {
 
@@ -1235,6 +1263,7 @@ public class OWLtranslator {
 
     /**
      * Write OWL format for SUMO-WordNet mappings.
+     *
      * @param synset is a POS prefixed synset number
      */
     private void writeWordNetSynset(PrintWriter pw, String synset) {
@@ -1298,6 +1327,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeWordNetExceptions(PrintWriter pw) throws IOException {
 
@@ -1328,6 +1358,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeOneWordToSenses(PrintWriter pw, String word) {
 
@@ -1351,6 +1382,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeWordsToSenses(PrintWriter pw) throws IOException {
 
@@ -1362,6 +1394,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeSenseIndex(PrintWriter pw) throws IOException {
 
@@ -1391,6 +1424,7 @@ public class OWLtranslator {
     }
 
     /**
+     *
      */
     private void writeWordNetHeader(PrintWriter pw) {
 

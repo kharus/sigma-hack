@@ -30,7 +30,9 @@ import java.util.ArrayList;
  */
 public class BasicXMLparser {
 
-    /** An ArrayList of BasicXMLelement(s). */
+    /**
+     * An ArrayList of BasicXMLelement(s).
+     */
     public ArrayList<BasicXMLelement> elements = new ArrayList<BasicXMLelement>();
 
     /**

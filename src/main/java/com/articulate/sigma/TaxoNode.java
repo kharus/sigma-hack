@@ -30,6 +30,7 @@ public class TaxoNode {
     public TaxoNode oneChild = null;                // only one child may be displayed
 
     /**
+     *
      */
     public String toHTML(String kbHref, int indentLevel) {
 

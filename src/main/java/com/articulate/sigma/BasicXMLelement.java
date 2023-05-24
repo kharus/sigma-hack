@@ -24,14 +24,22 @@ import java.util.Iterator;
  */
 public class BasicXMLelement {
 
-    /** The name of the tag */
+    /**
+     * The name of the tag
+     */
     public String tagname = null;
-    /** The attributes of the tag in key=value form */
+    /**
+     * The attributes of the tag in key=value form
+     */
     public HashMap<String, String> attributes = new HashMap<String, String>();
-    /** Any subelements of the tag, meaning any other
-     *  tags that are nested within this one. */
+    /**
+     * Any subelements of the tag, meaning any other
+     * tags that are nested within this one.
+     */
     public ArrayList<BasicXMLelement> subelements = new ArrayList<BasicXMLelement>();
-    /** The contents between the start and end of this tag */
+    /**
+     * The contents between the start and end of this tag
+     */
     public String contents = "";
 
 

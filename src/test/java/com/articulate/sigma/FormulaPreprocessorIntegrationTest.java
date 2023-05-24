@@ -42,7 +42,7 @@ public class FormulaPreprocessorIntegrationTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    
+
     @Test
     public void testFindTypes2() {
 
@@ -67,7 +67,7 @@ public class FormulaPreprocessorIntegrationTest extends IntegrationTestBase {
         assertEquals(expected, actualMap);
     }
 
-    
+
     @Ignore
     @Test
     public void testAddTypes3() {
@@ -93,7 +93,7 @@ public class FormulaPreprocessorIntegrationTest extends IntegrationTestBase {
         assertEquals(expected, actual);
     }
 
-    
+
     @Test
     public void testComputeVariableTypesPlaintiff() {
 

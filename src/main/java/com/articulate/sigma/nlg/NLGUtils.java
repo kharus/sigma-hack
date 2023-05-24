@@ -23,7 +23,7 @@ public class NLGUtils implements Serializable {
     private static NLGUtils nlg = null;
     private HashMap<String, HashMap<String, String>> keywordMap;
 
-    
+
     public static void init(String kbDir) {
 
         if (KBmanager.getMgr().getPref("loadLexicons").equals("false"))
@@ -113,7 +113,7 @@ public class NLGUtils implements Serializable {
         }
     }
 
-    
+
     static String prettyPrint(String term) {
 
         if (term.endsWith("Fn"))
@@ -249,7 +249,7 @@ public class NLGUtils implements Serializable {
         return result.toString();
     }
 
-    
+
     static boolean logicalOperator(String word) {
 
         String logops = "if,then,=>,and,or,<=>,not,forall,exists,holds";
@@ -470,7 +470,7 @@ public class NLGUtils implements Serializable {
         return result;
     }
 
-    
+
     public static HashMap<String, HashMap<String, String>> getKeywordMap() {
 
         if (NLGUtils.nlg == null || NLGUtils.nlg.keywordMap == null) {
@@ -479,7 +479,7 @@ public class NLGUtils implements Serializable {
         return NLGUtils.nlg.keywordMap;
     }
 
-    
+
     public static void setKeywordMap(HashMap<String, HashMap<String, String>> themap) {
 
         if (NLGUtils.nlg == null)
@@ -487,7 +487,7 @@ public class NLGUtils implements Serializable {
         NLGUtils.nlg.keywordMap = themap;
     }
 
-    
+
     public static String getKeyword(String englishWord, String language) {
 
         String ans = "";

@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 public class KBmeasures extends IntegrationTestBase {
 
-    
+
     @Test
     public void testTermDepth1() {
 
@@ -15,7 +15,7 @@ public class KBmeasures extends IntegrationTestBase {
         assertTrue(kb.termDepth("AudioRecorder") > kb.termDepth("Device"));
     }
 
-    
+
     @Test
     public void testTermDepth2() {
 
@@ -23,7 +23,7 @@ public class KBmeasures extends IntegrationTestBase {
         assertEquals(1, kb.compareTermDepth("AudioRecorder", "Device"));
     }
 
-    
+
     @Test
     public void testTermDepth3() {
 
@@ -31,7 +31,7 @@ public class KBmeasures extends IntegrationTestBase {
         assertTrue(kb.termDepth("VacuumCleaner") > kb.termDepth("Device"));
     }
 
-    
+
     @Test
     public void testTermDepth4() {
 

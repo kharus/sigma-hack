@@ -259,7 +259,7 @@ public class HTMLformatter {
         return result.toString();
     }
 
-    
+
     public static String processFormalLanguage(String flang) {
 
         if (!StringUtil.isNonEmptyString(flang) || !availableFormalLanguages.contains(flang))
@@ -268,7 +268,7 @@ public class HTMLformatter {
             return flang;
     }
 
-    
+
     public static String processNaturalLanguage(String lang, KB kb) {
 
         if (kb == null || !kb.availableLanguages().contains(lang) || !StringUtil.isNonEmptyString(lang))
@@ -411,7 +411,7 @@ public class HTMLformatter {
         return show.toString();
     }
 
-    
+
     public static String showNeighborTerms(KB kb, String term) {
         return HTMLformatter.showNeighborTerms(kb, term, term);
     }
@@ -462,7 +462,7 @@ public class HTMLformatter {
         return markup;
     }
 
-    
+
     public static ArrayList<String> getAllRelTerms(KB kb, ArrayList<String> matchesList) {
 
         ArrayList<String> result = new ArrayList<String>();
@@ -472,7 +472,7 @@ public class HTMLformatter {
         return result;
     }
 
-    
+
     public static ArrayList<String> getAllNonRelTerms(KB kb, ArrayList<String> matchesList) {
 
         ArrayList<String> result = new ArrayList<String>();
@@ -995,7 +995,7 @@ public class HTMLformatter {
         return html.toString();
     }
 
-    
+
     public static String formatConsistencyCheck(String msg, String ccheckResult,
                                                 String language, int page) {
 
@@ -1107,7 +1107,7 @@ public class HTMLformatter {
         return html.toString();
     }
 
-    
+
     public static void main(String[] args) {
 
         try {

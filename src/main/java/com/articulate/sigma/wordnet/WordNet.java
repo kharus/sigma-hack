@@ -31,14 +31,15 @@ import java.util.regex.Pattern;
 import static com.articulate.sigma.wordnet.WordNetUtilities.isValidKey;
 
 /**
- *  This program finds and displays SUMO terms that are related in meaning to the English
- *  expressions that are entered as input.  Note that this program uses four WordNet data
- *  files, "NOUN.EXC", "VERB.EXC" etc, as well as four WordNet to SUMO
- *  mappings files called "WordNetMappings-nouns.txt", "WordNetMappings-verbs.txt" etc
- *  The main part of the program prompts the user for an English term and then
- *  returns associated SUMO concepts.  The two primary public methods are initOnce() and page().
- *  @author Ian Niles
- *  @author Adam Pease
+ * This program finds and displays SUMO terms that are related in meaning to the English
+ * expressions that are entered as input.  Note that this program uses four WordNet data
+ * files, "NOUN.EXC", "VERB.EXC" etc, as well as four WordNet to SUMO
+ * mappings files called "WordNetMappings-nouns.txt", "WordNetMappings-verbs.txt" etc
+ * The main part of the program prompts the user for an English term and then
+ * returns associated SUMO concepts.  The two primary public methods are initOnce() and page().
+ *
+ * @author Ian Niles
+ * @author Adam Pease
  */
 public class WordNet implements Serializable {
 
@@ -47,9 +48,11 @@ public class WordNet implements Serializable {
     public static final int ADJECTIVE = 3;
     public static final int ADVERB = 4;
     public static final int ADJECTIVE_SATELLITE = 5;
-    /**  This array contains all of the regular expression strings that
+    /**
+     * This array contains all of the regular expression strings that
      * will be compiled to Pattern objects for use in the methods in
-     * this file. */
+     * this file.
+     */
     public static final String[] regexPatternStrings =
             {
                     // 0: WordNet.processPointers()
@@ -130,6 +133,7 @@ public class WordNet implements Serializable {
                     // 25: WordNet.removePunctuation()
                     "(\\w)\\'ve"
             };
+    private static final HashMap<String, String> wnFilenames = new HashMap<>();
     public static boolean disable = false;
     public static boolean debug = false;
     public static WordNet wn = new WordNet();
@@ -138,8 +142,10 @@ public class WordNet implements Serializable {
     public static String baseDir = "";
     public static File baseDirFile = null;
     public static boolean initNeeded = true;
-    /** This array contains all of the compiled Pattern objects that
-     * will be used by methods in this file. */
+    /**
+     * This array contains all of the compiled Pattern objects that
+     * will be used by methods in this file.
+     */
     public static Pattern[] regexPatterns = null;
     public static ArrayList<String> VerbFrames = new ArrayList<String>(Arrays.asList("", // empty 0 index
             "Something ----s",                                      // 1
@@ -177,7 +183,6 @@ public class WordNet implements Serializable {
             "Somebody ----s VERB-ing",
             "It ----s that CLAUSE",
             "Something ----s INFINITIVE"));                         // 35
-    private static final HashMap<String, String> wnFilenames = new HashMap<>();
     public HashMap<String, HashSet<String>> nounSynsetHash = new HashMap<>();   // Words in root form are String keys,
     public HashMap<String, HashSet<String>> verbSynsetHash = new HashMap<>();   // String values are 8-digit synset lists.
     public HashMap<String, HashSet<String>> adjectiveSynsetHash = new HashMap<>();
@@ -196,13 +201,17 @@ public class WordNet implements Serializable {
     public String maxVerbSynsetID = "";
     public String origMaxNounSynsetID = "";
     public String origMaxVerbSynsetID = "";
-    /** Keys are SUMO terms, values are ArrayLists(s) of
+    /**
+     * Keys are SUMO terms, values are ArrayLists(s) of
      * POS-prefixed 9-digit synset String(s) meaning that the part of speech code is
-     * prepended to the synset number. */
+     * prepended to the synset number.
+     */
     public Hashtable<String, ArrayList<String>> SUMOHash = new Hashtable<String, ArrayList<String>>();
-    /** Keys are String POS-prefixed synsets.  Values
+    /**
+     * Keys are String POS-prefixed synsets.  Values
      * are ArrayList(s) of String(s) which are words. Note
-     * that the order of words in the file is preserved. */
+     * that the order of words in the file is preserved.
+     */
     public Hashtable<String, ArrayList<String>> synsetsToWords = new Hashtable<String, ArrayList<String>>();
     // key is inflected form, value is root
     public HashMap<String, String> exceptionVerbHash = new HashMap<>();
@@ -212,64 +221,88 @@ public class WordNet implements Serializable {
     public HashMap<String, String> exceptionVerbPastHash = new HashMap<String, String>();
     // key root, value  is inflected (-ing) form
     public HashMap<String, String> exceptVerbProgHash = new HashMap<String, String>();
-    /** list of irregular plural forms where the key is the
-     *  plural, singular is the value. */
+    /**
+     * list of irregular plural forms where the key is the
+     * plural, singular is the value.
+     */
     public HashMap<String, String> exceptionNounHash = new HashMap<String, String>();
     // The reverse index of the above
     public HashMap<String, String> exceptionNounPluralHash = new HashMap<String, String>();
-    /** Keys are POS-prefixed synsets, values are ArrayList(s) of AVPair(s)
+    /**
+     * Keys are POS-prefixed synsets, values are ArrayList(s) of AVPair(s)
      * in which the attribute is a pointer type according to
      * http://wordnet.princeton.edu/man/wninput.5WN.html#sect3 and
-     * the value is a POS-prefixed synset  @see WordNetUtilities.convertWordNetPointer */
+     * the value is a POS-prefixed synset  @see WordNetUtilities.convertWordNetPointer
+     */
     public Hashtable<String, ArrayList<AVPair>> relations = new Hashtable<String, ArrayList<AVPair>>();
-    /** a HashMap of HashMaps where the key is a word sense of the
+    /**
+     * a HashMap of HashMaps where the key is a word sense of the
      * form word_POS_num signifying the word, part of speech and number
      * of the sense in WordNet.  The value is a HashMap of words and the
      * number of times that word cooccurs in sentences with the word sense
-     * given in the key.  */
+     * given in the key.
+     */
     public HashMap<String, HashMap<String, Integer>> wordCoFrequencies = new HashMap<String, HashMap<String, Integer>>();
     // A Map from all uppercase words to their possibly mixed case original versions
     public HashMap<String, String> caseMap = new HashMap<>();
-    /** a HashMap where the key is a 9-digit POS-prefixed sense and the value is a
-     *  the number of times that sense occurs in the Brown corpus.  */
+    /**
+     * a HashMap where the key is a 9-digit POS-prefixed sense and the value is a
+     * the number of times that sense occurs in the Brown corpus.
+     */
     public HashMap<String, Integer> senseFrequencies = new HashMap<String, Integer>();
-    /** English "stop words" such as "a", "at", "them", which have no or little
-     * inherent meaning when taken alone. */
+    /**
+     * English "stop words" such as "a", "at", "them", which have no or little
+     * inherent meaning when taken alone.
+     */
     public ArrayList<String> stopwords = new ArrayList<String>();
-    /** A HashMap where the keys are of the form word_POS_sensenum (alpha POS like "VB")
+    /**
+     * A HashMap where the keys are of the form word_POS_sensenum (alpha POS like "VB")
      * and values are 8 digit WordNet synset byte offsets. Note that all words are
-     * from index.sense, which reduces all words to lower case */
+     * from index.sense, which reduces all words to lower case
+     */
     public HashMap<String, String> senseIndex = new HashMap<String, String>();
-    /** A HashMap where the keys are of the form word%POS:lex_filenum:lex_id (numeric POS)
+    /**
+     * A HashMap where the keys are of the form word%POS:lex_filenum:lex_id (numeric POS)
      * and values are 8 digit WordNet synset byte offsets. Note that all words are
-     * from index.sense, which reduces all words to lower case */
+     * from index.sense, which reduces all words to lower case
+     */
     public HashMap<String, String> senseKeys = new HashMap<String, String>();
-    /** A HashMap where the keys are 9 digit POS prefixed WordNet synset byte offsets,
+    /**
+     * A HashMap where the keys are 9 digit POS prefixed WordNet synset byte offsets,
      * and the values are of the form word_POS_sensenum (alpha POS like "VB"). Note
      * that all words are from index.sense, which reduces
-     * all words to lower case */
+     * all words to lower case
+     */
     public HashMap<String, String> reverseSenseIndex = new HashMap<String, String>();
-    /** A HashMap where keys are 8 digit
+    /**
+     * A HashMap where keys are 8 digit
      * WordNet synset byte offsets or synsets appended with a dash and a specific
      * word such as "12345678-foo" or in the case where the frame applies to the entire
      * synset, it's just the synset number.  Values are ArrayList(s) of String
-     * verb frame numbers. */
+     * verb frame numbers.
+     */
     public HashMap<String, ArrayList<String>> verbFrames = new HashMap<String, ArrayList<String>>();
-    /** A HashMap with words as keys and ArrayList as values.  The
+    /**
+     * A HashMap with words as keys and ArrayList as values.  The
      * ArrayList contains word senses which are Strings of the form
      * word_POS_num (alpha POS like "VB") signifying the word, part of speech and number of
      * the sense in WordNet. Note that all words are from index.sense, which reduces
-     * all words to lower case*/
+     * all words to lower case
+     */
     public HashMap<String, ArrayList<String>> wordsToSenseKeys = new HashMap<String, ArrayList<String>>();
     public MultiWords multiWords = new MultiWords();
-    /** A HashMap with language name keys and HashMap<String,String> values.  The interior HashMap
+    /**
+     * A HashMap with language name keys and HashMap<String,String> values.  The interior HashMap
      * has String keys which are PWN30 synsets with 8-digit synsets a dash and then a alphabetic
-     * part of speech character.  Values are words in the target language. */
+     * part of speech character.  Values are words in the target language.
+     */
     public HashMap<String, HashMap<String, String>> OMW = new HashMap<String, HashMap<String, String>>();
-    /** a HashMap of HashMaps where the key is a word and the value is a
+    /**
+     * a HashMap of HashMaps where the key is a word and the value is a
      * HashMap of 9-digit POS-prefixed senses which is the value of the AVPair,
      * and the number of times that sense occurs in the Brown corpus, which is
-     * the key of the AVPair*/
+     * the key of the AVPair
+     */
     protected HashMap<String, TreeSet<AVPair>> wordFrequencies = new HashMap<String, TreeSet<AVPair>>();
     //private Pattern p;
     private transient Matcher m;
@@ -352,6 +385,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     public static boolean serializedExists() {
 
@@ -360,7 +394,7 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  Check whether sources are newer than serialized version.
+     * Check whether sources are newer than serialized version.
      */
     public static boolean serializedOld() {
 
@@ -377,7 +411,7 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  Load the most recently save serialized version.
+     * Load the most recently save serialized version.
      */
     public static void loadSerialized() {
 
@@ -411,7 +445,7 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  save serialized version.
+     * save serialized version.
      */
     public static void serialize() {
 
@@ -436,7 +470,7 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  Read the WordNet files only on initialization of the class.
+     * Read the WordNet files only on initialization of the class.
      */
     private static void loadFresh() {
 
@@ -467,7 +501,7 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  Read the WordNet files only on initialization of the class.
+     * Read the WordNet files only on initialization of the class.
      */
     public static void initOnce() {
 
@@ -514,6 +548,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     private static boolean arrayContains(int[] ar, int value) {
 
@@ -549,6 +584,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     private static String multipleMappingToProlog(String term) {
 
@@ -562,8 +598,8 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  A method used only for testing.  It should not be called
-     *  during normal operation.
+     * A method used only for testing.  It should not be called
+     * during normal operation.
      */
     public static void testWordFreq() {
 
@@ -590,8 +626,8 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  A method used only for testing.  It should not be called
-     *  during normal operation.
+     * A method used only for testing.  It should not be called
+     * during normal operation.
      */
     public static void testProcessPointers() {
 
@@ -608,6 +644,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     public static void checkWordsToSenses() {
 
@@ -630,6 +667,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     public static void getEntailments() {
 
@@ -655,6 +693,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     public static void showHelp() {
 
@@ -665,8 +704,8 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  A main method, used only for testing.  It should not be called
-     *  during normal operation.
+     * A main method, used only for testing.  It should not be called
+     * during normal operation.
      */
     public static void main(String[] args) {
 
@@ -689,6 +728,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     private void makeFileMap() {
 
@@ -728,8 +768,7 @@ public class WordNet implements Serializable {
      * Returns the WordNet File object corresponding to key.
      *
      * @param key A descriptive literal String that maps to a regular
-     * expression pattern used to obtain a WordNet file.
-     *
+     *            expression pattern used to obtain a WordNet file.
      * @return A File object
      */
     public File getWnFile(String key, String override) {
@@ -913,6 +952,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     private void addSUMOMapping(String SUMO, String synset) {
 
@@ -962,13 +1002,13 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  Create the hashtables nounSynsetHash, nounDocumentationHash,
-     *  nounSUMOhash and exceptionNounHash that contain the WordNet
-     *  noun synsets, word definitions, mappings to SUMO, and plural
-     *  exception forms, respectively.
-     *  Throws an IOException if the files are not found.
-     *  Use a default filename and path unless a non-null string is
-     *  provided, in which case assume it is a full path.
+     * Create the hashtables nounSynsetHash, nounDocumentationHash,
+     * nounSUMOhash and exceptionNounHash that contain the WordNet
+     * noun synsets, word definitions, mappings to SUMO, and plural
+     * exception forms, respectively.
+     * Throws an IOException if the files are not found.
+     * Use a default filename and path unless a non-null string is
+     * provided, in which case assume it is a full path.
      */
     private void readNouns() throws java.io.IOException {
 
@@ -1046,6 +1086,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     protected void setMaxNounSynsetID(String synset) {
 
@@ -1055,6 +1096,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     protected void setMaxVerbSynsetID(String synset) {
 
@@ -1063,6 +1105,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     protected boolean processNounLine(String line) {
 
@@ -1098,12 +1141,12 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  Create the hashtables verbSynsetHash (by calling processPointers which calls
-     *  addSynsetsToWords), verbDocumentationHash,
-     *  verbSUMOhash and exceptionVerbHash that contain the WordNet
-     *  verb synsets, word definitions, mappings to SUMO, and plural
-     *  exception forms, respectively.
-     *  Throws an IOException if the files are not found.
+     * Create the hashtables verbSynsetHash (by calling processPointers which calls
+     * addSynsetsToWords), verbDocumentationHash,
+     * verbSUMOhash and exceptionVerbHash that contain the WordNet
+     * verb synsets, word definitions, mappings to SUMO, and plural
+     * exception forms, respectively.
+     * Throws an IOException if the files are not found.
      */
     private void readVerbs() throws java.io.IOException {
 
@@ -1193,10 +1236,10 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  Create the hashtables adjectiveSynsetHash, adjectiveDocumentationHash,
-     *  and adjectiveSUMOhash that contain the WordNet
-     *  adjective synsets, word definitions, and mappings to SUMO, respectively.
-     *  Throws an IOException if the files are not found.
+     * Create the hashtables adjectiveSynsetHash, adjectiveDocumentationHash,
+     * and adjectiveSUMOhash that contain the WordNet
+     * adjective synsets, word definitions, and mappings to SUMO, respectively.
+     * Throws an IOException if the files are not found.
      */
     private void readAdjectives() throws java.io.IOException {
 
@@ -1256,10 +1299,10 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  Create the hashtables adverbSynsetHash, adverbDocumentationHash,
-     *  and adverbSUMOhash that contain the WordNet
-     *  adverb synsets, word definitions, and mappings to SUMO, respectively.
-     *  Throws an IOException if the files are not found.
+     * Create the hashtables adverbSynsetHash, adverbDocumentationHash,
+     * and adverbSUMOhash that contain the WordNet
+     * adverb synsets, word definitions, and mappings to SUMO, respectively.
+     * Throws an IOException if the files are not found.
      */
     private void readAdverbs() throws java.io.IOException {
 
@@ -1420,6 +1463,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     public void readStopWords() {
 
@@ -1646,12 +1690,13 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  A routine which looks up a given list of words in the hashtables
-     *  to find the relevant word definitions and SUMO mappings.
-     *  @param input is the target sentence to be parsed. See WordSenseBody.jsp for usage.
-     *  @param context is the larger context of the sentence. Can mean more accurate results.
-     *  @param params is the set of html parameters
-     *  @returns a String that is the sentence taken apart and displayed in HTML
+     * A routine which looks up a given list of words in the hashtables
+     * to find the relevant word definitions and SUMO mappings.
+     *
+     * @param input   is the target sentence to be parsed. See WordSenseBody.jsp for usage.
+     * @param context is the larger context of the sentence. Can mean more accurate results.
+     * @param params  is the set of html parameters
+     * @returns a String that is the sentence taken apart and displayed in HTML
      */
     public String sumoSentenceDisplay(String input, String context, String params) {
 
@@ -1745,10 +1790,11 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  A routine that uses computeSentiment in DB.java to display a sentiment score for a single sentence
-     *  as well as the individual scores of scored descriptors.
-     *  @param sentence is the target sentence to be scored. See WordSenseBody.jsp for usage.
-     *  @returns a String that is the sentence scored and displayed in HTML
+     * A routine that uses computeSentiment in DB.java to display a sentiment score for a single sentence
+     * as well as the individual scores of scored descriptors.
+     *
+     * @param sentence is the target sentence to be scored. See WordSenseBody.jsp for usage.
+     * @returns a String that is the sentence scored and displayed in HTML
      */
     public String sumoSentimentDisplay(String sentence) {
 
@@ -1777,13 +1823,14 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  A routine which takes a full pathname as input and returns a sentence by sentence display of sense
-     *  and sentiment analysis
-     *  @param pathname
-     *  @param counter is used to keep track of which sentence is being displayed
-     *  @param params is the set of html parameters
-     *  @returns a String that is the file split into sentences, which are taken apart one by one
-     *   and displayed in HTML
+     * A routine which takes a full pathname as input and returns a sentence by sentence display of sense
+     * and sentiment analysis
+     *
+     * @param pathname
+     * @param counter  is used to keep track of which sentence is being displayed
+     * @param params   is the set of html parameters
+     * @returns a String that is the file split into sentences, which are taken apart one by one
+     * and displayed in HTML
      */
     public String sumoFileDisplay(String pathname, String counter, String params) {
 
@@ -1990,7 +2037,7 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  create a map of upper case versions of all words
+     * create a map of upper case versions of all words
      */
     private void createIgnoreCaseMap() {
 
@@ -2005,11 +2052,12 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  The main routine which looks up the search word in the hashtables
-     *  to find the relevant word definitions and SUMO mappings.
-     *  @param word is the word the user is asking to search for.
-     *  @param type is whether the word is a noun or verb (we need to add capability for adjectives and adverbs.
-     *  @param params is the set of html parameters
+     * The main routine which looks up the search word in the hashtables
+     * to find the relevant word definitions and SUMO mappings.
+     *
+     * @param word   is the word the user is asking to search for.
+     * @param type   is whether the word is a noun or verb (we need to add capability for adjectives and adverbs.
+     * @param params is the set of html parameters
      */
     private String sumoDisplay(HashSet<String> synsetBlock, String word, String type,
                                String sumokbname, String synsetNum, String params) {
@@ -2146,14 +2194,14 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  This routine converts a noun to its singular form and gets the synsets for it,
-     *  then passes those synsets to sumoDisplay() for processing.
-     *  First check to see if the input value or its lower-case version are entered in the
-     *  WordNet exception list (NOUN.EXC).  If so, then use the regular form in the exception
-     *  list to find the synsets in the NOUN.DAT file.
-     *  If the word is not in the exception list, check to see if the lower case version of
-     *  the input value is a plural and search over NOUN.DAT in the singular form if it is.
-     *  Note that multi-word synsets must have underscores in place of spaces.
+     * This routine converts a noun to its singular form and gets the synsets for it,
+     * then passes those synsets to sumoDisplay() for processing.
+     * First check to see if the input value or its lower-case version are entered in the
+     * WordNet exception list (NOUN.EXC).  If so, then use the regular form in the exception
+     * list to find the synsets in the NOUN.DAT file.
+     * If the word is not in the exception list, check to see if the lower case version of
+     * the input value is a plural and search over NOUN.DAT in the singular form if it is.
+     * Note that multi-word synsets must have underscores in place of spaces.
      */
     private String processNoun(String sumokbname, String mixedCase, String input,
                                String synset, String params) {
@@ -2264,14 +2312,14 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  This routine converts a verb to its present tense singular form and gets the synsets for it,
-     *  then passes those synsets to sumoDisplay() for processing.
-     *  First check to see if the input value or its lower-case version are entered in the
-     *  WordNet exception list (VERB.EXC).  If so, then use the regular form in the exception
-     *  list to find the synsets in the VERB.DAT file.
-     *  If the word is not in the exception list, check to see if the lower case version of the
-     *  input value is a singular form and search over VERB.DAT with the infinitive form if it is.
-     *  Note that multi-word synsets must have underscores in place of spaces.
+     * This routine converts a verb to its present tense singular form and gets the synsets for it,
+     * then passes those synsets to sumoDisplay() for processing.
+     * First check to see if the input value or its lower-case version are entered in the
+     * WordNet exception list (VERB.EXC).  If so, then use the regular form in the exception
+     * list to find the synsets in the VERB.DAT file.
+     * If the word is not in the exception list, check to see if the lower case version of the
+     * input value is a singular form and search over VERB.DAT with the infinitive form if it is.
+     * Note that multi-word synsets must have underscores in place of spaces.
      */
     private String processVerb(String sumokbname, String mixedCase, String input,
                                String synset, String params) {
@@ -2363,6 +2411,7 @@ public class WordNet implements Serializable {
 
     /**
      * Get all the synsets for a given word.
+     *
      * @return a TreeMap of sense keys in the form of word_POS_num
      * and values that are ArrayLists of synset Strings
      */
@@ -2479,6 +2528,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     public ArrayList<String> getWordsFromSynset(String synset) {
 
@@ -2531,9 +2581,9 @@ public class WordNet implements Serializable {
      * present to the user.  The part of speech codes must be the same as in
      * the menu options in WordNet.jsp and Browse.jsp
      *
-     *  @param inp The string the user is searching for.
-     *  @param pos The part of speech of the word 1=noun, 2=verb, 3=adjective, 4=adverb
-     *  @return A string contained the HTML formatted search result.
+     * @param inp The string the user is searching for.
+     * @param pos The part of speech of the word 1=noun, 2=verb, 3=adjective, 4=adverb
+     * @return A string contained the HTML formatted search result.
      */
     public String page(String inp, int pos, String kbname, String synset, String params) {
 
@@ -2694,6 +2744,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     private SimpleElement toXML() {
 
@@ -2763,6 +2814,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     public void writeXML() {
 
@@ -2795,9 +2847,9 @@ public class WordNet implements Serializable {
 
     /**
      * Frame transitivity
-     *   intransitive - 1,2,3,4,7,23,35
-     *   transitive - everything else
-     *   ditransitive - 15,16,17,18,19
+     * intransitive - 1,2,3,4,7,23,35
+     * transitive - everything else
+     * ditransitive - 15,16,17,18,19
      */
     public String getTransitivity(String synset, String word) {
 
@@ -2943,7 +2995,7 @@ public class WordNet implements Serializable {
     }
 
     /**
-     *  noun_in_lexicon(Noun,{object, person, time}, neuter, {count, mass}, singular, SUMOMapping, Synset_ID).
+     * noun_in_lexicon(Noun,{object, person, time}, neuter, {count, mass}, singular, SUMOMapping, Synset_ID).
      */
     private void writeNounsProlog(PrintWriter pw, KB kb) throws IOException {
 
@@ -3004,6 +3056,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     public void writeProlog(KB kb) {
 
@@ -3035,6 +3088,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     public String senseKeyPOS(String senseKey) {
 
@@ -3048,6 +3102,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     private String senseKeySenseNum(String senseKey) {
 
@@ -3084,6 +3139,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     private String processWordForProlog(String word) {
 
@@ -3158,6 +3214,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     public void writeWordNetHyp() {
 
@@ -3223,6 +3280,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     public void writeWordNetG() {
 
@@ -3278,6 +3336,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     public void writeWordNetProlog() throws IOException {
 
@@ -3361,6 +3420,7 @@ public class WordNet implements Serializable {
     }
 
     /**
+     *
      */
     private String createNewSenseIndexKey(String base) {
 
@@ -3375,10 +3435,11 @@ public class WordNet implements Serializable {
 
     /**
      * Generate a new synset from a termFormat statement
-     * @param form is the entire termFormat statement
-     * @param tf is the lexical item (word).  note that in the case of a multi-word
-     *           lexical item it should already have had spaces replaced by
-     *           underscores
+     *
+     * @param form     is the entire termFormat statement
+     * @param tf       is the lexical item (word).  note that in the case of a multi-word
+     *                 lexical item it should already have had spaces replaced by
+     *                 underscores
      * @param SUMOterm is the SUMO term that the lexical item is mapped to
      */
     public void synsetFromTermFormat(Formula form, String tf, String SUMOterm, KB kb) {

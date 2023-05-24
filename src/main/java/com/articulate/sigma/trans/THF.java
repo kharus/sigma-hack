@@ -17,58 +17,58 @@ import java.util.regex.Pattern;
 
 /**
  * This class handles the conversion of problems (= axioms + queries)
- * from their KIF representation into a THF representation; THF is the 
+ * from their KIF representation into a THF representation; THF is the
  * TPTP standard for classical higher-order logic, i.e. Church's simple
  * theory.
- *
+ * <p>
  * The main function provided is KIF2THF(KIFaxioms,KIFqueries,KnowledgeBase)
- *
+ * <p>
  * A challenge part in this transformation is the computation of an appropriate
  * typing for the KIF terms and formulas. This is partly non-trivial.
  * The conversion is intended to work purely syntactically (when no
- * typing-relevant information from SUMO is available) or mixed 
- * syntactically-semantically (when typing-relevant information from 
- * SUMO is available). 
- *
+ * typing-relevant information from SUMO is available) or mixed
+ * syntactically-semantically (when typing-relevant information from
+ * SUMO is available).
+ * <p>
  * A small example:
- * The KIF Problem with axioms 
- *
- *  (holdsDuring (YearFN n2009) (enjoys Mary Cooking))
- *  (holdsDuring (YearFN n2009) (=> (instance ?X Female) (wants Ben ?X)))
- *  (holdsDuring ?X (instance Mary Female))
- *
- *  and Query
- *
- *  (holdsDuring ?X (and (?Y Mary Cooking) (wants ?Z Mary)))
- *
+ * The KIF Problem with axioms
+ * <p>
+ * (holdsDuring (YearFN n2009) (enjoys Mary Cooking))
+ * (holdsDuring (YearFN n2009) (=> (instance ?X Female) (wants Ben ?X)))
+ * (holdsDuring ?X (instance Mary Female))
+ * <p>
+ * and Query
+ * <p>
+ * (holdsDuring ?X (and (?Y Mary Cooking) (wants ?Z Mary)))
+ * <p>
  * is tranlated into the THF problem:
- *
- *  %%% The extracted Signature %%%
- *   thf(holdsDuring,type,(holdsDuring: ($i>$o>$o))).
- *   thf(enjoys_THFTYPE_IiioI,type,(enjoys_THFTYPE_IiioI: ($i>$i>$o))).
- *   thf(female,type,(female: $i)).
- *   thf(n2009,type,(n2009: $i)).
- *   thf(cooking,type,(cooking: $i)).
- *   thf(ben,type,(ben: $i)).
- *   thf(yearFN_THFTYPE_IiiI,type,(yearFN_THFTYPE_IiiI: ($i>$i))).
- *   thf(mary,type,(mary: $i)).
- *   thf(wants,type,(wants: ($i>$i>$o))).
- *   thf(instance_THFTYPE_IiioI,type,(instance_THFTYPE_IiioI: ($i>$i>$o))).
- *
- *  %%% The translated axioms %%%
- *   thf(ax,axiom,((! [X: $i]: (holdsDuring @ X @ (instance_THFTYPE_IiioI @ mary @ female))))).
- *   thf(ax,axiom,((! [X: $i]: (holdsDuring @ (yearFN_THFTYPE_IiiI @ n2009) @ ((instance_THFTYPE_IiioI @ X @ female) => (wants @ ben @ X)))))).
- *   thf(ax,axiom,((holdsDuring @ (yearFN_THFTYPE_IiiI @ n2009) @ (enjoys_THFTYPE_IiioI @ mary @ cooking)))).
- *
- *  %%% The translated conjectures %%%
- *   thf(con,conjecture,((? [X: $i,Y: $i,Z: $i]: (holdsDuring @ X @ ((enjoys_THFTYPE_IiioI @ mary @ Y) & (wants @ Z @ mary)))))).
- *
+ * <p>
+ * %%% The extracted Signature %%%
+ * thf(holdsDuring,type,(holdsDuring: ($i>$o>$o))).
+ * thf(enjoys_THFTYPE_IiioI,type,(enjoys_THFTYPE_IiioI: ($i>$i>$o))).
+ * thf(female,type,(female: $i)).
+ * thf(n2009,type,(n2009: $i)).
+ * thf(cooking,type,(cooking: $i)).
+ * thf(ben,type,(ben: $i)).
+ * thf(yearFN_THFTYPE_IiiI,type,(yearFN_THFTYPE_IiiI: ($i>$i))).
+ * thf(mary,type,(mary: $i)).
+ * thf(wants,type,(wants: ($i>$i>$o))).
+ * thf(instance_THFTYPE_IiioI,type,(instance_THFTYPE_IiioI: ($i>$i>$o))).
+ * <p>
+ * %%% The translated axioms %%%
+ * thf(ax,axiom,((! [X: $i]: (holdsDuring @ X @ (instance_THFTYPE_IiioI @ mary @ female))))).
+ * thf(ax,axiom,((! [X: $i]: (holdsDuring @ (yearFN_THFTYPE_IiiI @ n2009) @ ((instance_THFTYPE_IiioI @ X @ female) => (wants @ ben @ X)))))).
+ * thf(ax,axiom,((holdsDuring @ (yearFN_THFTYPE_IiiI @ n2009) @ (enjoys_THFTYPE_IiioI @ mary @ cooking)))).
+ * <p>
+ * %%% The translated conjectures %%%
+ * thf(con,conjecture,((? [X: $i,Y: $i,Z: $i]: (holdsDuring @ X @ ((enjoys_THFTYPE_IiioI @ mary @ Y) & (wants @ Z @ mary)))))).
+ * <p>
  * This THF problem can be solved effectively by TPTP THF compliant higher-order theorem provers.
- *
+ * <p>
  * The transformation often needs to introduce several
  * 'copies' of KIF constants for different THF types. Therefore, some constant
  * symbols become tagged with type information during the transformation process.
- * Example for tagged contant symbols above enjoys_THFTYPE_IiioI and 
+ * Example for tagged contant symbols above enjoys_THFTYPE_IiioI and
  * instance_THFTYPE_IiioI.
  *
  * @author Christoph Benzmueller c.benzmueller [at] fu-berlin [dot] de
@@ -93,13 +93,17 @@ public class THF {
     private static final String numTp = "num";   // THF type for numbers (preliminary)
     private static final String unknownTp = "uknTP"; // the 'unknown' help type, kind of polymorphic
     private static final String problemTp = "probTp"; // the 'problem' help type, for real type clashes
-    private static int axcounter = 1;
-    private static int concounter = 1;
     /**
      * THFdebug: variable for enabling/diabling debugging mode; when set then
      * there will be useful information printed
      */
     private static final Boolean debug = false;
+    private static int axcounter = 1;
+    private static int concounter = 1;
+    /**
+     *
+     */
+    private final List<String> numericOps = new ArrayList<String>();
     /**
      * A string builder containing the dynamically modified
      * KIF formula during the KIF2THF transformation process
@@ -122,9 +126,7 @@ public class THF {
      * transformation
      */
     private HashMap terms = new HashMap();
-    /**
-     */
-    private final List<String> numericOps = new ArrayList<String>();
+
     /**
      * reset the axiom counters
      */
@@ -229,12 +231,9 @@ public class THF {
      * returns "(whatever (which (somewhat which)))"
      * and not "(whichever (what (somewhich what)))"
      *
-     * @param key a string to replace
-     *
+     * @param key      a string to replace
      * @param keysubst the string to use as replacement
-     *
-     * @param str the string to apply the substitution to
-     *
+     * @param str      the string to apply the substitution to
      */
     private String applySubstTo(String key, String keysubst, String str) {
 
@@ -248,6 +247,7 @@ public class THF {
     }
 
     /**
+     *
      */
     private boolean hasMathOp(Formula f, KB kb) {
 
@@ -261,6 +261,7 @@ public class THF {
     }
 
     /**
+     *
      */
     private LinkedHashSet<Formula> expandAxioms(Collection<Formula> col, boolean isQuery, KB kb) {
 
@@ -279,6 +280,7 @@ public class THF {
     }
 
     /**
+     *
      */
     public String oneKIF2THF(Formula form, boolean conjecture, KB kb) {
 
@@ -396,9 +398,9 @@ public class THF {
      * see the explanation at top of this file.
      * This is the only public function of THF.java so far.
      *
-     * @param axiomsC is a list of KIF axiom formulas
+     * @param axiomsC      is a list of KIF axiom formulas
      * @param conjecturesC is a list of KIF query formulas
-     * @param kb is a knowledge base, e.g. SUMO
+     * @param kb           is a knowledge base, e.g. SUMO
      */
     public ArrayList<String> KIF2THF(Collection<Formula> axiomsC,
                                      Collection<Formula> conjecturesC, KB kb) {
@@ -463,9 +465,7 @@ public class THF {
      * from the original mapping that are actually occuring in the string.
      *
      * @param map is a term-to-type mapping (both represented as strings)
-     *
-     * @param f is a formula string
-     *
+     * @param f   is a formula string
      */
     private HashMap clearMapFor(HashMap map, String f) {
 
@@ -493,9 +493,7 @@ public class THF {
      * entries that do not contain the _THFTPTP_ substring
      *
      * @param map is a term-to-type mapping (both represented as strings)
-     *
-     * @param f is a formula string
-     *
+     * @param f   is a formula string
      */
     private HashMap clearMapSpecial(HashMap map, String f) {
 
@@ -514,7 +512,6 @@ public class THF {
      * A function that converts a SUMO 'type' information into a THF type
      *
      * @param intype is the SUMO type
-     *
      */
     private String KIFType2THF(String intype) {
 
@@ -585,7 +582,6 @@ public class THF {
      * A predicate that checks whether a THF type is a base type
      *
      * @param intype is the THF type
-     *
      */
     private boolean isBaseTp(String intype) {
 
@@ -598,7 +594,6 @@ public class THF {
      * of 'unknownTp' by $iinformation into a THF type
      *
      * @param intype is the THF type
-     *
      */
     private String groundType(String sym, String intype) {
 
@@ -638,7 +633,6 @@ public class THF {
      * a KIF variable
      *
      * @param sym is the input symbol to analyse
-     *
      */
     private boolean isKifVar(String sym) {
 
@@ -650,7 +644,6 @@ public class THF {
      * a KIF variable
      *
      * @param sym is the input symbol to analyse
-     *
      */
     private boolean isKifConst(String sym) {
 
@@ -660,8 +653,7 @@ public class THF {
     /**
      * A function that converts a KIF variable into a THF variable
      *
-     * @param var  is the KIF variable
-     *
+     * @param var is the KIF variable
      */
     private String toTHFKifVar(String var) {
 
@@ -673,7 +665,6 @@ public class THF {
      * A function that converts a KIF constant symbol into a THF constant
      *
      * @param sym is the KIF constant symbol
-     *
      */
     private String toTHFKifConst(String sym) {
 
@@ -695,18 +686,12 @@ public class THF {
      * conversion of formulas with logical or arithmetic connective
      * at head position
      *
-     * @param f is the KIF formula to convert
-     *
-     * @param op_thf is the THF connective to use at head postion
-     *
-     * @param goalTp is the THF type suggested for this formula
-     *
-     * @param  argsTp is the THF type suggested for the arguments
-     *
+     * @param f            is the KIF formula to convert
+     * @param op_thf       is the THF connective to use at head postion
+     * @param goalTp       is the THF type suggested for this formula
+     * @param argsTp       is the THF type suggested for the arguments
      * @param preferPrefix signals if prefix or infix conversion is preferred
-     *
-     * @param relTpInfo is the passed on semantic 'type' information for symbols in f
-     *
+     * @param relTpInfo    is the passed on semantic 'type' information for symbols in f
      */
     private String toTHFHelp1(Formula f, String op_thf, String goalTp, String argsTp, boolean preferPrefix, HashMap relTpInfo) {
 
@@ -750,16 +735,11 @@ public class THF {
      * conversion of formulas with logical or arithmetic connective
      * at head position.
      *
-     * @param f is the KIF formula to convert
-     *
-     * @param op_thf is the THF connective to use at head postion
-     *
-     * @param goalTp is the THF type suggested for this formula
-     *
-     * @param  argsTp is the THF type suggested for the arguments
-     *
+     * @param f            is the KIF formula to convert
+     * @param op_thf       is the THF connective to use at head postion
+     * @param goalTp       is the THF type suggested for this formula
+     * @param argsTp       is the THF type suggested for the arguments
      * @param preferPrefix signals if prefix or infix conversion is preferred
-     *
      */
     private String toTHFHelp2(Formula f, String op_sumo, String op_thf, String goalTp, String argsTp, boolean preferPrefix) {
 
@@ -812,12 +792,9 @@ public class THF {
      * A help function for toTHF1; this help function addresses the THF
      * conversion of quantified formulas
      *
-     * @param f is the KIF formula to convert
-     *
+     * @param f         is the KIF formula to convert
      * @param quant_thf is the THF quantifier to use at head postion
-     *
      * @param relTpInfo is the passed on semantic 'type' information for symbols in f
-     *
      */
     private String toTHFQuant1(Formula f, String quant_thf, HashMap relTpInfo) {
 
@@ -855,12 +832,9 @@ public class THF {
      * A help function for toTHF1; this help function addresses the THF
      * conversion of KappaFN formulas
      *
-     * @param f is the KIF formula to convert
-     *
+     * @param f         is the KIF formula to convert
      * @param kappa_thf is the THF quantifier to use at head postion ("^")
-     *
      * @param relTpInfo is the passed on semantic 'type' information for symbols in f
-     *
      */
     private String toTHFKappaFN1(Formula f, String kappa_thf, HashMap relTpInfo) {
 
@@ -883,10 +857,8 @@ public class THF {
      * A help function for toTHF2; this help function addresses the THF
      * conversion of quantified formulas
      *
-     * @param f is the KIF formula to convert
-     *
+     * @param f         is the KIF formula to convert
      * @param quant_thf is the THF quantifier to use at head postion
-     *
      */
     private String toTHFQuant2(Formula f, String quant_sumo, String quant_thf) {
 
@@ -921,12 +893,9 @@ public class THF {
      * A help function for toTHF1; this help function addresses the THF
      * conversion of KappaFN formulas
      *
-     * @param f is the KIF formula to convert
-     *
-     * @param kappa_thf is the THF quantifier to use at head postion ("^")
-     *
+     * @param f          is the KIF formula to convert
+     * @param kappa_thf  is the THF quantifier to use at head postion ("^")
      * @param kappa_sumo is the passed on semantic 'type' information for symbols in f
-     *
      */
     private String toTHFKappaFN2(Formula f, String kappa_sumo, String kappa_thf) {
 
@@ -951,7 +920,6 @@ public class THF {
      * A function that computes the arity of THF types
      *
      * @param thfTp is the THF type
-     *
      */
     private int arity(String thfTp) {
 
@@ -971,8 +939,7 @@ public class THF {
      * A help function that concatenates a string to the last string
      * argument of a list of strings
      *
-     * @param str is the string to add
-     *
+     * @param str  is the string to add
      * @param accu is the list of strings
      */
     private List addStr(String str, List accu) {
@@ -1024,11 +991,8 @@ public class THF {
      * strings
      *
      * @param thfTp is the THF type
-     *
-     * @param i is an integer to count open brackets
-     *
-     * @param accu is accumulator in which the parsed information is passed on
-     *
+     * @param i     is an integer to count open brackets
+     * @param accu  is accumulator in which the parsed information is passed on
      */
     private List toTHFListH(String thfTp, int i, List accu) {
 
@@ -1124,9 +1088,7 @@ public class THF {
      * type informations for one and the same THF term
      *
      * @param type1 is the first given type
-     *
      * @param type2 is the second given type
-     *
      */
     private String computeConflictType(String type1, String type2) {
 
@@ -1156,9 +1118,7 @@ public class THF {
      * 'useful' information for a given symbol
      *
      * @param map is term-to-type map
-     *
      * @param sym is the symbol (or term) to look for
-     *
      */
     private boolean containsRelevantTypeInfo(HashMap map, String sym) {
 
@@ -1182,12 +1142,9 @@ public class THF {
      * A recursive function that turns a SUMO formula into a THF representation
      * which may still contain occurrences of the 'unknownTp'
      *
-     * @param f is a KIF formula to convert into THF format
-     *
-     * @param type is a suggested THF type for f
-     *
+     * @param f         is a KIF formula to convert into THF format
+     * @param type      is a suggested THF type for f
      * @param relTpInfo is the passed on semantic 'type' information for symbols in f
-     *
      */
     private String toTHF1(Formula f, String type, HashMap relTpInfo) {
 
@@ -1438,7 +1395,6 @@ public class THF {
      * as maintained in relTpInfo and translates into a THF type string
      *
      * @param o is a KIF 'type' as string or a list of KIF type strings
-     *
      */
     private String toTHFTp(Object o) {
 
@@ -1457,7 +1413,6 @@ public class THF {
      * A help function for toTHFTp
      *
      * @param l is a list of KIF type strings
-     *
      */
     private String toTHFTpList(List l) {
 
@@ -1487,7 +1442,6 @@ public class THF {
      * that '$' is not allowed in THF constant names).
      *
      * @param thfTp is the THF type to encode
-     *
      */
     private String toTHFSuffix(String thfTp) {
 
@@ -1508,9 +1462,7 @@ public class THF {
      * that '$' is not allowed in THF constant names).
      *
      * @param oldConst is the name of the given constant
-     *
-     * @param thfTp is the THF type to encode
-     *
+     * @param thfTp    is the THF type to encode
      */
     private String makeNewConstWithSuffix(String oldConst, String thfTp) {
 
@@ -1534,7 +1486,6 @@ public class THF {
      * all 'unknownTp' entries have disappeared
      *
      * @param f A formula to convert into THF format
-     *
      */
     private String toTHF2(Formula f) {
 
@@ -1756,6 +1707,7 @@ public class THF {
     }
 
     /**
+     *
      */
     private SortedSet<Formula> sortFormulas(Collection formulas) {
 

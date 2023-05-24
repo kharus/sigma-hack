@@ -44,13 +44,21 @@ import java.util.regex.PatternSyntaxException;
  */
 public class KB implements Serializable {
 
-    /** The String constant that is the suffix for file of user assertions. */
+    /**
+     * The String constant that is the suffix for file of user assertions.
+     */
     public static final String _userAssertionsString = "_UserAssertions.kif";
-    /** The String constant that is the suffix for TPTP file of user assertions. */
+    /**
+     * The String constant that is the suffix for TPTP file of user assertions.
+     */
     public static final String _userAssertionsTPTP = "_UserAssertions.tptp";
-    /** The String constant that is the suffix for TFF file of user assertions. */
+    /**
+     * The String constant that is the suffix for TFF file of user assertions.
+     */
     public static final String _userAssertionsTFF = "_UserAssertions.tff";
-    /** The String constant that is the suffix for THF file of user assertions. */
+    /**
+     * The String constant that is the suffix for THF file of user assertions.
+     */
     public static final String _userAssertionsTHF = "_UserAssertions.thf";
     /* The String constant that is the suffix for files of cached assertions.     */
     public static final String _cacheFileSuffix = "_Cache.kif";
@@ -64,23 +72,38 @@ public class KB implements Serializable {
      * by calling compilePatterns().
      */
     private static HashMap<String, ArrayList> REGEX_PATTERNS = null;
-    /** Eprover inference engine process for this KB. */
+    /* If true, assertions of the form (predicate x x) will be included in the
+     * relation cache tables.     */
+    private final boolean cacheReflexiveAssertions = false;
+    /**
+     * Eprover inference engine process for this KB.
+     */
     public transient EProver eprover;
-    /** LEO-III inference engine process for this KB. */
+    /**
+     * LEO-III inference engine process for this KB.
+     */
     public transient LEO leo;
-    /** The name of the knowledge base. */
+    /**
+     * The name of the knowledge base.
+     */
     public String name;
     /* An ArrayList of Strings that are the full canonical pathnames of the
      * files that comprise the KB.    */
     public ArrayList<String> constituents = new ArrayList<String>();
-    /** The natural language in which axiom paraphrases should be presented. */
+    /**
+     * The natural language in which axiom paraphrases should be presented.
+     */
     public String language = "EnglishLanguage";
     /* The location of preprocessed KIF files, suitable for loading into
      * EProver.     */
     public String kbDir = null;
-    /** The instance of the CELT process. */
+    /**
+     * The instance of the CELT process.
+     */
     public transient CELT celt = null;
-    /** a cache built through lazy evaluation of the taxonomic depth of each term */
+    /**
+     * a cache built through lazy evaluation of the taxonomic depth of each term
+     */
     public HashMap<String, Integer> termDepthCache = new HashMap<>();
     /* A synchronized SortedSet of Strings, which are all the terms in the KB.     */
     public SortedSet<String> terms = Collections.synchronizedSortedSet(new TreeSet<String>());
@@ -95,9 +118,13 @@ public class KB implements Serializable {
      * created in KIF.createKey(). The actual formula can be retrieved by using
      * the returned String as the key for the variable formulaMap     */
     public HashMap<String, ArrayList<String>> formulas = new HashMap<String, ArrayList<String>>();
-    /** Errors found during loading of the KB constituents. */
+    /**
+     * Errors found during loading of the KB constituents.
+     */
     public TreeSet<String> errors = new TreeSet<String>();
-    /** Warnings found during loading of the KB constituents. */
+    /**
+     * Warnings found during loading of the KB constituents.
+     */
     public TreeSet<String> warnings = new TreeSet<String>();
     /* Future: If true, the contents of the KB have been modified without
      * updating the caches     */
@@ -122,9 +149,6 @@ public class KB implements Serializable {
     /* language keys and HashMap values. The interior HashMap is term name keys
      * and String values.     */
     private HashMap<String, HashMap<String, String>> termFormatMap = new HashMap<String, HashMap<String, String>>();
-    /* If true, assertions of the form (predicate x x) will be included in the
-     * relation cache tables.     */
-    private final boolean cacheReflexiveAssertions = false;
 
     /**
      * Constructor which takes the name of the KB and the location where KBs preprocessed
@@ -148,6 +172,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     public KB(String n, String dir, boolean visibility) {
 
@@ -335,10 +360,8 @@ public class KB implements Serializable {
      * This method returns a compiled regular expression Pattern object indexed by
      * key.
      *
-     * @param key
-     *            A String that is the retrieval key for a compiled regular
+     * @param key A String that is the retrieval key for a compiled regular
      *            expression Pattern.
-     *
      * @return A compiled regular expression Pattern instance.
      */
     public static Pattern getCompiledPattern(String key) {
@@ -355,10 +378,8 @@ public class KB implements Serializable {
      * This method returns the int value that identifies the regular expression
      * binding group to be returned when there is a match.
      *
-     * @param key
-     *            A String that is the retrieval key for the binding group index
+     * @param key A String that is the retrieval key for the binding group index
      *            associated with a compiled regular expression Pattern.
-     *
      * @return An int that indexes a binding group.
      */
     public static int getPatternGroupIndex(String key) {
@@ -411,20 +432,14 @@ public class KB implements Serializable {
      * it is returned. If accumulator is not provided (is null), then a new
      * ArrayList is created and returned if matches are found.
      *
-     * @param input
-     *            The input String in which matches are sought.
-     *
-     * @param patternKey
-     *            A String used as the retrieval key for a regular expression
-     *            Pattern object, and an int index identifying a binding group.
-     *
-     * @param accumulator
-     *            An optional ArrayList to which matches are added. Note that if
-     *            accumulator is provided, it will be the return value even if
-     *            no new matches are found in the input String.
-     *
+     * @param input       The input String in which matches are sought.
+     * @param patternKey  A String used as the retrieval key for a regular expression
+     *                    Pattern object, and an int index identifying a binding group.
+     * @param accumulator An optional ArrayList to which matches are added. Note that if
+     *                    accumulator is provided, it will be the return value even if
+     *                    no new matches are found in the input String.
      * @return An ArrayList, or null if no matches are found and an accumulator
-     *         is not provided.
+     * is not provided.
      */
     public static ArrayList<String> getMatches(String input, String patternKey, ArrayList<String> accumulator) {
 
@@ -459,13 +474,9 @@ public class KB implements Serializable {
      * compiled Pattern and binding group index retrieved with patternKey, and
      * returns the results, if any, in an ArrayList.
      *
-     * @param input
-     *            The input String in which matches are sought.
-     *
-     * @param patternKey
-     *            A String used as the retrieval key for a regular expression
-     *            Pattern object, and an int index identifying a binding group.
-     *
+     * @param input      The input String in which matches are sought.
+     * @param patternKey A String used as the retrieval key for a regular expression
+     *                   Pattern object, and an int index identifying a binding group.
      * @return An ArrayList, or null if no matches are found.
      */
     public static ArrayList<String> getMatches(String input, String patternKey) {
@@ -473,12 +484,9 @@ public class KB implements Serializable {
     }
 
     /**
-     *
-     * @param obj
-     *            Any object
-     *
+     * @param obj Any object
      * @return true if obj is a String representation of a LISP empty list, else
-     *         false.
+     * false.
      */
     public static boolean isEmptyList(Object obj) {
         return (StringUtil.isNonEmptyString(obj) && Formula.empty((String) obj));
@@ -487,8 +495,7 @@ public class KB implements Serializable {
     /**
      * A static utility method.
      *
-     * @param obj
-     *            Presumably, a String.
+     * @param obj Presumably, a String.
      * @return true if obj is a SUO-KIF variable, else false.
      */
     public static boolean isVariable(String obj) {
@@ -502,8 +509,7 @@ public class KB implements Serializable {
     /**
      * A static utility method.
      *
-     * @param obj
-     *            A String.
+     * @param obj A String.
      * @return true if obj is a SUO-KIF logical quantifier, else false.
      */
     public static boolean isQuantifier(String obj) {
@@ -514,10 +520,9 @@ public class KB implements Serializable {
     /**
      * A static utility method.
      *
-     * @param obj
-     *            Presumably, a String.
+     * @param obj Presumably, a String.
      * @return true if obj is a SUO-KIF commutative logical operator, else
-     *         false.
+     * false.
      */
     public static boolean isCommutative(String obj) {
 
@@ -558,6 +563,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     private static void deletedOldInfFiles(String filename, String prefix) {
 
@@ -630,6 +636,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     public static void test() {
 
@@ -681,6 +688,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     public static void showHelp() {
 
@@ -706,6 +714,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     public static void main(String[] args) throws IOException {
 
@@ -814,6 +823,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     public boolean isVisible() {
         return isVisible;
@@ -844,8 +854,7 @@ public class KB implements Serializable {
      * BrowseBody.jsp when a single match is found. Purpose is to simplify a
      * RegEx to its only matching term
      *
-     * @param term
-     *            a String
+     * @param term a String
      * @return modified term a String
      */
     public String simplifyTerm(String term, boolean ignoreCaps) {
@@ -860,8 +869,7 @@ public class KB implements Serializable {
      * (interpreted as a Regular Expression) and returns true if any term in the
      * KB has a match with the RE.
      *
-     * @param term
-     *            A String
+     * @param term A String
      * @return true or false.
      */
     public boolean containsRE(String term, boolean ignoreCaps) {
@@ -874,8 +882,7 @@ public class KB implements Serializable {
      * (interpreted as a Regular Expression) and returns an ArrayList containing
      * every term in the KB that has a match with the RE.
      *
-     * @param term
-     *            A String
+     * @param term A String
      * @return An ArrayList of terms that have a match to term
      */
     public ArrayList<String> getREMatch(String term, boolean ignoreCaps) {
@@ -1156,6 +1163,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     public boolean isInstance(String term) {
 
@@ -1189,7 +1197,7 @@ public class KB implements Serializable {
      * of c2, else returns false.  Note that classes are also subclasses of
      * themselves
      *
-     * @param c1 A String, the name of a Class.
+     * @param c1     A String, the name of a Class.
      * @param parent A String, the name of a Class.
      * @return boolean
      */
@@ -1217,7 +1225,7 @@ public class KB implements Serializable {
      * true if the KB cache supports the conclusion that c1 is a subAttribute of
      * c2, else returns false.
      *
-     * @param c1 A String, the name of a SetOrClass.
+     * @param c1     A String, the name of a SetOrClass.
      * @param parent A String, the name of a SetOrClass.
      * @return boolean
      */
@@ -1489,6 +1497,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     private ArrayList<Formula> stringsToFormulas(ArrayList<String> strings) {
 
@@ -2384,116 +2393,117 @@ public class KB implements Serializable {
      * Submits a query to the LEO inference engine. Returns an XML formatted String that
      * contains the response of the inference engine. It should be in the form
      * "<queryResponse>...</queryResponse>".
-     *
+     * <p>
      * suoKifFormula The String representation of the SUO-KIF query.
-     *  timeout       The number of seconds after which the underlying inference
-     *                      engine should give up. (Time taken by axiom selection doesn't
-     *                      count.)
-     *  maxAnswers    The maximum number of answers (binding sets) the inference
-     *                      engine should return.
+     * timeout       The number of seconds after which the underlying inference
+     * engine should give up. (Time taken by axiom selection doesn't
+     * count.)
+     * maxAnswers    The maximum number of answers (binding sets) the inference
+     * engine should return.
+     *
      * @return A String indicating the status of the ask operation.
-
-    public String askLEOOld(String suoKifFormula, int timeout, int maxAnswers, String flag) {
-
-    String result = "";
-    try {
-    String LeoExecutable = KBmanager.getMgr().getPref("leoExecutable");
-    String LeoInput = KBmanager.getMgr().getPref("inferenceTestDir") + "prob.p";
-    String LeoProblem;
-    String responseLine;
-    String LeoOutput = "";
-    File LeoExecutableFile = new File(LeoExecutable);
-    File LeoInputFile = new File(LeoInput);
-    FileWriter LeoInputFileW = new FileWriter(LeoInput);
-
-    List<Formula> selectedQuery = new ArrayList<Formula>();
-    Formula newQ = new Formula();
-    newQ.read(suoKifFormula);
-    selectedQuery.add(newQ);
-    List<String> selFs = null;
-    if (flag.equals("LeoSine")) {
-    SInE sine = new SInE(this.formulaMap.keySet());
-    selFs = new ArrayList<String>(sine.performSelection(suoKifFormula));
-    sine.terminate();
-    }
-    else if (flag.equals("LeoLocal"))
-    selFs = new ArrayList<String>();
-    else if (flag.equals("LeoGlobal")) {
-    selFs = new ArrayList<String>();
-    Iterator<Formula> it = this.formulaMap.values().iterator();
-    while (it.hasNext()) {
-    Formula entry = it.next();
-    selFs.add(entry.toString());
-    }
-    }
-    try { // add user asserted formulas
-    File dir = new File(this.kbDir);
-    File file = new File(dir, (this.name + _userAssertionsString));
-    String filename = file.getCanonicalPath();
-    BufferedReader userAssertedInput = new BufferedReader(new FileReader(filename));
-
-    try {
-    String line = null;
-    /
+     * <p>
+     * public String askLEOOld(String suoKifFormula, int timeout, int maxAnswers, String flag) {
+     * <p>
+     * String result = "";
+     * try {
+     * String LeoExecutable = KBmanager.getMgr().getPref("leoExecutable");
+     * String LeoInput = KBmanager.getMgr().getPref("inferenceTestDir") + "prob.p";
+     * String LeoProblem;
+     * String responseLine;
+     * String LeoOutput = "";
+     * File LeoExecutableFile = new File(LeoExecutable);
+     * File LeoInputFile = new File(LeoInput);
+     * FileWriter LeoInputFileW = new FileWriter(LeoInput);
+     * <p>
+     * List<Formula> selectedQuery = new ArrayList<Formula>();
+     * Formula newQ = new Formula();
+     * newQ.read(suoKifFormula);
+     * selectedQuery.add(newQ);
+     * List<String> selFs = null;
+     * if (flag.equals("LeoSine")) {
+     * SInE sine = new SInE(this.formulaMap.keySet());
+     * selFs = new ArrayList<String>(sine.performSelection(suoKifFormula));
+     * sine.terminate();
+     * }
+     * else if (flag.equals("LeoLocal"))
+     * selFs = new ArrayList<String>();
+     * else if (flag.equals("LeoGlobal")) {
+     * selFs = new ArrayList<String>();
+     * Iterator<Formula> it = this.formulaMap.values().iterator();
+     * while (it.hasNext()) {
+     * Formula entry = it.next();
+     * selFs.add(entry.toString());
+     * }
+     * }
+     * try { // add user asserted formulas
+     * File dir = new File(this.kbDir);
+     * File file = new File(dir, (this.name + _userAssertionsString));
+     * String filename = file.getCanonicalPath();
+     * BufferedReader userAssertedInput = new BufferedReader(new FileReader(filename));
+     * <p>
+     * try {
+     * String line = null;
+     * /
      * readLine is a bit quirky : it returns the content of a
      * line MINUS the newline. it returns null only for the END
      * of the stream. it returns an empty String if two newlines
      * appear in a row.
-
-    while ((line = userAssertedInput.readLine()) != null)
-    selFs.add(line);
-    }
-    finally {
-    userAssertedInput.close();
-    }
-    }
-    catch (IOException ex) {
-    System.out.println("Error in KB.askLEO(): " + ex.getMessage());
-    ex.printStackTrace();
-    }
-    List<Formula> selectedFormulas = new ArrayList();
-    Formula newF = new Formula();
-
-    Iterator<String> it = selFs.iterator();
-    while (it.hasNext()) {
-    String entry = it.next();
-    newF = new Formula();
-    newF.read(entry);
-    selectedFormulas.add(newF);
-    }
-    System.out.println(selFs.toString());
-    THF thf = new THF();
-    LeoProblem = thf.KIF2THF(selectedFormulas, selectedQuery, this);
-    LeoInputFileW.write(LeoProblem);
-    LeoInputFileW.close();
-
-    String command = LeoExecutableFile.getCanonicalPath() + " -po 1 -t " + timeout + " "
-    + LeoInputFile.getCanonicalPath();
-
-    Process leo = Runtime.getRuntime().exec(command);
-    BufferedReader reader = new BufferedReader(new InputStreamReader(leo.getInputStream()));
-    while ((responseLine = reader.readLine()) != null)
-    LeoOutput += responseLine + "\n";
-    reader.close();
-    System.out.println(LeoOutput);
-
-    if (LeoOutput.contains("SZS status Theorem")) {
-    result = "Answer 1. yes" + "<br> <br>" + LeoProblem.replaceAll("\\n", "<br>") + "<br> <br>"
-    + LeoOutput.replaceAll("\\n", "<br>");
-    }
-    else {
-    result = "Answer 1. don't know" + "<br> <br>" + LeoProblem.replaceAll("\\n", "<br>") + "<br> <br>"
-    + LeoOutput.replaceAll("\\n", "<br>");
-    }
-    }
-    catch (Exception ex) {
-    System.out.println("Error in KB.askLEO(): " + ex.getMessage());
-    ex.printStackTrace();
-    }
-    return result;
-    }
-
-    /**
+     * <p>
+     * while ((line = userAssertedInput.readLine()) != null)
+     * selFs.add(line);
+     * }
+     * finally {
+     * userAssertedInput.close();
+     * }
+     * }
+     * catch (IOException ex) {
+     * System.out.println("Error in KB.askLEO(): " + ex.getMessage());
+     * ex.printStackTrace();
+     * }
+     * List<Formula> selectedFormulas = new ArrayList();
+     * Formula newF = new Formula();
+     * <p>
+     * Iterator<String> it = selFs.iterator();
+     * while (it.hasNext()) {
+     * String entry = it.next();
+     * newF = new Formula();
+     * newF.read(entry);
+     * selectedFormulas.add(newF);
+     * }
+     * System.out.println(selFs.toString());
+     * THF thf = new THF();
+     * LeoProblem = thf.KIF2THF(selectedFormulas, selectedQuery, this);
+     * LeoInputFileW.write(LeoProblem);
+     * LeoInputFileW.close();
+     * <p>
+     * String command = LeoExecutableFile.getCanonicalPath() + " -po 1 -t " + timeout + " "
+     * + LeoInputFile.getCanonicalPath();
+     * <p>
+     * Process leo = Runtime.getRuntime().exec(command);
+     * BufferedReader reader = new BufferedReader(new InputStreamReader(leo.getInputStream()));
+     * while ((responseLine = reader.readLine()) != null)
+     * LeoOutput += responseLine + "\n";
+     * reader.close();
+     * System.out.println(LeoOutput);
+     * <p>
+     * if (LeoOutput.contains("SZS status Theorem")) {
+     * result = "Answer 1. yes" + "<br> <br>" + LeoProblem.replaceAll("\\n", "<br>") + "<br> <br>"
+     * + LeoOutput.replaceAll("\\n", "<br>");
+     * }
+     * else {
+     * result = "Answer 1. don't know" + "<br> <br>" + LeoProblem.replaceAll("\\n", "<br>") + "<br> <br>"
+     * + LeoOutput.replaceAll("\\n", "<br>");
+     * }
+     * }
+     * catch (Exception ex) {
+     * System.out.println("Error in KB.askLEO(): " + ex.getMessage());
+     * ex.printStackTrace();
+     * }
+     * return result;
+     * }
+     * <p>
+     * /**
      * Count the number of "levels" deep the term is in taxonomic
      * relations from Entity.  Remove trailing '+' signs.  Also handle
      * a composite term like (UnionFn A B) with a warning
@@ -2532,6 +2542,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     public HashSet<String> immediateParents(String term) {
 
@@ -2900,10 +2911,10 @@ public class KB implements Serializable {
 
     /**
      * Populates the format maps for language lang.
-     *
+     * <p>
      * see termFormatMap is a HashMap of language keys and HashMap values. The
-     *      interior HashMaps are term keys and format string values.
-     *
+     * interior HashMaps are term keys and format string values.
+     * <p>
      * see formatMap is the same but for relation format strings.
      */
     public void loadFormatMaps(String lang) {
@@ -2981,7 +2992,7 @@ public class KB implements Serializable {
      * existing map. This is a case of "lazy evaluation".
      *
      * @return An instance of Map where the keys are terms and the values are
-     *         format strings.
+     * format strings.
      */
     public HashMap<String, String> getTermFormatMap(String lang) {
 
@@ -3002,7 +3013,7 @@ public class KB implements Serializable {
      * the existing map. This is a case of "lazy evaluation".
      *
      * @return An instance of Map where the keys are relation names and the
-     *         values are format strings.
+     * values are format strings.
      */
     public HashMap<String, String> getFormatMap(String lang) {
 
@@ -3066,6 +3077,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     public KIF readConstituent(String filename) {
 
@@ -3151,8 +3163,7 @@ public class KB implements Serializable {
      * Add a new KB constituent by reading in the file, and then merging the formulas with
      * the existing set of formulas.
      *
-     * @param filename
-     *            - The full path of the file being added
+     * @param filename - The full path of the file being added
      */
     public void addConstituent(String filename) {
 
@@ -3219,8 +3230,7 @@ public class KB implements Serializable {
     /**
      * Write a KIF file consisting of all the formulas in the knowledge base.
      *
-     * @param fname
-     *            - the name of the file to write, including full path.
+     * @param fname - the name of the file to write, including full path.
      */
     public void writeFile(String fname) throws IOException {
 
@@ -3280,15 +3290,13 @@ public class KB implements Serializable {
      * This method retrieves Formulas by asking the query expression queryLit, and
      * returns the results, if any, in an ArrayList.
      *
-     * @param queryLit
-     *            The query, which is assumed to be a List (atomic literal)
-     *            consisting of a single predicate and its arguments. The
-     *            arguments could be variables, constants, or a mix of the two,
-     *            but only the first constant encountered in a left to right
-     *            sweep over the literal will be used in the actual query.
-     *
+     * @param queryLit The query, which is assumed to be a List (atomic literal)
+     *                 consisting of a single predicate and its arguments. The
+     *                 arguments could be variables, constants, or a mix of the two,
+     *                 but only the first constant encountered in a left to right
+     *                 sweep over the literal will be used in the actual query.
      * @return An ArrayList of Formula objects, or an empty ArrayList if no
-     *         answers are retrieved.
+     * answers are retrieved.
      */
     public ArrayList<Formula> askWithLiteral(List<String> queryLit) {
 
@@ -3350,15 +3358,13 @@ public class KB implements Serializable {
      * This method retrieves formulas by asking the query expression queryLit, and
      * returns the results, if any, in an ArrayList.
      *
-     * @param queryLit
-     *            The query, which is assumed to be an atomic literal consisting
-     *            of a single predicate and its arguments. The arguments could
-     *            be variables, constants, or a mix of the two, but only the
-     *            first constant encountered in a left to right sweep over the
-     *            literal will be used in the actual query.
-     *
+     * @param queryLit The query, which is assumed to be an atomic literal consisting
+     *                 of a single predicate and its arguments. The arguments could
+     *                 be variables, constants, or a mix of the two, but only the
+     *                 first constant encountered in a left to right sweep over the
+     *                 literal will be used in the actual query.
      * @return An ArrayList of Formula objects, or an empty ArrayList if no
-     *         answers are retrieved.
+     * answers are retrieved.
      */
     public ArrayList<Formula> askWithLiteral(Formula queryLit) {
 
@@ -3371,9 +3377,7 @@ public class KB implements Serializable {
      * contained in the input set. The members of the input set are not included
      * in the result set.
      *
-     * @param classNames
-     *            A Set object containing SUO-KIF class names (Strings).
-     *
+     * @param classNames A Set object containing SUO-KIF class names (Strings).
      * @return A Set of SUO-KIF class names, which could be empty.
      */
     public Set<String> getAllSuperClasses(Set<String> classNames) {
@@ -3390,8 +3394,8 @@ public class KB implements Serializable {
     /**
      * This method retrieves all instances of the classes named in the input set.
      * TODO: Deprecated since it seems to do the opposite of what it should.
-     * @param classNames
-     *            A Set of String, containing SUO-KIF class names
+     *
+     * @param classNames A Set of String, containing SUO-KIF class names
      * @return A TreeSet, possibly empty, containing SUO-KIF constant names.
      */
     @Deprecated
@@ -3408,8 +3412,7 @@ public class KB implements Serializable {
     /**
      * This method retrieves all instances of the class named in the input String.
      *
-     * @param className
-     *            The name of a SUO-KIF Class.
+     * @param className The name of a SUO-KIF Class.
      * @return A TreeSet, possibly empty, containing SUO-KIF constant names.
      */
     public TreeSet<String> getAllInstances(String className) {
@@ -3425,11 +3428,10 @@ public class KB implements Serializable {
     /**
      * This method tries to find or compute a valence for the input relation.
      *
-     * @param relnName
-     *            A String, the name of a SUO-KIF Relation.
+     * @param relnName A String, the name of a SUO-KIF Relation.
      * @return An int value. -1 means that no valence value could be found. 0
-     *         means that the relation is a VariableArityRelation. 1-5 are the
-     *         standard SUO-KIF valence values.
+     * means that the relation is a VariableArityRelation. 1-5 are the
+     * standard SUO-KIF valence values.
      */
     public int getValence(String relnName) {
 
@@ -3445,7 +3447,6 @@ public class KB implements Serializable {
     }
 
     /**
-     *
      * @return an ArrayList containing all predicates in this KB.
      */
     public ArrayList<String> collectPredicates() {
@@ -3570,8 +3571,7 @@ public class KB implements Serializable {
     /**
      * Creates InferenceEngine and loads all of the constituents into it.
      *
-     * @param factory
-     *            Factory object used to create new InferenceEngine.
+     * @param factory Factory object used to create new InferenceEngine.
      * @return InferenceEngine object with all constituents loaded.
      */
     public InferenceEngine createInferenceEngine(InferenceEngine.EngineFactory factory) {
@@ -3788,6 +3788,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     public List<Pair> getSortedTermFrequency() {
 
@@ -3800,6 +3801,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     public TPTP3ProofProcessor runProver(String[] args, int timeout) {
 
@@ -3837,6 +3839,7 @@ public class KB implements Serializable {
     }
 
     /**
+     *
      */
     public String toString() {
 

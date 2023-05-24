@@ -189,7 +189,7 @@ public class OMWordnet implements Serializable {
         }
     }
 
-    
+
     public static String codeToLanguage(String code) {
 
         if (lcodes.contains(code))
@@ -198,7 +198,7 @@ public class OMWordnet implements Serializable {
             return "";
     }
 
-    
+
     public static String languageToCode(String lang) {
 
         if (lnames.contains(lang))
@@ -335,7 +335,7 @@ public class OMWordnet implements Serializable {
         System.out.println();
     }
 
-    
+
     public static void generateOMWOWLformat(KB kb) {
 
         String line;
@@ -399,7 +399,7 @@ public class OMWordnet implements Serializable {
         return result.toString();
     }
 
-    
+
     private static String formatArrayList(ArrayList<String> al) {
 
         if (al == null) return "";
@@ -411,7 +411,7 @@ public class OMWordnet implements Serializable {
         return sb.toString();
     }
 
-    
+
     public static String displaySynset(String kbName, String synset, String params) {
 
         StringBuffer sb = new StringBuffer();

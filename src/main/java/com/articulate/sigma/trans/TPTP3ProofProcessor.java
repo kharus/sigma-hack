@@ -50,7 +50,7 @@ public class TPTP3ProofProcessor {
     public HashMap<String, Integer> idTable = new HashMap<>();
     private int idCounter = 0;
 
-    
+
     public TPTP3ProofProcessor() {
     }
 
@@ -186,7 +186,7 @@ public class TPTP3ProofProcessor {
         return s.startsWith("esk") || s.startsWith("sK");
     }
 
-    
+
     private static void printPrologTerm(PrologTerm pt, String indent) {
 
         System.out.println(indent + pt.toString() + "\t" + pt.getType());
@@ -201,13 +201,13 @@ public class TPTP3ProofProcessor {
         }
     }
 
-    
+
     public static void printPrologTerm(PrologTerm pt) {
 
         printPrologTerm(pt, "");
     }
 
-    
+
     public static void showHelp() {
 
         System.out.println("TPTP3ProofProcessor class");
@@ -218,7 +218,7 @@ public class TPTP3ProofProcessor {
         System.out.println("  h - show this help");
     }
 
-    
+
     public static void main(String[] args) throws IOException {
 
         System.out.println("INFO in TPTP3ProofProcessor.main()");
@@ -288,7 +288,7 @@ public class TPTP3ProofProcessor {
         return sb.toString();
     }
 
-    
+
     public String getInferenceType(String supportId) {
 
         String inferenceType = null;
@@ -816,7 +816,7 @@ public class TPTP3ProofProcessor {
         return bindings;
     }
 
-    
+
     public void parseProofOutput(String st, KB kb) {
 
         StringReader sr = new StringReader(st);
@@ -824,7 +824,7 @@ public class TPTP3ProofProcessor {
         parseProofOutput(lnr, kb);
     }
 
-    
+
     public void parseProofFromFile(String filename, KB kb) {
 
         try {
@@ -853,7 +853,7 @@ public class TPTP3ProofProcessor {
         return idTable.get(id);
     }
 
-    
+
     private ArrayList<Integer> getSupports(PrologTerm pt) {
 
         if (debug) System.out.println("TPTP3ProofProcess.getSupports(PrologTerm): " + pt);
@@ -875,7 +875,7 @@ public class TPTP3ProofProcessor {
         return supports;
     }
 
-    
+
     private ArrayList<Integer> getSupports(String input) {
 
         if (debug) System.out.println("TPTP3ProofProcess.getSupports(String): " + input);
@@ -889,7 +889,7 @@ public class TPTP3ProofProcessor {
         return supports;
     }
 
-    
+
     private ArrayList<String> createProofDotGraphBody() {
 
         ArrayList<String> lines = new ArrayList<>();
@@ -940,7 +940,7 @@ public class TPTP3ProofProcessor {
         return lines;
     }
 
-    
+
     private void createProofDotGraphImage(String filename) throws IOException {
 
         try {
@@ -1029,7 +1029,7 @@ public class TPTP3ProofProcessor {
         }
     }
 
-    
+
     private void testPrologParser() {
 
         //Reader reader = new StringReader("hello(world). some({1,2,3})."); // power(X,Y,Z) :- Z is X ** Y.");

@@ -234,7 +234,6 @@ public class Mapping {
     }
 
 
-    
     private static int stringMatch(String t1, String t2, String matchMethod) {
 
         if (matchMethod.equals("JaroWinkler"))
@@ -400,7 +399,6 @@ public class Mapping {
     }
 
 
-    
     private static int minimum(int a, int b, int c) {
         int ans = a;
         if (b < ans) ans = b;

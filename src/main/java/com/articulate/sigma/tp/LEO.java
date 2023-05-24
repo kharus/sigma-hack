@@ -32,6 +32,7 @@ import java.util.*;
  * Class for invoking the latest version of LEO from Java
  * It should invoke a command like
  * ~/workspace/Leo-III/Leo-III-1.6/bin/leo3 /home/user/.sigmakee/KBs/SUMO.thf -t 60 -p
+ *
  * @author apease
  */
 
@@ -43,6 +44,7 @@ public class LEO {
     public ArrayList<String> output = new ArrayList<>();
 
     /**
+     *
      */
     private static String[] createCommandList(File executable, int timeout, File kbFile) {
 
@@ -56,11 +58,11 @@ public class LEO {
      * Add an assertion for inference.
      *
      * @param userAssertionTPTP asserted formula in the TPTP/TFF/THF syntax
-     * @param kb Knowledge base
-     * @param parsedFormulas a lit of parsed formulas in KIF syntax
-     * @param tptp convert formula to TPTP if tptp = true
+     * @param kb                Knowledge base
+     * @param parsedFormulas    a lit of parsed formulas in KIF syntax
+     * @param tptp              convert formula to TPTP if tptp = true
      * @return true if all assertions are added for inference
-     *
+     * <p>
      * TODO: This function might not be necessary if we find a way to
      * directly add assertion into opened inference engine (e_ltb_runner)
      */
@@ -114,6 +116,7 @@ public class LEO {
     }
 
     /**
+     *
      */
     public static void main(String[] args) throws Exception {
 
@@ -163,6 +166,7 @@ public class LEO {
     }
 
     /**
+     *
      */
     public String toString() {
 
@@ -176,10 +180,9 @@ public class LEO {
      * Creates a running instance of Leo.
      *
      * @param kbFile A File object denoting the initial knowledge base
-     * to be loaded by the Leo executable.
-     *
+     *               to be loaded by the Leo executable.
      * @throws IOException should not normally be thrown unless either
-     *         Leo executable or database file name are incorrect
+     *                     Leo executable or database file name are incorrect
      */
     private void run(File kbFile, int timeout) throws Exception {
 
@@ -246,6 +249,7 @@ public class LEO {
     }
 
     /**
+     *
      */
     public void catFiles(String f1, String f2, String fout) throws Exception {
 
@@ -270,6 +274,7 @@ public class LEO {
     }
 
     /**
+     *
      */
     public List<String> getUserAssertions(KB kb) {
 
@@ -287,6 +292,7 @@ public class LEO {
      * Creates a running instance of LEO-III adding a set of statements
      * in THF language to a file and then calling LEO.
      * Note that any query must be given as a "conjecture"
+     *
      * @param stmts should be the query but the list gets expanded here with
      *              any other prior user assertions
      */

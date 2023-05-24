@@ -13,13 +13,13 @@ import static org.junit.Assert.assertTrue;
 
 public class TPTP2SUMOTest {
 
-    
+
     @BeforeClass
     public static void init() {
 
     }
 
-    
+
     @Ignore
     @Test
     public void testPartition() {
@@ -46,7 +46,7 @@ public class TPTP2SUMOTest {
         }
     }
 
-    
+
     @Ignore
     @Test
     public void testCollapse() {
@@ -62,7 +62,7 @@ public class TPTP2SUMOTest {
         assertEquals(expected, result);
     }
 
-    
+
     @Ignore
     @Test
     public void testCollapse2() {
@@ -80,7 +80,7 @@ public class TPTP2SUMOTest {
         assertEquals(expected, result);
     }
 
-    
+
     @Test
     public void testCollapse3() {
 

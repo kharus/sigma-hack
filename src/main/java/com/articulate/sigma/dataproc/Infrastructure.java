@@ -35,7 +35,7 @@ public class Infrastructure {
     public HashMap<String, Category> categories = new HashMap<>(); //id, category
     public HashMap<String, HashSet<String>> parents = new HashMap<>(); //parent name, list of categories
 
-    
+
     public static void initOnce() {
 
         if (initialized)
@@ -53,7 +53,7 @@ public class Infrastructure {
         initialized = true;
     }
 
-    
+
     public static void initOnceDB() {
 
         if (initialized)
@@ -80,7 +80,7 @@ public class Infrastructure {
         initialized = true;
     }
 
-    
+
     public static void showHelp() {
 
         System.out.println("KButilities class");
@@ -89,7 +89,7 @@ public class Infrastructure {
         System.out.println("  -i initialize");
     }
 
-    
+
     public static void main(String[] args) {
 
         if (args != null && args.length > 0 && args[0].equals("-h"))
@@ -102,7 +102,7 @@ public class Infrastructure {
         }
     }
 
-    
+
     private void processProductTypes(JSONArray arraypt) throws SQLException {
 
         for (Object o : arraypt) {
@@ -119,7 +119,7 @@ public class Infrastructure {
         }
     }
 
-    
+
     private Mappings processMappings(JSONObject objm) {
 
         Mappings mappings = new Mappings();
@@ -144,7 +144,7 @@ public class Infrastructure {
         return mappings;
     }
 
-    
+
     private void processCategories(JSONArray arrayc,
                                    Mappings mappings) throws SQLException {
 
@@ -189,7 +189,7 @@ public class Infrastructure {
         }
     }
 
-    
+
     private void processProduct(JSONObject jso,
                                 Mappings mappings) throws SQLException {
 
@@ -266,7 +266,7 @@ public class Infrastructure {
         products.put(p.ID, p);
     }
 
-    
+
     public void toSUMObyParent() throws SQLException {
 
         System.out.println("toSUMObyParent(): ");
@@ -456,7 +456,7 @@ public class Infrastructure {
         }
     }
 
-    
+
     public ArrayList<String> getProductTypes() {
 
         ArrayList<String> al = new ArrayList<>();
@@ -464,7 +464,7 @@ public class Infrastructure {
         return al;
     }
 
-    
+
     public ArrayList<String> getProductTypesDB() {
 
         System.out.println("getProductTypesDB()");
@@ -485,7 +485,7 @@ public class Infrastructure {
         return al;
     }
 
-    
+
     public ArrayList<String> getCategories(String productType) {
 
         HashSet<String> result = new HashSet<>();
@@ -503,7 +503,7 @@ public class Infrastructure {
         return al;
     }
 
-    
+
     public ArrayList<String> getCategoriesDB(String productType) {
 
         System.out.println("getCategoriesDB(): subCategory: " + productType);
@@ -526,7 +526,7 @@ public class Infrastructure {
         return al;
     }
 
-    
+
     public ArrayList<String> getSubCategories(String category) {
 
         if (StringUtil.emptyString(category) || !parents.containsKey(category))
@@ -536,7 +536,7 @@ public class Infrastructure {
         return al;
     }
 
-    
+
     public ArrayList<String> getSubCategoriesDB(String category) throws SQLException {
 
         System.out.println("getSubCategoriesDB(): category: " + category);
@@ -559,7 +559,7 @@ public class Infrastructure {
         return al;
     }
 
-    
+
     public HashSet<String> getAllowedRelations(String subCategory) {
 
         if (StringUtil.emptyString(subCategory))
@@ -570,7 +570,7 @@ public class Infrastructure {
         return relsForType.get(subCategory);
     }
 
-    
+
     public HashSet<String> getAllowedRelationsDB(String subCategory) throws SQLException {
 
         if (StringUtil.emptyString(subCategory))
@@ -592,7 +592,7 @@ public class Infrastructure {
         return result;
     }
 
-    
+
     public ArrayList<String> getAllowableValues(String subCategory, String rel) {
 
         if (StringUtil.emptyString(subCategory))
@@ -613,7 +613,7 @@ public class Infrastructure {
         return al;
     }
 
-    
+
     public ArrayList<String> getAllowableValuesDB(String subCategory, String rel) {
 
         if (StringUtil.emptyString(subCategory))
@@ -638,7 +638,7 @@ public class Infrastructure {
         return al;
     }
 
-    
+
     public ArrayList<String> getProducts(Map<String, String> params) {
 
         System.out.println("getProducts(): params: " + params);
@@ -679,7 +679,7 @@ public class Infrastructure {
         return result;
     }
 
-    
+
     public ArrayList<String> getProductsByTypeDB(String subCat) {
 
         ArrayList<String> al = new ArrayList<>();
@@ -778,7 +778,7 @@ public class Infrastructure {
         return result;
     }
 
-    
+
     public class Product {
         public String SUMO = null;
         public String ID = null;
@@ -796,7 +796,7 @@ public class Infrastructure {
         }
     }
 
-    
+
     public class Category {
         public String ID = null;
         public String SUMO = null;

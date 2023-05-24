@@ -9,11 +9,6 @@ import java.util.*;
 public class SUMOKBtoTPTPKB {
 
     public static final boolean filterSimpleOnly = false;
-    // flags to support including numbers and HOL in pseudo-FOL for flexible provers
-    public static boolean removeHOL = true; // remove higher order expressions
-    public static boolean removeNum = true; // remove numbers
-    public static boolean debug = false;
-    public static String lang = "fof"; // or thf
     /**
      * define a set of predicates which will not be used for inference
      */
@@ -29,22 +24,27 @@ public class SUMOKBtoTPTPKB {
             "abbreviation",
             "conventionalShortName",
             "conventionalLongName");
-
+    // flags to support including numbers and HOL in pseudo-FOL for flexible provers
+    public static boolean removeHOL = true; // remove higher order expressions
+    public static boolean removeNum = true; // remove numbers
+    public static boolean debug = false;
+    public static String lang = "fof"; // or thf
     // maps TPTP axiom IDs to SUMO formulas
     public static HashMap<String, Formula> axiomKey = new HashMap<>();
     public KB kb;
     public Set<String> alreadyWrittenTPTPs = new HashSet<>();
 
-    public SUMOKBtoTPTPKB() {}
+    public SUMOKBtoTPTPKB() {
+    }
 
-    
+
     public static String langToExtension(String l) {
 
         if (l.equals("fof"))
             return "tptp";
         return l;
     }
-    
+
     public static String extensionToLang(String l) {
 
         if (l.equals("tptp"))
@@ -79,14 +79,14 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    
+
     public String getSanitizedKBname() {
 
         String sanitizedKBName = kb.name.replaceAll("\\W", "_");
         return sanitizedKBName;
     }
 
-    
+
     public String getInfFilename() {
 
         String sanitizedKBName = getSanitizedKBname();
@@ -95,7 +95,7 @@ public class SUMOKBtoTPTPKB {
         return filename;
     }
 
-    
+
     public String copyFile(String fileName) {
 
         String outputPath = "";
@@ -172,7 +172,7 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    
+
     public void writeHeader(PrintWriter pw, String sanitizedKBName) {
         if (pw != null) {
             pw.println("% Articulate Software");
@@ -347,7 +347,7 @@ public class SUMOKBtoTPTPKB {
         return pass;
     }
 
-    
+
     public boolean filterAxiom(Formula form, String tptp, PrintWriter pw) {
 
         //----Don't output ""ed ''ed and numbers
@@ -379,7 +379,7 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    
+
     public class OrderedFormulae extends TreeSet<Formula> {
 
         public int compare(Object o1, Object o2) {

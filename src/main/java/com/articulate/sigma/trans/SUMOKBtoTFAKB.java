@@ -97,7 +97,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return "$i";
     }
 
-    
+
     public static String translateName(String s) {
 
         //System.out.println("% translateName(): " + s);
@@ -110,7 +110,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         return result;
     }
 
-    
+
     public static boolean alreadyExtended(String t) {
 
         String patternString = "__(\\d)(In|Re|Ra|En)+";
@@ -153,7 +153,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
             MapUtils.addToMap(toExtend, "ListFn", suffix);
     }
 
-    
+
     public static void main(String[] args) {
 
         System.out.println("SUMOKBtoTFAKB.main():");
@@ -181,7 +181,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         }
     }
 
-    
+
     public void initOnce() {
 
         if (!initialized) {
@@ -446,7 +446,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         }
     }
 
-    
+
     private boolean expandableArg(String rel, int argnum, ArrayList<String> sig) {
 
         String type = "";

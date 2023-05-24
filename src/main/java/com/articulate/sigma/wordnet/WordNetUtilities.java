@@ -27,13 +27,15 @@ import java.util.regex.Pattern;
 import static com.articulate.sigma.wordnet.WSD.readFileIntoArray;
 
 /**
- *  @author Adam Pease
+ * @author Adam Pease
  */
 
 public class WordNetUtilities {
 
-    /** POS-prefixed mappings from a new synset number to the old
-     *  one. */
+    /**
+     * POS-prefixed mappings from a new synset number to the old
+     * one.
+     */
     public static HashMap<String, String> mappings = new HashMap<String, String>();
     public static int TPTPidCounter = 1;
     public static int errorCount = 0;
@@ -47,11 +49,12 @@ public class WordNetUtilities {
             "domain_usage", "member_usage", "entailment", "cause", "also_see",
             "verb_group", "similar_to", "participle", "pertainym"));
     /**
+     *
      */
     private static boolean testWordDebug = false;
 
     /**
-     *  Get a SUMO term minus its &% prefix and one character mapping
+     * Get a SUMO term minus its &% prefix and one character mapping
      * suffix.
      */
     public static String getBareSUMOTerm(String term) {
@@ -104,6 +107,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static String posAlphaKeyToWord(String alphaKey) {
 
@@ -115,6 +119,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static String posWordToAlphaKey(String word) {
 
@@ -180,7 +185,7 @@ public class WordNetUtilities {
 
     /**
      * Extract the info in a word%num:num:num sense key.
-     *     colonp = Pattern.compile("([^%]+)%([^:]*):([^:]*):([^:]*):([^:]*)");
+     * colonp = Pattern.compile("([^%]+)%([^:]*):([^:]*):([^:]*):([^:]*)");
      */
     public static ArrayList<String> parseColonKey(String colonKey) {
 
@@ -303,6 +308,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static String removeTermPrefixes(String formula) {
 
@@ -326,7 +332,7 @@ public class WordNetUtilities {
     }
 
     /**
-     *  Get a SUMO term mapping suffix.
+     * Get a SUMO term mapping suffix.
      */
     public static char getSUMOMappingSuffix(String term) {
 
@@ -337,6 +343,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static String convertWordNetPointer(String ptr) {
 
@@ -370,6 +377,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static char posLetterToNumber(char POS) {
 
@@ -390,6 +398,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static char posNumberToLetter(char POS) {
 
@@ -410,6 +419,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static char posPennToNumber(String penn) {
 
@@ -524,6 +534,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static String mappingCharToName(char mappingType) {
 
@@ -552,13 +563,14 @@ public class WordNetUtilities {
     }
 
     /**
-     *  A utility function that mimics the functionality of the perl
-     *  substitution feature (s/match/replacement/).  Note that only
-     *  one replacement is made, not a global replacement.
-     *  @param result is the string on which the substitution is performed.
-     *  @param match is the substring to be found and replaced.
-     *  @param subst is the string replacement for match.
-     *  @return is a String containing the result of the substitution.
+     * A utility function that mimics the functionality of the perl
+     * substitution feature (s/match/replacement/).  Note that only
+     * one replacement is made, not a global replacement.
+     *
+     * @param result is the string on which the substitution is performed.
+     * @param match  is the substring to be found and replaced.
+     * @param subst  is the string replacement for match.
+     * @return is a String containing the result of the substitution.
      */
     public static String subst(String result, String match, String subst) {
 
@@ -571,17 +583,18 @@ public class WordNetUtilities {
     }
 
     /**
-     *  A utility function that mimics the functionality of the perl
-     *  substitution feature (s/match/replacement/) but rather than
-     *  returning the result of the substitution, just tests whether the
-     *  result is a key in a hashtable.  Note that only
-     *  one replacement is made, not a global replacement.
-     *  @param result is the string on which the substitution is performed.
-     *  @param match is the substring to be found and replaced.
-     *  @param subst is the string replacement for match.
-     *  @param hash is a hashtable to be checked against the result.
-     *  @return is a boolean indicating whether the result of the substitution
-     *  was found in the hashtable.
+     * A utility function that mimics the functionality of the perl
+     * substitution feature (s/match/replacement/) but rather than
+     * returning the result of the substitution, just tests whether the
+     * result is a key in a hashtable.  Note that only
+     * one replacement is made, not a global replacement.
+     *
+     * @param result is the string on which the substitution is performed.
+     * @param match  is the substring to be found and replaced.
+     * @param subst  is the string replacement for match.
+     * @param hash   is a hashtable to be checked against the result.
+     * @return is a boolean indicating whether the result of the substitution
+     * was found in the hashtable.
      */
     public static boolean substTest(String result, String match, String subst,
                                     HashMap<String, HashSet<String>> hash) {
@@ -597,6 +610,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static boolean isVowel(char c) {
 
@@ -1128,6 +1142,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static String printStatistics() {
 
@@ -1231,6 +1246,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static boolean excludedStringsForMeronymy(String s1, String s2) {
 
@@ -1247,9 +1263,9 @@ public class WordNetUtilities {
     }
 
     /**
-     *  A utility to extract meronym relations as relations between
-     *  SUMO terms.  Filter out relations between genus and species,
-     *  which shouldn't be meronyms
+     * A utility to extract meronym relations as relations between
+     * SUMO terms.  Filter out relations between genus and species,
+     * which shouldn't be meronyms
      */
     public static void extractMeronyms() {
 
@@ -1331,6 +1347,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static void commentSentiment(String fileWithPath) {
 
@@ -1356,6 +1373,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static void writeTPTPWordNetClassDefinitions(PrintWriter pw) throws IOException {
 
@@ -1381,6 +1399,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static void writeTPTPVerbFrames(PrintWriter pw) throws IOException {
 
@@ -1395,6 +1414,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static void writeTPTPWordNetRelationDefinitions(PrintWriter pw) throws IOException {
 
@@ -1474,6 +1494,7 @@ public class WordNetUtilities {
 
     /**
      * Write TPTP format for SUMO-WordNet mappings.
+     *
      * @param synset is a POS prefixed synset number
      */
     private static void writeTPTPWordNetSynset(PrintWriter pw, String synset) {
@@ -1536,6 +1557,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static void writeTPTPWordNetExceptions(PrintWriter pw) throws IOException {
 
@@ -1568,6 +1590,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static void writeTPTPOneWordToSenses(PrintWriter pw, String word) {
 
@@ -1590,6 +1613,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static void writeTPTPWordsToSenses(PrintWriter pw) throws IOException {
 
@@ -1601,6 +1625,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static void writeTPTPSenseIndex(PrintWriter pw) throws IOException {
 
@@ -1632,6 +1657,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static void writeTPTPWordNetHeader(PrintWriter pw) {
 
@@ -1669,6 +1695,7 @@ public class WordNetUtilities {
      * Find all the leaf nodes for a particular relation in WordNet.
      * Note that the leaf must have a link from another node to be a
      * leaf.  No isolated nodes can be considered leaves.
+     *
      * @return a list of POS-prefixed synsets
      */
     public static HashSet<String> findLeavesInTree(HashSet<String> rels) {
@@ -1736,6 +1763,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static String lowestCommonParentInner(ArrayList<String> path,
                                                   ArrayList<ArrayList<String>> paths, int cursor) {
@@ -1758,6 +1786,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static String lowestCommonParent(ArrayList<ArrayList<String>> paths1,
                                              ArrayList<ArrayList<String>> paths2, int cursor) {
@@ -1773,6 +1802,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static String lowestCommonParent(String s1, String s2) {
 
@@ -1796,6 +1826,7 @@ public class WordNetUtilities {
      * Find all the leaf nodes for a particular relation in WordNet.
      * Note that a node may be a leaf simply because it has no such
      * link to another node.
+     *
      * @return a list of POS-prefixed synsets
      */
     public static HashSet<String> findLeaves(String rel) {
@@ -1817,6 +1848,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static void showAllLeaves() {
 
@@ -1841,6 +1873,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static void showAllRoots() {
 
@@ -1887,6 +1920,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static String synsetToOneWord(String s) {
 
@@ -1908,6 +1942,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static void addSenseSet(Hashtable<String, String> SUMOhash,
                                     String prefix, HashMap<String, HashSet<String>> SUMOs) {
@@ -2125,8 +2160,9 @@ public class WordNetUtilities {
 
     /**
      * get all verb frames corresponding to a synset.
+     *
      * @param synset is a 9-digit synset
-     * Note! The verb frame key takes an 8-digit synset
+     *               Note! The verb frame key takes an 8-digit synset
      */
     public static ArrayList<String> getVerbFramesForSynset(String synset) {
 
@@ -2142,8 +2178,9 @@ public class WordNetUtilities {
     /**
      * get all verb frames corresponding to a word in a synset.  Include
      * verb frames common to all words in the synset.
+     *
      * @param synset is a 9-digit synset
-     * Note! The verb frame key takes an 8-digit synset
+     *               Note! The verb frame key takes an 8-digit synset
      */
     public static ArrayList<String> getVerbFramesForWord(String synset, String word) {
 
@@ -2161,7 +2198,8 @@ public class WordNetUtilities {
 
     /**
      * get all verb frames corresponding to a word in a synset.
-     * @param map is a set of word keys and the values are the verb frames
+     *
+     * @param map   is a set of word keys and the values are the verb frames
      * @param words are all the words in a given synset
      */
     public static ArrayList<String> doVerbFrameSubstitution(HashMap<String, ArrayList<String>> map,
@@ -2194,8 +2232,9 @@ public class WordNetUtilities {
 
     /**
      * get all verb frames corresponding to a synset.
+     *
      * @param synset is a 9-digit synset
-     * Note! The verb frame key takes an 8-digit synset
+     *               Note! The verb frame key takes an 8-digit synset
      */
     public static HashMap<String, ArrayList<String>> getAllVerbFrames(String synset,
                                                                       ArrayList<String> words) {
@@ -2216,8 +2255,9 @@ public class WordNetUtilities {
 
     /**
      * get all verb frames corresponding to a synset.
+     *
      * @param synset is a 9-digit synset
-     * Note! The verb frame key takes an 8-digit synset
+     *               Note! The verb frame key takes an 8-digit synset
      */
     public static String showVerbFrames(String synset) {
 
@@ -2355,6 +2395,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static String rootFormOf(String word) {
 
@@ -2505,6 +2546,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static String removeIsh(String s) {
 
@@ -2584,8 +2626,8 @@ public class WordNetUtilities {
     }
 
     /**
-     *  A method used only for testing.  It should not be called
-     *  during normal operation.
+     * A method used only for testing.  It should not be called
+     * during normal operation.
      */
     public static void testCommonParent() {
 
@@ -2679,6 +2721,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     private static HashSet<String> readDomain(String domain) {
 
@@ -2714,6 +2757,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static void testWord() {
 
@@ -2725,6 +2769,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static void testSynesthesia() {
 
@@ -2734,6 +2779,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static void testGetPOS() {
 
@@ -2744,8 +2790,8 @@ public class WordNetUtilities {
     }
 
     /**
-     *  A method used only for testing.  It should not be called
-     *  during normal operation.
+     * A method used only for testing.  It should not be called
+     * during normal operation.
      */
     public static void testIsValidKey() {
 
@@ -2753,6 +2799,7 @@ public class WordNetUtilities {
     }
 
     /**
+     *
      */
     public static void showHelp() {
 
@@ -2764,8 +2811,8 @@ public class WordNetUtilities {
     }
 
     /**
-     *  A main method, used only for testing.  It should not be called
-     *  during normal operation.
+     * A main method, used only for testing.  It should not be called
+     * during normal operation.
      */
     public static void main(String[] args) {
 
@@ -2790,9 +2837,9 @@ public class WordNetUtilities {
     }
 
     /**
-     *  Import links from www.image-net.org that are linked to
-     *  WordNet and links them to SUMO terms when the synset has a
-     *  directly equivalent SUMO term
+     * Import links from www.image-net.org that are linked to
+     * WordNet and links them to SUMO terms when the synset has a
+     * directly equivalent SUMO term
      */
     public void imageNetLinks() throws IOException {
 

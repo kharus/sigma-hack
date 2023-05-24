@@ -9,12 +9,10 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class VerbNetTest extends IntegrationTestBase {
 
 
-    
     @Test
     public void testTerm() {
 
@@ -26,7 +24,7 @@ public class VerbNetTest extends IntegrationTestBase {
         assertFalse(StringUtil.emptyString(verbs));
     }
 
-    
+
     @Test
     public void testWordList() {
 

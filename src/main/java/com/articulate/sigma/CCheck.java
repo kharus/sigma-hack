@@ -22,6 +22,8 @@ import java.util.*;
 
 public class CCheck implements Runnable {
     private final KB kb;
+    private final String lineHtml = "<table ALIGN='LEFT' WIDTH='40%'><tr><TD BGCOLOR='#AAAAAA'>" +
+            "<IMG SRC='pixmaps/1pixel.gif' width=1 height=1 border=0></TD></tr></table><BR>\n";
     private File ccheckFile;
     private FileWriter fw;
     private PrintWriter pw;
@@ -29,10 +31,9 @@ public class CCheck implements Runnable {
     private String inferenceEngine;
     private HashMap<String, String> ieSettings;
     private int timeOut = 10;
-    private final String lineHtml = "<table ALIGN='LEFT' WIDTH='40%'><tr><TD BGCOLOR='#AAAAAA'>" +
-            "<IMG SRC='pixmaps/1pixel.gif' width=1 height=1 border=0></TD></tr></table><BR>\n";
 
     /**
+     *
      */
     public CCheck(KB kb, String filename) {
 
@@ -48,6 +49,7 @@ public class CCheck implements Runnable {
     }
 
     /**
+     *
      */
     public CCheck(KB kb, String fileName, String chosenEngine, int timeout) throws Exception {
 
@@ -62,6 +64,7 @@ public class CCheck implements Runnable {
     }
 
     /**
+     *
      */
     public CCheck(KB kb, String fileName, String chosenEngine, String systemChosen, String quietFlag,
                   String location, String language, int timeout) throws Exception {
@@ -76,15 +79,15 @@ public class CCheck implements Runnable {
     }
 
     /**
-     * This sets the inference engine to be used for the consistency check.  
+     * This sets the inference engine to be used for the consistency check.
      * This particular method sets it if chosenEngine == 'SoTPTP'
      *
-     * @param chosenEngine - string describing the inference engine to be used.  
-     *         For this particular method, it should be 'SoTPTP'
+     * @param chosenEngine - string describing the inference engine to be used.
+     *                     For this particular method, it should be 'SoTPTP'
      * @param systemChosen - the theorem prover to be used
-     * @param location - if it's local or remote
-     * @param quietFlag - command option as to the verbosity of the result 
-     * @param language - language for formatting
+     * @param location     - if it's local or remote
+     * @param quietFlag    - command option as to the verbosity of the result
+     * @param language     - language for formatting
      * @return true if there are no errors in setting the engine, false if errors are encountered.
      */
     private boolean setInferenceEngine(String chosenEngine, String systemChosen, String location,
@@ -118,12 +121,13 @@ public class CCheck implements Runnable {
     }
 
     /**
-     * This sets the inference engine to be used for the consistency check.  
+     * This sets the inference engine to be used for the consistency check.
      * It sends a test query to the inference engine to
      * ensure that the engine works.
+     *
      * @param chosenEngine - string describing the inference engine to be used.
-     * @return true if there are no errors in setting the engine, false if 
-     *         errors are encountered
+     * @return true if there are no errors in setting the engine, false if
+     * errors are encountered
      */
     private boolean setInferenceEngine(String chosenEngine) {
 
@@ -150,12 +154,14 @@ public class CCheck implements Runnable {
     }
 
     /**
+     *
      */
     public String getKBName() {
         return kb.name;
     }
 
     /**
+     *
      */
     private KB makeEmptyKB() {
 
@@ -189,6 +195,7 @@ public class CCheck implements Runnable {
     }
 
     /**
+     *
      */
     private void printReport(Formula query, String processedQ,
                              String sourceFile, boolean syntaxError, String proof,
@@ -220,12 +227,12 @@ public class CCheck implements Runnable {
     }
 
     /**
-     * This method saves the answer and proof for detected redundancies 
+     * This method saves the answer and proof for detected redundancies
      * or inconsistencies into the file.
      *
-     * @param proof - the proof presented that establishes the 
-     *         redundancy or inconsistency
-     * @param query - the statement that caused the error
+     * @param proof    - the proof presented that establishes the
+     *                 redundancy or inconsistency
+     * @param query    - the statement that caused the error
      * @param testType - whether it is a redundancy or inconsistency
      */
     private void reportAnswer(String proof, Formula query, String testType,
@@ -262,14 +269,10 @@ public class CCheck implements Runnable {
      * file to inform the user that an error occurred while performing a
      * consistency check on one of the statements.
      *
-     * @param message
-     *            - error message
-     * @param query
-     *            - the formula being tested
-     * @param processedQ
-     *            - the processed query
-     * @param sourceFile
-     *            - the source file where the formula being tested came from
+     * @param message    - error message
+     * @param query      - the formula being tested
+     * @param processedQ - the processed query
+     * @param sourceFile - the source file where the formula being tested came from
      */
     private void reportError(String message, Formula query, String processedQ, String sourceFile) {
 
@@ -407,10 +410,8 @@ public class CCheck implements Runnable {
      * Picks the inference engine to use for the consistency check based on the
      * set-up inference engine.
      *
-     * @param empty
-     *            - the kb to be used for the check
-     * @param query
-     *            - the statement to be checked
+     * @param empty - the kb to be used for the check
+     * @param query - the statement to be checked
      * @return - the result of the query
      */
     private String askInferenceEngine(KB empty, String query) {
@@ -439,6 +440,7 @@ public class CCheck implements Runnable {
     }
 
     /**
+     *
      */
     @Override
     public void run() {

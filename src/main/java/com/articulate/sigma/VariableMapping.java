@@ -23,13 +23,13 @@ public class VariableMapping {
     String var1;
     String var2;
 
-    
+
     public VariableMapping(String v1, String v2) {
         var1 = v1;
         var2 = v2;
     }
 
-    
+
     public static List<Set<VariableMapping>> intersect(List<Set<VariableMapping>> mapList1,
                                                        List<Set<VariableMapping>> mapList2) {
 
@@ -52,7 +52,7 @@ public class VariableMapping {
         return intersection;
     }
 
-    
+
     public static List<Set<VariableMapping>> union(List<Set<VariableMapping>> mapList1,
                                                    List<Set<VariableMapping>> mapList2) {
 
@@ -72,7 +72,7 @@ public class VariableMapping {
         return union;
     }
 
-    
+
     private static Set<VariableMapping> unify(Set<VariableMapping> set1, Set<VariableMapping> set2) {
 
         Set<VariableMapping> result = new HashSet<VariableMapping>();
@@ -93,7 +93,7 @@ public class VariableMapping {
         return result;
     }
 
-    
+
     @Override
     public boolean equals(Object o) {
 
@@ -112,7 +112,7 @@ public class VariableMapping {
         return Objects.equals(var2, that.var2);
     }
 
-    
+
     @Override
     public int hashCode() {
 
@@ -121,7 +121,7 @@ public class VariableMapping {
         return result;
     }
 
-    
+
     @Override
     public String toString() {
 

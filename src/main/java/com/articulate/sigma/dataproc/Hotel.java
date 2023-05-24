@@ -34,21 +34,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ *
  */
 public class Hotel {
 
     public static final int geocodeLimit = 100;  // to avoid Google shutting us off
     /**
-     */
-    public static int geocodeCount = 0;
-    /**
-     */
-    public static int level = 0;
-    /**
      * Used by processOneXMLHotel and HotelXMLtoCSV to compile a list of the
      * columns that should appear in the resulting CSV file.
      */
     private static final TreeSet<String> hotelColumns = new TreeSet<String>();
+    /**
+     *
+     */
+    public static int geocodeCount = 0;
+    /**
+     *
+     */
+    public static int level = 0;
     public String oID = "";
     public String nID = "";
     public String taID = "";
@@ -101,6 +104,7 @@ public class Hotel {
     public HashMap<String, String> values = new HashMap<String, String>();
 
     /**
+     *
      */
     public static String asCSVHeader() {
 
@@ -117,6 +121,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static String printAllHotels(ArrayList<Hotel> hotels) {
 
@@ -129,6 +134,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static void printAllHotelAmenitySentiment(ArrayList<Hotel> hotels) {
 
@@ -388,7 +394,8 @@ public class Hotel {
 
     /**
      * Collect all possible column names and assign them a number, then sort
-     * on that frequency.  
+     * on that frequency.
+     *
      * @result a list of SUMO term names, sorted by frequency
      */
     public static ArrayList<String> generateSUMOHeader(ArrayList<Hotel> hotels) {
@@ -428,6 +435,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static ArrayList<String> generateSUMOColumns(Hotel h, ArrayList<String> SUMOheader) {
 
@@ -576,6 +584,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static ArrayList<Hotel> readCSVHotels(String fname) {
 
@@ -811,6 +820,7 @@ public class Hotel {
 
     /**
      * Read hotel review files
+     *
      * @return an ArrayList of Hotel
      */
     public static ArrayList<Hotel> parseAllHotelReviewFiles(String fname) {
@@ -846,6 +856,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static Hotel parseOneTHotelReviewFile(String fname) {
 
@@ -899,6 +910,7 @@ public class Hotel {
 
     /**
      * Read hotel review files
+     *
      * @param fname is the directory path where the reviews are
      * @return an ArrayList of Hotel
      */
@@ -937,6 +949,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static void matchHotels(Hotel feedHotel, Hotel reviewsHotel) {
 
@@ -969,6 +982,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static void mergeHotels(ArrayList<Hotel> feed, ArrayList<Hotel> reviews) {
 
@@ -984,8 +998,7 @@ public class Hotel {
 
     /**
      * @param feed is an ArrayList of Hotel containing the raw data
-     * about hotels
-     *
+     *             about hotels
      * @return a list of hotels expressed as a list of string values
      * for several fields and then a count of SUMO terms appearing in
      * the review for the given hotel
@@ -1042,8 +1055,7 @@ public class Hotel {
 
     /**
      * @param feed is an ArrayList of Hotel containing the raw data
-     * about hotels
-     *
+     *             about hotels
      * @return a list of hotels expressed as a list of string values
      * for several fields and then a count of SUMO terms appearing in
      * the review for the given hotel
@@ -1152,6 +1164,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static ArrayList<Hotel> readOXMLhotels(String fname) {
 
@@ -1257,6 +1270,7 @@ public class Hotel {
 
     /**
      * This routine adds elements to the parameter
+     *
      * @return the string index
      */
     public static int parseJSONElement(String s, int ind, JSONElement js) {
@@ -1300,6 +1314,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static Hotel convertJSON2Hotel(JSONElement js) {
 
@@ -1321,6 +1336,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static Hotel parseOneJSONReviewFile(String fname) {
 
@@ -1358,6 +1374,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static String normalizeSentiment(String value) {
 
@@ -1374,6 +1391,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static void writeHotelAsXML(Hotel h, PrintWriter pw) {
 
@@ -1408,8 +1426,8 @@ public class Hotel {
 
     /**
      * @param writeIncremental means that each hotel review will be
-     * processed and each spreadsheet line will be written after reading
-     * each hotel.
+     *                         processed and each spreadsheet line will be written after reading
+     *                         each hotel.
      */
     public static ArrayList<Hotel> readJSONHotels(String dir, boolean writeIncremental) {
 
@@ -1471,6 +1489,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static void hotelSentiment(ArrayList<Hotel> hotels) {
 
@@ -1526,6 +1545,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static void execJSON(String path) {
 
@@ -1537,6 +1557,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public static void main(String[] args) {
 
@@ -1584,6 +1605,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public String asCSV() {
 
@@ -1621,6 +1643,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public String toString() {
 
@@ -1643,6 +1666,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public void addConceptSentiment(HashMap<String, Integer> conceptSent) {
 
@@ -1660,6 +1684,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public void addAllSenses(HashMap<String, Integer> wnsenses) {
 
@@ -1674,6 +1699,7 @@ public class Hotel {
     }
 
     /**
+     *
      */
     public class JSONElement {
 
@@ -1682,6 +1708,7 @@ public class Hotel {
         ArrayList<JSONElement> subelements = new ArrayList<JSONElement>();
 
         /**
+         *
          */
         public String toString() {
 
@@ -1709,6 +1736,7 @@ public class Hotel {
         }
 
         /**
+         *
          */
         public JSONElement getElement(String key) {
 
@@ -1722,6 +1750,7 @@ public class Hotel {
         }
 
         /**
+         *
          */
         public String getElementValue(String key) {
 

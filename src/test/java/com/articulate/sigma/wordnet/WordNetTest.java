@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 public class WordNetTest extends UnitTestBase {
 
-    
+
     @Test
     public void testVerbRootFormGoing() {
 
@@ -21,7 +21,7 @@ public class WordNetTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    
+
     @Test
     public void testVerbRootFormDriving() {
 
@@ -30,7 +30,7 @@ public class WordNetTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    
+
     @Test
     public void testGetSingularFormGo() {
 
@@ -39,7 +39,7 @@ public class WordNetTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    
+
     @Test
     public void testGetSingularFormDrive() {
 
@@ -48,14 +48,14 @@ public class WordNetTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    
+
     @Test
     public void testIsValidKey() {
 
         assertTrue(WordNetUtilities.isValidKey("stick_together_VB_1"));
     }
 
-    
+
     @Test
     public void checkWordsToSenses() {
 
