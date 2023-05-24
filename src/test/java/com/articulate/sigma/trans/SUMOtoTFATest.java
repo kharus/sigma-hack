@@ -17,14 +17,8 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- *
- */
 public class SUMOtoTFATest extends UnitTestBase {
 
-    /**
-     *
-     */
     @BeforeClass
     public static void init() {
 
@@ -48,9 +42,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         SUMOtoTFAform.setNumericFunctionInfo();
     }
 
-    /**
-     *
-     */
     @Test
     public void testBuildConstraints() {
 
@@ -68,9 +59,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void test1() {
 
@@ -88,9 +76,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void test2() {
 
@@ -108,9 +93,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void test3() {
 
@@ -137,9 +119,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void test4() {
 
@@ -171,9 +150,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void test5() {
 
@@ -204,9 +180,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void test6() {
 
@@ -238,9 +211,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void test7() {
 
@@ -266,9 +236,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Ignore // includes ListFn
     @Test
     public void test8() {
@@ -329,9 +296,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void test9() {
 
@@ -355,9 +319,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testElimLogops() {
 
@@ -388,9 +349,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertTrue(fExpected.deepEquals(fActual));
     }
 
-    /**
-     *
-     */
     @Test
     public void testTemporalComp() {
 
@@ -413,9 +371,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testBigNumber() {
 
@@ -438,9 +393,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testNumber() {
 
@@ -464,9 +416,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testMostSpecific() {
 
@@ -474,9 +423,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals("RealNumber", SUMOtoTFAform.mostSpecificType(Arrays.asList("RealNumber", "LengthMeasure")));
     }
 
-    /**
-     *
-     */
     @Test
     public void testTemporalComp2() {
 
@@ -499,9 +445,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testCeiling() {
 
@@ -526,9 +469,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Ignore // contains ListFn
     @Test
     public void testInList() {
@@ -554,9 +494,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Ignore // contains ListFn
     @Test
     public void testLeastCommon() {
@@ -580,9 +517,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testMult() {
 
@@ -604,9 +538,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testDay() {
 
@@ -628,9 +559,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testExponent() {
 
@@ -651,9 +579,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testInstance() {
 
@@ -676,9 +601,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testRadian() {
 
@@ -703,9 +625,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testFloor() {
 
@@ -729,9 +648,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testPrime() {
 
@@ -756,9 +672,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Ignore // requires loading a new kif file
     @Test
     public void testAvgWork() {
@@ -792,9 +705,6 @@ public class SUMOtoTFATest extends UnitTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testComposeSuffix() {
 

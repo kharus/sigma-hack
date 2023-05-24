@@ -37,9 +37,6 @@ public class SUMOKBtoTPTPKB {
 
     public SUMOKBtoTPTPKB() {}
 
-    /**
-     *
-     */
     public static String langToExtension(String l) {
 
         if (l.equals("fof"))
@@ -81,18 +78,12 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    /**
-     *
-     */
     public String getSanitizedKBname() {
 
         String sanitizedKBName = kb.name.replaceAll("\\W", "_");
         return sanitizedKBName;
     }
 
-    /**
-     *
-     */
     public String getInfFilename() {
 
         String sanitizedKBName = getSanitizedKBname();
@@ -101,9 +92,6 @@ public class SUMOKBtoTPTPKB {
         return filename;
     }
 
-    /**
-     *
-     */
     public String copyFile(String fileName) {
 
         String outputPath = "";
@@ -180,9 +168,6 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    /**
-     *
-     */
     public void writeHeader(PrintWriter pw, String sanitizedKBName) {
         if (pw != null) {
             pw.println("% Articulate Software");
@@ -357,9 +342,6 @@ public class SUMOKBtoTPTPKB {
         return pass;
     }
 
-    /**
-     *
-     */
     public boolean filterAxiom(Formula form, String tptp, PrintWriter pw) {
 
         //----Don't output ""ed ''ed and numbers
@@ -391,9 +373,6 @@ public class SUMOKBtoTPTPKB {
         }
     }
 
-    /**
-     *
-     */
     public class OrderedFormulae extends TreeSet<Formula> {
 
         public int compare(Object o1, Object o2) {

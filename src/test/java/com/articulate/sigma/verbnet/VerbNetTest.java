@@ -13,10 +13,6 @@ import static org.junit.Assert.assertTrue;
 
 public class VerbNetTest extends IntegrationTestBase {
 
-
-    /**
-     *
-     */
     @Test
     public void testTerm() {
 
@@ -28,9 +24,6 @@ public class VerbNetTest extends IntegrationTestBase {
         assertFalse(StringUtil.emptyString(verbs));
     }
 
-    /**
-     *
-     */
     @Test
     public void testWordList() {
 

@@ -50,9 +50,6 @@ public class Clausifier {
     private static final int GENSYM_COUNTER = 0;
     private Formula thisFormula = null;
 
-    /**
-     *
-     */
     public Clausifier(String s) {
 
         thisFormula = new Formula();
@@ -574,9 +571,6 @@ public class Clausifier {
      }
      */
 
-    /**
-     *
-     */
     private static void testRemoveImpEq() {
 
         System.out.println();
@@ -611,9 +605,6 @@ public class Clausifier {
         System.out.println();
     }
 
-    /**
-     *
-     */
     private static void testMoveQuantifiersLeft() {
 
         System.out.println();
@@ -664,9 +655,6 @@ public class Clausifier {
     */
     }
 
-    /**
-     *
-     */
     private static void testMoveNegationIn() {
 
         System.out.println();
@@ -733,9 +721,6 @@ public class Clausifier {
 
     }
 
-    /**
-     *
-     */
     private static void testStandardizeVariables() {
 
         System.out.println();
@@ -756,9 +741,6 @@ public class Clausifier {
         */
     }
 
-    /**
-     *
-     */
     private static void testSkolemization() {
 
         System.out.println();
@@ -770,9 +752,6 @@ public class Clausifier {
         System.out.println();
     }
 
-    /**
-     *
-     */
     private static void testDistribute() {
 
         System.out.println();
@@ -804,9 +783,6 @@ public class Clausifier {
         System.out.println();
     }
 
-    /**
-     *
-     */
     private static void testClausificationSteps(String s) {
 
         System.out.println();
@@ -858,18 +834,12 @@ public class Clausifier {
         System.out.println("after separation: " + forms);
     }
 
-    /**
-     *
-     */
     private static void testClausification() {
 
         //testClausificationSteps("((((![X]:a(X))|b(X))|(?[X]:(?[Y]:p(X,f(Y)))))<=>q(g(a),X))");
         testClausificationSteps("(![Fluent]:(![Time]:(((holdsAt(Fluent, Time)&(~releasedAt(Fluent, plus(Time, n1))))&(~(?[Event]:(happens(Event, Time)&terminates(Event, Fluent, Time)))))=>holdsAt(Fluent, plus(Time, n1)))))).");
     }
 
-    /**
-     *
-     */
     private static void testClausificationSimple() {
 
         System.out.println();
@@ -892,9 +862,6 @@ public class Clausifier {
         System.out.println(result);
     }
 
-    /**
-     *
-     */
     public static void main(String[] args) {
 
         //testRemoveImpEq();
@@ -908,9 +875,6 @@ public class Clausifier {
         //testClausifier(args);
     }
 
-    /**
-     *
-     */
     public String toString() {
 
         return thisFormula.getFormula();

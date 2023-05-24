@@ -37,9 +37,6 @@ public class PredVarInstTest extends UnitTestBase {
 
     private static final String stmt3 = "(=> (instance ?R TransitiveRelation) (=> (and (?R ?A ?B) (?R ?B ?C)) (?R ?A ?C)))";
 
-    /**
-     *
-     */
     @Test
     public void testGatherPredVarsStmt1() {
 
@@ -57,9 +54,6 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
     @Test
     public void testGatherPredVarsStmt2() {
 
@@ -77,9 +71,6 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
     @Test
     public void testGatherPredVarsStmt3() {
 
@@ -97,9 +88,6 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
     @Test
     public void testInstantiatePredStmt2() {
 
@@ -117,9 +105,6 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
     @Test
     public void testInstantiatePredStmt3() {
 
@@ -144,9 +129,6 @@ public class PredVarInstTest extends UnitTestBase {
         assertTrue(actual.size() > 100);
     }
 
-    /**
-     *
-     */
     @Test
     public void testPredVarArity() {
 
@@ -176,9 +158,6 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(2, PredVarInst.predVarArity.get("?REL").intValue());
     }
 
-    /**
-     *
-     */
     @Test
     public void testPredVarArity2() {
 
@@ -208,9 +187,6 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expectedArity, arity);
     }
 
-    /**
-     *
-     */
     @Test
     public void testTVRPredVars() {
 
@@ -246,9 +222,6 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     *
-     */
     @Test
     public void testTVRArity() {
 
@@ -286,9 +259,6 @@ public class PredVarInstTest extends UnitTestBase {
         assertEquals(expected, arity);
     }
 
-    /**
-     *
-     */
     @Test
     public void testTVRTypes() {
 
@@ -331,10 +301,6 @@ public class PredVarInstTest extends UnitTestBase {
         assertTrue(types.contains("Predicate"));
     }
 
-
-    /**
-     *
-     */
     @Test
     public void testPredVarCount() {
 
@@ -354,9 +320,6 @@ public class PredVarInstTest extends UnitTestBase {
         assertTrue(predVars.contains("?REL1") && predVars.contains("?REL2") && predVars.size() == 2);
     }
 
-    /**
-     *
-     */
     @Test
     public void testArity() {
 

@@ -11,9 +11,6 @@ import static org.junit.Assert.*;
 
 public class KBTest extends UnitTestBase {
 
-    /**
-     *
-     */
     @Test
     public void testMostSpecificTerm() {
 
@@ -22,9 +19,6 @@ public class KBTest extends UnitTestBase {
         assertEquals("RealNumber", t);
     }
 
-    /**
-     *
-     */
     @Test
     public void testAskWithTwoRestrictionsDirect1() {
 
@@ -54,17 +48,11 @@ public class KBTest extends UnitTestBase {
         assertEquals(0, actual.size());
     }
 
-    /**
-     *
-     */
     @Test
     public void testIsSubclass2() {
         assertTrue(SigmaTestBase.kb.isSubclass("Driving", "Process"));
     }
 
-    /**
-     *
-     */
     @Test
     public void testRemoveSuperClassesEmptyInput() {
 
@@ -74,9 +62,6 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
     @Test
     public void testRemoveSuperClassesOneElementInput() {
 
@@ -86,9 +71,6 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
     @Test
     public void testRemoveSuperClassesTwoElementIdenticalInput1() {
 
@@ -98,9 +80,6 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
     @Test
     public void testRemoveSuperClassesTwoElementIdenticalInput2() {
 
@@ -110,9 +89,6 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
     @Test
     public void testRemoveSuperClassesTwoElementIdenticalInput3() {
 
@@ -122,9 +98,6 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
     @Test
     public void testRemoveSuperClassesTwoElementInput() {
 
@@ -134,9 +107,6 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
     @Test
     public void testRemoveSuperClassesTwoElementInputReverse() {
 
@@ -146,9 +116,6 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
     @Test
     public void testRemoveSuperClassesTwoElementInputNoSubclass() {
 
@@ -158,9 +125,6 @@ public class KBTest extends UnitTestBase {
         assertEquals(expectedSet, actualSet);
     }
 
-    /**
-     *
-     */
     @Test
     public void testRemoveSuperClassesFiveElementInput() {
 

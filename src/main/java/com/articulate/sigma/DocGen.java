@@ -503,9 +503,6 @@ public class DocGen {
         return StringUtil.isNonEmptyString(s);
     }
 
-    /**
-     *
-     */
     public static void main(String[] args) {
 
         String status = "";
@@ -796,9 +793,6 @@ public class DocGen {
         return onto;
     }
 
-    /**
-     *
-     */
     public KB getKB() {
         return this.kb;
     }
@@ -5831,9 +5825,6 @@ public class DocGen {
         return elems;
     }
 
-    /**
-     *
-     */
     protected ArrayList getSyntacticExtensionTerms(KB kb,
                                                    String term,
                                                    int targetArgnum,
@@ -5892,9 +5883,6 @@ public class DocGen {
         return result;
     }
 
-    /**
-     *
-     */
     protected ArrayList getSyntacticUnionTerms(KB kb, String term, int targetArgnum) {
 
         ArrayList result = null;
@@ -5922,9 +5910,6 @@ public class DocGen {
         return result;
     }
 
-    /**
-     *
-     */
     protected ArrayList getSyntacticCompositeTerms(KB kb, String term, int targetArgnum) {
 
         ArrayList result = null;
@@ -5952,9 +5937,6 @@ public class DocGen {
         return result;
     }
 
-    /**
-     *
-     */
     protected String getClosestXmlDataType(KB kb, String term) {
 
         String xmlType = null;
@@ -5972,9 +5954,6 @@ public class DocGen {
         return xmlType;
     }
 
-    /**
-     *
-     */
     protected String getFirstDatatype(KB kb, String term) {
 
         String dtype = null;
@@ -5991,9 +5970,6 @@ public class DocGen {
         return dtype;
     }
 
-    /**
-     *
-     */
     protected ArrayList getDatatypeTerms(KB kb, String term, int targetArgnum) {
 
         ArrayList result = null;
@@ -6014,9 +5990,6 @@ public class DocGen {
         return result;
     }
 
-    /**
-     *
-     */
     protected boolean isDataType(KB kb, String term) {
 
         boolean ans = false;
@@ -6038,9 +6011,6 @@ public class DocGen {
         return ans;
     }
 
-    /**
-     *
-     */
     public String getTermPresentationName(KB kb, String term) {
 
         String name = term;
@@ -6056,18 +6026,12 @@ public class DocGen {
         return name;
     }
 
-    /**
-     *
-     */
     public String getTermPresentationName(KB kb,
                                           String namespace,
                                           String term) {
         return getTermPresentationName(kb, namespace, term, false);
     }
 
-    /**
-     *
-     */
     public String getTermPresentationName(KB kb,
                                           String namespace,
                                           String term,
@@ -6208,9 +6172,6 @@ public class DocGen {
         }
     }
 
-    /**
-     *
-     */
     public String getTermNamespace(KB kb, String term) {
 
         String result = "";

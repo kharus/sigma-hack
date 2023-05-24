@@ -17,9 +17,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestBase {
 
-    /**
-     *
-     */
     public void test(String label, String stmt, String expected) {
 
         System.out.println("=============================");
@@ -43,9 +40,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
         assertEquals(expectedTPTP, actualTPTP);
     }
 
-    /**
-     *
-     */
     @Test
     public void testAddTypeRestrictions1() {
 
@@ -65,9 +59,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
         test("testAddTypeRestrictions1", stmt, expected);
     }
 
-    /**
-     *
-     */
     @Test
     public void testAddTypeRestrictions2() {
 
@@ -101,9 +92,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
         test("testAddTypeRestrictions2", stmt, expected);
     }
 
-    /**
-     *
-     */
     @Test
     public void testAddTypeRestrictions3() {
 
@@ -147,9 +135,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
         test("testAddTypeRestrictions3()", stmt, expected);
     }
 
-    /**
-     *
-     */
     @Test
     public void testAddTypeRestrictions4() {
 
@@ -172,9 +157,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
         test("testAddTypeRestrictions4()", stmt, expected);
     }
 
-    /**
-     *
-     */
     @Test
     public void testAddTypeRestrictions5() {
 
@@ -213,9 +195,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
         test("testAddTypeRestrictions5", stmt, expected);
     }
 
-    /**
-     *
-     */
     @Ignore  // serviceFee is in Financial ontology not merge or MILO
     @Test
     public void testAddTypeRestrictions6() {
@@ -246,9 +225,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
         test("testAddTypeRestrictions6", stmt, expected);
     }
 
-    /**
-     *
-     */
     @Test
     public void testAddTypeRestrictions7() {
 
@@ -273,9 +249,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
         test("testAddTypeRestrictions7", stmt, expected);
     }
 
-    /**
-     *
-     */
     @Ignore
     @Test
     public void testAddTypeRestrictions8() {
@@ -330,9 +303,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
         test("testAddTypeRestrictions8", stmt, expected);
     }
 
-    /**
-     *
-     */
     @Ignore
     @Test
     public void testAddTypeRestrictions9() {
@@ -356,9 +326,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
         test("testAddTypeRestrictions9", stmt, expected);
     }
 
-    /**
-     *
-     */
     @Test
     public void testAddTypeRestrictions10() {
 
@@ -385,9 +352,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
         test("testAddTypeRestrictions10", stmt, expected);
     }
 
-    /**
-     *
-     */
     @Test
     public void testAddTypeRestrictions11() {
 
@@ -414,9 +378,6 @@ public class FormulaPreprocessorAddTypeRestrictionsTest extends IntegrationTestB
         test("testAddTypeRestrictions11", stmt, expected);
     }
 
-    /**
-     *
-     */
     @Ignore
     @Test
     public void testAddTypeRestrictions12() {

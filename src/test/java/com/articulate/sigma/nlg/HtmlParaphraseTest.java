@@ -979,9 +979,6 @@ public class HtmlParaphraseTest extends UnitTestBase {
         assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
     }
 
-    /**
-     *
-     */
     @Test
     public void testHumanTravels() {
         String stmt = "(exists (?he ?event)\n" +

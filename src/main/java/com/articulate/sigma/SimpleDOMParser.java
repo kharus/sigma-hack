@@ -28,9 +28,6 @@ public class SimpleDOMParser {
     private SimpleElement currentElement;
     private boolean skipProlog = true;
 
-    /**
-     *
-     */
     public SimpleDOMParser() {
 
         elements = new Stack();
@@ -92,9 +89,6 @@ public class SimpleDOMParser {
         return input;
     }
 
-    /**
-     *
-     */
     public static void main(String[] args) {
 
         SimpleDOMParser sdp = new SimpleDOMParser();
@@ -128,9 +122,6 @@ public class SimpleDOMParser {
         skipProlog = b;
     }
 
-    /**
-     *
-     */
     public SimpleElement parse(Reader reader) throws IOException {
 
         this.reader = reader;
@@ -244,9 +235,6 @@ public class SimpleDOMParser {
         }
     }
 
-    /**
-     *
-     */
     private int peek() throws IOException {
 
         reader.mark(1);
@@ -256,9 +244,6 @@ public class SimpleDOMParser {
         return result;
     }
 
-    /**
-     *
-     */
     private void peek(int[] buffer) throws IOException {
 
         reader.mark(buffer.length);
@@ -268,9 +253,6 @@ public class SimpleDOMParser {
         reader.reset();
     }
 
-    /**
-     *
-     */
     private void skipWhitespace() throws IOException {
 
         while (Character.isWhitespace((char) peek())) {
@@ -278,9 +260,6 @@ public class SimpleDOMParser {
         }
     }
 
-    /**
-     *
-     */
     private void skipProlog() throws IOException {
 
         reader.skip(2);                        // skip "<?" or "<!"
@@ -296,9 +275,6 @@ public class SimpleDOMParser {
         }
     }
 
-    /**
-     *
-     */
     private void skipPrologs() throws IOException {
 
         while (true) {
@@ -314,9 +290,6 @@ public class SimpleDOMParser {
         }
     }
 
-    /**
-     *
-     */
     private String readTag() throws IOException {
 
         //skipWhitespace();
@@ -340,9 +313,6 @@ public class SimpleDOMParser {
         return sb.toString();
     }
 
-    /**
-     *
-     */
     private String readText() throws IOException {
 
         StringBuffer sb = new StringBuffer();
@@ -366,9 +336,6 @@ public class SimpleDOMParser {
         return sb.toString();
     }
 
-    /**
-     *
-     */
     private boolean compareIntArrays(int[] a1, int[] a2) {
 
         if (a1.length != a2.length)

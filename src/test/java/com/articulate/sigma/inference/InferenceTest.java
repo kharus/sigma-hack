@@ -26,9 +26,6 @@ public class InferenceTest {
     @Parameterized.Parameter(value = 0)
     public String fInput;
 
-    /**
-     *
-     */
     @BeforeClass
     public static void setKB() {
 
@@ -44,9 +41,6 @@ public class InferenceTest {
         }
     }
 
-    /**
-     *
-     */
     @Parameterized.Parameters(name = "{0}")
     public static <T> Collection<T> prepare() {
 
@@ -60,9 +54,6 @@ public class InferenceTest {
                 excludeTestsList, enableExcludeTestsList);
     }
 
-    /**
-     *
-     */
     public static <T> Collection<T> getTestFiles(String testDataDirectoryPath,
                                                  ArrayList<String> includeTestsList, boolean enableIncludeTestsList,
                                                  ArrayList<String> excludeTestsList, boolean enableExcludeTestsList) {
@@ -97,9 +88,6 @@ public class InferenceTest {
         return result;
     }
 
-    /**
-     *
-     */
     @Test
     public void test() {
 
