@@ -384,7 +384,7 @@ public class WordNet implements Serializable {
         }
     }
 
-    
+
     public static boolean serializedExists() {
 
         File serfile = new File(baseDir + File.separator + "wn.ser");
@@ -545,7 +545,7 @@ public class WordNet implements Serializable {
         return synsetList;
     }
 
-    
+
     private static boolean arrayContains(int[] ar, int value) {
 
         //System.out.println("INFO in WordNet.arrayContains: value: " + value);
@@ -579,7 +579,7 @@ public class WordNet implements Serializable {
         return "[" + word + "]";
     }
 
-    
+
     private static String multipleMappingToProlog(String term) {
 
         if (term.indexOf("&%") < 0)
@@ -637,7 +637,7 @@ public class WordNet implements Serializable {
         System.out.println("Info in WordNet.testProcessPointers(): synset: " + WordNet.wn.verbSynsetHash.get("roll"));
     }
 
-    
+
     public static void checkWordsToSenses() {
 
         try {
@@ -658,7 +658,7 @@ public class WordNet implements Serializable {
         System.out.println("craft " + wn.wordsToSenseKeys.get("craft"));
     }
 
-    
+
     public static void getEntailments() {
 
         try {
@@ -682,7 +682,7 @@ public class WordNet implements Serializable {
         }
     }
 
-    
+
     public static void showHelp() {
 
         System.out.println("Semantic Rewriting with SUMO, Sigma and E");
@@ -715,7 +715,7 @@ public class WordNet implements Serializable {
         return multiWords;
     }
 
-    
+
     private void makeFileMap() {
 
         wnFilenames.put("noun_mappings", "WordNetMappings30-noun.txt");
@@ -937,7 +937,7 @@ public class WordNet implements Serializable {
         }
     }
 
-    
+
     private void addSUMOMapping(String SUMO, String synset) {
 
         SUMO = SUMO.trim();
@@ -1069,7 +1069,7 @@ public class WordNet implements Serializable {
         }
     }
 
-    
+
     protected void setMaxNounSynsetID(String synset) {
 
         //System.out.println("WordNet.setMaxNounSynsetID(): " + synset);
@@ -1077,14 +1077,14 @@ public class WordNet implements Serializable {
             maxNounSynsetID = synset;
     }
 
-    
+
     protected void setMaxVerbSynsetID(String synset) {
 
         if (WordNetUtilities.isValidSynset8(synset))
             maxVerbSynsetID = synset;
     }
 
-    
+
     protected boolean processNounLine(String line) {
 
         // 6: p = Pattern.compile("^([0-9]{8})([\\S\\s]+)\\|\\s([\\S\\s]+?)\\s(\\(?\\&\\%\\S+[\\S\\s]+)$");
@@ -1440,7 +1440,7 @@ public class WordNet implements Serializable {
         }
     }
 
-    
+
     public void readStopWords() {
 
         System.out.println("INFO in WordNet.readStopWords(): Reading stop words");
@@ -2503,7 +2503,7 @@ public class WordNet implements Serializable {
         return result;
     }
 
-    
+
     public ArrayList<String> getWordsFromSynset(String synset) {
 
         return WordNet.wn.synsetsToWords.get(synset);
@@ -2717,7 +2717,7 @@ public class WordNet implements Serializable {
         return displaySynset(sumokbname, POS + synset, params);
     }
 
-    
+
     private SimpleElement toXML() {
 
         SimpleElement top = new SimpleElement("wordnet");
@@ -2785,7 +2785,7 @@ public class WordNet implements Serializable {
         return top;
     }
 
-    
+
     public void writeXML() {
 
         FileWriter fw = null;
@@ -3025,7 +3025,7 @@ public class WordNet implements Serializable {
         }
     }
 
-    
+
     public void writeProlog(KB kb) {
 
         FileWriter fw = null;
@@ -3055,7 +3055,7 @@ public class WordNet implements Serializable {
         }
     }
 
-    
+
     public String senseKeyPOS(String senseKey) {
 
         if (StringUtil.emptyString(senseKey))
@@ -3067,7 +3067,7 @@ public class WordNet implements Serializable {
         return senseKey.substring(underscore1 + 1, underscore2);
     }
 
-    
+
     private String senseKeySenseNum(String senseKey) {
 
         if (senseKey == null) return "";
@@ -3102,7 +3102,7 @@ public class WordNet implements Serializable {
         return -1;
     }
 
-    
+
     private String processWordForProlog(String word) {
 
         String result = word;
@@ -3175,7 +3175,7 @@ public class WordNet implements Serializable {
         }
     }
 
-    
+
     public void writeWordNetHyp() {
 
         FileWriter fw = null;
@@ -3239,7 +3239,7 @@ public class WordNet implements Serializable {
         return doc;
     }
 
-    
+
     public void writeWordNetG() {
 
         FileWriter fw = null;
@@ -3293,7 +3293,7 @@ public class WordNet implements Serializable {
         }
     }
 
-    
+
     public void writeWordNetProlog() throws IOException {
 
         writeWordNetS();
@@ -3375,7 +3375,7 @@ public class WordNet implements Serializable {
         return synsetID;
     }
 
-    
+
     private String createNewSenseIndexKey(String base) {
 
         char num = '1';

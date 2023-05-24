@@ -129,7 +129,7 @@ public class KBcache implements Serializable {
     // each pair of relations as rel1\trel2
     public HashSet<String> disjointRelations = new HashSet<>();
     public boolean initialized = false;
-    
+
     private HashSet<String> visited = new HashSet<>();
 
     /**
@@ -139,7 +139,7 @@ public class KBcache implements Serializable {
 
     }
 
-    
+
     public KBcache(KB kbin) {
 
         relations = new HashSet<String>(kbin.getCountTerms() / 3, (float) 0.75);
@@ -161,7 +161,7 @@ public class KBcache implements Serializable {
         this.kb = kbin;
     }
 
-    
+
     public KBcache(KBcache kbCacheIn, KB kbIn) {
 
         this.kb = kbIn;
@@ -273,7 +273,7 @@ public class KBcache implements Serializable {
                 ar.add(st);
     }
 
-    
+
     public static void showState(KBcache nkbc) {
 
         System.out.println("-------------- relations ----------------");
@@ -352,7 +352,7 @@ public class KBcache implements Serializable {
             System.out.println(inst + ": " + nkbc.instances.get(inst));
     }
 
-    
+
     public static void showAll(KBcache nkbc) {
 
         System.out.println("KBcache.showAll(): transRels: " + nkbc.transRels);
@@ -366,7 +366,7 @@ public class KBcache implements Serializable {
         System.out.println("KBcache.showAll(): FormOfGovernment: " + nkbc.getInstancesForType("FormOfGovernment"));
     }
 
-    
+
     public static void showChildren(KBcache nkbc) {
 
         String term = "Integer";
@@ -436,7 +436,7 @@ public class KBcache implements Serializable {
         System.out.println("KBcache.showSizes(): disjointRelations size: " + nkbc.disjointRelations.size());
     }
 
-    
+
     public static void printHelp() {
 
         System.out.println("Sigma Knowledge Engineering Environment: KBcache");
@@ -448,7 +448,7 @@ public class KBcache implements Serializable {
         System.out.println("  -t - show complete sTate of cache");
     }
 
-    
+
     public static void main(String[] args) {
 
         if (args == null) {
@@ -601,7 +601,7 @@ public class KBcache implements Serializable {
         return false;
     }
 
-    
+
     public void addInstance(String child, String parent) {
 
         HashSet<String> is = instances.get(parent);
@@ -712,7 +712,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    
+
     public void buildDisjointRelationsMap() {
 
         HashSet<String> pairs = new HashSet<>();
@@ -1039,7 +1039,7 @@ public class KBcache implements Serializable {
         return mostSpecificParent(p1);
     }
 
-    
+
     public String getCommonChild(HashSet<String> t2) {
 
         String common = "Entity";
@@ -1187,7 +1187,7 @@ public class KBcache implements Serializable {
         return instancesForType2;
     }
 
-    
+
     public ArrayList<String> getSignature(String rel) {
 
         return signatures.get(rel);
@@ -1280,7 +1280,7 @@ public class KBcache implements Serializable {
         }
     }
 
-    
+
     public void buildFunctionsSet() {
 
         for (String s : relations)

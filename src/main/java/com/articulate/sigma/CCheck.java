@@ -32,7 +32,7 @@ public class CCheck implements Runnable {
     private HashMap<String, String> ieSettings;
     private int timeOut = 10;
 
-    
+
     public CCheck(KB kb, String filename) {
 
         this.kb = kb;
@@ -46,7 +46,7 @@ public class CCheck implements Runnable {
         }
     }
 
-    
+
     public CCheck(KB kb, String fileName, String chosenEngine, int timeout) throws Exception {
 
         this(kb, fileName);
@@ -59,7 +59,7 @@ public class CCheck implements Runnable {
         }
     }
 
-    
+
     public CCheck(KB kb, String fileName, String chosenEngine, String systemChosen, String quietFlag,
                   String location, String language, int timeout) throws Exception {
 
@@ -147,12 +147,12 @@ public class CCheck implements Runnable {
         }
     }
 
-    
+
     public String getKBName() {
         return kb.name;
     }
 
-    
+
     private KB makeEmptyKB() {
 
         ccheck_kb = "CCheck_" + kb.name;
@@ -184,7 +184,7 @@ public class CCheck implements Runnable {
         return empty;
     }
 
-    
+
     private void printReport(Formula query, String processedQ,
                              String sourceFile, boolean syntaxError, String proof,
                              String testType) {
@@ -427,7 +427,7 @@ public class CCheck implements Runnable {
         return result;
     }
 
-    
+
     @Override
     public void run() {
         runConsistencyCheck();

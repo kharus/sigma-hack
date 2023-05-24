@@ -193,7 +193,7 @@ public class FormulaPreprocessor {
         return pass;
     }
 
-    
+
     public static void testFindTypes() {
 
         System.out.println("------------------------------------");
@@ -240,7 +240,7 @@ public class FormulaPreprocessor {
         System.out.println("Explicit types: " + fp.findExplicitTypesInAntecedent(kb, f));
     }
 
-    
+
     public static void testFindExplicit() {
 
         System.out.println("------------------------------------");
@@ -262,7 +262,7 @@ public class FormulaPreprocessor {
         System.out.println("Explicit types: " + fp.findExplicitTypesInAntecedent(kb, f));
     }
 
-    
+
     public static void testAddTypes() {
 
         System.out.println("------------------------------------");
@@ -296,7 +296,7 @@ public class FormulaPreprocessor {
         System.out.println(fp.addTypeRestrictions(f, kb));
     }
 
-    
+
     public static void testOne() {
 
         System.out.println("------------------------------------");
@@ -322,7 +322,7 @@ public class FormulaPreprocessor {
         System.out.println(fp.preProcess(f, false, kb));
     }
 
-    
+
     public static void testTwo() {
 
         System.out.println("------------------------------------");
@@ -339,7 +339,7 @@ public class FormulaPreprocessor {
         System.out.println("testTwo(): equality: " + fp.preProcess(f, false, kb));
     }
 
-    
+
     public static void testThree() {
 
         System.out.println("------------------------------------");
@@ -370,7 +370,7 @@ public class FormulaPreprocessor {
         System.out.println("testThree(): " + fp.preProcess(f, false, kb));
     }
 
-    
+
     public static void testFour() {
 
         System.out.println("------------------------------------");
@@ -396,7 +396,7 @@ public class FormulaPreprocessor {
         System.out.println("testFour(): " + fp.addTypeRestrictions(f, kb));
     }
 
-    
+
     public static void testFive() {
 
         System.out.println("------------------------------------");
@@ -413,7 +413,7 @@ public class FormulaPreprocessor {
         System.out.println("testFive(): equality: " + fp.preProcess(f, false, kb));
     }
 
-    
+
     public static void test6() {
 
         System.out.println("------------------------------------");
@@ -437,7 +437,7 @@ public class FormulaPreprocessor {
         System.out.println("test6(): " + fp.preProcess(f, false, kb));
     }
 
-    
+
     public static void main(String[] args) {
 
         //testOne();
@@ -463,7 +463,7 @@ public class FormulaPreprocessor {
         return kb.kbCache.signatures.get(pred);
     }
 
-    
+
     private boolean hasFormulaType(Formula form,
                                    HashMap<String, HashSet<String>> varmap) {
 
@@ -552,7 +552,7 @@ public class FormulaPreprocessor {
         return varmap;
     }
 
-    
+
     public HashMap<String, HashSet<String>> findAllTypeRestrictions(Formula form, KB kb) {
 
         if (debug) System.out.println("findAllTypeRestrictions: form \n" + form);

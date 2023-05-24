@@ -50,7 +50,7 @@ public class WSD {
         return result;
     }
 
-    
+
     public static boolean polysemous(String word) {
 
         ArrayList<String> values = WordNet.wn.wordsToSenseKeys.get(word);
@@ -59,7 +59,7 @@ public class WSD {
         return values.size() != 1;
     }
 
-    
+
     public static boolean polysemous(String word, int pos) {
 
         ArrayList<String> values = WordNet.wn.wordsToSenseKeys.get(word);
@@ -506,7 +506,7 @@ public class WSD {
         return "";
     }
 
-    
+
     public static String getBestDefaultSense(String word) {
 
         return getBestDefaultSenseWithDomain(word, "");
@@ -824,7 +824,7 @@ public class WSD {
             System.out.println("INFO in WSD.testSentenceWSD(): word: " + s + " SUMO: " + WSD.getBestDefaultSUMO(s));
     }
 
-    
+
     public static void interactive() {
 
         BufferedReader d = new BufferedReader(new InputStreamReader(System.in));

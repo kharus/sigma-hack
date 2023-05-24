@@ -379,7 +379,7 @@ public class LanguageFormatter {
         return result;
     }
 
-    
+
     public static void test1() {
 
         try {
@@ -398,7 +398,7 @@ public class LanguageFormatter {
         System.out.println();
     }
 
-    
+
     public static void test2() {
 
         try {
@@ -464,7 +464,7 @@ public class LanguageFormatter {
         System.out.println();
     }
 
-    
+
     public static void test3() {
 
         try {
@@ -499,7 +499,7 @@ public class LanguageFormatter {
                 kb.getTermFormatMap("EnglishLanguage"), kb, "EnglishLanguage") + "\n";
     }
 
-    
+
     public static void showHelp() {
 
         System.out.println("Language generation ");
@@ -533,7 +533,7 @@ public class LanguageFormatter {
         doInformalNLG = doIt;
     }
 
-    
+
     private void init() {
 
         // Get special versions of variable maps.
@@ -985,7 +985,7 @@ public class LanguageFormatter {
         return "";
     }
 
-    
+
     public String generateFormalNaturalLanguage(List<String> args, String pred, boolean isNegMode) {
 
         if (args.isEmpty())

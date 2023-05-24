@@ -185,7 +185,7 @@ public class ProofProcessor {
         return (result.toString());
     }
 
-    
+
     public static void testRemoveAnswer() {
 
         String stmt = "(not (exists (?VAR1) (and (subclass ?VAR1 Object) " +
@@ -255,7 +255,7 @@ public class ProofProcessor {
         }
     }
 
-    
+
     public static void testFormatProof() {
 
         try {
@@ -275,7 +275,7 @@ public class ProofProcessor {
         }
     }
 
-    
+
     public static void testFormatProof2(String filename) {
 
         try {
@@ -294,7 +294,7 @@ public class ProofProcessor {
         }
     }
 
-    
+
     public static void showHelp() {
 
         System.out.println("ProofProcessor class");

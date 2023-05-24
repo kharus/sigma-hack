@@ -43,7 +43,7 @@ public class LEO {
     public StringBuffer qlist = null; // quantifier list in order for answer extraction
     public ArrayList<String> output = new ArrayList<>();
 
-    
+
     private static String[] createCommandList(File executable, int timeout, File kbFile) {
 
         String opts = "";
@@ -113,7 +113,7 @@ public class LEO {
         return allAdded;
     }
 
-    
+
     public static void main(String[] args) throws Exception {
 
         KBmanager.getMgr().initializeOnce();
@@ -161,7 +161,7 @@ public class LEO {
 
     }
 
-    
+
     public String toString() {
 
         StringBuffer sb = new StringBuffer();
@@ -242,7 +242,7 @@ public class LEO {
         }
     }
 
-    
+
     public void catFiles(String f1, String f2, String fout) throws Exception {
 
         System.out.println("catFiles(): concatenating " + f1 + " and " + f2 + " into " + fout);
@@ -265,7 +265,7 @@ public class LEO {
         pw.close();
     }
 
-    
+
     public List<String> getUserAssertions(KB kb) {
 
         String userAssertionTPTP = kb.name + KB._userAssertionsTHF;

@@ -66,7 +66,7 @@ public class SInE extends InferenceEngine {
     Map<String, List<String>> requirements;
     EngineFactory underlyingEngineFactory;
 
-    
+
     private SInE(String kbFileName, EngineFactory ef) throws Exception {
 
         underlyingEngineFactory = ef;
@@ -109,12 +109,12 @@ public class SInE extends InferenceEngine {
         }
     }
 
-    
+
     private SInE(String kbFileName) throws Exception {
         //this(kbFileName, Vampire.getFactory());
     }
 
-    
+
     public SInE(Iterable<String> formulaSource) {
 
         //underlyingEngineFactory = Vampire.getFactory();
@@ -127,7 +127,7 @@ public class SInE extends InferenceEngine {
         loadFormulas(formulaSource);
     }
 
-    
+
     public static SInE getNewInstance(String kbFileName) {
 
         SInE res = null;
@@ -140,7 +140,7 @@ public class SInE extends InferenceEngine {
         return res;
     }
 
-    
+
     public static EngineFactory getFactory() {
         return new SInEFactory();
     }
@@ -291,7 +291,7 @@ public class SInE extends InferenceEngine {
         return res;
     }
 
-    
+
     public Set<String> getSymbols(Collection<String> forms) {
 
         //System.out.println("SInE.getSymbols(): forms " + forms.size());
@@ -374,7 +374,7 @@ public class SInE extends InferenceEngine {
         return res;
     }
 
-    
+
     @Override
     public String submitQuery(String formula, int timeLimit, int bindingsLimit)
             throws IOException {
@@ -403,7 +403,7 @@ public class SInE extends InferenceEngine {
         return res;
     }
 
-    
+
     @Override
     public String assertFormula(String formula) {
 
@@ -414,7 +414,7 @@ public class SInE extends InferenceEngine {
         return null;
     }
 
-    
+
     public static class SInEFactory extends EngineFactory {
 
         @Override

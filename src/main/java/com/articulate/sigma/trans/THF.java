@@ -100,7 +100,7 @@ public class THF {
     private static final Boolean debug = false;
     private static int axcounter = 1;
     private static int concounter = 1;
-    
+
     private final List<String> numericOps = new ArrayList<String>();
     /**
      * A string builder containing the dynamically modified
@@ -244,7 +244,7 @@ public class THF {
         return str;
     }
 
-    
+
     private boolean hasMathOp(Formula f, KB kb) {
 
         for (String s : numericOps) {
@@ -256,7 +256,7 @@ public class THF {
         return false;
     }
 
-    
+
     private LinkedHashSet<Formula> expandAxioms(Collection<Formula> col, boolean isQuery, KB kb) {
 
         FormulaPreprocessor fp = new FormulaPreprocessor();
@@ -273,7 +273,7 @@ public class THF {
         return result;
     }
 
-    
+
     public String oneKIF2THF(Formula form, boolean conjecture, KB kb) {
 
         Formula f = new Formula();
@@ -1698,7 +1698,7 @@ public class THF {
         return result.toString();
     }
 
-    
+
     private SortedSet<Formula> sortFormulas(Collection formulas) {
 
         if (debug) System.out.println("\n   Enter sortFormulas with " + formulas.toString());

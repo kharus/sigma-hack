@@ -86,7 +86,7 @@ public class CELT {
         } while (line == null || !line.equalsIgnoreCase("Done initializing."));
     }
 
-    
+
     public static void main(String[] args) {
 
         try {

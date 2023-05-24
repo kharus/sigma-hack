@@ -210,7 +210,7 @@ public class ProofStep {
         return results;
     }
 
-    
+
     public String toString() {
 
         StringBuffer sb = new StringBuffer();

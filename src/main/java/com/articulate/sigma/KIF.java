@@ -81,7 +81,7 @@ public class KIF {
     private File file;
     private int totalLinesForComments = 0;
 
-    
+
     public KIF() {
     }
 
@@ -247,7 +247,7 @@ public class KIF {
         System.out.println(f.car());
     }
 
-    
+
     public static void showHelp() {
 
         System.out.println("KIF class");
@@ -258,7 +258,7 @@ public class KIF {
         System.out.println("  t - run a test");
     }
 
-    
+
     public static void main(String[] args) throws IOException {
 
         System.out.println("INFO in KIF.main()");
@@ -323,7 +323,7 @@ public class KIF {
         this.parseMode = mode;
     }
 
-    
+
     private void display(StreamTokenizer_s st, boolean inRule, boolean inAntecedent, boolean inConsequent,
                          int argumentNum, int parenLevel, String key) {
 
