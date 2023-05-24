@@ -18,9 +18,8 @@ public class SumoProcessCollector {
     // Use of TreeMultimap ensures iteration is predetermined.
     private final Multimap<CaseRole, String> roles = TreeMultimap.create();
     private final SumoProcess sumoProcess;
-    private VerbProperties.Polarity polarity = Polarity.AFFIRMATIVE;
     private final KB kb;
-
+    private VerbProperties.Polarity polarity = Polarity.AFFIRMATIVE;
     private Multimap<String, SumoProcessEntityProperty> entityProperties = TreeMultimap.create();
 
     /**

@@ -23,6 +23,8 @@ import java.util.*;
 
 public class PredVarInst {
 
+    //The list of logical terms that not related to arity check, will skip these predicates
+    private static final List<String> logicalTerms = Arrays.asList("forall", "exists", "=>", "and", "or", "<=>", "not", "equal");
     // The implied arity of a predicate variable from its use in a Formula
     public static HashMap<String, Integer> predVarArity = new HashMap<String, Integer>();
     public static boolean debug = false;
@@ -31,10 +33,9 @@ public class PredVarInst {
     public static boolean doublesHandled = false;
     // All predicates that meet that class membership and arity constraints for the given variable
     private static HashMap<String, HashSet<String>> candidatePredicates = new HashMap<String, HashSet<String>>();
-    //The list of logical terms that not related to arity check, will skip these predicates
-    private static final List<String> logicalTerms = Arrays.asList("forall", "exists", "=>", "and", "or", "<=>", "not", "equal");
 
     /**
+     *
      */
     public static void init() {
 
@@ -52,10 +53,9 @@ public class PredVarInst {
      * @param input formula
      * @param types type condition extracted from domain expression.
      *              This is a HashMap in which the keys are predicate variables,
-     *      and the values are HashSets containing one or more class
-     *      names that indicate the type constraints that apply to the
-     *      variable
-     *
+     *              and the values are HashSets containing one or more class
+     *              names that indicate the type constraints that apply to the
+     *              variable
      * @return add explicit type condition into types
      */
     protected static HashMap<String, HashSet<String>> addExplicitTypes(KB kb, Formula input, HashMap<String, HashSet<String>> types) {
@@ -79,6 +79,7 @@ public class PredVarInst {
     }
 
     /**
+     *
      */
     private static boolean isTypeExpansion(String rel) {
 
@@ -87,17 +88,15 @@ public class PredVarInst {
 
     /**
      * (=>
-     *   (and
-     *     (instance ?REL1 Predicate)
-     *     (instance ?REL2 Predicate)
-     *     (disjointRelation ?REL1 ?REL2)
-     *     (not
-     *       (equal ?REL1 ?REL2))
-     *     (?REL1 @ROW2))
-     *   (not
-     *     (?REL2 @ROW2)))
-     *
-
+     * (and
+     * (instance ?REL1 Predicate)
+     * (instance ?REL2 Predicate)
+     * (disjointRelation ?REL1 ?REL2)
+     * (not
+     * (equal ?REL1 ?REL2))
+     * (?REL1 @ROW2))
+     * (not
+     * (?REL2 @ROW2)))
      */
     private static Set<Formula> handleDouble1(KB kb) {
 
@@ -130,12 +129,12 @@ public class PredVarInst {
 
     /**
      * (=>
-     *   (and
-     *     (subrelation ?REL1 ?REL2)
-     *     (instance ?REL1 Predicate)
-     *     (instance ?REL2 Predicate)
-     *     (?REL1 @ROW))
-     *   (?REL2 @ROW))
+     * (and
+     * (subrelation ?REL1 ?REL2)
+     * (instance ?REL1 Predicate)
+     * (instance ?REL2 Predicate)
+     * (?REL1 @ROW))
+     * (?REL2 @ROW))
      */
     private static Set<Formula> handleDouble2(KB kb) {
 
@@ -198,12 +197,12 @@ public class PredVarInst {
 
     /**
      * @param input formula
-     * @param kb knowledge base
+     * @param kb    knowledge base
      * @return A list of formulas where predicate variables are instantiated;
-     *         There are three possible returns:
-     *         return null if input contains predicate variables but cannot be instantiated;
-     *         return empty if input contains no predicate variables;
-     *         return a list of instantiated formulas if the predicate variables are instantiated;
+     * There are three possible returns:
+     * return null if input contains predicate variables but cannot be instantiated;
+     * return empty if input contains no predicate variables;
+     * return a list of instantiated formulas if the predicate variables are instantiated;
      */
     public static Set<Formula> instantiatePredVars(Formula input, KB kb) {
 
@@ -396,6 +395,7 @@ public class PredVarInst {
     }
 
     /**
+     *
      */
     private static boolean containsRowVariable(ArrayList<Formula> arglist) {
 
@@ -495,6 +495,7 @@ public class PredVarInst {
     }
 
     /**
+     *
      */
     public static void arityTest() {
 
@@ -522,6 +523,7 @@ public class PredVarInst {
     }
 
     /**
+     *
      */
     public static void test() {
 
@@ -565,6 +567,7 @@ public class PredVarInst {
     }
 
     /**
+     *
      */
     public static void main(String[] args) {
 

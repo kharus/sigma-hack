@@ -22,9 +22,8 @@ public class SimpleDOMParser {
 
     private static final int[] cdata_start = {'<', '!', '[', 'C', 'D', 'A', 'T', 'A', '['};
     private static final int[] cdata_end = {']', ']', '>'};
-
-    private Reader reader;
     private final Stack elements;
+    private Reader reader;
     private SimpleElement currentElement;
     private boolean skipProlog = true;
 

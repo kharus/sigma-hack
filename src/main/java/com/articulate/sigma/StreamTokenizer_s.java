@@ -49,8 +49,8 @@ import java.io.Reader;
  *
  * @author James Gosling
  * @version 1.37, 12/03/01
- * @see     java.io.StreamTokenizer_s#nextToken()
- * @see     java.io.StreamTokenizer_s#TT_EOF
+ * @see java.io.StreamTokenizer_s#nextToken()
+ * @see java.io.StreamTokenizer_s#TT_EOF
  * @since JDK1.0
  */
 
@@ -88,6 +88,7 @@ public class StreamTokenizer_s {
      * made available as the part of the API in a future release.
      */
     private static final int TT_NOTHING = -4;
+    private final byte[] ctype = new byte[256];
     /**
      * After a call to the <code>nextToken</code> method, this field
      * contains the type of the token just read. For a single character
@@ -164,7 +165,6 @@ public class StreamTokenizer_s {
     private boolean eolIsSignificantP = false;
     private boolean slashSlashCommentsP = false;
     private boolean slashStarCommentsP = false;
-    private final byte[] ctype = new byte[256];
 
     /** Private constructor that initializes everything except the streams. */
     public StreamTokenizer_s() {

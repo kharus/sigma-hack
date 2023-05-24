@@ -30,25 +30,25 @@ public class EProver {
 
     private static String kbdir;
     private static int axiomIndex = 0;
-    public ArrayList<String> output = new ArrayList<>();
-    public StringBuffer qlist = null;
     private final ProcessBuilder _builder;
-    private Process _eprover;
     private final BufferedReader _reader;
     private final BufferedWriter _writer;
+    public ArrayList<String> output = new ArrayList<>();
+    public StringBuffer qlist = null;
+    private Process _eprover;
 
     /**
      * Create a new batch specification file, and create a new running
      * instance of EProver.
      *
      * @param executable A File object denoting the platform-specific
-     * EProver executable.
-     * @param kbFile A File object denoting the initial knowledge base
-     * to be loaded by the EProver executable.
+     *                   EProver executable.
+     * @param kbFile     A File object denoting the initial knowledge base
+     *                   to be loaded by the EProver executable.
      * @throws IOException should not normally be thrown unless either
-     *         EProver executable or database file name are incorrect
-     *
-     * e_ltb_runner -- interactive LTBSampleInput-AP.txt
+     *                     EProver executable or database file name are incorrect
+     *                     <p>
+     *                     e_ltb_runner -- interactive LTBSampleInput-AP.txt
      */
     public EProver(String executable, String kbFile) throws IOException {
 
@@ -90,7 +90,7 @@ public class EProver {
      * specification file.
      *
      * @param executable A File object denoting the platform-specific
-     * EProver executable.
+     *                   EProver executable.
      * @throws IOException
      */
     public EProver(String executable) throws IOException {
@@ -128,7 +128,7 @@ public class EProver {
      * specification file.
      *
      * @param executable A File object denoting the platform-specific
-     * EProver executable.
+     *                   EProver executable.
      * @param maxAnswers - Limit the answers upto maxAnswers only
      * @throws IOException
      */
@@ -164,15 +164,15 @@ public class EProver {
 
     /**
      * Create a new batch specification file.
-     *
+     * <p>
      * e_ltb_runner processes a batch specification file; it contains
      * a specification of the background theory, some options, and a
      * number of individual job requests. It is used with the option
      * --interactive.
      *
      * @param inputFilename contains TPTP assertions
-     * @param timeout time limit in E
-     *  */
+     * @param timeout       time limit in E
+     */
     public static void writeBatchConfig(String inputFilename, int timeout) {
 
         try {
@@ -201,13 +201,13 @@ public class EProver {
 
     /**
      * Update batch specification file.
-     *
+     * <p>
      * "inputFilename" is added into existing batch specification file
      * for inference.
      *
      * @param inputFilename contains TPTP assertions
-     * @param timeout time limit in E
-     *  */
+     * @param timeout       time limit in E
+     */
     public static void addBatchConfig(String inputFilename, int timeout) {
 
         File initFile = new File(kbdir, "EBatchConfig.txt");
@@ -270,7 +270,7 @@ public class EProver {
      *   <li>make an assertion;</li>
      *   <li>submit a query;</li>
      *   <li>terminate E</li>
-     *</ol>
+     * </ol>
      */
     public static void main(String[] args) throws Exception {
 
@@ -302,6 +302,7 @@ public class EProver {
     }
 
     /**
+     *
      */
     public String toString() {
 
@@ -352,12 +353,12 @@ public class EProver {
      * Add an assertion for inference.
      *
      * @param userAssertionTPTP asserted formula in the TPTP syntax
-     * @param kb Knowledge base
-     * @param eprover an instance of EProver
-     * @param parsedFormulas a lit of parsed formulas in KIF syntax
-     * @param tptp convert formula to TPTP if tptp = true
+     * @param kb                Knowledge base
+     * @param eprover           an instance of EProver
+     * @param parsedFormulas    a lit of parsed formulas in KIF syntax
+     * @param tptp              convert formula to TPTP if tptp = true
      * @return true if all assertions are added for inference
-     *
+     * <p>
      * TODO: This function might not be necessary if we find a way to
      * directly add assertion into opened inference engine (e_ltb_runner)
      */
@@ -441,7 +442,7 @@ public class EProver {
      * Submit a query.
      *
      * @param formula query in the KIF syntax
-     * @param kb current knowledge base
+     * @param kb      current knowledge base
      * @return answer to the query
      * @throws IOException should not normally be thrown
      */

@@ -37,6 +37,7 @@ public class KBcacheUnitTest {
     public static KB kb = new KB("TestKB");
 
     /**
+     *
      */
     @BeforeClass
     public static void setup() {
@@ -83,6 +84,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testRelations() {
@@ -96,6 +98,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testFunctions() {
@@ -108,6 +111,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testPredicates() {
@@ -122,6 +126,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void transRels() {
@@ -133,6 +138,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testParents() {
@@ -144,6 +150,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testChildren() {
@@ -160,6 +167,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testSignatures() {
@@ -171,6 +179,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testVarSignatures() {
@@ -184,6 +193,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testValences() {
@@ -195,6 +205,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testValences2() {
@@ -206,6 +217,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testInsts() {
@@ -215,6 +227,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testInstances() {
@@ -228,6 +241,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testTransInsts() {
@@ -239,6 +253,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testIsChildOf() {
@@ -248,6 +263,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testCommonParent() {
@@ -260,6 +276,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testInstancesForType() {
@@ -273,6 +290,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testDisjoint() {
@@ -306,6 +324,7 @@ public class KBcacheUnitTest {
     }
 
     /**
+     *
      */
     @Test
     public void testCollectArgsFromFormulas() {

@@ -35,19 +35,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *  Contains utility methods for KBs
+ * Contains utility methods for KBs
  */
 public class KButilities {
 
     public static boolean debug = false;
 
-    /** Errors found during processing formulas */
+    /**
+     * Errors found during processing formulas
+     */
     public static TreeSet<String> errors = new TreeSet<String>();
 
-    /** Warnings found during processing formulas */
+    /**
+     * Warnings found during processing formulas
+     */
     public static TreeSet<String> warnings = new TreeSet<String>();
 
     /**
+     *
      */
     public static boolean isRelation(KB kb, String term) {
 
@@ -55,24 +60,28 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static boolean isFunction(KB kb, String term) {
         return kb.isInstanceOf(term, "Function");
     }
 
     /**
+     *
      */
     public static boolean isAttribute(KB kb, String term) {
         return kb.isInstanceOf(term, "Attribute");
     }
 
     /**
+     *
      */
     public static void clearErrors() {
         errors = new TreeSet<>();
     }
 
     /**
+     *
      */
     public static boolean hasCorrectTypes(KB kb, Formula f) {
 
@@ -99,6 +108,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static boolean isValidFormula(KB kb, String form) {
 
@@ -131,6 +141,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static boolean isClass(KB kb, String term) {
 
@@ -138,6 +149,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static boolean isInstance(KB kb, String term) {
 
@@ -145,6 +157,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static boolean isVariableArity(KB kb, String term) {
 
@@ -152,6 +165,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static String getDocumentation(KB kb, String term) {
 
@@ -260,7 +274,7 @@ public class KButilities {
     }
 
     /**
-     * Get all formulas that contain both terms. 
+     * Get all formulas that contain both terms.
      */
     public static ArrayList<Formula> termIntersection(KB kb, String term1, String term2) {
 
@@ -293,6 +307,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static void countRelations(KB kb) {
 
@@ -308,6 +323,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static boolean isCacheFile(String filename) {
 
@@ -317,6 +333,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static void countProcesses(KB kb) {
 
@@ -336,6 +353,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     private static boolean uRLexists(String URLName) {
 
@@ -354,6 +372,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static void checkURLs(KB kb) {
 
@@ -368,6 +387,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static void validatePictureList() {
 
@@ -414,16 +434,16 @@ public class KButilities {
     }
 
     /**
-     *  Turn SUMO into a semantic network by extracting all ground
-     *  binary relations, turning all higher arity relations into a
-     *  set of binary relations, and making all term co-occurring in
-     *  an axiom to be related with a general "link" relation. Also
-     *  use the subclass hierarchy to relate all parents of terms in
-     *  domain statements, through the relation itself but with a
-     *  suffix designating it as a separate relation.
-     *  Optionally don't show cached statements,
-     *  if cached is false, or relations with String arguments, if strings
-     *  is false.
+     * Turn SUMO into a semantic network by extracting all ground
+     * binary relations, turning all higher arity relations into a
+     * set of binary relations, and making all term co-occurring in
+     * an axiom to be related with a general "link" relation. Also
+     * use the subclass hierarchy to relate all parents of terms in
+     * domain statements, through the relation itself but with a
+     * suffix designating it as a separate relation.
+     * Optionally don't show cached statements,
+     * if cached is false, or relations with String arguments, if strings
+     * is false.
      */
     private static Set<String> generateSemanticNetwork(KB kb, boolean cached, boolean strings) {
 
@@ -466,6 +486,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     private static String semnetAsDot(Set<String> triples) {
 
@@ -703,10 +724,10 @@ public class KButilities {
     }
 
     /**
-     *  Find all cases of where (instance A B) (instance B C) as
-     *  well as all cases of where (instance A B) (instance B C)
-     *  (instance C D).  Report true if any such cases are found,
-     *  false otherwise.
+     * Find all cases of where (instance A B) (instance B C) as
+     * well as all cases of where (instance A B) (instance B C)
+     * (instance C D).  Report true if any such cases are found,
+     * false otherwise.
      */
     public static boolean instanceOfInstanceP(KB kb) {
 
@@ -738,6 +759,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static void writeDisplayText(KB kb, String displayFormatPredicate, String displayTermPredicate,
                                         String language, String fname) throws IOException {
@@ -809,6 +831,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static void generateTPTPTestAssertions() {
 
@@ -865,6 +888,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static int getCountNonLinguisticAxioms(KB kb) {
 
@@ -910,7 +934,7 @@ public class KButilities {
     }
 
     /**
-     *  Find all formulas in which the SUMO term is involved.
+     * Find all formulas in which the SUMO term is involved.
      */
     public static Set<Formula> getAllFormulasOfTerm(KB kb, String term) {
 
@@ -926,7 +950,7 @@ public class KButilities {
     }
 
     /**
-     *  Find all formulas in which the SUMO term is involved.
+     * Find all formulas in which the SUMO term is involved.
      */
     public static String generateFormulasAndDoc(KB kb) {
 
@@ -984,6 +1008,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static void showHelp() {
 
@@ -1005,6 +1030,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public static void main(String[] args) {
 
@@ -1070,6 +1096,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public String semnetAsJSON3(KB kb, boolean cached, boolean strings) {
 
@@ -1084,6 +1111,7 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public Set<GraphArc> generateSemNetNeighbors(KB kb, boolean cached, boolean strings, boolean links, String term, int count) {
 
@@ -1161,12 +1189,14 @@ public class KButilities {
     }
 
     /**
+     *
      */
     public class GraphArc implements JSONAware, Comparable {
 
         public String source = "";
         public String rel = "";
         public String target = "";
+
         public GraphArc(String s, String r, String t) {
             source = s;
             rel = r;

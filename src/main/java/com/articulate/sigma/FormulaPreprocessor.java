@@ -167,11 +167,9 @@ public class FormulaPreprocessor {
      * Otherwise, returns false.
      *
      * @param query true if this Formula represents a query, else
-     * false.
-     *
-     * @param kb The KB object to be used for evaluating the
-     * suitability of this Formula.
-     *
+     *              false.
+     * @param kb    The KB object to be used for evaluating the
+     *              suitability of this Formula.
      * @return boolean
      */
     private static boolean isOkForInference(Formula f, boolean query, KB kb) {
@@ -196,6 +194,7 @@ public class FormulaPreprocessor {
     }
 
     /**
+     *
      */
     public static void testFindTypes() {
 
@@ -244,6 +243,7 @@ public class FormulaPreprocessor {
     }
 
     /**
+     *
      */
     public static void testFindExplicit() {
 
@@ -267,6 +267,7 @@ public class FormulaPreprocessor {
     }
 
     /**
+     *
      */
     public static void testAddTypes() {
 
@@ -302,6 +303,7 @@ public class FormulaPreprocessor {
     }
 
     /**
+     *
      */
     public static void testOne() {
 
@@ -329,6 +331,7 @@ public class FormulaPreprocessor {
     }
 
     /**
+     *
      */
     public static void testTwo() {
 
@@ -347,6 +350,7 @@ public class FormulaPreprocessor {
     }
 
     /**
+     *
      */
     public static void testThree() {
 
@@ -379,6 +383,7 @@ public class FormulaPreprocessor {
     }
 
     /**
+     *
      */
     public static void testFour() {
 
@@ -406,6 +411,7 @@ public class FormulaPreprocessor {
     }
 
     /**
+     *
      */
     public static void testFive() {
 
@@ -424,6 +430,7 @@ public class FormulaPreprocessor {
     }
 
     /**
+     *
      */
     public static void test6() {
 
@@ -449,6 +456,7 @@ public class FormulaPreprocessor {
     }
 
     /**
+     *
      */
     public static void main(String[] args) {
 
@@ -476,6 +484,7 @@ public class FormulaPreprocessor {
     }
 
     /**
+     *
      */
     private boolean hasFormulaType(Formula form,
                                    HashMap<String, HashSet<String>> varmap) {
@@ -497,11 +506,9 @@ public class FormulaPreprocessor {
      * classes from a List of sortal classes.
      *
      * @param types A List of classes (class name Strings) that
-     * constrain the value of a SUO-KIF variable.
-     *
-     * @param kb The KB used to determine if any of the classes in the
-     * List types are redundant.
-     *
+     *              constrain the value of a SUO-KIF variable.
+     * @param kb    The KB used to determine if any of the classes in the
+     *              List types are redundant.
      * @return void
      */
     public void winnowTypeList(HashSet<String> types, KB kb) {
@@ -568,6 +575,7 @@ public class FormulaPreprocessor {
     }
 
     /**
+     *
      */
     public HashMap<String, HashSet<String>> findAllTypeRestrictions(Formula form, KB kb) {
 
@@ -608,18 +616,18 @@ public class FormulaPreprocessor {
      * type to the type restrictions defined on every relation in which
      * it appears.  For example
      * (=>
-     *   (foo ?A B)
-     *   (bar B ?A))
-     *
+     * (foo ?A B)
+     * (bar B ?A))
+     * <p>
      * (domain foo 1 Z)
-     *
+     * <p>
      * would result in
-     *
+     * <p>
      * (=>
-     *   (instance ?A Z)
-     *   (=>
-     *     (foo ?A B)
-     *     (bar B ?A)))
+     * (instance ?A Z)
+     * (=>
+     * (foo ?A B)
+     * (bar B ?A)))
      */
     public Formula addTypeRestrictions(Formula form, KB kb) {
 
@@ -685,7 +693,7 @@ public class FormulaPreprocessor {
      * Recursively add sortals for existentially quantified variables
      *
      * @param kb The KB used to add type restrictions.
-     * @param f The formula in KIF syntax
+     * @param f  The formula in KIF syntax
      * @param sb A StringBuilder used to store the new formula with sortals
      */
     private void addTypeRestrictionsRecurse(KB kb, Formula f, StringBuffer sb) {
@@ -780,11 +788,11 @@ public class FormulaPreprocessor {
 
     /**
      * Collect variables from strings.
-     *
+     * <p>
      * For example,
      * Input = (?X ?Y ?Z)
      * Output = a list of ?X, ?Y and ?Z
-     *
+     * <p>
      * Input = ?X
      * Output = a list of ?X
      */
@@ -806,13 +814,13 @@ public class FormulaPreprocessor {
     /**
      * Get the most specific type for variables.
      *
-     * @param kb The KB to be used for processing
+     * @param kb    The KB to be used for processing
      * @param types a list of sumo types for a sumo term/variable
      * @return the most specific sumo type for the term/variable
-     *
+     * <p>
      * For example
      * types of ?Writing = [Entity, Physical, Process, IntentionalProcess,
-     *                      ContentDevelopment, Writing]
+     * ContentDevelopment, Writing]
      * return the most specific type Writing
      */
     protected String getMostRelevantType(KB kb, HashSet<String> types) {
@@ -878,10 +886,9 @@ public class FormulaPreprocessor {
      * expressions. subclass restrictions are marked with a '+'.
      *
      * @param form The formula in KIF syntax
-     *
      * @return A map of variables paired with a set of sumo types collected
      * from instance and subclass expressions.
-     *
+     * <p>
      * TODO: This may ultimately require CNF conversion and then checking
      * negative literals, but for now it's just a hack to grab preconditions.
      */
@@ -899,9 +906,9 @@ public class FormulaPreprocessor {
      * Collect variable names and their types from instance or subclass
      * expressions.
      *
-     * @param form The formula in KIF syntax
-     * @param varExplicitTypes A map of variables paired with sumo types
-     *                         collected from instance expressions
+     * @param form               The formula in KIF syntax
+     * @param varExplicitTypes   A map of variables paired with sumo types
+     *                           collected from instance expressions
      * @param varExplicitClasses A map of variables paired with sumo types
      *                           collected from subclass expression
      */
@@ -924,10 +931,10 @@ public class FormulaPreprocessor {
      * @param kb The KB to be used to compute the sortal constraints
      *           for each variable.
      * @return A HashMap of variable names and their types. Subclass
-     *         restrictions are marked with a '+', meaning that a
-     *         domainSubclass is defined for this argument in one of
-     *         the loaded .kif files. Instance restrictions have no
-     *         special mark.
+     * restrictions are marked with a '+', meaning that a
+     * domainSubclass is defined for this argument in one of
+     * the loaded .kif files. Instance restrictions have no
+     * special mark.
      */
     public HashMap<String, HashSet<String>> computeVariableTypes(Formula form, KB kb) {
 
@@ -962,11 +969,11 @@ public class FormulaPreprocessor {
     }
 
     /**
-     *  @rparam input A HashMap of variable names and their types. Subclass
-     *               restrictions are marked with a '+', meaning that a
-     *               domainSubclass is defined for this argument in one of
-     *               the loaded .kif files. Instance restrictions have no
-     *               special mark.
+     * @rparam input A HashMap of variable names and their types. Subclass
+     * restrictions are marked with a '+', meaning that a
+     * domainSubclass is defined for this argument in one of
+     * the loaded .kif files. Instance restrictions have no
+     * special mark.
      */
     private HashMap<String, HashSet<String>> computeVariableTypesRecurse(KB kb, Formula f,
                                                                          HashMap<String, HashSet<String>> input) {
@@ -1054,6 +1061,7 @@ public class FormulaPreprocessor {
      * translating mathematical operators, quoting higher-order formulas,
      * adding a numerical suffix to VariableArityRelations based on their count,
      * expanding row variables and prepending the 'holds__' predicate.
+     *
      * @return an ArrayList of Formula(s)
      */
     private String preProcessRecurse(Formula f, String previousPred, boolean ignoreStrings,
@@ -1154,11 +1162,9 @@ public class FormulaPreprocessor {
      * expand row variables in this Formula, looping until no new
      * Formulae are generated.
      *
-     * @param kb The KB to be used for processing this Formula
-     *
+     * @param kb             The KB to be used for processing this Formula
      * @param addHoldsPrefix If true, predicate variables are not
-     * instantiated
-     *
+     *                       instantiated
      * @return an ArrayList of Formula(s), which could be empty.
      */
     protected ArrayList<Formula> replacePredVarsAndRowVars(Formula form, KB kb, boolean addHoldsPrefix) {
@@ -1244,17 +1250,14 @@ public class FormulaPreprocessor {
      * Adds statements of the form (instance <Entity> <Class>) if
      * they are not already in the KB.
      *
-     * @param kb The KB to be used for processing the input Formulae
-     * in variableReplacements
-     *
-     * @param isQuery If true, this method just returns the initial
-     * input List, variableReplacements, with no additions
-     *
+     * @param kb                   The KB to be used for processing the input Formulae
+     *                             in variableReplacements
+     * @param isQuery              If true, this method just returns the initial
+     *                             input List, variableReplacements, with no additions
      * @param variableReplacements A List of Formulae in which
-     * predicate variables and row variables have already been
-     * replaced, and to which (instance <Entity> <Class>)
-     * Formulae might be added
-     *
+     *                             predicate variables and row variables have already been
+     *                             replaced, and to which (instance <Entity> <Class>)
+     *                             Formulae might be added
      * @return an ArrayList of Formula(s), which could be larger than
      * the input List, variableReplacements, or could be empty.
      */
@@ -1320,11 +1323,8 @@ public class FormulaPreprocessor {
      * @param isQuery If true the Formula is a query and should be
      *                existentially quantified, else the Formula is a
      *                statement and should be universally quantified
-     *
-     * @param kb The KB to be used for processing this Formula
-     *
+     * @param kb      The KB to be used for processing this Formula
      * @return an Set of Formula(s), which could be empty.
-     *
      */
     public Set<Formula> preProcess(Formula form, boolean isQuery, KB kb) {
 

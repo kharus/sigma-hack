@@ -10,7 +10,8 @@ import java.io.FileReader;
 import java.io.LineNumberReader;
 import java.io.StringReader;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class TPTP3Test extends IntegrationTestBase {
 

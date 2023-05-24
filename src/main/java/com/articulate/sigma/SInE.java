@@ -59,13 +59,15 @@ public class SInE extends InferenceEngine {
     /**
      * Relation between symbols and formulas which represents the fact that
      * a formula (axiom) defines meaning of a symbol.
-     *
+     * <p>
      * The meaning of strings is following:<br>
      * Map<Symbol, List<Formula>>
      */
     Map<String, List<String>> requirements;
     EngineFactory underlyingEngineFactory;
+
     /**
+     *
      */
     private SInE(String kbFileName, EngineFactory ef) throws Exception {
 
@@ -110,11 +112,14 @@ public class SInE extends InferenceEngine {
     }
 
     /**
+     *
      */
     private SInE(String kbFileName) throws Exception {
         //this(kbFileName, Vampire.getFactory());
     }
+
     /**
+     *
      */
     public SInE(Iterable<String> formulaSource) {
 
@@ -129,6 +134,7 @@ public class SInE extends InferenceEngine {
     }
 
     /**
+     *
      */
     public static SInE getNewInstance(String kbFileName) {
 
@@ -143,15 +149,16 @@ public class SInE extends InferenceEngine {
     }
 
     /**
+     *
      */
     public static EngineFactory getFactory() {
         return new SInEFactory();
     }
 
     /**
-     *  A simple test to load a KB file and pose a query, which are
-     *  the first and second item, respectively, given on the
-     *  command line.
+     * A simple test to load a KB file and pose a query, which are
+     * the first and second item, respectively, given on the
+     * command line.
      */
     public static void test(String[] args) {
 
@@ -175,9 +182,9 @@ public class SInE extends InferenceEngine {
     }
 
     /**
-     *  A simple test to load a KB file and pose a query, which are
-     *  the first and second item, respectively, given on the
-     *  command line.
+     * A simple test to load a KB file and pose a query, which are
+     * the first and second item, respectively, given on the
+     * command line.
      */
     public static void main(String[] args) throws Exception {
 
@@ -295,6 +302,7 @@ public class SInE extends InferenceEngine {
     }
 
     /**
+     *
      */
     public Set<String> getSymbols(Collection<String> forms) {
 
@@ -379,6 +387,7 @@ public class SInE extends InferenceEngine {
     }
 
     /**
+     *
      */
     @Override
     public String submitQuery(String formula, int timeLimit, int bindingsLimit)
@@ -409,6 +418,7 @@ public class SInE extends InferenceEngine {
     }
 
     /**
+     *
      */
     @Override
     public String assertFormula(String formula) {
@@ -421,6 +431,7 @@ public class SInE extends InferenceEngine {
     }
 
     /**
+     *
      */
     public static class SInEFactory extends EngineFactory {
 

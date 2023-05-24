@@ -10,12 +10,12 @@ import com.google.common.collect.Multiset;
 
 public class SVOElement {
     public final SVOGrammarPosition position;
-    private String surfaceForm = "";
     /**
      * Performs two tasks: keeps track of which case roles have been used to fill this grammatical position; and
      * lets outsiders know if the grammatical position is singular or plural
      */
     private final Multiset<CaseRole> consumedCaseRoles = HashMultiset.create();
+    private String surfaceForm = "";
 
     public SVOElement(SVOGrammarPosition pos) {
         position = pos;

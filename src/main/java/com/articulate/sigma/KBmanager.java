@@ -19,10 +19,10 @@
 package com.articulate.sigma;
 
 import com.articulate.sigma.CCheckManager.CCheckStatus;
-import com.articulate.sigma.verbnet.VerbNet;
 import com.articulate.sigma.nlg.NLGUtils;
 import com.articulate.sigma.trans.SUMOKBtoTPTPKB;
 import com.articulate.sigma.utils.StringUtil;
+import com.articulate.sigma.verbnet.VerbNet;
 import com.articulate.sigma.wordnet.OMWordnet;
 import com.articulate.sigma.wordnet.WordNet;
 import py4j.GatewayServer;
@@ -30,8 +30,9 @@ import py4j.GatewayServer;
 import java.io.*;
 import java.util.*;
 
-/** This is a class that manages a group of knowledge bases.  It should only
- *  have one instance, contained in its own static member variable.
+/**
+ * This is a class that manages a group of knowledge bases.  It should only
+ * have one instance, contained in its own static member variable.
  */
 public class KBmanager implements Serializable {
 
@@ -51,26 +52,26 @@ public class KBmanager implements Serializable {
                     "systemsDir", "graphVizDir", "kbDir", "celtdir", "tptpHomeDir", "logDir",
                     "englishPCFG");
     protected static final String CONFIG_FILE = "config.xml";
-
+    private static final CCheckManager ccheckManager = new CCheckManager();
     // preferences set before initialization that override values in config.xml
     public static HashMap<String, String> prefOverride = new HashMap<String, String>();
     public static boolean initialized = false;
     public static boolean initializing = false;
     public static boolean debug = false;
-    private static final CCheckManager ccheckManager = new CCheckManager();
     private static KBmanager manager = new KBmanager();
+    private final HashMap<String, String> preferences = new HashMap<String, String>();
     public HashMap<String, KB> kbs = new HashMap<String, KB>();
     public Prover prover = Prover.VAMPIRE;
-    private final HashMap<String, String> preferences = new HashMap<String, String>();
     private String error = "";
 
     /**
+     *
      */
     public KBmanager() {
     }
 
     /**
-     *  Check whether sources are newer than serialized version.
+     * Check whether sources are newer than serialized version.
      */
     public static boolean serializedExists() {
 
@@ -81,7 +82,7 @@ public class KBmanager implements Serializable {
     }
 
     /**
-     *  Check whether sources are newer than serialized version.
+     * Check whether sources are newer than serialized version.
      */
     public static boolean serializedOld(SimpleElement configuration) {
 
@@ -110,7 +111,7 @@ public class KBmanager implements Serializable {
     }
 
     /**
-     *  Load the most recently saved serialized version.
+     * Load the most recently saved serialized version.
      */
     public static boolean loadSerialized() {
 
@@ -140,7 +141,7 @@ public class KBmanager implements Serializable {
     }
 
     /**
-     *  save serialized version.
+     * save serialized version.
      */
     public static void serialize() {
 
@@ -161,6 +162,7 @@ public class KBmanager implements Serializable {
     }
 
     /**
+     *
      */
     public static CCheckStatus initiateCCheck(KB kb, String chosenEngine, String systemChosen, String location,
                                               String language, int timeout) {
@@ -316,7 +318,7 @@ public class KBmanager implements Serializable {
     /**
      * Create an server-based interface for Python to call the KB object.
      * https://pypi.python.org
-     *
+     * <p>
      * from py4j.java_gateway import JavaGateway
      * gateway = JavaGateway()             # connect to the JVM
      * sigma_app = gateway.entry_point     # get the KB instance
@@ -336,6 +338,7 @@ public class KBmanager implements Serializable {
     }
 
     /**
+     *
      */
     public static void printHelp() {
 
@@ -347,6 +350,7 @@ public class KBmanager implements Serializable {
     }
 
     /**
+     *
      */
     public static void main(String[] args) {
 
@@ -387,8 +391,8 @@ public class KBmanager implements Serializable {
     }
 
     /**
-     *  Check whether config file or any .kif constituent is newer than its
-     *  corresponding TPTP/TFF/THF file
+     * Check whether config file or any .kif constituent is newer than its
+     * corresponding TPTP/TFF/THF file
      */
     public boolean infFileOld(String lang) {
 
@@ -417,8 +421,8 @@ public class KBmanager implements Serializable {
     }
 
     /**
-     *  Check whether config file or any .kif constituent is newer than its
-     *  corresponding TPTP/TFF/THF file
+     * Check whether config file or any .kif constituent is newer than its
+     * corresponding TPTP/TFF/THF file
      */
     public boolean infFileOld() {
 
@@ -520,6 +524,7 @@ public class KBmanager implements Serializable {
     }
 
     /**
+     *
      */
     private void preferencesFromXML(SimpleElement configuration) {
 
@@ -544,6 +549,7 @@ public class KBmanager implements Serializable {
     }
 
     /**
+     *
      */
     public void loadKBforInference(KB kb) {
 
@@ -560,6 +566,7 @@ public class KBmanager implements Serializable {
     }
 
     /**
+     *
      */
     public boolean loadKB(String kbName, List<String> constituents) {
 
@@ -596,6 +603,7 @@ public class KBmanager implements Serializable {
     }
 
     /**
+     *
      */
     private void fromXML(SimpleElement configuration) {
 
@@ -778,6 +786,7 @@ public class KBmanager implements Serializable {
 
     /**
      * Sets instance fields by reading the xml found in the configuration file.
+     *
      * @param configuration
      */
     public void setConfiguration(SimpleElement configuration) {
@@ -818,6 +827,7 @@ public class KBmanager implements Serializable {
 
     /**
      * Create a new empty KB with a name.
+     *
      * @param name - the name of the KB
      */
     public void addKB(String name) {
@@ -832,6 +842,7 @@ public class KBmanager implements Serializable {
 
     /**
      * Remove a knowledge base.
+     *
      * @param name - the name of the KB
      */
     public String removeKB(String name) {

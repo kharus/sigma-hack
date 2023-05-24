@@ -21,16 +21,16 @@ import java.io.*;
  */
 public class CELT {
 
-    private Process _CELT;
     private final BufferedReader _reader;
     private final BufferedWriter _writer;
     private final BufferedReader _error;
+    private Process _CELT;
 
     /**
      * Create a running instance of CELT.
      *
      * @throws IOException should not normally be thrown unless either
-     *         Prolog executable or CELT startup file name are incorrect
+     *                     Prolog executable or CELT startup file name are incorrect
      */
     public CELT() throws IOException {
 
@@ -87,6 +87,7 @@ public class CELT {
     }
 
     /**
+     *
      */
     public static void main(String[] args) {
 

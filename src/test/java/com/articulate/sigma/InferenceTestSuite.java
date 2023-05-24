@@ -29,37 +29,42 @@ import java.util.*;
  * August 9, Acapulco, Mexico.  See also https://github.com/ontologyportal
  */
 
-/** A framework for doing a series of assertions and queries, and for comparing
- *  the actual result of queries against an expected result.  Also will 
- *  keep track of the time needed for each query.  Tests are expected in files
- *  with a .tq extension contained in a directory specified by the 
- *  "inferenceTestDir" parameter, and results are provided in the same directory 
- *  with a .res extension.
- *
- *  The test files contain legal KIF expressions including several kinds of
- *  meta-information.  Meta-predicates include (note <String>), (query <Formula>),
- *  and (answer <term1>..<termn>).  There may be only one note and query statements,
- *  but there may be several answer statements, if multiple binding sets are
- *  expected.
- *
- *  Comments are allowed in test files, and are signified by a ';', after which
- *  all content on the line is ignored.
- *
- *  Note that since answers are provided in an ordered list, without reference
- *  to their respective variable names, that the inference engine is assumed to
- *  return bindings in the same order.
- *
- *  All test file statements must be valid SUO-KIF.  Allowable meta-predicates
- *  are: note, time, query, answer.  All other predicates are assumed to be
- *  SUO-KIF expressions.  'answer' may take multiple SUO-KIF statements where there
- *  could be more than one valid answer.
+/**
+ * A framework for doing a series of assertions and queries, and for comparing
+ * the actual result of queries against an expected result.  Also will
+ * keep track of the time needed for each query.  Tests are expected in files
+ * with a .tq extension contained in a directory specified by the
+ * "inferenceTestDir" parameter, and results are provided in the same directory
+ * with a .res extension.
+ * <p>
+ * The test files contain legal KIF expressions including several kinds of
+ * meta-information.  Meta-predicates include (note <String>), (query <Formula>),
+ * and (answer <term1>..<termn>).  There may be only one note and query statements,
+ * but there may be several answer statements, if multiple binding sets are
+ * expected.
+ * <p>
+ * Comments are allowed in test files, and are signified by a ';', after which
+ * all content on the line is ignored.
+ * <p>
+ * Note that since answers are provided in an ordered list, without reference
+ * to their respective variable names, that the inference engine is assumed to
+ * return bindings in the same order.
+ * <p>
+ * All test file statements must be valid SUO-KIF.  Allowable meta-predicates
+ * are: note, time, query, answer.  All other predicates are assumed to be
+ * SUO-KIF expressions.  'answer' may take multiple SUO-KIF statements where there
+ * could be more than one valid answer.
  */
 public class InferenceTestSuite {
 
-    /** Total time */
+    /**
+     * Total time
+     */
     public static long totalTime = 0;
 
-    /** Default timeout for queries with unspecified timeouts or override when selected */
+    /**
+     * Default timeout for queries with unspecified timeouts or override when selected
+     */
     public static int _DEFAULT_TIMEOUT = 30;
 
     public static boolean overrideTimeout = false;
@@ -74,7 +79,7 @@ public class InferenceTestSuite {
      * Compare the expected answers to the returned answers.  Return
      * true if no answers are found or if any pair of answers
      * is different.  Return false otherwise.
-     *
+     * <p>
      * TODO: If both answersList and tpp.bindings are a lit of entities,
      *       we enforce that all entity pair should be exactly the same;
      */
@@ -106,7 +111,7 @@ public class InferenceTestSuite {
      * Compare the expected answers to the returned answers.  Return
      * true if no answers are found or if any pair of answers
      * is different.  Return false otherwise.
-     *
+     * <p>
      * TODO: If both answersList and tpp.bindings are a lit of entities,
      *       we enforce that all entity pair should be exactly the same;
      */
@@ -127,6 +132,7 @@ public class InferenceTestSuite {
     }
 
     /**
+     *
      */
     private static File setOutputDir() throws IOException {
 
@@ -138,6 +144,7 @@ public class InferenceTestSuite {
     }
 
     /**
+     *
      */
     private static void clearOutputDir(File outputDir) throws IOException {
 
@@ -152,8 +159,8 @@ public class InferenceTestSuite {
     }
 
     /**
-     *  Copy test files to the output directory so that they are visible
-     *  to Sigma as a Tomcat application.
+     * Copy test files to the output directory so that they are visible
+     * to Sigma as a Tomcat application.
      */
     private static void copyTestFiles(ArrayList<File> files, File outputDir) throws IOException {
 
@@ -173,8 +180,9 @@ public class InferenceTestSuite {
     }
 
     /**
-     *  Note that 'files' variable is modified as a side effect.
-     *  @return error messages, or null if none
+     * Note that 'files' variable is modified as a side effect.
+     *
+     * @return error messages, or null if none
      */
     private static String getTestFiles(ArrayList<File> files, File outputDir) throws IOException {
 
@@ -261,6 +269,7 @@ public class InferenceTestSuite {
 
     /**
      * Undo all parts of the state that have anything to do with user assertions made during inference.
+     *
      * @throws IOException
      */
     public static void resetAllForInference(KB kb) throws IOException {
@@ -283,6 +292,7 @@ public class InferenceTestSuite {
     }
 
     /**
+     *
      */
     public static void showHelp() {
 
@@ -375,6 +385,7 @@ public class InferenceTestSuite {
 
     /**
      * Convenience method that sets some default parameters
+     *
      * @param timeout is a default timeout that is likely to be
      *                overwritten by a specification in the test
      *                data
@@ -469,6 +480,7 @@ public class InferenceTestSuite {
     }
 
     /**
+     *
      */
     public void saveTPTP(InfTestData itd) {
 
@@ -490,6 +502,7 @@ public class InferenceTestSuite {
     }
 
     /**
+     *
      */
     public void printResults(Collection<InfTestData> tests) {
 
@@ -798,6 +811,7 @@ public class InferenceTestSuite {
     }
 
     /**
+     *
      */
     public class InfTestData {
 

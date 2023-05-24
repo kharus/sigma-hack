@@ -45,9 +45,13 @@ public class KIF {
      */
     public static final int RELAXED_PARSE_MODE = 2;
     public static int count = 0;
-    /** The set of all terms in the knowledge base. This is a set of Strings. */
+    /**
+     * The set of all terms in the knowledge base. This is a set of Strings.
+     */
     public TreeSet<String> terms = new TreeSet<String>();
-    /** A hashMap to store term frequencies for each term in knowledge base */
+    /**
+     * A hashMap to store term frequencies for each term in knowledge base
+     */
     public Map<String, Integer> termFrequency = new HashMap<String, Integer>();
     /**
      * A HashMap of ArrayLists of Formulas. Each String key points to a list of
@@ -65,15 +69,20 @@ public class KIF {
      */
     public HashMap<String, Formula> formulaMap = new HashMap<String, Formula>();
     public String filename;
-    /** warnings generated during parsing */
+    /**
+     * warnings generated during parsing
+     */
     public TreeSet<String> warningSet = new TreeSet<String>();
-    /** errors generated during parsing */
+    /**
+     * errors generated during parsing
+     */
     public TreeSet<String> errorSet = new TreeSet<String>();
     private int parseMode = NORMAL_PARSE_MODE;
     private File file;
     private int totalLinesForComments = 0;
 
     /**
+     *
      */
     public KIF() {
     }
@@ -129,13 +138,13 @@ public class KIF {
      * parentheses. An example key would be arg-0-instance for a appearance of
      * the term "instance" in a statement in the predicate position.
      *
-     * @param sval            - the token such as "instance", "Human" etc.
-     * @param inAntecedent    - whether the term appears in the antecedent of a rule.
-     * @param inConsequent    - whether the term appears in the consequent of a rule.
-     * @param argumentNum     - the argument position in which the term appears. The
-     *            predicate position is argument 0. The first argument is 1 etc.
-     * @param parenLevel      - if the paren level is > 1 then the term appears nested in a
-     *            statement and the argument number is ignored.
+     * @param sval         - the token such as "instance", "Human" etc.
+     * @param inAntecedent - whether the term appears in the antecedent of a rule.
+     * @param inConsequent - whether the term appears in the consequent of a rule.
+     * @param argumentNum  - the argument position in which the term appears. The
+     *                     predicate position is argument 0. The first argument is 1 etc.
+     * @param parenLevel   - if the paren level is > 1 then the term appears nested in a
+     *                     statement and the argument number is ignored.
      */
     public static String createKey(String sval, boolean inAntecedent, boolean inConsequent,
                                    int argumentNum, int parenLevel) {
@@ -241,6 +250,7 @@ public class KIF {
     }
 
     /**
+     *
      */
     public static void showHelp() {
 
@@ -253,6 +263,7 @@ public class KIF {
     }
 
     /**
+     *
      */
     public static void main(String[] args) throws IOException {
 
@@ -310,8 +321,7 @@ public class KIF {
     /**
      * Sets the current parse mode to the input value mode.
      *
-     * @param mode
-     *            An integer value denoting a parsing mode.
+     * @param mode An integer value denoting a parsing mode.
      * @return void
      */
     public void setParseMode(int mode) {
@@ -320,6 +330,7 @@ public class KIF {
     }
 
     /**
+     *
      */
     private void display(StreamTokenizer_s st, boolean inRule, boolean inAntecedent, boolean inConsequent,
                          int argumentNum, int parenLevel, String key) {
@@ -353,7 +364,7 @@ public class KIF {
      * "formulas" include the string representation of the formula.
      *
      * @return a Set of warnings that may indicate syntax errors, but not fatal
-     *         parse errors.
+     * parse errors.
      */
     public TreeSet<String> parse(Reader r) {
 

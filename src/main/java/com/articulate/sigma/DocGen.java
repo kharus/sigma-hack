@@ -22,7 +22,9 @@ import com.articulate.sigma.utils.StringUtil;
 import java.io.*;
 import java.util.*;
 
-/** A class to generate simplified HTML-based documentation for SUO-KIF terms. */
+/**
+ * A class to generate simplified HTML-based documentation for SUO-KIF terms.
+ */
 public class DocGen {
 
     /**
@@ -58,7 +60,9 @@ public class DocGen {
      * generation process.
      */
     protected int docGenControlBits = 0;
-    /** The default namespace associated with this DocGen object */
+    /**
+     * The default namespace associated with this DocGen object
+     */
 
     protected String defaultNamespace = "";
     /**
@@ -79,26 +83,35 @@ public class DocGen {
      * A Set of Strings.
      */
     protected Set codedIdentifiers = null;
-    /** The document title text to be used for HTML generation */
+    /**
+     * The document title text to be used for HTML generation
+     */
     protected String titleText = "";
-    /** The document footer text to be used for HTML generation */
+    /**
+     * The document footer text to be used for HTML generation
+     */
 
     protected String footerText = "";
-    /** The style sheet (CSS filename) to be referenced in HTML generation */
+    /**
+     * The style sheet (CSS filename) to be referenced in HTML generation
+     */
 
     protected String styleSheet = "simple.css";
-    /** The default image file (such as an organization's logo) to be
+    /**
+     * The default image file (such as an organization's logo) to be
      * used in HTML generation
      */
 
     protected String defaultImageFile = "articulate_logo.gif";
-    /** The default image file (such as an organization's logo) to be
+    /**
+     * The default image file (such as an organization's logo) to be
      * used in HTML generation, wrapped in any necessary additional
      * markup required for proper display.
      */
 
     protected String defaultImageFileMarkup = "articulate_logo.gif";
-    /** The canonical pathname of the current directory in which
+    /**
+     * The canonical pathname of the current directory in which
      * output files will be (are being) saved.
      */
 
@@ -108,17 +121,20 @@ public class DocGen {
      * adequate ASCII translations for HTML character entities, in
      * circumstances where occurrences of the entities might cause
      * parsing or rendering problems (e.g., apparently, in XSD files).
-     *
      */
     protected Map stringReplacementMap = null;
-    /** A set of the predicates that should not be displayed to the user. */
+    /**
+     * A set of the predicates that should not be displayed to the user.
+     */
     protected Set inhibitDisplayRelations = null;
     /**
      * The header to be used for the the table of contents (or index
      * list) section during HTML generation.
      */
     protected String tocHeader = "";
-    /** A default key to identify this particular DocGen object **/
+    /**
+     * A default key to identify this particular DocGen object
+     **/
     protected String docGenKey = DEFAULT_KEY;
     /**
      * If true, a termFormat value obtained for term will be displayed
@@ -142,18 +158,18 @@ public class DocGen {
      */
     protected DisplayFilter displayFilter = null;
     /**
-     *  A TreeMap of TreeMaps of ArrayLists where the keys are
-     *  uppercase single characters (of term formats or headwords) and
-     *  the values are TreeMaps with a key of the term formats or
-     *  headwords and ArrayList values of the actual term names.  Note
-     *  that if "simplified" is false actual term names will be used
-     *  instead of term formats or headwords and the interior map will
-     *  have keys that are the same as their values.
-     *
-     *  Pictorially:
-     *
-     *      letter->    formattedTerm1->term11,term12...term1N
-     *                  formattedTerm2->term21,term22...term2N
+     * A TreeMap of TreeMaps of ArrayLists where the keys are
+     * uppercase single characters (of term formats or headwords) and
+     * the values are TreeMaps with a key of the term formats or
+     * headwords and ArrayList values of the actual term names.  Note
+     * that if "simplified" is false actual term names will be used
+     * instead of term formats or headwords and the interior map will
+     * have keys that are the same as their values.
+     * <p>
+     * Pictorially:
+     * <p>
+     * letter->    formattedTerm1->term11,term12...term1N
+     * formattedTerm2->term21,term22...term2N
      */
     protected TreeMap alphaList = new TreeMap(String.CASE_INSENSITIVE_ORDER);
     /**
@@ -207,6 +223,7 @@ public class DocGen {
     }
 
     /**
+     *
      */
     public static DocGen getInstance(String compositeKey) {
 
@@ -247,6 +264,7 @@ public class DocGen {
     }
 
     /**
+     *
      */
     public static DocGen getInstance(KB kb, String ontology) {
 
@@ -270,10 +288,8 @@ public class DocGen {
      * Returns a List of String tokens that determine how the output
      * should be formatted.  The List could be empty.
      *
-     * @param kb The KB in which to look for docGenOutputFormat statements
-     *
+     * @param kb       The KB in which to look for docGenOutputFormat statements
      * @param ontology A SUO-KIF term denoting an Ontology
-     *
      * @return a List of Strings, which could be empty
      */
     public static ArrayList<String> getOutputFormatTokens(KB kb, String ontology) {
@@ -304,10 +320,8 @@ public class DocGen {
      * third element in statements for which the predicate is
      * docGenOutputFormat.
      *
-     * @param kb The KB in which to look for docGenOutputFormat statements
-     *
+     * @param kb       The KB in which to look for docGenOutputFormat statements
      * @param ontology A SUO-KIF term denoting an Ontology
-     *
      * @return a String token, or null.
      */
     public static String getFirstHtmlFormatToken(KB kb, String ontology) {
@@ -329,11 +343,9 @@ public class DocGen {
     /**
      * Returns a String consisting of str concatenated indent times.
      *
-     * @param str The String to be concatentated with itself
-     *
+     * @param str    The String to be concatentated with itself
      * @param indent An int indicating the number of times str should
-     * be concatenated
-     *
+     *               be concatenated
      * @return A String
      */
     public static String indentChars(String str, int indent) {
@@ -350,10 +362,8 @@ public class DocGen {
      * Returns true if term is an instance or subclass of
      * CompositeContentBearingObject in kb, else returns false.
      *
-     * @param kb The KB in which to check the definition of term
-     *
+     * @param kb   The KB in which to check the definition of term
      * @param term A SUO-KIF term
-     *
      * @return true or false
      */
     public static boolean isComposite(KB kb, String term) {
@@ -375,10 +385,8 @@ public class DocGen {
      * predicate.  If no statement can be retrieved, the ArrayList
      * will be empty.
      *
-     * @param kb The KB from which to retrieve a statement with predicate
-     *
+     * @param kb        The KB from which to retrieve a statement with predicate
      * @param predicate
-     *
      * @return An ArrayList of Strings, which could be empty.
      */
     public static ArrayList<String> getRangeValueList(KB kb, String predicate) {
@@ -431,7 +439,6 @@ public class DocGen {
     /**
      * Returns true if term should be skipped over during printing,
      * else returns false.
-     *
      */
     protected static boolean isSkipNode(KB kb, String term) {
 
@@ -449,8 +456,8 @@ public class DocGen {
      * Returns true if i is an instance of c, else returns false.
      *
      * @param kb A KB object
-     * @param i A String denoting an instance
-     * @param c A String denoting a Class
+     * @param i  A String denoting an instance
+     * @param c  A String denoting a Class
      * @return true or false
      */
     protected static boolean isInstanceOf(KB kb, String i, String c) {
@@ -461,10 +468,8 @@ public class DocGen {
     /**
      * Writes a List of Strings to an OutputStream.
      *
-     * @param data A List of String objects
-     *
+     * @param data   A List of String objects
      * @param stream An OutputSteam object
-     *
      * @return void
      */
     public static void writeToStream(List<String> data, OutputStream stream) {
@@ -490,6 +495,7 @@ public class DocGen {
     }
 
     /**
+     *
      */
     public static boolean emptyString(String s) {
 
@@ -497,6 +503,7 @@ public class DocGen {
     }
 
     /**
+     *
      */
     public static boolean isNonEmptyString(String s) {
 
@@ -550,7 +557,6 @@ public class DocGen {
      * this DocGen instance.
      *
      * @param val An integer representing bit values
-     *
      * @return An int value representing the result of the bitwise OR
      * operation.
      */
@@ -565,7 +571,6 @@ public class DocGen {
      * document generation process for this DocGen instance.
      *
      * @param token A String representing bit values
-     *
      * @return An int value representing the result of the bitwise OR
      * operation.
      */
@@ -579,7 +584,6 @@ public class DocGen {
      * among the control bits represented for this DocGen instance.
      *
      * @param valToTest An integer representing bit values to be tested
-     *
      * @return true or false
      */
     public boolean testDocGenControlBits(int valToTest) {
@@ -604,7 +608,6 @@ public class DocGen {
      * the control bits represented for this DocGen instance.
      *
      * @param token A String token corresponding to a bit value
-     *
      * @return true or false
      */
     public boolean testDocGenControlBits(String token) {
@@ -615,7 +618,6 @@ public class DocGen {
     /**
      * Returns the String denoting the default namespace
      * associated with this DocGen object.
-     *
      */
     public String getDefaultNamespace() {
 
@@ -650,7 +652,6 @@ public class DocGen {
      * Returns the String denoting the default namespace for
      * predicates in the ontology associated with this DocGen
      * object.
-     *
      */
     public String getDefaultPredicateNamespace() {
 
@@ -680,7 +681,6 @@ public class DocGen {
     /**
      * Sets the default namespace for predicates in the ontology
      * associated with this DB object.
-     *
      */
     public void setDefaultPredicateNamespace(String namespace) {
 
@@ -710,6 +710,7 @@ public class DocGen {
     }
 
     /**
+     *
      */
     public void setOntology(String term) {
 
@@ -798,6 +799,7 @@ public class DocGen {
     }
 
     /**
+     *
      */
     public void setKB(KB kb) {
 
@@ -809,10 +811,9 @@ public class DocGen {
      * identifiers in kb, including ISO code values stated to be such.
      *
      * @param kb The KB in which to gather terms defined as coded
-     * identifiers
-     *
-     *  @return A Set of all the terms that denote ISO code values and
-     *  other coded identifiers
+     *           identifiers
+     * @return A Set of all the terms that denote ISO code values and
+     * other coded identifiers
      */
     protected Set getCodedIdentifiers(KB kb) {
 
@@ -853,7 +854,7 @@ public class DocGen {
      * Sets the title text to be used during HTML document generation.
      *
      * @param titlestr A String that will be used as the HTML document
-     * title
+     *                 title
      */
     public void setTitleText(String titlestr) {
 
@@ -874,7 +875,7 @@ public class DocGen {
      * generation.
      *
      * @param str A String that will be used as the HTML document
-     * footer text
+     *            footer text
      */
     public void setFooterText(String str) {
 
@@ -896,8 +897,7 @@ public class DocGen {
      * Sheet file to be referenced during HTML document generation.
      *
      * @param filename A String that is a base filename plus a
-     * filename suffix
-     *
+     *                 filename suffix
      */
     public void setStyleSheet(String filename) {
         styleSheet = filename;
@@ -917,8 +917,7 @@ public class DocGen {
      * to be referenced during HTML document generation.
      *
      * @param filename A String that is a base filename plus a
-     * filename suffix
-     *
+     *                 filename suffix
      */
     public void setDefaultImageFile(String filename) {
 
@@ -939,9 +938,8 @@ public class DocGen {
      * to be referenced during HTML document generation.
      *
      * @param markup A String that includes the image file pathname
-     * plus any additional markup required for proper display of the
-     * image
-     *
+     *               plus any additional markup required for proper display of the
+     *               image
      */
     public void setDefaultImageFileMarkup(String markup) {
         defaultImageFileMarkup = markup;
@@ -960,7 +958,6 @@ public class DocGen {
      * which output files will be (are being) saved.
      *
      * @param pathname A canonical pathname String
-     *
      */
     public void setOutputDirectoryPath(String pathname) {
         outputDirectoryPath = pathname;
@@ -1016,7 +1013,6 @@ public class DocGen {
      * located, else just returns fromString.
      *
      * @param fromString A String for which a replacement is sought
-     *
      * @return A replacement String
      */
     public String getStringReplacement(String fromString) {
@@ -1075,7 +1071,6 @@ public class DocGen {
      * those contained in relations.
      *
      * @param relations A Set of predicate names
-     *
      */
     public void setInhibitDisplayRelations(Set relations) {
         this.inhibitDisplayRelations = relations;
@@ -1099,7 +1094,6 @@ public class DocGen {
     /**
      * Returns the String key that is the index for this particular
      * DocGen object.
-     *
      */
     public String getDocGenKey() {
         return this.docGenKey;
@@ -1108,7 +1102,6 @@ public class DocGen {
     /**
      * Sets the String key that is the index for this particular
      * DocGen object.
-     *
      */
     public void setDocGenKey(String key) {
         this.docGenKey = key;
@@ -1143,12 +1136,10 @@ public class DocGen {
      * docGenOutputParentDirectory and the argument ontology.  Tries
      * to create the directory pathname if it does not already exist.
      *
-     * @param kb The KB containing a statement formed with the
-     * predicate docGenOutputParentDirectory and ontology
-     *
+     * @param kb       The KB containing a statement formed with the
+     *                 predicate docGenOutputParentDirectory and ontology
      * @param ontology The ontology referred to in a statement formed
-     * with the predicate docGenOutputParentDirectory in kb
-     *
+     *                 with the predicate docGenOutputParentDirectory in kb
      */
     public void setOutputParentDir(KB kb, String ontology) {
 
@@ -1296,9 +1287,9 @@ public class DocGen {
     }
 
     /**
-     *  Rebuilds the TreeSet containing all terms in kb, and forces
-     *  the new TreeSet to sort according to each term's presentation
-     *  name.
+     * Rebuilds the TreeSet containing all terms in kb, and forces
+     * the new TreeSet to sort according to each term's presentation
+     * name.
      */
     public SortedSet<String> resortKbTerms(KB kb) {
 
@@ -1326,18 +1317,18 @@ public class DocGen {
     }
 
     /**
-     *  @return a TreeMap of TreeMaps of ArrayLists where the keys
-     *          are uppercase single characters (of term formats or
-     *          headwords) and the values are TreeMaps with a key of
-     *          the term formats or headwords and ArrayList values
-     *          of the actual term names.  Note that if "simplified"
-     *          is false actual term names will be used instead of
-     *          term formats or headwords and the interior map will
-     *          have keys that are the same as their values.
-     *
-     *          Pictorially:
-     *      letter->    formattedTerm1->term11,term12...term1N
-     *                  formattedTerm2->term21,term22...term2N
+     * @return a TreeMap of TreeMaps of ArrayLists where the keys
+     * are uppercase single characters (of term formats or
+     * headwords) and the values are TreeMaps with a key of
+     * the term formats or headwords and ArrayList values
+     * of the actual term names.  Note that if "simplified"
+     * is false actual term names will be used instead of
+     * term formats or headwords and the interior map will
+     * have keys that are the same as their values.
+     * <p>
+     * Pictorially:
+     * letter->    formattedTerm1->term11,term12...term1N
+     * formattedTerm2->term21,term22...term2N
      */
     public TreeMap getAlphaList(KB kb) {
 
@@ -1354,7 +1345,7 @@ public class DocGen {
     }
 
     /**
-     *  Clears the alphaList for this DocGen object.
+     * Clears the alphaList for this DocGen object.
      */
     public void clearAlphaList() {
 
@@ -1368,18 +1359,18 @@ public class DocGen {
     }
 
     /**
-     *  @return a TreeMap of TreeMaps of ArrayLists where the keys
-     *          are uppercase single characters (of term formats or
-     *          headwords) and the values are TreeMaps with a key of
-     *          the term formats or headwords and ArrayList values
-     *          of the actual term names.  Note that if "simplified"
-     *          is false actual term names will be used instead of
-     *          term formats or headwords and the interior map will
-     *          have keys that are the same as their values.
-     *
-     *          Pictorially:
-     *      letter->    formattedTerm1->term11,term12...term1N
-     *                  formattedTerm2->term21,term22...term2N
+     * @return a TreeMap of TreeMaps of ArrayLists where the keys
+     * are uppercase single characters (of term formats or
+     * headwords) and the values are TreeMaps with a key of
+     * the term formats or headwords and ArrayList values
+     * of the actual term names.  Note that if "simplified"
+     * is false actual term names will be used instead of
+     * term formats or headwords and the interior map will
+     * have keys that are the same as their values.
+     * <p>
+     * Pictorially:
+     * letter->    formattedTerm1->term11,term12...term1N
+     * formattedTerm2->term21,term22...term2N
      */
     protected TreeMap createAlphaList(KB kb) { // , HashMap stringMap
         /*
@@ -1454,11 +1445,9 @@ public class DocGen {
      * Tries to use the values obtained from kb and ontology to set
      * some of the parameter values used for HTML generation.
      *
-     * @param kb The KB from which to gather stated parameter values
-     *
+     * @param kb       The KB from which to gather stated parameter values
      * @param ontology The ontology from which to gather stated
-     * parameter values
-     *
+     *                 parameter values
      * @return void
      */
     public void setMetaDataFromKB(KB kb, String ontology) {
@@ -1547,7 +1536,7 @@ public class DocGen {
      * structure.
      *
      * @param alphaList a TreeMap of TreeMaps of ArrayLists.  @see
-     *                   createAlphaList()
+     *                  createAlphaList()
      */
     public String createCompositePage(KB kb,
                                       String kbHref,
@@ -1946,7 +1935,6 @@ public class DocGen {
      * using title as the document title String.
      *
      * @param title A String to be used as the document title
-     *
      * @return A String of HTML markup encoding the start of an HTML
      * document
      */
@@ -1999,8 +1987,7 @@ public class DocGen {
      * displayed at the bottom of the page.
      *
      * @param footerText The text String to be diplayed at the bottom
-     * of an HTML document
-     *
+     *                   of an HTML document
      * @return A String of HTML markup
      */
     protected String generateHtmlFooter(String footerText) {
@@ -2062,11 +2049,9 @@ public class DocGen {
      * namespace and an ontology is represented by a statement formed
      * with the SUO-KIF predicate ontologyNamespace.
      *
-     * @param kb The KB in which ontologyNamespace statements will be
-     * sought
-     *
+     * @param kb       The KB in which ontologyNamespace statements will be
+     *                 sought
      * @param ontology The name of the ontology that will be checked
-     *
      * @return An ArrayList of SUO-KIF terms that denote namespaces
      * and occur in statements formed with the predicate
      * ontologyNamespace
@@ -2094,11 +2079,9 @@ public class DocGen {
      * statements formed with the SUO-KIF predicate
      * docGenNamespaceDelimiter.
      *
-     * @param kb The KB that will be checked to find statements formed
-     * with docGenNamespaceDelimiter
-     *
+     * @param kb       The KB that will be checked to find statements formed
+     *                 with docGenNamespaceDelimiter
      * @param ontology The name of the ontology that will be checked
-     *
      * @return An ArrayList of tokens (Strings) that are used as
      * delimiters between a qualified term name and the namespace
      * prefix that qualifies the term
@@ -2212,13 +2195,10 @@ public class DocGen {
      * or in ontology, using the predicates inNamespace and
      * ontologyNamespace.
      *
-     * @param kb The KB in which statements will be checked
-     *
+     * @param kb       The KB in which statements will be checked
      * @param ontology The name of the ontology that will be checked
-     *
-     * @param force If true, this parameter will force the List of
-     * namespaces to be recomputed
-     *
+     * @param force    If true, this parameter will force the List of
+     *                 namespaces to be recomputed
      * @return A List of all the SUO-KIF terms that denote namespaces
      * and occur in statements formed with inNamespace or
      * ontologyNamespace
@@ -2331,10 +2311,8 @@ public class DocGen {
     /**
      * Returns a SUO-KIF term denoting a namespace.
      *
-     * @param kb The KB in which to determine if term is an namespace
-     *
+     * @param kb   The KB in which to determine if term is an namespace
      * @param term A String denoting a namespace, perhaps in W3C format
-     *
      * @return String A term denoting a namespace in SUO-KIF format,
      * else just returns the input term if no syntactic transformation
      * is warranted
@@ -2374,11 +2352,9 @@ public class DocGen {
      * Removes namespace prefixes from all SUO-KIF terms to be
      * hyperlinked in text.
      *
-     * @param kb The KB is use when checking for valid namespace prefixes
-     *
+     * @param kb   The KB is use when checking for valid namespace prefixes
      * @param text The String in which all linkable SUO-KIF terms are
-     * to be transformed
-     *
+     *             to be transformed
      * @return A String with all linkable SUO-KIF terms have had their
      * namespace prefixes removed
      */
@@ -2403,11 +2379,10 @@ public class DocGen {
     }
 
     /**
-     *  Collects and returns a List of all Predicates in kb.
+     * Collects and returns a List of all Predicates in kb.
      *
      * @param kb The KB from which to gather all terms that are
-     * instances of BinaryPredicate
-     *
+     *           instances of BinaryPredicate
      * @return A List of BinaryPredicates (Strings)
      */
     protected ArrayList getPredicates(KB kb, boolean requireNamespace) {
@@ -2530,10 +2505,8 @@ public class DocGen {
      * Returns true if term has syntactic subcomponents such as XML
      * elements or XML attributes in kb, else returns false.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String denoting a SUO-KIF constant name
-     *
      * @return true or false
      */
     protected boolean hasSubComponents(KB kb, String term) {
@@ -2553,10 +2526,8 @@ public class DocGen {
      * Returns a List containing those terms that are immediate
      * syntactic subordinates of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String that is a SUO-KIF constant
-     *
      * @return A List of Strings that denote SUO-KIF constants, or an
      * empty List
      */
@@ -2581,10 +2552,8 @@ public class DocGen {
      * Returns a List containing those terms that are immediate
      * syntactic superiors or "containers" of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String, a SUO-KIF constant
-     *
      * @return A List of Strings that denote SUO-KIF constants, or an
      * empty List
      */
@@ -2610,13 +2579,10 @@ public class DocGen {
      * for term in kb, else returns null if no termFormat value
      * exists.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param term A String that is a SUO-KIF constant
-     *
+     * @param kb       The KB in which term is defined
+     * @param term     A String that is a SUO-KIF constant
      * @param contexts A List of namespaces or other terms that index
-     * context-specific termFormat statements
-     *
+     *                 context-specific termFormat statements
      * @return A List of Strings that denote SUO-KIF constants, or an
      * empty List
      */
@@ -2666,13 +2632,10 @@ public class DocGen {
      * using the List of namespaces or other contextualizing terms in
      * contexts.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param term A String that is a SUO-KIF constant
-     *
+     * @param kb       The KB in which term is defined
+     * @param term     A String that is a SUO-KIF constant
      * @param contexts A List of namespaces or other terms that index
-     * context-specific documentation or comment statements
-     *
+     *                 context-specific documentation or comment statements
      * @return A documentation String, or an empty String if no
      * documentation String can be found
      */
@@ -2728,10 +2691,8 @@ public class DocGen {
      * Returns the first containing Class that can be found for term
      * in kb.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String that is a SUO-KIF constant
-     *
      * @return A SUO-KIF term denoting a Class, or null if no Class
      * can be found
      */
@@ -2799,10 +2760,8 @@ public class DocGen {
      * for term in kb, assuming that term denotes a Class or a
      * Relation.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String that denotes a SUO-KIF Class or Relation
-     *
      * @return A SUO-KIF term, or null if no subsuming term can be
      * found
      */
@@ -2835,10 +2794,8 @@ public class DocGen {
      * Returns the first containing, subsuming, or superordinate
      * entity that can be found for term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String that is a SUO-KIF constant
-     *
      * @return A SUO-KIF term, or null if no more general term can be
      * found
      */
@@ -2877,10 +2834,8 @@ public class DocGen {
      * Returns a List of the first containing, subsuming, or
      * superordinate entities found for term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String that denotes a SUO-KIF term
-     *
      * @return A List of SUO-KIF terms, or an empty List if no
      * generalizations of term can be found
      */
@@ -2916,12 +2871,9 @@ public class DocGen {
      * Returns a List of the first instances or syntactic subordinate
      * entities that can be found for term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String that denotes a SUO-KIF term
-     *
      * @return A List of SUO-KIF terms, or an empty List
-     *
      */
     protected ArrayList<String> getFirstSpecificTerms(KB kb, String term) {
 
@@ -2954,12 +2906,9 @@ public class DocGen {
      * Returns a List of the entities that are immediate syntactic
      * subordinates of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String that denotes a SUO-KIF term
-     *
      * @return A List of SUO-KIF terms, or an empty List
-     *
      */
     protected ArrayList<String> getSyntacticSubordinateTerms(KB kb, String term) {
 
@@ -2997,12 +2946,9 @@ public class DocGen {
      * Returns a List of the entities that are immediate instances of
      * term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String that denotes a SUO-KIF Class
-     *
      * @return A List of SUO-KIF terms, or an empty List
-     *
      */
     protected ArrayList getFirstInstances(KB kb, String term) {
 
@@ -3029,12 +2975,9 @@ public class DocGen {
      * Returns a SUO-KIF constant that denotes the first containing
      * Class of term obtained in kb.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String that denotes a SUO-KIF term
-     *
      * @return A String that denotes a SUO-KIF Class, or null
-     *
      */
     protected String getFirstContainingClass(KB kb, String term) {
 
@@ -3049,12 +2992,9 @@ public class DocGen {
      * Returns a List containing the immediate SUO-KIF subclasses of
      * term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String that denotes a SUO-KIF term
-     *
      * @return A List of SUO-KIF Classes, or an empty List
-     *
      */
     protected ArrayList getFirstSubClasses(KB kb, String term) {
 
@@ -3081,20 +3021,15 @@ public class DocGen {
      * Returns a String consisting of HTML markup for a documentation
      * String for term obtained from kb and indexed by language.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb       The KB in which term is defined
+     * @param kbHref   A String containing the constant parts of the
+     *                 href link for term, or an empty String
+     * @param term     A String that denotes a SUO-KIF term
      * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * documentation Strings in kb
-     *
+     *                 natural language, or other type of entity that indexes
+     *                 documentation Strings in kb
      * @return A String containing HTML markup, or an empty String if
      * term is supposed to be suppressed for display
-     *
      */
     protected String createDocs(KB kb, String kbHref, String term, String language) {
 
@@ -3129,20 +3064,15 @@ public class DocGen {
      * Returns a String containing the HTML markup for the Comment
      * field in a page displaying the definition of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb       The KB in which term is defined
+     * @param kbHref   A String containing the constant parts of the
+     *                 href link for term, or an empty String
+     * @param term     A String that denotes a SUO-KIF term
      * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * comment Strings in kb
-     *
+     *                 natural language, or other type of entity that indexes
+     *                 comment Strings in kb
      * @return A String containing HTML markup, or an empty String if
      * term is supposed to be suppressed for display
-     *
      */
     protected String createComments(KB kb, String kbHref, String term, String language) {
 
@@ -3190,16 +3120,12 @@ public class DocGen {
      * Returns a String containing HTML markup for the synonym field
      * of an HTML page displaying the definition of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb     The KB in which term is defined
      * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     *               href link for term, or an empty String
+     * @param term   A String that denotes a SUO-KIF term
      * @return A String containing HTML markup, or an empty String if
      * term is supposed to be suppressed for display
-     *
      */
     protected String createSynonyms(KB kb, String kbHref, String term, String formatToken) {
 
@@ -3300,16 +3226,12 @@ public class DocGen {
      * Returns a String containing HTML markup for the Display Labels
      * field of an HTML page displaying statements about term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb          The KB in which term is defined
+     * @param kbHref      A String containing the constant parts of the
+     *                    href link for term, or an empty String
+     * @param term        A String that denotes a SUO-KIF term
      * @param formatToken A String token that partly determines the
-     * format of the output
-     *
+     *                    format of the output
      * @return A String containing HTML markup, or an empty String if
      * term is supposed to be suppressed for display
      */
@@ -3397,20 +3319,15 @@ public class DocGen {
      * Components As field of an HTML page displaying the definition
      * of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb       The KB in which term is defined
+     * @param kbHref   A String containing the constant parts of the
+     *                 href link for term, or an empty String
+     * @param term     A String that denotes a SUO-KIF term
      * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * termFormat Strings in kb
-     *
+     *                 natural language, or other type of entity that indexes
+     *                 termFormat Strings in kb
      * @return A String containing HTML markup, or an empty String if
      * term is supposed to be suppressed for display
-     *
      */
     protected String createHasSameComponents(KB kb,
                                              String kbHref,
@@ -3467,20 +3384,15 @@ public class DocGen {
      * Using Same Components field of an HTML page displaying the
      * definition of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb       The KB in which term is defined
+     * @param kbHref   A String containing the constant parts of the
+     *                 href link for term, or an empty String
+     * @param term     A String that denotes a SUO-KIF term
      * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * termFormat Strings in kb
-     *
+     *                 natural language, or other type of entity that indexes
+     *                 termFormat Strings in kb
      * @return A String containing HTML markup, or an empty String if
      * term is supposed to be suppressed for display
-     *
      */
     protected String createUsingSameComponents(KB kb,
                                                String kbHref,
@@ -3552,23 +3464,17 @@ public class DocGen {
      * Returns a String containing HTML markup for the Parents field
      * of an HTML page displaying the definition of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
-     * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * termFormat Strings in kb
-     *
+     * @param kb         The KB in which term is defined
+     * @param kbHref     A String containing the constant parts of the
+     *                   href link for term, or an empty String
+     * @param term       A String that denotes a SUO-KIF term
+     * @param language   A String denoting a SUO-KIF namespace, a
+     *                   natural language, or other type of entity that indexes
+     *                   termFormat Strings in kb
      * @param parentsSet A Set for accumulating the parent terms of
-     * term
-     *
+     *                   term
      * @return A String containing HTML markup, or an empty String if
      * term is supposed to be suppressed for display
-     *
      */
     protected String createParents(KB kb,
                                    String kbHref,
@@ -3663,20 +3569,15 @@ public class DocGen {
      * Returns a String containing HTML markup for the Children field
      * of an HTML page displaying the definition of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb       The KB in which term is defined
+     * @param kbHref   A String containing the constant parts of the
+     *                 href link for term, or an empty String
+     * @param term     A String that denotes a SUO-KIF term
      * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * termFormat Strings in kb
-     *
+     *                 natural language, or other type of entity that indexes
+     *                 termFormat Strings in kb
      * @return A String containing HTML markup, or an empty String if
      * term is supposed to be suppressed for display
-     *
      */
     protected String createChildren(KB kb, String kbHref, String term, String language) {
 
@@ -3743,22 +3644,16 @@ public class DocGen {
      * section of an HTML page displaying the definition of term in
      * kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb       The KB in which term is defined
+     * @param kbHref   A String containing the constant parts of the
+     *                 href link for term, or an empty String
+     * @param term     A String that denotes a SUO-KIF term
      * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * termFormat Strings in kb
-     *
+     *                 natural language, or other type of entity that indexes
+     *                 termFormat Strings in kb
      * @param excluded A List of terms to be excluded from the display
-     *
      * @return A String containing HTML markup, or an empty String if
      * term is supposed to be suppressed for display
-     *
      */
     protected String createInstances(KB kb,
                                      String kbHref,
@@ -3894,31 +3789,23 @@ public class DocGen {
     /**
      * Returns a String containing HTML markup for a SUO-KIF Formula.
      *
-     * @param kb The KB in which formula occurs
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for the constants in formula, or an empty String
-     *
-     * @param indentSeq A character sequence that will be used as the
-     * indentation quantum for formula
-     *
-     * @param level The current indentation level
-     *
+     * @param kb           The KB in which formula occurs
+     * @param kbHref       A String containing the constant parts of the
+     *                     href link for the constants in formula, or an empty String
+     * @param indentSeq    A character sequence that will be used as the
+     *                     indentation quantum for formula
+     * @param level        The current indentation level
      * @param previousTerm A String, the term that occurs sequentially
-     * before currentTerm in the same level of nesting.  The value of
-     * previousTerm aids in determining how a given Formula should be
-     * formatted, and could be null.
-     *
-     * @param currentTerm A String denoting a SUO-KIF Formula or part
-     * of a Formula
-     *
-     * @param context A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * termFormat Strings in kb
-     *
+     *                     before currentTerm in the same level of nesting.  The value of
+     *                     previousTerm aids in determining how a given Formula should be
+     *                     formatted, and could be null.
+     * @param currentTerm  A String denoting a SUO-KIF Formula or part
+     *                     of a Formula
+     * @param context      A String denoting a SUO-KIF namespace, a
+     *                     natural language, or other type of entity that indexes
+     *                     termFormat Strings in kb
      * @return A String containing HTML markup, or an empty String if
      * formula cannot be processed
-     *
      */
     protected String createFormula(KB kb,
                                    String kbHref,
@@ -4002,20 +3889,15 @@ public class DocGen {
      * section of an HTML page displaying the definition of term in
      * kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb       The KB in which term is defined
+     * @param kbHref   A String containing the constant parts of the
+     *                 href link for term, or an empty String
+     * @param term     A String that denotes a SUO-KIF term
      * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * termFormat Strings in kb
-     *
+     *                 natural language, or other type of entity that indexes
+     *                 termFormat Strings in kb
      * @return A String containing HTML markup, or an empty String if
      * term is supposed to be suppressed for display
-     *
      */
     protected String createRelations(KB kb,
                                      String kbHref,
@@ -4150,21 +4032,16 @@ public class DocGen {
      * Returns a String containing HTML markup for the Cardinality
      * field of an HTML page displaying the definition of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb      The KB in which term is defined
+     * @param kbHref  A String containing the constant parts of the
+     *                href link for term, or an empty String
+     * @param term    A String that denotes a SUO-KIF term
      * @param context A String denoting a SUO-KIF namespace, a natural
-     * language, or other type of entity that indexes termFormat
-     * Strings in kb -- this parameter is currently ignored, since
-     * LocalInstance terms are already highly specific
-     *
+     *                language, or other type of entity that indexes termFormat
+     *                Strings in kb -- this parameter is currently ignored, since
+     *                LocalInstance terms are already highly specific
      * @return A String containing HTML markup, or an empty String if
      * no markup can be generated
-     *
      */
     protected String showCardinalityCell(KB kb, String kbHref, String term, String context) {
 
@@ -4224,23 +4101,17 @@ public class DocGen {
      * in the Composite Component section of an HTML page displaying
      * the partial definition of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
-     * @param indent A int value that determines the depth to which
-     * term will be indented when displayed
-     *
+     * @param kb       The KB in which term is defined
+     * @param kbHref   A String containing the constant parts of the
+     *                 href link for term, or an empty String
+     * @param term     A String that denotes a SUO-KIF term
+     * @param indent   A int value that determines the depth to which
+     *                 term will be indented when displayed
      * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * termFormat Strings in kb
-     *
+     *                 natural language, or other type of entity that indexes
+     *                 termFormat Strings in kb
      * @return A String containing HTML markup, or an empty String if
      * term is supposed to be suppressed for display
-     *
      */
     protected String createCompositeComponentLine(KB kb,
                                                   String kbHref,
@@ -4342,18 +4213,14 @@ public class DocGen {
      * otherwise returns the termFormat entry for term in English,
      * otherwise just returns the term name.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb       The KB in which term is defined
+     * @param term     A String that denotes a SUO-KIF term
      * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or another type of entity that contextualizes
-     * or indexes termFormat Strings in kb
-     *
+     *                 natural language, or another type of entity that contextualizes
+     *                 or indexes termFormat Strings in kb
      * @return A String providing a context-specific name for term,
      * possibly including HTML markup, or just term if no
      * context-specific form can be found or produced
-     *
      */
     public String showTermName(KB kb, String term, String language) {
 
@@ -4377,21 +4244,16 @@ public class DocGen {
      * Returns a String containing HTML markup for a hierarchy or tree
      * display of terms that denote nested composite components.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param hier A List containing term names and representing one
-     * sub-branch in a tree
-     *
+     * @param kb       The KB in which term is defined
+     * @param kbHref   A String containing the constant parts of the
+     *                 href link for term, or an empty String
+     * @param hier     A List containing term names and representing one
+     *                 sub-branch in a tree
      * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * termFormat Strings in kb
-     *
+     *                 natural language, or other type of entity that indexes
+     *                 termFormat Strings in kb
      * @return A String containing HTML markup, or an empty String if
      * no markup can be generated
-     *
      */
     protected String formatCompositeHierarchy(KB kb,
                                               String kbHref,
@@ -4423,20 +4285,15 @@ public class DocGen {
      * the graph containing those XML elements and attributes
      * syntactically subordinate to term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb          The KB in which term is defined
+     * @param term        A String that denotes a SUO-KIF term
      * @param isAttribute If true, this parameter indicates that term
-     * denotes an XML attribute
-     *
-     * @param indent An integer indicating the depth or level to which
-     * term should be indented when displayed
-     *
+     *                    denotes an XML attribute
+     * @param indent      An integer indicating the depth or level to which
+     *                    term should be indented when displayed
      * @return A List containing two Lists, the first of which is a
      * List of terms that denote XML attributes, and the second of
      * which is a list of terms that denote XML elements
-     *
      */
     protected ArrayList createCompositeRecurse(KB kb,
                                                String term,
@@ -4484,13 +4341,10 @@ public class DocGen {
      * elements and attributes syntactically subordinate to term in
      * kb.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String that denotes a SUO-KIF term
-     *
      * @return A String containing HTML markup, or an empty String if
      * no markup can be generated
-     *
      */
     protected boolean isXmlAttribute(KB kb, String term) {
 
@@ -4525,26 +4379,19 @@ public class DocGen {
      * contained component in an HTML page displaying the partial
      * definition of instance in kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
+     * @param kb             The KB in which term is defined
+     * @param kbHref         A String containing the constant parts of the
+     *                       href link for term, or an empty String
      * @param containingComp A String that denotes the term that
-     * contains, or is syntactically superordinate to, instance
-     *
-     * @param instance A String that denotes a SUO-KIF term
-     *
-     * @param indent An int value that determines the depth to which
-     * instance will be indented when displayed
-     *
-     * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * termFormat Strings in kb
-     *
+     *                       contains, or is syntactically superordinate to, instance
+     * @param instance       A String that denotes a SUO-KIF term
+     * @param indent         An int value that determines the depth to which
+     *                       instance will be indented when displayed
+     * @param language       A String denoting a SUO-KIF namespace, a
+     *                       natural language, or other type of entity that indexes
+     *                       termFormat Strings in kb
      * @return A String containing HTML markup, or an empty String if
      * no markup can be generated
-     *
      */
     protected String createContainingCompositeComponentLine(KB kb,
                                                             String kbHref,
@@ -4620,13 +4467,13 @@ public class DocGen {
     }
 
     /**
-     *  Given the SUO-KIF statements:
-     *
+     * Given the SUO-KIF statements:
+     * <p>
      * (hasXmlElement PartyDescriptor LocalInstance_2_459)
      * (datatype LocalInstance_2_459 PartyId)
      * (documentation LocalInstance_2_459
      * PartyDescriptor "A Composite containing details...")
-     *
+     * <p>
      * show PartyDescriptor as one of the "containing
      * composites" of PartyId, and show the documentation for
      * the instance node next to the parent composite.
@@ -4708,24 +4555,18 @@ public class DocGen {
      * section of an HTML page displaying the partial
      * definition of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb       The KB in which term is defined
+     * @param kbHref   A String containing the constant parts of the
+     *                 href link for term, or an empty String
+     * @param term     A String that denotes a SUO-KIF term
      * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * termFormat Strings in kb
-     *
-     * @param parents A Set containing the terms displayed in the
-     * Parent field for term, to avoid duplication between the Parents
-     * field and the Belongs to Class field
-     *
+     *                 natural language, or other type of entity that indexes
+     *                 termFormat Strings in kb
+     * @param parents  A Set containing the terms displayed in the
+     *                 Parent field for term, to avoid duplication between the Parents
+     *                 field and the Belongs to Class field
      * @return A String containing HTML markup, or an empty String if
      * no markup can be generated
-     *
      */
     protected String createBelongsToClass(KB kb,
                                           String kbHref,
@@ -4779,20 +4620,15 @@ public class DocGen {
      * section of an HTML page displaying the partial
      * definition of term in kb.
      *
-     * @param kb The KB in which term is defined
-     *
-     * @param kbHref A String containing the constant parts of the
-     * href link for term, or an empty String
-     *
-     * @param term A String that denotes a SUO-KIF term
-     *
+     * @param kb       The KB in which term is defined
+     * @param kbHref   A String containing the constant parts of the
+     *                 href link for term, or an empty String
+     * @param term     A String that denotes a SUO-KIF term
      * @param language A String denoting a SUO-KIF namespace, a
-     * natural language, or other type of entity that indexes
-     * termFormat Strings in kb
-     *
+     *                 natural language, or other type of entity that indexes
+     *                 termFormat Strings in kb
      * @return A String containing HTML markup, or an empty String if
      * no markup can be generated
-     *
      */
     protected String createBelongsToClass(KB kb,
                                           String kbHref,
@@ -4806,13 +4642,10 @@ public class DocGen {
      * Returns an ArrayList holding the composite entities (Elements)
      * that contain term, or returns an empty ArrayList.
      *
-     * @param kb The KB in which term is defined
-     *
+     * @param kb   The KB in which term is defined
      * @param term A String that denotes a SUO-KIF term
-     *
      * @return An ArrayList containing the names of the Elements that
      * contain term.
-     *
      */
     protected ArrayList findContainingComposites(KB kb, String term) {
 
@@ -5006,9 +4839,9 @@ public class DocGen {
     }
 
     /**
-     *  Generate an alphabetic HTML list that points to the
-     *  individual index pages (which collect all terms starting
-     *  with a particular letter.
+     * Generate an alphabetic HTML list that points to the
+     * individual index pages (which collect all terms starting
+     * with a particular letter.
      */
     public String generateDynamicTOCHeader(String kbHref) {
 
@@ -5047,12 +4880,12 @@ public class DocGen {
     }
 
     /**
-     *  Generate an alphabetic HTML list that points to the
-     *  individual index pages (which collect all terms or term
-     *  formats) starting with a particular letter.
+     * Generate an alphabetic HTML list that points to the
+     * individual index pages (which collect all terms or term
+     * formats) starting with a particular letter.
      *
      * @param alphaList a TreeMap of TreeMaps of ArrayLists.  @see
-     *                   createAlphaList()
+     *                  createAlphaList()
      */
     protected String generateTocHeader(KB kb, TreeMap alphaList, String allname) {
 
@@ -5144,11 +4977,11 @@ public class DocGen {
     }
 
     /**
-     *  Generate an HTML page that lists term name and its
-     *  documentation
+     * Generate an HTML page that lists term name and its
+     * documentation
      *
      * @param alphaList a TreeMap of TreeMaps of ArrayLists.  @see
-     *                   createAlphaList()
+     *                  createAlphaList()
      */
     protected String generateTOCPage(KB kb,
                                      String firstLetter,
@@ -5240,10 +5073,9 @@ public class DocGen {
      * Generate and save all the index pages that link to the
      * individual term pages.
      *
-     * @param dir is the directory in which to save the pages
-     *
+     * @param dir       is the directory in which to save the pages
      * @param alphaList a TreeMap of TreeMaps of ArrayLists.  @see
-     *                   createAlphaList()
+     *                  createAlphaList()
      */
     protected void saveIndexPages(KB kb,
                                   TreeMap alphaList,
@@ -5310,8 +5142,8 @@ public class DocGen {
     }
 
     /**
-     *  Save pages below the KBs directory in a directory called
-     *  HTML.  If that already exists, use HTML1, HTML2 etc.
+     * Save pages below the KBs directory in a directory called
+     * HTML.  If that already exists, use HTML1, HTML2 etc.
      */
     protected void printHTMLPages(TreeMap pageList, String dirpath) {
 
@@ -5374,7 +5206,6 @@ public class DocGen {
      * object representing the canonical pathname of the directory.
      *
      * @param token A token that indicates a type of output file
-     *
      * @return A File representing a directory
      */
     protected File makeOutputDir(String token) {
@@ -5453,7 +5284,7 @@ public class DocGen {
 
     /**
      * @param alphaList a TreeMap of TreeMaps of ArrayLists.  @see
-     *                   createAlphaList()
+     *                  createAlphaList()
      */
     protected TreeMap generateHTMLPages(KB kb,
                                         TreeMap alphaList,
@@ -5532,8 +5363,8 @@ public class DocGen {
      * makeOutputDir()
      *
      * @param simplified Indicates whether to present a "simplified"
-     * view of terms, meaning using a termFormat or headword, rather
-     * than the term name itself
+     *                   view of terms, meaning using a termFormat or headword, rather
+     *                   than the term name itself
      */
     public void generateHTML(KB kb, String language, boolean simplified, String formatToken) {
 
@@ -5607,13 +5438,12 @@ public class DocGen {
     /**
      * Generate a single HTML page showing all terms.
      *
-     * @param alphaList a TreeMap of TreeMaps of ArrayLists.
-     *      letter->    formattedTerm1->term11,term12...term1N
-     *                  formattedTerm2->term21,term22...term2N
-     *
+     * @param alphaList  a TreeMap of TreeMaps of ArrayLists.
+     *                   letter->    formattedTerm1->term11,term12...term1N
+     *                   formattedTerm2->term21,term22...term2N
      * @param simplified Indicates whether to present a "simplified"
-     * view of terms, meaning using a termFormat or headword, rather
-     * than the term name itself
+     *                   view of terms, meaning using a termFormat or headword, rather
+     *                   than the term name itself
      */
     public void generateSingleHTML(KB kb,
                                    String dir,
@@ -5735,6 +5565,7 @@ public class DocGen {
     }
 
     /**
+     *
      */
     public void generateSingleHTML(KB kb, String language, boolean simplified)
             throws IOException {
@@ -6082,14 +5913,10 @@ public class DocGen {
      * Sorts stringList in place by the presentation name of each its
      * terms, which could be very different from the raw term name.
      *
-     * @param kb The KB from which to obtain the presentation names
-     *
+     * @param kb            The KB from which to obtain the presentation names
      * @param namespaceTerm A KIF term denoting a namespace
-     *
-     * @param stringList The List of Strings to be sorted
-     *
+     * @param stringList    The List of Strings to be sorted
      * @return void
-     *
      */
     public void sortByPresentationName(KB kb, String namespaceTerm, List stringList) {
         /*
@@ -6199,15 +6026,11 @@ public class DocGen {
     }
 
     /**
-     *
-     *
      * @param isXmlDoc If true, HTML character entities will be
      *                 replaced with their ASCII equivalents, when
      *                 possible
-     *
      * @param addHrefs If true, HTML anchor markup will be added
      *                 for recognized terms
-     *
      */
     protected String processDocString(KB kb,
                                       String kbHref,
@@ -6313,7 +6136,8 @@ public class DocGen {
     }
 
     /**
-     * */
+     *
+     */
     public ArrayList<ArrayList<String>> readSpreadsheetFile(String inpath,
                                                             char delimiter) {
         return readSpreadsheetFile(inpath, delimiter, 0, null);
@@ -6325,14 +6149,11 @@ public class DocGen {
      * concatenates sequential lines that do not start with one of the
      * Strings, else rowFlags is ignored.
      *
-     * @param delimiter A char that delimits each field in a row
-     *
+     * @param delimiter        A char that delimits each field in a row
      * @param delimitersPerRow An int that indicates the number of
-     * expected delimiter chars per row
-     *
-     * @param rowFlags A List of the tokens (Strings) that indicate
-     * the start of a new row
-     *
+     *                         expected delimiter chars per row
+     * @param rowFlags         A List of the tokens (Strings) that indicate
+     *                         the start of a new row
      * @return An ArrayList of ArrayLists
      */
     public ArrayList<ArrayList<String>> readSpreadsheetFile(String inpath,
@@ -6437,12 +6258,10 @@ public class DocGen {
      * Converts a List of char-delimited Strings to a List of Lists
      * (i.e., an array) representing a spreadsheet.
      *
-     * @param rows A List of char-delimited Strings.  The list is
-     * processed in place, and will contain only Lists when
-     * processing is finished.
-     *
+     * @param rows      A List of char-delimited Strings.  The list is
+     *                  processed in place, and will contain only Lists when
+     *                  processing is finished.
      * @param delimiter A char that delimits each field in line.
-     *
      * @return void
      */
     protected ArrayList<ArrayList<String>> convertRowStringsToLists(List<String> rows, char delimiter) {
@@ -6493,11 +6312,9 @@ public class DocGen {
      * Counts the number of field delimiters in line and returns the
      * count, ignoring delimiters that are inside Strings.
      *
-     * @param line A line of data fields that are separated by
-     * occurrences of a delimiter char.
-     *
+     * @param line      A line of data fields that are separated by
+     *                  occurrences of a delimiter char.
      * @param delimiter A char that delimits each field in line.
-     *
      * @return An int indicating the number of delimiters in line.
      */
     protected int countDelimiters(String line, char delimiter) {
@@ -6527,14 +6344,12 @@ public class DocGen {
          * particular UI text or other output generated by the DocGen
          * object dg.
          *
-         * @param dg The DocGen object that will use this filter to
-         * determine which terms should be displayed or otherwise included
-         * in generated output
-         *
+         * @param dg         The DocGen object that will use this filter to
+         *                   determine which terms should be displayed or otherwise included
+         *                   in generated output
          * @param suoKifTerm A term in the SUO-KIF representation
-         * language, which could be an atomic constant, a variable, a
-         * quoted character string, or a list
-         *
+         *                   language, which could be an atomic constant, a variable, a
+         *                   quoted character string, or a list
          * @return true or false
          */
         boolean isLegalForDisplay(DocGen dg, String suoKifTerm);

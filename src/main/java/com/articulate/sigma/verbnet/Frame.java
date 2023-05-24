@@ -21,6 +21,7 @@ import java.util.HashSet;
  */
 public class Frame {
 
+    private final boolean echo = false;
     public String descriptionNum;
     public String primary;
     public String secondary;
@@ -28,7 +29,6 @@ public class Frame {
     public String example;
     public ArrayList<Tuple> syntax = new ArrayList<>();
     public ArrayList<Tuple> semantics = new ArrayList<>();
-    private final boolean echo = false;
 
     public void readDesc(SimpleElement desc) {
 

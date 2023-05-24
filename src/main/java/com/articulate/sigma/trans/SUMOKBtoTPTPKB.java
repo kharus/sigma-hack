@@ -9,11 +9,6 @@ import java.util.*;
 public class SUMOKBtoTPTPKB {
 
     public static final boolean filterSimpleOnly = false;
-    // flags to support including numbers and HOL in pseudo-FOL for flexible provers
-    public static boolean removeHOL = true; // remove higher order expressions
-    public static boolean removeNum = true; // remove numbers
-    public static boolean debug = false;
-    public static String lang = "fof"; // or thf
     /**
      * define a set of predicates which will not be used for inference
      */
@@ -29,13 +24,18 @@ public class SUMOKBtoTPTPKB {
             "abbreviation",
             "conventionalShortName",
             "conventionalLongName");
-
+    // flags to support including numbers and HOL in pseudo-FOL for flexible provers
+    public static boolean removeHOL = true; // remove higher order expressions
+    public static boolean removeNum = true; // remove numbers
+    public static boolean debug = false;
+    public static String lang = "fof"; // or thf
     // maps TPTP axiom IDs to SUMO formulas
     public static HashMap<String, Formula> axiomKey = new HashMap<>();
     public KB kb;
     public Set<String> alreadyWrittenTPTPs = new HashSet<>();
 
-    public SUMOKBtoTPTPKB() {}
+    public SUMOKBtoTPTPKB() {
+    }
 
     public static String langToExtension(String l) {
 
@@ -43,7 +43,7 @@ public class SUMOKBtoTPTPKB {
             return "tptp";
         return l;
     }
-    
+
     public static String extensionToLang(String l) {
 
         if (l.equals("tptp"))

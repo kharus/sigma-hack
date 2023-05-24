@@ -516,7 +516,7 @@ public class GenSimpTestData {
         kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
         System.out.println("generate(): # relations: " + kb.kbCache.relations.size());
         HashMap<String, String> formatMap = kb.getFormatMap("EnglishLanguage");
-        skipTypes.addAll(List.of("Formula"));
+        skipTypes.add("Formula");
         System.out.println("generate(): output existing ground statements ");
         handleGroundStatements(formatMap);
         System.out.println("generate(): create ground statements ");

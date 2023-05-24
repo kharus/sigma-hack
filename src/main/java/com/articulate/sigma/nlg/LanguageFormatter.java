@@ -30,11 +30,11 @@ import edu.stanford.nlp.ling.CoreLabel;
 import java.util.*;
 
 /**
- *  A class that handles the generation of natural language from logic.
+ * A class that handles the generation of natural language from logic.
  *
- *  @author Adam Pease - apease [at] articulatesoftware [dot] com, with thanks
- *  to Michal Sevcenko - sevcenko@vc.cvut.cz for development of the
- *  formatting language.
+ * @author Adam Pease - apease [at] articulatesoftware [dot] com, with thanks
+ * to Michal Sevcenko - sevcenko@vc.cvut.cz for development of the
+ * formatting language.
  */
 public class LanguageFormatter {
 
@@ -66,9 +66,9 @@ public class LanguageFormatter {
     private boolean doInformalNLG = false;
 
     /**
-     * @param stmt The statement to be formatted.
+     * @param stmt      The statement to be formatted.
      * @param phraseMap kb.getFormatMap() for this language
-     * @param termMap kb.getTermFormatMap() for this language
+     * @param termMap   kb.getTermFormatMap() for this language
      * @param kb
      * @param language
      */
@@ -252,9 +252,10 @@ public class LanguageFormatter {
     /**
      * Replace variables with types, and articles appropriate to how many times
      * they have occurred.
-     *
+     * <p>
      * There is a known bug where variables that are a substring of each other
      * causes problems.
+     *
      * @param typeMap is a map with variable type keys that counts
      *                how many times variables of the given type
      *                appears in the paraphrase.  This is done in
@@ -379,6 +380,7 @@ public class LanguageFormatter {
     }
 
     /**
+     *
      */
     public static void test1() {
 
@@ -399,6 +401,7 @@ public class LanguageFormatter {
     }
 
     /**
+     *
      */
     public static void test2() {
 
@@ -466,6 +469,7 @@ public class LanguageFormatter {
     }
 
     /**
+     *
      */
     public static void test3() {
 
@@ -502,6 +506,7 @@ public class LanguageFormatter {
     }
 
     /**
+     *
      */
     public static void showHelp() {
 
@@ -537,6 +542,7 @@ public class LanguageFormatter {
     }
 
     /**
+     *
      */
     private void init() {
 
@@ -579,7 +585,7 @@ public class LanguageFormatter {
      * termString is the text that should be displayed hyperlinked.
      *
      * @param href the anchor string up to the term= parameter, which this method
-     *               will fill in.
+     *             will fill in.
      * @return
      */
     public String htmlParaphrase(String href) {
@@ -653,10 +659,11 @@ public class LanguageFormatter {
 
     /**
      * Create a natural language paraphrase of a logical statement.
-     *  @param stmt The statement to be paraphrased.
-     *  @param isNegMode Whether the statement is negated.
-     *  @param depth An int indicating the level of nesting, for control of indentation.
-     *  @return A String, which is the paraphrased statement.
+     *
+     * @param stmt      The statement to be paraphrased.
+     * @param isNegMode Whether the statement is negated.
+     * @param depth     An int indicating the level of nesting, for control of indentation.
+     * @return A String, which is the paraphrased statement.
      */
     public String paraphraseStatement(String stmt, boolean isNegMode, int depth) {
 
@@ -791,6 +798,7 @@ public class LanguageFormatter {
     /**
      * Modify the given variable map so that given key is mapped to a surface form for the entity which includes
      * the given property.
+     *
      * @param variableMap
      * @param key
      * @param property
@@ -812,6 +820,7 @@ public class LanguageFormatter {
     /**
      * Insert the give case role into the current element's process map; or, if the SumoProcess already exists
      * there, update it with the new information.
+     *
      * @param formula
      * @param caseRole
      * @param isNegMode
@@ -870,6 +879,7 @@ public class LanguageFormatter {
     /**
      * Uses variableToInstanceMap and variableTypes to resolve a given variable.
      * If more than one entry is in the map, currently takes the first one returned by the iterator.
+     *
      * @param input
      * @return
      */
@@ -890,9 +900,10 @@ public class LanguageFormatter {
 
     /**
      * Create a natural language paraphrase for statements involving the logical operators.
-     * @param stmt The logical statement for which we want to paraphrase the operator, arg 0.
+     *
+     * @param stmt      The logical statement for which we want to paraphrase the operator, arg 0.
      * @param isNegMode Is the expression negated?
-     * @param depth The nested operator depth, for controlling indentation.
+     * @param depth     The nested operator depth, for controlling indentation.
      * @return The natural language paraphrase as a String, or null if the predicate was not a logical operator.
      */
     private String paraphraseLogicalOperator(String stmt, boolean isNegMode, int depth) {
@@ -985,6 +996,7 @@ public class LanguageFormatter {
     }
 
     /**
+     *
      */
     public String generateFormalNaturalLanguage(List<String> args, String pred, boolean isNegMode) {
 
@@ -1171,7 +1183,8 @@ public class LanguageFormatter {
      * Create a natural language paraphrase of a logical statement, where the
      * predicate is not a logical operator.  Use a printf-like format string to generate
      * the paraphrase.
-     * @param stmt the statement to format
+     *
+     * @param stmt      the statement to format
      * @param isNegMode whether the statement is negated, and therefore requiring special formatting.
      * @return the paraphrased statement.
      */

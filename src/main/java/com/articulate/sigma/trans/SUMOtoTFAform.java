@@ -22,10 +22,11 @@ import java.util.regex.Pattern;
  */
 public class SUMOtoTFAform {
 
+    // a map of relation signatures (where function returns are index 0)
+    // modified from the original by the constraints of the axiom
+    private static final HashMap<String, ArrayList<String>> signatures = null;
     public static KB kb;
-
     public static boolean debug = false;
-
     // a Set of types for each variable key
     public static HashMap<String, HashSet<String>> varmap = null;
     public static boolean initialized = false;
@@ -44,9 +45,6 @@ public class SUMOtoTFAform {
     // storage for a message why the formula wasn't translated
     public static String filterMessage = "";
     public static HashSet<String> errors = new HashSet<>();
-    // a map of relation signatures (where function returns are index 0)
-    // modified from the original by the constraints of the axiom
-    private static final HashMap<String, ArrayList<String>> signatures = null;
     // extra sorts determined just for this formula
     public HashSet<String> sorts = new HashSet<>();
 
@@ -324,105 +322,105 @@ public class SUMOtoTFAform {
      * Recurse through the formula giving numeric and comparison
      * operators a suffix if they operate on
      * numbers.
-
-     public static Formula convertNumericFunctions(Formula f, String parentType) {
-
-     if (f == null)
-     return f;
-     if (f.atom()) {
-     int ttype = f.getFormula().charAt(0);
-     if (Character.isDigit(ttype))
-     ttype = StreamTokenizer_s.TT_NUMBER;
-     return f;
-     }
-     Formula car = f.carAsFormula();
-     ArrayList<String> args = f.complexArgumentsToArrayListString(1);
-     if (isMathFunction(car.getFormula()) ||
-     (isComparisonOperator(car.getFormula()) && !car.getFormula().equals("equal"))) {
-     StringBuffer argsStr = new StringBuffer();
-     boolean isInt = false;
-     boolean isReal = false;
-     boolean isRat = false;
-     for (String s : args) {
-     if (Formula.isVariable(s)) {
-     if (varmap.containsKey(s)) {
-     Set<String> types = varmap.get(s);
-     String type = kb.mostSpecificTerm(types);
-     if (debug) System.out.println("SUMOtoTFAform.convertNumericFunctions(): type: " + type);
-     if (type != null && (type.equals("Integer") || kb.isSubclass(type,"Integer")))
-     isInt = true;
-     if (type != null && (type.equals("RationalNumber") || kb.isSubclass(type,"RationalNumber")))
-     isRat = true;
-     if (type != null && (type.equals("RealNumber") || kb.isSubclass(type,"RealNumber")))
-     isReal = true;
-     }
-     }
-     if (StringUtil.isInteger(s)) {
-     if (isMathFunction(car.getFormula()) && kb.isSubclass(parentType,"Integer"))
-     isInt = true;
-     else
-     isReal = true; // isInt = true; it could be a real that just doesn't have a decimal
-     }
-     if (!isInt && StringUtil.isNumeric(s))
-     isReal = true;
-     if (!isInt && !isReal) {
-     Formula sf = new Formula(s);
-     Formula argResult = convertNumericFunctions(sf,"");
-     String type = kb.kbCache.getRange(argResult.car());
-     if (type != null && (type.equals("Integer") || kb.isSubclass(type,"Integer")))
-     isInt = true;
-     if (type != null && (type.equals("RationalNumber") || kb.isSubclass(type,"RationalNumber")))
-     isRat = true;
-     if (type != null && (type.equals("RealNumber") || kb.isSubclass(type,"RealNumber")))
-     isReal = true;
-     argsStr.append(argResult + " ");
-     }
-     else
-     argsStr.append(s + " ");
-     }
-     argsStr.deleteCharAt(argsStr.length()-1);
-     String suffix = "";
-     if (isMathFunction(car.getFormula())) {
-     if (isInt)
-     suffix = "__0In1In2In";
-     else if (isRat)
-     suffix = "__0Ra1Ra2Ra";
-     else if (isReal)
-     suffix = "__0Re1Re2Re";
-     }
-     else {
-     if (isInt)
-     suffix = "__1In2In";
-     else if (isRat)
-     suffix = "__1Ra2Ra";
-     else if (isReal)
-     suffix = "__1Re2Re";
-     }
-     if (suffix != "" && isMathFunction(car.getFormula()))
-     suffix = suffix + "Fn";
-     String withSuffix = composeSuffix(car.getFormula(),suffix);
-     f = new Formula("(" + withSuffix + " " + argsStr.toString() + ")");
-     //if (isInt || isReal || isRat)
-     //    constrainVarsFromFunct(args,suffix.substring(0,4));
-     }
-     else {
-     StringBuffer argsStr = new StringBuffer();
-     ArrayList<String> sig = kb.kbCache.signatures.get(car.toString());
-     if (args != null) {
-     for (int i = 0; i < args.size(); i++) {
-     String s = args.get(i);
-     String type = "";
-     if (sig != null && (i+1) < sig.size())
-     type = sig.get(i+1);
-     Formula sf = new Formula(s);
-     argsStr.append(convertNumericFunctions(sf,type) + " ");
-     }
-     argsStr.deleteCharAt(argsStr.length() - 1);
-     f = new Formula("(" + car.getFormula() + " " + argsStr.toString() + ")");
-     }
-     }
-     return f;
-     }
+     * <p>
+     * public static Formula convertNumericFunctions(Formula f, String parentType) {
+     * <p>
+     * if (f == null)
+     * return f;
+     * if (f.atom()) {
+     * int ttype = f.getFormula().charAt(0);
+     * if (Character.isDigit(ttype))
+     * ttype = StreamTokenizer_s.TT_NUMBER;
+     * return f;
+     * }
+     * Formula car = f.carAsFormula();
+     * ArrayList<String> args = f.complexArgumentsToArrayListString(1);
+     * if (isMathFunction(car.getFormula()) ||
+     * (isComparisonOperator(car.getFormula()) && !car.getFormula().equals("equal"))) {
+     * StringBuffer argsStr = new StringBuffer();
+     * boolean isInt = false;
+     * boolean isReal = false;
+     * boolean isRat = false;
+     * for (String s : args) {
+     * if (Formula.isVariable(s)) {
+     * if (varmap.containsKey(s)) {
+     * Set<String> types = varmap.get(s);
+     * String type = kb.mostSpecificTerm(types);
+     * if (debug) System.out.println("SUMOtoTFAform.convertNumericFunctions(): type: " + type);
+     * if (type != null && (type.equals("Integer") || kb.isSubclass(type,"Integer")))
+     * isInt = true;
+     * if (type != null && (type.equals("RationalNumber") || kb.isSubclass(type,"RationalNumber")))
+     * isRat = true;
+     * if (type != null && (type.equals("RealNumber") || kb.isSubclass(type,"RealNumber")))
+     * isReal = true;
+     * }
+     * }
+     * if (StringUtil.isInteger(s)) {
+     * if (isMathFunction(car.getFormula()) && kb.isSubclass(parentType,"Integer"))
+     * isInt = true;
+     * else
+     * isReal = true; // isInt = true; it could be a real that just doesn't have a decimal
+     * }
+     * if (!isInt && StringUtil.isNumeric(s))
+     * isReal = true;
+     * if (!isInt && !isReal) {
+     * Formula sf = new Formula(s);
+     * Formula argResult = convertNumericFunctions(sf,"");
+     * String type = kb.kbCache.getRange(argResult.car());
+     * if (type != null && (type.equals("Integer") || kb.isSubclass(type,"Integer")))
+     * isInt = true;
+     * if (type != null && (type.equals("RationalNumber") || kb.isSubclass(type,"RationalNumber")))
+     * isRat = true;
+     * if (type != null && (type.equals("RealNumber") || kb.isSubclass(type,"RealNumber")))
+     * isReal = true;
+     * argsStr.append(argResult + " ");
+     * }
+     * else
+     * argsStr.append(s + " ");
+     * }
+     * argsStr.deleteCharAt(argsStr.length()-1);
+     * String suffix = "";
+     * if (isMathFunction(car.getFormula())) {
+     * if (isInt)
+     * suffix = "__0In1In2In";
+     * else if (isRat)
+     * suffix = "__0Ra1Ra2Ra";
+     * else if (isReal)
+     * suffix = "__0Re1Re2Re";
+     * }
+     * else {
+     * if (isInt)
+     * suffix = "__1In2In";
+     * else if (isRat)
+     * suffix = "__1Ra2Ra";
+     * else if (isReal)
+     * suffix = "__1Re2Re";
+     * }
+     * if (suffix != "" && isMathFunction(car.getFormula()))
+     * suffix = suffix + "Fn";
+     * String withSuffix = composeSuffix(car.getFormula(),suffix);
+     * f = new Formula("(" + withSuffix + " " + argsStr.toString() + ")");
+     * //if (isInt || isReal || isRat)
+     * //    constrainVarsFromFunct(args,suffix.substring(0,4));
+     * }
+     * else {
+     * StringBuffer argsStr = new StringBuffer();
+     * ArrayList<String> sig = kb.kbCache.signatures.get(car.toString());
+     * if (args != null) {
+     * for (int i = 0; i < args.size(); i++) {
+     * String s = args.get(i);
+     * String type = "";
+     * if (sig != null && (i+1) < sig.size())
+     * type = sig.get(i+1);
+     * Formula sf = new Formula(s);
+     * argsStr.append(convertNumericFunctions(sf,type) + " ");
+     * }
+     * argsStr.deleteCharAt(argsStr.length() - 1);
+     * f = new Formula("(" + car.getFormula() + " " + argsStr.toString() + ")");
+     * }
+     * }
+     * return f;
+     * }
      */
 
     private static String processQuant(Formula f, Formula car, String parentType, String op,
