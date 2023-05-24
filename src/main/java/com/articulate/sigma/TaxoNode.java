@@ -29,9 +29,7 @@ public class TaxoNode {
     public boolean childrenExpanded = false;
     public TaxoNode oneChild = null;                // only one child may be displayed
 
-    /**
-     *
-     */
+    
     public String toHTML(String kbHref, int indentLevel) {
 
         StringBuffer sb = new StringBuffer();

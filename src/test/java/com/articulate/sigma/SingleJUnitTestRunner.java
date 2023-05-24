@@ -14,9 +14,7 @@ import org.junit.runner.Result;
 
 public class SingleJUnitTestRunner {
 
-    /**
-     *
-     */
+    
     public static void main(String[] args) {
 
         try {

@@ -64,9 +64,7 @@ public class KBmanager implements Serializable {
     public Prover prover = Prover.VAMPIRE;
     private String error = "";
 
-    /**
-     *
-     */
+    
     public KBmanager() {
     }
 
@@ -161,9 +159,7 @@ public class KBmanager implements Serializable {
         }
     }
 
-    /**
-     *
-     */
+    
     public static CCheckStatus initiateCCheck(KB kb, String chosenEngine, String systemChosen, String location,
                                               String language, int timeout) {
 
@@ -337,9 +333,7 @@ public class KBmanager implements Serializable {
         System.out.println("KBmanager.pythonServer(): completed initialization, server running");
     }
 
-    /**
-     *
-     */
+    
     public static void printHelp() {
 
         System.out.println("Sigma Knowledge Engineering Environment");
@@ -349,9 +343,7 @@ public class KBmanager implements Serializable {
         System.out.println("  with no arguments show this help screen an execute a test");
     }
 
-    /**
-     *
-     */
+    
     public static void main(String[] args) {
 
         if (args == null) {
@@ -523,9 +515,7 @@ public class KBmanager implements Serializable {
         }
     }
 
-    /**
-     *
-     */
+    
     private void preferencesFromXML(SimpleElement configuration) {
 
         if (!configuration.getTagName().equals("configuration"))
@@ -548,9 +538,7 @@ public class KBmanager implements Serializable {
                 preferences.keySet().size());
     }
 
-    /**
-     *
-     */
+    
     public void loadKBforInference(KB kb) {
 
         System.out.println("KBmanager.loadKBforInference(): KB: " + kb.name);
@@ -565,9 +553,7 @@ public class KBmanager implements Serializable {
         }
     }
 
-    /**
-     *
-     */
+    
     public boolean loadKB(String kbName, List<String> constituents) {
 
         KB kb = null;
@@ -602,9 +588,7 @@ public class KBmanager implements Serializable {
         return true;
     }
 
-    /**
-     *
-     */
+    
     private void fromXML(SimpleElement configuration) {
 
         if (!configuration.getTagName().equals("configuration"))

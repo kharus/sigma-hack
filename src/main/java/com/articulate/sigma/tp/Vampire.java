@@ -48,9 +48,7 @@ public class Vampire {
     // Avatar is faster but doesn't provide answer variables
     public ArrayList<String> output = new ArrayList<>();
 
-    /**
-     *
-     */
+    
     private static String[] createCommandList(File executable, int timeout, File kbFile) {
 
         String opts = "";
@@ -130,9 +128,7 @@ public class Vampire {
         return allAdded;
     }
 
-    /**
-     *
-     */
+    
     public static void main(String[] args) throws Exception {
 
         /*
@@ -190,9 +186,7 @@ public class Vampire {
         }
     }
 
-    /**
-     *
-     */
+    
     public String toString() {
 
         StringBuffer sb = new StringBuffer();
@@ -241,9 +235,7 @@ public class Vampire {
         System.out.println("Vampire.run() done executing");
     }
 
-    /**
-     *
-     */
+    
     public void writeStatements(HashSet<String> stmts, String type) {
 
         FileWriter fw = null;
@@ -297,9 +289,7 @@ public class Vampire {
         pw.close();
     }
 
-    /**
-     *
-     */
+    
     public List<String> getUserAssertions(KB kb) {
 
         String userAssertionTPTP = kb.name + KB._userAssertionsTPTP;

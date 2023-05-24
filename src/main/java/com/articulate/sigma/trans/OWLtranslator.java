@@ -122,9 +122,7 @@ public class OWLtranslator {
     public KB kb;
     private TreeMap axiomMap = new TreeMap();
 
-    /**
-     *
-     */
+    
     private static String processStringForXMLOutput(String s) {
 
         if (s == null)
@@ -135,9 +133,7 @@ public class OWLtranslator {
         return s;
     }
 
-    /**
-     *
-     */
+    
     private static String processStringForKIFOutput(String s) {
 
         if (s == null)
@@ -160,9 +156,7 @@ public class OWLtranslator {
         return s;
     }
 
-    /**
-     *
-     */
+    
     private static String getParentReference(SimpleElement se) {
 
         String value = null;
@@ -429,9 +423,7 @@ public class OWLtranslator {
         return result;
     }
 
-    /**
-     *
-     */
+    
     public static void initOnce(String kbName) {
 
         if (ot.kb == null || !kbName.equals(ot.kb.name))
@@ -445,9 +437,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     public static void showHelp() {
 
         System.out.println("OWL translator class");
@@ -567,9 +557,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void writeTermFormat(PrintWriter pw, String term) {
 
         ArrayList al = kb.askWithRestriction(0, "termFormat", 2, term);
@@ -586,9 +574,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void writeSynonymous(PrintWriter pw, String term, String termType) {
 
         ArrayList syn = kb.askWithRestriction(0, "synonymousExternalConcept", 2, term);
@@ -608,9 +594,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void writeAxiomLinks(PrintWriter pw, String term) {
 
         ArrayList al = kb.ask("ant", 0, term);
@@ -627,9 +611,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void writeWordNetLink(PrintWriter pw, String term) {
 
         WordNet.initOnce();
@@ -682,9 +664,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void createAxiomMap() {
 
         axiomMap = new TreeMap<String, Formula>();
@@ -698,9 +678,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void writeAxioms(PrintWriter pw) {
 
         TreeSet ts = new TreeSet();
@@ -722,9 +700,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void writeOneAxiom(PrintWriter pw, String id) {
 
         //System.out.println("INFO in OWLtranslator.writeOneAxiom(): write axiom ID: " + id);
@@ -743,9 +719,7 @@ public class OWLtranslator {
             System.out.println("Error in OWLtranslator.writeOneAxiom(): null or non-axiom for ID: " + id);
     }
 
-    /**
-     *
-     */
+    
     private void writeDocumentation(PrintWriter pw, String term) {
 
         ArrayList doc = kb.askWithRestriction(0, "documentation", 1, term);    // Class expressions for term.
@@ -764,9 +738,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void writeYAGOMapping(PrintWriter pw, String term) {
 
         //System.out.println("INFO in OWLtranslator.writeYAGOMapping(): writing term: " + term);
@@ -842,9 +814,7 @@ public class OWLtranslator {
         pw.println();
     }
 
-    /**
-     *
-     */
+    
     private void writeInstances(PrintWriter pw, String term, ArrayList instances) {
 
         pw.println("<owl:Thing rdf:about=\"#" + term + "\">");
@@ -897,9 +867,7 @@ public class OWLtranslator {
         pw.println();
     }
 
-    /**
-     *
-     */
+    
     private void writeClasses(PrintWriter pw, String term, ArrayList classes,
                               boolean isInstance) {
 
@@ -1101,9 +1069,7 @@ public class OWLtranslator {
         pw.close();
     }
 
-    /**
-     *
-     */
+    
     private void writeWordNetClassDefinitions(PrintWriter pw) throws IOException {
 
         ArrayList WordNetClasses =
@@ -1137,9 +1103,7 @@ public class OWLtranslator {
         pw.println("</owl:Class>");
     }
 
-    /**
-     *
-     */
+    
     private void writeVerbFrames(PrintWriter pw) throws IOException {
 
         ArrayList VerbFrames = new ArrayList(Arrays.asList("Something ----s",
@@ -1190,9 +1154,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void writeWordNetRelationDefinitions(PrintWriter pw) throws IOException {
 
         ArrayList WordNetRelations = new ArrayList(Arrays.asList("antonym",
@@ -1326,9 +1288,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void writeWordNetExceptions(PrintWriter pw) throws IOException {
 
         Iterator it = WordNet.wn.exceptionNounHash.keySet().iterator();
@@ -1357,9 +1317,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void writeOneWordToSenses(PrintWriter pw, String word) {
 
         String wordAsID = StringUtil.stringToKIFid(word);
@@ -1381,9 +1339,7 @@ public class OWLtranslator {
         pw.println("</owl:Thing>");
     }
 
-    /**
-     *
-     */
+    
     private void writeWordsToSenses(PrintWriter pw) throws IOException {
 
         Iterator it = WordNet.wn.wordsToSenseKeys.keySet().iterator();
@@ -1393,9 +1349,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void writeSenseIndex(PrintWriter pw) throws IOException {
 
         Iterator it = WordNet.wn.senseIndex.keySet().iterator();
@@ -1423,9 +1377,7 @@ public class OWLtranslator {
         }
     }
 
-    /**
-     *
-     */
+    
     private void writeWordNetHeader(PrintWriter pw) {
 
         pw.println("<!DOCTYPE rdf:RDF [");

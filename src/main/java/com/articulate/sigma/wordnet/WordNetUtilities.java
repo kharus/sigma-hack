@@ -48,9 +48,7 @@ public class WordNetUtilities {
             "domain_topic", "member_topic", "domain_region", "member_region",
             "domain_usage", "member_usage", "entailment", "cause", "also_see",
             "verb_group", "similar_to", "participle", "pertainym"));
-    /**
-     *
-     */
+    
     private static boolean testWordDebug = false;
 
     /**
@@ -106,9 +104,7 @@ public class WordNetUtilities {
         return senseKey.matches(m);
     }
 
-    /**
-     *
-     */
+    
     public static String posAlphaKeyToWord(String alphaKey) {
 
         if (alphaKey.equals("NN")) return "noun";
@@ -118,9 +114,7 @@ public class WordNetUtilities {
         return "adjective_satellite";
     }
 
-    /**
-     *
-     */
+    
     public static String posWordToAlphaKey(String word) {
 
         if (word.equals("noun")) return "NN";
@@ -307,9 +301,7 @@ public class WordNetUtilities {
             return POSnum + WordNet.wn.senseIndex.get(senseKey);
     }
 
-    /**
-     *
-     */
+    
     public static String removeTermPrefixes(String formula) {
 
         return formula.replaceAll("&%", "");
@@ -342,9 +334,7 @@ public class WordNetUtilities {
             return ' ';
     }
 
-    /**
-     *
-     */
+    
     public static String convertWordNetPointer(String ptr) {
 
         if (ptr.equals("!")) ptr = "antonym";
@@ -376,9 +366,7 @@ public class WordNetUtilities {
         return ptr;
     }
 
-    /**
-     *
-     */
+    
     public static char posLetterToNumber(char POS) {
 
         switch (POS) {
@@ -397,9 +385,7 @@ public class WordNetUtilities {
         return '1';
     }
 
-    /**
-     *
-     */
+    
     public static char posNumberToLetter(char POS) {
 
         switch (POS) {
@@ -418,9 +404,7 @@ public class WordNetUtilities {
         return 'n';
     }
 
-    /**
-     *
-     */
+    
     public static char posPennToNumber(String penn) {
 
         if (penn.equals("CC")) return '0';    // Coordinating conjunction
@@ -533,9 +517,7 @@ public class WordNetUtilities {
         return 0;
     }
 
-    /**
-     *
-     */
+    
     public static String mappingCharToName(char mappingType) {
 
         String mapping = "";
@@ -609,9 +591,7 @@ public class WordNetUtilities {
             return false;
     }
 
-    /**
-     *
-     */
+    
     private static boolean isVowel(char c) {
 
         return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
@@ -1141,9 +1121,7 @@ public class WordNetUtilities {
         return 0;
     }
 
-    /**
-     *
-     */
+    
     public static String printStatistics() {
 
         HashSet<String> mappedSUMOterms = new HashSet<String>();
@@ -1245,9 +1223,7 @@ public class WordNetUtilities {
         return result.toString();
     }
 
-    /**
-     *
-     */
+    
     private static boolean excludedStringsForMeronymy(String s1, String s2) {
 
         return s1.indexOf("genus_") > -1 ||
@@ -1346,9 +1322,7 @@ public class WordNetUtilities {
         }
     }
 
-    /**
-     *
-     */
+    
     public static void commentSentiment(String fileWithPath) {
 
         String line;
@@ -1372,9 +1346,7 @@ public class WordNetUtilities {
         }
     }
 
-    /**
-     *
-     */
+    
     private static void writeTPTPWordNetClassDefinitions(PrintWriter pw) throws IOException {
 
         ArrayList<String> WordNetClasses =
@@ -1398,9 +1370,7 @@ public class WordNetUtilities {
                 ",axiom,(s__documentation(s__VerbFrame,s__EnglishLanguage,\"A string template showing allowed form of use of a verb.\"))).");
     }
 
-    /**
-     *
-     */
+    
     private static void writeTPTPVerbFrames(PrintWriter pw) throws IOException {
 
         for (int i = 0; i < WordNet.VerbFrames.size(); i++) {
@@ -1413,9 +1383,7 @@ public class WordNetUtilities {
         }
     }
 
-    /**
-     *
-     */
+    
     private static void writeTPTPWordNetRelationDefinitions(PrintWriter pw) throws IOException {
 
         Iterator<String> it = WordNetRelations.iterator();
@@ -1556,9 +1524,7 @@ public class WordNetUtilities {
         }
     }
 
-    /**
-     *
-     */
+    
     private static void writeTPTPWordNetExceptions(PrintWriter pw) throws IOException {
 
         Iterator<String> it = WordNet.wn.exceptionNounHash.keySet().iterator();
@@ -1589,9 +1555,7 @@ public class WordNetUtilities {
         }
     }
 
-    /**
-     *
-     */
+    
     private static void writeTPTPOneWordToSenses(PrintWriter pw, String word) {
 
         String wordAsID = StringUtil.StringToPrologID(word);
@@ -1612,9 +1576,7 @@ public class WordNetUtilities {
             System.out.println("Error in WordNetUtilities.writeTPTPOneWordToSenses(): no senses for word: " + word);
     }
 
-    /**
-     *
-     */
+    
     private static void writeTPTPWordsToSenses(PrintWriter pw) throws IOException {
 
         Iterator<String> it = WordNet.wn.wordsToSenseKeys.keySet().iterator();
@@ -1624,9 +1586,7 @@ public class WordNetUtilities {
         }
     }
 
-    /**
-     *
-     */
+    
     private static void writeTPTPSenseIndex(PrintWriter pw) throws IOException {
 
         Iterator<String> it = WordNet.wn.senseIndex.keySet().iterator();
@@ -1656,9 +1616,7 @@ public class WordNetUtilities {
         }
     }
 
-    /**
-     *
-     */
+    
     private static void writeTPTPWordNetHeader(PrintWriter pw) {
 
         pw.println("# An expression of the Princeton WordNet " +
@@ -1762,9 +1720,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /**
-     *
-     */
+    
     private static String lowestCommonParentInner(ArrayList<String> path,
                                                   ArrayList<ArrayList<String>> paths, int cursor) {
 
@@ -1785,9 +1741,7 @@ public class WordNetUtilities {
         return null;
     }
 
-    /**
-     *
-     */
+    
     private static String lowestCommonParent(ArrayList<ArrayList<String>> paths1,
                                              ArrayList<ArrayList<String>> paths2, int cursor) {
 
@@ -1801,9 +1755,7 @@ public class WordNetUtilities {
         return bestSyn;
     }
 
-    /**
-     *
-     */
+    
     public static String lowestCommonParent(String s1, String s2) {
 
         ArrayList<String> base1 = new ArrayList<String>();
@@ -1847,9 +1799,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /**
-     *
-     */
+    
     public static void showAllLeaves() {
 
         try {
@@ -1872,9 +1822,7 @@ public class WordNetUtilities {
         }
     }
 
-    /**
-     *
-     */
+    
     public static void showAllRoots() {
 
         try {
@@ -1919,9 +1867,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /**
-     *
-     */
+    
     public static String synsetToOneWord(String s) {
 
         return WordNet.wn.getWordsFromSynset(s).get(0);
@@ -1941,9 +1887,7 @@ public class WordNetUtilities {
             return false;
     }
 
-    /**
-     *
-     */
+    
     private static void addSenseSet(Hashtable<String, String> SUMOhash,
                                     String prefix, HashMap<String, HashSet<String>> SUMOs) {
 
@@ -2394,9 +2338,7 @@ public class WordNetUtilities {
         return result;
     }
 
-    /**
-     *
-     */
+    
     public static String rootFormOf(String word) {
 
         String rootWord = word;
@@ -2545,9 +2487,7 @@ public class WordNetUtilities {
         return synWords;
     }
 
-    /**
-     *
-     */
+    
     private static String removeIsh(String s) {
 
         if (s.endsWith("ish")) {
@@ -2720,9 +2660,7 @@ public class WordNetUtilities {
         return false;
     }
 
-    /**
-     *
-     */
+    
     private static HashSet<String> readDomain(String domain) {
 
         HashSet<String> result = new HashSet<>();
@@ -2756,9 +2694,7 @@ public class WordNetUtilities {
         }
     }
 
-    /**
-     *
-     */
+    
     public static void testWord() {
 
         testWordDebug = true;
@@ -2768,9 +2704,7 @@ public class WordNetUtilities {
         sensoryOrMentalWord("pianola");
     }
 
-    /**
-     *
-     */
+    
     public static void testSynesthesia() {
 
         HashMap<String, HashSet<String>> sensoryWords = sensoryWords();
@@ -2778,9 +2712,7 @@ public class WordNetUtilities {
         synesthesiaCompare(sensoryWords, synwords);
     }
 
-    /**
-     *
-     */
+    
     public static void testGetPOS() {
 
         String s = "four-lane_AS_1";
@@ -2798,9 +2730,7 @@ public class WordNetUtilities {
         System.out.println("INFO in WordNetUtilities.testIsValidKey(): " + isValidKey("morale_NN_1"));
     }
 
-    /**
-     *
-     */
+    
     public static void showHelp() {
 
         System.out.println("KB class");

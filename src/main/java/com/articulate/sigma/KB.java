@@ -171,9 +171,7 @@ public class KB implements Serializable {
         }
     }
 
-    /**
-     *
-     */
+    
     public KB(String n, String dir, boolean visibility) {
 
         this(n, dir);
@@ -562,9 +560,7 @@ public class KB implements Serializable {
         return sourceAxioms;
     }
 
-    /**
-     *
-     */
+    
     private static void deletedOldInfFiles(String filename, String prefix) {
 
         System.out.println("KB.deletedOldInfFiles(): deleting old inference files");
@@ -635,9 +631,7 @@ public class KB implements Serializable {
                 FormulaUtil.formatCollection(removalSuccess));
     }
 
-    /**
-     *
-     */
+    
     public static void test() {
 
         // generateTPTPTestAssertions();
@@ -687,9 +681,7 @@ public class KB implements Serializable {
          */
     }
 
-    /**
-     *
-     */
+    
     public static void showHelp() {
 
         System.out.println("KB class");
@@ -713,9 +705,7 @@ public class KB implements Serializable {
         System.out.println("  s - show statistics");
     }
 
-    /**
-     *
-     */
+    
     public static void main(String[] args) throws IOException {
 
         System.out.println("INFO in KB.main()");
@@ -822,9 +812,7 @@ public class KB implements Serializable {
         }
     }
 
-    /**
-     *
-     */
+    
     public boolean isVisible() {
         return isVisible;
     }
@@ -1162,9 +1150,7 @@ public class KB implements Serializable {
         return kbCache != null && kbCache.relations != null && kbCache.relations.contains(i);
     }
 
-    /**
-     *
-     */
+    
     public boolean isInstance(String term) {
 
         ArrayList<Formula> al = askWithRestriction(0, "instance", 1, term);
@@ -1496,9 +1482,7 @@ public class KB implements Serializable {
         return result;
     }
 
-    /**
-     *
-     */
+    
     private ArrayList<Formula> stringsToFormulas(ArrayList<String> strings) {
 
         ArrayList<Formula> result = new ArrayList<Formula>();
@@ -2541,9 +2525,7 @@ public class KB implements Serializable {
         return 0;
     }
 
-    /**
-     *
-     */
+    
     public HashSet<String> immediateParents(String term) {
 
         //System.out.println("KB.immediateParents(): " + term);
@@ -3076,9 +3058,7 @@ public class KB implements Serializable {
         }
     }
 
-    /**
-     *
-     */
+    
     public KIF readConstituent(String filename) {
 
         String canonicalPath = null;
@@ -3787,9 +3767,7 @@ public class KB implements Serializable {
         return Lists.newArrayList(loadFormatMapsAttempted);
     }
 
-    /**
-     *
-     */
+    
     public List<Pair> getSortedTermFrequency() {
 
         List<Pair> termFrequencies = new ArrayList<>();
@@ -3800,9 +3778,7 @@ public class KB implements Serializable {
         return termFrequencies;
     }
 
-    /**
-     *
-     */
+    
     public TPTP3ProofProcessor runProver(String[] args, int timeout) {
 
         TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
@@ -3838,9 +3814,7 @@ public class KB implements Serializable {
         forLang.put(term, format);
     }
 
-    /**
-     *
-     */
+    
     public String toString() {
 
         StringBuffer sb = new StringBuffer();

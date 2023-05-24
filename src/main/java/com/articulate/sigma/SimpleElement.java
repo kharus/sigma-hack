@@ -97,9 +97,7 @@ public class SimpleElement {
         return null;
     }
 
-    /**
-     *
-     */
+    
     public String toString(int indent, boolean forFile) {
 
         StringBuffer strindent = new StringBuffer();
@@ -140,25 +138,19 @@ public class SimpleElement {
         return result.toString();
     }
 
-    /**
-     *
-     */
+    
     public String toString() {
 
         return toString(0, false);
     }
 
-    /**
-     *
-     */
+    
     public String toFileString() {
 
         return toString(0, true);
     }
 
-    /**
-     *
-     */
+    
     public String toFileString(int indent) {
 
         return toString(indent, true);
