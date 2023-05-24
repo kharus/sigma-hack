@@ -31,6 +31,10 @@ import java.util.*;
  */
 public class VerbNet {
 
+    private static final boolean debug = false;
+    private static final boolean echo = false;
+    private static final HashMap<String, SimpleElement> verbFiles = new HashMap<>();
+    private static final HashMap<String, String> roles = new HashMap<>(); // VN to SUMO role mappings
     public static KB kb;
     public static int verbcount = 0;
     public static int syncount = 0;
@@ -39,14 +43,8 @@ public class VerbNet {
     // verb ID keys and Verb values
     public static HashMap<String, Verb> verbs = new HashMap<>();
     public static boolean disable = false;
-    private static final boolean debug = false;
-    private static final boolean echo = false;
-    private static final HashMap<String, SimpleElement> verbFiles = new HashMap<>();
-    private static final HashMap<String, String> roles = new HashMap<>(); // VN to SUMO role mappings
     private static boolean initialized = false;
 
-    /**
-     */
     public static void initOnce() {
 
         if (KBmanager.getMgr().getPref("loadLexicons").equals("false"))
@@ -77,8 +75,6 @@ public class VerbNet {
         }
     }
 
-    /**
-     */
     public static void readVerbFiles() {
 
         SimpleElement configuration = null;
@@ -109,8 +105,6 @@ public class VerbNet {
         }
     }
 
-    /**
-     */
     public static void processVerbs() {
 
         for (String fname : verbFiles.keySet()) {
@@ -128,8 +122,6 @@ public class VerbNet {
         }
     }
 
-    /**
-     */
     private static String formatForSynset(String synset) {
 
         StringBuffer result = new StringBuffer();
@@ -194,8 +186,6 @@ public class VerbNet {
         return result.toString();
     }
 
-    /**
-     */
     public static void main(String[] args) {
 
         KBmanager.getMgr().initializeOnce();

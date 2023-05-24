@@ -8,9 +8,6 @@ import static junit.framework.TestCase.assertTrue;
 
 public class FormatTest extends IntegrationTestBase {
 
-    /**
-     *
-     */
     @Test
     public void testNegativePositiveFormat() {
 
@@ -32,9 +29,6 @@ public class FormatTest extends IntegrationTestBase {
         assertTrue(problems.toString(), problems.toString().trim().isEmpty());
     }
 
-    /**
-     *
-     */
     @Test
     public void testFormatMatchingCharacters() {
 

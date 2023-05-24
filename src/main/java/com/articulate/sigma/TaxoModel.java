@@ -191,8 +191,6 @@ public class TaxoModel {
         }
     }
 
-    /**
-     */
     public static String toHTML(String kbHref) {
 
         StringBuffer sb = new StringBuffer();

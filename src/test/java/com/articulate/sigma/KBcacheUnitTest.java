@@ -36,8 +36,6 @@ public class KBcacheUnitTest {
 
     public static KB kb = new KB("TestKB");
 
-    /**
-     */
     @BeforeClass
     public static void setup() {
 
@@ -82,8 +80,6 @@ public class KBcacheUnitTest {
         KBcache.showState(kb.kbCache);
     }
 
-    /**
-     */
     @Test
     public void testRelations() {
 
@@ -95,8 +91,6 @@ public class KBcacheUnitTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     */
     @Test
     public void testFunctions() {
 
@@ -107,8 +101,6 @@ public class KBcacheUnitTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     */
     @Test
     public void testPredicates() {
 
@@ -121,8 +113,6 @@ public class KBcacheUnitTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     */
     @Test
     public void transRels() {
 
@@ -132,8 +122,6 @@ public class KBcacheUnitTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     */
     @Test
     public void testParents() {
 
@@ -143,8 +131,6 @@ public class KBcacheUnitTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     */
     @Test
     public void testChildren() {
 
@@ -159,8 +145,6 @@ public class KBcacheUnitTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     */
     @Test
     public void testSignatures() {
 
@@ -170,8 +154,6 @@ public class KBcacheUnitTest {
         assertEquals(expected.subList(1, 2), actual.subList(1, 2));
     }
 
-    /**
-     */
     @Test
     public void testVarSignatures() {
 
@@ -183,8 +165,6 @@ public class KBcacheUnitTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     */
     @Test
     public void testValences() {
 
@@ -194,8 +174,6 @@ public class KBcacheUnitTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     */
     @Test
     public void testValences2() {
 
@@ -205,8 +183,6 @@ public class KBcacheUnitTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     */
     @Test
     public void testInsts() {
 
@@ -214,8 +190,6 @@ public class KBcacheUnitTest {
         assertTrue(kb.kbCache.insts.contains("rel"));
     }
 
-    /**
-     */
     @Test
     public void testInstances() {
 
@@ -227,8 +201,6 @@ public class KBcacheUnitTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     */
     @Test
     public void testTransInsts() {
 
@@ -238,8 +210,6 @@ public class KBcacheUnitTest {
         assertTrue(kb.kbCache.transInstOf("Attorney", "Attribute"));
     }
 
-    /**
-     */
     @Test
     public void testIsChildOf() {
 
@@ -247,8 +217,6 @@ public class KBcacheUnitTest {
         assertTrue(kb.isChildOf("CitizenryFn", "Function"));
     }
 
-    /**
-     */
     @Test
     public void testCommonParent() {
 
@@ -259,8 +227,6 @@ public class KBcacheUnitTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     */
     @Test
     public void testInstancesForType() {
 
@@ -272,8 +238,6 @@ public class KBcacheUnitTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     */
     @Test
     public void testDisjoint() {
 
@@ -305,8 +269,6 @@ public class KBcacheUnitTest {
         assertFalse(kb.kbCache.checkDisjoint(kb, classes));
     }
 
-    /**
-     */
     @Test
     public void testCollectArgsFromFormulas() {
 

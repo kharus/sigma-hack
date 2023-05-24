@@ -32,9 +32,10 @@ import java.util.*;
  * A previous version invoked the KIF version of Vampire from Java
  * but that's 15 years old now.  The current Vampire does TPTP3 output
  * instead of XML.
+ *
  * @author Andrei Voronkov
- * @since 14/08/2003, Acapulco
  * @author apease
+ * @since 14/08/2003, Acapulco
  */
 
 public class Vampire {
@@ -47,8 +48,6 @@ public class Vampire {
     // Avatar is faster but doesn't provide answer variables
     public ArrayList<String> output = new ArrayList<>();
 
-    /**
-     */
     private static String[] createCommandList(File executable, int timeout, File kbFile) {
 
         String opts = "";
@@ -69,11 +68,11 @@ public class Vampire {
      * Add an assertion for inference.
      *
      * @param userAssertionTPTP asserted formula in the TPTP/TFF syntax
-     * @param kb Knowledge base
-     * @param parsedFormulas a lit of parsed formulas in KIF syntax
-     * @param tptp convert formula to TPTP if tptp = true
+     * @param kb                Knowledge base
+     * @param parsedFormulas    a lit of parsed formulas in KIF syntax
+     * @param tptp              convert formula to TPTP if tptp = true
      * @return true if all assertions are added for inference
-     *
+     * <p>
      * TODO: This function might not be necessary if we find a way to
      * directly add assertion into opened inference engine (e_ltb_runner)
      */
@@ -128,8 +127,6 @@ public class Vampire {
         return allAdded;
     }
 
-    /**
-     */
     public static void main(String[] args) throws Exception {
 
         /*
@@ -187,8 +184,6 @@ public class Vampire {
         }
     }
 
-    /**
-     */
     public String toString() {
 
         StringBuffer sb = new StringBuffer();
@@ -201,10 +196,9 @@ public class Vampire {
      * Creates a running instance of Vampire.
      *
      * @param kbFile A File object denoting the initial knowledge base
-     * to be loaded by the Vampire executable.
-     *
+     *               to be loaded by the Vampire executable.
      * @throws IOException should not normally be thrown unless either
-     *         Vampire executable or database file name are incorrect
+     *                     Vampire executable or database file name are incorrect
      */
     private void run(File kbFile, int timeout) throws Exception {
 
@@ -238,8 +232,6 @@ public class Vampire {
         System.out.println("Vampire.run() done executing");
     }
 
-    /**
-     */
     public void writeStatements(HashSet<String> stmts, String type) {
 
         FileWriter fw = null;
@@ -293,8 +285,6 @@ public class Vampire {
         pw.close();
     }
 
-    /**
-     */
     public List<String> getUserAssertions(KB kb) {
 
         String userAssertionTPTP = kb.name + KB._userAssertionsTPTP;

@@ -35,9 +35,6 @@ public class FormulaLogicalEqualityTest extends UnitTestBase {
     @Parameterized.Parameter(value = 2)
     public boolean areEqual;
 
-    /**
-     *
-     */
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> loadParamteres() {
 
@@ -66,9 +63,6 @@ public class FormulaLogicalEqualityTest extends UnitTestBase {
         return result;
     }
 
-    /**
-     *
-     */
     @After
     public void performanceReport() {
 
@@ -78,9 +72,6 @@ public class FormulaLogicalEqualityTest extends UnitTestBase {
                 " milisecond execution time per test.\n");
     }
 
-    /**
-     *
-     */
     @Test
     public void test() {
 

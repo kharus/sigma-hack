@@ -177,9 +177,6 @@ public class Sentence {
         setCaseRolesScratchpad(caseRoles);
     }
 
-    /**
-     *
-     */
     private String concatenateIndirectObjects() {
         StringBuilder sBuild = new StringBuilder();
 
@@ -245,9 +242,6 @@ public class Sentence {
         element.setSurfaceForm(sBuild.toString().replaceAll("\\s+", " ").trim());
     }
 
-    /**
-     *
-     */
     void formulateNaturalVerb() {
         verb.formulateNaturalVerb(this);
     }

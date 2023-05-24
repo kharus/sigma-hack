@@ -35,45 +35,39 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *  Contains utility methods for KBs
+ * Contains utility methods for KBs
  */
 public class KButilities {
 
     public static boolean debug = false;
 
-    /** Errors found during processing formulas */
+    /**
+     * Errors found during processing formulas
+     */
     public static TreeSet<String> errors = new TreeSet<String>();
 
-    /** Warnings found during processing formulas */
+    /**
+     * Warnings found during processing formulas
+     */
     public static TreeSet<String> warnings = new TreeSet<String>();
 
-    /**
-     */
     public static boolean isRelation(KB kb, String term) {
 
         return kb.isInstanceOf(term, "Relation");
     }
 
-    /**
-     */
     public static boolean isFunction(KB kb, String term) {
         return kb.isInstanceOf(term, "Function");
     }
 
-    /**
-     */
     public static boolean isAttribute(KB kb, String term) {
         return kb.isInstanceOf(term, "Attribute");
     }
 
-    /**
-     */
     public static void clearErrors() {
         errors = new TreeSet<>();
     }
 
-    /**
-     */
     public static boolean hasCorrectTypes(KB kb, Formula f) {
 
         SUMOtoTFAform.initOnce();
@@ -98,8 +92,6 @@ public class KButilities {
         return true;
     }
 
-    /**
-     */
     public static boolean isValidFormula(KB kb, String form) {
 
         SUMOtoTFAform.initOnce();
@@ -130,29 +122,21 @@ public class KButilities {
         return true;
     }
 
-    /**
-     */
     public static boolean isClass(KB kb, String term) {
 
         return kb.isInstanceOf(term, "Class");
     }
 
-    /**
-     */
     public static boolean isInstance(KB kb, String term) {
 
         return !kb.isInstanceOf(term, "Class");
     }
 
-    /**
-     */
     public static boolean isVariableArity(KB kb, String term) {
 
         return kb.isInstanceOf(term, "VariableArityRelation");
     }
 
-    /**
-     */
     public static String getDocumentation(KB kb, String term) {
 
         ArrayList<Formula> forms = kb.askWithRestriction(0, "documentation", 1, term);
@@ -260,7 +244,7 @@ public class KButilities {
     }
 
     /**
-     * Get all formulas that contain both terms. 
+     * Get all formulas that contain both terms.
      */
     public static ArrayList<Formula> termIntersection(KB kb, String term1, String term2) {
 
@@ -292,8 +276,6 @@ public class KButilities {
         return result;
     }
 
-    /**
-     */
     public static void countRelations(KB kb) {
 
         System.out.println("Relations: " + kb.getCountRelations());
@@ -307,8 +289,6 @@ public class KButilities {
         }
     }
 
-    /**
-     */
     public static boolean isCacheFile(String filename) {
 
         if (StringUtil.emptyString(filename))
@@ -316,8 +296,6 @@ public class KButilities {
         return filename.endsWith("_Cache.kif");
     }
 
-    /**
-     */
     public static void countProcesses(KB kb) {
 
         int count = 0;
@@ -335,8 +313,6 @@ public class KButilities {
         System.out.println("SUMO Process synsets: " + wncount);
     }
 
-    /**
-     */
     private static boolean uRLexists(String URLName) {
 
         try {
@@ -353,8 +329,6 @@ public class KButilities {
         }
     }
 
-    /**
-     */
     public static void checkURLs(KB kb) {
 
         URL u = null;
@@ -367,8 +341,6 @@ public class KButilities {
         }
     }
 
-    /**
-     */
     public static void validatePictureList() {
 
         // (externalImage WaterVehicle "http://upload.wikimedia.org/wikipedia/commons/1/12/2003_LWGO_ubt.JPG") 
@@ -414,16 +386,16 @@ public class KButilities {
     }
 
     /**
-     *  Turn SUMO into a semantic network by extracting all ground
-     *  binary relations, turning all higher arity relations into a
-     *  set of binary relations, and making all term co-occurring in
-     *  an axiom to be related with a general "link" relation. Also
-     *  use the subclass hierarchy to relate all parents of terms in
-     *  domain statements, through the relation itself but with a
-     *  suffix designating it as a separate relation.
-     *  Optionally don't show cached statements,
-     *  if cached is false, or relations with String arguments, if strings
-     *  is false.
+     * Turn SUMO into a semantic network by extracting all ground
+     * binary relations, turning all higher arity relations into a
+     * set of binary relations, and making all term co-occurring in
+     * an axiom to be related with a general "link" relation. Also
+     * use the subclass hierarchy to relate all parents of terms in
+     * domain statements, through the relation itself but with a
+     * suffix designating it as a separate relation.
+     * Optionally don't show cached statements,
+     * if cached is false, or relations with String arguments, if strings
+     * is false.
      */
     private static Set<String> generateSemanticNetwork(KB kb, boolean cached, boolean strings) {
 
@@ -465,8 +437,6 @@ public class KButilities {
         return resultSet;
     }
 
-    /**
-     */
     private static String semnetAsDot(Set<String> triples) {
 
         StringBuffer sb = new StringBuffer();
@@ -703,10 +673,10 @@ public class KButilities {
     }
 
     /**
-     *  Find all cases of where (instance A B) (instance B C) as
-     *  well as all cases of where (instance A B) (instance B C)
-     *  (instance C D).  Report true if any such cases are found,
-     *  false otherwise.
+     * Find all cases of where (instance A B) (instance B C) as
+     * well as all cases of where (instance A B) (instance B C)
+     * (instance C D).  Report true if any such cases are found,
+     * false otherwise.
      */
     public static boolean instanceOfInstanceP(KB kb) {
 
@@ -737,8 +707,6 @@ public class KButilities {
         return result;
     }
 
-    /**
-     */
     public static void writeDisplayText(KB kb, String displayFormatPredicate, String displayTermPredicate,
                                         String language, String fname) throws IOException {
 
@@ -808,8 +776,6 @@ public class KButilities {
         }
     }
 
-    /**
-     */
     public static void generateTPTPTestAssertions() {
 
         try {
@@ -864,8 +830,6 @@ public class KButilities {
         }
     }
 
-    /**
-     */
     public static int getCountNonLinguisticAxioms(KB kb) {
 
         HashSet<String> rels = new HashSet<>();
@@ -910,7 +874,7 @@ public class KButilities {
     }
 
     /**
-     *  Find all formulas in which the SUMO term is involved.
+     * Find all formulas in which the SUMO term is involved.
      */
     public static Set<Formula> getAllFormulasOfTerm(KB kb, String term) {
 
@@ -926,7 +890,7 @@ public class KButilities {
     }
 
     /**
-     *  Find all formulas in which the SUMO term is involved.
+     * Find all formulas in which the SUMO term is involved.
      */
     public static String generateFormulasAndDoc(KB kb) {
 
@@ -983,8 +947,6 @@ public class KButilities {
         return result;
     }
 
-    /**
-     */
     public static void showHelp() {
 
         System.out.println("KButilities class");
@@ -1004,8 +966,6 @@ public class KButilities {
         System.out.println("  -t - generate a table of termFormat(s)");
     }
 
-    /**
-     */
     public static void main(String[] args) {
 
         if (args != null && args.length > 0 && args[0].equals("-h"))
@@ -1069,8 +1029,6 @@ public class KButilities {
         }
     }
 
-    /**
-     */
     public String semnetAsJSON3(KB kb, boolean cached, boolean strings) {
 
         Set<String> s = generateSemanticNetwork(kb, cached, strings);
@@ -1083,8 +1041,6 @@ public class KButilities {
         return JSONValue.toJSONString(al);
     }
 
-    /**
-     */
     public Set<GraphArc> generateSemNetNeighbors(KB kb, boolean cached, boolean strings, boolean links, String term, int count) {
 
         if (debug) System.out.println("generateSemNetNeighbors(): term: " + term + " count: " + count);
@@ -1160,13 +1116,12 @@ public class KButilities {
         return resultSet;
     }
 
-    /**
-     */
     public class GraphArc implements JSONAware, Comparable {
 
         public String source = "";
         public String rel = "";
         public String target = "";
+
         public GraphArc(String s, String r, String t) {
             source = s;
             rel = r;

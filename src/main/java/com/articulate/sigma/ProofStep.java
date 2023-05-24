@@ -20,7 +20,9 @@ import com.articulate.sigma.utils.FileUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/** A trivial structure to hold the elements of a proof step. */
+/**
+ * A trivial structure to hold the elements of a proof step.
+ */
 public class ProofStep {
 
     public static final String QUERY = "[Query]";
@@ -30,30 +32,42 @@ public class ProofStep {
     // the TPTP3 input
     public String input = null;
 
-    /** A String giving the type of the clause or formula, such as 'conjecture', 'plain' or 'axiom' */
+    /**
+     * A String giving the type of the clause or formula, such as 'conjecture', 'plain' or 'axiom'
+     */
     public String formulaType = null;
 
-    /** A String of the role of the formula */
+    /**
+     * A String of the role of the formula
+     */
     public String formulaRole = null;
 
-    /** A String of the inference type, e.g. add_answer_literal | assume_negation | etc. */
+    /**
+     * A String of the inference type, e.g. add_answer_literal | assume_negation | etc.
+     */
     public String inferenceType = null;
 
-    /** A String containing a valid SUO-KIF expression, that is the axiom
-     *  expressing the conclusion of this proof step. */
+    /**
+     * A String containing a valid SUO-KIF expression, that is the axiom
+     * expressing the conclusion of this proof step.
+     */
     public String axiom = null;
 
     // ID of the SUMO axiom that corresponds to kb.axiomKey.keySet()
     public String sourceID = "";
 
-    /** The number assigned to this proof step, initially by EProver and
-     *  then normalized by ProofStep.normalizeProofStepNumbers() */
+    /**
+     * The number assigned to this proof step, initially by EProver and
+     * then normalized by ProofStep.normalizeProofStepNumbers()
+     */
     public Integer number = 0;
 
-    /** An ArrayList of Integer(s), which reference prior proof steps from
-     *  which this axiom is derived. Note that the numbering is what
-     *  the ProofProcessor assigns, not necessarily the proof
-     *  numbers returned directly from the inference engine. */
+    /**
+     * An ArrayList of Integer(s), which reference prior proof steps from
+     * which this axiom is derived. Note that the numbering is what
+     * the ProofProcessor assigns, not necessarily the proof
+     * numbers returned directly from the inference engine.
+     */
     public ArrayList<Integer> premises = new ArrayList();
 
     /**
@@ -85,7 +99,7 @@ public class ProofStep {
                 //System.out.println("INFO in ProofStep.normalizeProofStepNumbers(): old premise num: " + premiseNum);
                 Integer newNumber = null;
                 if (numberingMap.get(premiseNum) != null)
-                    newNumber = Integer.valueOf(numberingMap.get(premiseNum));
+                    newNumber = numberingMap.get(premiseNum);
                 else {
                     newNumber = Integer.valueOf(newIndex++);
                     numberingMap.put(premiseNum, newNumber);
@@ -151,7 +165,7 @@ public class ProofStep {
                 Integer premiseNum = ps.premises.get(j);
                 Integer newNumber = null;
                 if (numberingMap.get(premiseNum) != null)
-                    newNumber = Integer.valueOf(numberingMap.get(premiseNum));
+                    newNumber = numberingMap.get(premiseNum);
                 else
                     newNumber = premiseNum;
                 newPremises.add(newNumber);
@@ -196,8 +210,6 @@ public class ProofStep {
         return results;
     }
 
-    /**
-     */
     public String toString() {
 
         StringBuffer sb = new StringBuffer();

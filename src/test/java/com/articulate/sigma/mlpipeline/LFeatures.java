@@ -111,10 +111,6 @@ public class LFeatures {
         //System.out.println("LFeatures(): objects: " + objects.terms);
     }
 
-
-    /**
-     *
-     */
     public ArrayList<AVPair> initModals() {
 
         ArrayList<AVPair> modals = new ArrayList<>();

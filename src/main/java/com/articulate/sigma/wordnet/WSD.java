@@ -50,8 +50,6 @@ public class WSD {
         return result;
     }
 
-    /**
-     */
     public static boolean polysemous(String word) {
 
         ArrayList<String> values = WordNet.wn.wordsToSenseKeys.get(word);
@@ -60,8 +58,6 @@ public class WSD {
         return values.size() != 1;
     }
 
-    /**
-     */
     public static boolean polysemous(String word, int pos) {
 
         ArrayList<String> values = WordNet.wn.wordsToSenseKeys.get(word);
@@ -89,8 +85,9 @@ public class WSD {
     /**
      * Collect all the synsets that represent the best guess at
      * meanings for all the words in a text given a larger linguistic
-     * context.  
-     * @return 9 digit synset IDs 
+     * context.
+     *
+     * @return 9 digit synset IDs
      */
     public static ArrayList<String> collectWordSenses(String text) {
 
@@ -221,9 +218,10 @@ public class WSD {
     /**
      * Return the best guess at the synset for the given word in the
      * context of the sentence with the given POS.
-     * @param word - word to disambiguate
+     *
+     * @param word  - word to disambiguate
      * @param words - words in context
-     * @param pos - part of speech of @word
+     * @param pos   - part of speech of @word
      * @return the 9-digit synset but only if there's a reasonable amount of data.
      */
     public static String findWordSenseInContextWithPos(String word, List<String> words, int pos, boolean lemma) {
@@ -506,8 +504,6 @@ public class WSD {
         return "";
     }
 
-    /**
-     */
     public static String getBestDefaultSense(String word) {
 
         return getBestDefaultSenseWithDomain(word, "");
@@ -517,6 +513,7 @@ public class WSD {
      * Get the POS-prefixed synset that represents the best guess at
      * meaning for a word with a given part of speech.  It picks the
      * most frequent sense for the word in the Brown Corpus.
+     *
      * @return a 9 digit synset number
      */
     public static String getBestDefaultSense(String word, int pos) {
@@ -591,9 +588,9 @@ public class WSD {
     }
 
     /**
-     *  @return each line of a file into an array.  The first element of
-     *  each interior array is the whole line, and subsequent elements
-     *  are the individual words.
+     * @return each line of a file into an array.  The first element of
+     * each interior array is the whole line, and subsequent elements
+     * are the individual words.
      */
     public static ArrayList<ArrayList<String>> readFileIntoArray(String filename) {
 
@@ -627,7 +624,7 @@ public class WSD {
     }
 
     /**
-     *  @return each line of a file into an array of String.
+     * @return each line of a file into an array of String.
      */
     public static ArrayList<String> readFile(String filename) {
 
@@ -656,9 +653,10 @@ public class WSD {
     }
 
     /**
-     *  Extract SUMO terms from a file assuming one sentence per line
-     *  @return a Map of SUMO term keys and integer counts of their
-     *  appearance
+     * Extract SUMO terms from a file assuming one sentence per line
+     *
+     * @return a Map of SUMO term keys and integer counts of their
+     * appearance
      */
     public static Map<String, Integer> collectSUMOFromFile(String filename) {
 
@@ -702,9 +700,9 @@ public class WSD {
     }
 
     /**
-     *  Extract SUMO terms from a file assuming one sentence per line
-     *  print SUMO term keys and integer counts of their
-     *  appearance
+     * Extract SUMO terms from a file assuming one sentence per line
+     * print SUMO term keys and integer counts of their
+     * appearance
      */
     public static void printSUMOFromFileByLine(String filename) {
 
@@ -717,9 +715,10 @@ public class WSD {
     }
 
     /**
-     *  Extract SUMO terms from a file assuming one sentence per line
-     *  @return a Map of SUMO term keys and integer counts of their
-     *  appearance
+     * Extract SUMO terms from a file assuming one sentence per line
+     *
+     * @return a Map of SUMO term keys and integer counts of their
+     * appearance
      */
     public static Map<String, Integer> collectSUMOFromString(String lineStr) {
 
@@ -752,8 +751,8 @@ public class WSD {
     }
 
     /**
-     *  A method used only for testing.  It should not be called
-     *  during normal operation.
+     * A method used only for testing.  It should not be called
+     * during normal operation.
      */
     public static void testWordWSD() {
 
@@ -768,8 +767,8 @@ public class WSD {
     }
 
     /**
-     *  A method used only for testing.  It should not be called
-     *  during normal operation.
+     * A method used only for testing.  It should not be called
+     * during normal operation.
      */
     public static void testSentenceWSD() {
 
@@ -801,8 +800,8 @@ public class WSD {
     }
 
     /**
-     *  A method used only for testing.  It should not be called
-     *  during normal operation.
+     * A method used only for testing.  It should not be called
+     * during normal operation.
      */
     public static void testSentenceWSD2() {
 
@@ -822,8 +821,6 @@ public class WSD {
             System.out.println("INFO in WSD.testSentenceWSD(): word: " + s + " SUMO: " + WSD.getBestDefaultSUMO(s));
     }
 
-    /**
-     */
     public static void interactive() {
 
         BufferedReader d = new BufferedReader(new InputStreamReader(System.in));
@@ -843,8 +840,8 @@ public class WSD {
     }
 
     /**
-     *  A main method, used only for testing.  It should not be called
-     *  during normal operation.
+     * A main method, used only for testing.  It should not be called
+     * during normal operation.
      */
     public static void main(String[] args) {
 

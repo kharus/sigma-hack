@@ -26,15 +26,16 @@ import java.util.logging.Logger;
  */
 
 /**
- * This class manages the threads that run consistency checks for the different 
+ * This class manages the threads that run consistency checks for the different
  * KBs in the system.
- * @author Karen Joy Nomorosa, Rearden Commerce Inc.
  *
+ * @author Karen Joy Nomorosa, Rearden Commerce Inc.
  */
 public class CCheckManager extends ThreadPoolExecutor {
     private HashMap<String, HashMap<String, Object>> checkedKBs = null;
     private HashMap<String, String> ccheckQueue = null;
     private Logger logger = null;
+
     public CCheckManager() {
         super(3, 3, 50000L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(10));
 
@@ -47,6 +48,7 @@ public class CCheckManager extends ThreadPoolExecutor {
 
     /**
      * Returns the timestamp of when the last consistency check was run on this KB.
+     *
      * @param kbName - name of the KB
      * @return Timestamp if a consistency check has been run previously, null if it hasn't.
      */
@@ -64,6 +66,7 @@ public class CCheckManager extends ThreadPoolExecutor {
 
     /**
      * This method returns full or partial results of the consistency checks.
+     *
      * @param kbName - name of the KB that we want the results of
      * @return SimpleElement of the parsed XML file or null if there are errors or it does not exist.
      */
@@ -141,6 +144,7 @@ public class CCheckManager extends ThreadPoolExecutor {
 
     /**
      * Returns the current status of a KB
+     *
      * @param kbName - the name of the KB to be checked
      * @return true if there is a worker thread currently performing consistency checks on it, and false if not
      */
@@ -155,6 +159,7 @@ public class CCheckManager extends ThreadPoolExecutor {
 
     /**
      * Main code that performs the consistency check on the KB.
+     *
      * @param kb - KB to be checked
      * @return the status of the check (whether it has been accepted or rejected)
      */
@@ -198,6 +203,7 @@ public class CCheckManager extends ThreadPoolExecutor {
     /**
      * Removes the KB from the list of kbs currently being checked, and add it to the checkedKBs list.
      * This method is overridden from the parent class.
+     *
      * @param r
      * @param t
      */

@@ -46,9 +46,6 @@ public class SigmaTestBase {
         checkConfiguration();
     }
 
-    /**
-     *
-     */
     protected static void checkConfiguration() {
 
         List<String> problemList = Lists.newArrayList();
@@ -119,9 +116,6 @@ public class SigmaTestBase {
         return xmlReader;
     }
 
-    /**
-     *
-     */
     public static <T> void displayCollectionStringDiffs(Collection<T> coll1, Collection<T> coll2) {
 
         for (T obj : coll1) {

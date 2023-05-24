@@ -31,8 +31,10 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** A class to interface with databases and database-like formats,
- such as spreadsheets. */
+/**
+ * A class to interface with databases and database-like formats,
+ * such as spreadsheets.
+ */
 public class DB {
     // a map of word keys, broken down by POS, listing whether it's a positive or negative word
     // keys are pre-defined as type, POS, stemmed, polarity
@@ -46,10 +48,10 @@ public class DB {
      * lines not starting with one of the String tokens it contains
      * will be concatenated.  ';' denotes a comment line and will be skipped
      *
-     * @param inReader A reader for the file to be processed
+     * @param inReader        A reader for the file to be processed
      * @param lineStartTokens If a List containing String tokens, all
-     *        lines not starting with one of the tokens will be concatenated
-     * @param quote signifies whether to retain quotes in elements
+     *                        lines not starting with one of the tokens will be concatenated
+     * @param quote           signifies whether to retain quotes in elements
      * @return An ArrayList of ArrayLists
      */
     public static ArrayList<ArrayList<String>> readSpreadsheet(Reader inReader, List<String> lineStartTokens, boolean quote, char delimiter) {
@@ -164,11 +166,10 @@ public class DB {
      * lineStartTokens is a non-empty list, all lines not starting
      * with one of the String tokens it contains will be concatenated.
      *
-     * @param fname The pathname of the CSV file to be processed
-     *
+     * @param fname           The pathname of the CSV file to be processed
      * @param lineStartTokens If a List containing String tokens, all
-     * lines not starting with one of the tokens will be concatenated
-     * @param quote signifies whether to retain quotes in elements
+     *                        lines not starting with one of the tokens will be concatenated
+     * @param quote           signifies whether to retain quotes in elements
      * @return An ArrayList of ArrayLists
      */
     public static ArrayList<ArrayList<String>> readSpreadsheet(String fname, List lineStartTokens,
@@ -188,16 +189,12 @@ public class DB {
         return rows;
     }
 
-    /**
-     */
     public static ArrayList<ArrayList<String>> readSpreadsheet(String fname, List lineStartTokens,
                                                                boolean quote) {
 
         return readSpreadsheet(fname, lineStartTokens, quote, ',');
     }
 
-    /**
-     */
     private static boolean isInteger(String input) {
 
         try {
@@ -245,7 +242,6 @@ public class DB {
      * (.dif) file into an ArrayList of ArrayLists.
      *
      * @param inReader A reader created from the .dif file to be processed
-     *
      * @return An ArrayList of ArrayLists
      */
     public static ArrayList<ArrayList> readDataInterchangeFormatFile(Reader inReader) {
@@ -364,7 +360,6 @@ public class DB {
      * ArrayList of ArrayLists.
      *
      * @param fname The pathname of the file to be processed
-     *
      * @return An ArrayList of ArrayLists
      */
     public static ArrayList<ArrayList> readDataInterchangeFormatFile(String fname) {
@@ -381,8 +376,6 @@ public class DB {
         return rows;
     }
 
-    /**
-     */
     public static int writeSuoKifStatements(Set statements, PrintWriter pw) {
 
         long t1 = System.currentTimeMillis();
@@ -417,11 +410,9 @@ public class DB {
      * Writes to sourceFilePath all Formulae in kb that have
      * sourceFilePath as source file.
      *
-     * @param kb The KB from which Formulae will be written
-     *
+     * @param kb             The KB from which Formulae will be written
      * @param sourceFilePath The canonical pathname of the file to
-     * which Formulae will be written
-     *
+     *                       which Formulae will be written
      * @return An int denoting the number of expressions saved to the
      * file named by sourceFilePath
      */
@@ -475,20 +466,14 @@ public class DB {
         return count;
     }
 
-    /**
-     */
     public static String wordWrap(String input, int length) {
         return StringUtil.wordWrap(input, length);
     }
 
-    /**
-     */
     public static boolean emptyString(String input) {
         return StringUtil.emptyString(input);
     }
 
-    /**
-     */
     public static void RearDBtoKIF() {
 
         LineNumberReader lnr = null;
@@ -596,8 +581,6 @@ public class DB {
         }
     }
 
-    /**
-     */
     public static String parseCuisines(String cuisine, String RST_RESTAURANTNAME, String RST_RESTAURANTID) {
 
         StringBuffer result = new StringBuffer();
@@ -755,8 +738,6 @@ public class DB {
         System.out.println();
     }
 
-    /**
-     */
     public static String processTimeDate(String timeDate) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // "2009-03-19 17:30:00"
@@ -778,8 +759,6 @@ public class DB {
                 " (YearFn " + calendar.get(Calendar.YEAR) + "))))))";
     }
 
-    /**
-     */
     public static HashMap<String, String> readStateAbbrevs() {
 
         HashMap<String, String> result = new HashMap<String, String>();
@@ -793,8 +772,6 @@ public class DB {
         return result;
     }
 
-    /**
-     */
     public static ArrayList<String> fill(String value, int count) {
 
         ArrayList<String> line = new ArrayList<String>();
@@ -803,8 +780,6 @@ public class DB {
         return line;
     }
 
-    /**
-     */
     public static void DiningDBImport() {
 
         ArrayList<ArrayList<String>> f = DB.readSpreadsheet("dining.csv", null, false);
@@ -915,8 +890,6 @@ public class DB {
         return result;
     }
 
-    /**
-     */
     public static HashSet<String> parseRest(String menu, String placename, String price,
                                             String address, String latitude, String longitude, String phone) {
 
@@ -979,8 +952,6 @@ public class DB {
         return axioms;
     }
 
-    /**
-     */
     public static HashSet<String> getAllRest() {
 
         HashSet<String> result = new HashSet<String>();
@@ -1060,8 +1031,6 @@ public class DB {
         return result;
     }
 
-    /**
-     */
     public static String printTopSUMOInReviews(ArrayList<AVPair> topSUMO) {
 
         StringBuffer result = new StringBuffer();
@@ -1074,6 +1043,7 @@ public class DB {
 
     /**
      * A test method.
+     *
      * @param fname has no file extension or directory
      */
     public static HashSet<String> parseOneRestFile(String fname) {
@@ -1140,9 +1110,10 @@ public class DB {
     }
 
     /**
-     *  Fill out from a CSV file a set of concepts that should be ignored
-     *  during content extraction
-     @return void side effect on static variable "stopConcept"
+     * Fill out from a CSV file a set of concepts that should be ignored
+     * during content extraction
+     *
+     * @return void side effect on static variable "stopConcept"
      */
     public static void readStopConceptArray() {
 
@@ -1159,10 +1130,11 @@ public class DB {
     }
 
     /**
-     *  Fill out from a CSV file a map of word keys, and values broken down by POS,
-     listing whether it's a positive or negative word interior hash map keys are
-     type, POS, stemmed, polarity
-     @return void side effect on static variable "sentiment"
+     * Fill out from a CSV file a map of word keys, and values broken down by POS,
+     * listing whether it's a positive or negative word interior hash map keys are
+     * type, POS, stemmed, polarity
+     *
+     * @return void side effect on static variable "sentiment"
      */
     public static void readSentimentArray() {
 
@@ -1235,6 +1207,7 @@ public class DB {
 
     /**
      * Add new scores to existing scores.  Note the side effect on scores.
+     *
      * @return a map of concept keys and integer sentiment score values
      */
     public static HashMap<String, Integer> addConceptSentimentScores(HashMap<String, Integer> scores,
@@ -1255,6 +1228,7 @@ public class DB {
 
     /**
      * Associate individual concepts with a sentiment score
+     *
      * @return a map of concept keys and integer sentiment score values
      */
     public static HashMap<String, Integer> computeConceptSentimentFromFile(String filename) {
@@ -1285,6 +1259,7 @@ public class DB {
 
     /**
      * Associate individual concepts with a sentiment score
+     *
      * @return a map of concept keys and integer sentiment score values
      */
     public static HashMap<String, Integer> computeConceptSentiment(String input) {
@@ -1308,8 +1283,6 @@ public class DB {
         return result;
     }
 
-    /**
-     */
     public static void readAmenities() {
 
         ArrayList<ArrayList<String>> f = DB.readSpreadsheet(KBmanager.getMgr().getPref("kbDir") +
@@ -1340,8 +1313,6 @@ public class DB {
         return result;
     }
 
-    /**
-     */
     public static void textSentimentByPeriod() {
 
         // ArrayList by time period of an array of SUMO terms and sentiment values for that period
@@ -1380,8 +1351,6 @@ public class DB {
         System.out.println(totalSent);
     }
 
-    /**
-     */
     public static void textSentiment() {
 
         int period = 0;
@@ -1440,8 +1409,6 @@ public class DB {
         }
     }
 
-    /**
-     */
     public static void testSentiment() {
         readSentimentArray();
         String[] s = new String[24];
@@ -1474,8 +1441,6 @@ public class DB {
         }
     }
 
-    /**
-     */
     public static void testSentimentCorpus() {
 
         try {
@@ -1489,8 +1454,6 @@ public class DB {
         textFileSentiment("rt-polarity.neg", true);
     }
 
-    /**
-     */
     public static void guessGender(String fname) {
 
         ArrayList<ArrayList<String>> fn = DB.readSpreadsheet("FirstNames.csv", null, false, ',');
@@ -1606,8 +1569,8 @@ pw = new PrintWriter(fout);
     }
 
     /**
-     *  Print statistics in a summary form for TPTP test run
-     *  data
+     * Print statistics in a summary form for TPTP test run
+     * data
      */
     public HashMap printTPTPDataInCSV(HashMap byProver) throws IOException {
 
@@ -1639,8 +1602,8 @@ pw = new PrintWriter(fout);
     }
 
     /**
-     *  Reorganize statistics in a summary form for TPTP test run
-     *  data
+     * Reorganize statistics in a summary form for TPTP test run
+     * data
      */
     public HashMap resortTPTPData(HashMap stats) throws IOException {
 
@@ -1670,7 +1633,7 @@ pw = new PrintWriter(fout);
     }
 
     /**
-     *  Read statistics for TPTP test run data
+     * Read statistics for TPTP test run data
      */
     public HashMap processTPTPData() throws IOException {
 
@@ -1709,9 +1672,9 @@ pw = new PrintWriter(fout);
     /**
      * This procedure is called by @see generateDB().  It generates
      * SQL statements of some of the following forms:
-     *
+     * <p>
      * create table [table name] (personid int(50),firstname
-     *  varchar(35));
+     * varchar(35));
      * alter table [table name]
      * add column [new column name] varchar (20);
      * drop database [database name];
@@ -1738,10 +1701,10 @@ pw = new PrintWriter(fout);
     }
 
     /**
-     *  Generate an SQL database from the knowledge base
-     *  Tables must be defined as instances of &%DatabaseTable and
-     *  must have &%localDocumentation and &%HasDatabaseColumn
-     *  relations.
+     * Generate an SQL database from the knowledge base
+     * Tables must be defined as instances of &%DatabaseTable and
+     * must have &%localDocumentation and &%HasDatabaseColumn
+     * relations.
      */
     public void generateDB(KB kb) {
 
@@ -1755,8 +1718,6 @@ pw = new PrintWriter(fout);
         }
     }
 
-    /**
-     */
     private void processForRDFExport(ArrayList rows) {
 
         //System.out.println("<!-- Begin Export -->");
@@ -1788,9 +1749,9 @@ pw = new PrintWriter(fout);
     }
 
     /**
-     *  Collect relations in the knowledge base
+     * Collect relations in the knowledge base
      *
-     *  @return The set of relations in the knowledge base.
+     * @return The set of relations in the knowledge base.
      */
     private ArrayList getRelations(KB kb) {
 
@@ -1810,8 +1771,7 @@ pw = new PrintWriter(fout);
      * are TreeMaps, whose values in turn are Strings.  The ArrayList of
      * relations forms the column headers, which are Strings.
      *
-     * @param rows - the matrix
-     *
+     * @param rows      - the matrix
      * @param relations - the relations that form the column header
      */
     public void printSpreadsheet(TreeMap rows, ArrayList relations) {
@@ -1850,7 +1810,7 @@ pw = new PrintWriter(fout);
      * statements in the knowledge base.  Only the relations that are
      * actually used are included in the header.
      *
-     *  @param kb The knowledge base.
+     * @param kb The knowledge base.
      */
     public void exportTable(KB kb) {
 
@@ -1888,8 +1848,6 @@ pw = new PrintWriter(fout);
         printSpreadsheet(rows, usedRelations);
     }
 
-    /**
-     */
     private String replaceStringWithID(int counter, String arg, HashMap stringMap) {
 
         String id = ("String" + counter);

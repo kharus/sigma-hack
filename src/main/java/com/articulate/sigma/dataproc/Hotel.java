@@ -33,22 +33,18 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- */
 public class Hotel {
 
     public static final int geocodeLimit = 100;  // to avoid Google shutting us off
-    /**
-     */
-    public static int geocodeCount = 0;
-    /**
-     */
-    public static int level = 0;
     /**
      * Used by processOneXMLHotel and HotelXMLtoCSV to compile a list of the
      * columns that should appear in the resulting CSV file.
      */
     private static final TreeSet<String> hotelColumns = new TreeSet<String>();
+
+    public static int geocodeCount = 0;
+
+    public static int level = 0;
     public String oID = "";
     public String nID = "";
     public String taID = "";
@@ -100,8 +96,6 @@ public class Hotel {
     public HashMap<String, Integer> conceptSentiment = new HashMap<String, Integer>();
     public HashMap<String, String> values = new HashMap<String, String>();
 
-    /**
-     */
     public static String asCSVHeader() {
 
         String result = "id," +
@@ -116,8 +110,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     */
     public static String printAllHotels(ArrayList<Hotel> hotels) {
 
         System.out.println("INFO in Hotel.printAllHotels(): number: " + hotels.size());
@@ -128,8 +120,6 @@ public class Hotel {
         return sb.toString();
     }
 
-    /**
-     */
     public static void printAllHotelAmenitySentiment(ArrayList<Hotel> hotels) {
 
         StringBuffer sb = new StringBuffer();
@@ -388,7 +378,8 @@ public class Hotel {
 
     /**
      * Collect all possible column names and assign them a number, then sort
-     * on that frequency.  
+     * on that frequency.
+     *
      * @result a list of SUMO term names, sorted by frequency
      */
     public static ArrayList<String> generateSUMOHeader(ArrayList<Hotel> hotels) {
@@ -427,8 +418,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     */
     public static ArrayList<String> generateSUMOColumns(Hotel h, ArrayList<String> SUMOheader) {
 
         ArrayList<String> result = DB.fill("", SUMOheader.size());
@@ -575,8 +564,6 @@ public class Hotel {
         return h;
     }
 
-    /**
-     */
     public static ArrayList<Hotel> readCSVHotels(String fname) {
 
         HashMap<String, String> abbrevs = DB.readStateAbbrevs();
@@ -811,6 +798,7 @@ public class Hotel {
 
     /**
      * Read hotel review files
+     *
      * @return an ArrayList of Hotel
      */
     public static ArrayList<Hotel> parseAllHotelReviewFiles(String fname) {
@@ -845,8 +833,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     */
     public static Hotel parseOneTHotelReviewFile(String fname) {
 
         Hotel h = new Hotel();
@@ -899,6 +885,7 @@ public class Hotel {
 
     /**
      * Read hotel review files
+     *
      * @param fname is the directory path where the reviews are
      * @return an ArrayList of Hotel
      */
@@ -936,8 +923,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     */
     public static void matchHotels(Hotel feedHotel, Hotel reviewsHotel) {
 
         //if (feedHotel.name.equals(reviewsHotel.name)) {
@@ -968,8 +953,6 @@ public class Hotel {
         */
     }
 
-    /**
-     */
     public static void mergeHotels(ArrayList<Hotel> feed, ArrayList<Hotel> reviews) {
 
         System.out.println("INFO in mergeHotels()");
@@ -984,8 +967,7 @@ public class Hotel {
 
     /**
      * @param feed is an ArrayList of Hotel containing the raw data
-     * about hotels
-     *
+     *             about hotels
      * @return a list of hotels expressed as a list of string values
      * for several fields and then a count of SUMO terms appearing in
      * the review for the given hotel
@@ -1042,8 +1024,7 @@ public class Hotel {
 
     /**
      * @param feed is an ArrayList of Hotel containing the raw data
-     * about hotels
-     *
+     *             about hotels
      * @return a list of hotels expressed as a list of string values
      * for several fields and then a count of SUMO terms appearing in
      * the review for the given hotel
@@ -1151,8 +1132,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     */
     public static ArrayList<Hotel> readOXMLhotels(String fname) {
 
         ArrayList<Hotel> hotels = new ArrayList<Hotel>();
@@ -1257,6 +1236,7 @@ public class Hotel {
 
     /**
      * This routine adds elements to the parameter
+     *
      * @return the string index
      */
     public static int parseJSONElement(String s, int ind, JSONElement js) {
@@ -1299,8 +1279,6 @@ public class Hotel {
         return index;
     }
 
-    /**
-     */
     public static Hotel convertJSON2Hotel(JSONElement js) {
 
         Hotel result = new Hotel();
@@ -1320,8 +1298,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     */
     public static Hotel parseOneJSONReviewFile(String fname) {
 
         Hotel h = new Hotel();
@@ -1357,8 +1333,6 @@ public class Hotel {
         return h;
     }
 
-    /**
-     */
     public static String normalizeSentiment(String value) {
 
         try {
@@ -1373,8 +1347,6 @@ public class Hotel {
         }
     }
 
-    /**
-     */
     public static void writeHotelAsXML(Hotel h, PrintWriter pw) {
 
         try {
@@ -1408,8 +1380,8 @@ public class Hotel {
 
     /**
      * @param writeIncremental means that each hotel review will be
-     * processed and each spreadsheet line will be written after reading
-     * each hotel.
+     *                         processed and each spreadsheet line will be written after reading
+     *                         each hotel.
      */
     public static ArrayList<Hotel> readJSONHotels(String dir, boolean writeIncremental) {
 
@@ -1470,8 +1442,6 @@ public class Hotel {
         return result;
     }
 
-    /**
-     */
     public static void hotelSentiment(ArrayList<Hotel> hotels) {
 
         System.out.println("INFO in Hotel.hotelSentiment()");
@@ -1525,8 +1495,6 @@ public class Hotel {
         }
     }
 
-    /**
-     */
     public static void execJSON(String path) {
 
         //ArrayList<Hotel> hotels = readJSONHotels(path,false);
@@ -1536,8 +1504,6 @@ public class Hotel {
         System.out.println("INFO in Hotel.execJSON(): done computing sentiment in " + ((System.currentTimeMillis() - t1) / 1000.0) + " seconds");
     }
 
-    /**
-     */
     public static void main(String[] args) {
 
         if (args[0].equals("-help") || StringUtil.emptyString(args[0])) {
@@ -1583,8 +1549,6 @@ public class Hotel {
         //System.out.println(printAllHotels(al));
     }
 
-    /**
-     */
     public String asCSV() {
 
         StringBuffer result = new StringBuffer();
@@ -1620,8 +1584,6 @@ public class Hotel {
         return result.toString();
     }
 
-    /**
-     */
     public String toString() {
 
         StringBuffer result = new StringBuffer();
@@ -1642,8 +1604,6 @@ public class Hotel {
         return result.toString();
     }
 
-    /**
-     */
     public void addConceptSentiment(HashMap<String, Integer> conceptSent) {
 
         Iterator<String> it = conceptSent.keySet().iterator();
@@ -1659,8 +1619,6 @@ public class Hotel {
         }
     }
 
-    /**
-     */
     public void addAllSenses(HashMap<String, Integer> wnsenses) {
 
         Iterator<String> it = wnsenses.keySet().iterator();
@@ -1673,16 +1631,12 @@ public class Hotel {
         }
     }
 
-    /**
-     */
     public class JSONElement {
 
         String key = ""; // empty key signifies root element
         String value = "";
         ArrayList<JSONElement> subelements = new ArrayList<JSONElement>();
 
-        /**
-         */
         public String toString() {
 
             StringBuffer sb = new StringBuffer();
@@ -1708,8 +1662,6 @@ public class Hotel {
             return sb.toString();
         }
 
-        /**
-         */
         public JSONElement getElement(String key) {
 
             for (int i = 0; i < subelements.size(); i++) {
@@ -1721,8 +1673,6 @@ public class Hotel {
             return null;
         }
 
-        /**
-         */
         public String getElementValue(String key) {
 
             JSONElement js = getElement(key);

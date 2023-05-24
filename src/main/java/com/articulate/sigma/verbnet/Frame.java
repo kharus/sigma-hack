@@ -21,6 +21,7 @@ import java.util.HashSet;
  */
 public class Frame {
 
+    private final boolean echo = false;
     public String descriptionNum;
     public String primary;
     public String secondary;
@@ -28,11 +29,7 @@ public class Frame {
     public String example;
     public ArrayList<Tuple> syntax = new ArrayList<>();
     public ArrayList<Tuple> semantics = new ArrayList<>();
-    private final boolean echo = false;
 
-    /**
-     *
-     */
     public void readDesc(SimpleElement desc) {
 
         if (echo) System.out.println("Frame.readDesc()");
@@ -46,9 +43,6 @@ public class Frame {
         if (echo) System.out.println("xtag: " + xtag);
     }
 
-    /**
-     *
-     */
     public void readEx(SimpleElement ex) {
 
         if (echo) System.out.println("Frame.readEx()");
@@ -65,9 +59,6 @@ public class Frame {
         }
     }
 
-    /**
-     *
-     */
     public HashSet<AVPair> readSynrestrs(SimpleElement syn) {
 
         HashSet<AVPair> restr = new HashSet<>();
@@ -88,9 +79,6 @@ public class Frame {
         return restr;
     }
 
-    /**
-     *
-     */
     public void readSyn(SimpleElement syn) {
 
         HashMap<String, String> parts = new HashMap<>();
@@ -173,9 +161,6 @@ public class Frame {
         }
     }
 
-    /**
-     *
-     */
     public HashSet<AVPair> readArgs(SimpleElement pred) {
 
         HashSet<AVPair> result = new HashSet<>();
@@ -198,9 +183,6 @@ public class Frame {
         return result;
     }
 
-    /**
-     *
-     */
     public Tuple readPred(SimpleElement pred) {
 
         Tuple t = new Tuple();
@@ -219,9 +201,6 @@ public class Frame {
         return t;
     }
 
-    /**
-     *
-     */
     public void readSem(SimpleElement sem) {
 
         if (echo) System.out.println("Frame.readSem()");
@@ -235,9 +214,6 @@ public class Frame {
         }
     }
 
-    /**
-     *
-     */
     public void readFrame(SimpleElement element) {
 
         for (int j = 0; j < element.getChildElements().size(); j++) {

@@ -51,7 +51,9 @@ public class KBcache implements Serializable {
     public static final List<String> intendedTransRels =
             Arrays.asList("subclass", "subrelation", "subAttribute"); //, "located", "geographicSubregion");
     public static boolean debug = false;
-    /** Errors found during processing formulas */
+    /**
+     * Errors found during processing formulas
+     */
     public static TreeSet<String> errors = new TreeSet<String>();
     public KB kb = null;
     // all the relations in the kb
@@ -66,7 +68,8 @@ public class KBcache implements Serializable {
     public HashSet<String> instRels = new HashSet<String>();
     // all the transitive relations between instances in the kb
     public HashSet<String> instTransRels = new HashSet<String>();
-    /** All the cached "parent" relations of all transitive relations
+    /**
+     * All the cached "parent" relations of all transitive relations
      * meaning the relations between all first arguments and the
      * transitive closure of second arguments.  The external HashMap
      * pairs relation name String keys to values that are the parent
@@ -75,7 +78,8 @@ public class KBcache implements Serializable {
      */
     public HashMap<String, HashMap<String, Set<String>>> parents =
             new HashMap<String, HashMap<String, Set<String>>>();
-    /** Parent relations from instances, including those that are
+    /**
+     * Parent relations from instances, including those that are
      * transitive through (instance,instance) relations, such as
      * subAttribute and subrelation.  May not do what you think
      * since the key is the child (instance)
@@ -85,11 +89,13 @@ public class KBcache implements Serializable {
     // all the instances of a class key, including through subrelation
     // and subAttribute
     public HashMap<String, HashSet<String>> instances = new HashMap<>();
-    /** A temporary list of instances built during creation of the
+    /**
+     * A temporary list of instances built during creation of the
      * children map, in order to efficiently create the instances map
      **/
     public HashSet<String> insts = new HashSet<>();
-    /** All the cached "child" relations of all transitive relations
+    /**
+     * All the cached "child" relations of all transitive relations
      * meaning the relations between all first arguments and the
      * transitive closure of second arguments.  The external HashMap
      * pairs relation name String keys to values that are the child
@@ -98,7 +104,8 @@ public class KBcache implements Serializable {
      */
     public HashMap<String, HashMap<String, HashSet<String>>> children =
             new HashMap<String, HashMap<String, HashSet<String>>>();
-    /** Relation name keys and argument types with 0th arg always ""
+    /**
+     * Relation name keys and argument types with 0th arg always ""
      * except in the case of Functions where the 0th arg will be the
      * function range.
      * Variable arity relations may have a type for the last argument,
@@ -111,7 +118,8 @@ public class KBcache implements Serializable {
             new HashMap<String, ArrayList<String>>();
     // The number of arguments to each relation.  Variable arity is -1
     public HashMap<String, Integer> valences = new HashMap<String, Integer>();
-    /** Disjoint relationships which were explicitly defined in "partition", "disjoint",
+    /**
+     * Disjoint relationships which were explicitly defined in "partition", "disjoint",
      * and "disjointDecomposition" expressions
      **/
     public HashMap<String, Set<String>> explicitDisjoint = new HashMap<>();
@@ -121,8 +129,7 @@ public class KBcache implements Serializable {
     // each pair of relations as rel1\trel2
     public HashSet<String> disjointRelations = new HashSet<>();
     public boolean initialized = false;
-    /**
-     */
+
     private HashSet<String> visited = new HashSet<>();
 
     /**
@@ -132,8 +139,6 @@ public class KBcache implements Serializable {
 
     }
 
-    /**
-     */
     public KBcache(KB kbin) {
 
         relations = new HashSet<String>(kbin.getCountTerms() / 3, (float) 0.75);
@@ -155,8 +160,6 @@ public class KBcache implements Serializable {
         this.kb = kbin;
     }
 
-    /**
-     */
     public KBcache(KBcache kbCacheIn, KB kbIn) {
 
         this.kb = kbIn;
@@ -268,8 +271,6 @@ public class KBcache implements Serializable {
                 ar.add(st);
     }
 
-    /**
-     */
     public static void showState(KBcache nkbc) {
 
         System.out.println("-------------- relations ----------------");
@@ -348,8 +349,6 @@ public class KBcache implements Serializable {
             System.out.println(inst + ": " + nkbc.instances.get(inst));
     }
 
-    /**
-     */
     public static void showAll(KBcache nkbc) {
 
         System.out.println("KBcache.showAll(): transRels: " + nkbc.transRels);
@@ -363,8 +362,6 @@ public class KBcache implements Serializable {
         System.out.println("KBcache.showAll(): FormOfGovernment: " + nkbc.getInstancesForType("FormOfGovernment"));
     }
 
-    /**
-     */
     public static void showChildren(KBcache nkbc) {
 
         String term = "Integer";
@@ -434,8 +431,6 @@ public class KBcache implements Serializable {
         System.out.println("KBcache.showSizes(): disjointRelations size: " + nkbc.disjointRelations.size());
     }
 
-    /**
-     */
     public static void printHelp() {
 
         System.out.println("Sigma Knowledge Engineering Environment: KBcache");
@@ -447,8 +442,6 @@ public class KBcache implements Serializable {
         System.out.println("  -t - show complete sTate of cache");
     }
 
-    /**
-     */
     public static void main(String[] args) {
 
         if (args == null) {
@@ -601,8 +594,6 @@ public class KBcache implements Serializable {
         return false;
     }
 
-    /**
-     */
     public void addInstance(String child, String parent) {
 
         HashSet<String> is = instances.get(parent);
@@ -713,8 +704,6 @@ public class KBcache implements Serializable {
         }
     }
 
-    /**
-     */
     public void buildDisjointRelationsMap() {
 
         HashSet<String> pairs = new HashSet<>();
@@ -1041,8 +1030,6 @@ public class KBcache implements Serializable {
         return mostSpecificParent(p1);
     }
 
-    /**
-     */
     public String getCommonChild(HashSet<String> t2) {
 
         String common = "Entity";
@@ -1124,7 +1111,7 @@ public class KBcache implements Serializable {
 
     /**
      * return classes for the given instance cl.
-     *
+     * <p>
      * For example, if we know (instance UnitedStates Nation), then
      * getParentClassesOfInstances(UnitedStates) returns Nation and its
      * super classes from subclass expressions.
@@ -1140,13 +1127,13 @@ public class KBcache implements Serializable {
 
     /**
      * Get all instances for the given input class
-     *
+     * <p>
      * For example, given the class "Nation", getInstancesForType(Nation)
      * returns all instances, like "America", "Austria", "Albania", etc.
-     *
+     * <p>
      * Follow instances through transitive relations if applicable from
      * the set of [subAttribute, subrelation].
-     *
+     * <p>
      * TODO: do we need a DownwardHeritableRelation so that this
      * list doesn't need to be hardcoded?
      */
@@ -1190,8 +1177,6 @@ public class KBcache implements Serializable {
         return instancesForType2;
     }
 
-    /**
-     */
     public ArrayList<String> getSignature(String rel) {
 
         return signatures.get(rel);
@@ -1199,6 +1184,7 @@ public class KBcache implements Serializable {
 
     /**
      * Get the range (return type) of a Function.
+     *
      * @return null if argument is not a function
      */
     public String getRange(String f) {
@@ -1283,8 +1269,6 @@ public class KBcache implements Serializable {
         }
     }
 
-    /**
-     */
     public void buildFunctionsSet() {
 
         for (String s : relations)
@@ -1535,9 +1519,9 @@ public class KBcache implements Serializable {
      * inherit it from the parent.  If there is no argument type, send
      * an error to the Sigma error list.
      * Relation name keys and argument types with 0th arg always "" except
-     *   for functions which will have the range type as their 0th argument
+     * for functions which will have the range type as their 0th argument
      * public HashMap<String,ArrayList<String>> signatures =
-     *      new HashMap<String,ArrayList<String>>();
+     * new HashMap<String,ArrayList<String>>();
      */
     public void collectDomains() {
 

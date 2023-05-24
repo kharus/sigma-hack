@@ -25,8 +25,8 @@ public abstract class InferenceEngine {
     /**
      * Submit a query.
      *
-     * @param formula query in the KIF syntax
-     * @param timeLimit time limit for answering the query (in seconds)
+     * @param formula       query in the KIF syntax
+     * @param timeLimit     time limit for answering the query (in seconds)
      * @param bindingsLimit limit on the number of bindings
      * @return answer to the query (in the XML syntax)
      * @throws IOException should not normally be thrown
@@ -47,7 +47,7 @@ public abstract class InferenceEngine {
      * Terminates this instance of InferenceEngine.
      * <font color='red'><b>Warning:</b></font>After calling this functions
      * no further assertions or queries can be done.
-     *
+     * <p>
      * Some inference engines might not need/support termination. In that case this
      * method does nothing.
      *

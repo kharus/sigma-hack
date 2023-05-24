@@ -22,10 +22,11 @@ import java.util.regex.Pattern;
  */
 public class SUMOtoTFAform {
 
+    // a map of relation signatures (where function returns are index 0)
+    // modified from the original by the constraints of the axiom
+    private static final HashMap<String, ArrayList<String>> signatures = null;
     public static KB kb;
-
     public static boolean debug = false;
-
     // a Set of types for each variable key
     public static HashMap<String, HashSet<String>> varmap = null;
     public static boolean initialized = false;
@@ -44,9 +45,6 @@ public class SUMOtoTFAform {
     // storage for a message why the formula wasn't translated
     public static String filterMessage = "";
     public static HashSet<String> errors = new HashSet<>();
-    // a map of relation signatures (where function returns are index 0)
-    // modified from the original by the constraints of the axiom
-    private static final HashMap<String, ArrayList<String>> signatures = null;
     // extra sorts determined just for this formula
     public HashSet<String> sorts = new HashSet<>();
 
@@ -84,9 +82,6 @@ public class SUMOtoTFAform {
         return (isComparisonOperator(s) || isMathFunction(s)) && !s.equals(Formula.FLOORFN);
     }
 
-    /**
-     *
-     */
     public static String withoutSuffix(String s) {
 
         if (StringUtil.emptyString(s))
@@ -169,9 +164,6 @@ public class SUMOtoTFAform {
         return sig;
     }
 
-    /**
-     *
-     */
     private static String suffixToType(String type) {
 
         if (type.equals("In"))
@@ -188,9 +180,6 @@ public class SUMOtoTFAform {
         }
     }
 
-    /**
-     *
-     */
     private static String typeToSuffix(String type) {
 
         if (type.equals("Integer"))
@@ -333,109 +322,107 @@ public class SUMOtoTFAform {
      * Recurse through the formula giving numeric and comparison
      * operators a suffix if they operate on
      * numbers.
-
-     public static Formula convertNumericFunctions(Formula f, String parentType) {
-
-     if (f == null)
-     return f;
-     if (f.atom()) {
-     int ttype = f.getFormula().charAt(0);
-     if (Character.isDigit(ttype))
-     ttype = StreamTokenizer_s.TT_NUMBER;
-     return f;
-     }
-     Formula car = f.carAsFormula();
-     ArrayList<String> args = f.complexArgumentsToArrayListString(1);
-     if (isMathFunction(car.getFormula()) ||
-     (isComparisonOperator(car.getFormula()) && !car.getFormula().equals("equal"))) {
-     StringBuffer argsStr = new StringBuffer();
-     boolean isInt = false;
-     boolean isReal = false;
-     boolean isRat = false;
-     for (String s : args) {
-     if (Formula.isVariable(s)) {
-     if (varmap.containsKey(s)) {
-     Set<String> types = varmap.get(s);
-     String type = kb.mostSpecificTerm(types);
-     if (debug) System.out.println("SUMOtoTFAform.convertNumericFunctions(): type: " + type);
-     if (type != null && (type.equals("Integer") || kb.isSubclass(type,"Integer")))
-     isInt = true;
-     if (type != null && (type.equals("RationalNumber") || kb.isSubclass(type,"RationalNumber")))
-     isRat = true;
-     if (type != null && (type.equals("RealNumber") || kb.isSubclass(type,"RealNumber")))
-     isReal = true;
-     }
-     }
-     if (StringUtil.isInteger(s)) {
-     if (isMathFunction(car.getFormula()) && kb.isSubclass(parentType,"Integer"))
-     isInt = true;
-     else
-     isReal = true; // isInt = true; it could be a real that just doesn't have a decimal
-     }
-     if (!isInt && StringUtil.isNumeric(s))
-     isReal = true;
-     if (!isInt && !isReal) {
-     Formula sf = new Formula(s);
-     Formula argResult = convertNumericFunctions(sf,"");
-     String type = kb.kbCache.getRange(argResult.car());
-     if (type != null && (type.equals("Integer") || kb.isSubclass(type,"Integer")))
-     isInt = true;
-     if (type != null && (type.equals("RationalNumber") || kb.isSubclass(type,"RationalNumber")))
-     isRat = true;
-     if (type != null && (type.equals("RealNumber") || kb.isSubclass(type,"RealNumber")))
-     isReal = true;
-     argsStr.append(argResult + " ");
-     }
-     else
-     argsStr.append(s + " ");
-     }
-     argsStr.deleteCharAt(argsStr.length()-1);
-     String suffix = "";
-     if (isMathFunction(car.getFormula())) {
-     if (isInt)
-     suffix = "__0In1In2In";
-     else if (isRat)
-     suffix = "__0Ra1Ra2Ra";
-     else if (isReal)
-     suffix = "__0Re1Re2Re";
-     }
-     else {
-     if (isInt)
-     suffix = "__1In2In";
-     else if (isRat)
-     suffix = "__1Ra2Ra";
-     else if (isReal)
-     suffix = "__1Re2Re";
-     }
-     if (suffix != "" && isMathFunction(car.getFormula()))
-     suffix = suffix + "Fn";
-     String withSuffix = composeSuffix(car.getFormula(),suffix);
-     f = new Formula("(" + withSuffix + " " + argsStr.toString() + ")");
-     //if (isInt || isReal || isRat)
-     //    constrainVarsFromFunct(args,suffix.substring(0,4));
-     }
-     else {
-     StringBuffer argsStr = new StringBuffer();
-     ArrayList<String> sig = kb.kbCache.signatures.get(car.toString());
-     if (args != null) {
-     for (int i = 0; i < args.size(); i++) {
-     String s = args.get(i);
-     String type = "";
-     if (sig != null && (i+1) < sig.size())
-     type = sig.get(i+1);
-     Formula sf = new Formula(s);
-     argsStr.append(convertNumericFunctions(sf,type) + " ");
-     }
-     argsStr.deleteCharAt(argsStr.length() - 1);
-     f = new Formula("(" + car.getFormula() + " " + argsStr.toString() + ")");
-     }
-     }
-     return f;
-     }
+     * <p>
+     * public static Formula convertNumericFunctions(Formula f, String parentType) {
+     * <p>
+     * if (f == null)
+     * return f;
+     * if (f.atom()) {
+     * int ttype = f.getFormula().charAt(0);
+     * if (Character.isDigit(ttype))
+     * ttype = StreamTokenizer_s.TT_NUMBER;
+     * return f;
+     * }
+     * Formula car = f.carAsFormula();
+     * ArrayList<String> args = f.complexArgumentsToArrayListString(1);
+     * if (isMathFunction(car.getFormula()) ||
+     * (isComparisonOperator(car.getFormula()) && !car.getFormula().equals("equal"))) {
+     * StringBuffer argsStr = new StringBuffer();
+     * boolean isInt = false;
+     * boolean isReal = false;
+     * boolean isRat = false;
+     * for (String s : args) {
+     * if (Formula.isVariable(s)) {
+     * if (varmap.containsKey(s)) {
+     * Set<String> types = varmap.get(s);
+     * String type = kb.mostSpecificTerm(types);
+     * if (debug) System.out.println("SUMOtoTFAform.convertNumericFunctions(): type: " + type);
+     * if (type != null && (type.equals("Integer") || kb.isSubclass(type,"Integer")))
+     * isInt = true;
+     * if (type != null && (type.equals("RationalNumber") || kb.isSubclass(type,"RationalNumber")))
+     * isRat = true;
+     * if (type != null && (type.equals("RealNumber") || kb.isSubclass(type,"RealNumber")))
+     * isReal = true;
+     * }
+     * }
+     * if (StringUtil.isInteger(s)) {
+     * if (isMathFunction(car.getFormula()) && kb.isSubclass(parentType,"Integer"))
+     * isInt = true;
+     * else
+     * isReal = true; // isInt = true; it could be a real that just doesn't have a decimal
+     * }
+     * if (!isInt && StringUtil.isNumeric(s))
+     * isReal = true;
+     * if (!isInt && !isReal) {
+     * Formula sf = new Formula(s);
+     * Formula argResult = convertNumericFunctions(sf,"");
+     * String type = kb.kbCache.getRange(argResult.car());
+     * if (type != null && (type.equals("Integer") || kb.isSubclass(type,"Integer")))
+     * isInt = true;
+     * if (type != null && (type.equals("RationalNumber") || kb.isSubclass(type,"RationalNumber")))
+     * isRat = true;
+     * if (type != null && (type.equals("RealNumber") || kb.isSubclass(type,"RealNumber")))
+     * isReal = true;
+     * argsStr.append(argResult + " ");
+     * }
+     * else
+     * argsStr.append(s + " ");
+     * }
+     * argsStr.deleteCharAt(argsStr.length()-1);
+     * String suffix = "";
+     * if (isMathFunction(car.getFormula())) {
+     * if (isInt)
+     * suffix = "__0In1In2In";
+     * else if (isRat)
+     * suffix = "__0Ra1Ra2Ra";
+     * else if (isReal)
+     * suffix = "__0Re1Re2Re";
+     * }
+     * else {
+     * if (isInt)
+     * suffix = "__1In2In";
+     * else if (isRat)
+     * suffix = "__1Ra2Ra";
+     * else if (isReal)
+     * suffix = "__1Re2Re";
+     * }
+     * if (suffix != "" && isMathFunction(car.getFormula()))
+     * suffix = suffix + "Fn";
+     * String withSuffix = composeSuffix(car.getFormula(),suffix);
+     * f = new Formula("(" + withSuffix + " " + argsStr.toString() + ")");
+     * //if (isInt || isReal || isRat)
+     * //    constrainVarsFromFunct(args,suffix.substring(0,4));
+     * }
+     * else {
+     * StringBuffer argsStr = new StringBuffer();
+     * ArrayList<String> sig = kb.kbCache.signatures.get(car.toString());
+     * if (args != null) {
+     * for (int i = 0; i < args.size(); i++) {
+     * String s = args.get(i);
+     * String type = "";
+     * if (sig != null && (i+1) < sig.size())
+     * type = sig.get(i+1);
+     * Formula sf = new Formula(s);
+     * argsStr.append(convertNumericFunctions(sf,type) + " ");
+     * }
+     * argsStr.deleteCharAt(argsStr.length() - 1);
+     * f = new Formula("(" + car.getFormula() + " " + argsStr.toString() + ")");
+     * }
+     * }
+     * return f;
+     * }
      */
-    /**
-     *
-     */
+
     private static String processQuant(Formula f, Formula car, String parentType, String op,
                                        ArrayList<String> args) {
 
@@ -475,9 +462,6 @@ public class SUMOtoTFAform {
         }
     }
 
-    /**
-     *
-     */
     private static String processConjDisj(Formula f, Formula car, String parentType,
                                           ArrayList<String> args) {
 
@@ -498,9 +482,6 @@ public class SUMOtoTFAform {
         return sb.toString();
     }
 
-    /**
-     *
-     */
     private static String processLogOp(Formula f, Formula car, String parentType,
                                        ArrayList<String> args) {
         String op = car.getFormula();
@@ -570,9 +551,6 @@ public class SUMOtoTFAform {
                 arg.equals("Integer");
     }
 
-    /**
-     *
-     */
     private static boolean allBuiltInNumericTypes(ArrayList<String> args) {
 
         ArrayList<String> argtypes = collectArgTypes(args);
@@ -586,9 +564,6 @@ public class SUMOtoTFAform {
         return true;
     }
 
-    /**
-     *
-     */
     private static boolean allOfType(ArrayList<String> args, String type) {
 
         ArrayList<String> argtypes = collectArgTypes(args);
@@ -1044,17 +1019,11 @@ public class SUMOtoTFAform {
         return !StringUtil.emptyString(type) && (kb.isSubclass(type, "RealNumber") || type.equals("RealNumber"));
     }
 
-    /**
-     *
-     */
     public static boolean isNumericType(String s) {
 
         return !StringUtil.emptyString(s) && (kb.isSubclass(s, "RealNumber") || s.equals("RealNumber"));
     }
 
-    /**
-     *
-     */
     public static boolean isBuiltInNumericType(String s) {
 
         return !StringUtil.emptyString(s) && (s.equals("Integer") ||
@@ -1308,9 +1277,6 @@ public class SUMOtoTFAform {
         return types;
     }
 
-    /**
-     *
-     */
     private static String getOpType(String op) {
 
         String type = "";
@@ -1724,9 +1690,6 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /**
-     *
-     */
     private static String getOpReturnType(String arg) {
 
         if (StringUtil.emptyString(arg) || !Formula.listP(arg))
@@ -1777,9 +1740,6 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /**
-     *
-     */
     private static void setAll(ArrayList<String> sig, String best) {
 
         for (int i = 0; i < sig.size(); i++)
@@ -1869,9 +1829,6 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    /**
-     *
-     */
     private static String constrainFunctVarsRecurse(Formula f, String parentType) {
 
         //if (debug) System.out.println("SUMOtoTFAform.constrainFunctVarsRecurse(): " + f);
@@ -2104,9 +2061,6 @@ public class SUMOtoTFAform {
         return false;
     }
 
-    /**
-     *
-     */
     private static boolean typeConflict(Formula f, String type) {
 
         if (debug) System.out.println("SUMOtoTFAform.typeConflict(f,type): " + f + ", " + type);
@@ -2311,9 +2265,6 @@ public class SUMOtoTFAform {
         return "";
     }
 
-    /**
-     *
-     */
     public static String process(String s, boolean query) {
 
         filterMessage = "";
@@ -2326,9 +2277,6 @@ public class SUMOtoTFAform {
         return process(f, query);
     }
 
-    /**
-     *
-     */
     public static Collection<String> processList(Collection<Formula> l) {
 
         ArrayList<String> result = new ArrayList<>();
@@ -2539,9 +2487,6 @@ public class SUMOtoTFAform {
         }
     }
 
-    /**
-     *
-     */
     public static void initNumericConstantTypes() {
 
         numericConstantTypes.clear();
@@ -2551,9 +2496,6 @@ public class SUMOtoTFAform {
         numericConstantValues.put("Pi", "3.141592653589793");
     }
 
-    /**
-     *
-     */
     public static void initOnce() {
 
         if (initialized)
@@ -2569,9 +2511,6 @@ public class SUMOtoTFAform {
         initialized = true;
     }
 
-    /**
-     *
-     */
     public static void test1() {
 
         Formula f = new Formula("(equal ?X (AdditionFn__IntegerFn 1 2))");
@@ -2580,9 +2519,6 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.test1(): " + processRecurse(f, "Entity"));
     }
 
-    /**
-     *
-     */
     public static void test2() {
 
         Formula f = new Formula("(=> (and (equal (AbsoluteValueFn ?NUMBER1) ?NUMBER2) " +
@@ -2592,9 +2528,6 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.test2(): " + process(f, false));
     }
 
-    /**
-     *
-     */
     public static void test3() {
 
         Formula f = new Formula("(<=> (equal (RemainderFn ?NUMBER1 ?NUMBER2) ?NUMBER) " +
@@ -2602,18 +2535,12 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.test3(): " + process(f, false));
     }
 
-    /**
-     *
-     */
     public static void test4() {
 
         Formula f = new Formula("(<=> (greaterThanOrEqualTo ?NUMBER1 ?NUMBER2) (or (equal ?NUMBER1 ?NUMBER2) (greaterThan ?NUMBER1 ?NUMBER2)))");
         System.out.println("SUMOtoTFAform.test4(): " + process(f, false));
     }
 
-    /**
-     *
-     */
     public static void test5() {
 
         Formula f = new Formula("(=>\n" +
@@ -2623,9 +2550,6 @@ public class SUMOtoTFAform {
         System.out.println("SUMOtoTFAform.test5(): " + modifyTypesToConstraints(f));
     }
 
-    /**
-     *
-     */
     public static void test6() {
 
         Formula f = new Formula("(<=> " +
@@ -2641,9 +2565,6 @@ public class SUMOtoTFAform {
                 "V__NUMBER1 => s__RemainderFn(V__NUMBER1, V__NUMBER2) = V__NUMBER)))).");
     }
 
-    /**
-     *
-     */
     public static void test7() {
 
         Formula f = new Formula("(<=> (and (equal (AbsoluteValueFn ?NUMBER1) ?NUMBER2) " +
@@ -2660,9 +2581,6 @@ public class SUMOtoTFAform {
                 "V__NUMBER2 = $difference(0.0 ,V__NUMBER1) => s__AbsoluteValueFn__0Re1ReFn(V__NUMBER1) = V__NUMBER2)).");
     }
 
-    /**
-     *
-     */
     public static void test8() {
 
         Formula f = new Formula("(<=> (equal (LastFn ?LIST) ?ITEM) (exists (?NUMBER) " +
@@ -2677,9 +2595,6 @@ public class SUMOtoTFAform {
                 "s__LastFn(V__LIST) = V__ITEM)))).");
     }
 
-    /**
-     *
-     */
     public static void test9() {
 
         Formula f = new Formula("(<=> (and (equal (AbsoluteValueFn ?NUMBER1) ?NUMBER2) " +
@@ -2697,9 +2612,6 @@ public class SUMOtoTFAform {
                 "s__AbsoluteValueFn(V__NUMBER1) = V__NUMBER2)))).");
     }
 
-    /**
-     *
-     */
     public static void test10() {
 
         Formula f = new Formula("(<=> (and (equal (AbsoluteValueFn ?NUMBER1) ?NUMBER2) " +
@@ -2716,9 +2628,6 @@ public class SUMOtoTFAform {
                 "V__NUMBER2 = $difference(0.0 ,V__NUMBER1) => s__AbsoluteValueFn__0Re1ReFn(V__NUMBER1) = V__NUMBER2)))).");
     }
 
-    /**
-     *
-     */
     public static void testRelEmbed() {
 
         String rel = "AbsoluteValueFn";
@@ -2729,18 +2638,12 @@ public class SUMOtoTFAform {
         kb.kbCache.signatures.put(rel + "__" + "1Re", sig);
     }
 
-    /**
-     *
-     */
     public static void testRelExtract() {
 
         String rel = "AbsoluteValueFn__1ReFn";
         System.out.println("SUMOtoTFAform.testRelExtract(): new name: " + relationExtractSigFromName(rel));
     }
 
-    /**
-     *
-     */
     public static void showHelp() {
 
         System.out.println("KB class");
@@ -2750,9 +2653,6 @@ public class SUMOtoTFAform {
         System.out.println("  h - show this help");
     }
 
-    /**
-     *
-     */
     public static void main(String[] args) throws IOException {
 
         System.out.println("INFO in SUMOtoTFAform.main()");

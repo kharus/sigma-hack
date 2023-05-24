@@ -35,24 +35,20 @@ import java.util.*;
  */
 public class Clausifier {
 
-    public static boolean resetSkolem = false;
-    // This static variable holds the int value that is used to
-    // generate unique variable names.
-    private static int VAR_INDEX = 0;
-
-    // This static variable holds the int value that is used to
-    // generate unique Skolem terms.
-    private static int SKOLEM_INDEX = 0;
     /**
      * Counter for instantiateVariables() to make sure generated
      * symbols are unique.
      */
     private static final int GENSYM_COUNTER = 0;
+    public static boolean resetSkolem = false;
+    // This static variable holds the int value that is used to
+    // generate unique variable names.
+    private static int VAR_INDEX = 0;
+    // This static variable holds the int value that is used to
+    // generate unique Skolem terms.
+    private static int SKOLEM_INDEX = 0;
     private Formula thisFormula = null;
 
-    /**
-     *
-     */
     public Clausifier(String s) {
 
         thisFormula = new Formula();
@@ -555,28 +551,25 @@ public class Clausifier {
     }
 
     /**
-     *  Create constants to fill variables.
-
-     public Formula instantiateVariables() {
-
-     Formula f = renameVariables();
-     ArrayList<HashSet<String>> varList = f.collectVariables();
-     TreeMap<String,String> vars = new TreeMap<String,String>();
-     ArrayList<String> al = (ArrayList<String>) varList.get(0);
-     al.addAll((ArrayList<String>) varList.get(1));
-     for (int i = 0; i < al.size(); i++) {
-     String s = (String) al.get(i);
-     _GENSYM_COUNTER++;
-     String value = "GenSym" + String.valueOf(_GENSYM_COUNTER);
-     vars.put(s,value);
-     }
-     return f.substituteVariables(vars);
-     }
+     * Create constants to fill variables.
+     * <p>
+     * public Formula instantiateVariables() {
+     * <p>
+     * Formula f = renameVariables();
+     * ArrayList<HashSet<String>> varList = f.collectVariables();
+     * TreeMap<String,String> vars = new TreeMap<String,String>();
+     * ArrayList<String> al = (ArrayList<String>) varList.get(0);
+     * al.addAll((ArrayList<String>) varList.get(1));
+     * for (int i = 0; i < al.size(); i++) {
+     * String s = (String) al.get(i);
+     * _GENSYM_COUNTER++;
+     * String value = "GenSym" + String.valueOf(_GENSYM_COUNTER);
+     * vars.put(s,value);
+     * }
+     * return f.substituteVariables(vars);
+     * }
      */
 
-    /**
-     *
-     */
     private static void testRemoveImpEq() {
 
         System.out.println();
@@ -611,9 +604,6 @@ public class Clausifier {
         System.out.println();
     }
 
-    /**
-     *
-     */
     private static void testMoveQuantifiersLeft() {
 
         System.out.println();
@@ -664,9 +654,6 @@ public class Clausifier {
     */
     }
 
-    /**
-     *
-     */
     private static void testMoveNegationIn() {
 
         System.out.println();
@@ -733,9 +720,6 @@ public class Clausifier {
 
     }
 
-    /**
-     *
-     */
     private static void testStandardizeVariables() {
 
         System.out.println();
@@ -756,9 +740,6 @@ public class Clausifier {
         */
     }
 
-    /**
-     *
-     */
     private static void testSkolemization() {
 
         System.out.println();
@@ -770,9 +751,6 @@ public class Clausifier {
         System.out.println();
     }
 
-    /**
-     *
-     */
     private static void testDistribute() {
 
         System.out.println();
@@ -804,9 +782,6 @@ public class Clausifier {
         System.out.println();
     }
 
-    /**
-     *
-     */
     private static void testClausificationSteps(String s) {
 
         System.out.println();
@@ -858,18 +833,12 @@ public class Clausifier {
         System.out.println("after separation: " + forms);
     }
 
-    /**
-     *
-     */
     private static void testClausification() {
 
         //testClausificationSteps("((((![X]:a(X))|b(X))|(?[X]:(?[Y]:p(X,f(Y)))))<=>q(g(a),X))");
         testClausificationSteps("(![Fluent]:(![Time]:(((holdsAt(Fluent, Time)&(~releasedAt(Fluent, plus(Time, n1))))&(~(?[Event]:(happens(Event, Time)&terminates(Event, Fluent, Time)))))=>holdsAt(Fluent, plus(Time, n1)))))).");
     }
 
-    /**
-     *
-     */
     private static void testClausificationSimple() {
 
         System.out.println();
@@ -892,9 +861,6 @@ public class Clausifier {
         System.out.println(result);
     }
 
-    /**
-     *
-     */
     public static void main(String[] args) {
 
         //testRemoveImpEq();
@@ -908,9 +874,6 @@ public class Clausifier {
         //testClausifier(args);
     }
 
-    /**
-     *
-     */
     public String toString() {
 
         return thisFormula.getFormula();

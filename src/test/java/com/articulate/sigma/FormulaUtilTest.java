@@ -6,9 +6,6 @@ import static org.junit.Assert.assertEquals;
 
 public class FormulaUtilTest {
 
-    /**
-     *
-     */
     @Test
     public void testToProlog() {
 

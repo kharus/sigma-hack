@@ -25,9 +25,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
 
     private static SUMOKBtoTFAKB skbtfakb = null;
 
-    /**
-     *
-     */
     @BeforeClass
     public static void init() {
 
@@ -51,9 +48,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         }
     }
 
-    /**
-     *
-     */
     @Test
     public void testExtractSig() {
 
@@ -72,9 +66,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals("[RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber]", sorts.toString());
     }
 
-    /**
-     *
-     */
     @Test
     public void testExtractUpdateSig() {
 
@@ -93,9 +84,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void testExtractUpdateSig2() {
 
@@ -114,9 +102,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void testSorts() {
 
@@ -134,9 +119,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void testParents() {
 
@@ -161,9 +143,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void test1() {
 
@@ -181,9 +160,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void test1_5() {
 
@@ -201,9 +177,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void test2() {
 
@@ -228,9 +201,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void test3() {
 
@@ -254,9 +224,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void test4() {
 
@@ -279,9 +246,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void test5() {
 
@@ -306,9 +270,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void testFloorFn() {
 
@@ -335,9 +296,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void testNumericSubclass() {
 
@@ -366,9 +324,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void testElimUnitaryLogops() {
 
@@ -390,9 +345,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
     @Ignore // can't process ListFn
     @Test
     public void testVariableArity() {
@@ -431,9 +383,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
     @Ignore // can't process ListFn
     @Test
     public void testVariableArity2() {
@@ -476,9 +425,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void testPredVarArity() {
 
@@ -542,10 +488,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-
-    /**
-     *
-     */
     @Ignore // can't process ListFn
     @Test
     public void testRemoveNumInst() {
@@ -588,10 +530,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-
-    /**
-     *
-     */
     @Test
     public void testInstNum() {
 
@@ -626,9 +564,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void testTypeConflict() {
 
@@ -650,9 +585,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(inc);
     }
 
-    /**
-     *
-     */
     @Test
     public void testTypeConflict2() {
 
@@ -698,9 +630,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(inc);
     }
 
-    /**
-     *
-     */
     @Ignore
     @Test
     public void testTransNum() {
@@ -721,9 +650,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertTrue(StringUtil.emptyString(result));
     }
 
-    /**
-     *
-     */
     @Test
     public void testPropertyFn() {
 
@@ -747,9 +673,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expected, result);
     }
 
-    /**
-     *
-     */
     @Test
     public void testMemberTypeCount() {
 
@@ -773,9 +696,6 @@ public class SUMOtoTFAformTest extends IntegrationTestBase {
         assertEquals(expectedRes, actualRes.trim());
     }
 
-    /**
-     *
-     */
     @Test
     public void testTypeConflict4() {
 

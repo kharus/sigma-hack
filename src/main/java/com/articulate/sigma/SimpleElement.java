@@ -10,7 +10,8 @@ import com.articulate.sigma.utils.StringUtil;
 
 import java.util.*;
 
-/**  *****************************************************************
+/**
+ * ****************************************************************
  * <code>SimpleElement</code> is the only node type for
  * simplified DOM model.  Note that all CDATA values are stored with
  * reserved any characters '>' '<' converted to &gt; and &lt;
@@ -18,10 +19,10 @@ import java.util.*;
  */
 public class SimpleElement {
 
-    private String tagName;
-    private String text;
     private final HashMap<String, String> attributes;
     private final ArrayList<SimpleElement> childElements;
+    private String tagName;
+    private String text;
 
     public SimpleElement(String tagName) {
         this.tagName = tagName;
@@ -96,8 +97,6 @@ public class SimpleElement {
         return null;
     }
 
-    /**
-     */
     public String toString(int indent, boolean forFile) {
 
         StringBuffer strindent = new StringBuffer();
@@ -138,22 +137,16 @@ public class SimpleElement {
         return result.toString();
     }
 
-    /**
-     */
     public String toString() {
 
         return toString(0, false);
     }
 
-    /**
-     */
     public String toFileString() {
 
         return toString(0, true);
     }
 
-    /**
-     */
     public String toFileString(int indent) {
 
         return toString(indent, true);

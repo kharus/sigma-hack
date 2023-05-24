@@ -78,8 +78,6 @@ public class TPTP2SUMO {
         return newForm;
     }
 
-    /**
-     */
     private static String addIndent(int indent, int indented) {
 
         String res = "";
@@ -166,8 +164,6 @@ public class TPTP2SUMO {
         return result;
     }
 
-    /**
-     */
     public static void showHelp() {
 
         System.out.println("KB class");
@@ -178,8 +174,6 @@ public class TPTP2SUMO {
         System.out.println("  -f <fname> - convert file to SUO-KIF");
     }
 
-    /**
-     */
     public static void main(String[] args) {
 
         System.out.println("INFO in TPTP2SUMO.main() with args: " + Arrays.toString(args));

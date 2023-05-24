@@ -16,18 +16,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class SUMOformulaToTPTPformulaTest {
 
-    /**
-     *
-     */
     @Before
     public void init() {
         SUMOformulaToTPTPformula.hideNumbers = true;
         SUMOformulaToTPTPformula.lang = "fof";
     }
 
-    /**
-     *
-     */
     public void test(String kif, String expected, String label) {
 
         System.out.println("=============================");
@@ -47,9 +41,6 @@ public class SUMOformulaToTPTPformulaTest {
         assertEquals(expected, actualRes);
     }
 
-    /**
-     *
-     */
     @Test
     public void string1() {
 
@@ -62,9 +53,6 @@ public class SUMOformulaToTPTPformulaTest {
         test(kifstring, expectedRes, "string1");
     }
 
-    /**
-     *
-     */
     @Test
     public void string2() {
 
@@ -78,9 +66,6 @@ public class SUMOformulaToTPTPformulaTest {
         test(kifstring, expectedRes, "string2");
     }
 
-    /**
-     *
-     */
     @Test
     public void string3() {
 
@@ -93,9 +78,6 @@ public class SUMOformulaToTPTPformulaTest {
         test(kifstring, expectedRes, "string3");
     }
 
-    /**
-     *
-     */
     @Test
     public void string4() {
 
@@ -112,9 +94,6 @@ public class SUMOformulaToTPTPformulaTest {
         test(kifstring, expectedRes, "string4");
     }
 
-    /**
-     *
-     */
     @Test
     public void string5() {
 
@@ -131,9 +110,6 @@ public class SUMOformulaToTPTPformulaTest {
         test(kifstring, expectedRes, "string5");
     }
 
-    /**
-     *
-     */
     @Test
     public void string6() {
 
@@ -144,9 +120,6 @@ public class SUMOformulaToTPTPformulaTest {
         test(kifstring, expectedRes, "string6");
     }
 
-    /**
-     *
-     */
     @Test
     public void hol() {
 
@@ -165,9 +138,6 @@ public class SUMOformulaToTPTPformulaTest {
         test(kifstring, expectedRes, "hol");
     }
 
-    /**
-     *
-     */
     @Test
     public void string7() {
 
@@ -181,9 +151,6 @@ public class SUMOformulaToTPTPformulaTest {
         test(kifstring, expectedRes, "string7");
     }
 
-    /**
-     *
-     */
     @Test
     @Ignore
     public void embedded() {
@@ -196,9 +163,6 @@ public class SUMOformulaToTPTPformulaTest {
         test(kifstring, expectedRes, "embedded");
     }
 
-    /**
-     *
-     */
     @Test
     public void equality() {
 

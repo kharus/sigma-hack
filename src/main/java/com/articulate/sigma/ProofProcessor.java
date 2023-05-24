@@ -27,11 +27,14 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** Process results from the inference engine.
+/**
+ * Process results from the inference engine.
  */
 public class ProofProcessor {
 
-    /** An ArrayList of BasicXMLelement (s). */
+    /**
+     * An ArrayList of BasicXMLelement (s).
+     */
     private ArrayList<BasicXMLelement> xml = null;
 
     /**
@@ -182,8 +185,6 @@ public class ProofProcessor {
         return (result.toString());
     }
 
-    /**
-     */
     public static void testRemoveAnswer() {
 
         String stmt = "(not (exists (?VAR1) (and (subclass ?VAR1 Object) " +
@@ -253,8 +254,6 @@ public class ProofProcessor {
         }
     }
 
-    /**
-     */
     public static void testFormatProof() {
 
         try {
@@ -274,8 +273,6 @@ public class ProofProcessor {
         }
     }
 
-    /**
-     */
     public static void testFormatProof2(String filename) {
 
         try {
@@ -294,8 +291,6 @@ public class ProofProcessor {
         }
     }
 
-    /**
-     */
     public static void showHelp() {
 
         System.out.println("ProofProcessor class");
@@ -305,8 +300,8 @@ public class ProofProcessor {
     }
 
     /**
-     *  A main method, used only for testing.  It should not be called
-     *  during normal operation.
+     * A main method, used only for testing.  It should not be called
+     * during normal operation.
      */
     public static void main(String[] args) {
 
