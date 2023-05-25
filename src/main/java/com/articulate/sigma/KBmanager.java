@@ -25,9 +25,13 @@ import com.articulate.sigma.utils.StringUtil;
 import com.articulate.sigma.verbnet.VerbNet;
 import com.articulate.sigma.wordnet.OMWordnet;
 import com.articulate.sigma.wordnet.WordNet;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import py4j.GatewayServer;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -35,7 +39,7 @@ import java.util.*;
  * have one instance, contained in its own static member variable.
  */
 public class KBmanager implements Serializable {
-
+    private final Log log = LogFactory.getLog(getClass());
     public static final List<String> configKeys =
             Arrays.asList("sumokbname", "testOutputDir", "TPTPDisplay", "semRewrite",
                     "eprover", "inferenceTestDir", "baseDir", "hostname",
@@ -64,6 +68,7 @@ public class KBmanager implements Serializable {
     public Prover prover = Prover.VAMPIRE;
     private String error = "";
 
+    private KBConfigProperties kbConfigProperties;
     public KBmanager() {
     }
 
@@ -362,6 +367,10 @@ public class KBmanager implements Serializable {
                 printHelp();
             }
         }
+    }
+
+    public void setKbConfigProperties(KBConfigProperties kbConfigProperties) {
+        this.kbConfigProperties = kbConfigProperties;
     }
 
     /**
@@ -676,9 +685,8 @@ public class KBmanager implements Serializable {
      * configuration file, or uses the default parameters.
      */
     public void initializeOnce() {
-        System.out.println("Info in KBmanager.initializeOnce()");
-        String base = System.getenv("SIGMA_HOME");
-        initializeOnce(base + File.separator + "KBs");
+        Path base = kbConfigProperties.getSigmaHome();
+        initializeOnce(base.resolve("KBs").toString());
     }
 
     /**
