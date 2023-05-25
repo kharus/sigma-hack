@@ -59,6 +59,7 @@ jobs:
           mvn -B test -Dtest=UnitTestSuite --file pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.PACKAGE_READONLY }}
+          SIGMA_HOME: ${{ github.workspace }}/sigmakee-runtime
         working-directory: sigma-hack
 
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
