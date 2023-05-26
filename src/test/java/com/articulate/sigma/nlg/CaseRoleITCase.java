@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 // Tests requiring that KBs be loaded.
 
-public class CaseRoleTest extends UnitTestBase {
+public class CaseRoleITCase extends UnitTestBase {
 
     @Test
     public void testCommonCaseRoles() {

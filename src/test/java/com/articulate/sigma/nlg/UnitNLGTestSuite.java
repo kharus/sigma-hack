@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        CaseRoleTest.class,
+        CaseRoleITCase.class,
         //HtmlParaphraseMockTest.class, TODO: restore tests
         //HtmlParaphraseTest.class,
         LanguageFormatterStackTest.class,

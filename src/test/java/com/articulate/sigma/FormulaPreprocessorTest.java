@@ -1,9 +1,10 @@
+/**
+ * This software is released under the GNU Public License
+ * <http://www.gnu.org/copyleft/gpl.html>.
+ * Copyright 2019 Infosys
+ * adam.pease@infosys.com
+ */
 package com.articulate.sigma;
-
-//This software is released under the GNU Public License
-//<http://www.gnu.org/copyleft/gpl.html>.
-// Copyright 2019 Infosys
-// adam.pease@infosys.com
 
 import com.articulate.sigma.trans.SUMOKBtoTFAKB;
 import com.articulate.sigma.trans.SUMOKBtoTPTPKB;
@@ -122,15 +123,12 @@ public class FormulaPreprocessorTest extends UnitTestBase {
     public void testMergeToMap1() {
 
         System.out.println("\n============= testMergeToMap1 ==================");
-//        Set<String> objectSet1 = Sets.newHashSet("Object", "CorpuscularObject");
-//        Set<String> humanSet1 = Sets.newHashSet("Man", "Woman");
+
         HashMap<String, HashSet<String>> map1 = Maps.newHashMap();
         map1.put("?Obj", Sets.newHashSet("Object", "CorpuscularObject"));
         map1.put("?Hum", Sets.newHashSet("Man", "Woman"));
         map1.put("?Time", Sets.newHashSet("Month"));
 
-//        Set<String> objectSet2 = Sets.newHashSet("Object");
-//        Set<String> humanSet2 = Sets.newHashSet("Human");
         HashMap<String, HashSet<String>> map2 = Maps.newHashMap();
         map2.put("?Obj", Sets.newHashSet("Object"));
         map2.put("?Hum", Sets.newHashSet("Human"));

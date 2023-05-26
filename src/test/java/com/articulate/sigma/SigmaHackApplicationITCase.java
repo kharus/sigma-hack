@@ -1,10 +1,10 @@
-package com.kharu5.sigmahack;
+package com.articulate.sigma;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SigmaHackApplicationTests {
+class SigmaHackApplicationITCase {
 
     @Test
     void contextLoads() {

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import static junit.framework.TestCase.assertTrue;
 
-public class FormatTest extends IntegrationTestBase {
+public class FormatITCase extends IntegrationTestBase {
 
     @Test
     public void testNegativePositiveFormat() {

@@ -8,7 +8,7 @@ import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
 
-public class CaseRoleTest extends IntegrationTestBase {
+public class CaseRoleITCase extends IntegrationTestBase {
 
     /**
      * This test is meant to detect errors in the writing of SUMO rules in kif files. It fails if it finds a case where a term

@@ -6,8 +6,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        CaseRoleTest.class,
-        FormatTest.class,
+        CaseRoleITCase.class,
+        FormatITCase.class,
         FormulaPreprocessorAddTypeRestrictionsTest.class,
         FormulaPreprocessorIntegrationTest.class,
         KBcacheTest.class,

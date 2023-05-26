@@ -1,3 +1,9 @@
+/*
+ * This software is released under the GNU Public License
+ * <http://www.gnu.org/copyleft/gpl.html>.
+ * Copyright 2019 Infosys
+ * adam.pease@infosys.com
+ */
 package com.articulate.sigma;
 
 import com.articulate.sigma.nlg.UnitNLGTestSuite;
@@ -8,14 +14,10 @@ import com.articulate.sigma.wordnet.WordNetTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-//This software is released under the GNU Public License
-//<http://www.gnu.org/copyleft/gpl.html>.
-// Copyright 2019 Infosys
-// adam.pease@infosys.com
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        FormulaArityCheckTest.class,
+        FormulaArityCheckITCase.class,
         FormulaDeepEqualsTest.class,
         FormulaLogicalEqualityTest.class,
         FormulaPreprocessorComputeVariableTypesTest.class,
