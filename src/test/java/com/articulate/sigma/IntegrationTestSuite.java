@@ -1,6 +1,6 @@
 package com.articulate.sigma;
 
-import com.articulate.sigma.trans.SUMOformulaToTPTPformulaTest;
+import com.articulate.sigma.trans.SUMOformulaToTPTPformulaITCase;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -8,14 +8,14 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         CaseRoleITCase.class,
         FormatITCase.class,
-        FormulaPreprocessorAddTypeRestrictionsTest.class,
-        FormulaPreprocessorIntegrationTest.class,
-        KBcacheTest.class,
-        KbIntegrationTest.class,
-        KBmanagerInitIntegrationTest.class,
-        PredVarInstIntegrationTest.class,
-        SUMOformulaToTPTPformulaTest.class,
-        //HtmlParaphraseIntegrationTest.class,
+        FormulaPreprocessorAddTypeRestrictionsITCase.class,
+        FormulaPreprocessorIntegrationITCase.class,
+        KBcacheITCase.class,
+        KbIntegrationITCase.class,
+        KBmanagerInitIntegrationITCase.class,
+        PredVarInstIntegrationITCase.class,
+        SUMOformulaToTPTPformulaITCase.class,
+        //HtmlParaphraseIntegrationITCase.class,
 })
 public class IntegrationTestSuite extends IntegrationTestBase {
 
