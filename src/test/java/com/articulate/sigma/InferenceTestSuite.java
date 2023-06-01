@@ -666,7 +666,7 @@ public class InferenceTestSuite {
     }
 
     /**
-     * The method will be called in InferenceTest in unit test;
+     * The method will be called in InferenceITCase in unit test;
      * It takes a TQG file path, reading the kif statements and queries and expected answers;
      * It parses the theorem prover's inference output for actual answers;
      * Note that this procedure DOES NOT delete any prior user assertions.
