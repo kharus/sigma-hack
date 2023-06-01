@@ -4,6 +4,7 @@ import com.articulate.sigma.*;
 import com.articulate.sigma.utils.StringUtil;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
 
 public class SUMOKBtoTPTPKB {

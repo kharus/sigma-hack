@@ -68,7 +68,7 @@ public class KBmanager implements Serializable {
     public Prover prover = Prover.VAMPIRE;
     private String error = "";
 
-    private KBConfigProperties kbConfigProperties;
+    private transient KBConfigProperties kbConfigProperties;
     public KBmanager() {
     }
 

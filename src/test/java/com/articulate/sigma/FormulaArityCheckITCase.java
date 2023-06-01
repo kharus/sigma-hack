@@ -20,16 +20,22 @@
  */
 package com.articulate.sigma;
 
-import junit.framework.AssertionFailedError;
-import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.Test;
 
-public class FormulaArityCheckITCase extends UnitTestBase {
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+@SpringBootTest
+public class FormulaArityCheckITCase {
+    @Autowired
+    private KBmanager kbManager;
 
     @Test
     public void testArityCheck1() {
+        KB kb = kbManager.getKB(kbManager.getPref("sumokbname"));
 
         String input = "(=>\n" +
                 "   (and\n" +
@@ -45,7 +51,8 @@ public class FormulaArityCheckITCase extends UnitTestBase {
     }
 
     @Test
-    public void testArityCheck2() throws AssertionFailedError {
+    public void testArityCheck2() {
+        KB kb = kbManager.getKB(kbManager.getPref("sumokbname"));
 
         String input = "(=>\n" +
                 "   (and\n" +

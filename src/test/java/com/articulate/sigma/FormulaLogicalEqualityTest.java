@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
  * Created by sserban on 3/1/15.
  */
 @RunWith(Parameterized.class)
-public class FormulaLogicalEqualityITCase extends UnitTestBase {
+public class FormulaLogicalEqualityTest {
 
     private static final String TEST_FILE_NAME = "formula_logical_equality_tests.json";
 

@@ -316,7 +316,7 @@ public class InferenceTestSuite {
                 showHelp();
             else {
                 KBmanager.getMgr().initializeOnce();
-                InferenceITCaseSuite its = new InferenceITCaseSuite();
+                InferenceTestSuite its = new InferenceTestSuite();
                 if (args[0].indexOf('l') != -1)
                     SUMOKBtoTPTPKB.lang = "thf";
                 if (args[0].indexOf('f') != -1)

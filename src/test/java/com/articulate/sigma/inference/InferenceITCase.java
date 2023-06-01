@@ -94,8 +94,8 @@ public class InferenceITCase {
         System.out.println("InferenceITCase.test(): " + fInput);
         ArrayList<String> expectedAnswers = new ArrayList<>();
         ArrayList<String> actualAnswers = new ArrayList<>();
-        InferenceITCaseSuite its = new InferenceITCaseSuite();
-        InferenceITCaseSuite.InfTestData itd = its.inferenceUnitTest(fInput, kb);
+        InferenceTestSuite its = new InferenceTestSuite();
+        InferenceTestSuite.InfTestData itd = its.inferenceUnitTest(fInput, kb);
         System.out.println("expected: " + itd.expectedAnswers);
         System.out.println("actual: " + itd.actualAnswers);
         if (itd.inconsistent)
