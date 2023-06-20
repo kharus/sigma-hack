@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.6</version>
+        <version>3.1.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.kharu5</groupId>
@@ -15,11 +15,11 @@
     <description>Hack project for Sigmakee</description>
     <properties>
         <java.version>17</java.version>
-        <spring-shell.version>3.0.3</spring-shell.version>
+        <spring-shell.version>3.1.1</spring-shell.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-        <repositories>
+    <repositories>
         <repository>
             <id>central</id>
             <url>https://repo1.maven.org/maven2</url>
@@ -38,6 +38,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.shell</groupId>
+            <artifactId>spring-shell-starter</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,11 +54,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-		<dependency>
-			<groupId>com.kharu5</groupId>
-			<artifactId>hack-sigma-utils</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
+        <dependency>
+            <groupId>com.kharu5</groupId>
+            <artifactId>hack-sigma-utils</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>com.kharu5</groupId>
             <artifactId>tptp-grammar-hack</artifactId>
@@ -85,13 +89,23 @@
             <artifactId>stanford-corenlp</artifactId>
             <version>3.9.1</version>
         </dependency>
-		<dependency>
-			<groupId>org.junit.vintage</groupId>
-			<artifactId>junit-vintage-engine</artifactId>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.shell</groupId>
+                <artifactId>spring-shell-dependencies</artifactId>
+                <version>${spring-shell.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <testResources>
             <testResource>
@@ -152,7 +166,7 @@
                     </configuration>
                 </plugin>
             </plugins>
-            
+
         </pluginManagement>
     </build>
 

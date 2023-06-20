@@ -5,7 +5,10 @@ import com.articulate.sigma.utils.StringUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.shell.command.annotation.Command;
+import org.springframework.shell.context.InteractionMode;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
@@ -14,7 +17,8 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 
 @Component
-public class SUMOKBtoTPTPKBRunner implements CommandLineRunner {
+@Command
+public class SUMOKBtoTPTPKBRunner {
     private final Log log = LogFactory.getLog(getClass());
     private final KBmanager kbManager;
 
@@ -28,7 +32,8 @@ public class SUMOKBtoTPTPKBRunner implements CommandLineRunner {
         this.kbManager = kbManager;
     }
 
-    public void run(String... args) throws Exception {
+    @Command(command = "fof")
+    public void tptpFof() {
         SUMOKBtoTPTPKB skbtptpkb = new SUMOKBtoTPTPKB();
         skbtptpkb.kb = kbManager.getKB(sumokbname);
 
@@ -37,7 +42,7 @@ public class SUMOKBtoTPTPKBRunner implements CommandLineRunner {
         try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename, true)))) {
             String fileWritten = skbtptpkb.writeFile(filename, null, false, pw);
             if (StringUtil.isNonEmptyString(fileWritten))
-                log.info("File written: " + fileWritten + " with key: " + SUMOKBtoTPTPKB.axiomKey);
+                log.info("File written: " + fileWritten);
             else
                 log.error("Could not write " + filename);
         } catch (Exception e) {
