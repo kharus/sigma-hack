@@ -37,7 +37,6 @@ SumoProcessCollectorSimpleITCase.java
 SumoProcessEntityPropertySimpleITCase.java
 VerbPropertiesITCase.java
 SUMOformulaToTPTPformulaITCase.java
-SUMOtoTFAITCase.java
 SUMOtoTFAKBITCase.java
 SUMOtoTFAformITCase.java
 TPTP2SUMOITCase.java
