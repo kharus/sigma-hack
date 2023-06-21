@@ -1,2 +1,6 @@
 sumokbname: SUMO
 kbDir: "E:/code/sigmakee-runtime-top/KBs"
+spring:
+  shell:
+    interactive:
+      enabled: false
