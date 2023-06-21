@@ -34,7 +34,7 @@ import static com.articulate.sigma.SigmaTestBase.checkConfiguration;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.shell.interactive.enabled=false")
 public class FormulaArityCheckITCase {
 
     private KB kb;

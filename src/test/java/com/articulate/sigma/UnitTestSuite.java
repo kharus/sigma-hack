@@ -17,7 +17,6 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        FormulaArityCheckITCase.class,
         FormulaDeepEqualsITCase.class,
         FormulaLogicalEqualityITCase.class,
         FormulaPreprocessorComputeVariableTypesITCase.class,
