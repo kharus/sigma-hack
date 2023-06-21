@@ -1,12 +1,10 @@
 CaseRoleITCase.java
 FormatITCase.java
-FormulaDeepEqualsITCase
 FormulaITCase.java
 FormulaLogicalEqualityITCase.java
 FormulaPreprocessorAddTypeRestrictionsITCase.java
 FormulaPreprocessorComputeVariableTypesITCase.java
 FormulaPreprocessorFindExplicitTypesITCase.java
-FormulaPreprocessorITCase.java
 FormulaPreprocessorIntegrationITCase.java
 FormulaUnificationITCase.java
 FormulaUtilITCase.java
@@ -37,10 +35,8 @@ SumoProcessCollectorSimpleITCase.java
 SumoProcessEntityPropertySimpleITCase.java
 VerbPropertiesITCase.java
 SUMOformulaToTPTPformulaITCase.java
-SUMOtoTFAITCase.java
 SUMOtoTFAKBITCase.java
 SUMOtoTFAformITCase.java
-TPTP2SUMOITCase.java
 TPTP3ProofProcITCase.java
 VerbNetITCase.java
 MultiWordsITCase.java

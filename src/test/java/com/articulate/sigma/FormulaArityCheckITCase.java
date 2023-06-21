@@ -20,58 +20,29 @@
  */
 package com.articulate.sigma;
 
-import junit.framework.AssertionFailedError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
-import java.io.*;
-
-import static com.articulate.sigma.SigmaTestBase.checkConfiguration;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
+@Import(KBmanagerTestConfiguration.class)
 public class FormulaArityCheckITCase {
 
     private KB kb;
 
     @Autowired
-    private KBmanager testKBManager;
+    private KBmanager topOnlyKBManager;
 
-    @TestConfiguration
-    static class KBmanagerTestConfiguration {
-        @Bean
-        public KBmanager testKBManager() {
-            try (InputStream is = getClass().getClassLoader().getResourceAsStream("config_topOnly.xml");
-                 Reader reader = new BufferedReader(new InputStreamReader(is))) {
-
-                if (!KBmanager.initialized) {
-                    SimpleDOMParser sdp = new SimpleDOMParser();
-                    SimpleElement configuration = sdp.parse(reader);
-
-                    KBmanager.getMgr().setDefaultAttributes();
-                    KBmanager.getMgr().setConfiguration(configuration);
-                    KBmanager.initialized = true;
-                }
-                checkConfiguration();
-                return KBmanager.getMgr();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-        }
-    }
     @BeforeEach
     void init() {
-        kb = testKBManager.getKB(testKBManager.getPref("sumokbname"));
+        kb = topOnlyKBManager.getKB(topOnlyKBManager.getPref("sumokbname"));
     }
     @Test
     public void testArityCheck1() {
-
         String input = """
                 (=>
                    (and
@@ -83,12 +54,11 @@ public class FormulaArityCheckITCase {
         Formula f = new Formula();
         f.read(input);
         String output = PredVarInst.hasCorrectArity(f, kb);
-        assertNull(output);
+        assertThat(output).isNull();
     }
 
     @Test
-    public void testArityCheck2() throws AssertionFailedError {
-
+    public void testArityCheck2() {
         String input = """
                 (=>
                    (and
@@ -98,7 +68,7 @@ public class FormulaArityCheckITCase {
         Formula f = new Formula();
         f.read(input);
         String output = PredVarInst.hasCorrectArity(f, kb);
-        assertNotNull(output);
+        assertThat(output).isNotNull();
     }
 
 }
