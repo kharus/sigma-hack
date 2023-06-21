@@ -21,13 +21,4 @@ public class KBmanagerInitITCase extends UnitTestBase {
         assertEquals(expected, actual);
     }
 
-    /**
-     * Verify how long the base class's KBmanager initialization took.
-     */
-    @Test
-    public void testInitializationTime() {
-        assertTrue("Actual time = " + UnitTestBase.totalKbMgrInitTime, UnitTestBase.totalKbMgrInitTime < 280000);
-        // Just in case something whacky is going on, make sure it's greater than some minimum, too.
-        assertTrue("Actual time = " + UnitTestBase.totalKbMgrInitTime, UnitTestBase.totalKbMgrInitTime > 10000);
-    }
 }

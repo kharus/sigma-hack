@@ -123,7 +123,10 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-<!--                    <includes>**/UnitTestSuite.java</includes>-->
+                    <includes>
+                        <include>**/UnitTestSuite.java</include>
+                        <include>**/*ITCase.java</include>
+                    </includes>
                     <excludesFile>${project.basedir}/src/test/resources/failsafe.excludes</excludesFile>
                 </configuration>
                 <executions>
