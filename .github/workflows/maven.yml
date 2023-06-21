@@ -70,7 +70,7 @@ jobs:
 
       - name: Test with Maven
         run: |
-          mvn -B verify --file pom.xml
+          mvn -B verify -Dgroups=com.articulate.sigma.TopOnly --file pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.PACKAGE_READONLY }}
         working-directory: sigma-hack

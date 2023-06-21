@@ -8,6 +8,7 @@ package com.articulate.sigma;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertNull;
 /**
  * FormulaPreprocessor tests specifically targeted on the findExplicitTypes( ) and findExplicitTypesInAntecedent( ) methods.
  */
+@Category(TopOnly.class)
 public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
 
     @Test

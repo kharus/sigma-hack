@@ -1,9 +1,11 @@
 package com.articulate.sigma.trans;
 
+import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,6 +16,7 @@ import static org.junit.Assert.assertEquals;
  * // Copyright 2019 Infosys, 2020- Articulate Software
  * // apease@articulatesoftware.com
  */
+@Category(TopOnly.class)
 public class SUMOformulaToTPTPformulaITCase {
 
     @Before

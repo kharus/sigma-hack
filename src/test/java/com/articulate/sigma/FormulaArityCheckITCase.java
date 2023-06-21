@@ -22,6 +22,7 @@ package com.articulate.sigma;
 
 import junit.framework.AssertionFailedError;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,6 +36,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 @SpringBootTest
+@Tag("com.articulate.sigma.TopOnly")
 public class FormulaArityCheckITCase {
 
     private KB kb;

@@ -1,12 +1,14 @@
 package com.articulate.sigma.nlg;
 
+import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertEquals;
 
 // Tests requiring that KBs be loaded.
-
+@Category(TopOnly.class)
 public class CaseRoleITCase extends UnitTestBase {
 
     @Test

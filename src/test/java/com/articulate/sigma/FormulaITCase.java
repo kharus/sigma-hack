@@ -3,11 +3,13 @@ package com.articulate.sigma;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.*;
 
 import static org.junit.Assert.*;
 
+@Category(TopOnly.class)
 public class FormulaITCase {
 
     @Test

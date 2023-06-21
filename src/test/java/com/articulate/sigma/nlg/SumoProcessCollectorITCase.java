@@ -2,13 +2,15 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.KB;
 import com.articulate.sigma.SigmaTestBase;
+import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertEquals;
 
 // Tests on SumoProcess require KBs be loaded.
-
+@Category(TopOnly.class)
 public class SumoProcessCollectorITCase extends UnitTestBase {
 
     private final KB knowledgeBase = SigmaTestBase.kb;

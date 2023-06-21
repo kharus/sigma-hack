@@ -1,6 +1,7 @@
 package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.SigmaTestBase;
+import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
 import com.articulate.sigma.utils.StringUtil;
 import com.google.common.collect.ImmutableMap;
@@ -9,6 +10,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertEquals;
  * LanguageFormatter tests NOT targeted toward the htmlParaphrase( ) method.
  * See LanguageFormatterHtmlParaphraseITCase for tests that invoke this method.
  */
+@Category(TopOnly.class)
 public class LanguageFormatterITCase extends UnitTestBase {
 
     @Ignore

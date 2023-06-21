@@ -1,17 +1,16 @@
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.Formula;
-import com.articulate.sigma.KB;
-import com.articulate.sigma.KBmanager;
-import com.articulate.sigma.UnitTestBase;
+import com.articulate.sigma.*;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+@Category(TopOnly.class)
 public class TPTP3ProofProcITCase extends UnitTestBase {
 
     @BeforeClass
