@@ -21,23 +21,65 @@
 package com.articulate.sigma;
 
 import junit.framework.AssertionFailedError;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 
+import java.io.*;
+
+import static com.articulate.sigma.SigmaTestBase.checkConfiguration;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-public class FormulaArityCheckITCase extends UnitTestBase {
+@SpringBootTest
+public class FormulaArityCheckITCase {
 
+    private KB kb;
+
+    @Autowired
+    private KBmanager testKBManager;
+
+    @TestConfiguration
+    static class KBmanagerTestConfiguration {
+        @Bean
+        public KBmanager testKBManager() {
+            try (InputStream is = getClass().getClassLoader().getResourceAsStream("config_topOnly.xml");
+                 Reader reader = new BufferedReader(new InputStreamReader(is))) {
+
+                if (!KBmanager.initialized) {
+                    SimpleDOMParser sdp = new SimpleDOMParser();
+                    SimpleElement configuration = sdp.parse(reader);
+
+                    KBmanager.getMgr().setDefaultAttributes();
+                    KBmanager.getMgr().setConfiguration(configuration);
+                    KBmanager.initialized = true;
+                }
+                checkConfiguration();
+                return KBmanager.getMgr();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+    @BeforeEach
+    void init() {
+        kb = testKBManager.getKB(testKBManager.getPref("sumokbname"));
+    }
     @Test
     public void testArityCheck1() {
 
-        String input = "(=>\n" +
-                "   (and\n" +
-                "      (domainSubclass ?REL ?NUMBER ?CLASS1)\n" +
-                "      (domainSubclass ?REL ?NUMBER ?CLASS2))\n" +
-                "   (or\n" +
-                "      (subclass ?CLASS1 ?CLASS2)\n" +
-                "      (subclass ?CLASS2 ?CLASS1)))";
+        String input = """
+                (=>
+                   (and
+                      (domainSubclass ?REL ?NUMBER ?CLASS1)
+                      (domainSubclass ?REL ?NUMBER ?CLASS2))
+                   (or
+                      (subclass ?CLASS1 ?CLASS2)
+                      (subclass ?CLASS2 ?CLASS1)))""";
         Formula f = new Formula();
         f.read(input);
         String output = PredVarInst.hasCorrectArity(f, kb);
@@ -47,11 +89,12 @@ public class FormulaArityCheckITCase extends UnitTestBase {
     @Test
     public void testArityCheck2() throws AssertionFailedError {
 
-        String input = "(=>\n" +
-                "   (and\n" +
-                "      (subrelation ?REL1 ?REL2 Car)\n" +
-                "      (domainSubclass ?REL2 ?NUMBER ?CLASS1))\n" +
-                "   (domainSubclass ?REL1 ?NUMBER ?CLASS1))";
+        String input = """
+                (=>
+                   (and
+                      (subrelation ?REL1 ?REL2 Car)
+                      (domainSubclass ?REL2 ?NUMBER ?CLASS1))
+                   (domainSubclass ?REL1 ?NUMBER ?CLASS1))""";
         Formula f = new Formula();
         f.read(input);
         String output = PredVarInst.hasCorrectArity(f, kb);

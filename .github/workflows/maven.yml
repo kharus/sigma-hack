@@ -53,7 +53,22 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Build with Maven
+      - name: Compile with Maven
+        run: |
+          mvn -B test-compile --file pom.xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.PACKAGE_READONLY }}
+        working-directory: sigma-hack
+
+      - name: Finish Setup SigmaKEE
+        env:
+          SIGMA_HOME: ${{ github.workspace }}/sigmakee-runtime
+          SIGMA_SRC: ${{ github.workspace }}/sigma-hack
+        working-directory: ${{ github.workspace }}
+        run: |
+          cp $SIGMA_SRC/target/test-classes/config_topOnly.xml $SIGMA_HOME/KBs/config.xml
+
+      - name: Test with Maven
         run: |
           mvn -B verify --file pom.xml
         env:
