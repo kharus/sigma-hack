@@ -64,14 +64,7 @@ public class KBcacheITCase extends IntegrationTestBase {
         String kbName = KBmanager.getMgr().getPref("sumokbname");
         System.out.println("testbuildChildren(): KBs: " + KBmanager.getMgr().getKB(kbName).constituents);
         String parent = "BiologicalAttribute";
-        /* HashSet<String> expected = new HashSet<>(Arrays.asList("AnimacyAttribute", "BodyPosition", "DevelopmentalAttribute",
-                "DiseaseOrSyndrome", "Fingerprint", "PsychologicalAttribute", "SexAttribute", "VisualAcuityAttribute",
-                "AquiredImmunoDeficiencySyndrome", "Disability", "PhysicalDisability", "SensoryDisability",
-                "InfectiousDisease", "BacterialDisease", "VaccinatableDisease", "Influenza", "TickBorneEncephalitis",
-                "ViralDisease", "EmotionalState", "HemorrhagicFever", "Hepatitis", "RiftValleyFever", "LiteracyAttribute",
-                "VenezuelanEquineEncephalitis", "ConsciousnessAttribute", "LifeThreateningDisease", "NonspecificDisease",
-                "PsychologicalDysfunction", "Neurosis", "Psychosis", "TyphoidFever", "StateOfMind", "TraitAttribute"));
-*/
+
         TreeSet<String> expected = new TreeSet<>(Arrays.asList("AcquiredImmunoDeficiencySyndrome", "AnimacyAttribute",
                 "BacterialDisease",
                 "BiologicalAttribute", "BodyPosition", "ChronicDisease", "ConsciousnessAttribute", "Depression",
@@ -100,14 +93,7 @@ public class KBcacheITCase extends IntegrationTestBase {
         System.out.println("\n============= testBuildChildren2 ==================");
         KBcache cache = SigmaTestBase.kb.kbCache;
         String parent = "RealNumber";
-        /* HashSet<String> expected = new HashSet<>(Arrays.asList("AnimacyAttribute", "BodyPosition", "DevelopmentalAttribute",
-                "DiseaseOrSyndrome", "Fingerprint", "PsychologicalAttribute", "SexAttribute", "VisualAcuityAttribute",
-                "AquiredImmunoDeficiencySyndrome", "Disability", "PhysicalDisability", "SensoryDisability",
-                "InfectiousDisease", "BacterialDisease", "VaccinatableDisease", "Influenza", "TickBorneEncephalitis",
-                "ViralDisease", "EmotionalState", "HemorrhagicFever", "Hepatitis", "RiftValleyFever", "LiteracyAttribute",
-                "VenezuelanEquineEncephalitis", "ConsciousnessAttribute", "LifeThreateningDisease", "NonspecificDisease",
-                "PsychologicalDysfunction", "Neurosis", "Psychosis", "TyphoidFever", "StateOfMind", "TraitAttribute"));
-*/
+
         TreeSet<String> expected = new TreeSet<>(Arrays.asList("RationalNumber", "Integer", "EvenInteger",
                 "OddInteger", "PrimeNumber", "NonnegativeInteger", "PositiveInteger", "NegativeInteger",
                 "IrrationalNumber", "NonnegativeRealNumber", "PositiveRealNumber", "PositiveInteger",

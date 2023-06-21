@@ -1,6 +1,6 @@
 <configuration >
   <preference name="adminBrowserLimit" value="200" />
-  <preference name="baseDir" value="/home/theuser/.sigmakee" />
+  <preference name="baseDir" value="@project.basedir@/../sigmakee-runtime" />
   <preference name="cache" value="yes" />
   <preference name="celtdir" value="" />
   <preference name="editDir" value="/home/theuser/workspace/sumo" />
@@ -9,13 +9,13 @@
   <preference name="holdsPrefix" value="no" />
   <preference name="hostname" value="localhost" />
   <preference name="https" value="false" />
-  <preference name="inferenceTestDir" value="/home/theuser/.sigmakee/KBs/tests" />
+  <preference name="inferenceTestDir" value="@project.basedir@/../sigmakee-runtime/KBs/tests" />
   <preference name="jedit" value="jedit" />
-  <preference name="kbDir" value="/home/theuser/.sigmakee/KBs" />
+  <preference name="kbDir" value="@project.basedir@/../sigmakee-runtime/KBs" />
   <preference name="leoExecutable" value="/home/theuser/leo" />
   <preference name="lineNumberCommand" value="" />
   <preference name="loadCELT" value="no" />
-  <preference name="logDir" value="/home/theuser/.sigmakee/logs" />
+  <preference name="logDir" value="@project.basedir@/../sigmakee-runtime/logs" />
   <preference name="logLevel" value="warning" />
   <preference name="port" value="8080" />
   <preference name="prolog" value="" />

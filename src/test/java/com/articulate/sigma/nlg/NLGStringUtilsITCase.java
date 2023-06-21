@@ -1,10 +1,13 @@
 package com.articulate.sigma.nlg;
 
+import com.articulate.sigma.TopOnly;
 import com.google.common.collect.Lists;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertEquals;
 
+@Category(TopOnly.class)
 public class NLGStringUtilsITCase {
 
     @Test

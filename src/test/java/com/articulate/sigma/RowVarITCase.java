@@ -1,6 +1,7 @@
 package com.articulate.sigma;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import static org.junit.Assert.assertTrue;
  * TODO: See how relevant the line "if (kb.kbCache.transInstOf("exhaustiveAttribute","VariableArityRelation"))"
  * at the start of the original PredVarInst.test( ) method is. Should these tests somehow reflect that?
  */
+@Category(TopOnly.class)
 public class RowVarITCase extends UnitTestBase {
 
     @Test

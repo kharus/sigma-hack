@@ -2,12 +2,15 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.KB;
+import com.articulate.sigma.TopOnly;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@Category(TopOnly.class)
 public class LanguageFormatterStackITCase extends SigmaMockTestBase {
     private final KB kb = kbMock;
 

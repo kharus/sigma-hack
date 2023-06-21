@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * FormulaPreprocessor tests focused on computeVariableTypes().
  */
+@Category(TopOnly.class)
 public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase {
 
     @Test

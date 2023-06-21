@@ -1,7 +1,9 @@
 package com.articulate.sigma.wordnet;
 
+import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.List;
 
@@ -10,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 // TODO: Test the WordNet class more thoroughly. Start with the test methods called in main( ).
 
+@Category(TopOnly.class)
 public class WordNetITCase extends UnitTestBase {
 
     @Test

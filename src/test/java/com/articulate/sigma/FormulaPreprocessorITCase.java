@@ -14,6 +14,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -29,6 +30,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * FormulaPreprocessor tests not focused on findExplicitTypes( ) or computeVariableTypes( ).
  */
+@Category(TopOnly.class)
 public class FormulaPreprocessorITCase extends UnitTestBase {
 
     // TODO: Technically, this should to in the FormulaITCase class, but the gatherRelationsWithArgTypes( ) method requires a KB

@@ -2,6 +2,7 @@ package com.articulate.sigma;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -9,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by sserban on 2/11/15.
  */
+@Category(TopOnly.class)
 public class FormulaDeepEqualsITCase extends UnitTestBase {
 
     @Test

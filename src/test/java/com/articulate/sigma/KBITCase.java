@@ -2,6 +2,7 @@ package com.articulate.sigma;
 
 import com.google.common.collect.Sets;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 
+@Category(TopOnly.class)
 public class KBITCase extends UnitTestBase {
 
     @Test

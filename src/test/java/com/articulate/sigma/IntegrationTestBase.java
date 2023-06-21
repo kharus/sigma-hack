@@ -23,7 +23,7 @@ public class IntegrationTestBase extends SigmaTestBase {
     static {
         String d = null;
         try {
-            d = System.getenv("SIGMA_SRC") + File.separator + "test/integration/java/resources";
+            d = System.getenv("SIGMA_SRC") + File.separator + "src/test/resources";
             System.out.println("IntegrationTestBase initialization with dir: " + d);
             File f = new File(d);
             if (!f.exists())

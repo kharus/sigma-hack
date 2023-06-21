@@ -1,15 +1,7 @@
-FormatITCase.java
-FormulaPreprocessorAddTypeRestrictionsITCase.java
-FormulaPreprocessorIntegrationITCase.java
-KBcacheITCase.java
-KBmanagerInitIntegrationITCase.java
-KbIntegrationITCase.java
-PredVarInstIntegrationITCase.java
 SigmaHackApplicationITCase.java
 TPTP3ITCase.java
 InferenceITCase.java
 GenSimpTestDataITCase.java
-CaseRoleITCase.java
 HtmlParaphraseIntegrationITCase.java
 SUMOtoTFAKBITCase.java
 SUMOtoTFAformITCase.java

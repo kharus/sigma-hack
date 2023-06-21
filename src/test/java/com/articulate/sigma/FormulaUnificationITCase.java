@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertTrue;
  * Created by sserban on 3/1/15.
  */
 @RunWith(Parameterized.class)
+@Category(TopOnly.class)
 public class FormulaUnificationITCase extends UnitTestBase {
     private static final String TEST_FILE_NAME = "formula_unification_tests.json";
 

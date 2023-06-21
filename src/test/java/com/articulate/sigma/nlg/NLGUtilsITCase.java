@@ -2,14 +2,17 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.SigmaTestBase;
+import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
 import com.google.common.collect.Lists;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@Category(TopOnly.class)
 public class NLGUtilsITCase extends UnitTestBase {
     @Test(expected = IllegalArgumentException.class)
     public void testReadKeywordMapNull() {

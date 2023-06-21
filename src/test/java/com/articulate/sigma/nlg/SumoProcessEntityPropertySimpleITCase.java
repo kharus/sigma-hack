@@ -2,12 +2,15 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.KB;
+import com.articulate.sigma.TopOnly;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertEquals;
 
 // Tests on SumoProcessEntityProperty with a mock set of KBs.
 
+@Category(TopOnly.class)
 public class SumoProcessEntityPropertySimpleITCase extends SigmaMockTestBase {
 
     private final KB knowledgeBase = this.kbMock;

@@ -31,7 +31,6 @@ public class SigmaTestBase {
         if (!KBmanager.initialized) {
             try {
                 SimpleDOMParser sdp = new SimpleDOMParser();
-                //sdp.setSkipProlog(false);
                 configuration = sdp.parse(reader);
             } catch (IOException e) {
                 e.printStackTrace();

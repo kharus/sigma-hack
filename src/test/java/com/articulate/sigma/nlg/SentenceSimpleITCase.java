@@ -1,14 +1,17 @@
 package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.KB;
+import com.articulate.sigma.TopOnly;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertEquals;
 
 // Tests on SumoProcess that do not require KBs be loaded.
 
+@Category(TopOnly.class)
 public class SentenceSimpleITCase extends SigmaMockTestBase {
 
     private final KB knowledgeBase = this.kbMock;

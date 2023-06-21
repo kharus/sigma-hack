@@ -24,6 +24,7 @@ package com.articulate.sigma;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +33,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+@Category(TopOnly.class)
 public class KBcacheUnitITCase {
 
     public static KB kb = new KB("TestKB");
