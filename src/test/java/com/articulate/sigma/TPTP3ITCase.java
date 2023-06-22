@@ -16,7 +16,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 @Category(TopOnly.class)
-@Ignore
 public class TPTP3ITCase extends UnitTestBase {
 
     @Test

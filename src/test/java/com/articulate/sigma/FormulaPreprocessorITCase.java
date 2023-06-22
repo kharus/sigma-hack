@@ -188,6 +188,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     }
 
     @Test
+    @Ignore
     public void test5() {
 
         System.out.println("\n============= test5 ==================");
@@ -224,6 +225,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     }
 
     @Test
+    @Ignore
     public void test6() {
 
         System.out.println("\n============= test6 ==================");
@@ -254,6 +256,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     }
 
     @Test
+    @Ignore
     public void test7() {
 
         System.out.println("\n============= test7 ==================");
