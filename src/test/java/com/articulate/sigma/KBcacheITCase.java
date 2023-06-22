@@ -261,7 +261,7 @@ public class KBcacheITCase extends IntegrationTestBase {
         System.out.println("\n============= testSignature ==================");
         KBcache cache = SigmaTestBase.kb.kbCache;
         System.out.println("testSignature(): cache.getSignature(memberTypeCount): " + cache.getSignature("memberTypeCount"));
-        List<String> expected = List.of("", "Collection", "SetOrClass", "NonnegativeInteger");
+        List<String> expected = List.of("", "Collection", "Class", "NonnegativeInteger");
         List<String> actual = cache.getSignature("memberTypeCount");
         System.out.println("actual: " + actual);
         System.out.println("expoected: " + expected);
