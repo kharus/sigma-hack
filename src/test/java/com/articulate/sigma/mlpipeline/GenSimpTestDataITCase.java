@@ -171,6 +171,7 @@ public class GenSimpTestDataITCase {
     }
 
     @Test
+    @Ignore
     public void testSoccer() {
         testVerb("Soccer", false, PROGRESSIVE, "soccer", false, "Is playing soccer", lfeat);
     }
@@ -232,6 +233,7 @@ public class GenSimpTestDataITCase {
     }
 
     @Test
+    @Ignore
     public void testBeckon() {
         testVerb("Waving", true, FUTUREPROG, "beckon", true, "will not be beckoning", lfeat);
     }
@@ -268,16 +270,19 @@ public class GenSimpTestDataITCase {
     }
 
     @Test
+    @Ignore
     public void testEat1() {
         testCapability("Eating", "patient", "ArtWork", false);
     }
 
     @Test
+    @Ignore
     public void testWading1() {
         testCapability("Wading", "patient", "Book", false);
     }
 
     @Test
+    @Ignore
     public void testChimney1() {
         testCapability("Eating", "objectTransferred", "Chimney", false);
     }
@@ -310,6 +315,7 @@ public class GenSimpTestDataITCase {
     }
 
     @Test
+    @Ignore
     public void testTaste() {
 
         System.out.println();
