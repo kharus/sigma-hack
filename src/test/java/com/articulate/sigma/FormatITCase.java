@@ -8,7 +8,7 @@ import java.util.Map;
 import static junit.framework.TestCase.assertTrue;
 
 @Category(TopOnly.class)
-public class FormatITCase extends IntegrationTestBase {
+public class FormatITCase extends UnitTestBase {
 
     @Test
     public void testNegativePositiveFormat() {

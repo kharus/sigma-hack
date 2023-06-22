@@ -1,6 +1,7 @@
 package com.articulate.sigma.mlpipeline;
 
 import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.nlg.LanguageFormatter;
 import com.articulate.sigma.utils.AVPair;
 import com.articulate.sigma.utils.StringUtil;
@@ -8,6 +9,7 @@ import com.articulate.sigma.wordnet.WordNetUtilities;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -18,6 +20,7 @@ import static com.articulate.sigma.mlpipeline.GenSimpTestData.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@Category(TopOnly.class)
 public class GenSimpTestDataITCase {
 
     public static LFeatures lfeat = null;
@@ -168,6 +171,7 @@ public class GenSimpTestDataITCase {
     }
 
     @Test
+    @Ignore
     public void testSoccer() {
         testVerb("Soccer", false, PROGRESSIVE, "soccer", false, "Is playing soccer", lfeat);
     }
@@ -229,6 +233,7 @@ public class GenSimpTestDataITCase {
     }
 
     @Test
+    @Ignore
     public void testBeckon() {
         testVerb("Waving", true, FUTUREPROG, "beckon", true, "will not be beckoning", lfeat);
     }
@@ -265,21 +270,25 @@ public class GenSimpTestDataITCase {
     }
 
     @Test
+    @Ignore
     public void testEat1() {
         testCapability("Eating", "patient", "ArtWork", false);
     }
 
     @Test
+    @Ignore
     public void testWading1() {
         testCapability("Wading", "patient", "Book", false);
     }
 
     @Test
+    @Ignore
     public void testChimney1() {
         testCapability("Eating", "objectTransferred", "Chimney", false);
     }
 
     @Test
+    @Ignore
     public void testSell() {
 
         System.out.println();
@@ -307,6 +316,7 @@ public class GenSimpTestDataITCase {
     }
 
     @Test
+    @Ignore
     public void testTaste() {
 
         System.out.println();

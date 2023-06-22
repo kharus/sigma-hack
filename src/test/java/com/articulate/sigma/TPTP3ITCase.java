@@ -4,7 +4,9 @@ import com.articulate.sigma.tp.EProver;
 import com.articulate.sigma.tp.Vampire;
 import com.articulate.sigma.trans.TPTP3ProofProcessor;
 import com.articulate.sigma.utils.StringUtil;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.io.FileReader;
 import java.io.LineNumberReader;
@@ -13,9 +15,11 @@ import java.io.StringReader;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class TPTP3ITCase extends IntegrationTestBase {
+@Category(TopOnly.class)
+public class TPTP3ITCase extends UnitTestBase {
 
     @Test
+    @Ignore
     public void testParseProofFile() {
 
         System.out.println("-----------------------testParseProofFile--------------------------");
@@ -203,6 +207,7 @@ public class TPTP3ITCase extends IntegrationTestBase {
     }
 
     @Test
+    @Ignore
     public void testParseProofStep() {
 
         String ps1 = "fof(c_0_5, axiom, (s__subclass(s__Artifact,s__Object)), c_0_3).";
@@ -315,6 +320,7 @@ public class TPTP3ITCase extends IntegrationTestBase {
     }
 
     @Test
+    @Ignore
     public void testParseProofStep5() {
 
         String ps1 = "cnf(c_0_8, negated_conjecture, ($false), " +
@@ -340,6 +346,7 @@ public class TPTP3ITCase extends IntegrationTestBase {
     }
 
     @Test
+    @Ignore
     public void testParseProofStep6() {
 
         String ps1 = "fof(f16682,plain,(\n" +

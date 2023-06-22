@@ -121,9 +121,6 @@ public class PredVarInstITCase extends UnitTestBase {
 
         System.out.println("\n--------------------");
         Set<Formula> actual = PredVarInst.instantiatePredVars(f, SigmaTestBase.kb);
-        Set<Formula> expected = Sets.newHashSet();
-        System.out.println("testInstantiatePredStmt3() actual: " + actual);
-        System.out.println("testInstantiatePredStmt3() expected: " + expected);
         if (actual.size() > 100)
             System.out.println("testInstantiatePredStmt3(): success!");
         else

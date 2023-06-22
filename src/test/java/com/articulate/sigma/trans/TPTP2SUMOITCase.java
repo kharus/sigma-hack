@@ -2,15 +2,18 @@ package com.articulate.sigma.trans;
 
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.TopOnly;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@Category(TopOnly.class)
 public class TPTP2SUMOITCase {
 
     @BeforeClass

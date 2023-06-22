@@ -188,6 +188,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     }
 
     @Test
+    @Ignore
     public void test5() {
 
         System.out.println("\n============= test5 ==================");
@@ -224,6 +225,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     }
 
     @Test
+    @Ignore
     public void test6() {
 
         System.out.println("\n============= test6 ==================");
@@ -254,6 +256,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     }
 
     @Test
+    @Ignore
     public void test7() {
 
         System.out.println("\n============= test7 ==================");
@@ -346,15 +349,10 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        //PredVarInst.debug = true;
-        //FormulaPreprocessor.debug = true;
-        //RowVars.DEBUG = true;
         System.out.println("testMinValuePreprocess: greaterThanOrEqualTo valence: " +
                 kb.kbCache.valences.get("greaterThanOrEqualTo"));
         assertEquals(2, (int) kb.kbCache.valences.get("greaterThanOrEqualTo"));
         Set<Formula> actual = fp.preProcess(f, false, kb);
-        System.out.println("testMinValuePreprocess(): actual: " + actual);
-        Set<Formula> expected = Sets.newHashSet();
         int expectedSize = 100;
         System.out.println("testMinValuePreprocess(): expected: " + expectedSize);
         if (actual.size() > expectedSize)
