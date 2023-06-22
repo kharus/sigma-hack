@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
  * <constituent filename="Mid-level-ontology.kif" />
  * <constituent filename="FinancialOntology.kif" />
  */
-@Category(TopOnly.class)
+@Category(MidLevel.class)
 public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTestBase {
 
     public void test(String label, String stmt, String expected) {

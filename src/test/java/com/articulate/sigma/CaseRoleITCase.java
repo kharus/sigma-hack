@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
 
-@Category(TopOnly.class)
+@Category(MidLevel.class)
 public class CaseRoleITCase extends IntegrationTestBase {
 
     /**
