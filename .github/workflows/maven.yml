@@ -53,9 +53,9 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Compile with Maven
+      - name: Unit test with Maven
         run: |
-          mvn -B test-compile --file pom.xml
+          mvn -B test --file pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.PACKAGE_READONLY }}
         working-directory: sigma-hack
@@ -68,7 +68,7 @@ jobs:
         run: |
           cp $SIGMA_SRC/target/test-classes/config_topOnly.xml $SIGMA_HOME/KBs/config.xml
 
-      - name: Test with Maven
+      - name: Integration Top Test with Maven
         run: |
           mvn -B verify -Dgroups=com.articulate.sigma.TopOnly --file pom.xml
         env:

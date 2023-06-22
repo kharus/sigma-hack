@@ -1,23 +1,20 @@
+/*
+ * Created by qingqingcai on 1/14/15. Copyright IPsoft 2015
+ * This software is released under the GNU Public License
+ * <http://www.gnu.org/copyleft/gpl.html>.
+ * Copyright 2019 Infosys, 2020- Articulate Software
+ * apease@articulatesoftware.com
+ */
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by qingqingcai on 1/14/15. Copyright IPsoft 2015
- * //This software is released under the GNU Public License
- * //<http://www.gnu.org/copyleft/gpl.html>.
- * // Copyright 2019 Infosys, 2020- Articulate Software
- * // apease@articulatesoftware.com
- */
-@Category(TopOnly.class)
-public class SUMOformulaToTPTPformulaITCase {
+public class SUMOformulaToTPTPformulaTest {
 
     @Before
     public void init() {
