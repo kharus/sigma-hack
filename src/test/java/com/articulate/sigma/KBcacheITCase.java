@@ -7,6 +7,7 @@ import org.junit.experimental.categories.Category;
 
 import java.util.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
 @Category(MidLevel.class)
@@ -258,14 +259,11 @@ public class KBcacheITCase extends IntegrationTestBase {
     @Test
     public void testSignature() {
 
-        System.out.println("\n============= testSignature ==================");
         KBcache cache = SigmaTestBase.kb.kbCache;
         System.out.println("testSignature(): cache.getSignature(memberTypeCount): " + cache.getSignature("memberTypeCount"));
         List<String> expected = List.of("", "Collection", "Class", "NonnegativeInteger");
         List<String> actual = cache.getSignature("memberTypeCount");
-        System.out.println("actual: " + actual);
-        System.out.println("expoected: " + expected);
-        assertEquals(actual, expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
