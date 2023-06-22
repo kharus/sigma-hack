@@ -81,6 +81,7 @@ jobs:
           SIGMA_SRC: ${{ github.workspace }}/sigma-hack
         working-directory: ${{ github.workspace }}
         run: |
+          find $SIGMA_HOME/KBs -name '*.ser' -delete
           cp $SIGMA_SRC/target/test-classes/config_topAndMid.xml $SIGMA_HOME/KBs/config.xml
 
       - name: Integration MidLevel Test with Maven
