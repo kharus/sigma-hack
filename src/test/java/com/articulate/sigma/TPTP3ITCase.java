@@ -5,6 +5,7 @@ import com.articulate.sigma.tp.Vampire;
 import com.articulate.sigma.trans.TPTP3ProofProcessor;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.io.FileReader;
 import java.io.LineNumberReader;
@@ -13,7 +14,8 @@ import java.io.StringReader;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class TPTP3ITCase extends IntegrationTestBase {
+@Category(TopOnly.class)
+public class TPTP3ITCase extends UnitTestBase {
 
     @Test
     public void testParseProofFile() {

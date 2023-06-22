@@ -1,6 +1,7 @@
 package com.articulate.sigma.mlpipeline;
 
 import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.nlg.LanguageFormatter;
 import com.articulate.sigma.utils.AVPair;
 import com.articulate.sigma.utils.StringUtil;
@@ -8,6 +9,7 @@ import com.articulate.sigma.wordnet.WordNetUtilities;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -18,6 +20,7 @@ import static com.articulate.sigma.mlpipeline.GenSimpTestData.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@Category(TopOnly.class)
 public class GenSimpTestDataITCase {
 
     public static LFeatures lfeat = null;

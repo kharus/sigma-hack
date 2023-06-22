@@ -1,11 +1,6 @@
-SigmaHackApplicationITCase.java
-TPTP3ITCase.java
 InferenceITCase.java
-GenSimpTestDataITCase.java
 HtmlParaphraseIntegrationITCase.java
 SUMOtoTFAKBITCase.java
-SUMOtoTFAformITCase.java
-TPTP2SUMOITCase.java
 VerbNetITCase.java
 
 # Were disabled in UnitNLGTestSuite

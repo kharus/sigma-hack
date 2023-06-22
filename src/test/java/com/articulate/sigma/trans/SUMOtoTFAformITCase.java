@@ -1,12 +1,17 @@
+/*
+ * This software is released under the GNU Public License
+ * <http://www.gnu.org/copyleft/gpl.html>.
+ * Copyright 2019 Infosys
+ * adam.pease@infosys.com
+ */
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.Formula;
-import com.articulate.sigma.IntegrationTestBase;
-import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.*;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,11 +21,7 @@ import java.util.ArrayList;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
-//This software is released under the GNU Public License
-//<http://www.gnu.org/copyleft/gpl.html>.
-// Copyright 2019 Infosys
-// adam.pease@infosys.com
-
+@Category(MidLevel.class)
 public class SUMOtoTFAformITCase extends IntegrationTestBase {
 
     private static SUMOKBtoTFAKB skbtfakb = null;
