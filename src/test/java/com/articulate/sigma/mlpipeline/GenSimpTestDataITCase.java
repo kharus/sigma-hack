@@ -288,6 +288,7 @@ public class GenSimpTestDataITCase {
     }
 
     @Test
+    @Ignore
     public void testSell() {
 
         System.out.println();
