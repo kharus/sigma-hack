@@ -1,11 +1,13 @@
 package com.articulate.sigma;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.Map;
 
 import static junit.framework.TestCase.assertTrue;
 
+@Category(TopOnly.class)
 public class FormatITCase extends IntegrationTestBase {
 
     @Test

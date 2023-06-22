@@ -60,7 +60,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PACKAGE_READONLY }}
         working-directory: sigma-hack
 
-      - name: Finish Setup SigmaKEE
+      - name: Setup Top Only SigmaKEE
         env:
           SIGMA_HOME: ${{ github.workspace }}/sigmakee-runtime
           SIGMA_SRC: ${{ github.workspace }}/sigma-hack
@@ -71,6 +71,21 @@ jobs:
       - name: Integration Top Test with Maven
         run: |
           mvn -B verify -Dgroups=com.articulate.sigma.TopOnly --file pom.xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.PACKAGE_READONLY }}
+        working-directory: sigma-hack
+
+      - name: Setup Mid-Level SigmaKEE
+        env:
+          SIGMA_HOME: ${{ github.workspace }}/sigmakee-runtime
+          SIGMA_SRC: ${{ github.workspace }}/sigma-hack
+        working-directory: ${{ github.workspace }}
+        run: |
+          cp $SIGMA_SRC/target/test-classes/config_topAndMid.xml $SIGMA_HOME/KBs/config.xml
+
+      - name: Integration MidLevel Test with Maven
+        run: |
+          mvn -B verify -Dgroups=com.articulate.sigma.MidLevel --file pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.PACKAGE_READONLY }}
         working-directory: sigma-hack

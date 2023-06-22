@@ -32,6 +32,7 @@ import org.springframework.context.annotation.Bean;
 import java.io.*;
 
 import static com.articulate.sigma.SigmaTestBase.checkConfiguration;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -85,7 +86,7 @@ public class FormulaArityCheckITCase {
         Formula f = new Formula();
         f.read(input);
         String output = PredVarInst.hasCorrectArity(f, kb);
-        assertNull(output);
+        assertThat(output).isNull();
     }
 
     @Test

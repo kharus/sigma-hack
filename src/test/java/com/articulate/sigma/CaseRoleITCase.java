@@ -1,6 +1,7 @@
 package com.articulate.sigma;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,6 +9,7 @@ import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
 
+@Category(MidLevel.class)
 public class CaseRoleITCase extends IntegrationTestBase {
 
     /**
