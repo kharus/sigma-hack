@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
+@Category(MidLevel.class)
 public class PredVarInstIntegrationITCase extends IntegrationTestBase {
 
     @Ignore

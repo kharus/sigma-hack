@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 import static org.junit.Assert.assertTrue;
 
+@Category(MidLevel.class)
 public class KBmanagerInitIntegrationITCase extends IntegrationTestBase {
 
     private static final Set<String> kifSet = Sets.newHashSet();

@@ -4,6 +4,7 @@ import com.articulate.sigma.trans.SUMOformulaToTPTPformula;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,6 +16,7 @@ import static org.junit.Assert.assertEquals;
  * <constituent filename="Mid-level-ontology.kif" />
  * <constituent filename="FinancialOntology.kif" />
  */
+@Category(TopOnly.class)
 public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTestBase {
 
     public void test(String label, String stmt, String expected) {

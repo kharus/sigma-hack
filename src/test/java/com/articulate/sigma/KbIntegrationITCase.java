@@ -1,11 +1,13 @@
 package com.articulate.sigma;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+@Category(MidLevel.class)
 public class KbIntegrationITCase extends IntegrationTestBase {
 
     @Test

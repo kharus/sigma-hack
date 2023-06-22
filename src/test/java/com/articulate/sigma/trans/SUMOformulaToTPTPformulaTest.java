@@ -7,13 +7,16 @@
  */
 package com.articulate.sigma.trans;
 
+import com.articulate.sigma.MidLevel;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertEquals;
 
+@Category(MidLevel.class)
 public class SUMOformulaToTPTPformulaTest {
 
     @Before
