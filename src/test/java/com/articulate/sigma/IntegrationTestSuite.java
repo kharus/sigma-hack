@@ -1,6 +1,6 @@
 package com.articulate.sigma;
 
-import com.articulate.sigma.trans.SUMOformulaToTPTPformulaITCase;
+import com.articulate.sigma.trans.SUMOformulaToTPTPformulaTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
         KbIntegrationITCase.class,
         KBmanagerInitIntegrationITCase.class,
         PredVarInstIntegrationITCase.class,
-        SUMOformulaToTPTPformulaITCase.class,
+        SUMOformulaToTPTPformulaTest.class,
         //HtmlParaphraseIntegrationITCase.class,
 })
 public class IntegrationTestSuite extends IntegrationTestBase {
