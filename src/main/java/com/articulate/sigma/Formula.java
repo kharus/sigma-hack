@@ -430,7 +430,7 @@ public class Formula implements Comparable, Serializable {
      * @param varPlaceholders
      * @return
      */
-    private static String normalizeParameterOrder(String formula, KB kb, boolean varPlaceholders) {
+    public static String normalizeParameterOrder(String formula, KB kb, boolean varPlaceholders) {
 
         //null test first
         if (formula == null) {
@@ -1485,37 +1485,6 @@ public class Formula implements Comparable, Serializable {
     }
 
     /**
-     * Collects all variables in this Formula.  Returns an ArrayList
-     * of String variable names (with initial '?').
-     *
-     * @return An ArrayList of String variable names
-
-    public ArrayList<String> collectOrderedVariables() {
-
-    ArrayList<String> result = new ArrayList<String>();
-    if (listLength() < 1)
-    return result;
-    Formula fcar = new Formula();
-    fcar.read(this.car());
-    if (fcar.isVariable() && !result.contains(fcar.theFormula))
-    result.add(fcar.theFormula);
-    else {
-    if (fcar.listP())
-    addAllNoDup(result,fcar.collectAllVariables());
-    }
-    Formula fcdr = new Formula();
-    fcdr.read(this.cdr());
-    if (fcdr.isVariable() && !result.contains(fcar.theFormula))
-    result.add(fcdr.theFormula);
-    else {
-    if (fcdr.listP())
-    addAllNoDup(result,fcdr.collectAllVariables());
-    }
-    return result;
-    }
-     */
-
-    /**
      * Test whether the Formula is a LISP atom.
      */
     public boolean atom() {
@@ -1530,43 +1499,6 @@ public class Formula implements Comparable, Serializable {
 
         return Formula.empty(theFormula);
     }
-
-    /**
-     * Collects all quantified variables in this Formula.  Returns an ArrayList
-     * of String variable names (with initial '?').  Note that 
-     * duplicates are not removed.
-     *
-     * @return An ArrayList of String variable names
-
-    public ArrayList<String> collectExistentiallyQuantifiedVariables() {
-
-    ArrayList<String> result = new ArrayList<String>();
-    HashSet<String> resultSet = new HashSet<String>();
-    if (listLength() < 1)
-    return result;
-    Formula fcar = new Formula();
-    fcar.read(this.car());
-    if (fcar.theFormula.equals(EQUANT)) {
-    Formula remainder = new Formula();
-    remainder.read(this.cdr());
-    if (!remainder.listP()) {
-    System.out.println("Error in Formula.collectQuantifiedVariables(): incorrect quantification: " + this.toString());
-    return result;
-    }
-    Formula varlist = new Formula();
-    varlist.read(remainder.car());
-    resultSet.addAll(varlist.collectAllVariables());
-    resultSet.addAll(remainder.cdrAsFormula().collectExistentiallyQuantifiedVariables());
-    }
-    else {
-    if (fcar.listP())
-    resultSet.addAll(fcar.collectExistentiallyQuantifiedVariables());
-    resultSet.addAll(this.cdrAsFormula().collectExistentiallyQuantifiedVariables());
-    }
-    result.addAll(resultSet);
-    return result;
-    }
-     */
 
     /**
      * Test whether the Formula is a list.
