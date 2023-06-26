@@ -190,8 +190,12 @@ public class KBcache implements Serializable {
         if (kbCacheIn.instanceOf != null) {
             for (Map.Entry<String, HashSet<String>> entry : kbCacheIn.instanceOf.entrySet()) {
                 String key = entry.getKey();
-                HashSet<String> newSet = Sets.newHashSet(entry.getValue());
-                this.instanceOf.put(key, newSet);
+                if (entry.getValue() != null) {
+                    HashSet<String> newSet = Sets.newHashSet(entry.getValue());
+                    this.instanceOf.put(key, newSet);
+                } else {
+                    System.out.println("Value is empty for key: "+ key);
+                }
             }
         }
         if (kbCacheIn.insts != null) {
