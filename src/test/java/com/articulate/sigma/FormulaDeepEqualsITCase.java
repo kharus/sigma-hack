@@ -2,16 +2,21 @@ package com.articulate.sigma;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by sserban on 2/11/15.
- */
-@Category(TopOnly.class)
-public class FormulaDeepEqualsITCase extends UnitTestBase {
+@SpringBootTest
+@Tag("com.articulate.sigma.TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class FormulaDeepEqualsITCase {
+
+    @Autowired
+    FormulaDeepEqualsService deepEqualsService;
 
     @Test
     public void testDeepEquals() {
@@ -35,11 +40,11 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
                 "                (instrument ?W ?C)))))");
 
         //testing equal formulas
-        assertTrue(f1.deepEquals(f1));
+        assertTrue(deepEqualsService.deepEquals(f1, f1));
 
         //testing formulas that differ in variable reference
         f2.read("(or (not (instance ?X6 WalkingCane)) (hasPurpose ?X4 (and (instance (SkFn2 ?X6) Walking) (instrument (SkFn2 ?X6) ?X6))))");
-        assertTrue(f1.deepEquals(f2));
+        assertTrue(deepEqualsService.deepEquals(f1, f2));
 
         //testing unequal formulas
         f1 = new Formula();
@@ -60,7 +65,7 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
                 "                (instance ?W Running)" +
                 "                (instrument ?W ?C)))))");
 
-        assertFalse(f1.deepEquals(f2));
+        assertFalse(deepEqualsService.deepEquals(f1, f2));
 
         //testing commutative terms
         f1 = new Formula();
@@ -81,7 +86,7 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
                 "                (instrument ?W ?C)" +
                 "                (instance ?W Walking)))))");
 
-        assertTrue(f1.deepEquals(f2));
+        assertTrue(deepEqualsService.deepEquals(f1, f2));
 
     }
 
@@ -120,7 +125,7 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
                 "    (instance ?baby-4 HumanBaby)) )");
         Formula.debug = true;
         //testing equal formulas
-        assertTrue(f1.deepEquals(f2));
+        assertTrue(deepEqualsService.deepEquals(f1, f2));
         Formula.debug = false;
     }
 
@@ -130,18 +135,18 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
         Formula f = new Formula();
         f.read("(<=> (instance ?REL SymmetricRelation) (forall (?INST1 ?INST2) (=> (?REL ?INST1 ?INST2) (?REL ?INST2 ?INST1)))))");
 
-        assertFalse(f.deepEquals(null));
+        assertFalse(deepEqualsService.deepEquals(f, null));
 
         Formula compared = new Formula();
-        assertFalse(f.deepEquals(compared));
+        assertFalse(deepEqualsService.deepEquals(f, compared));
 
         compared.read("");
-        assertFalse(f.deepEquals(compared));
+        assertFalse(deepEqualsService.deepEquals(f, compared));
 
         compared.read("()");
-        assertFalse(f.deepEquals(compared));
+        assertFalse(deepEqualsService.deepEquals(f, compared));
 
-        assertTrue(f.deepEquals(f));
+        assertTrue(deepEqualsService.deepEquals(f, f));
     }
 
     @Test
@@ -150,18 +155,18 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
         Formula f = new Formula();
         f.read("(<=> (instance ?REL SymmetricRelation) (forall (?INST1 ?INST2) (=> (?REL ?INST1 ?INST2) (?REL ?INST2 ?INST1)))))");
 
-        assertFalse(f.logicallyEquals((Formula) null));
+        assertFalse(deepEqualsService.logicallyEquals(f, null));
 
         Formula compared = new Formula();
-        assertFalse(f.logicallyEquals(compared));
+        assertFalse(deepEqualsService.logicallyEquals(f, compared));
 
         compared.read("");
-        assertFalse(f.logicallyEquals(compared));
+        assertFalse(deepEqualsService.logicallyEquals(f, compared));
 
         compared.read("()");
-        assertFalse(f.logicallyEquals(compared));
+        assertFalse(deepEqualsService.logicallyEquals(f, compared));
 
-        assertTrue(f.logicallyEquals(f));
+        assertTrue(deepEqualsService.logicallyEquals(f, f));
     }
 
     @Test
