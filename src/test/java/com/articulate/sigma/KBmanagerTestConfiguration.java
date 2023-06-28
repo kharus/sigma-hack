@@ -2,6 +2,8 @@ package com.articulate.sigma;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 
 import java.io.*;
 
@@ -10,7 +12,9 @@ import static com.articulate.sigma.SigmaTestBase.checkConfiguration;
 @TestConfiguration
 class KBmanagerTestConfiguration {
     @Bean
-    public KBmanager topOnlyKBManager() {
+    @Profile("TopOnly")
+    public KBmanager kbManager() {
+        System.out.println("KBmanagerTestConfiguration.kbManager");
         try (InputStream is = getClass().getClassLoader().getResourceAsStream("config_topOnly.xml");
              Reader reader = new BufferedReader(new InputStreamReader(is))) {
 

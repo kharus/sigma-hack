@@ -35,7 +35,11 @@ import java.util.Objects;
 @Component
 public class FormulaDeepEqualsService {
 
-    private KBmanager kBManager;
+    private final KBmanager kBManager;
+
+    public FormulaDeepEqualsService(KBmanager kBManager) {
+        this.kBManager = kBManager;
+    }
 
     /**
      * Test if the contents of the formula are equal to the argument.

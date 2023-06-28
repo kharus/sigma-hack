@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.io.FileReader;
@@ -26,6 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
+@ActiveProfiles("TopOnly")
 @Import(KBmanagerTestConfiguration.class)
 public class FormulaLogicalEqualityITCase {
 
