@@ -27,22 +27,24 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
+@ActiveProfiles("TopOnly")
 @Import(KBmanagerTestConfiguration.class)
 public class FormulaArityCheckITCase {
 
     private KB kb;
 
     @Autowired
-    private KBmanager topOnlyKBManager;
+    private KBmanager kbManager;
 
     @BeforeEach
     void init() {
-        kb = topOnlyKBManager.getKB(topOnlyKBManager.getPref("sumokbname"));
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
     }
     @Test
     public void testArityCheck1() {

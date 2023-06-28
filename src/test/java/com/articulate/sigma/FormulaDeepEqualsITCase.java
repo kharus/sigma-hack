@@ -1,19 +1,32 @@
 package com.articulate.sigma;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
+@ActiveProfiles("TopOnly")
 @Import(KBmanagerTestConfiguration.class)
 public class FormulaDeepEqualsITCase {
+
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
 
     @Autowired
     FormulaDeepEqualsService deepEqualsService;
@@ -123,10 +136,8 @@ public class FormulaDeepEqualsITCase {
                 "    (instance ?blankets-6 Blanket)\n" +
                 "    (instance ?Leigh-1 Human)\n" +
                 "    (instance ?baby-4 HumanBaby)) )");
-        Formula.debug = true;
         //testing equal formulas
         assertTrue(deepEqualsService.deepEquals(f1, f2));
-        Formula.debug = false;
     }
 
     @Test
@@ -244,8 +255,8 @@ public class FormulaDeepEqualsITCase {
     /**
      * Formula.unifyWith is deprecated
      */
-    @Ignore
     @Test
+    @Disabled
     public void testUnifyWithMiscPredicates() {
 
         String s1 = "(=> (and (instance ?X4 Dog) (instance ?X5 Cat)) (equal ?X4 ?X5))";
@@ -256,7 +267,6 @@ public class FormulaDeepEqualsITCase {
         Formula f2 = new Formula();
         f2.read(s2);
 
-        Formula.debug = true;
         //System.out.println("testUnifyWithMiscPredicates(): deepEquals: " +  f1.deepEquals(f2));
         long start = System.nanoTime();
         assertTrue(f1.unifyWith(f2));
@@ -280,7 +290,7 @@ public class FormulaDeepEqualsITCase {
 
         expected.read(expectedString);
 
-        Formula actual = fp.addTypeRestrictions(f, SigmaTestBase.kb);
+        Formula actual = fp.addTypeRestrictions(f, kb);
         System.out.println("testLogicallyEqualsPerformance: expected: " + expected);
         System.out.println("testLogicallyEqualsPerformance: actual: " + actual);
         long start = System.nanoTime();
