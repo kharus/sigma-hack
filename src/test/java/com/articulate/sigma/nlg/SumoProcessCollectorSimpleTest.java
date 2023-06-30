@@ -56,10 +56,10 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
      */
     @Test
     public void testInvalidRole() {
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("Invalid role: role = invalidRole; process = hi; entity = there.");
-
-        new SumoProcessCollector(knowledgeBase, "invalidRole", "hi", "there");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new SumoProcessCollector(knowledgeBase, "invalidRole", "hi", "there");
+        });
+        assertThat(exception.getMessage()).isEqualTo("Invalid role: role = invalidRole; process = hi; entity = there.");
     }
 
     /**
@@ -67,10 +67,11 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
      */
     @Test
     public void testInvalidProcess() {
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("Process parameter is not a Process: role = agent; process = EatingBadTastingOatmeal; entity = John.");
-
-        new SumoProcessCollector(knowledgeBase, "agent", "EatingBadTastingOatmeal", "John");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new SumoProcessCollector(knowledgeBase, "agent", "EatingBadTastingOatmeal", "John");
+        });
+        assertThat(exception.getMessage())
+                .isEqualTo("Process parameter is not a Process: role = agent; process = EatingBadTastingOatmeal; entity = John.");
     }
 
     @Test
@@ -209,9 +210,12 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
         SumoProcessCollector process2 = new SumoProcessCollector(knowledgeBase, "agent", "Eating", "?H");
         process2.addRole("patient", "?C");
 
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("Cannot merge because the objects do not have identical processes: process1 = Driving; process2 = Eating");
-        process1.merge(process2);
+        Exception exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> process1.merge(process2));
+
+        assertThat(exception.getMessage())
+                .isEqualTo("Cannot merge because the objects do not have identical processes: process1 = Driving; process2 = Eating");
     }
 
     @Test
