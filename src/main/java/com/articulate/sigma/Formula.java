@@ -33,7 +33,7 @@ import java.util.*;
  * formatting for presentation as well as pre-processing for sending
  * to the inference engine.
  */
-public class Formula implements Comparable, Serializable {
+public class Formula implements Comparable<Formula>, Serializable {
 
     public static final String AND = "and";
     public static final String OR = "or";
@@ -1111,17 +1111,8 @@ public class Formula implements Comparable, Serializable {
      * Implement the Comparable interface by defining the compareTo
      * method.  Formulas are equal if their formula strings are equal.
      */
-    public int compareTo(Object f) throws ClassCastException {
-
-        if (f == null) {
-            System.out.println("Error in Formula.compareTo(): null formula");
-            throw new ClassCastException("Error in Formula.compareTo(): null formula");
-        }
-        if (!f.getClass().getName().equalsIgnoreCase("com.articulate.sigma.Formula"))
-            throw new ClassCastException("Error in Formula.compareTo(): "
-                    + "Class cast exception for argument of class: "
-                    + f.getClass().getName());
-        return theFormula.compareTo(((Formula) f).theFormula);
+    public int compareTo(Formula f) throws ClassCastException {
+        return this.theFormula.compareTo(f.theFormula);
     }
 
     /**
@@ -2451,13 +2442,13 @@ public class Formula implements Comparable, Serializable {
      * types.  Some Map keys may map to null values or empty
      * Lists, and most Lists will contain some null values.
      */
-    public Map<String, List> gatherRelationsWithArgTypes(KB kb) {
+    public Map<String, List<String>> gatherRelationsWithArgTypes(KB kb) {
 
-        Map<String, List> argtypemap = new HashMap<String, List>();
+        Map<String, List<String>> argtypemap = new HashMap<>();
         Set<String> relations = gatherRelationConstants();
         for (String r : relations) {
             int atlen = (Formula.MAX_PREDICATE_ARITY + 1);
-            List argtypes = new ArrayList();
+            List<String> argtypes = new ArrayList<>();
             for (int i = 0; i < atlen; i++)
                 argtypes.add(kb.getArgType(r, i));
             argtypemap.put(r, argtypes);
