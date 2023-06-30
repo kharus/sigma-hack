@@ -1,11 +1,11 @@
 package com.articulate.sigma;
 
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class KBmanagerInitITCase extends UnitTestBase {
 
     /**

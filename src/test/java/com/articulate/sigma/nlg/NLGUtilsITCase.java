@@ -6,14 +6,14 @@ import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class NLGUtilsITCase extends UnitTestBase {
     @Test
     public void testReadKeywordMapNull() {

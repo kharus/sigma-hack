@@ -9,7 +9,7 @@ import com.articulate.sigma.wordnet.WordNetUtilities;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -19,7 +19,7 @@ import java.util.Set;
 import static com.articulate.sigma.mlpipeline.GenSimpTestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class GenSimpTestDataITCase {
 
     public static LFeatures lfeat = null;

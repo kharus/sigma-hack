@@ -10,7 +10,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * LanguageFormatter tests NOT targeted toward the htmlParaphrase( ) method.
  * See LanguageFormatterHtmlParaphraseITCase for tests that invoke this method.
  */
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class LanguageFormatterITCase extends UnitTestBase {
 
     @Disabled

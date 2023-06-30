@@ -6,7 +6,7 @@ import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(MidLevel.class)
+@Tag("com.articulate.sigma.MidLevel")
 public class KBmanagerInitIntegrationITCase extends IntegrationTestBase {
 
     private static final Set<String> kifSet = Sets.newHashSet();

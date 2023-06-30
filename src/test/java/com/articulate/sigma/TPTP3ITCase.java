@@ -6,7 +6,7 @@ import com.articulate.sigma.trans.TPTP3ProofProcessor;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 
 import java.io.FileReader;
 import java.io.LineNumberReader;
@@ -14,7 +14,7 @@ import java.io.StringReader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class TPTP3ITCase extends UnitTestBase {
 
     @Test

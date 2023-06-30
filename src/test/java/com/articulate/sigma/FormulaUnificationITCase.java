@@ -3,7 +3,7 @@ package com.articulate.sigma;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by sserban on 3/1/15.
  */
 @RunWith(Parameterized.class)
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class FormulaUnificationITCase extends UnitTestBase {
     private static final String TEST_FILE_NAME = "formula_unification_tests.json";
 

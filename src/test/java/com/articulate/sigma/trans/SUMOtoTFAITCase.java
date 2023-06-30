@@ -3,7 +3,7 @@ package com.articulate.sigma.trans;
 import com.articulate.sigma.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Disabled;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
@@ -14,7 +14,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class SUMOtoTFAITCase extends UnitTestBase {
 
     @BeforeAll

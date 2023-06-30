@@ -12,11 +12,11 @@ import com.articulate.sigma.utils.StringUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(MidLevel.class)
+@Tag("com.articulate.sigma.MidLevel")
 public class SUMOformulaToTPTPformulaTest {
 
     @BeforeEach

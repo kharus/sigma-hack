@@ -5,13 +5,13 @@ import com.articulate.sigma.SigmaTestBase;
 import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // Tests on SumoProcess require KBs be loaded.
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class SumoProcessCollectorITCase extends UnitTestBase {
 
     private final KB knowledgeBase = SigmaTestBase.kb;

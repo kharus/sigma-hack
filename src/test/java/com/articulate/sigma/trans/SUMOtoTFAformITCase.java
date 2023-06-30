@@ -14,7 +14,7 @@ import com.articulate.sigma.utils.StringUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -25,7 +25,7 @@ import java.util.List;
 import static junit.framework.TestCase.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(MidLevel.class)
+@Tag("com.articulate.sigma.MidLevel")
 public class SUMOtoTFAformITCase extends IntegrationTestBase {
 
     private static SUMOKBtoTFAKB skbtfakb = null;

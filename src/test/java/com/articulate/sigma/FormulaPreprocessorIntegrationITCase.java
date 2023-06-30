@@ -3,7 +3,7 @@ package com.articulate.sigma;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Disabled;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * FormulaPreprocessor tests not focused on findExplicitTypes( ), but requiring that the KBs be loaded.
  */
-@Category(MidLevel.class)
+@Tag("com.articulate.sigma.MidLevel")
 public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
 
     /**

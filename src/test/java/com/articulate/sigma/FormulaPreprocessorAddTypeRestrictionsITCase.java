@@ -4,7 +4,7 @@ import com.articulate.sigma.trans.SUMOformulaToTPTPformula;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <constituent filename="Mid-level-ontology.kif" />
  * <constituent filename="FinancialOntology.kif" />
  */
-@Category(MidLevel.class)
+@Tag("com.articulate.sigma.MidLevel")
 public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTestBase {
 
     public void test(String label, String stmt, String expected) {
