@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // Tests on SumoProcess that do not require KBs be loaded.
 
@@ -22,24 +23,32 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
     public ExpectedException expectedException = ExpectedException.none();
 
     // Testing for null/empty parameters.
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNullKB() {
-        new SumoProcessCollector(null, "agent", "Process", "Human");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new SumoProcessCollector(null, "agent", "Process", "Human");
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testEmptyRole() {
-        new SumoProcessCollector(knowledgeBase, "", "Process", "Human");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new SumoProcessCollector(knowledgeBase, "", "Process", "Human");
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testEmptyProcess() {
-        new SumoProcessCollector(knowledgeBase, "agent", "", "Human");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new SumoProcessCollector(knowledgeBase, "agent", "", "Human");
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testEmptyEntity() {
-        new SumoProcessCollector(knowledgeBase, "agent", "Process", "");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new SumoProcessCollector(knowledgeBase, "agent", "Process", "");
+        });
     }
 
     /**

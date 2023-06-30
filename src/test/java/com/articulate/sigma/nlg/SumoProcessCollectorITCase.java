@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // Tests on SumoProcess require KBs be loaded.
 @Category(TopOnly.class)
@@ -15,10 +16,12 @@ public class SumoProcessCollectorITCase extends UnitTestBase {
 
     private final KB knowledgeBase = SigmaTestBase.kb;
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testAddInvalidRole() {
         SumoProcessCollector process = new SumoProcessCollector(knowledgeBase, "agent", "Driving", "Mark");
-        process.addRole("goal", "HospitalBuilding");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            process.addRole("goal", "HospitalBuilding");
+        });
     }
 
     @Test

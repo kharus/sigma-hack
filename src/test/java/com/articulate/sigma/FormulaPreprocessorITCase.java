@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * FormulaPreprocessor tests not focused on findExplicitTypes( ) or computeVariableTypes( ).
  */
 @Tag("com.articulate.sigma.TopOnly")
-public class FormulaPreprocessorITCase extends UnitTestBase5 {
+public class FormulaPreprocessorITCase extends UnitTestBase {
 
     // TODO: Technically, this should to in the FormulaITCase class, but the gatherRelationsWithArgTypes( ) method requires a KB
     // and none of the other tests in that class do. Maybe move the method to FormulaPreprocessor--it's the only Formula method

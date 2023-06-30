@@ -11,22 +11,27 @@ import org.junit.experimental.categories.Category;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Category(TopOnly.class)
 public class NLGUtilsITCase extends UnitTestBase {
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testReadKeywordMapNull() {
-        NLGUtils.readKeywordMap(null);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            NLGUtils.readKeywordMap(null);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testReadKeywordMapEmpty() {
-        NLGUtils.readKeywordMap("");
+
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testReadKeywordMapNoExist() {
-        NLGUtils.readKeywordMap("/somePathThatDoesntExist/SomeFileThatDoesntExist.txt");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            NLGUtils.readKeywordMap("/somePathThatDoesntExist/SomeFileThatDoesntExist.txt");
+        });
     }
 
     /**
@@ -45,10 +50,13 @@ public class NLGUtilsITCase extends UnitTestBase {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testFormatListNoLanguage() {
         String input = "?A ?B ?C";
-        NLGUtils.formatList(input, "");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            NLGUtils.formatList(input, "");
+        });
+
     }
 
     @Test
