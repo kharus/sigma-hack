@@ -11,9 +11,7 @@ import com.articulate.sigma.utils.StringUtil;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,13 +28,13 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
     public static String lang = "tff";
     public static boolean initialized = false;
     public static boolean debug = false;
-    public static HashSet<String> qChildren = new HashSet<String>();
-    public static HashSet<String> iChildren = new HashSet<String>();
-    public static HashSet<String> rChildren = new HashSet<String>();
-    public static HashSet<String> lChildren = new HashSet<String>();
-    public static HashSet<String> qNotR = new HashSet<String>();
-    public static HashSet<String> qNotI = new HashSet<String>();
-    public static HashSet<String> qNotL = new HashSet<String>();
+    public static Set<String> qChildren = new HashSet<String>();
+    public static Set<String> iChildren = new HashSet<String>();
+    public static Set<String> rChildren = new HashSet<String>();
+    public static Set<String> lChildren = new HashSet<String>();
+    public static Set<String> qNotR = new HashSet<String>();
+    public static Set<String> qNotI = new HashSet<String>();
+    public static Set<String> qNotL = new HashSet<String>();
 
     /**
      * Test whether the term is a subclass of Quantity but not a
@@ -122,22 +120,22 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
      * ListFn is a VariableArityPredicate, so we need to provide all
      * permutations of TFF types in a list as signatures.
      */
-    private static void handleListFn(HashMap<String, HashSet<String>> toExtend) {
+    private static void handleListFn(Map<String, Set<String>> toExtend) {
 
-        ArrayList<String> types = new ArrayList<>();
+        List<String> types = new ArrayList<>();
         types.add("In");
         types.add("Re");
         types.add("Ra");
         types.add("En");
-        ArrayList<String> suffixes = new ArrayList<>();
-        ArrayList<String> finalsuffixes = new ArrayList<>();
+        List<String> suffixes = new ArrayList<>();
+        List<String> finalsuffixes = new ArrayList<>();
         for (String t : types) {
             String ext = 1 + "Fn__0En" + 1 + t;
             suffixes.add(ext);
         }
         finalsuffixes.addAll(suffixes);
         for (int i = 2; i <= RowVars.MAX_ARITY + 1; i++) {
-            ArrayList<String> newsuffixes = new ArrayList<>();
+            List<String> newsuffixes = new ArrayList<>();
             for (String suffix : suffixes) {
                 for (String t : types) {
                     String ext = i + "Fn__" + suffix.substring(5) + i + t;
@@ -222,7 +220,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
      */
     public boolean hasNumericArg(String t) {
 
-        ArrayList<String> sig = kb.kbCache.signatures.get(t);
+        List<String> sig = kb.kbCache.signatures.get(t);
         boolean result = false;
         for (String s : sig) {
             if (kb.isSubclass(s, "Quantity"))
@@ -237,7 +235,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
      */
     public boolean hasNumericSuperArg(String t) {
 
-        ArrayList<String> sig = kb.kbCache.signatures.get(t);
+        List<String> sig = kb.kbCache.signatures.get(t);
         boolean result = false;
         for (String s : sig) {
             if (kb.isSubclass("RealNumber", s))
@@ -254,7 +252,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
 
         if (t.startsWith("AssignmentFn"))
             return true;
-        ArrayList<String> sig = kb.kbCache.signatures.get(t);
+        List<String> sig = kb.kbCache.signatures.get(t);
         boolean result = false;
         for (String s : sig) {
             if (s.equals("List"))
@@ -286,7 +284,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
             System.out.println("ERROR in writeRelationSort(): is function mismatch with term name : " + t + ", " + kb.isFunction(t));
         if (Formula.isLogicalOperator(t) || Formula.isMathFunction(t))
             return;
-        ArrayList<String> sig = kb.kbCache.signatures.get(t);
+        List<String> sig = kb.kbCache.signatures.get(t);
         if (sig == null || sig.size() == 0) {
             pw.println("% Error in SUMOKBtoTFAKB.writeRelationSort(): no sig for " + t);
             System.out.println("Error in SUMOKBtoTFAKB.writeRelationSort(): no sig for " + t);
@@ -331,15 +329,15 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
      *                 of suffixes that are its argument type variations
      * @param t        is the relation name
      */
-    private void processRelationSort(HashMap<String, HashSet<String>> toExtend, String t) {
+    private void processRelationSort(Map<String, Set<String>> toExtend, String t) {
 
         if (debug) System.out.println("SUMOKBtoTFAKB.processRelationSort(): t: " + t);
         int index = 1;
         if (kb.isFunction(t)) {
             index = 0;
         }
-        ArrayList<String> sig = kb.kbCache.signatures.get(t);
-        HashMap<String, HashSet<String>> modsig = new HashMap<>();
+        List<String> sig = kb.kbCache.signatures.get(t);
+        Map<String, Set<String>> modsig = new HashMap<>();
         for (int i = index; i < sig.size(); i++) {
             String s = sig.get(i);
             String strnum = Integer.toString(i);
@@ -363,11 +361,11 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
                 MapUtils.addToMap(modsig, strnum, strnum + ENTITY_SUFFIX);
             }
         }
-        HashSet<String> allsig = new HashSet<>();
+        Set<String> allsig = new HashSet<>();
         allsig.add("");
         for (String s : modsig.keySet()) {  // number of the argument
-            HashSet<String> sigElem = modsig.get(s);
-            HashSet<String> newsig = new HashSet<>();
+            Set<String> sigElem = modsig.get(s);
+            Set<String> newsig = new HashSet<>();
             for (String res : allsig) {  // all the suffixes for previous arguments
                 for (String suf : sigElem) {  // suffixes for the new argument
                     newsig.add(res + suf);
@@ -399,14 +397,14 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         String newRel = t + "__" + e + suffix;
         if (kb.terms.contains(newRel))
             return;
-        ArrayList<String> sig = kb.kbCache.signatures.get(t);
+        List<String> sig = kb.kbCache.signatures.get(t);
         if (sig == null || sig.size() == 0) {
             System.out.println("Error in SUMOKBtoTFAKB.extendRelationSig(): t: " + t);
             Thread.dumpStack();
             return;
         }
-        ArrayList<String> extsig = SUMOtoTFAform.relationExtractUpdateSigFromName(newRel);
-        ArrayList<String> combinedSig = new ArrayList<>();
+        List<String> extsig = SUMOtoTFAform.relationExtractUpdateSigFromName(newRel);
+        List<String> combinedSig = new ArrayList<>();
         int sigmax = sig.size();
         if (extsig.size() > sigmax)
             sigmax = extsig.size();
@@ -423,7 +421,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
      * Create polymorphic comparison and math relations.
      * The result is a side effect on toExtend
      */
-    private void handleMathAndComp(HashMap<String, HashSet<String>> toExtend) {
+    private void handleMathAndComp(Map<String, Set<String>> toExtend) {
 
         if (debug) System.out.println("SUMOKBtoTFAKB.handleMathAndComp():");
         for (String t : Formula.COMPARISON_OPERATORS) {                 // EQUAL,GT,GTET,LT,LTET
@@ -442,7 +440,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         }
     }
 
-    private boolean expandableArg(String rel, int argnum, ArrayList<String> sig) {
+    private boolean expandableArg(String rel, int argnum, List<String> sig) {
 
         String type = "";
         if (argnum < sig.size())
@@ -469,13 +467,13 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
      * disjointDecomposition, exhaustiveAttribute, exhaustiveDecomposition,
      * partition and processList.  ListFn is a special special case
      */
-    private void handleVariableArity(HashMap<String, HashSet<String>> toExtend) {
+    private void handleVariableArity(Map<String, Set<String>> toExtend) {
 
-        HashSet<String> rels = kb.kbCache.getInstancesForType("VariableArityRelation");
+        Set<String> rels = kb.kbCache.getInstancesForType("VariableArityRelation");
         for (String r : rels) {
             if (r.equals("ListFn"))
                 continue;
-            ArrayList<String> sig = kb.kbCache.getSignature(r);
+            List<String> sig = kb.kbCache.getSignature(r);
             int size = sig.size();
             if (size > 1)
                 size = size - 1;  // first sig element is range, some sig elements before variable arity element may be fixed and explicit
@@ -524,7 +522,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
      */
     public void writeSorts(PrintWriter pw) {
 
-        HashMap<String, HashSet<String>> toExtend = new HashMap<>();
+        Map<String, Set<String>> toExtend = new HashMap<>();
         handleMathAndComp(toExtend); // needed within processing to determine types even though they don't appear in result
         handleVariableArity(toExtend); // special case
         handleListFn(toExtend);
@@ -545,7 +543,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
             }
         }
         for (String k : toExtend.keySet()) {
-            HashSet<String> vals = toExtend.get(k);
+            Set<String> vals = toExtend.get(k);
             String fnSuffix = "";
             if (kb.isFunction(k) || k.endsWith("Fn"))  // variable arity relations with numerical suffixes not in kb yet
                 fnSuffix = "Fn";

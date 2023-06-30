@@ -133,12 +133,12 @@ public class WordNet implements Serializable {
                     // 25: WordNet.removePunctuation()
                     "(\\w)\\'ve"
             };
-    private static final HashMap<String, String> wnFilenames = new HashMap<>();
+    private static final Map<String, String> wnFilenames = new HashMap<>();
     public static boolean disable = false;
     public static boolean debug = false;
     public static WordNet wn = new WordNet();
     /* A map of language name to wordnets */
-    //public static HashMap<String,WordNet> wns = new HashMap<String,WordNet>();
+    //public static Map<String,WordNet> wns = new HashMap<String,WordNet>();
     public static String baseDir = "";
     public static File baseDirFile = null;
     public static boolean initNeeded = true;
@@ -147,7 +147,7 @@ public class WordNet implements Serializable {
      * will be used by methods in this file.
      */
     public static Pattern[] regexPatterns = null;
-    public static ArrayList<String> VerbFrames = new ArrayList<String>(Arrays.asList("", // empty 0 index
+    public static List<String> VerbFrames = new ArrayList<String>(Arrays.asList("", // empty 0 index
             "Something ----s",                                      // 1
             "Somebody ----s",
             "It is ----ing",
@@ -183,12 +183,12 @@ public class WordNet implements Serializable {
             "Somebody ----s VERB-ing",
             "It ----s that CLAUSE",
             "Something ----s INFINITIVE"));                         // 35
-    public HashMap<String, HashSet<String>> nounSynsetHash = new HashMap<>();   // Words in root form are String keys,
-    public HashMap<String, HashSet<String>> verbSynsetHash = new HashMap<>();   // String values are 8-digit synset lists.
-    public HashMap<String, HashSet<String>> adjectiveSynsetHash = new HashMap<>();
-    public HashMap<String, HashSet<String>> adverbSynsetHash = new HashMap<>();
+    public Map<String, Set<String>> nounSynsetHash = new HashMap<>();   // Words in root form are String keys,
+    public Map<String, Set<String>> verbSynsetHash = new HashMap<>();   // String values are 8-digit synset lists.
+    public Map<String, Set<String>> adjectiveSynsetHash = new HashMap<>();
+    public Map<String, Set<String>> adverbSynsetHash = new HashMap<>();
     // @see caseMap
-    public HashMap<String, HashSet<String>> ignoreCaseSynsetHash = new HashMap<>(); // uppercase keys to synsets covering all POS
+    public Map<String, Set<String>> ignoreCaseSynsetHash = new HashMap<>(); // uppercase keys to synsets covering all POS
     public Hashtable<String, String> verbDocumentationHash = new Hashtable<String, String>();       // Keys are synset Strings, values
     public Hashtable<String, String> adjectiveDocumentationHash = new Hashtable<String, String>();  // are documentation strings.
     public Hashtable<String, String> adverbDocumentationHash = new Hashtable<String, String>();
@@ -202,122 +202,122 @@ public class WordNet implements Serializable {
     public String origMaxNounSynsetID = "";
     public String origMaxVerbSynsetID = "";
     /**
-     * Keys are SUMO terms, values are ArrayLists(s) of
+     * Keys are SUMO terms, values are Lists(s) of
      * POS-prefixed 9-digit synset String(s) meaning that the part of speech code is
      * prepended to the synset number.
      */
-    public Hashtable<String, ArrayList<String>> SUMOHash = new Hashtable<String, ArrayList<String>>();
+    public Hashtable<String, List<String>> SUMOHash = new Hashtable<String, List<String>>();
     /**
      * Keys are String POS-prefixed synsets.  Values
-     * are ArrayList(s) of String(s) which are words. Note
+     * are List(s) of String(s) which are words. Note
      * that the order of words in the file is preserved.
      */
-    public Hashtable<String, ArrayList<String>> synsetsToWords = new Hashtable<String, ArrayList<String>>();
+    public Hashtable<String, List<String>> synsetsToWords = new Hashtable<String, List<String>>();
     // key is inflected form, value is root
-    public HashMap<String, String> exceptionVerbHash = new HashMap<>();
+    public Map<String, String> exceptionVerbHash = new HashMap<>();
     // key root, value is inflected (-en) form
-    public HashMap<String, String> exceptionVerbPastProgHash = new HashMap<>();
+    public Map<String, String> exceptionVerbPastProgHash = new HashMap<>();
     // key root, value  is inflected form
-    public HashMap<String, String> exceptionVerbPastHash = new HashMap<String, String>();
+    public Map<String, String> exceptionVerbPastHash = new HashMap<String, String>();
     // key root, value  is inflected (-ing) form
-    public HashMap<String, String> exceptVerbProgHash = new HashMap<String, String>();
+    public Map<String, String> exceptVerbProgHash = new HashMap<String, String>();
     /**
      * list of irregular plural forms where the key is the
      * plural, singular is the value.
      */
-    public HashMap<String, String> exceptionNounHash = new HashMap<String, String>();
+    public Map<String, String> exceptionNounHash = new HashMap<String, String>();
     // The reverse index of the above
-    public HashMap<String, String> exceptionNounPluralHash = new HashMap<String, String>();
+    public Map<String, String> exceptionNounPluralHash = new HashMap<String, String>();
     /**
-     * Keys are POS-prefixed synsets, values are ArrayList(s) of AVPair(s)
+     * Keys are POS-prefixed synsets, values are List(s) of AVPair(s)
      * in which the attribute is a pointer type according to
      * http://wordnet.princeton.edu/man/wninput.5WN.html#sect3 and
      * the value is a POS-prefixed synset  @see WordNetUtilities.convertWordNetPointer
      */
-    public Hashtable<String, ArrayList<AVPair>> relations = new Hashtable<String, ArrayList<AVPair>>();
+    public Hashtable<String, List<AVPair>> relations = new Hashtable<String, List<AVPair>>();
     /**
-     * a HashMap of HashMaps where the key is a word sense of the
+     * a Map of Maps where the key is a word sense of the
      * form word_POS_num signifying the word, part of speech and number
-     * of the sense in WordNet.  The value is a HashMap of words and the
+     * of the sense in WordNet.  The value is a Map of words and the
      * number of times that word cooccurs in sentences with the word sense
      * given in the key.
      */
-    public HashMap<String, HashMap<String, Integer>> wordCoFrequencies = new HashMap<String, HashMap<String, Integer>>();
+    public Map<String, Map<String, Integer>> wordCoFrequencies = new HashMap<String, Map<String, Integer>>();
     // A Map from all uppercase words to their possibly mixed case original versions
-    public HashMap<String, String> caseMap = new HashMap<>();
+    public Map<String, String> caseMap = new HashMap<>();
     /**
-     * a HashMap where the key is a 9-digit POS-prefixed sense and the value is a
+     * a Map where the key is a 9-digit POS-prefixed sense and the value is a
      * the number of times that sense occurs in the Brown corpus.
      */
-    public HashMap<String, Integer> senseFrequencies = new HashMap<String, Integer>();
+    public Map<String, Integer> senseFrequencies = new HashMap<String, Integer>();
     /**
      * English "stop words" such as "a", "at", "them", which have no or little
      * inherent meaning when taken alone.
      */
-    public ArrayList<String> stopwords = new ArrayList<String>();
+    public List<String> stopwords = new ArrayList<String>();
     /**
-     * A HashMap where the keys are of the form word_POS_sensenum (alpha POS like "VB")
+     * A Map where the keys are of the form word_POS_sensenum (alpha POS like "VB")
      * and values are 8 digit WordNet synset byte offsets. Note that all words are
      * from index.sense, which reduces all words to lower case
      */
-    public HashMap<String, String> senseIndex = new HashMap<String, String>();
+    public Map<String, String> senseIndex = new HashMap<String, String>();
     /**
-     * A HashMap where the keys are of the form word%POS:lex_filenum:lex_id (numeric POS)
+     * A Map where the keys are of the form word%POS:lex_filenum:lex_id (numeric POS)
      * and values are 8 digit WordNet synset byte offsets. Note that all words are
      * from index.sense, which reduces all words to lower case
      */
-    public HashMap<String, String> senseKeys = new HashMap<String, String>();
+    public Map<String, String> senseKeys = new HashMap<String, String>();
     /**
-     * A HashMap where the keys are 9 digit POS prefixed WordNet synset byte offsets,
+     * A Map where the keys are 9 digit POS prefixed WordNet synset byte offsets,
      * and the values are of the form word_POS_sensenum (alpha POS like "VB"). Note
      * that all words are from index.sense, which reduces
      * all words to lower case
      */
-    public HashMap<String, String> reverseSenseIndex = new HashMap<String, String>();
+    public Map<String, String> reverseSenseIndex = new HashMap<String, String>();
     /**
-     * A HashMap where keys are 8 digit
+     * A Map where keys are 8 digit
      * WordNet synset byte offsets or synsets appended with a dash and a specific
      * word such as "12345678-foo" or in the case where the frame applies to the entire
-     * synset, it's just the synset number.  Values are ArrayList(s) of String
+     * synset, it's just the synset number.  Values are List(s) of String
      * verb frame numbers.
      */
-    public HashMap<String, ArrayList<String>> verbFrames = new HashMap<String, ArrayList<String>>();
+    public Map<String, List<String>> verbFrames = new HashMap<String, List<String>>();
     /**
-     * A HashMap with words as keys and ArrayList as values.  The
-     * ArrayList contains word senses which are Strings of the form
+     * A Map with words as keys and List as values.  The
+     * List contains word senses which are Strings of the form
      * word_POS_num (alpha POS like "VB") signifying the word, part of speech and number of
      * the sense in WordNet. Note that all words are from index.sense, which reduces
      * all words to lower case
      */
-    public HashMap<String, ArrayList<String>> wordsToSenseKeys = new HashMap<String, ArrayList<String>>();
+    public Map<String, List<String>> wordsToSenseKeys = new HashMap<String, List<String>>();
     public MultiWords multiWords = new MultiWords();
     /**
-     * A HashMap with language name keys and HashMap<String,String> values.  The interior HashMap
+     * A Map with language name keys and Map<String,String> values.  The interior Map
      * has String keys which are PWN30 synsets with 8-digit synsets a dash and then a alphabetic
      * part of speech character.  Values are words in the target language.
      */
-    public HashMap<String, HashMap<String, String>> OMW = new HashMap<String, HashMap<String, String>>();
+    public Map<String, Map<String, String>> OMW = new HashMap<String, Map<String, String>>();
     /**
-     * a HashMap of HashMaps where the key is a word and the value is a
-     * HashMap of 9-digit POS-prefixed senses which is the value of the AVPair,
+     * a Map of Maps where the key is a word and the value is a
+     * Map of 9-digit POS-prefixed senses which is the value of the AVPair,
      * and the number of times that sense occurs in the Brown corpus, which is
      * the key of the AVPair
      */
-    protected HashMap<String, TreeSet<AVPair>> wordFrequencies = new HashMap<String, TreeSet<AVPair>>();
+    protected Map<String, TreeSet<AVPair>> wordFrequencies = new HashMap<String, TreeSet<AVPair>>();
     //private Pattern p;
     private transient Matcher m;
 
     /**
-     * Return an ArrayList of the string split by spaces.
+     * Return an List of the string split by spaces.
      */
-    public static ArrayList<String> splitToArrayList(String st) {
+    public static List<String> splitToArrayList(String st) {
 
         if (StringUtil.emptyString(st)) {
             System.out.println("Error in WordNet.splitToArrayList(): empty string input");
             return null;
         }
         String[] sentar = st.split(" ");
-        ArrayList<String> words = new ArrayList<String>(Arrays.asList(sentar));
+        List<String> words = new ArrayList<String>(Arrays.asList(sentar));
         for (int i = 0; i < words.size(); i++) {
             if (words.get(i).equals("") || words.get(i) == null || words.get(i).matches("\\s*"))
                 words.remove(i);
@@ -326,16 +326,16 @@ public class WordNet implements Serializable {
     }
 
     /**
-     * Return an ArrayList of the string split by periods.
+     * Return an List of the string split by periods.
      */
-    public static ArrayList<String> splitToArrayListSentence(String st) {
+    public static List<String> splitToArrayListSentence(String st) {
 
         if (st.equals("") || st == null) {
             System.out.println("Error in WordNet.splitToArrayList(): empty string input");
             return null;
         }
         String[] sentar = st.split("\\.\\s");
-        ArrayList<String> words = new ArrayList<String>(Arrays.asList(sentar));
+        List<String> words = new ArrayList<String>(Arrays.asList(sentar));
         for (int i = 0; i < words.size(); i++) {
             if (words.get(i).equals("") || words.get(i) == null || words.get(i).matches("\\s*"))
                 words.remove(i);
@@ -344,13 +344,13 @@ public class WordNet implements Serializable {
     }
 
     /**
-     * Write a HashMap of HashMaps where the key is a word sense of the
+     * Write a Map of Maps where the key is a word sense of the
      * form word_POS_num signifying the word, part of speech and number
-     * of the sense in WordNet.  The value is a HashMap of words and the
+     * of the sense in WordNet.  The value is a Map of words and the
      * number of times that word cooccurs in sentences with the word sense
      * given in the key.
      */
-    public static void writeWordCoFrequencies(String fname, HashMap<String, HashMap<String, Integer>> senses) {
+    public static void writeWordCoFrequencies(String fname, Map<String, Map<String, Integer>> senses) {
 
         FileWriter fw = null;
         PrintWriter pw = null;
@@ -361,7 +361,7 @@ public class WordNet implements Serializable {
             pw = new PrintWriter(fw);
             System.out.println("INFO in WordNet.writeWordFrequencies(): Writing WordNet word frequencies");
             for (String s : senses.keySet()) {
-                HashMap<String, Integer> values = senses.get(s);
+                Map<String, Integer> values = senses.get(s);
                 if (values.size() > 0) {
                     pw.print("Word: " + s + " Values: ");
                     for (String v : values.keySet())
@@ -607,7 +607,7 @@ public class WordNet implements Serializable {
         System.out.println("Word frequencies: " + WordNet.wn.wordFrequencies.get(word));
         System.out.println("Best word frequency: " + WordNet.wn.wordFrequencies.get(word).last());
         System.out.println("Best word frequency value: " + WordNet.wn.wordFrequencies.get(word).last().value);
-        // HashMap<String,TreeSet<AVPair>> wordFrequencies
+        // Map<String,TreeSet<AVPair>> wordFrequencies
         System.out.println("Best word frequency value sense index: " +
                 WordNet.wn.senseIndex.get(WordNet.wn.wordFrequencies.get(word).last().value));
         System.out.println("Best default sense w/POS: " + WSD.getBestDefaultSense(word, 2));
@@ -777,7 +777,7 @@ public class WordNet implements Serializable {
         //System.out.println("INFO in WordNet.addSUMOHash(): SUMO term: " + key);
         //System.out.println("INFO in WordNet.addSUMOHash(): synset: " + value);
         term = term.substring(2, term.length() - 1);
-        ArrayList<String> synsets = SUMOHash.get(term);
+        List<String> synsets = SUMOHash.get(term);
         if (synsets == null) {
             synsets = new ArrayList<String>();
             SUMOHash.put(term, synsets);
@@ -793,14 +793,14 @@ public class WordNet implements Serializable {
 
         if (word.indexOf('_') > 0)
             multiWords.addMultiWord(word);
-        ArrayList<String> al = synsetsToWords.get(POS + synsetStr);
+        List<String> al = synsetsToWords.get(POS + synsetStr);
         if (al == null) {
             al = new ArrayList<String>();
             synsetsToWords.put(POS + synsetStr, al);
         }
         al.add(word);
 
-        HashSet<String> synsets = null;
+        Set<String> synsets = null;
         switch (POS.charAt(0)) {
             case '1':
                 MapUtils.addToMap(nounSynsetHash, word, synsetStr);
@@ -877,7 +877,7 @@ public class WordNet implements Serializable {
             AVPair avp = new AVPair();
             avp.attribute = ptr;
             avp.value = targetPOS + targetSynset;
-            ArrayList<AVPair> al = new ArrayList<AVPair>();
+            List<AVPair> al = new ArrayList<AVPair>();
             if (relations.containsKey(synset))
                 al = relations.get(synset);
             else {
@@ -907,14 +907,14 @@ public class WordNet implements Serializable {
                         key = synset.substring(1);
                     else {
                         int num = Integer.valueOf(wordNum).intValue();
-                        ArrayList<String> al = synsetsToWords.get(synset);
+                        List<String> al = synsetsToWords.get(synset);
                         if (al == null)
                             System.out.println("Error in WordNet.processPointers(): " + synset
                                     + " has no words for pointers: \"" + pointers + "\"");
                         String word = al.get(num - 1);
                         key = synset.substring(1) + "-" + word;
                     }
-                    ArrayList<String> frames = new ArrayList<String>();
+                    List<String> frames = new ArrayList<String>();
                     if (!verbFrames.containsKey(key))
                         verbFrames.put(key, frames);
                     else
@@ -1329,17 +1329,17 @@ public class WordNet implements Serializable {
     }
 
     /**
-     * Merge a new set of word co-occurrence statistics into the existing
+     * Merge a new HashSet of word co-occurrence statistics into the existing
      * set.
      */
-    public void mergeWordCoFrequencies(HashMap<String, HashMap<String, Integer>> senses) {
+    public void mergeWordCoFrequencies(Map<String, Map<String, Integer>> senses) {
 
         System.out.println("INFO in WordNet.mergeWordCoFrequencies(): before size: " +
                 wordCoFrequencies.keySet().size());
         for (String s : senses.keySet()) {
             if (wordCoFrequencies.containsKey(s)) {
-                HashMap<String, Integer> newValues = senses.get(s);
-                HashMap<String, Integer> oldValues = wordCoFrequencies.get(s);
+                Map<String, Integer> newValues = senses.get(s);
+                Map<String, Integer> oldValues = wordCoFrequencies.get(s);
                 for (String w : newValues.keySet()) {
                     if (oldValues.containsKey(w)) {
                         oldValues.put(w, newValues.get(w) + oldValues.get(w));
@@ -1355,16 +1355,16 @@ public class WordNet implements Serializable {
     }
 
     /**
-     * Return a HashMap of HashMaps where the key is a word sense of the
+     * Return a Map of Maps where the key is a word sense of the
      * form word_POS_num signifying the word, part of speech and number
-     * of the sense in WordNet.  The value is a HashMap of words and the
+     * of the sense in WordNet.  The value is a Map of words and the
      * number of times that word cooccurs in sentences with the word sense
      * given in the key.
      */
     public void readWordCoFrequencies() {
 
         System.out.println("INFO in WordNet.readWordFrequencies(): Reading WordNet word frequencies");
-        wordCoFrequencies = new HashMap<String, HashMap<String, Integer>>();
+        wordCoFrequencies = new HashMap<String, Map<String, Integer>>();
         LineNumberReader lr = null;
         int counter = 0;
         File wfFile = null;
@@ -1388,7 +1388,7 @@ public class WordNet implements Serializable {
                     String key = m.group(1);
                     String values = m.group(2);
                     String[] words = values.split(" ");
-                    HashMap<String, Integer> frequencies = new HashMap<String, Integer>();
+                    Map<String, Integer> frequencies = new HashMap<String, Integer>();
                     for (int i = 0; i < words.length - 3; i++) {
                         if (words[i].equals("SUMOterm:")) {
                             i = words.length;
@@ -1505,7 +1505,7 @@ public class WordNet implements Serializable {
                     String sensekey = word + "%" + pos + ":" + lexFilenum + ":" + lexID;
                     senseKeys.put(sensekey, synset);
                     //System.out.println("WordNet.readSenseIndex(): " + sensekey + " " + synset);
-                    ArrayList<String> al = wordsToSenseKeys.get(word);
+                    List<String> al = wordsToSenseKeys.get(word);
                     if (al == null) {
                         al = new ArrayList<String>();
                         wordsToSenseKeys.put(word, al);
@@ -1542,7 +1542,7 @@ public class WordNet implements Serializable {
     }
 
     /**
-     * Read word sense frequencies into a HashMap of PriorityQueues
+     * Read word sense frequencies into a Map of PriorityQueues
      * containing AVPairs where the value is a word and the attribute
      * (on which PriorityQueue is sorted) is an 8 digit String
      * representation of an integer count.
@@ -1667,22 +1667,22 @@ public class WordNet implements Serializable {
         if (StringUtil.emptyString(input))
             return "Empty input";
         try {
-            ArrayList<String> sentenceList = splitToArrayListSentence(input);
+            List<String> sentenceList = splitToArrayListSentence(input);
             StringBuffer result = new StringBuffer();
 
             for (String sentence : sentenceList) {
-                ArrayList<String> synsetList = WSD.collectWordSenses(sentence); //returns an ArrayList of synsets
+                List<String> synsetList = WSD.collectWordSenses(sentence); //returns an List of synsets
                 System.out.println("INFO in WordNet.sumoSentenceDisplay(): " + synsetList);
                 result.append("<b>Target Sentence: </b>" + sentence + "<br>\n");
                 //if (wordSynsetList == null || wordSynsetList.size() < 2)
                 //    continue;
                 //String wordColl = wordSynsetList.get(0);
                 //String synsetColl = wordSynsetList.get(1);
-                //ArrayList<String> synsetList = splitToArrayList(synsetColl); //removes all punctuation and whitespace
-                //ArrayList<String> wordList = splitToArrayList(wordColl);
+                //List<String> synsetList = splitToArrayList(synsetColl); //removes all punctuation and whitespace
+                //List<String> wordList = splitToArrayList(wordColl);
 
                 result.append(sumoSentimentDisplay(sentence)); //attaches sentiment display already in HTML format
-                HashMap<String, Integer> conceptMap = DB.computeConceptSentiment(sentence); //returns Hashmap of key=SUMO concept, value=sentiment score
+                Map<String, Integer> conceptMap = DB.computeConceptSentiment(sentence); //returns Map of key=SUMO concept, value=sentiment score
                 System.out.println("INFO in WordNet.sumoSentenceDisplay(): map " + conceptMap);
 
                 if (synsetList == null) {
@@ -1690,7 +1690,7 @@ public class WordNet implements Serializable {
                     return result.toString();
                 }
 
-                ArrayList<String> SUMOtermList = new ArrayList<String>();
+                List<String> SUMOtermList = new ArrayList<String>();
                 int listLength = synsetList.size();
                 for (int i = 0; i < listLength; i++) {
                     String s = synsetList.get(i);
@@ -1705,7 +1705,7 @@ public class WordNet implements Serializable {
 
                 for (int j = 0; j < listLength; j++) {
                     synset = synsetList.get(j);
-                    ArrayList<String> words = synsetsToWords.get(synset);
+                    List<String> words = synsetsToWords.get(synset);
                     if (words != null && words.size() > 0)
                         word = words.get(0);
                     else
@@ -1768,8 +1768,8 @@ public class WordNet implements Serializable {
 
             String newSentence = WordNet.wn.removeStopWords(sentence.trim());
             newSentence = StringUtil.removePunctuation(newSentence);
-            ArrayList<String> words = splitToArrayList(newSentence);
-            HashMap<String, Integer> scoreMap = new HashMap<String, Integer>();
+            List<String> words = splitToArrayList(newSentence);
+            Map<String, Integer> scoreMap = new HashMap<String, Integer>();
             for (String w : words) { //must gather individual scores that went into created the overall sentiment
                 Integer score = DB.computeSentimentForWord(w);
                 if (score != 0)
@@ -1813,7 +1813,7 @@ public class WordNet implements Serializable {
             dataStream.close();
             String text = textBuffer.toString();
             Integer overallSentiment = DB.computeSentiment(text); //returns an Integer that is the overall sentiment of the entire file
-            ArrayList<String> sentenceList = splitToArrayListSentence(text); //splits by periods. Runs into trouble with titles such as Mr. Test.
+            List<String> sentenceList = splitToArrayListSentence(text); //splits by periods. Runs into trouble with titles such as Mr. Test.
             StringBuffer result = new StringBuffer();
             result.append("<b>Overall File Sentiment Score: </b>" + overallSentiment + "<br><br>");
             if (Integer.parseInt(counter) > 0) {
@@ -1851,19 +1851,19 @@ public class WordNet implements Serializable {
      * second POS-prefixed synset.
      * This is a recursive method.
      */
-    public boolean isHyponymRecurse(String synset, String hypo, ArrayList<String> visited) {
+    public boolean isHyponymRecurse(String synset, String hypo, List<String> visited) {
 
         //System.out.println("INFO in WordNet.isHyponym(): synset, hypo: " + synset + "," + hypo);
         //System.out.println("INFO in WordNet.isHyponym(): synset, hypo: " + synsetsToWords.get(synset) + "," + synsetsToWords.get(hypo));
 
         // hypernym 100021265 - food, nutrient
-        //    public Hashtable<String,ArrayList<AVPair>> relations = new Hashtable();
+        //    public Hashtable<String,List<AVPair>> relations = new Hashtable();
         // ~ is hyponym
         if (StringUtil.emptyString(synset) || StringUtil.emptyString(hypo))
             return false;
         if (visited.contains(synset))  // catch cycles
             return false;
-        ArrayList<AVPair> links = relations.get(synset);
+        List<AVPair> links = relations.get(synset);
         if (links != null) {
             for (int i = 0; i < links.size(); i++) {
                 AVPair link = links.get(i);
@@ -1873,7 +1873,7 @@ public class WordNet implements Serializable {
                     if (link.value.equals(hypo))
                         return true;
                     else {
-                        ArrayList<String> newVisited = new ArrayList<String>();
+                        List<String> newVisited = new ArrayList<String>();
                         newVisited.addAll(visited);
                         newVisited.add(synset);
                         if (isHyponymRecurse(link.value, hypo, newVisited))
@@ -1892,7 +1892,7 @@ public class WordNet implements Serializable {
      */
     public boolean isHyponym(String synset, String hypo) {
 
-        ArrayList<String> visited = new ArrayList<String>();
+        List<String> visited = new ArrayList<String>();
         return isHyponymRecurse(synset, hypo, visited);
     }
 
@@ -1904,7 +1904,7 @@ public class WordNet implements Serializable {
         if (StringUtil.emptyString(sentence))
             return "";
         String result = "";
-        ArrayList<String> al = splitToArrayList(sentence);
+        List<String> al = splitToArrayList(sentence);
         if (al == null)
             return "";
         for (int i = 0; i < al.size(); i++) {
@@ -1922,9 +1922,9 @@ public class WordNet implements Serializable {
     /**
      * Remove stop words from a sentence.
      */
-    public ArrayList<String> removeStopWords(ArrayList<String> sentence) {
+    public List<String> removeStopWords(List<String> sentence) {
 
-        ArrayList<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
         if (sentence == null)
             return result;
         for (int i = 0; i < sentence.size(); i++) {
@@ -1962,17 +1962,17 @@ public class WordNet implements Serializable {
      * meanings for all the words in a sentence.  Keep track of how many
      * times each sense appears.
      */
-    public HashMap<String, Integer> collectCountedWordSenses(String sentence) {
+    public Map<String, Integer> collectCountedWordSenses(String sentence) {
 
         if (StringUtil.emptyString(sentence))
             System.out.println("Error in collectCountedWordSenses(): empty string");
-        HashMap<String, Integer> result = new HashMap<String, Integer>();
+        Map<String, Integer> result = new HashMap<String, Integer>();
         //System.out.println("INFO in collectSUMOWordSenses(): unprocessed sentence: " + sentence);
         String newSentence = StringUtil.removeHTML(sentence);
         newSentence = StringUtil.removePunctuation(sentence);
         newSentence = removeStopWords(newSentence);
         //System.out.println("INFO in collectSUMOWordSenses(): processed sentence: " + newSentence);
-        ArrayList<String> al = splitToArrayList(newSentence);
+        List<String> al = splitToArrayList(newSentence);
         if (al == null)
             return result;
         for (int i = 0; i < al.size(); i++) {
@@ -2023,7 +2023,7 @@ public class WordNet implements Serializable {
      * @param type   is whether the word is a noun or verb (we need to add capability for adjectives and adverbs.
      * @param params is the set of html parameters
      */
-    private String sumoDisplay(HashSet<String> synsetBlock, String word, String type,
+    private String sumoDisplay(Set<String> synsetBlock, String word, String type,
                                String sumokbname, String synsetNum, String params) {
 
         StringBuffer result = new StringBuffer();
@@ -2171,7 +2171,7 @@ public class WordNet implements Serializable {
                                String synset, String params) {
 
         String regular = null;
-        HashSet<String> synsetBlock = null;
+        Set<String> synsetBlock = null;
 
         regular = nounRootForm(mixedCase, input);
         //System.out.println("Info in WordNet.processNoun(): root form: " + regular);
@@ -2189,7 +2189,7 @@ public class WordNet implements Serializable {
 
      if (StringUtil.emptyString(word))
      return null;
-     HashSet<String> synsetBlock = null;  // A String of synsets, which are 8 digit numbers, separated by spaces.
+     Set<String> synsetBlock = null;  // A String of synsets, which are 8 digit numbers, separated by spaces.
 
      //System.out.println("INFO in WordNet.getSUMOterm: Checking word : " + word);
      if (pos == NOUN)
@@ -2289,7 +2289,7 @@ public class WordNet implements Serializable {
                                String synset, String params) {
 
         String regular = null;
-        HashSet<String> synsetBlock = null;
+        Set<String> synsetBlock = null;
 
         regular = verbRootForm(mixedCase, input);
         System.out.println("INFO in processVerb(): word: " + regular);
@@ -2309,7 +2309,7 @@ public class WordNet implements Serializable {
                                  String synset, String params) {
 
         StringBuffer result = new StringBuffer();
-        HashSet<String> synsetBlock = null;
+        Set<String> synsetBlock = null;
 
         synsetBlock = adverbSynsetHash.get(input);
         result.append(sumoDisplay(synsetBlock, mixedCase, "adverb", sumokbname, synset, params));
@@ -2326,7 +2326,7 @@ public class WordNet implements Serializable {
                                     String input, String synset, String params) {
 
         StringBuffer result = new StringBuffer();
-        HashSet<String> synsetBlock = null;
+        Set<String> synsetBlock = null;
 
         synsetBlock = adjectiveSynsetHash.get(input);
         result.append(sumoDisplay(synsetBlock, mixedCase, "adjective", sumokbname, synset, params));
@@ -2337,11 +2337,11 @@ public class WordNet implements Serializable {
     /**
      * Prepend a POS number to a set of 8 digit synsets
      *
-     * @return an ArrayList of 9 digit synset Strings
+     * @return an List of 9 digit synset Strings
      */
-    public HashSet<String> prependPOS(HashSet<String> synsets, String POS) {
+    public Set<String> prependPOS(Set<String> synsets, String POS) {
 
-        HashSet<String> result = new HashSet<>();
+        Set<String> result = new HashSet<>();
         for (String s : synsets)
             result.add(POS + s);
         return result;
@@ -2351,21 +2351,21 @@ public class WordNet implements Serializable {
      * Get all the synsets for a given word. Print an error if this
      * routine gives a result and getSenseKeysFromWord() doesn't
      *
-     * @return an ArrayList of 9 digit synset Strings
+     * @return an List of 9 digit synset Strings
      */
-    public HashSet<String> getSynsetsFromWord(String word) {
+    public Set<String> getSynsetsFromWord(String word) {
 
-        HashSet<String> result = new HashSet<>();
-        HashSet<String> nouns = nounSynsetHash.get(word);
+        Set<String> result = new HashSet<>();
+        Set<String> nouns = nounSynsetHash.get(word);
         if (nouns != null)
             result.addAll(prependPOS(nouns, "1"));
-        HashSet<String> verbs = verbSynsetHash.get(word);
+        Set<String> verbs = verbSynsetHash.get(word);
         if (verbs != null)
             result.addAll(prependPOS(verbs, "1"));
-        HashSet<String> adj = adjectiveSynsetHash.get(word);
+        Set<String> adj = adjectiveSynsetHash.get(word);
         if (adj != null)
             result.addAll(prependPOS(adj, "1"));
-        HashSet<String> adv = adverbSynsetHash.get(word);
+        Set<String> adv = adverbSynsetHash.get(word);
         if (adv != null)
             result.addAll(prependPOS(adv, "1"));
         if (result.size() > 0 && getSenseKeysFromWord(word).keySet().size() == 0)
@@ -2377,14 +2377,14 @@ public class WordNet implements Serializable {
      * Get all the synsets for a given word.
      *
      * @return a TreeMap of sense keys in the form of word_POS_num
-     * and values that are ArrayLists of synset Strings
+     * and values that are Lists of synset Strings
      */
-    public TreeMap<String, ArrayList<String>> getSenseKeysFromWord(String word) {
+    public TreeMap<String, List<String>> getSenseKeysFromWord(String word) {
 
-        TreeMap<String, ArrayList<String>> result = new TreeMap<String, ArrayList<String>>();
+        TreeMap<String, List<String>> result = new TreeMap<String, List<String>>();
         String verbRoot = verbRootForm(word, word.toLowerCase());
         String nounRoot = nounRootForm(word, word.toLowerCase());
-        ArrayList<String> senseKeys = wordsToSenseKeys.get(verbRoot);
+        List<String> senseKeys = wordsToSenseKeys.get(verbRoot);
         if (senseKeys != null) {
             for (int i = 0; i < senseKeys.size(); i++) {
                 String senseKey = senseKeys.get(i);                // returns a word_POS_num
@@ -2397,12 +2397,12 @@ public class WordNet implements Serializable {
                     if (POS != null) {
                         String synset = WordNetUtilities.posLettersToNumber(POS) + senseIndex.get(senseKey);
                         if (synset != null) {
-                            ArrayList<String> words = synsetsToWords.get(synset);
+                            List<String> words = synsetsToWords.get(synset);
                             if (words != null) {
                                 Iterator<String> it2 = words.iterator();
                                 while (it2.hasNext()) {
                                     String newword = it2.next();
-                                    ArrayList<String> al = result.get(newword);
+                                    List<String> al = result.get(newword);
                                     if (al == null) {
                                         al = new ArrayList<String>();
                                         result.put(newword, al);
@@ -2428,12 +2428,12 @@ public class WordNet implements Serializable {
                     if (POS != null) {
                         String synset = WordNetUtilities.posLettersToNumber(POS) + senseIndex.get(senseKey);
                         if (synset != null) {
-                            ArrayList<String> words = synsetsToWords.get(synset);
+                            List<String> words = synsetsToWords.get(synset);
                             if (words != null) {
                                 Iterator<String> it2 = words.iterator();
                                 while (it2.hasNext()) {
                                     String newword = it2.next();
-                                    ArrayList<String> al = result.get(newword);
+                                    List<String> al = result.get(newword);
                                     if (al == null) {
                                         al = new ArrayList<String>();
                                         result.put(newword, al);
@@ -2469,7 +2469,7 @@ public class WordNet implements Serializable {
     public TreeMap<String, String> getWordsFromTerm(String SUMOterm) {
 
         TreeMap<String, String> result = new TreeMap<String, String>();
-        ArrayList<String> synsets = SUMOHash.get(SUMOterm);
+        List<String> synsets = SUMOHash.get(SUMOterm);
         if (synsets == null) {
             System.out.println("INFO in WordNet.getWordsFromTerm(): No synsets for term : " + SUMOterm);
             return null;
@@ -2477,7 +2477,7 @@ public class WordNet implements Serializable {
         Iterator<String> it = synsets.iterator();
         while (it.hasNext()) {
             String synset = it.next();
-            ArrayList<String> words = synsetsToWords.get(synset);
+            List<String> words = synsetsToWords.get(synset);
             if (words == null) {
                 System.out.println("INFO in WordNet.getWordsFromTerm(): No words for synset: " + synset);
                 return null;
@@ -2491,7 +2491,7 @@ public class WordNet implements Serializable {
         return result;
     }
 
-    public ArrayList<String> getWordsFromSynset(String synset) {
+    public List<String> getWordsFromSynset(String synset) {
 
         return WordNet.wn.synsetsToWords.get(synset);
     }
@@ -2654,7 +2654,7 @@ public class WordNet implements Serializable {
         if (SUMOterm != null && SUMOterm != "")
             buf.append(HTMLformatter.termMappingsList(SUMOterm, "<a href=\"Browse.jsp?" + params + "&term="));
         TreeSet<String> words = new TreeSet<String>();
-        ArrayList<String> al = synsetsToWords.get(synset);
+        List<String> al = synsetsToWords.get(synset);
         if (al != null)
             words.addAll(al);
         buf.append(" <b>Words:</b> ");
@@ -2667,7 +2667,7 @@ public class WordNet implements Serializable {
         }
         buf.append("<P>\n <b>Gloss:</b> " + gloss);
         buf.append("<P>\n");
-        ArrayList<AVPair> al3 = relations.get(synset);
+        List<AVPair> al3 = relations.get(synset);
         if (al3 != null) {
             Iterator<AVPair> it3 = al3.iterator();
             while (it3.hasNext()) {
@@ -2675,7 +2675,7 @@ public class WordNet implements Serializable {
                 buf.append(avp.attribute + " ");
                 buf.append("<a href=\"WordNet.jsp?synset=" + avp.value + "&" + params + "\">" + avp.value + "</a> - ");
                 words = new TreeSet<String>();
-                ArrayList<String> al2 = synsetsToWords.get(avp.value);
+                List<String> al2 = synsetsToWords.get(avp.value);
                 if (al2 != null)
                     words.addAll(al2);
                 Iterator<String> it2 = words.iterator();
@@ -2733,7 +2733,7 @@ public class WordNet implements Serializable {
             }
             if (gloss != null)
                 gloss = gloss.replaceAll("\"", "&quote;");
-            ArrayList<String> al2 = synsetsToWords.get(synset);
+            List<String> al2 = synsetsToWords.get(synset);
             Iterator<String> itts = al2.iterator();
             if (itts.hasNext())
                 name = itts.next();
@@ -2745,7 +2745,7 @@ public class WordNet implements Serializable {
             item.setAttribute("source", "WordNet 2.0");
             item.setAttribute("gloss", gloss);
             top.addChildElement(item);
-            ArrayList<AVPair> al = relations.get(synset);
+            List<AVPair> al = relations.get(synset);
             if (SUMO != "") {
                 String bareTerm = WordNetUtilities.getBareSUMOTerm(SUMO);
                 char mapping = WordNetUtilities.getSUMOMappingSuffix(SUMO);
@@ -2814,8 +2814,8 @@ public class WordNet implements Serializable {
         String intransitive = "no";
         String transitive = "no";
         String ditransitive = "no";
-        ArrayList<String> frames = new ArrayList<String>();
-        ArrayList<String> res = verbFrames.get(synset);
+        List<String> frames = new ArrayList<String>();
+        List<String> res = verbFrames.get(synset);
         if (res != null)
             frames.addAll(res);
         res = verbFrames.get(synset + "-" + word);
@@ -2851,7 +2851,7 @@ public class WordNet implements Serializable {
             if (word.indexOf("_") > -1)
                 compound = "compound";
 
-            HashSet<String> stringSynsets = verbSynsetHash.get(word);
+            Set<String> stringSynsets = verbSynsetHash.get(word);
             String plural = WordNetUtilities.verbPlural(word);
             if (word.indexOf("_") > -1) {
                 word = processMultiWord(word);
@@ -2893,7 +2893,7 @@ public class WordNet implements Serializable {
         Iterator<String> it = adjectiveSynsetHash.keySet().iterator();
         while (it.hasNext()) {
             String word = it.next();
-            HashSet<String> stringSynsets = adjectiveSynsetHash.get(word);
+            Set<String> stringSynsets = adjectiveSynsetHash.get(word);
             if (word.indexOf("_") > -1)
                 word = processMultiWord(word);
             else {
@@ -2926,7 +2926,7 @@ public class WordNet implements Serializable {
         Iterator<String> it = verbSynsetHash.keySet().iterator();
         while (it.hasNext()) {
             String word = it.next();
-            HashSet<String> stringSynsets = verbSynsetHash.get(word);
+            Set<String> stringSynsets = verbSynsetHash.get(word);
             if (word.indexOf("_") > -1)
                 word = processMultiWord(word);
             else {
@@ -2957,7 +2957,7 @@ public class WordNet implements Serializable {
         Iterator<String> it = nounSynsetHash.keySet().iterator();
         while (it.hasNext()) {
             String word = it.next();
-            HashSet<String> stringSynsets = nounSynsetHash.get(word);
+            Set<String> stringSynsets = nounSynsetHash.get(word);
             boolean uppercase = Character.isUpperCase(word.charAt(0));
             if (word.indexOf("_") > -1)
                 word = processMultiWord(word);
@@ -2984,12 +2984,12 @@ public class WordNet implements Serializable {
                         countOrMass = "mass";
                     boolean instance = uppercase && mapping == '@';
                     if (mapping == '=') {
-                        ArrayList<Formula> al = kb.instancesOf(bareSumoTerm);
+                        List<Formula> al = kb.instancesOf(bareSumoTerm);
                         if (al.size() > 0)
                             instance = true;
                     }
                     if (instance && uppercase) {
-                        ArrayList<Formula> al = kb.askWithRestriction(1, bareSumoTerm, 0, "instance");
+                        List<Formula> al = kb.askWithRestriction(1, bareSumoTerm, 0, "instance");
                         String parentTerm = "";
                         if (al != null && al.size() > 0) {
                             parentTerm = al.get(0).getStringArgument(2);
@@ -3068,7 +3068,7 @@ public class WordNet implements Serializable {
      */
     private int findWordNum(String POS, String synset, String word) {
 
-        ArrayList<String> al = synsetsToWords.get(POS + synset);
+        List<String> al = synsetsToWords.get(POS + synset);
         if (al == null || al.size() < 1) {
             System.out.println("Error in WordNet.findWordNum(): No words found for synset: " + POS + synset + " and word " + word);
             return -1;
@@ -3123,7 +3123,7 @@ public class WordNet implements Serializable {
             while (it.hasNext()) {
                 String word = it.next();
                 String processedWord = processWordForProlog(word);
-                ArrayList<String> keys = wordsToSenseKeys.get(word);
+                List<String> keys = wordsToSenseKeys.get(word);
                 Iterator<String> it2 = keys.iterator();
                 if (keys.size() < 1)
                     System.out.println("Error in WordNet.writeWordNetS(): No synsets for word: " + word);
@@ -3173,7 +3173,7 @@ public class WordNet implements Serializable {
             while (it.hasNext()) {
                 String synset = it.next();
                 //System.out.println("INFO in WordNet.writeWordNetHyp(): synset: " + synset);
-                ArrayList<AVPair> rels = relations.get(synset);
+                List<AVPair> rels = relations.get(synset);
                 if (rels == null || rels.size() < 1)
                     System.out.println("Error in WordNet.writeWordNetHyp(): No contents in rels for synset: " + synset);
                 if (rels != null) {
@@ -3313,7 +3313,7 @@ public class WordNet implements Serializable {
     public String nounSynsetFromTermFormat(String tf, String SUMOterm, KB kb) {
 
         String synsetID = generateNounSynsetID();
-        ArrayList<Formula> forms = kb.askWithRestriction(0, "documentation", 1, SUMOterm);
+        List<Formula> forms = kb.askWithRestriction(0, "documentation", 1, SUMOterm);
         if (forms.size() > 0) {
             Formula f = forms.get(0);
             String doc = f.getStringArgument(3);
@@ -3322,7 +3322,7 @@ public class WordNet implements Serializable {
             nounDocumentationHash.put(synsetID, doc);
         }
         nounSUMOHash.put(synsetID, SUMOterm + "=");
-        HashSet<String> synsets = new HashSet<>();
+        Set<String> synsets = new HashSet<>();
         if (nounSynsetHash.containsKey(tf))
             synsets = nounSynsetHash.get(tf);
         synsets.add(synsetID);
@@ -3336,7 +3336,7 @@ public class WordNet implements Serializable {
     public String verbSynsetFromTermFormat(String tf, String SUMOterm, KB kb) {
 
         String synsetID = generateVerbSynsetID();
-        ArrayList<Formula> forms = kb.askWithRestriction(0, "documentation", 1, SUMOterm);
+        List<Formula> forms = kb.askWithRestriction(0, "documentation", 1, SUMOterm);
         if (forms.size() > 0) {
             Formula f = forms.get(0);
             String doc = f.getStringArgument(3);
@@ -3345,7 +3345,7 @@ public class WordNet implements Serializable {
             verbDocumentationHash.put(synsetID, doc);
         }
         verbSUMOHash.put(synsetID, SUMOterm + "=");
-        HashSet<String> synsets = new HashSet<>();
+        Set<String> synsets = new HashSet<>();
         if (verbSynsetHash.containsKey(tf))
             synsets = verbSynsetHash.get(tf);
         synsets.add(synsetID);
@@ -3389,13 +3389,13 @@ public class WordNet implements Serializable {
         MapUtils.addToMap(ignoreCaseSynsetHash, tf.toUpperCase(), synsetID);
         //System.out.println("INFO in WordNet.synsetFromTermFormat(): " + tf.toUpperCase() + "," + synsetID);
 
-        ArrayList<String> al = SUMOHash.get(SUMOterm);
+        List<String> al = SUMOHash.get(SUMOterm);
         if (al == null)
             al = new ArrayList<String>();
         al.add(synsetID);
         SUMOHash.put(SUMOterm, al);
 
-        ArrayList<String> words = synsetsToWords.get(synsetID);
+        List<String> words = synsetsToWords.get(synsetID);
         if (words == null)
             words = new ArrayList<String>();
         words.add(tf);
@@ -3406,7 +3406,7 @@ public class WordNet implements Serializable {
         String key = createNewSenseIndexKey(tf + "_" + letterPOS + "_");
         senseIndex.put(key, synsetID.substring(1)); // senseIndex requires un-prefixed synset #
         reverseSenseIndex.put(synsetID, key);
-        ArrayList<String> keys = new ArrayList<String>();
+        List<String> keys = new ArrayList<String>();
         if (wordsToSenseKeys.containsKey(tf))
             keys = wordsToSenseKeys.get(tf);
         keys.add(key);
@@ -3455,12 +3455,12 @@ public class WordNet implements Serializable {
         int totalcount = 0;
         //System.out.println("INFO in WordNet.termFormatsToSynsets()");
         long millis2 = System.currentTimeMillis();
-        ArrayList<Formula> forms = kb.ask("arg", 0, "termFormat");
+        List<Formula> forms = kb.ask("arg", 0, "termFormat");
         System.out.println("WordNet.termFormatsToSynsets(): just the ask in seconds: " + (System.currentTimeMillis() - millis) / 1000);
         System.out.println("WordNet.termFormatsToSynsets(): termFormats: " + forms.size());
         for (Formula form : forms) {
             //System.out.println("WordNet.termFormatsToSynsets(): form: " + form);
-            ArrayList<String> args = form.argumentsToArrayListString(0);
+            List<String> args = form.argumentsToArrayListString(0);
             //System.out.println("WordNet.termFormatsToSynsets(): args: " + args);
             if (args == null || args.size() < 2)
                 continue;

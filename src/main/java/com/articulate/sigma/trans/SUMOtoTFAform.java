@@ -24,29 +24,29 @@ public class SUMOtoTFAform {
 
     // a map of relation signatures (where function returns are index 0)
     // modified from the original by the constraints of the axiom
-    private static final HashMap<String, ArrayList<String>> signatures = null;
+    private static final Map<String, List<String>> signatures = null;
     public static KB kb;
     public static boolean debug = false;
     // a Set of types for each variable key
-    public static HashMap<String, HashSet<String>> varmap = null;
+    public static Map<String, Set<String>> varmap = null;
     public static boolean initialized = false;
     public static FormulaPreprocessor fp = new FormulaPreprocessor();
     // constraints on numeric types
-    public static HashMap<String, String> numericConstraints = new HashMap<>();
+    public static Map<String, String> numericConstraints = new HashMap<>();
     // variable names of constraints on numeric types
-    public static HashMap<String, String> numericVars = new HashMap<>();
+    public static Map<String, String> numericVars = new HashMap<>();
     // numeric constraint axioms that need not be processed since
     // their constraints will be substituted into axioms directly
-    public static HashSet<String> numConstAxioms = new HashSet<>();
+    public static Set<String> numConstAxioms = new HashSet<>();
     // types like E and Pi
-    public static HashMap<String, String> numericConstantTypes = new HashMap<>();
-    public static HashMap<String, String> numericConstantValues = new HashMap<>();
+    public static Map<String, String> numericConstantTypes = new HashMap<>();
+    public static Map<String, String> numericConstantValues = new HashMap<>();
     public static int numericConstantCount = 0; // to compare with if another constant is found after initialization
     // storage for a message why the formula wasn't translated
     public static String filterMessage = "";
-    public static HashSet<String> errors = new HashSet<>();
+    public static Set<String> errors = new HashSet<>();
     // extra sorts determined just for this formula
-    public HashSet<String> sorts = new HashSet<>();
+    public Set<String> sorts = new HashSet<>();
 
     /**
      * comparison ops are EQUAL, GT, GTET, LT, LTET
@@ -118,7 +118,7 @@ public class SUMOtoTFAform {
      * Fill the indicated elements with "Entity", starting at start and ending
      * at end-1
      */
-    public static void fill(ArrayList<String> ar, int start, int end) {
+    public static void fill(List<String> ar, int start, int end) {
 
         fill(ar, start, end, "Entity");
     }
@@ -127,7 +127,7 @@ public class SUMOtoTFAform {
      * Fill the indicated elements with the given string, starting at start and ending
      * at end-1
      */
-    public static void fill(ArrayList<String> ar, int start, int end, String fillStr) {
+    public static void fill(List<String> ar, int start, int end, String fillStr) {
 
         if (ar.size() <= end)
             for (int i = start; i < end; i++)
@@ -141,7 +141,7 @@ public class SUMOtoTFAform {
      * If there's no such element index, fill the previous elements
      * with Entity
      */
-    public static void safeSet(ArrayList<String> ar, int index, String val) {
+    public static void safeSet(List<String> ar, int index, String val) {
 
         if (index > ar.size() - 1)
             fill(ar, ar.size(), index + 1);
@@ -151,12 +151,12 @@ public class SUMOtoTFAform {
     /**
      * Return the full signature
      */
-    protected static ArrayList<String> relationExtractNonNumericSig(String rel) {
+    protected static List<String> relationExtractNonNumericSig(String rel) {
 
         if (debug) System.out.println("relationExtractNonNumericSig(): rel " + rel);
         if (debug) System.out.println("relationExtractNonNumericSig(): sig " + kb.kbCache.signatures);
         String bareRel = rel.substring(0, rel.length() - 3);
-        ArrayList<String> sig = new ArrayList();
+        List<String> sig = new ArrayList();
         int size = Integer.parseInt(rel.substring(rel.length() - 1));
         sig = kb.kbCache.signatures.get(bareRel);
         String type = kb.kbCache.variableArityType(bareRel);
@@ -200,13 +200,13 @@ public class SUMOtoTFAform {
      * Extract modifications to the relation signature from annotations
      * embedded in the suffixes to its name.  Note that the first argument
      * to a relation is number 1, so getting the 0th argument of the
-     * returned ArrayList would give an empty string result for a relation.
+     * returned List would give an empty string result for a relation.
      */
-    public static ArrayList<String> relationExtractSigFromName(String rel) {
+    public static List<String> relationExtractSigFromName(String rel) {
 
         if (StringUtil.emptyString(rel))
             return new ArrayList<String>();
-        ArrayList<String> sig = new ArrayList();
+        List<String> sig = new ArrayList();
         String patternString = "(\\d)(In|Re|Ra|En)";
 
         int under = rel.indexOf("__");
@@ -232,21 +232,21 @@ public class SUMOtoTFAform {
      * Extract modifications to the relation signature from annotations
      * embedded in the suffixes to its name.  Note that the first argument
      * to a relation is number 1, so getting the 0th argument of the
-     * returned ArrayList would give an empty string result for a relation.
+     * returned List would give an empty string result for a relation.
      */
-    public static ArrayList<String> relationExtractUpdateSigFromName(String rel) {
+    public static List<String> relationExtractUpdateSigFromName(String rel) {
 
         if (debug) System.out.println("SUMOtoTFAform.relationExtractUpdateSigFromName(): rel: " + rel);
         if (StringUtil.emptyString(rel))
             return new ArrayList<String>();
-        ArrayList<String> origsig = kb.kbCache.getSignature(withoutSuffix(rel));
+        List<String> origsig = kb.kbCache.getSignature(withoutSuffix(rel));
         if (origsig == null) {
             System.out.println("Error in SUMOtoTFAform.relationExtractUpdateSigFromName(): null signature for " + rel);
             return null;
         }
-        ArrayList<String> sig = new ArrayList();
+        List<String> sig = new ArrayList();
         sig.addAll(origsig);
-        ArrayList<String> newsig = relationExtractSigFromName(rel);
+        List<String> newsig = relationExtractSigFromName(rel);
         if (sig.size() < newsig.size())
             fill(sig, sig.size(), newsig.size());
         for (int i = 0; i < newsig.size(); i++)
@@ -261,7 +261,7 @@ public class SUMOtoTFAform {
      * the relation.  This is used for when a relation's signature is
      * modified from its authored original
 
-     private static String relationEmbedSig(String rel, ArrayList<String> sig) {
+     private static String relationEmbedSig(String rel, List<String> sig) {
 
      if (rel.equals("instance"))
      return "";
@@ -281,7 +281,7 @@ public class SUMOtoTFAform {
      */
     /**
 
-     private static void constrainVarsFromFunct(ArrayList<String> sig, String typeStr) {
+     private static void constrainVarsFromFunct(List<String> sig, String typeStr) {
 
      if (debug) System.out.println("SUMOtoTFAform.constrainVarsFromFunct(): sig,typeStr: " +
      sig + ", " + typeStr);
@@ -311,7 +311,7 @@ public class SUMOtoTFAform {
      for (int i = start; i <= 2; i++) {
      String arg = sig.get(i);
      if (Formula.isVariable(arg)) {
-     HashSet<String> types = varmap.get(arg);
+     Set<String> types = varmap.get(arg);
      types.add(type);
      varmap.put(arg,types);
      }
@@ -334,7 +334,7 @@ public class SUMOtoTFAform {
      * return f;
      * }
      * Formula car = f.carAsFormula();
-     * ArrayList<String> args = f.complexArgumentsToArrayListString(1);
+     * List<String> args = f.complexArgumentsToArrayListString(1);
      * if (isMathFunction(car.getFormula()) ||
      * (isComparisonOperator(car.getFormula()) && !car.getFormula().equals("equal"))) {
      * StringBuffer argsStr = new StringBuffer();
@@ -405,7 +405,7 @@ public class SUMOtoTFAform {
      * }
      * else {
      * StringBuffer argsStr = new StringBuffer();
-     * ArrayList<String> sig = kb.kbCache.signatures.get(car.toString());
+     * List<String> sig = kb.kbCache.signatures.get(car.toString());
      * if (args != null) {
      * for (int i = 0; i < args.size(); i++) {
      * String s = args.get(i);
@@ -424,7 +424,7 @@ public class SUMOtoTFAform {
      */
 
     private static String processQuant(Formula f, Formula car, String parentType, String op,
-                                       ArrayList<String> args) {
+                                       List<String> args) {
 
         //if (debug) System.out.println("SUMOtoTFAform.processQuant(): quantifier");
         if (args.size() != 3) { // quant + list + formula
@@ -435,7 +435,7 @@ public class SUMOtoTFAform {
             if (args.get(1) != null) {
                 //if (debug) System.out.println("SUMOtoTFAform.processQuant(): valid varlist: " + args.get(0));
                 Formula varlist = new Formula(args.get(1));
-                ArrayList<String> vars = varlist.argumentsToArrayListString(0);
+                List<String> vars = varlist.argumentsToArrayListString(0);
                 //if (debug) System.out.println("SUMOtoTFAform.processRecurse(): valid vars: " + vars);
                 StringBuffer varStr = new StringBuffer();
                 for (String v : vars) {
@@ -463,7 +463,7 @@ public class SUMOtoTFAform {
     }
 
     private static String processConjDisj(Formula f, Formula car, String parentType,
-                                          ArrayList<String> args) {
+                                          List<String> args) {
 
         String op = car.getFormula();
         if (args.size() < 3) {
@@ -483,7 +483,7 @@ public class SUMOtoTFAform {
     }
 
     private static String processLogOp(Formula f, Formula car, String parentType,
-                                       ArrayList<String> args) {
+                                       List<String> args) {
         String op = car.getFormula();
         if (debug) System.out.println("processLogOp(): f: " + f);
         if (debug) System.out.println("processLogOp(): args: " + args);
@@ -551,9 +551,9 @@ public class SUMOtoTFAform {
                 arg.equals("Integer");
     }
 
-    private static boolean allBuiltInNumericTypes(ArrayList<String> args) {
+    private static boolean allBuiltInNumericTypes(List<String> args) {
 
-        ArrayList<String> argtypes = collectArgTypes(args);
+        List<String> argtypes = collectArgTypes(args);
         for (String arg : argtypes) {
             if (!StringUtil.emptyString(arg) && !arg.equals("Integer") &&
                     !arg.equals("RationalNumber") && !arg.equals("RealNumber") &&
@@ -564,9 +564,9 @@ public class SUMOtoTFAform {
         return true;
     }
 
-    private static boolean allOfType(ArrayList<String> args, String type) {
+    private static boolean allOfType(List<String> args, String type) {
 
-        ArrayList<String> argtypes = collectArgTypes(args);
+        List<String> argtypes = collectArgTypes(args);
         for (String arg : argtypes) {
             if (!StringUtil.emptyString(arg) && !arg.equals(type)) {
                 return false;
@@ -579,14 +579,14 @@ public class SUMOtoTFAform {
      * Specify the TFF types in the name of a predicate, as given by
      * the SUMO types listed in @param argTypeMap
      */
-    private static String makePredFromArgTypes(Formula car, ArrayList<String> argTypeMap) {
+    private static String makePredFromArgTypes(Formula car, List<String> argTypeMap) {
 
         String pred = car.getFormula();
         String arityCountStr = null;
         if (debug) System.out.println("SUMOtoTFAform.makePredFromArgTypes(): car: " + car);
         if (!hasNumeric(argTypeMap))
             return car.getFormula();
-        ArrayList<String> newArgTypeMap = new ArrayList<>();
+        List<String> newArgTypeMap = new ArrayList<>();
         newArgTypeMap.addAll(argTypeMap);
         int index = 0;
         String suffix = "";
@@ -599,8 +599,8 @@ public class SUMOtoTFAform {
             index = 1;
             newArgTypeMap.set(0, "");
         }
-        ArrayList<String> predTypes = kb.kbCache.getSignature(car.getFormula());
-        ArrayList<String> types = mostSpecificSignature(predTypes, newArgTypeMap);
+        List<String> predTypes = kb.kbCache.getSignature(car.getFormula());
+        List<String> types = mostSpecificSignature(predTypes, newArgTypeMap);
         String mostSpecific = mostSpecificType(types);
         if (debug)
             System.out.println("SUMOtoTFAform.makePredFromArgTypes(): isEqualTypeOp(pred): " + isEqualTypeOp(pred));
@@ -641,26 +641,26 @@ public class SUMOtoTFAform {
      */
     private static String processNumericSuperArgs(Formula f, Formula car,
                                                   String parentType,
-                                                  ArrayList<String> args,
-                                                  ArrayList<String> argTypes) {
+                                                  List<String> args,
+                                                  List<String> argTypes) {
 
         if (debug) System.out.println("SUMOtoTFAform.processNumericSuperArgs(): f: " + f);
         if (debug) System.out.println("SUMOtoTFAform.processNumericSuperArgs(): car: " + car);
         if (debug) System.out.println("SUMOtoTFAform.processNumericSuperArgs(): parentType: " + parentType);
         if (debug) System.out.println("SUMOtoTFAform.processNumericSuperArgs(): argTypes: " + argTypes);
-        ArrayList<String> newArgTypes = new ArrayList<>();
+        List<String> newArgTypes = new ArrayList<>();
         newArgTypes.addAll(argTypes);
         if (kb.isFunctional(f) && argTypes != null)
             newArgTypes.set(0, bestOfPair(parentType, argTypes.get(0)));
-        ArrayList<String> predTypes = kb.kbCache.getSignature(car.getFormula());
+        List<String> predTypes = kb.kbCache.getSignature(car.getFormula());
         newArgTypes = bestSignature(predTypes, newArgTypes);
         if (debug) System.out.println("SUMOtoTFAform.processNumericSuperArgs(): newArgTypes: " + newArgTypes);
         String pred = car.getFormula();
-        ArrayList<String> sig = kb.kbCache.getSignature(pred);
+        List<String> sig = kb.kbCache.getSignature(pred);
         if (!equalTFFsig(newArgTypes, sig, pred) || KButilities.isVariableArity(kb, pred))
             pred = makePredFromArgTypes(car, newArgTypes);
         if (debug) System.out.println("SUMOtoTFAform.processNumericSuperArgs(): pred: " + pred);
-        ArrayList<String> processedArgs = new ArrayList<>();
+        List<String> processedArgs = new ArrayList<>();
         for (int i = 1; i < args.size(); i++) {
             String argType = "Entity";
             if (i < newArgTypes.size())
@@ -691,15 +691,15 @@ public class SUMOtoTFAform {
      */
     private static String processListFn(Formula f, Formula car,
                                         String parentType,
-                                        ArrayList<String> args,
-                                        ArrayList<String> argTypes) {
+                                        List<String> args,
+                                        List<String> argTypes) {
 
         if (debug) System.out.println("SUMOtoTFAform.processListFn(): f: " + f);
         String pred = car.getFormula();
-        ArrayList<String> sig = kb.kbCache.getSignature(pred);
+        List<String> sig = kb.kbCache.getSignature(pred);
         if (!equalTFFsig(argTypes, sig, pred) || KButilities.isVariableArity(kb, pred))
             pred = makePredFromArgTypes(car, argTypes);
-        ArrayList<String> processedArgs = new ArrayList<>();
+        List<String> processedArgs = new ArrayList<>();
         for (int i = 1; i < args.size(); i++) // arg 0 is ListFn
             processedArgs.add(processRecurse(new Formula(args.get(i)), parentType));
         StringBuffer result = new StringBuffer();
@@ -718,8 +718,8 @@ public class SUMOtoTFAform {
      * @param args includes the relation as arg 0
      */
     private static String processCompOp(Formula f, Formula car,
-                                        ArrayList<String> args,
-                                        ArrayList<String> argTypes) {
+                                        List<String> args,
+                                        List<String> argTypes) {
 
         String op = car.getFormula();
         if (debug) System.out.println("SUMOtoTFAform.processCompOp(): f: " + f);
@@ -800,8 +800,8 @@ public class SUMOtoTFAform {
      */
     private static String mixedQuotient(Formula f, String op,
                                         String parentType,
-                                        ArrayList<String> args,
-                                        ArrayList<String> argTypes) {
+                                        List<String> args,
+                                        List<String> argTypes) {
 
         if (debug) System.out.println("SUMOtoTFAform.mixedQuotient(): f: " + f);
         if (debug) System.out.println("SUMOtoTFAform.mixedQuotient(): argTypes: " + argTypes);
@@ -838,12 +838,12 @@ public class SUMOtoTFAform {
      */
     private static String processMathOp(Formula f, Formula car,
                                         String parentType,
-                                        ArrayList<String> args,
-                                        ArrayList<String> argTypes) {
+                                        List<String> args,
+                                        List<String> argTypes) {
 
         String op = car.getFormula();
-        ArrayList<String> predType = relationExtractSigFromName(op);
-        ArrayList<String> sig = kb.kbCache.getSignature(op);
+        List<String> predType = relationExtractSigFromName(op);
+        List<String> sig = kb.kbCache.getSignature(op);
         String best = mostGeneralNumericType(sig);
         if (debug) System.out.println("SUMOtoTFAform.processMathOp(): f: " + f);
         if (debug) System.out.println("SUMOtoTFAform.processMathOp(): sig: " + sig);
@@ -900,15 +900,15 @@ public class SUMOtoTFAform {
      */
     private static String processOtherRelation(Formula f, Formula car,
                                                String parentType,
-                                               ArrayList<String> args,
-                                               ArrayList<String> argTypes) {
+                                               List<String> args,
+                                               List<String> argTypes) {
 
         String op = car.getFormula();
         if (debug) System.out.println("SUMOtoTFAform.processOtherRelation(): f: " + f);
         if (debug) System.out.println("SUMOtoTFAform.processOtherRelation(): parentType: " + parentType);
         if (debug) System.out.println("SUMOtoTFAform.processOtherRelation(): argTypes: " + argTypes);
-        ArrayList<String> newArgTypes = new ArrayList<>();
-        ArrayList<String> sig = kb.kbCache.getSignature(op);
+        List<String> newArgTypes = new ArrayList<>();
+        List<String> sig = kb.kbCache.getSignature(op);
         if (debug) System.out.println("SUMOtoTFAform.processOtherRelation(): sig: " + sig);
         newArgTypes.addAll(argTypes);
         if (!SUMOKBtoTFAKB.alreadyExtended(op) && kb.isFunctional(f) && argTypes.size() > 0 &&
@@ -918,7 +918,7 @@ public class SUMOtoTFAform {
             if (!equalTFFsig(newArgTypes, sig, op) || KButilities.isVariableArity(kb, op)) // only add the suffix if arg types are different from the original sort of the predicate
                 op = makePredFromArgTypes(car, newArgTypes);
         }
-        ArrayList<String> predTypes = kb.kbCache.getSignature(car.getFormula());
+        List<String> predTypes = kb.kbCache.getSignature(car.getFormula());
         newArgTypes = bestSignature(predTypes, newArgTypes);
         if (debug) System.out.println("SUMOtoTFAform.processOtherRelation(): newArgTypes: " + newArgTypes);
         StringBuffer argStr = new StringBuffer();
@@ -961,7 +961,7 @@ public class SUMOtoTFAform {
      * of Integer, and therefore could be used with more than one
      * TF) numerical type.
      */
-    public static boolean hasNumericSuper(ArrayList<String> argTypes) {
+    public static boolean hasNumericSuper(List<String> argTypes) {
 
         for (String s : argTypes)
             if (!kb.isSubclass("Integer", s) && !s.equals("Integer") && kb.isSubclass(s, "RealNumber"))
@@ -1033,7 +1033,7 @@ public class SUMOtoTFAform {
     /**
      * Check if at least one of the types in the list is a numeric type
      */
-    public static boolean hasNumeric(ArrayList<String> argTypes) {
+    public static boolean hasNumeric(List<String> argTypes) {
 
         for (String s : argTypes)
             if (kb.isSubclass(s, "RealNumber") || s.equals("RealNumber"))
@@ -1046,8 +1046,8 @@ public class SUMOtoTFAform {
      *
      * @param pred is used just to give a meaningful error message
      */
-    public static boolean equalTFFsig(ArrayList<String> argTypes1,
-                                      ArrayList<String> argTypes2, String pred) {
+    public static boolean equalTFFsig(List<String> argTypes1,
+                                      List<String> argTypes2, String pred) {
 
         if (argTypes1 == null || argTypes2 == null ||
                 argTypes1.size() != argTypes2.size()) {
@@ -1121,11 +1121,11 @@ public class SUMOtoTFAform {
         String op = car.getFormula();
         if (debug) System.out.println("SUMOtoTFAform.processRecurse(): op: " + op);
 
-        ArrayList<String> args = f.complexArgumentsToArrayListString(0);
+        List<String> args = f.complexArgumentsToArrayListString(0);
         // in order to handle functions and their types, always include the relation in arg list
-        ArrayList<String> argTypes = collectArgTypes(args);
+        List<String> argTypes = collectArgTypes(args);
         if (debug) System.out.println("SUMOtoTFAform.processRecurse(): argTypes: " + argTypes);
-        ArrayList<String> argsFromSig = relationExtractSigFromName(op);
+        List<String> argsFromSig = relationExtractSigFromName(op);
         if (debug) System.out.println("SUMOtoTFAform.processRecurse(): argsFromSig: " + argsFromSig);
         argTypes = bestSignature(argTypes, argsFromSig);
         if (Formula.listP(op)) {
@@ -1149,13 +1149,13 @@ public class SUMOtoTFAform {
     /**
      * result is a side effect on varmap
      */
-    private static HashMap<String, HashSet<String>> cloneVarmap() {
+    private static Map<String, Set<String>> cloneVarmap() {
 
-        HashMap<String, HashSet<String>> newVarmap = new HashMap<>();
+        Map<String, Set<String>> newVarmap = new HashMap<>();
         for (String s : varmap.keySet()) {
-            HashSet<String> newSet = new HashSet<>();
-            newSet.addAll(varmap.get(s));
-            newVarmap.put(s, newSet);
+            Set<String> newHashSet = new HashSet<>();
+            newHashSet.addAll(varmap.get(s));
+            newVarmap.put(s, newHashSet);
         }
         return newVarmap;
     }
@@ -1233,10 +1233,10 @@ public class SUMOtoTFAform {
      * varmap and if a numeric type, use the most specific type.
      * If a function, check its return type.
      */
-    private static ArrayList<String> collectArgTypes(ArrayList<String> args) {
+    private static List<String> collectArgTypes(List<String> args) {
 
         if (debug) System.out.println("SUMOtoTFAform.collectArgTypes(): varmap: " + varmap);
-        ArrayList<String> types = new ArrayList<String>();
+        List<String> types = new ArrayList<String>();
         if (args == null)
             return types;
         for (String s : args) {
@@ -1265,7 +1265,7 @@ public class SUMOtoTFAform {
                         range = kb.kbCache.getRange(s);
                     types.add(range);
                 } else {
-                    HashSet<String> p = kb.immediateParents(s);
+                    Set<String> p = kb.immediateParents(s);
                     String most = kb.mostSpecificTerm(p);
                     if (!StringUtil.emptyString(most))
                         types.add(most);
@@ -1287,14 +1287,14 @@ public class SUMOtoTFAform {
                 type = type.substring(0, type.length() - 2);
             return type;
         }
-        ArrayList<String> sig = kb.kbCache.getSignature(op);
+        List<String> sig = kb.kbCache.getSignature(op);
         return kb.mostSpecificTerm(sig);
     }
 
     /**
      * Constrain a list of arguments to be the best type
      */
-    private static void constrainVars(ArrayList<String> argTypes, ArrayList<String> args) {
+    private static void constrainVars(List<String> argTypes, List<String> args) {
 
         if (debug) System.out.println("SUMOtoTFAform.constrainVars(): argTypes, args: " + argTypes + ", " + args);
         for (int i = 0; i < args.size(); i++) {
@@ -1304,7 +1304,7 @@ public class SUMOtoTFAform {
             String type = argTypes.get(i);
             if (!kb.isSubclass(type, "Quantity"))
                 System.out.println("Error in SUMOtoTFAform.constrainVars(): non numeric type: " + type);
-            HashSet<String> types = varmap.get(t);
+            Set<String> types = varmap.get(t);
             if (debug) System.out.println("SUMOtoTFAform.constrainVars(): checking var " + t + " with type " + types);
             String best = bestSpecificTerm(types);
             if (debug) System.out.println("SUMOtoTFAform.constrainVars(): type " + type + " best " + best);
@@ -1320,9 +1320,9 @@ public class SUMOtoTFAform {
     /**
      * Constrain a list of arguments to be a given type
      */
-    private static ArrayList<String> constrainArgs(String type, ArrayList<String> argTypes) {
+    private static List<String> constrainArgs(String type, List<String> argTypes) {
 
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
 
         if (debug) System.out.println("SUMOtoTFAform.constrainArgs(): " + type);
         for (int i = 0; i < argTypes.size(); i++)
@@ -1337,7 +1337,7 @@ public class SUMOtoTFAform {
      */
     private static String leastNumericType(String op, String suffix) {
 
-        ArrayList<String> args = relationExtractSigFromName("dummy__" + suffix);
+        List<String> args = relationExtractSigFromName("dummy__" + suffix);
         String least = "";
         for (int i = 0; i < args.size(); i++) {
             if (args.get(i) != "") {
@@ -1370,7 +1370,7 @@ public class SUMOtoTFAform {
      *
      * @return the most general numeric type
      */
-    private static String mostGeneralNumericType(ArrayList<String> args) {
+    private static String mostGeneralNumericType(List<String> args) {
 
         if (args == null)
             return "Entity";
@@ -1407,10 +1407,10 @@ public class SUMOtoTFAform {
         if (under == -1 || SUMOKBtoTFAKB.alreadyExtended(op))
             return op + suffix;
         String justOp = op.substring(0, under);
-        ArrayList<String> newTypes = relationExtractSigFromName("dummy" + suffix);
-        ArrayList<String> oldTypes = relationExtractSigFromName(op);
-        ArrayList<String> bestSig = bestSignature(newTypes, oldTypes);
-        ArrayList<String> sig = kb.kbCache.getSignature(justOp);
+        List<String> newTypes = relationExtractSigFromName("dummy" + suffix);
+        List<String> oldTypes = relationExtractSigFromName(op);
+        List<String> bestSig = bestSignature(newTypes, oldTypes);
+        List<String> sig = kb.kbCache.getSignature(justOp);
         if (!equalTFFsig(bestSig, sig, justOp) || KButilities.isVariableArity(kb, justOp))
             justOp = makePredFromArgTypes(new Formula(justOp), bestSig);
         String result = justOp;
@@ -1573,8 +1573,8 @@ public class SUMOtoTFAform {
     /**
      * Find the most specific TFF type or superclass at every argument position
      */
-    public static ArrayList<String> mostSpecificSignature(ArrayList<String> args1,
-                                                          ArrayList<String> args2) {
+    public static List<String> mostSpecificSignature(List<String> args1,
+                                                     List<String> args2) {
 
         //if (debug) System.out.println("SUMOtoTFAform.mostSpecificSignature(): args1 args2: " + args1 + " " + args2);
         if (args1 == null || args2 == null || args1.size() != args2.size()) {
@@ -1588,7 +1588,7 @@ public class SUMOtoTFAform {
             else
                 return args2;
         }
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (int i = 0; i < args1.size(); i++) {
             String arg1 = args1.get(i);
             String arg2 = args2.get(i);
@@ -1602,8 +1602,8 @@ public class SUMOtoTFAform {
     /**
      * Find the best type at every argument position
      */
-    public static ArrayList<String> bestSignature(ArrayList<String> args1,
-                                                  ArrayList<String> args2) {
+    public static List<String> bestSignature(List<String> args1,
+                                             List<String> args2) {
 
         if (debug) System.out.println("SUMOtoTFAform.bestSignature(): args1 args2: " + args1 + " " + args2);
         if (args1 == null || args2 == null || args1.size() != args2.size()) {
@@ -1617,7 +1617,7 @@ public class SUMOtoTFAform {
             else
                 return args2;
         }
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (int i = 0; i < args1.size(); i++) {
             String arg1 = args1.get(i);
             String arg2 = args2.get(i);
@@ -1697,7 +1697,7 @@ public class SUMOtoTFAform {
         Formula f = new Formula(arg);
         String op = f.car();
         if (!kb.containsTerm(op)) {
-            ArrayList<String> sig = SUMOtoTFAform.relationExtractSigFromName(op);
+            List<String> sig = SUMOtoTFAform.relationExtractSigFromName(op);
             String ret = sig.get(0);
             if (!StringUtil.emptyString(ret))
                 return ret;
@@ -1715,16 +1715,16 @@ public class SUMOtoTFAform {
 
     /**
      * Given two lists of types, return the bigger list, or create a
-     * new list from two of equal size that has the most specific type
+     * new ArrayList from two of equal size that has the most specific type
      * at each index.
      */
-    private static ArrayList<String> mostSpecificArgType(ArrayList<String> args1, ArrayList<String> args2) {
+    private static List<String> mostSpecificArgType(List<String> args1, List<String> args2) {
 
         if (args1 == null || args1.size() < 1)
             return args2;
         if (args2 == null || args2.size() < 1)
             return args1;
-        ArrayList<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
         int size = args1.size();
         if (args2.size() > size)
             size = args2.size();
@@ -1740,7 +1740,7 @@ public class SUMOtoTFAform {
         return result;
     }
 
-    private static void setAll(ArrayList<String> sig, String best) {
+    private static void setAll(List<String> sig, String best) {
 
         for (int i = 0; i < sig.size(); i++)
             sig.set(i, best);
@@ -1753,7 +1753,7 @@ public class SUMOtoTFAform {
      * @param op   is the operator of formula f
      * @return the constrained formula
      */
-    private static String constrainOp(Formula f, String op, String parentType, ArrayList<String> args) {
+    private static String constrainOp(Formula f, String op, String parentType, List<String> args) {
 
         if (debug) System.out.println("SUMOtoTFAform.constrainOp(): f: " + f);
         if (debug) System.out.println("SUMOtoTFAform.constrainOp(): op: " + op);
@@ -1772,11 +1772,11 @@ public class SUMOtoTFAform {
         // pick the 'best' from them - most specific down to TF0 types (so Integer is better than PositiveInteger)
 
         String suffix = "";
-        ArrayList<String> sig = kb.kbCache.getSignature(op);
+        List<String> sig = kb.kbCache.getSignature(op);
         if (debug) System.out.println("SUMOtoTFAform.constrainOp(): op sig: " + sig);
-        ArrayList<String> typeFromName = relationExtractSigFromName(op); // extract type signature from the operator name
+        List<String> typeFromName = relationExtractSigFromName(op); // extract type signature from the operator name
         if (debug) System.out.println("SUMOtoTFAform.constrainOp(): typeFromName: " + typeFromName);
-        ArrayList<String> newsig = mostSpecificSignature(sig, typeFromName);
+        List<String> newsig = mostSpecificSignature(sig, typeFromName);
         if (debug) System.out.println("SUMOtoTFAform.constrainOp(1): newsig: " + newsig);
         //if (!kb.kbCache.signatures.containsKey(op))
         //    if (typeFromName != null)
@@ -1784,7 +1784,7 @@ public class SUMOtoTFAform {
         String opType = "Entity";
         if (sig != null && sig.get(0) != "")
             opType = sig.get(0);
-        ArrayList<String> argtypes = collectArgTypes(args);
+        List<String> argtypes = collectArgTypes(args);
         newsig = mostSpecificSignature(newsig, argtypes);
         if (debug) System.out.println("SUMOtoTFAform.constrainOp(): argtypes: " + argtypes);
         if (debug) System.out.println("SUMOtoTFAform.constrainOp(2): newsig: " + newsig);
@@ -1808,7 +1808,7 @@ public class SUMOtoTFAform {
             args.set(i, constrainOp(argForm, argForm.car(), type, argForm.complexArgumentsToArrayListString(0)));
         }
 
-        ArrayList<String> newargs = new ArrayList<>();
+        List<String> newargs = new ArrayList<>();
         newargs.addAll(args);
         newargs.remove(0);
         String composed = op;
@@ -1823,8 +1823,8 @@ public class SUMOtoTFAform {
         if (debug) System.out.println("SUMOtoTFAform.constrainOp(): suffix: " + suffix);
         //if (isComparisonOperator(op) || op.startsWith("ListFn")  || isMathFunction(op))
         //    composed = composeSuffix(op, suffix);
-        //String result = "(" + composed + " " + StringUtil.arrayListToSpacedString(newargs) + ")";
-        String result = "(" + makePred + " " + StringUtil.arrayListToSpacedString(newargs) + ")";
+        //String result = "(" + composed + " " + StringUtil.ListToSpacedString(newargs) + ")";
+        String result = "(" + makePred + " " + StringUtil.ListToSpacedString(newargs) + ")";
         if (debug) System.out.println("SUMOtoTFAform.constrainOp(): result: " + result);
         return result;
     }
@@ -1837,7 +1837,7 @@ public class SUMOtoTFAform {
         Formula car = f.carAsFormula();
         if (car.isVariable())
             return f.getFormula();
-        ArrayList<String> args = f.complexArgumentsToArrayListString(0);
+        List<String> args = f.complexArgumentsToArrayListString(0);
         //if (debug) System.out.println("SUMOtoTFAform.constrainFunctVarsRecurse(): args: " + args);
         if (args == null)
             args = new ArrayList<>();
@@ -1849,10 +1849,10 @@ public class SUMOtoTFAform {
         if (!Formula.isLogicalOperator(op) && !Formula.isVariable(op))
             return constrainOp(f, op, parentType, args);
         else {
-            ArrayList<String> sig = kb.kbCache.getSignature(op);
+            List<String> sig = kb.kbCache.getSignature(op);
             StringBuffer resultString = new StringBuffer();
             resultString.append("(" + op);
-            ArrayList<String> newargs = new ArrayList<>();
+            List<String> newargs = new ArrayList<>();
             newargs.addAll(args);
             for (int i = 1; i < newargs.size(); i++) {
                 String s = newargs.get(i);
@@ -1872,13 +1872,13 @@ public class SUMOtoTFAform {
      *
      * @result is the new varmap as a side effect
      */
-    private static void constrainTypeRestriction(HashMap<String, HashSet<String>> newvarmap) {
+    private static void constrainTypeRestriction(Map<String, Set<String>> newvarmap) {
 
         //if (debug) System.out.println("SUMOtoTFAform.constrainTypeRestriction(): varmap: " + varmap);
         for (String k : newvarmap.keySet()) {
-            HashSet<String> newvartypes = newvarmap.get(k);
+            Set<String> newvartypes = newvarmap.get(k);
             String newt = bestSpecificTerm(newvartypes);
-            HashSet<String> oldvartypes = varmap.get(k);
+            Set<String> oldvartypes = varmap.get(k);
             String oldt = bestSpecificTerm(oldvartypes);
             if (StringUtil.emptyString(newt) && StringUtil.emptyString(oldt)) {
                 System.out.println("Error in SUMOtoTFAform.constrainTypeRestriction(): empty variables: " +
@@ -1907,13 +1907,13 @@ public class SUMOtoTFAform {
 
         int counter = 0;
         if (debug) System.out.println("SUMOtoTFAform.constrainFunctVars(): formula: " + f);
-        HashMap<String, HashSet<String>> oldVarmap = null;
+        Map<String, Set<String>> oldVarmap = null;
         do {
             counter++;
             oldVarmap = cloneVarmap();
             String newf = constrainFunctVarsRecurse(f, "Entity");
             f = new Formula(newf);
-            HashMap<String, HashSet<String>> types = fp.findAllTypeRestrictions(f, kb);
+            Map<String, Set<String>> types = fp.findAllTypeRestrictions(f, kb);
             constrainTypeRestriction(types);
         } while (!varmap.equals(oldVarmap) && counter < 5);
         return f;
@@ -1929,7 +1929,7 @@ public class SUMOtoTFAform {
 
         if (f.empty() || f.atom())
             return f.getFormula();
-        ArrayList<String> args = f.complexArgumentsToArrayListString(0);
+        List<String> args = f.complexArgumentsToArrayListString(0);
         if (args == null) return "";
         if (f.car().equals("and") || f.car().equals("or") || f.car().equals("=>")) {
             if (args.size() == 1) {  // meaning that the one "argument" is the predicate
@@ -1998,7 +1998,7 @@ public class SUMOtoTFAform {
         if (Formula.listP(s)) {
             if (f.isSimpleClause(kb)) {
                 if (f.car().equals("instance")) {
-                    ArrayList<String> al = f.complexArgumentsToArrayListString(0);
+                    List<String> al = f.complexArgumentsToArrayListString(0);
                     if (al.size() < 3) {
                         System.out.println("Error SUMOtoTFAform.removeNumericInstance(): wrong # or args to: " + f);
                         return s;
@@ -2025,7 +2025,7 @@ public class SUMOtoTFAform {
                     }
                 }
             } else {
-                ArrayList<String> args = f.complexArgumentsToArrayListString(1);
+                List<String> args = f.complexArgumentsToArrayListString(1);
                 StringBuffer sb = new StringBuffer();
                 sb.append("(" + f.car());
                 for (String a : args)
@@ -2043,7 +2043,7 @@ public class SUMOtoTFAform {
     public static boolean inconsistentVarTypes() {
 
         for (String s : varmap.keySet()) {
-            HashSet<String> types = varmap.get(s);
+            Set<String> types = varmap.get(s);
             for (String c1 : types) {
                 for (String c2 : types) {
                     if (!c1.equals(c2)) {
@@ -2070,7 +2070,7 @@ public class SUMOtoTFAform {
             return false;
         if (!kb.isFunctional(f))
             return false;
-        ArrayList<String> sig = kb.kbCache.getSignature(f.car());
+        List<String> sig = kb.kbCache.getSignature(f.car());
         String rangeType = sig.get(0);
         if (kb.kbCache.checkDisjoint(kb, type, rangeType)) {
             if (debug)
@@ -2087,7 +2087,7 @@ public class SUMOtoTFAform {
      * @param types the set of types to check
      * @param type  the type to check against the set
      */
-    private static boolean typeConflict(HashSet<String> types, String type) {
+    private static boolean typeConflict(Set<String> types, String type) {
 
         if (debug) System.out.println("SUMOtoTFAform.typeConflict(types,type): " + types + ", " + type);
         if (types == null) {
@@ -2118,7 +2118,7 @@ public class SUMOtoTFAform {
             return false;
         String op = f.car();
         if (Formula.isQuantifier(op)) {
-            ArrayList<String> args = f.complexArgumentsToArrayListString(1);
+            List<String> args = f.complexArgumentsToArrayListString(1);
             for (String s : args) {
                 Formula farg = new Formula(s);
                 farg.sourceFile = f.sourceFile;
@@ -2126,8 +2126,8 @@ public class SUMOtoTFAform {
                     return true;
             }
         } else {
-            ArrayList<String> sig = kb.kbCache.getSignature(op);
-            ArrayList<String> args = f.complexArgumentsToArrayListString(0);
+            List<String> sig = kb.kbCache.getSignature(op);
+            List<String> args = f.complexArgumentsToArrayListString(0);
             for (int i = 1; i < args.size(); i++) {
                 String s = args.get(i);
                 String sigType = "";
@@ -2146,7 +2146,7 @@ public class SUMOtoTFAform {
                 } else if (farg.listP() && typeConflict(farg))
                     return true;
                 else if (farg.isVariable()) {
-                    HashSet<String> vars = varmap.get(farg.getFormula());
+                    Set<String> vars = varmap.get(farg.getFormula());
                     if (vars != null && typeConflict(vars, sigType)) {
                         errors.add("error between " + farg + " and argument " + i + " of " + op +
                                 " with type " + sigType + " in file " + f.sourceFile);
@@ -2164,7 +2164,7 @@ public class SUMOtoTFAform {
      */
     public static String sortFromRelation(String rel) {
 
-        ArrayList<String> sig = SUMOtoTFAform.relationExtractSigFromName(rel);
+        List<String> sig = SUMOtoTFAform.relationExtractSigFromName(rel);
         if (sig == null || sig.size() < 1)
             return "";
         StringBuffer sigBuf = new StringBuffer();
@@ -2240,7 +2240,7 @@ public class SUMOtoTFAform {
             return "";
         f = new Formula(elimUnitaryLogops(f)); // remove empty (and... and (or... and =>...
         if (f != null && f.listP()) {
-            HashSet<String> UqVars = f.collectUnquantifiedVariables();
+            Set<String> UqVars = f.collectUnquantifiedVariables();
             String result = processRecurse(f, "Entity"); // no enclosing required type
             StringBuffer qlist = new StringBuffer();
             for (String s : UqVars) {
@@ -2279,7 +2279,7 @@ public class SUMOtoTFAform {
 
     public static Collection<String> processList(Collection<Formula> l) {
 
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (Formula f : l)
             result.add(process(f, false));
         return result;
@@ -2350,8 +2350,8 @@ public class SUMOtoTFAform {
             System.out.println("formula: " + f);
             return null;
         }
-        HashSet<String> intChildren = kb.kbCache.getChildClasses("Integer");
-        HashSet<String> realChildren = new HashSet<String>();
+        Set<String> intChildren = kb.kbCache.getChildClasses("Integer");
+        Set<String> realChildren = new HashSet<String>();
         if (kb.kbCache.getChildClasses("RealNumber") != null)
             realChildren.addAll(kb.kbCache.getChildClasses("RealNumber"));
         realChildren.remove("Integer");
@@ -2448,17 +2448,17 @@ public class SUMOtoTFAform {
     private static void buildNumericConstraints() {
 
         System.out.println("INFO in SUMOtoTFAform.buildNumericConstraints(): kbCache : " + kb.kbCache);
-        HashSet<String> intChildren = kb.kbCache.getChildClasses("Integer");
+        Set<String> intChildren = kb.kbCache.getChildClasses("Integer");
         if (intChildren == null)
             return;
-        HashSet<String> realChildren = new HashSet<String>();
+        Set<String> realChildren = new HashSet<String>();
         if (kb.kbCache.getChildClasses("RealNumber") != null)
             realChildren.addAll(kb.kbCache.getChildClasses("RealNumber"));
         realChildren.remove("Integer");
         //if (debug) System.out.println("buildNumericConstraints(): intChildren " + intChildren);
         //if (debug) System.out.println("buildNumericConstraints(): realChildren " + realChildren);
         for (String t : intChildren) {
-            ArrayList<Formula> intFormsTemp = kb.ask("ant", 0, t);
+            List<Formula> intFormsTemp = kb.ask("ant", 0, t);
             if (intFormsTemp != null) {
                 for (Formula f : intFormsTemp) {
                     String var = matchingPrecond(f, t);
@@ -2473,7 +2473,7 @@ public class SUMOtoTFAform {
         if (realChildren == null)
             return;
         for (String t : realChildren) {
-            ArrayList<Formula> realFormsTemp = kb.ask("ant", 0, t);
+            List<Formula> realFormsTemp = kb.ask("ant", 0, t);
             if (realFormsTemp != null) {
                 for (Formula f : realFormsTemp) {
                     String var = matchingPrecond(f, t);
@@ -2631,7 +2631,7 @@ public class SUMOtoTFAform {
     public static void testRelEmbed() {
 
         String rel = "AbsoluteValueFn";
-        ArrayList<String> sig = kb.kbCache.getSignature(rel);
+        List<String> sig = kb.kbCache.getSignature(rel);
         System.out.println("SUMOtoTFAform.testRlEmbed(): " + sig);
         System.out.println("SUMOtoTFAform.testRlEmbed(): new name: " + makePredFromArgTypes(new Formula(rel), sig));
         kb.kbCache.extendInstance(rel, "1Re");
@@ -2671,17 +2671,17 @@ public class SUMOtoTFAform {
                 String t1 = args[1];
                 String t2 = args[2];
                 System.out.println("main() best of " + t1 + " and " + t2 + " : " + constrainTerm(t1, t2));
-                ArrayList<String> argTypeMap = new ArrayList<>();
+                List<String> argTypeMap = new ArrayList<>();
                 argTypeMap.add("RealNumber");
                 argTypeMap.add("RealNumber");
-                ArrayList<String> predTypes = new ArrayList<>();
+                List<String> predTypes = new ArrayList<>();
                 predTypes.add("Integer");
                 predTypes.add("RealNumber");
                 System.out.println();
-                ArrayList<String> best = bestSignature(argTypeMap, predTypes);
+                List<String> best = bestSignature(argTypeMap, predTypes);
                 System.out.println("main() best: " + best);
                 System.out.println();
-                ArrayList<String> constrained = mostSpecificSignature(argTypeMap, predTypes);
+                List<String> constrained = mostSpecificSignature(argTypeMap, predTypes);
                 System.out.println("main() most specific for (argTypeMap, predType) " +
                         argTypeMap + ", " + predTypes + " : " + constrained);
                 System.out.println();
@@ -2716,9 +2716,9 @@ public class SUMOtoTFAform {
      * @return a list of TFF relation sort definitions to cover
      * ListFn statements that have diverse sorts
      */
-    public HashSet<String> missingSorts(Formula f) {
+    public Set<String> missingSorts(Formula f) {
 
-        HashSet<String> result = new HashSet<String>();
+        Set<String> result = new HashSet<String>();
         Pattern p = Pattern.compile("(ListFn[^ ]+)");
         Matcher m = p.matcher(f.getFormula());
         while (m.find()) {

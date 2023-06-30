@@ -55,7 +55,7 @@ public class SVOGrammar {
 
         // TODO: Uncomment when benefits is made a CaseRole
         // benefits/patient: Mary helps Mark.
-//        svoList = ArrayListMultimap.create();
+//        svoList = ListMultimap.create();
 //        svoList.putAll(SVOGrammarRole.DIRECT_OBJECT, Lists.newArrayList(CaseRole.PATIENT, CaseRole.BENEFITS));
 //        specialVerbBehaviorMap.put("help", svoList);
     }

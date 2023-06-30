@@ -19,6 +19,7 @@ import java.io.LineNumberReader;
 import java.io.StringReader;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Parses simple XML into a hierarchy of BasicXMLelement (s).  Used
@@ -31,13 +32,13 @@ import java.util.ArrayList;
 public class BasicXMLparser {
 
     /**
-     * An ArrayList of BasicXMLelement(s).
+     * An List of BasicXMLelement(s).
      */
-    public ArrayList<BasicXMLelement> elements = new ArrayList<BasicXMLelement>();
+    public List<BasicXMLelement> elements = new ArrayList<BasicXMLelement>();
 
     /**
      * Constructor that parses an XML-formatted string, with one tag per
-     * line, into an ArrayList of BasicXMLelement (s).
+     * line, into an List of BasicXMLelement (s).
      */
     public BasicXMLparser(String xml) {
 

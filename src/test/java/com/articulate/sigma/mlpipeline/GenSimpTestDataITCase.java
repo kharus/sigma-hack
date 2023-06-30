@@ -13,8 +13,8 @@ import org.junit.experimental.categories.Category;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static com.articulate.sigma.mlpipeline.GenSimpTestData.*;
 import static org.junit.Assert.assertEquals;
@@ -116,7 +116,7 @@ public class GenSimpTestDataITCase {
         System.out.println("======================= ");
         System.out.println("GenSimpTestData.testVerbs()");
         String t = "Trespassing";
-        ArrayList<String> synsets = WordNetUtilities.getEquivalentVerbSynsetsFromSUMO(t);
+        List<String> synsets = WordNetUtilities.getEquivalentVerbSynsetsFromSUMO(t);
         System.out.println("testVerb(): equiv synsets size: " + synsets.size() + " for term: " + t);
         synsets = WordNetUtilities.getVerbSynsetsFromSUMO(t);
         System.out.println("testVerb(): synsets size: " + synsets.size() + " for term: " + t);
@@ -396,7 +396,7 @@ public class GenSimpTestDataITCase {
         System.out.println("======================= ");
         System.out.println("GenSimpTestData.testGiving()");
         String t = "Giving";
-        ArrayList<String> synsets = WordNetUtilities.getEquivalentVerbSynsetsFromSUMO(t);
+        List<String> synsets = WordNetUtilities.getEquivalentVerbSynsetsFromSUMO(t);
         System.out.println("testGiving(): equiv synsets size: " + synsets.size() + " for term: " + t);
         synsets = WordNetUtilities.getVerbSynsetsFromSUMO(t);
         System.out.println("testGiving(): synsets size: " + synsets.size() + " for term: " + t);
@@ -430,7 +430,7 @@ public class GenSimpTestDataITCase {
         System.out.println("======================= ");
         System.out.println("GenSimpTestData.testPutting()");
         String t = "Putting";
-        ArrayList<String> synsets = WordNetUtilities.getEquivalentVerbSynsetsFromSUMO(t);
+        List<String> synsets = WordNetUtilities.getEquivalentVerbSynsetsFromSUMO(t);
         System.out.println("testPutting(): equiv synsets size: " + synsets.size() + " for term: " + t);
 
         synsets = WordNetUtilities.getVerbSynsetsFromSUMO(t);
@@ -444,7 +444,7 @@ public class GenSimpTestDataITCase {
         System.out.println("======================= ");
         System.out.println("GenSimpTestData.testTypes()");
         String t = "Object";
-        HashSet<String> hinsts = kb.kbCache.getInstancesForType(t);
+        Set<String> hinsts = kb.kbCache.getInstancesForType(t);
         //System.out.println(hinsts);
         System.out.println("Object has instance BinaryPredicate: " + hinsts.contains("BinaryPredicate"));
         System.out.println("signature of 'half': " + kb.kbCache.getSignature("half"));

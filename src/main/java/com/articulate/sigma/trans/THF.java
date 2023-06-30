@@ -112,18 +112,18 @@ public class THF {
      * set of constant symbols during the KIF2THF transformation. This
      * is used in the 'tagging' of constant symbols with type information.
      */
-    private HashMap subst = new HashMap();
+    private Map subst = new HashMap();
     /**
      * Two maps from THF constant symbols to THF types as built up by the
      * KIF2THF transformation
      */
-    private HashMap localsig = new HashMap();
-    private HashMap overallsig = new HashMap();
+    private Map localsig = new HashMap();
+    private Map overallsig = new HashMap();
     /**
      * A map from THF (sub-)terms to types as exploited by the KIF2THF
      * transformation
      */
-    private HashMap terms = new HashMap();
+    private Map terms = new HashMap();
 
     /**
      * reset the axiom counters
@@ -156,7 +156,7 @@ public class THF {
         try {
             System.out.println("\n\nTHF.main(): Test on all KB kb content:");
             Collection coll = Collections.EMPTY_LIST;
-            ArrayList<String> kbAll2 = thf.KIF2THF(kb.formulaMap.values(), coll, kb);
+            List<String> kbAll2 = thf.KIF2THF(kb.formulaMap.values(), coll, kb);
             String filename = kbDir + sep + kb.name + ".thf";
             FileWriter fstream = new FileWriter(filename);
             BufferedWriter out = new BufferedWriter(fstream);
@@ -185,7 +185,7 @@ public class THF {
         try {
             System.out.println("\n\nTHF.main(): Test on all KB kb content:");
             Collection coll = Collections.EMPTY_LIST;
-            ArrayList<String> kbAll2 = thf.KIF2THF(kb.formulaMap.values(), coll, kb);
+            List<String> kbAll2 = thf.KIF2THF(kb.formulaMap.values(), coll, kb);
             String filename = kbDir + sep + kb.name + ".thf";
             FileWriter fstream = new FileWriter(filename);
             BufferedWriter out = new BufferedWriter(fstream);
@@ -205,7 +205,7 @@ public class THF {
      *
      * @param map a term-to-type mapping (where types are encoded as strings)
      */
-    private boolean containsUnknownTp(HashMap map) {
+    private boolean containsUnknownTp(Map map) {
 
         Collection<String> entries = map.values();
         if (debug)
@@ -283,10 +283,10 @@ public class THF {
         // function and
         // relation symbols involved; this information is used with priority
         // below
-        HashMap relTypeInfo = f.gatherRelationsWithArgTypes(kb);
+        Map relTypeInfo = f.gatherRelationsWithArgTypes(kb);
         // we initialize the terms-to-types mapping and start the actual
         // translation
-        terms = (HashMap) overallsig.clone();
+        terms = new HashMap(overallsig);
         String res = toTHF1(f, boolTp, relTypeInfo);
         // toTHF1 may return a THF translation that still contains many occurrences
         // of the (kind of) polymorphic 'unkownTp' and in this case we apply further
@@ -301,13 +301,13 @@ public class THF {
         // translation; the handling of e.g. the different upper and lower case conventions
         // between KIF and TPTP THF further complicates matters. This issue makes the code
         // particularly fragile, also since it exploits string processing way too much.
-        HashMap oldsig = new HashMap();
+        Map oldsig = new HashMap();
         // localsig = new HashMap();
         kifFormula = new StringBuilder();
         while (containsUnknownTp(localsig)) {
             if (!oldsig.equals(localsig)) {
                 if (debug) System.out.println("\n THF.KIF2THF(): Enter new regular topmost call to THF2");
-                oldsig = (HashMap) localsig.clone();
+                oldsig = new HashMap(localsig);
                 res = toTHF2(f);
                 f = new Formula();
                 f.read(kifFormula.toString());
@@ -317,7 +317,7 @@ public class THF {
             } else {
                 if (debug)
                     System.out.println("\n THF.KIF2THF() Enter new topmost call to THF2 with constant symbol substitution");
-                oldsig = (HashMap) localsig.clone();
+                oldsig = new HashMap(localsig);
                 Set<String> keyset = subst.keySet();
                 if (debug) System.out.println("  THF.KIF2THF() f before is " + f);
                 if (debug) System.out.println("  THF.KIF2THF() subst is " + subst.toString());
@@ -391,8 +391,8 @@ public class THF {
      * @param conjecturesC is a list of KIF query formulas
      * @param kb           is a knowledge base, e.g. SUMO
      */
-    public ArrayList<String> KIF2THF(Collection<Formula> axiomsC,
-                                     Collection<Formula> conjecturesC, KB kb) {
+    public List<String> KIF2THF(Collection<Formula> axiomsC,
+                                Collection<Formula> conjecturesC, KB kb) {
 
         numericOps.addAll(Formula.INEQUALITIES);
         numericOps.addAll(Formula.MATH_FUNCTIONS);
@@ -408,12 +408,12 @@ public class THF {
         }
         if (debug) System.out.println("INFO in THF.KIF2THF() finished pre-processing");
         overallsig = new HashMap();
-        ArrayList<String> result = new ArrayList<>();
-        ArrayList<String> signatures = new ArrayList<>();
-        ArrayList<String> axiomsResult = new ArrayList<String>();
-        ArrayList<String> conjecturesResult = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
+        List<String> signatures = new ArrayList<>();
+        List<String> axiomsResult = new ArrayList<String>();
+        List<String> conjecturesResult = new ArrayList<String>();
         // tags and a map to distinguish axioms from conjectures
-        HashMap<Formula, Boolean> taggedFormulas = new HashMap();
+        Map<Formula, Boolean> taggedFormulas = new HashMap();
         for (Formula ax : axioms)
             taggedFormulas.put(ax, false);
         for (Formula con : conjectures)
@@ -456,9 +456,9 @@ public class THF {
      * @param map is a term-to-type mapping (both represented as strings)
      * @param f   is a formula string
      */
-    private HashMap clearMapFor(HashMap map, String f) {
+    private Map clearMapFor(Map map, String f) {
 
-        HashMap copyMap = (HashMap) map.clone();
+        Map copyMap = new HashMap(map);
         THFdebugOut("\n  Enter clearMapFor with " + f + " \n  map is " + map);
         Set keyset = map.keySet();
         for (Iterator it = keyset.iterator(); it.hasNext(); ) {
@@ -484,9 +484,9 @@ public class THF {
      * @param map is a term-to-type mapping (both represented as strings)
      * @param f   is a formula string
      */
-    private HashMap clearMapSpecial(HashMap map, String f) {
+    private Map clearMapSpecial(Map map, String f) {
 
-        HashMap copyMap = (HashMap) map.clone();
+        Map copyMap = new HashMap(map);
         THFdebugOut("\n  Enter clearMapSpecial with " + f + " \n  map is " + map);
         Set<String> keyset = map.keySet();
         for (String key : keyset) {
@@ -505,7 +505,7 @@ public class THF {
     private String KIFType2THF(String intype) {
 
         THFdebugOut("\n  Enter KIFType2THF with intype=" + intype);
-        HashMap convertTypeInfo = new HashMap();
+        Map convertTypeInfo = new HashMap();
         /* some default cases */
         /* convertTypeInfo.put(null,unknownTp); */
         convertTypeInfo.put(unknownTp, unknownTp);
@@ -682,7 +682,7 @@ public class THF {
      * @param preferPrefix signals if prefix or infix conversion is preferred
      * @param relTpInfo    is the passed on semantic 'type' information for symbols in f
      */
-    private String toTHFHelp1(Formula f, String op_thf, String goalTp, String argsTp, boolean preferPrefix, HashMap relTpInfo) {
+    private String toTHFHelp1(Formula f, String op_thf, String goalTp, String argsTp, boolean preferPrefix, Map relTpInfo) {
 
         THFdebugOut("\n  Debug: logical connective at head position in " + f.getFormula());
         // resTerm will contain the result
@@ -785,7 +785,7 @@ public class THF {
      * @param quant_thf is the THF quantifier to use at head postion
      * @param relTpInfo is the passed on semantic 'type' information for symbols in f
      */
-    private String toTHFQuant1(Formula f, String quant_thf, HashMap relTpInfo) {
+    private String toTHFQuant1(Formula f, String quant_thf, Map relTpInfo) {
 
         THFdebugOut("\n  Debug: universal quantifier at head position in " + f.getFormula());
         String varlist = f.getStringArgument(1);
@@ -825,7 +825,7 @@ public class THF {
      * @param kappa_thf is the THF quantifier to use at head postion ("^")
      * @param relTpInfo is the passed on semantic 'type' information for symbols in f
      */
-    private String toTHFKappaFN1(Formula f, String kappa_thf, HashMap relTpInfo) {
+    private String toTHFKappaFN1(Formula f, String kappa_thf, Map relTpInfo) {
 
         THFdebugOut("\n  Debug: KappaFn at head position in " + f.getFormula());
         StringBuilder resTerm = new StringBuilder();
@@ -1109,7 +1109,7 @@ public class THF {
      * @param map is term-to-type map
      * @param sym is the symbol (or term) to look for
      */
-    private boolean containsRelevantTypeInfo(HashMap map, String sym) {
+    private boolean containsRelevantTypeInfo(Map map, String sym) {
 
         boolean result = false;
         // the criterion is that map returns a type information list for sym
@@ -1135,7 +1135,7 @@ public class THF {
      * @param type      is a suggested THF type for f
      * @param relTpInfo is the passed on semantic 'type' information for symbols in f
      */
-    private String toTHF1(Formula f, String type, HashMap relTpInfo) {
+    private String toTHF1(Formula f, String type, Map relTpInfo) {
 
         StringBuilder result = new StringBuilder();
         //boolean THFdebugOld = THFdebug;

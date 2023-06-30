@@ -71,7 +71,7 @@ public class InferenceTestSuite {
     public static boolean debug = false;
     // save TPTP translations of each problem as <probName>.p
     public static boolean saveTPTP = true;
-    public static HashSet<String> metaPred = new HashSet(
+    public static Set<String> metaPred = new HashSet(
             Arrays.asList("note", "time", "query", "answer"));
     public KB kb = null;
 
@@ -83,7 +83,7 @@ public class InferenceTestSuite {
      * TODO: If both answersList and tpp.bindings are a lit of entities,
      *       we enforce that all entity pair should be exactly the same;
      */
-    private static boolean sameAnswers(ArrayList<String> actualAnswerList, ArrayList<String> expectedAnswerList) {
+    private static boolean sameAnswers(List<String> actualAnswerList, List<String> expectedAnswerList) {
 
         if (debug) System.out.println("InferenceTestSuite.sameAnswers(1): expected answers: " + expectedAnswerList);
         if (debug) System.out.println("InferenceTestSuite.sameAnswers(1): bindings: " + actualAnswerList);
@@ -115,7 +115,7 @@ public class InferenceTestSuite {
      * TODO: If both answersList and tpp.bindings are a lit of entities,
      *       we enforce that all entity pair should be exactly the same;
      */
-    private static boolean sameAnswers(TPTP3ProofProcessor tpp, ArrayList<String> answerList) {
+    private static boolean sameAnswers(TPTP3ProofProcessor tpp, List<String> answerList) {
 
         if (debug) System.out.println("InferenceTestSuite.sameAnswers(2): expected answers: " + answerList);
         if (debug) System.out.println("InferenceTestSuite.sameAnswers(2): tpp proof size: " + tpp.proof.size());
@@ -156,7 +156,7 @@ public class InferenceTestSuite {
      * Copy test files to the output directory so that they are visible
      * to Sigma as a Tomcat application.
      */
-    private static void copyTestFiles(ArrayList<File> files, File outputDir) throws IOException {
+    private static void copyTestFiles(List<File> files, File outputDir) throws IOException {
 
         if ((outputDir == null) || !outputDir.isDirectory()) {
             System.out.println("Error in InferenceTestSuite.copyTestFiles(): Could not find  " + outputDir);
@@ -178,7 +178,7 @@ public class InferenceTestSuite {
      *
      * @return error messages, or null if none
      */
-    private static String getTestFiles(ArrayList<File> files, File outputDir) throws IOException {
+    private static String getTestFiles(List<File> files, File outputDir) throws IOException {
 
         String inferenceTestDirPath = KBmanager.getMgr().getPref("inferenceTestDir");
         if ((inferenceTestDirPath == null) || inferenceTestDirPath.equals(""))
@@ -248,7 +248,7 @@ public class InferenceTestSuite {
         } else {
             Formula ansForm = new Formula(answerstring);
             if (debug) System.out.println("INFO in InferenceTestSuite.readTestFile(): answer form: " + ansForm);
-            ArrayList<String> answers = ansForm.complexArgumentsToArrayListString(1);
+            List<String> answers = ansForm.complexArgumentsToArrayListString(1);
             if (debug) System.out.println("INFO in InferenceTestSuite.readTestFile(): answers: " + answers);
             //answerstring = normalizeSkolem(answerstring);
             //answerstring = StringUtil.removeEnclosingCharPair(answerstring,1,'(',')');
@@ -459,9 +459,9 @@ public class InferenceTestSuite {
     /**
      * Read in all the .tq inference test files from the given list
      */
-    public ArrayList<InfTestData> readTestFiles(ArrayList<File> files) {
+    public List<InfTestData> readTestFiles(List<File> files) {
 
-        ArrayList<InfTestData> result = new ArrayList<>();
+        List<InfTestData> result = new ArrayList<>();
         for (File f : files) {
             InfTestData ifd = readTestFile(f);
             if (ifd != null)
@@ -535,13 +535,13 @@ public class InferenceTestSuite {
 
         File outputDir = setOutputDir();
         clearOutputDir(outputDir);
-        ArrayList<File> files = new ArrayList();
+        List<File> files = new ArrayList();
         String error = getTestFiles(files, outputDir);
         copyTestFiles(files, outputDir);
         if (error != null)
             return error;
 
-        ArrayList<InfTestData> tests = readTestFiles(files);
+        List<InfTestData> tests = readTestFiles(files);
         System.out.println("INFO in InferenceTestSuite.test(): number of files: " + files.size());
         int counter = 0;
         for (InfTestData itd : tests) {
@@ -800,12 +800,12 @@ public class InferenceTestSuite {
         public String filename = "";
         public String note = "";
         public String query = "";
-        public HashSet<String> kbFiles = new HashSet<>();
-        public ArrayList<String> expectedAnswers = new ArrayList<>();
-        public ArrayList<String> actualAnswers = new ArrayList<>();
+        public Set<String> kbFiles = new HashSet<>();
+        public List<String> expectedAnswers = new ArrayList<>();
+        public List<String> actualAnswers = new ArrayList<>();
         public int timeout = 30;
-        public ArrayList<String> files = new ArrayList<>();
-        public ArrayList<String> statements = new ArrayList<>();
+        public List<String> files = new ArrayList<>();
+        public List<String> statements = new ArrayList<>();
         public boolean inconsistent = false;
         public boolean success = false;
         public float execTime = 0;

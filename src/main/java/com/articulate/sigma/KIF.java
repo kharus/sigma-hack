@@ -50,24 +50,24 @@ public class KIF {
      */
     public TreeSet<String> terms = new TreeSet<String>();
     /**
-     * A hashMap to store term frequencies for each term in knowledge base
+     * A Map to store term frequencies for each term in knowledge base
      */
     public Map<String, Integer> termFrequency = new HashMap<String, Integer>();
     /**
-     * A HashMap of ArrayLists of Formulas. Each String key points to a list of
+     * A Map of Lists of Formulas. Each String key points to a list of
      * String formulas that correspond to that key. For example, "arg-1-Foo"
      * would be one of several keys for "(instance Foo Bar)".
      *
      * @see #createKey(String, boolean, boolean, int, int) for key format.
      */
-    public HashMap<String, ArrayList<String>> formulas = new HashMap<String, ArrayList<String>>();
+    public Map<String, List<String>> formulas = new HashMap<String, List<String>>();
     /**
-     * A HashMap of String keys representing the formula, and Formula values.
+     * A Map of String keys representing the formula, and Formula values.
      * For example, "(instance Foo Bar)" is a String key that might point to a
      * Formula that is that string, along with information about at what line
      * number and in what file it appears.
      */
-    public HashMap<String, Formula> formulaMap = new HashMap<String, Formula>();
+    public Map<String, Formula> formulaMap = new HashMap<String, Formula>();
     public String filename;
     /**
      * warnings generated during parsing
@@ -92,7 +92,7 @@ public class KIF {
         long size = getKIFFileSize(fname);
         if (size != 0) {
             termFrequency = new HashMap<String, Integer>((int) size / 25, (float) 0.75);
-            formulas = new HashMap<String, ArrayList<String>>((int) size / 3, (float) 0.75);
+            formulas = new HashMap<String, List<String>>((int) size / 3, (float) 0.75);
             formulaMap = new HashMap<String, Formula>((int) size / 3, (float) 0.75);
         }
         filename = fname;
@@ -236,7 +236,7 @@ public class KIF {
         Reader r = new StringReader(exp);
         kif.parse(r);
         System.out.println(kif.formulaMap);
-        ArrayList<String> al = kif.formulas.get("arg-0-documentation");
+        List<String> al = kif.formulas.get("arg-0-documentation");
         String fstr = al.get(0);
         Formula f = kif.formulaMap.get(fstr);
         System.out.println(f);
@@ -379,7 +379,7 @@ public class KIF {
             int argumentNum = -1;
             boolean inAntecedent = false;
             boolean inConsequent = false;
-            HashSet<String> keySet = new HashSet<String>();
+            Set<String> keySet = new HashSet<String>();
             // int lineStart = 0;
             boolean isEOL = false;
             do {
@@ -462,7 +462,7 @@ public class KIF {
                             String fkey = it.next();
                             if (formulas.containsKey(fkey)) {
                                 if (!formulaMap.containsKey(f.getFormula())) { // don't add keys if formula is already present
-                                    ArrayList<String> list = formulas.get(fkey);
+                                    List<String> list = formulas.get(fkey);
                                     if (StringUtil.emptyString(f.getFormula())) {
                                         System.out.println("Error in KIF.parse(): Storing empty formula from line: "
                                                 + f.startLine);
@@ -471,7 +471,7 @@ public class KIF {
                                         list.add(f.getFormula());
                                 }
                             } else {
-                                ArrayList<String> list = new ArrayList<String>();
+                                List<String> list = new ArrayList<String>();
                                 if (StringUtil.emptyString(f.getFormula())) {
                                     System.out.println(
                                             "Error in KIF.parse(): Storing empty formula from line: " + f.startLine);
@@ -638,12 +638,12 @@ public class KIF {
     }
 
     /**
-     * Return an ArrayList of Formula in the same lexical order as their
+     * Return an List of Formula in the same lexical order as their
      * source file
      */
-    public ArrayList<Formula> lexicalOrder() {
+    public List<Formula> lexicalOrder() {
 
-        ArrayList<Formula> ordered = new ArrayList<>();
+        List<Formula> ordered = new ArrayList<>();
         ordered.addAll(formulaMap.values());
         Collections.sort(ordered, new Formula.SortByLine());
         return ordered;

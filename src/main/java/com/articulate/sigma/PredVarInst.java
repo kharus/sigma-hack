@@ -26,13 +26,13 @@ public class PredVarInst {
     //The list of logical terms that not related to arity check, will skip these predicates
     private static final List<String> logicalTerms = Arrays.asList("forall", "exists", "=>", "and", "or", "<=>", "not", "equal");
     // The implied arity of a predicate variable from its use in a Formula
-    public static HashMap<String, Integer> predVarArity = new HashMap<String, Integer>();
+    public static Map<String, Integer> predVarArity = new HashMap<String, Integer>();
     public static boolean debug = false;
     // a debugging option to reject formulas with more than one predicate variable, to save time
     public static boolean rejectDoubles = false;
     public static boolean doublesHandled = false;
     // All predicates that meet that class membership and arity constraints for the given variable
-    private static HashMap<String, HashSet<String>> candidatePredicates = new HashMap<String, HashSet<String>>();
+    private static Map<String, Set<String>> candidatePredicates = new HashMap<String, Set<String>>();
 
     public static void init() {
 
@@ -49,23 +49,23 @@ public class PredVarInst {
      *
      * @param input formula
      * @param types type condition extracted from domain expression.
-     *              This is a HashMap in which the keys are predicate variables,
-     *              and the values are HashSets containing one or more class
+     *              This is a Map in which the keys are predicate variables,
+     *              and the values are Sets containing one or more class
      *              names that indicate the type constraints that apply to the
      *              variable
      * @return add explicit type condition into types
      */
-    protected static HashMap<String, HashSet<String>> addExplicitTypes(KB kb, Formula input, HashMap<String, HashSet<String>> types) {
+    protected static Map<String, Set<String>> addExplicitTypes(KB kb, Formula input, Map<String, Set<String>> types) {
 
-        HashMap<String, HashSet<String>> result = new HashMap<String, HashSet<String>>();
+        Map<String, Set<String>> result = new HashMap<String, Set<String>>();
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> explicit = fp.findExplicitTypesInAntecedent(kb, input);
+        Map<String, Set<String>> explicit = fp.findExplicitTypesInAntecedent(kb, input);
         if (explicit == null || explicit.keySet() == null || explicit.keySet().size() == 0)
             return types;
         Iterator<String> it = explicit.keySet().iterator();
         while (it.hasNext()) {
             String var = it.next();
-            HashSet<String> hs = new HashSet<String>();
+            Set<String> hs = new HashSet<String>();
             if (types.containsKey(var)) { // only add keys from 'types' which contains all the pred vars
                 hs = types.get(var);
                 hs.addAll(explicit.get(var));
@@ -144,7 +144,7 @@ public class PredVarInst {
             if (debug) System.out.println("handleDouble2(): is function " + kb.isFunction(r1));
             if (kb.kbCache.functions.contains(r1)) // || kb.isFunction(r1))
                 continue;
-            HashSet<String> children = kb.kbCache.children.get("subrelation").get(r1);
+            Set<String> children = kb.kbCache.children.get("subrelation").get(r1);
             if (children != null) {
                 for (String r2 : children) {
                     int arity1 = kb.kbCache.getArity(r1);
@@ -202,7 +202,7 @@ public class PredVarInst {
 
         if (debug) System.out.println("instantiatePredVars(): input: " + input);
         Set<Formula> result = new HashSet<Formula>();
-        HashSet<String> predVars = gatherPredVars(kb, input);
+        Set<String> predVars = gatherPredVars(kb, input);
         if (predVars.size() > 1) {
             if (rejectDoubles) {
                 SUMOtoTFAform.filterMessage = "reject axioms with more than one predicate variable";
@@ -228,7 +228,7 @@ public class PredVarInst {
         if (predVars.size() == 0)   // Return empty if input does not have predicate variables
             return result;
         // 1. get types for predicate variables from domain definitions
-        HashMap<String, HashSet<String>> varTypes = findPredVarTypes(input, kb);
+        Map<String, Set<String>> varTypes = findPredVarTypes(input, kb);
         // 2. add explicitly defined types for predicate variables
         varTypes = addExplicitTypes(kb, input, varTypes);
         if (debug) System.out.println("instantiatePredVars(): types: " + varTypes);
@@ -311,7 +311,7 @@ public class PredVarInst {
                 Formula.atom(f.getFormula()) || f.isVariable())
             return null;
         String rel = f.getStringArgument(0);
-        ArrayList<Formula> argList = f.complexArgumentsToArrayList(1);
+        List<Formula> argList = f.complexArgumentsToArrayList(1);
         if (argList == null || argList.size() == 0) {
             return null;
         }
@@ -388,7 +388,7 @@ public class PredVarInst {
         return res;
     }
 
-    private static boolean containsRowVariable(ArrayList<Formula> arglist) {
+    private static boolean containsRowVariable(List<Formula> arglist) {
 
         for (Formula s : arglist)
             if (s.isRowVar())
@@ -401,9 +401,9 @@ public class PredVarInst {
      * the argument list has a row variable, return 0 as the value, meaning
      * any possible arity of 1 - maxArity
      */
-    protected static HashSet<String> gatherPredVarRecurse(KB kb, Formula f) {
+    protected static Set<String> gatherPredVarRecurse(KB kb, Formula f) {
 
-        HashSet<String> ans = new HashSet<String>();
+        Set<String> ans = new HashSet<String>();
         if (debug) System.out.println("INFO in PredVarInst.gatherPredVarRecurse(): " + f);
         if (f == null || f.empty() || Formula.atom(f.getFormula()) || f.isVariable())
             return ans;
@@ -411,7 +411,7 @@ public class PredVarInst {
             Formula arg0 = f.getArgument(0);
             if (debug) System.out.println("INFO in PredVarInst.gatherPredVarRecurse(): simple clause with: " + arg0);
             if (arg0.isRegularVariable()) {
-                ArrayList<Formula> arglist = f.complexArgumentsToArrayList(1);
+                List<Formula> arglist = f.complexArgumentsToArrayList(1);
                 if (arglist != null && arglist.size() > 0) {// a variable could be an argument to a higher-order formula
                     if (debug) System.out.println("INFO in PredVarInst.gatherPredVarRecurse(): adding: " + arg0 +
                             " with arglist: " + arglist);
@@ -441,23 +441,23 @@ public class PredVarInst {
     /**
      * Get a set of all the types for predicate variables in the formula.
      *
-     * @return a HashMap in which the keys are predicate variables,
-     * and the values are HashSets containing one or more class
+     * @return a Map in which the keys are predicate variables,
+     * and the values are Sets containing one or more class
      * names that indicate the type constraints that apply to the
      * variable.  If no predicate variables can be gathered from the
-     * Formula, the HashMap will be empty.  Note that predicate variables
+     * Formula, the Map will be empty.  Note that predicate variables
      * must logically be instances (of class Relation).
      */
-    protected static HashMap<String, HashSet<String>> findPredVarTypes(Formula f, KB kb) {
+    protected static Map<String, Set<String>> findPredVarTypes(Formula f, KB kb) {
 
-        HashSet<String> predVars = gatherPredVars(kb, f);
+        Set<String> predVars = gatherPredVars(kb, f);
         if (debug) System.out.println("findPredVarTypes(): predVars: " + predVars);
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        //HashMap<String,HashSet<String>> typeMap = fp.computeVariableTypes(f, kb);  // <- this skips explicit types
-        //HashMap<String,HashSet<String>> typeMap = fp.findTypeRestrictions(f, kb);  // <- won't get instance relations
-        HashMap<String, HashSet<String>> typeMap = fp.findAllTypeRestrictions(f, kb);
+        //Map<String,Set<String>> typeMap = fp.computeVariableTypes(f, kb);  // <- this skips explicit types
+        //Map<String,Set<String>> typeMap = fp.findTypeRestrictions(f, kb);  // <- won't get instance relations
+        Map<String, Set<String>> typeMap = fp.findAllTypeRestrictions(f, kb);
         if (debug) System.out.println("findPredVarTypes(): typeMap: " + typeMap);
-        HashMap<String, HashSet<String>> result = new HashMap<String, HashSet<String>>();
+        Map<String, Set<String>> result = new HashMap<String, Set<String>>();
         for (String var : predVars) {
             if (typeMap.containsKey(var))
                 result.put(var, typeMap.get(var));
@@ -469,15 +469,15 @@ public class PredVarInst {
     /**
      * Collect and return all predicate variables for the given formula
      */
-    public static HashSet<String> gatherPredVars(KB kb, Formula f) {
+    public static Set<String> gatherPredVars(KB kb, Formula f) {
 
         if (debug) System.out.println("INFO in PredVarInst.gatherPredVars(): " + f);
         if (f.predVarCache != null) {
             if (debug) System.out.println("INFO in PredVarInst.gatherPredVars(): returning cache " + f.predVarCache);
             return f.predVarCache;
         }
-        HashSet<String> varlist = null;
-        HashMap<String, HashSet<String>> ans = new HashMap<String, HashSet<String>>();
+        Set<String> varlist = null;
+        Map<String, Set<String>> ans = new HashMap<String, Set<String>>();
         if (!StringUtil.emptyString(f.getFormula())) {
             varlist = gatherPredVarRecurse(kb, f);
         }

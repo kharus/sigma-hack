@@ -11,7 +11,10 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Class mocks KB and KBcache so that unit tests can be run independently and without long initialization.
@@ -60,20 +63,20 @@ public class SigmaMockTestBase {
             "Telephone",
             "Truck");
     private static final Map<String, List<String>> recognizedMap = Maps.newHashMap();
-    private static final ArrayList<String> INSTANCE_SIGNATURES = Lists.newArrayList(
+    private static final List<String> INSTANCE_SIGNATURES = Lists.newArrayList(
             "",
             "Entity",
             "Class");
-    private static final ArrayList<String> AGENT_SIGNATURES = Lists.newArrayList(
+    private static final List<String> AGENT_SIGNATURES = Lists.newArrayList(
             "",
             "Process",
             "Agent");
-    private static final ArrayList<String> NAMES_SIGNATURES = Lists.newArrayList(
+    private static final List<String> NAMES_SIGNATURES = Lists.newArrayList(
             "",
             "SymbolicString",
             "Entity");
-    private static final HashMap<String, ArrayList<String>> signaturesMap = Maps.newHashMap();
-    private static final ArrayList<Formula> LANG_FORMAT_MAP_COLS = Lists.newArrayList(
+    private static final Map<String, List<String>> signaturesMap = Maps.newHashMap();
+    private static final List<Formula> LANG_FORMAT_MAP_COLS = Lists.newArrayList(
             new Formula("(format EnglishLanguage agent \"%2 is %n an &%agent of %1\")"),
             new Formula("(format EnglishLanguage attribute \"%2 is %n an &%attribute of %1\")"),
             new Formula("(format EnglishLanguage destination \"%1 %n{doesn't} %n &%end%p{s} at %2\")"),
@@ -88,8 +91,8 @@ public class SigmaMockTestBase {
             new Formula("(format EnglishLanguage subList \"%1 is %n a &%sublist of %2\")"),
             new Formula("(format EnglishLanguage transported \"%2 is %n &%transported during %1\")")
     );
-    private static final HashMap<String, String> termFormatMap = Maps.newHashMap();
-    private static HashMap<String, HashSet<String>> oldWordNetSynSetTable;
+    private static final Map<String, String> termFormatMap = Maps.newHashMap();
+    private static Map<String, Set<String>> oldWordNetSynSetTable;
 
     /**
      */
@@ -140,7 +143,7 @@ public class SigmaMockTestBase {
 
         NLGUtils.readKeywordMap(KB_PATH);
 
-        HashMap<String, HashSet<String>> hash = new HashMap<>();
+        Map<String, Set<String>> hash = new HashMap<>();
         hash.put("drink", null);
         hash.put("drive", null);
         hash.put("eat", null);
@@ -175,12 +178,12 @@ public class SigmaMockTestBase {
         }
 
         @Override
-        public ArrayList<Formula> askWithRestriction(int argnum1, String term1, int argnum2, String term2) {
+        public List<Formula> askWithRestriction(int argnum1, String term1, int argnum2, String term2) {
             return LANG_FORMAT_MAP_COLS;
         }
 
         @Override
-        public HashMap<String, String> getTermFormatMap(String lang) {
+        public Map<String, String> getTermFormatMap(String lang) {
             return termFormatMap;
         }
     }

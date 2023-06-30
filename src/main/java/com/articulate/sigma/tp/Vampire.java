@@ -46,7 +46,7 @@ public class Vampire {
     public StringBuffer qlist = null; // quantifier list in order for answer extraction
 
     // Avatar is faster but doesn't provide answer variables
-    public ArrayList<String> output = new ArrayList<>();
+    public List<String> output = new ArrayList<>();
 
     private static String[] createCommandList(File executable, int timeout, File kbFile) {
 
@@ -77,14 +77,14 @@ public class Vampire {
      * directly add assertion into opened inference engine (e_ltb_runner)
      */
     public static boolean assertFormula(String userAssertionTPTP, KB kb,
-                                        ArrayList<Formula> parsedFormulas, boolean tptp) {
+                                        List<Formula> parsedFormulas, boolean tptp) {
 
         if (debug) System.out.println("INFO in Vampire.assertFormula(2):writing to file " + userAssertionTPTP);
         boolean allAdded = false;
         PrintWriter pw = null;
         try {
             pw = new PrintWriter(new BufferedWriter(new FileWriter(userAssertionTPTP, true)));
-            HashSet<Formula> processedFormulas = new HashSet();
+            Set<Formula> processedFormulas = new HashSet();
             for (Formula parsedF : parsedFormulas) {
                 processedFormulas.clear();
                 FormulaPreprocessor fp = new FormulaPreprocessor();
@@ -162,7 +162,7 @@ public class Vampire {
             System.out.println("Vampire.main(): no such file: " + s);
         else {
             System.out.println("Vampire.main(): first test");
-            HashSet<String> query = new HashSet<>();
+            Set<String> query = new HashSet<>();
             query.add("tff(conj1,conjecture,?[V__X, V__Y] : (s__subclass(V__X,V__Y))).");
             System.out.println("Vampire.main(): calling Vampire with: " + s + ", 30, " + query);
             Vampire vampire = new Vampire();
@@ -232,7 +232,7 @@ public class Vampire {
         System.out.println("Vampire.run() done executing");
     }
 
-    public void writeStatements(HashSet<String> stmts, String type) {
+    public void writeStatements(Set<String> stmts, String type) {
 
         FileWriter fw = null;
         PrintWriter pw = null;
@@ -304,7 +304,7 @@ public class Vampire {
      * in TFF or TPTP language to a file and then calling Vampire.
      * Note that any query must be given as a "conjecture"
      */
-    public void run(KB kb, File kbFile, int timeout, HashSet<String> stmts) throws Exception {
+    public void run(KB kb, File kbFile, int timeout, Set<String> stmts) throws Exception {
 
         String lang = "tff";
         if (SUMOKBtoTPTPKB.lang.equals("fof"))

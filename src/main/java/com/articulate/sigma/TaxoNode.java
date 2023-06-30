@@ -1,6 +1,7 @@
 package com.articulate.sigma;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This code is copyright Articulate Software (c) 2003.  Some portions
@@ -24,8 +25,8 @@ import java.util.ArrayList;
 public class TaxoNode {
 
     public String name = ""; // the name of the SUMO term;
-    public ArrayList<TaxoNode> parents = new ArrayList<TaxoNode>();
-    public ArrayList<TaxoNode> children = new ArrayList<TaxoNode>();
+    public List<TaxoNode> parents = new ArrayList<TaxoNode>();
+    public List<TaxoNode> children = new ArrayList<TaxoNode>();
     public boolean childrenExpanded = false;
     public TaxoNode oneChild = null;                // only one child may be displayed
 
@@ -35,7 +36,7 @@ public class TaxoNode {
         int width = indentLevel * 10;
         if (parents == null || parents.size() == 0) {
             KB kb = KBmanager.getMgr().getKB(TaxoModel.kbName);
-            ArrayList<Formula> forms = kb.askWithRestriction(0, TaxoModel.relation, 1, name);
+            List<Formula> forms = kb.askWithRestriction(0, TaxoModel.relation, 1, name);
             forms = TaxoModel.removeCached(forms);
             if (forms.size() > 0)
                 sb.append("<span style='white-space: nowrap;'><img src='pixmaps/trans.gif' width=" + width + " height=5><a href=\"" + kbHref + name + "&up=" + name + "\"><img border=0 height=11 src='pixmaps/arrowup.gif'></a>&nbsp;");

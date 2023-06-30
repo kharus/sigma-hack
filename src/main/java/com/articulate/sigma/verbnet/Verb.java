@@ -6,9 +6,7 @@ import com.articulate.sigma.utils.StringUtil;
 import com.articulate.sigma.wordnet.WordNet;
 import com.articulate.sigma.wordnet.WordNetUtilities;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * This code is copyright Infosys 2019.
@@ -28,15 +26,15 @@ public class Verb {
 
     public String ID;
 
-    public HashMap<String, Member> members = new HashMap<>();
+    public Map<String, Member> members = new HashMap<>();
 
-    public HashSet<Role> roles = new HashSet<>();
-    public HashSet<Verb> subclasses = new HashSet<>();
-    public HashSet<Frame> frames = new HashSet<>();
+    public Set<Role> roles = new HashSet<>();
+    public Set<Verb> subclasses = new HashSet<>();
+    public Set<Frame> frames = new HashSet<>();
 
-    public static ArrayList<AVPair> readSelrestrs(SimpleElement selrestrs) {
+    public static List<AVPair> readSelrestrs(SimpleElement selrestrs) {
 
-        ArrayList<AVPair> result = new ArrayList<>();
+        List<AVPair> result = new ArrayList<>();
         if (debug) System.out.println("VerbNet.readSelrestrs()");
         String logic = selrestrs.getAttribute("logic");
         if (debug) System.out.println("Selectional Restriction: " + logic);
@@ -180,12 +178,12 @@ public class Verb {
 
     public class Role {
         String type;
-        HashSet<AVPair> restrictions = new HashSet<>();
+        Set<AVPair> restrictions = new HashSet<>();
     }
 
     public class Member {
         String name;
-        HashSet<String> wn = new HashSet<>();
+        Set<String> wn = new HashSet<>();
         String grouping;
     }
 }

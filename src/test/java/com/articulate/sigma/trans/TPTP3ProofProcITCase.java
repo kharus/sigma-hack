@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -195,7 +196,7 @@ public class TPTP3ProofProcITCase extends UnitTestBase {
         System.out.println("========================");
         String label = "testProcessAnswersFromProof";
         System.out.println("TPTP3ProofProcITCase: " + label);
-        ArrayList<String> input = new ArrayList();
+        List<String> input = new ArrayList();
         input.add("% SZS status Theorem for temp-comb");
         input.add("% SZS answers Tuple [[s__TransitFn__m]|_] for temp-comb");
         input.add("% SZS output start Proof for temp-comb");

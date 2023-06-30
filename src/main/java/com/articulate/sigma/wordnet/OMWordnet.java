@@ -31,7 +31,7 @@ public class OMWordnet implements Serializable {
 
     public static boolean disable = false; // disable for debugging
 
-    public static ArrayList<String> lcodes = new ArrayList<String>(Arrays.asList(
+    public static List<String> lcodes = new ArrayList<String>(Arrays.asList(
             "als", "arb", "bul",
             "cat", "cow", "dan",
             "ell", "eng", "eus",
@@ -42,7 +42,7 @@ public class OMWordnet implements Serializable {
             "nob", "pol", "por",
             "qcn", "spa", "swe",
             "tha", "zsm"));
-    public static ArrayList<String> lnames = new ArrayList<String>(Arrays.asList(
+    public static List<String> lnames = new ArrayList<String>(Arrays.asList(
             "AlbanianLanguage", "ArabicLanguage", "BulgarianLanguage",
             "CatalanLanguage", "ChineseLanguage", "DanishLanguage",
             "GreekLanguage", "EnglishLanguage", "BasqueLanguage",
@@ -55,14 +55,14 @@ public class OMWordnet implements Serializable {
             "ThaiLanguage", "MalayLanguage"));
 
     // String key of language name
-    // Interior key of a 9-digit WordNet synset and value of and ArrayList of
+    // Interior key of a 9-digit WordNet synset and value of and List of
     // non-English synset Strings
-    public HashMap<String, HashMap<String, ArrayList<String>>> wordnets =
-            new HashMap<String, HashMap<String, ArrayList<String>>>();
-    public HashMap<String, HashMap<String, ArrayList<String>>> glosses =
-            new HashMap<String, HashMap<String, ArrayList<String>>>();
-    public HashMap<String, HashMap<String, ArrayList<String>>> examples =
-            new HashMap<String, HashMap<String, ArrayList<String>>>();
+    public Map<String, Map<String, List<String>>> wordnets =
+            new HashMap<String, Map<String, List<String>>>();
+    public Map<String, Map<String, List<String>>> glosses =
+            new HashMap<String, Map<String, List<String>>>();
+    public Map<String, Map<String, List<String>>> examples =
+            new HashMap<String, Map<String, List<String>>>();
 
     private static char getOMWMappingSuffix(String SUMOmapping) {
 
@@ -130,11 +130,11 @@ public class OMWordnet implements Serializable {
     private static void readOMWformat(String inputFileWithPath, String langName) {
 
         //System.out.println("INFO in WordNetUtilities.readOMWformat(): creating table entry for " + langName);
-        HashMap<String, ArrayList<String>> wordnet = new HashMap<String, ArrayList<String>>();
+        Map<String, List<String>> wordnet = new HashMap<String, List<String>>();
         OMWordnet.omw.wordnets.put(langName, wordnet);
-        HashMap<String, ArrayList<String>> gloss = new HashMap<String, ArrayList<String>>();
+        Map<String, List<String>> gloss = new HashMap<String, List<String>>();
         OMWordnet.omw.glosses.put(langName, gloss);
-        HashMap<String, ArrayList<String>> example = new HashMap<String, ArrayList<String>>();
+        Map<String, List<String>> example = new HashMap<String, List<String>>();
         OMWordnet.omw.examples.put(langName, example);
         File inputf = new File(inputFileWithPath);
         if (!inputf.exists()) return;
@@ -156,7 +156,7 @@ public class OMWordnet implements Serializable {
                         if (type.endsWith("lemma")) {
                             int end = line.length();
                             String value = line.substring(tab2index + 1, end);
-                            ArrayList<String> val = wordnet.get(id);
+                            List<String> val = wordnet.get(id);
                             if (val == null)
                                 val = new ArrayList<String>();
                             val.add(value);
@@ -165,7 +165,7 @@ public class OMWordnet implements Serializable {
                         if (type.contains(":def ")) {
                             int end = line.length();
                             String value = line.substring(tab2index + 1, end);
-                            ArrayList<String> val = gloss.get(id);
+                            List<String> val = gloss.get(id);
                             if (val == null)
                                 val = new ArrayList<String>();
                             val.add(value);
@@ -174,7 +174,7 @@ public class OMWordnet implements Serializable {
                         if (type.contains(":exe ")) {
                             int end = line.length();
                             String value = line.substring(tab2index + 1, end);
-                            ArrayList<String> val = example.get(id);
+                            List<String> val = example.get(id);
                             if (val == null)
                                 val = new ArrayList<String>();
                             val.add(value);
@@ -367,18 +367,18 @@ public class OMWordnet implements Serializable {
     public static String formatWords(String term, String kbName, String lang, String href) {
 
         //System.out.println("INFO in OMWordnet.formatWords(): " + term + " " + lang);
-        HashMap<String, ArrayList<String>> wordnet = omw.wordnets.get(languageToCode(lang));
+        Map<String, List<String>> wordnet = omw.wordnets.get(languageToCode(lang));
         if (wordnet == null || wordnet.size() == 0)
             return "";
         StringBuffer result = new StringBuffer();
-        ArrayList<String> synsets = WordNet.wn.SUMOHash.get(term);
+        List<String> synsets = WordNet.wn.SUMOHash.get(term);
         int limit = synsets.size();
         if (limit > 50)
             limit = 50;
         for (int i = 0; i < limit; i++) {
             String synset = synsets.get(i);
             String OMWsynset = toOMWsynset(synset);
-            ArrayList<String> words = wordnet.get(OMWsynset);
+            List<String> words = wordnet.get(OMWsynset);
             if (words != null) {
                 for (int j = 0; j < words.size(); j++) {
                     result.append("<a href=\"" + href + "OMW.jsp?kb=" + kbName + "&synset=" + OMWsynset + "\">");
@@ -396,7 +396,7 @@ public class OMWordnet implements Serializable {
         return result.toString();
     }
 
-    private static String formatArrayList(ArrayList<String> al) {
+    private static String formatArrayList(List<String> al) {
 
         if (al == null) return "";
         StringBuffer sb = new StringBuffer();
@@ -413,9 +413,9 @@ public class OMWordnet implements Serializable {
         sb.append("<table>");
         String name = "";
         String id = "";
-        ArrayList<String> words = null;
-        ArrayList<String> exams = null;
-        ArrayList<String> defs = null;
+        List<String> words = null;
+        List<String> exams = null;
+        List<String> defs = null;
         for (int i = 0; i < lnames.size(); i++) {
             name = lnames.get(i);
             id = lcodes.get(i);

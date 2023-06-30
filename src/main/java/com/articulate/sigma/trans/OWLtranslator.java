@@ -32,7 +32,7 @@ public class OWLtranslator {
      * Relations in SUMO that have a corresponding relation in
      * OWL and therefore require special treatment.
      */
-    private static final ArrayList SUMOReservedRelations =
+    private static final List SUMOReservedRelations =
             new ArrayList(Arrays.asList("disjoint",                 // owl:disjointWith
                     "disjointDecomposition",    // owl:distinctMembers
                     "documentation",            // rdfs:comment
@@ -43,7 +43,7 @@ public class OWLtranslator {
                     "subclass",                 // rdfs:subClassOf
                     "subrelation",
                     "synonymousExternalConcept")); // owl:sameAs or owl:equivalentClass or owl:equivalentProperty
-    private static final ArrayList OWLReservedRelations =             // c=class, i=instance, r=relation
+    private static final List OWLReservedRelations =             // c=class, i=instance, r=relation
             new ArrayList(Arrays.asList("rdf:about",
                     "rdf:ID",
                     "rdf:nodeID",
@@ -83,7 +83,7 @@ public class OWLtranslator {
      * and versioning stuff), individuals, data values and the
      * built-in vocabulary.
      */
-    private static final ArrayList OWLReservedClasses =
+    private static final List OWLReservedClasses =
             new ArrayList(Arrays.asList("rdf:List",
                     "rdf:Property",
                     "rdfs:Class",
@@ -113,12 +113,12 @@ public class OWLtranslator {
      * A map of functional statements and the automatically
      * generated term that is created for it.
      */
-    private final HashMap functionTable = new HashMap();
+    private final Map functionTable = new HashMap();
     /**
      * Keys are SUMO term name Strings, values are YAGO/DBPedia
      * term name Strings.
      */
-    private final HashMap SUMOYAGOMap = new HashMap();
+    private final Map SUMOYAGOMap = new HashMap();
     public KB kb;
     private TreeMap axiomMap = new TreeMap();
 
@@ -157,7 +157,7 @@ public class OWLtranslator {
     private static String getParentReference(SimpleElement se) {
 
         String value = null;
-        ArrayList children = se.getChildElements();
+        List children = se.getChildElements();
         if (children.size() > 0) {
             SimpleElement child = (SimpleElement) children.get(0);
             if (child.getTagName().equals("owl:Class")) {
@@ -520,7 +520,7 @@ public class OWLtranslator {
             Formula f = new Formula();
             f.read(functionTerm);
             String func = f.getStringArgument(0);
-            ArrayList ranges = kb.askWithRestriction(0, "range", 1, func);
+            List ranges = kb.askWithRestriction(0, "range", 1, func);
             String range;
             if (ranges.size() > 0) {
                 Formula f2 = (Formula) ranges.get(0);
@@ -534,7 +534,7 @@ public class OWLtranslator {
                 pw.println("</owl:Thing>");
                 pw.println();
             } else {
-                ArrayList subranges = kb.askWithRestriction(0, "rangeSubclass", 1, functionTerm);
+                List subranges = kb.askWithRestriction(0, "rangeSubclass", 1, functionTerm);
                 if (subranges.size() > 0) {
                     Formula f2 = (Formula) subranges.get(0);
                     range = f2.getStringArgument(2);
@@ -554,7 +554,7 @@ public class OWLtranslator {
 
     private void writeTermFormat(PrintWriter pw, String term) {
 
-        ArrayList al = kb.askWithRestriction(0, "termFormat", 2, term);
+        List al = kb.askWithRestriction(0, "termFormat", 2, term);
         if (al.size() > 0) {
             for (int i = 0; i < al.size(); i++) {
                 Formula form = (Formula) al.get(i);
@@ -570,7 +570,7 @@ public class OWLtranslator {
 
     private void writeSynonymous(PrintWriter pw, String term, String termType) {
 
-        ArrayList syn = kb.askWithRestriction(0, "synonymousExternalConcept", 2, term);
+        List syn = kb.askWithRestriction(0, "synonymousExternalConcept", 2, term);
         if (syn.size() > 0) {
             for (int i = 0; i < syn.size(); i++) {
                 Formula form = (Formula) syn.get(i);
@@ -589,7 +589,7 @@ public class OWLtranslator {
 
     private void writeAxiomLinks(PrintWriter pw, String term) {
 
-        ArrayList al = kb.ask("ant", 0, term);
+        List al = kb.ask("ant", 0, term);
         for (int i = 0; i < al.size(); i++) {
             Formula f = (Formula) al.get(i);
             String st = f.createID();
@@ -607,7 +607,7 @@ public class OWLtranslator {
 
         WordNet.initOnce();
         // get list of synsets with part of speech prepended to the synset number.
-        ArrayList al = WordNet.wn.SUMOHash.get(term);
+        List al = WordNet.wn.SUMOHash.get(term);
         if (al != null) {
             for (int i = 0; i < al.size(); i++) {
                 String synset = (String) al.get(i);
@@ -709,7 +709,7 @@ public class OWLtranslator {
 
     private void writeDocumentation(PrintWriter pw, String term) {
 
-        ArrayList doc = kb.askWithRestriction(0, "documentation", 1, term);    // Class expressions for term.
+        List doc = kb.askWithRestriction(0, "documentation", 1, term);    // Class expressions for term.
         if (doc.size() > 0) {
             for (int i = 0; i < doc.size(); i++) {
                 Formula form = (Formula) doc.get(i);
@@ -749,7 +749,7 @@ public class OWLtranslator {
         else if (kb.childOf(term, "Function"))
             propType = "FunctionalProperty";
         pw.println("<owl:" + propType + " rdf:about=\"#" + term + "\">");
-        ArrayList argTypes = kb.askWithRestriction(0, "domain", 1, term);  // domain expressions for term.
+        List argTypes = kb.askWithRestriction(0, "domain", 1, term);  // domain expressions for term.
 
         if (argTypes.size() > 0) {
             for (int i = 0; i < argTypes.size(); i++) {
@@ -765,7 +765,7 @@ public class OWLtranslator {
             }
         }
 
-        ArrayList ranges = kb.askWithRestriction(0, "range", 1, term);  // domain expressions for term.
+        List ranges = kb.askWithRestriction(0, "range", 1, term);  // domain expressions for term.
         if (ranges.size() > 0) {
             Formula form = (Formula) ranges.get(0);
             String argType = form.getStringArgument(2);
@@ -773,7 +773,7 @@ public class OWLtranslator {
                 pw.println("  <rdfs:range rdf:resource=\"" + (argType.equals("Entity") ? "&owl;Thing" : "#" + argType) + "\" />");
         }
 
-        ArrayList inverses = kb.askWithRestriction(0, "inverse", 1, term);  // inverse expressions for term.
+        List inverses = kb.askWithRestriction(0, "inverse", 1, term);  // inverse expressions for term.
         if (inverses.size() > 0) {
             Formula form = (Formula) inverses.get(0);
             String arg = form.getStringArgument(2);
@@ -781,7 +781,7 @@ public class OWLtranslator {
                 pw.println("  <owl:inverseOf rdf:resource=\"" + (arg.equals("Entity") ? "&owl;Thing" : "#" + arg) + "\" />");
         }
 
-        ArrayList subs = kb.askWithRestriction(0, "subrelation", 1, term);  // subrelation expressions for term.
+        List subs = kb.askWithRestriction(0, "subrelation", 1, term);  // subrelation expressions for term.
         if (subs.size() > 0) {
             for (int i = 0; i < subs.size(); i++) {
                 Formula form = (Formula) subs.get(i);
@@ -800,7 +800,7 @@ public class OWLtranslator {
         pw.println();
     }
 
-    private void writeInstances(PrintWriter pw, String term, ArrayList instances) {
+    private void writeInstances(PrintWriter pw, String term, List instances) {
 
         pw.println("<owl:Thing rdf:about=\"#" + term + "\">");
         String kbName = KBmanager.getMgr().getPref("sumokbname");
@@ -812,7 +812,7 @@ public class OWLtranslator {
                 pw.println("  <rdf:type rdf:resource=\"" + (parent.equals("Entity") ? "&owl;Thing" : "#" + parent) + "\"/>");
         }
         writeDocumentation(pw, term);
-        ArrayList statements = kb.ask("arg", 1, term);
+        List statements = kb.ask("arg", 1, term);
         for (int i = 0; i < statements.size(); i++) {
             Formula form = (Formula) statements.get(i);
             String rel = form.getStringArgument(0);
@@ -852,7 +852,7 @@ public class OWLtranslator {
         pw.println();
     }
 
-    private void writeClasses(PrintWriter pw, String term, ArrayList classes,
+    private void writeClasses(PrintWriter pw, String term, List classes,
                               boolean isInstance) {
 
         if (isInstance)
@@ -868,7 +868,7 @@ public class OWLtranslator {
                 pw.println("  <rdfs:subClassOf rdf:resource=\"" + (parent.equals("Entity") ? "&owl;Thing" : "#" + parent) + "\"/>");
         }
         writeDocumentation(pw, term);
-        ArrayList statements = kb.ask("arg", 1, term);
+        List statements = kb.ask("arg", 1, term);
         for (int i = 0; i < statements.size(); i++) {
             Formula form = (Formula) statements.get(i);
             String rel = form.getStringArgument(0);
@@ -898,7 +898,7 @@ public class OWLtranslator {
                     pw.println("  <" + rel + " rdf:resource=\"" + (range.equals("Entity") ? "&owl;Thing" : "#" + range) + "\" />");
             }
         }
-        ArrayList syn = kb.askWithRestriction(0, "synonymousExternalConcept", 2, term);
+        List syn = kb.askWithRestriction(0, "synonymousExternalConcept", 2, term);
         if (syn.size() > 0) {
             for (int i = 0; i < syn.size(); i++) {
                 Formula form = (Formula) syn.get(i);
@@ -1006,8 +1006,8 @@ public class OWLtranslator {
         if (kb.childOf(term, "BinaryRelation") && kb.isInstance(term))
             writeRelations(pw, term);
         if (Character.isUpperCase(term.charAt(0))) {
-            ArrayList instances = kb.askWithRestriction(0, "instance", 1, term);  // Instance expressions for term.
-            ArrayList classes = kb.askWithRestriction(0, "subclass", 1, term);    // Class expressions for term.
+            List instances = kb.askWithRestriction(0, "instance", 1, term);  // Instance expressions for term.
+            List classes = kb.askWithRestriction(0, "subclass", 1, term);    // Class expressions for term.
             String documentation = null;
             Formula form;
             if (instances.size() > 0 && !kb.childOf(term, "BinaryRelation"))
@@ -1055,7 +1055,7 @@ public class OWLtranslator {
 
     private void writeWordNetClassDefinitions(PrintWriter pw) throws IOException {
 
-        ArrayList WordNetClasses =
+        List WordNetClasses =
                 new ArrayList(Arrays.asList("Synset", "NounSynset", "VerbSynset", "AdjectiveSynset", "AdverbSynset"));
         Iterator it = WordNetClasses.iterator();
         while (it.hasNext()) {
@@ -1088,7 +1088,7 @@ public class OWLtranslator {
 
     private void writeVerbFrames(PrintWriter pw) throws IOException {
 
-        ArrayList VerbFrames = new ArrayList(Arrays.asList("Something ----s",
+        List VerbFrames = new ArrayList(Arrays.asList("Something ----s",
                 "Somebody ----s",
                 "It is ----ing",
                 "Something is ----ing PP",
@@ -1138,7 +1138,7 @@ public class OWLtranslator {
 
     private void writeWordNetRelationDefinitions(PrintWriter pw) throws IOException {
 
-        ArrayList WordNetRelations = new ArrayList(Arrays.asList("antonym",
+        List WordNetRelations = new ArrayList(Arrays.asList("antonym",
                 "hypernym", "instance-hypernym", "hyponym", "instance-hyponym",
                 "member-holonym", "substance-holonym", "part-holonym", "member-meronym",
                 "substance-meronym", "part-meronym", "attribute", "derivationally-related",
@@ -1214,7 +1214,7 @@ public class OWLtranslator {
         System.out.println("INFO in OWLtranslator.writeWordNetSynset(): " + synset);
         if (synset.startsWith("WN30-"))
             synset = synset.substring(5);
-        ArrayList al = WordNet.wn.synsetsToWords.get(synset);
+        List al = WordNet.wn.synsetsToWords.get(synset);
         if (al != null) {
             pw.println("<owl:Thing rdf:about=\"#WN30-" + synset + "\">");
             String parent = "Noun";
@@ -1307,7 +1307,7 @@ public class OWLtranslator {
         if (word.indexOf("_") != -1)
             wordOrPhrase = "phrase";
         pw.println("  <rdfs:comment xml:lang=\"en\">The English " + wordOrPhrase + " \"" + word + "\".</rdfs:comment>");
-        ArrayList senses = WordNet.wn.wordsToSenseKeys.get(word);
+        List senses = WordNet.wn.wordsToSenseKeys.get(word);
         if (senses != null) {
             for (int i = 0; i < senses.size(); i++) {
                 String sense = (String) senses.get(i);
@@ -1342,7 +1342,7 @@ public class OWLtranslator {
             String posNum = WordNetUtilities.posLettersToNumber(pos);
             pw.println("  <wnd:synset rdf:resource=\"#WN30-" + posNum + synset + "\"/>");
             if (posNum.equals("2")) {
-                ArrayList frames = WordNet.wn.verbFrames.get(synset + "-" + word);
+                List frames = WordNet.wn.verbFrames.get(synset + "-" + word);
                 if (frames != null) {
                     for (int i = 0; i < frames.size(); i++) {
                         String frame = (String) frames.get(i);

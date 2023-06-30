@@ -12,7 +12,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,10 +38,10 @@ public class LanguageFormatterITCase extends UnitTestBase {
     @Test
     public void testVariableReplaceBasic() {
         String form = "there exist ?D and ?H such that ?D is an &%instance$\"instance\" of &%Driving$\"driving\" and ?H is an &%instance$\"instance\" of &%Human$\"human\" and ?H is an &%agent$\"agent\" of ?D";
-        HashMap<String, Set<String>> instanceMap = Maps.newHashMap();
+        Map<String, Set<String>> instanceMap = Maps.newHashMap();
         instanceMap.put("?D", Sets.newHashSet("Process"));
         instanceMap.put("?H", Sets.newHashSet("AutonomousAgent"));
-        HashMap<String, Set<String>> classMap = Maps.newHashMap();
+        Map<String, Set<String>> classMap = Maps.newHashMap();
 
         String expected = "there exist &%Process$\"a  process\" and &%AutonomousAgent$\"an agent\" such that &%Process$\"the process\" is an &%instance$\"instance\" of &%Driving$\"driving\" and &%AutonomousAgent$\"the agent\" is an &%instance$\"instance\" of &%Human$\"human\" and &%AutonomousAgent$\"the agent\" is an &%agent$\"agent\" of &%Process$\"the process\"";
 
@@ -133,7 +132,7 @@ public class LanguageFormatterITCase extends UnitTestBase {
         // Verify variableReplace( ).
         Map<String, Set<String>> instanceMap = Maps.newHashMap(ImmutableMap.of("?S", Sets.newHashSet("Seeing"),
                 "?H", Sets.newHashSet("Human"), "?D", Sets.newHashSet("Driving")));
-        HashMap<String, Set<String>> classMap = Maps.newHashMap();
+        Map<String, Set<String>> classMap = Maps.newHashMap();
 
         String expected = "<ul><li>if &%Human$\"a  human\" drives,</li><li>then &%Human$\"the human\" sees</li></ul>";
         String variableReplaceOutput = LanguageFormatter.variableReplace(form, instanceMap, classMap, SigmaTestBase.kb, "EnglishLanguage");
@@ -155,7 +154,7 @@ public class LanguageFormatterITCase extends UnitTestBase {
         // Verify variableReplace( ).
         Map<String, Set<String>> instanceMap = Maps.newHashMap(ImmutableMap.of("?S", Sets.newHashSet("Seeing"),
                 "?H", Sets.newHashSet("Human"), "?D", Sets.newHashSet("Driving")));
-        HashMap<String, Set<String>> classMap = Maps.newHashMap();
+        Map<String, Set<String>> classMap = Maps.newHashMap();
 
         String expected = "if &%Human$\"a  human\" drives, then &%Human$\"the human\" sees";
         String variableReplaceOutput = LanguageFormatter.variableReplace(form, instanceMap, classMap, SigmaTestBase.kb, "EnglishLanguage");

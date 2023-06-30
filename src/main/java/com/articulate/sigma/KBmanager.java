@@ -54,13 +54,13 @@ public class KBmanager implements Serializable {
     protected static final String CONFIG_FILE = "config.xml";
     private static final CCheckManager ccheckManager = new CCheckManager();
     // preferences set before initialization that override values in config.xml
-    public static HashMap<String, String> prefOverride = new HashMap<String, String>();
+    public static Map<String, String> prefOverride = new HashMap<String, String>();
     public static boolean initialized = false;
     public static boolean initializing = false;
     public static boolean debug = false;
     private static KBmanager manager = new KBmanager();
-    private final HashMap<String, String> preferences = new HashMap<String, String>();
-    public HashMap<String, KB> kbs = new HashMap<String, KB>();
+    private final Map<String, String> preferences = new HashMap<String, String>();
+    public Map<String, KB> kbs = new HashMap<String, KB>();
     public Prover prover = Prover.VAMPIRE;
     private String error = "";
 
@@ -92,8 +92,8 @@ public class KBmanager implements Serializable {
         System.out.println("KBmanager.serializedOld(config): save date: " + saveDate);
         if (saveDate.compareTo(configDate) < 0)
             return true;
-        ArrayList<ArrayList<String>> kbFilenames = kbFilenamesFromXML(configuration);
-        for (ArrayList<String> thekb : kbFilenames) { // iterate through the kbs
+        List<List<String>> kbFilenames = kbFilenamesFromXML(configuration);
+        for (List<String> thekb : kbFilenames) { // iterate through the kbs
             for (String f : thekb) { // iterate through the constituents
                 File file = new File(f);
                 Date fileDate = new Date(file.lastModified());
@@ -191,7 +191,7 @@ public class KBmanager implements Serializable {
                     if (kbName.equals(getMgr().getPref("sumokbname")))
                         SUMOKBexists = true;
                     KBmanager.getMgr().addKB(kbName);
-                    ArrayList<String> constituentsToAdd = new ArrayList<String>();
+                    List<String> constituentsToAdd = new ArrayList<String>();
                     boolean useCacheFile = KBmanager.getMgr().getPref("cache").equalsIgnoreCase("yes");
                     for (int j = 0; j < element.getChildElements().size(); j++) {
                         SimpleElement kbConst = element.getChildElements().get(j);
@@ -222,9 +222,9 @@ public class KBmanager implements Serializable {
      * Note that filenames that are not full paths are prefixed with the
      * value of preference kbDir
      */
-    private static ArrayList<ArrayList<String>> kbFilenamesFromXML(SimpleElement configuration) {
+    private static List<List<String>> kbFilenamesFromXML(SimpleElement configuration) {
 
-        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        List<List<String>> result = new ArrayList<>();
         if (!configuration.getTagName().startsWith("configuration")) {
             System.out.println("Error in KBmanager.kbsFilenamesFromXML(): Bad tag: " + configuration.getTagName());
             System.out.println("Error in KBmanager.kbsFilenamesFromXML(): expected <configuration>");
@@ -232,7 +232,7 @@ public class KBmanager implements Serializable {
             for (int i = 0; i < configuration.getChildElements().size(); i++) {
                 SimpleElement element = configuration.getChildElements().get(i);
                 if (element.getTagName().equals("kb")) {
-                    ArrayList<String> kb = new ArrayList<>();
+                    List<String> kb = new ArrayList<>();
                     result.add(kb);
                     boolean useCacheFile = KBmanager.getMgr().getPref("cache").equalsIgnoreCase("yes");
                     for (int j = 0; j < element.getChildElements().size(); j++) {
@@ -600,7 +600,7 @@ public class KBmanager implements Serializable {
                     if (element.getTagName().equals("kb")) {
                         String kbName = element.getAttribute("name");
                         addKB(kbName);
-                        ArrayList<String> constituentsToAdd = new ArrayList<String>();
+                        List<String> constituentsToAdd = new ArrayList<String>();
                         boolean useCacheFile = KBmanager.getMgr().getPref("cache").equalsIgnoreCase("yes");
                         for (int j = 0; j < element.getChildElements().size(); j++) {
                             SimpleElement kbConst = element.getChildElements().get(j);
@@ -919,9 +919,9 @@ public class KBmanager implements Serializable {
     /**
      * Get the Set of KB names in this manager.
      */
-    public HashSet<String> getKBnames() {
+    public Set<String> getKBnames() {
 
-        HashSet<String> names = new HashSet<String>();
+        Set<String> names = new HashSet<String>();
         for (String kbName : kbs.keySet()) {
             KB kb = getKB(kbName);
             if (kb.isVisible()) {
@@ -934,9 +934,9 @@ public class KBmanager implements Serializable {
     /**
      * Get the the complete list of languages available in all KBs
      */
-    public ArrayList<String> allAvailableLanguages() {
+    public List<String> allAvailableLanguages() {
 
-        ArrayList<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
         Iterator<String> it = kbs.keySet().iterator();
         while (it.hasNext()) {
             String kbName = it.next();

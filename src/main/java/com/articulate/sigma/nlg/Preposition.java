@@ -47,7 +47,7 @@ public class Preposition {
     // FIXME: Uncomment when benefits is made a CaseRole
 //    static {
 //        // "The benefits role for the verb 'help' does not take a preposition."
-//        Multimap<CaseRole, String> prepsForCaseRole = ArrayListMultimap.create();
+//        Multimap<CaseRole, String> prepsForCaseRole = ListMultimap.create();
 //        prepsForCaseRole.put(CaseRole.BENEFITS, "");
 //        specialVerbPrepositionBehaviorMap.put("help", prepsForCaseRole);
 //    }

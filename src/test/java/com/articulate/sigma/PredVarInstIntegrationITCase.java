@@ -6,7 +6,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -1418,9 +1417,9 @@ public class PredVarInstIntegrationITCase extends IntegrationTestBase {
         Formula f = new Formula();
         f.read(stmt3);
 
-        Map<String, HashSet<String>> actual = PredVarInst.findPredVarTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = PredVarInst.findPredVarTypes(f, SigmaTestBase.kb);
         System.out.println("testFindPredVarTypesStmt3(): actual: " + actual);
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?ROLE", Sets.newHashSet("CaseRole"));
         assertEquals(expected, actual);
     }

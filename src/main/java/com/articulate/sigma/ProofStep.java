@@ -19,6 +19,8 @@ import com.articulate.sigma.utils.FileUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A trivial structure to hold the elements of a proof step.
@@ -63,22 +65,22 @@ public class ProofStep {
     public Integer number = 0;
 
     /**
-     * An ArrayList of Integer(s), which reference prior proof steps from
+     * An List of Integer(s), which reference prior proof steps from
      * which this axiom is derived. Note that the numbering is what
      * the ProofProcessor assigns, not necessarily the proof
      * numbers returned directly from the inference engine.
      */
-    public ArrayList<Integer> premises = new ArrayList();
+    public List<Integer> premises = new ArrayList();
 
     /**
-     * Take an ArrayList of ProofSteps and renumber them consecutively
-     * starting at 1.  Update the ArrayList of premises so that they
+     * Take an List of ProofSteps and renumber them consecutively
+     * starting at 1.  Update the List of premises so that they
      * reflect the renumbering.
      */
-    public static ArrayList<ProofStep> normalizeProofStepNumbers(ArrayList<ProofStep> proofSteps) {
+    public static List<ProofStep> normalizeProofStepNumbers(List<ProofStep> proofSteps) {
 
         // old number, new number
-        HashMap<Integer, Integer> numberingMap = new HashMap<>();
+        Map<Integer, Integer> numberingMap = new HashMap<>();
         System.out.println("INFO in ProofStep.normalizeProofStepNumbers(): begin with " + proofSteps.size() + " steps ");
         //if (debug) System.out.println("INFO in ProofStep.normalizeProofStepNumbers(): before: " + proofSteps);
         int newIndex = 1;
@@ -115,21 +117,21 @@ public class ProofStep {
     /**
      * Remove duplicate statements in the proof
      */
-    public static ArrayList<ProofStep> removeDuplicates(ArrayList<ProofStep> proofSteps) {
+    public static List<ProofStep> removeDuplicates(List<ProofStep> proofSteps) {
 
         if (debug) System.out.println("INFO in ProofStep.removeDuplicates(): before: " + proofSteps);
         //	System.out.println("INFO in ProofSteps.removeDuplicates()");
         // old number, new number
-        HashMap<Integer, Integer> numberingMap = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> numberingMap = new HashMap<Integer, Integer>();
 
         // formula string, proof step number
-        HashMap<String, Integer> formulaMap = new HashMap<String, Integer>();
+        Map<String, Integer> formulaMap = new HashMap<String, Integer>();
 
         // proof step number, proof step
-        HashMap<Integer, ProofStep> reverseFormulaMap = new HashMap<Integer, ProofStep>();
+        Map<Integer, ProofStep> reverseFormulaMap = new HashMap<Integer, ProofStep>();
 
-        ArrayList<ProofStep> newProofSteps = new ArrayList<ProofStep>();
-        ArrayList<ProofStep> dedupedProofSteps = new ArrayList<ProofStep>();
+        List<ProofStep> newProofSteps = new ArrayList<ProofStep>();
+        List<ProofStep> dedupedProofSteps = new ArrayList<ProofStep>();
 
         int counter = 1;
         for (int i = 0; i < proofSteps.size(); i++) {
@@ -160,7 +162,7 @@ public class ProofStep {
             psNew.axiom = s;
             psNew.number = newIndex;
             psNew.input = ps.input;
-            ArrayList<Integer> newPremises = new ArrayList();
+            List<Integer> newPremises = new ArrayList();
             for (int j = 0; j < ps.premises.size(); j++) {
                 Integer premiseNum = ps.premises.get(j);
                 Integer newNumber = null;
@@ -184,10 +186,10 @@ public class ProofStep {
      * (1) conjecture
      * (2) duplicate $false;
      */
-    public static ArrayList<ProofStep> removeUnnecessary(ArrayList<ProofStep> proofSteps) {
+    public static List<ProofStep> removeUnnecessary(List<ProofStep> proofSteps) {
 
         if (debug) System.out.println("INFO in ProofStep.removeUnnecessary(): before: " + proofSteps);
-        ArrayList<ProofStep> results = new ArrayList<ProofStep>();
+        List<ProofStep> results = new ArrayList<ProofStep>();
         boolean firstTimeSeeFALSE = true;
         for (int i = 0; i < proofSteps.size(); i++) {
             ProofStep ps = proofSteps.get(i);

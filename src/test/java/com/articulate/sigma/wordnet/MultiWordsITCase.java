@@ -26,7 +26,6 @@ import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -79,7 +78,7 @@ public class MultiWordsITCase extends UnitTestBase {
     @Test
     public void testVerbMultiWordCatsAndDogs3() {
 
-        ArrayList<String> input = Lists.newArrayList("cats", "and", "dogs", "and", "sheep");
+        List<String> input = Lists.newArrayList("cats", "and", "dogs", "and", "sheep");
         List<String> synset = Lists.newArrayList();
         int endIndex = WordNet.wn.getMultiWords().findMultiWord("rain", "rain", input, synset);
 
@@ -91,7 +90,7 @@ public class MultiWordsITCase extends UnitTestBase {
     @Test
     public void testVerbMultiWordCatsAndDogs4() {
 
-        ArrayList<String> input = Lists.newArrayList("cats", "and", "dogs", "and", "sheep");
+        List<String> input = Lists.newArrayList("cats", "and", "dogs", "and", "sheep");
         List<String> synset = Lists.newArrayList();
         // Incorrect root form
         int endIndex = WordNet.wn.getMultiWords().findMultiWord("raining", "raining", input, synset);
@@ -103,7 +102,7 @@ public class MultiWordsITCase extends UnitTestBase {
     @Test
     public void testVerbMultiWordCatsAndDogs5() {
 
-        ArrayList<String> input = Lists.newArrayList("raining", "cats", "and", "dogs", "and", "sheep");
+        List<String> input = Lists.newArrayList("raining", "cats", "and", "dogs", "and", "sheep");
         List<String> synset = Lists.newArrayList();
         // Incorrect root form
         String result = WordNet.wn.getMultiWords().findMultiWord(input);
@@ -115,8 +114,8 @@ public class MultiWordsITCase extends UnitTestBase {
     @Test
     public void testNounMultiWord1() {
 
-        ArrayList<String> input = Lists.newArrayList("father");
-        ArrayList<String> synset = Lists.newArrayList();
+        List<String> input = Lists.newArrayList("father");
+        List<String> synset = Lists.newArrayList();
         // Incorrect root form
         int endIndex = WordNet.wn.getMultiWords().findMultiWord("found", "found", input, synset);
 
@@ -127,8 +126,8 @@ public class MultiWordsITCase extends UnitTestBase {
     @Test
     public void testNounMultiWord2() {
 
-        ArrayList<String> input = Lists.newArrayList("father");
-        ArrayList<String> synset = Lists.newArrayList();
+        List<String> input = Lists.newArrayList("father");
+        List<String> synset = Lists.newArrayList();
         int endIndex = WordNet.wn.getMultiWords().findMultiWord("founding", "founding", input, synset);
 
         assertEquals(2, endIndex);

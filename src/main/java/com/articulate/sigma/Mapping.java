@@ -4,8 +4,8 @@ import com.articulate.sigma.trans.OWLtranslator;
 import com.articulate.sigma.utils.StringUtil;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -211,7 +211,7 @@ public class Mapping {
     public static String getTermFormat(KB kb, String term) {
 
         if (kb != null) {
-            ArrayList al = kb.askWithRestriction(0, "termFormat", 2, term);
+            List al = kb.askWithRestriction(0, "termFormat", 2, term);
             if (al != null && al.size() > 0) {
                 Formula f = (Formula) al.get(0);
                 String t = f.getStringArgument(3);

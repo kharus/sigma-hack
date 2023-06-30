@@ -23,17 +23,17 @@ public class Infrastructure {
 
     public static int funcIdCounter = 0;
 
-    public HashMap<String, HashSet<String>> relsForType = new HashMap<>();
+    public Map<String, Set<String>> relsForType = new HashMap<>();
 
     // exterior key of product type, interior key of relation, interior set of allowed values
-    public HashMap<String, HashMap<String, HashSet<String>>> allowableValues = new HashMap<>();
+    public Map<String, Map<String, Set<String>>> allowableValues = new HashMap<>();
 
-    public HashMap<String, String> productTypes = new HashMap<>();  // id, name
-    public HashMap<String, HashSet<String>> productsByTypeNames = new HashMap<>();
+    public Map<String, String> productTypes = new HashMap<>();  // id, name
+    public Map<String, Set<String>> productsByTypeNames = new HashMap<>();
 
-    public HashMap<String, Product> products = new HashMap<>(); //id, product
-    public HashMap<String, Category> categories = new HashMap<>(); //id, category
-    public HashMap<String, HashSet<String>> parents = new HashMap<>(); //parent name, list of categories
+    public Map<String, Product> products = new HashMap<>(); //id, product
+    public Map<String, Category> categories = new HashMap<>(); //id, category
+    public Map<String, Set<String>> parents = new HashMap<>(); //parent name, list of categories
 
     public static void initOnce() {
 
@@ -194,7 +194,7 @@ public class Infrastructure {
         p.ID = oid;
         p.name = name;
         //System.out.println("processProduct(): " + p.name);
-        p.attributes = (HashMap<String, String>) attrib;
+        p.attributes = (Map<String, String>) attrib;
         JSONObject jsocat = (JSONObject) jso.get("subCategoryId");
         String subcat = (String) jsocat.get("$oid");
         if (categories.containsKey(subcat)) { // points to a duplicate concepts in categories
@@ -373,8 +373,8 @@ public class Infrastructure {
         JSONArray arraypt = null;
         JSONArray arrayc = null;
         JSONObject objm = null;
-        HashMap<String, Category> categories = new HashMap<>();
-        HashMap<String, String> productType = new HashMap<>();
+        Map<String, Category> categories = new HashMap<>();
+        Map<String, String> productType = new HashMap<>();
         Mappings mappings = new Mappings();
         try {
             // read product types
@@ -405,7 +405,7 @@ public class Infrastructure {
             //System.out.println("(applicableRelation " + SUMO + " " + newR + ")");
             //System.out.println("(allowableValue " + SUMO + " " + newR + " \"" + attrib.get(r) + "\")");
             for (String ptype : relsForType.keySet()) {
-                HashSet<String> rels = relsForType.get(ptype);
+                Set<String> rels = relsForType.get(ptype);
                 for (String rel : rels) {
                     System.out.println("(applicableRelation " + StringUtil.stringToKIFid(ptype) + " " + StringUtil.stringToKIFid(rel) + ")");
                     PreparedStatement st = conn.prepareStatement("INSERT  INTO edges (rel, source, target) " +
@@ -416,9 +416,9 @@ public class Infrastructure {
                 }
             }
             for (String ptype : allowableValues.keySet()) {
-                HashMap<String, HashSet<String>> rels = allowableValues.get(ptype);
+                Map<String, Set<String>> rels = allowableValues.get(ptype);
                 for (String rel : rels.keySet()) {
-                    HashSet<String> vals = rels.get(rel);
+                    Set<String> vals = rels.get(rel);
                     for (String val : vals) {
                         String funcID = "Function" + funcIdCounter++;
                         val = processValue(val, funcID);
@@ -447,17 +447,17 @@ public class Infrastructure {
         }
     }
 
-    public ArrayList<String> getProductTypes() {
+    public List<String> getProductTypes() {
 
-        ArrayList<String> al = new ArrayList<>();
+        List<String> al = new ArrayList<>();
         al.addAll(productTypes.values());
         return al;
     }
 
-    public ArrayList<String> getProductTypesDB() {
+    public List<String> getProductTypesDB() {
 
         System.out.println("getProductTypesDB()");
-        ArrayList<String> al = new ArrayList<>();
+        List<String> al = new ArrayList<>();
         try {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT source FROM edges WHERE target='ProductAttribute';");
@@ -474,9 +474,9 @@ public class Infrastructure {
         return al;
     }
 
-    public ArrayList<String> getCategories(String productType) {
+    public List<String> getCategories(String productType) {
 
-        HashSet<String> result = new HashSet<>();
+        Set<String> result = new HashSet<>();
         for (String s : categories.keySet()) {
             Category c = categories.get(s);
             if (StringUtil.emptyString(c.parent)) {
@@ -486,17 +486,17 @@ public class Infrastructure {
                     result.add(c.name);
             }
         }
-        ArrayList<String> al = new ArrayList<>();
+        List<String> al = new ArrayList<>();
         al.addAll(result);
         return al;
     }
 
-    public ArrayList<String> getCategoriesDB(String productType) {
+    public List<String> getCategoriesDB(String productType) {
 
         System.out.println("getCategoriesDB(): subCategory: " + productType);
         if (StringUtil.emptyString(productType))
             return null;
-        ArrayList<String> al = new ArrayList<>();
+        List<String> al = new ArrayList<>();
         try {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT source FROM edges WHERE rel='industryProductType' AND target='" + productType + "';");
@@ -513,21 +513,21 @@ public class Infrastructure {
         return al;
     }
 
-    public ArrayList<String> getSubCategories(String category) {
+    public List<String> getSubCategories(String category) {
 
         if (StringUtil.emptyString(category) || !parents.containsKey(category))
             return null;
-        ArrayList<String> al = new ArrayList<>();
+        List<String> al = new ArrayList<>();
         al.addAll(parents.get(category));
         return al;
     }
 
-    public ArrayList<String> getSubCategoriesDB(String category) throws SQLException {
+    public List<String> getSubCategoriesDB(String category) throws SQLException {
 
         System.out.println("getSubCategoriesDB(): category: " + category);
         if (StringUtil.emptyString(category))
             return null;
-        ArrayList<String> al = new ArrayList<>();
+        List<String> al = new ArrayList<>();
         try {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT source FROM edges WHERE rel='subclass' and target='" + category + "';");
@@ -544,7 +544,7 @@ public class Infrastructure {
         return al;
     }
 
-    public HashSet<String> getAllowedRelations(String subCategory) {
+    public Set<String> getAllowedRelations(String subCategory) {
 
         if (StringUtil.emptyString(subCategory))
             return null;
@@ -554,11 +554,11 @@ public class Infrastructure {
         return relsForType.get(subCategory);
     }
 
-    public HashSet<String> getAllowedRelationsDB(String subCategory) throws SQLException {
+    public Set<String> getAllowedRelationsDB(String subCategory) throws SQLException {
 
         if (StringUtil.emptyString(subCategory))
             return null;
-        HashSet<String> result = new HashSet<>();
+        Set<String> result = new HashSet<>();
         subCategory = StringUtil.decode(subCategory);
         System.out.println("getAllowedRelationsDB(): subCategory: " + subCategory);
         System.out.println("getAllowedRelationsDB(): " + relsForType);
@@ -575,11 +575,11 @@ public class Infrastructure {
         return result;
     }
 
-    public ArrayList<String> getAllowableValues(String subCategory, String rel) {
+    public List<String> getAllowableValues(String subCategory, String rel) {
 
         if (StringUtil.emptyString(subCategory))
             return null;
-        ArrayList<String> al = new ArrayList<>();
+        List<String> al = new ArrayList<>();
         System.out.println("getAllowableValues(): subCategory: " + subCategory);
         System.out.println("getAllowableValues(): rel: " + rel);
         System.out.println("getAllowableValues(): " + allowableValues);
@@ -595,11 +595,11 @@ public class Infrastructure {
         return al;
     }
 
-    public ArrayList<String> getAllowableValuesDB(String subCategory, String rel) {
+    public List<String> getAllowableValuesDB(String subCategory, String rel) {
 
         if (StringUtil.emptyString(subCategory))
             return null;
-        ArrayList<String> al = new ArrayList<>();
+        List<String> al = new ArrayList<>();
         System.out.println("getAllowableValuesDB(): subCategory: " + subCategory);
         System.out.println("getAllowableValuesDB(): rel: " + rel);
         System.out.println("getAllowableValuesDB(): " + allowableValues);
@@ -619,10 +619,10 @@ public class Infrastructure {
         return al;
     }
 
-    public ArrayList<String> getProducts(Map<String, String> params) {
+    public List<String> getProducts(Map<String, String> params) {
 
         System.out.println("getProducts(): params: " + params);
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         String subCat = params.get("subCategory");
         System.out.println("getProducts(): subCat: " + subCat);
         if (StringUtil.emptyString(subCat))
@@ -659,9 +659,9 @@ public class Infrastructure {
         return result;
     }
 
-    public ArrayList<String> getProductsByTypeDB(String subCat) {
+    public List<String> getProductsByTypeDB(String subCat) {
 
-        ArrayList<String> al = new ArrayList<>();
+        List<String> al = new ArrayList<>();
         try {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT source FROM edges WHERE rel='subclass' and target='" + subCat + "';");
@@ -700,10 +700,10 @@ public class Infrastructure {
      * @param params is a map of attribute value pairs of the features being searched for
      * @return a list of products
      */
-    public ArrayList<String> getProductsDB(Map<String, String> params) {
+    public List<String> getProductsDB(Map<String, String> params) {
 
         System.out.println("getProductsDB(): params: " + params);
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         String subCat = params.get("subCategory");
         String cat = params.get("category");
         System.out.println("getProductsDB(): subCat: " + subCat);
@@ -762,7 +762,7 @@ public class Infrastructure {
         public String ID = null;
         public String name = null;
         public String subCat = null; // a JSON oid
-        public HashMap<String, String> attributes = new HashMap<>();
+        public Map<String, String> attributes = new HashMap<>();
 
         public String toString() {
             StringBuilder sb = new StringBuilder();
@@ -780,7 +780,7 @@ public class Infrastructure {
         public String name = null;
         public String parent = null; // a JSON oid
         public String productType = null;  // a JSON oid
-        public HashSet<String> sectors = new HashSet<>();
+        public Set<String> sectors = new HashSet<>();
 
         public String toString() {
             StringBuilder sb = new StringBuilder();
@@ -796,8 +796,8 @@ public class Infrastructure {
      * maps are old string ID keys and new (SUMO) id values
      */
     public class Mappings {
-        public HashMap<String, String> terms = new HashMap<>();
-        public HashMap<String, String> relations = new HashMap<>();
-        public HashMap<String, String> units = new HashMap<>();
+        public Map<String, String> terms = new HashMap<>();
+        public Map<String, String> relations = new HashMap<>();
+        public Map<String, String> units = new HashMap<>();
     }
 }

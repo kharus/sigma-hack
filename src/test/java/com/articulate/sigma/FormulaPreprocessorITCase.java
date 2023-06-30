@@ -19,9 +19,8 @@ import org.junit.experimental.categories.Category;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -44,10 +43,10 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         Formula f = new Formula();
         f.read(stmt);
 
-        HashMap<String, ArrayList> actualMap = f.gatherRelationsWithArgTypes(SigmaTestBase.kb);
+        Map<String, List> actualMap = f.gatherRelationsWithArgTypes(SigmaTestBase.kb);
 
-        ArrayList<String> expectedList = Lists.newArrayList(null, "Process", "AutonomousAgent", null, null, null, null, null);
-        HashMap<String, ArrayList> expectedMap = Maps.newHashMap();
+        List<String> expectedList = Lists.newArrayList(null, "Process", "AutonomousAgent", null, null, null, null, null);
+        Map<String, List> expectedMap = Maps.newHashMap();
         expectedMap.put("agent", expectedList);
 
         System.out.println("testGatherRelationships(): actual: " + actualMap);
@@ -126,21 +125,21 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
 
         System.out.println("\n============= testMergeToMap1 ==================");
 
-        HashMap<String, HashSet<String>> map1 = Maps.newHashMap();
+        Map<String, Set<String>> map1 = Maps.newHashMap();
         map1.put("?Obj", Sets.newHashSet("Object", "CorpuscularObject"));
         map1.put("?Hum", Sets.newHashSet("Man", "Woman"));
         map1.put("?Time", Sets.newHashSet("Month"));
 
-        HashMap<String, HashSet<String>> map2 = Maps.newHashMap();
+        Map<String, Set<String>> map2 = Maps.newHashMap();
         map2.put("?Obj", Sets.newHashSet("Object"));
         map2.put("?Hum", Sets.newHashSet("Human"));
 
-        HashMap<String, HashSet<String>> expectedMap = Maps.newHashMap();
+        Map<String, Set<String>> expectedMap = Maps.newHashMap();
         expectedMap.put("?Obj", Sets.newHashSet("CorpuscularObject"));
         expectedMap.put("?Hum", Sets.newHashSet("Man", "Woman"));
         expectedMap.put("?Time", Sets.newHashSet("Month"));
 
-        HashMap<String, HashSet<String>> actualMap = KButilities.mergeToMap(map1, map2, SigmaTestBase.kb);
+        Map<String, Set<String>> actualMap = KButilities.mergeToMap(map1, map2, SigmaTestBase.kb);
 
         System.out.println("testMergeToMap1(): actual: " + actualMap);
         System.out.println("testMergeToMap1(): expected: " + expectedMap);
@@ -296,7 +295,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         Formula f = new Formula();
         f.read(strf);
         //FormulaPreprocessor.debug = true;
-        HashMap<String, HashSet<String>> actual = fp.findAllTypeRestrictions(f, kb);
+        Map<String, Set<String>> actual = fp.findAllTypeRestrictions(f, kb);
         String expected = "{?NUMBER1=[RealNumber], ?NUMBER2=[NonnegativeRealNumber]}";
         System.out.println("testAbsolute(): actual: " + actual);
         System.out.println("testAbsolute(): expected: " + expected);
@@ -322,7 +321,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
 
         FormulaPreprocessor fp = new FormulaPreprocessor();
         //FormulaPreprocessor.debug = true;
-        ArrayList<Formula> actual = fp.replacePredVarsAndRowVars(f, kb, false);
+        List<Formula> actual = fp.replacePredVarsAndRowVars(f, kb, false);
         System.out.println("testInstantiatePredStmt4(): actual: " + actual);
         Set<Formula> expected = Sets.newHashSet();
         int expectedSize = 100;
@@ -394,7 +393,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         System.out.println("testArgNumsPreprocess: patient valence: " +
                 kb.kbCache.valences.get("patient"));
 
-        ArrayList<Formula> forms = RowVars.expandRowVars(kb, f);
+        List<Formula> forms = RowVars.expandRowVars(kb, f);
         System.out.println("testArgNumsPreprocess: forms: " + forms);
     }
 

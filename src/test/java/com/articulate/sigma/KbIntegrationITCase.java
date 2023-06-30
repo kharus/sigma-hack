@@ -3,7 +3,7 @@ package com.articulate.sigma;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +24,7 @@ public class KbIntegrationITCase extends IntegrationTestBase {
 
     @Test
     public void testAskWithTwoRestrictionsDirect2() {
-        ArrayList<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Boy", 2, "Man");
+        List<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Boy", 2, "Man");
         assertNotEquals(0, actual.size());
     }
 

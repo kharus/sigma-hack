@@ -8,7 +8,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -36,7 +36,7 @@ public class TPTP2SUMOITCase {
             // kif = TPTP2SUMO.convert(reader, false);
             tptp_parser.TPTPVisitor sv = new tptp_parser.TPTPVisitor();
             sv.parseString(input);
-            HashMap<String, tptp_parser.TPTPFormula> hm = sv.result;
+            Map<String, tptp_parser.TPTPFormula> hm = sv.result;
             for (String s : hm.keySet()) {
                 System.out.println(hm.get(s));
                 System.out.println("\t" + hm.get(s).sumo + "\n");

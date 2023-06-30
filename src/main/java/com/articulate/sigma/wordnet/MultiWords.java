@@ -131,7 +131,7 @@ public class MultiWords implements Serializable {
             String foundMultiWord = multiWordKey + "_" + multiWordTail.get(wordIndex);
             Collection<String> candidates = multiWord.get(multiWordKey);
             while (candidates.size() > 0) {
-                ArrayList<String> newCandidates = new ArrayList<String>();
+                List<String> newCandidates = new ArrayList<String>();
                 for (String candidate : candidates) {
                     if (candidate.equals(foundMultiWord)) {
                         String sense = WSD.getBestDefaultSense(foundMultiWord);

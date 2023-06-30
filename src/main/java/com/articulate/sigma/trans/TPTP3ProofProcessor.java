@@ -42,12 +42,12 @@ public class TPTP3ProofProcessor {
     public boolean noConjecture = false;
     public boolean inconsistency = false;
     public boolean containsFalse = false;
-    public ArrayList<String> bindings = new ArrayList<>();
-    public HashMap<String, String> bindingMap = new HashMap<>();
-    public HashMap<String, String> skolemTypes = new HashMap<>();
-    public ArrayList<TPTPFormula> proof = new ArrayList<>();
+    public List<String> bindings = new ArrayList<>();
+    public Map<String, String> bindingMap = new HashMap<>();
+    public Map<String, String> skolemTypes = new HashMap<>();
+    public List<TPTPFormula> proof = new ArrayList<>();
     // a map of original ID keys and renumbered key values
-    public HashMap<String, Integer> idTable = new HashMap<>();
+    public Map<String, Integer> idTable = new HashMap<>();
     private int idCounter = 0;
 
     public TPTP3ProofProcessor() {
@@ -57,9 +57,9 @@ public class TPTP3ProofProcessor {
      * Join TPTP3 proof statements that are formatted over multiple lines. Note
      * that comment lines are left unchanged.
      */
-    public static ArrayList<String> joinLines(ArrayList<String> inputs) {
+    public static List<String> joinLines(List<String> inputs) {
 
-        ArrayList<String> outputs = new ArrayList<String>();
+        List<String> outputs = new ArrayList<String>();
         StringBuffer sb = new StringBuffer();
         boolean before = true;
         for (String s : inputs) {
@@ -82,11 +82,11 @@ public class TPTP3ProofProcessor {
      * reverse them for Vampire, which presents proofs in reverse order. Note
      * that comment lines are left unchanged.
      */
-    public static ArrayList<String> joinNreverseInputLines(ArrayList<String> inputs) {
+    public static List<String> joinNreverseInputLines(List<String> inputs) {
 
-        ArrayList<String> outputs = new ArrayList<String>();
-        ArrayList<String> commentsBefore = new ArrayList<String>();
-        ArrayList<String> commentsAfter = new ArrayList<String>();
+        List<String> outputs = new ArrayList<String>();
+        List<String> commentsBefore = new ArrayList<String>();
+        List<String> commentsAfter = new ArrayList<String>();
         StringBuffer sb = new StringBuffer();
         boolean before = true;
         for (String s : inputs) {
@@ -105,7 +105,7 @@ public class TPTP3ProofProcessor {
                 sb.append(s.trim());
         }
         Collections.reverse(outputs);
-        ArrayList<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
         for (String s : commentsBefore)
             result.add(s);
         for (String s : outputs)
@@ -119,9 +119,9 @@ public class TPTP3ProofProcessor {
      * return the predicate and arguments to a valid prolog expression p(a1,a2...an)
      * where a1..an are an atom, a string or a prolog expression
      */
-    public static ArrayList<String> getPrologArgs(String line) {
+    public static List<String> getPrologArgs(String line) {
 
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         boolean inQuote = false;
         int parenLevel = 0;
         StringBuffer sb = new StringBuffer();
@@ -239,7 +239,7 @@ public class TPTP3ProofProcessor {
                     String query = "(maximumPayloadCapacity ?X (MeasureFn ?Y ?Z))";
                     StringBuffer answerVars = new StringBuffer("?X ?Y ?Z");
                     System.out.println("input: " + lines + "\n");
-                    tpp.parseProofOutput((ArrayList<String>) lines, query, kb, answerVars);
+                    tpp.parseProofOutput(lines, query, kb, answerVars);
                     tpp.createProofDotGraph();
                     System.out.println("TPTP3ProofProcessor.main(): " + tpp.proof.size() + " steps ");
                     for (TPTPFormula step : tpp.proof) {
@@ -306,9 +306,9 @@ public class TPTP3ProofProcessor {
     /**
      * Parse support / proof statements in the response
      */
-    public ArrayList<Integer> supportIdToInts(ArrayList<String> supportIds) {
+    public List<Integer> supportIdToInts(List<String> supportIds) {
 
-        ArrayList<Integer> prems = new ArrayList<Integer>();
+        List<Integer> prems = new ArrayList<Integer>();
         for (String s : supportIds)
             prems.add(getNumFromIDtable(s));
         return prems;
@@ -317,11 +317,11 @@ public class TPTP3ProofProcessor {
     /**
      * Parse support / proof statements in the response
      */
-    public ArrayList<Integer> parseSupports(String supportId) {
+    public List<Integer> parseSupports(String supportId) {
 
         if (debug) System.out.println("Info in TPTP3ProofProcessor.parseSupports(): " + supportId);
 
-        ArrayList<Integer> prems = new ArrayList<Integer>();
+        List<Integer> prems = new ArrayList<Integer>();
         if (supportId.startsWith("[") && !supportId.equals("[]")) {
             //supportId = trimBrackets(supportId).trim();
             supportId = StringUtil.removeEnclosingCharPair(supportId, 1, '[', ']').trim();
@@ -387,7 +387,7 @@ public class TPTP3ProofProcessor {
         try {
             TPTPVisitor sv = new TPTPVisitor();
             sv.parseString(line);
-            HashMap<String, TPTPFormula> hm = sv.result;
+            Map<String, TPTPFormula> hm = sv.result;
             if (hm != null) {
                 for (String tptpid : hm.keySet()) {
                     TPTPFormula tptpF = hm.get(tptpid);
@@ -481,7 +481,7 @@ public class TPTP3ProofProcessor {
             if (predF != null)
                 return predF;
         }
-        ArrayList<Formula> args = ax.complexArgumentsToArrayList(1);
+        List<Formula> args = ax.complexArgumentsToArrayList(1);
         if (debug) System.out.println("extractAnswerClause(): args: " + args);
 
         if (args == null)
@@ -501,9 +501,9 @@ public class TPTP3ProofProcessor {
     /**
      * Remove duplicates in an Array without changing the order
      */
-    public ArrayList<String> removeDupInArray(ArrayList<String> input) {
+    public List<String> removeDupInArray(List<String> input) {
 
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (String s : input)
             if (!result.contains(s))
                 result.add(s);
@@ -516,10 +516,10 @@ public class TPTP3ProofProcessor {
     public void processAnswersFromProof(StringBuffer qlist, String query) {
 
         Formula qform = new Formula(query);
-        ArrayList<String> answers = null;
-        ArrayList<String> vars = qform.collectAllVariablesOrdered();
+        List<String> answers = null;
+        List<String> vars = qform.collectAllVariablesOrdered();
         vars = removeDupInArray(vars);
-        ArrayList<String> qvars = new ArrayList<>();
+        List<String> qvars = new ArrayList<>();
         if (debug) System.out.println("processAnswersFromProof(): vars: " + vars);
         if (debug) System.out.println("processAnswersFromProof(): qlist: " + qlist);
         if (debug) System.out.println("processAnswersFromProof(): query: " + query);
@@ -581,12 +581,12 @@ public class TPTP3ProofProcessor {
         for (String var : bindingMap.keySet()) {
             String binding = bindingMap.get(var);
             if (binding.startsWith("esk") || binding.startsWith("(sK")) {
-                ArrayList<String> skolemStmts = ProofProcessor.returnSkolemStmt(binding, proof);
+                List<String> skolemStmts = ProofProcessor.returnSkolemStmt(binding, proof);
                 if (debug) System.out.println("findTypesForSkolemTerms(): skolem stmts: " + skolemStmts);
-                HashSet<String> types = new HashSet<>();
+                Set<String> types = new HashSet<>();
                 for (String skolemStmt : skolemStmts) {
                     Formula f = new Formula(skolemStmt);
-                    ArrayList<String> l = f.complexArgumentsToArrayListString(0);
+                    List<String> l = f.complexArgumentsToArrayListString(0);
                     if (l.size() != 3)
                         continue;
                     if (l.get(0).equals("names") || l.get(0).equals("instance") || l.get(0).equals("subclass"))
@@ -673,7 +673,7 @@ public class TPTP3ProofProcessor {
      */
     public void parseProofOutput(LineNumberReader lnr, KB kb) {
 
-        ArrayList<String> lines = new ArrayList<>();
+        List<String> lines = new ArrayList<>();
         try {
             String line;
             while ((line = lnr.readLine()) != null)
@@ -694,7 +694,7 @@ public class TPTP3ProofProcessor {
      *              which is the order Vampire and Eprover will follow when
      *              reporting answers
      */
-    public void parseProofOutput(ArrayList<String> lines, String kifQuery, KB kb, StringBuffer qlist) {
+    public void parseProofOutput(List<String> lines, String kifQuery, KB kb, StringBuffer qlist) {
 
         if (debug) System.out.println("TPTP3ProofProcessor.parseProofOutput(ar): before reverse: " +
                 lines);
@@ -797,9 +797,9 @@ public class TPTP3ProofProcessor {
      * Output = [An instance of Human] (Human is the most specific type
      * for esk3_0 in the given proof)
      */
-    public ArrayList<String> parseAnswerTuples(ArrayList<String> st, String strQuery, KB kb, StringBuffer qlist) {
+    public List<String> parseAnswerTuples(List<String> st, String strQuery, KB kb, StringBuffer qlist) {
 
-        ArrayList<String> answers = new ArrayList<>();
+        List<String> answers = new ArrayList<>();
         parseProofOutput(st, strQuery, kb, qlist);
         if (bindings == null || bindings.isEmpty()) {
             if (proof != null && !proof.isEmpty()) {
@@ -845,11 +845,11 @@ public class TPTP3ProofProcessor {
         return idTable.get(id);
     }
 
-    private ArrayList<Integer> getSupports(PrologTerm pt) {
+    private List<Integer> getSupports(PrologTerm pt) {
 
         if (debug) System.out.println("TPTP3ProofProcess.getSupports(PrologTerm): " + pt);
         if (debug) System.out.println("getSupports(): string,type: " + pt.toString() + "\t" + pt.getType());
-        ArrayList<Integer> supports = new ArrayList<>();
+        List<Integer> supports = new ArrayList<>();
         if (pt.getType() == ATOM)
             supports.add(getNumFromIDtable(pt.toString()));
         else if (pt.getType() == LIST) {
@@ -866,10 +866,10 @@ public class TPTP3ProofProcessor {
         return supports;
     }
 
-    private ArrayList<Integer> getSupports(String input) {
+    private List<Integer> getSupports(String input) {
 
         if (debug) System.out.println("TPTP3ProofProcess.getSupports(String): " + input);
-        ArrayList<Integer> supports = new ArrayList<>();
+        List<Integer> supports = new ArrayList<>();
         Reader reader = new StringReader(input);
         if (debug) System.out.println(input);
         DefaultParserContext dpc = new DefaultParserContext(ParserContext.FLAG_CURLY_BRACKETS).addOps(Op.SWI);
@@ -879,9 +879,9 @@ public class TPTP3ProofProcessor {
         return supports;
     }
 
-    private ArrayList<String> createProofDotGraphBody() {
+    private List<String> createProofDotGraphBody() {
 
-        ArrayList<String> lines = new ArrayList<>();
+        List<String> lines = new ArrayList<>();
         for (TPTPFormula ps : proof) {
             if (tptpProof) {
                 if (StringUtil.emptyString(ps.name))
@@ -972,7 +972,7 @@ public class TPTP3ProofProcessor {
             fw = new FileWriter(filename + ".dot");
             System.out.println("Graph.createGraphBody(): creating file at " + filename + ".dot");
             pw = new PrintWriter(fw);
-            HashSet<String> result = new HashSet<String>();
+            Set<String> result = new HashSet<String>();
             result.addAll(createProofDotGraphBody());
             pw.println("digraph G {");
             pw.println("  rankdir=LR");

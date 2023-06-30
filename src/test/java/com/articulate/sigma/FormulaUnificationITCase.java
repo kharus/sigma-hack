@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.ListIterator;
 
 import static org.junit.Assert.assertTrue;
@@ -35,7 +36,7 @@ public class FormulaUnificationITCase extends UnitTestBase {
 
         File jsonTestFile = new File(UnitTestBase.CONFIG_FILE_DIR, TEST_FILE_NAME);
         JSONParser parser = new JSONParser();
-        ArrayList<Object[]> result = new ArrayList<Object[]>();
+        List<Object[]> result = new ArrayList<Object[]>();
 
         try {
             Object obj = parser.parse(new FileReader(jsonTestFile.getAbsolutePath()));

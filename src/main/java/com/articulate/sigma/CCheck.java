@@ -29,7 +29,7 @@ public class CCheck implements Runnable {
     private PrintWriter pw;
     private String ccheck_kb;
     private String inferenceEngine;
-    private HashMap<String, String> ieSettings;
+    private Map<String, String> ieSettings;
     private int timeOut = 10;
 
     public CCheck(KB kb, String filename) {
@@ -89,7 +89,7 @@ public class CCheck implements Runnable {
                 //String result = InterfaceTPTP.queryTPTP("(instance instance BinaryPredicate)", 10, 1, lineHtml,
                 //        systemChosen, location, quietFlag, kb.name, language);
                 inferenceEngine = "SoTPTP";
-                ieSettings = new HashMap<String, String>();
+                ieSettings = new HashMap<>();
                 ieSettings.put("systemChosen", systemChosen);
                 if (location == "" || location == null)
                     return false;

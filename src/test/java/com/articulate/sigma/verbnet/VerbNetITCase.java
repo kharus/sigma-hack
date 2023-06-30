@@ -5,7 +5,7 @@ import com.articulate.sigma.utils.StringUtil;
 import com.articulate.sigma.wordnet.WordNet;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 import static org.junit.Assert.assertFalse;
@@ -26,7 +26,7 @@ public class VerbNetITCase extends IntegrationTestBase {
     @Test
     public void testWordList() {
 
-        TreeMap<String, ArrayList<String>> tm = WordNet.wn.getSenseKeysFromWord("object");
+        TreeMap<String, List<String>> tm = WordNet.wn.getSenseKeysFromWord("object");
         System.out.println("testWordList(): senses: " + tm);
         String verbs = VerbNet.formatVerbsList(tm);
         System.out.println("testWordList(): verbs: " + verbs);

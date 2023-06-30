@@ -77,24 +77,24 @@ public class Hotel {
     public String areaServed = "";
     public String lastModified = "";
     // type, [title,description]
-    public HashMap<String, AVPair> facilities = new HashMap<String, AVPair>();
+    public Map<String, AVPair> facilities = new HashMap<String, AVPair>();
     // amenity code, value
-    public HashMap<String, String> amenities = new HashMap<String, String>();
+    public Map<String, String> amenities = new HashMap<String, String>();
     // code, url
-    public HashMap<String, String> media = new HashMap<String, String>();
-    public ArrayList<String> reviews = new ArrayList<String>();
+    public Map<String, String> media = new HashMap<String, String>();
+    public List<String> reviews = new ArrayList<String>();
     // a map of the sense (or term) and the number of appearances
-    public HashMap<String, Integer> senses = new HashMap<String, Integer>();
-    public HashMap<String, Integer> SUMO = new HashMap<String, Integer>();
+    public Map<String, Integer> senses = new HashMap<String, Integer>();
+    public Map<String, Integer> SUMO = new HashMap<String, Integer>();
     // a numerical assessment against arbitrary labels
     public TreeMap<String, Float> buckets = new TreeMap<String, Float>();
-    public ArrayList<String> feedData = new ArrayList<String>();
+    public List<String> feedData = new ArrayList<String>();
     // overall sentiment for the hotel's reviews
     public int sentiment = 0;
     // Concept key and sentiment value reflecting the sentiment of each sentence
     // and the concepts in that sentence - an approximate association
-    public HashMap<String, Integer> conceptSentiment = new HashMap<String, Integer>();
-    public HashMap<String, String> values = new HashMap<String, String>();
+    public Map<String, Integer> conceptSentiment = new HashMap<String, Integer>();
+    public Map<String, String> values = new HashMap<String, String>();
 
     public static String asCSVHeader() {
 
@@ -110,7 +110,7 @@ public class Hotel {
         return result;
     }
 
-    public static String printAllHotels(ArrayList<Hotel> hotels) {
+    public static String printAllHotels(List<Hotel> hotels) {
 
         System.out.println("INFO in Hotel.printAllHotels(): number: " + hotels.size());
         StringBuffer sb = new StringBuffer();
@@ -120,7 +120,7 @@ public class Hotel {
         return sb.toString();
     }
 
-    public static void printAllHotelAmenitySentiment(ArrayList<Hotel> hotels) {
+    public static void printAllHotelAmenitySentiment(List<Hotel> hotels) {
 
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < hotels.size(); i++) {
@@ -143,18 +143,18 @@ public class Hotel {
      * fitness with respect to a particular criterion.  Result is a side
      * effect of setting the bucket weights for the hotels.
      */
-    public static void setHotelWeights(ArrayList<Hotel> hotels) {
+    public static void setHotelWeights(List<Hotel> hotels) {
 
-        ArrayList<ArrayList<String>> rawWeights = DB.readSpreadsheet("OAmenities-weights.csv", null, false);
+        List<List<String>> rawWeights = DB.readSpreadsheet("OAmenities-weights.csv", null, false);
 
         // amenity key, value map of bucket name key, weight value
-        HashMap<String, HashMap<String, String>> weights = new HashMap<String, HashMap<String, String>>();
-        ArrayList<String> header = rawWeights.get(0);
+        Map<String, Map<String, String>> weights = new HashMap<String, Map<String, String>>();
+        List<String> header = rawWeights.get(0);
         //System.out.println("INFO in DB.setHotelWeights(): buckets: " + buckets);
         for (int i = 1; i < rawWeights.size(); i++) {
-            ArrayList<String> al = rawWeights.get(i);
+            List<String> al = rawWeights.get(i);
             String amenity = al.get(0).trim();
-            HashMap<String, String> amenityValues = new HashMap<String, String>();
+            Map<String, String> amenityValues = new HashMap<String, String>();
             for (int j = 2; j < header.size(); j++) {
                 String bucket = header.get(j);
                 String value = al.get(j);
@@ -178,7 +178,7 @@ public class Hotel {
                         //System.out.println("INFO in DB.setHotelWeights(): amenity, amenityValue is non-empty: " + amenity + "," + amenityValue);
                         if (weights.containsKey(amenity)) {  // if the amenity has a weight
                             //System.out.println("INFO in DB.setHotelWeights(): amenity has a weight: " + amenity);
-                            HashMap<String, String> weightBuckets = weights.get(amenity);
+                            Map<String, String> weightBuckets = weights.get(amenity);
                             Iterator<String> it2 = weightBuckets.keySet().iterator();
                             while (it2.hasNext()) {
                                 String bucket = it2.next();
@@ -205,14 +205,14 @@ public class Hotel {
     /**
      * @param w states whether to write SUMO statements
      */
-    public static ArrayList<Hotel> HotelDBImport(boolean w) {
+    public static List<Hotel> HotelDBImport(boolean w) {
 
-        HashMap<String, String> abbrevs = DB.readStateAbbrevs();
-        ArrayList<Hotel> result = new ArrayList<Hotel>();
-        ArrayList<ArrayList<String>> f = DB.readSpreadsheet("Hotels_SF.csv", null, false);
+        Map<String, String> abbrevs = DB.readStateAbbrevs();
+        List<Hotel> result = new ArrayList<Hotel>();
+        List<List<String>> f = DB.readSpreadsheet("Hotels_SF.csv", null, false);
         for (int i = 1; i < f.size(); i++) {
             Hotel h = new Hotel();
-            ArrayList al = f.get(i);
+            List al = f.get(i);
             h.feedData = al;
             String NTMHotelID = (String) al.get(0);
             h.nID = NTMHotelID;
@@ -382,10 +382,10 @@ public class Hotel {
      *
      * @result a list of SUMO term names, sorted by frequency
      */
-    public static ArrayList<String> generateSUMOHeader(ArrayList<Hotel> hotels) {
+    public static List<String> generateSUMOHeader(List<Hotel> hotels) {
 
         TreeMap<String, Integer> columnNumbers = new TreeMap<String, Integer>();
-        ArrayList<String> result = DB.fill("", hotelColumns.size());
+        List<String> result = DB.fill("", hotelColumns.size());
         Iterator<Hotel> it = hotels.iterator();
         while (it.hasNext()) {
             Hotel h = it.next();
@@ -418,9 +418,9 @@ public class Hotel {
         return result;
     }
 
-    public static ArrayList<String> generateSUMOColumns(Hotel h, ArrayList<String> SUMOheader) {
+    public static List<String> generateSUMOColumns(Hotel h, List<String> SUMOheader) {
 
-        ArrayList<String> result = DB.fill("", SUMOheader.size());
+        List<String> result = DB.fill("", SUMOheader.size());
         Iterator<String> it = h.SUMO.keySet().iterator();
         while (it.hasNext()) {  // iterate through the columns
             String columnName = it.next();
@@ -433,10 +433,10 @@ public class Hotel {
     /**
      * Convert a particular XML markup into an array of hotels
      */
-    public static ArrayList<Hotel> readXMLHotels(String fname) {
+    public static List<Hotel> readXMLHotels(String fname) {
 
         // CSV data structure: a list of lines containing list of column cells
-        ArrayList<Hotel> result = new ArrayList<Hotel>();
+        List<Hotel> result = new ArrayList<Hotel>();
         try {
             String line = "";
             FileReader fr = new FileReader(fname);
@@ -564,14 +564,14 @@ public class Hotel {
         return h;
     }
 
-    public static ArrayList<Hotel> readCSVHotels(String fname) {
+    public static List<Hotel> readCSVHotels(String fname) {
 
-        HashMap<String, String> abbrevs = DB.readStateAbbrevs();
-        ArrayList<Hotel> result = new ArrayList<Hotel>();
-        ArrayList<ArrayList<String>> f = DB.readSpreadsheet(fname, null, false);
+        Map<String, String> abbrevs = DB.readStateAbbrevs();
+        List<Hotel> result = new ArrayList<Hotel>();
+        List<List<String>> f = DB.readSpreadsheet(fname, null, false);
         for (int i = 1; i < f.size(); i++) {
             Hotel h = new Hotel();
-            ArrayList al = f.get(i);
+            List al = f.get(i);
             System.out.println(al);
             h.feedData = al;
             String NTMHotelID = (String) al.get(0);
@@ -601,7 +601,7 @@ public class Hotel {
             /*
             geocodeCount++;
             if (geocodeCount < geocodeLimit) {
-                ArrayList<String> latlon = DB.geocode(addr);
+                List<String> latlon = DB.geocode(addr);
                 if (latlon != null) {
                     h.lat = latlon.get(0);
                     h.lng = latlon.get(1);
@@ -799,12 +799,12 @@ public class Hotel {
     /**
      * Read hotel review files
      *
-     * @return an ArrayList of Hotel
+     * @return an List of Hotel
      */
-    public static ArrayList<Hotel> parseAllHotelReviewFiles(String fname) {
+    public static List<Hotel> parseAllHotelReviewFiles(String fname) {
 
         System.out.println("INFO in parseAllHotelReviewFiles()");
-        ArrayList<Hotel> result = new ArrayList<Hotel>();
+        List<Hotel> result = new ArrayList<Hotel>();
         LineNumberReader lnr = null;
         try {
             File fin = new File(fname);
@@ -887,12 +887,12 @@ public class Hotel {
      * Read hotel review files
      *
      * @param fname is the directory path where the reviews are
-     * @return an ArrayList of Hotel
+     * @return an List of Hotel
      */
-    public static ArrayList<Hotel> parseAllTHotelReviewFiles(String fname) {
+    public static List<Hotel> parseAllTHotelReviewFiles(String fname) {
 
         System.out.println("INFO in parseAllTHotelReviewFiles()");
-        ArrayList<Hotel> result = new ArrayList<Hotel>();
+        List<Hotel> result = new ArrayList<Hotel>();
         LineNumberReader lnr = null;
         try {
             File fin = new File(fname);
@@ -953,7 +953,7 @@ public class Hotel {
         */
     }
 
-    public static void mergeHotels(ArrayList<Hotel> feed, ArrayList<Hotel> reviews) {
+    public static void mergeHotels(List<Hotel> feed, List<Hotel> reviews) {
 
         System.out.println("INFO in mergeHotels()");
         for (int i = 0; i < feed.size(); i++) {
@@ -966,23 +966,23 @@ public class Hotel {
     }
 
     /**
-     * @param feed is an ArrayList of Hotel containing the raw data
+     * @param feed is an List of Hotel containing the raw data
      *             about hotels
      * @return a list of hotels expressed as a list of string values
      * for several fields and then a count of SUMO terms appearing in
      * the review for the given hotel
      */
-    public static ArrayList<ArrayList<String>> hotelReviewSUMOasSparseMatrix(ArrayList<Hotel> feed) {
+    public static List<List<String>> hotelReviewSUMOasSparseMatrix(List<Hotel> feed) {
 
-        ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
+        List<List<String>> result = new ArrayList<List<String>>();
         DB.disambigReviews(feed);
         DB.SUMOReviews(feed);
         hotelSentiment(feed);
-        ArrayList<String> hotelAsArray = new ArrayList<String>();
+        List<String> hotelAsArray = new ArrayList<String>();
 
         // a list of attribute value pairs where the count is in
         // the attribute and the SUMO term is the value
-        ArrayList<AVPair> SUMO = DB.topSUMOInReviews(feed);
+        List<AVPair> SUMO = DB.topSUMOInReviews(feed);
 
         hotelAsArray.add("name");
         hotelAsArray.add("address");
@@ -1023,26 +1023,26 @@ public class Hotel {
     }
 
     /**
-     * @param feed is an ArrayList of Hotel containing the raw data
+     * @param feed is an List of Hotel containing the raw data
      *             about hotels
      * @return a list of hotels expressed as a list of string values
      * for several fields and then a count of SUMO terms appearing in
      * the review for the given hotel
      */
-    public static ArrayList<ArrayList<String>> hotelReviewSUMOSentimentAsSparseMatrix(ArrayList<Hotel> feed, boolean write) {
+    public static List<List<String>> hotelReviewSUMOSentimentAsSparseMatrix(List<Hotel> feed, boolean write) {
 
-        ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
+        List<List<String>> result = new ArrayList<List<String>>();
         System.out.println("INFO in Hotel.hotelReviewSUMOSentimentAsSparseMatrix()");
         DB.disambigReviews(feed);
         System.out.println("INFO in Hotel.hotelReviewSUMOSentimentAsSparseMatrix(): Completed disambigutation");
         DB.SUMOReviews(feed);
         hotelSentiment(feed);
         System.out.println("INFO in Hotel.hotelReviewSUMOSentimentAsSparseMatrix(): Completed sentiment calculation");
-        ArrayList<String> hotelAsArray = new ArrayList<String>();
+        List<String> hotelAsArray = new ArrayList<String>();
 
         // a list of attribute value pairs where the count is in
         // the attribute and the SUMO term is the value
-        ArrayList<AVPair> SUMO = DB.topSUMOInReviews(feed);
+        List<AVPair> SUMO = DB.topSUMOInReviews(feed);
         hotelAmenitySentiment(feed);
 
         hotelAsArray.add("name");
@@ -1132,9 +1132,9 @@ public class Hotel {
         return result;
     }
 
-    public static ArrayList<Hotel> readOXMLhotels(String fname) {
+    public static List<Hotel> readOXMLhotels(String fname) {
 
-        ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+        List<Hotel> hotels = new ArrayList<Hotel>();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setIgnoringElementContentWhitespace(true);
         try {
@@ -1383,7 +1383,7 @@ public class Hotel {
      *                         processed and each spreadsheet line will be written after reading
      *                         each hotel.
      */
-    public static ArrayList<Hotel> readJSONHotels(String dir, boolean writeIncremental) {
+    public static List<Hotel> readJSONHotels(String dir, boolean writeIncremental) {
 
         System.out.println("INFO in readJSONHotels()");
         KBmanager.getMgr().initializeOnce();
@@ -1392,7 +1392,7 @@ public class Hotel {
         System.out.println("INFO in readJSONHotels(): complete reading WordNet files");
 
         long t1 = System.currentTimeMillis();
-        ArrayList<Hotel> result = new ArrayList<Hotel>();
+        List<Hotel> result = new ArrayList<Hotel>();
         LineNumberReader lnr = null;
         PrintWriter pw = null;
         try {
@@ -1442,7 +1442,7 @@ public class Hotel {
         return result;
     }
 
-    public static void hotelSentiment(ArrayList<Hotel> hotels) {
+    public static void hotelSentiment(List<Hotel> hotels) {
 
         System.out.println("INFO in Hotel.hotelSentiment()");
         DB.readSentimentArray();
@@ -1475,7 +1475,7 @@ public class Hotel {
         for (int j = 0; j < h.reviews.size(); j++) {
             String review = h.reviews.get(j);
             //System.out.println(review);
-            HashMap<String, Integer> conceptSent = DB.computeConceptSentiment(review);
+            Map<String, Integer> conceptSent = DB.computeConceptSentiment(review);
             //System.out.println("=== " + conceptSent + " ===");
             h.addConceptSentiment(conceptSent);
         }
@@ -1484,7 +1484,7 @@ public class Hotel {
     /**
      * Compute concept sentiment and store as a side effect.
      */
-    public static void hotelAmenitySentiment(ArrayList<Hotel> hotels) {
+    public static void hotelAmenitySentiment(List<Hotel> hotels) {
 
         WordNet.initOnce();
         DB.readSentimentArray();
@@ -1497,8 +1497,8 @@ public class Hotel {
 
     public static void execJSON(String path) {
 
-        //ArrayList<Hotel> hotels = readJSONHotels(path,false);
-        ArrayList<Hotel> hotels = readJSONHotels(path, true);
+        //List<Hotel> hotels = readJSONHotels(path,false);
+        List<Hotel> hotels = readJSONHotels(path, true);
         long t1 = System.currentTimeMillis();
         //System.out.println(DB.writeSpreadsheet(Hotel.hotelReviewSUMOSentimentAsSparseMatrix(hotels,true),true));
         System.out.println("INFO in Hotel.execJSON(): done computing sentiment in " + ((System.currentTimeMillis() - t1) / 1000.0) + " seconds");
@@ -1524,8 +1524,8 @@ public class Hotel {
         //System.out.println(parseOneHotelFile(""));
 
         /*
-        ArrayList<Hotel> feed = HotelDBImport(false);
-        ArrayList<Hotel> reviews = DB.disambigReviews();
+        List<Hotel> feed = HotelDBImport(false);
+        List<Hotel> reviews = DB.disambigReviews();
         DB.SUMOReviews(reviews);
         mergeHotels(feed,reviews);
         for (int i = 0; i < reviews.size(); i++) {
@@ -1537,7 +1537,7 @@ public class Hotel {
 
         //System.out.println(printAllHotels(readCSVHotels("NHotel-sample.csv")));
 
-        //ArrayList<Hotel> hotels = null;
+        //List<Hotel> hotels = null;
         //hotels = Hotel.readXMLHotels("OHotel.xml");
         //setHotelWeights(hotels);
         //System.out.println(DB.writeSpreadsheet(Hotel.hotelReviewSUMOSentimentAsSparseMatrix(hotels),true));
@@ -1604,7 +1604,7 @@ public class Hotel {
         return result.toString();
     }
 
-    public void addConceptSentiment(HashMap<String, Integer> conceptSent) {
+    public void addConceptSentiment(Map<String, Integer> conceptSent) {
 
         Iterator<String> it = conceptSent.keySet().iterator();
         while (it.hasNext()) {
@@ -1619,7 +1619,7 @@ public class Hotel {
         }
     }
 
-    public void addAllSenses(HashMap<String, Integer> wnsenses) {
+    public void addAllSenses(Map<String, Integer> wnsenses) {
 
         Iterator<String> it = wnsenses.keySet().iterator();
         while (it.hasNext()) {
@@ -1635,7 +1635,7 @@ public class Hotel {
 
         String key = ""; // empty key signifies root element
         String value = "";
-        ArrayList<JSONElement> subelements = new ArrayList<JSONElement>();
+        List<JSONElement> subelements = new ArrayList<JSONElement>();
 
         public String toString() {
 
