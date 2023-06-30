@@ -7,8 +7,8 @@ import com.articulate.sigma.wordnet.WordNet;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
 import java.util.HashMap;
@@ -138,7 +138,7 @@ public class SigmaMockTestBase {
 
     protected final KB kbMock = new KBMock("dummyString");
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
 
         NLGUtils.readKeywordMap(KB_PATH);
@@ -155,7 +155,7 @@ public class SigmaMockTestBase {
         WordNet.wn.verbSynsetHash = hash;
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         WordNet.wn.verbSynsetHash = oldWordNetSynSetTable;
     }

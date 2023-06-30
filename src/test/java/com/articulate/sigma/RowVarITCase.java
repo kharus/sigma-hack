@@ -1,7 +1,7 @@
 package com.articulate.sigma;
 
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * TODO: See how relevant the line "if (kb.kbCache.transInstOf("exhaustiveAttribute","VariableArityRelation"))"
  * at the start of the original PredVarInst.test( ) method is. Should these tests somehow reflect that?
  */
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class RowVarITCase extends UnitTestBase {
 
     @Test

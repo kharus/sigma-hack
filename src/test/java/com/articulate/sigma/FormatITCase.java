@@ -1,13 +1,13 @@
 package com.articulate.sigma;
 
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class FormatITCase extends UnitTestBase {
 
     @Test

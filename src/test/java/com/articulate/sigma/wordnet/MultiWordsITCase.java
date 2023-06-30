@@ -23,14 +23,14 @@ package com.articulate.sigma.wordnet;
 import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
 import com.google.common.collect.Lists;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class MultiWordsITCase extends UnitTestBase {
 
     @Test

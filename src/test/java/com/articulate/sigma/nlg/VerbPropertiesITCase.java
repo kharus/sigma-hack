@@ -2,14 +2,14 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.TopOnly;
 import com.google.common.collect.Lists;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class VerbPropertiesITCase {
 
     private final VerbPropertiesSimpleImpl verbPropertiesSimple = new VerbPropertiesSimpleImpl();

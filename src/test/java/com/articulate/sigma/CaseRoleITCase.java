@@ -1,7 +1,7 @@
 package com.articulate.sigma;
 
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.TreeSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(MidLevel.class)
+@Tag("com.articulate.sigma.MidLevel")
 public class CaseRoleITCase extends IntegrationTestBase {
 
     /**

@@ -2,11 +2,12 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.KB;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LanguageFormatterStackTest extends SigmaMockTestBase {
     private final KB kb = kbMock;
@@ -65,7 +66,7 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
     }
 
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testIllegalTranslatedState() {
         String string1 = "(exists (?D ?H)\n" +
                 "               (and\n" +
@@ -92,7 +93,9 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
         stack.getCurrStackElement().setTranslation("", true);
 
         // Call pushCurrTranslatedStateDown().
-        stack.pushCurrTranslatedStateDown(string2);
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
+            stack.pushCurrTranslatedStateDown(string2);
+        });
     }
 
     @Test

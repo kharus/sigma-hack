@@ -2,8 +2,8 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.KB;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -197,7 +197,7 @@ public class HtmlParaphraseMockITCase extends SigmaMockTestBase {
      * Ideal: "Bell created the telephone."; also "The telephone was created by Bell."
      */
     @Test
-    @Ignore
+    @Disabled
     public void testHtmlParaphraseBellCreateTelephone() {
         String stmt = "(exists \n" +
                 "              (?event ?telephone) \n" +
@@ -424,7 +424,7 @@ public class HtmlParaphraseMockITCase extends SigmaMockTestBase {
      * Ideal: "The waiter pours soup into the bowl."
      */
     @Test
-    @Ignore
+    @Disabled
     public void testWaiterGivesTeaDoctor() {
         String stmt = "(exists \n" +
                 "              (?doctor ?event ?tea ?waiter) \n" +

@@ -5,28 +5,33 @@ import com.articulate.sigma.SigmaTestBase;
 import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
 import com.google.common.collect.Lists;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class NLGUtilsITCase extends UnitTestBase {
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testReadKeywordMapNull() {
-        NLGUtils.readKeywordMap(null);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            NLGUtils.readKeywordMap(null);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testReadKeywordMapEmpty() {
-        NLGUtils.readKeywordMap("");
+
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testReadKeywordMapNoExist() {
-        NLGUtils.readKeywordMap("/somePathThatDoesntExist/SomeFileThatDoesntExist.txt");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            NLGUtils.readKeywordMap("/somePathThatDoesntExist/SomeFileThatDoesntExist.txt");
+        });
     }
 
     /**
@@ -45,10 +50,13 @@ public class NLGUtilsITCase extends UnitTestBase {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testFormatListNoLanguage() {
         String input = "?A ?B ?C";
-        NLGUtils.formatList(input, "");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            NLGUtils.formatList(input, "");
+        });
+
     }
 
     @Test

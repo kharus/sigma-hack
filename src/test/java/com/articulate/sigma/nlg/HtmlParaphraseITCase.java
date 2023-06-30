@@ -3,7 +3,7 @@ package com.articulate.sigma.nlg;
 import com.articulate.sigma.SigmaTestBase;
 import com.articulate.sigma.UnitTestBase;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

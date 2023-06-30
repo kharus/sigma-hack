@@ -9,17 +9,17 @@ package com.articulate.sigma.trans;
 
 import com.articulate.sigma.MidLevel;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(MidLevel.class)
+@Tag("com.articulate.sigma.MidLevel")
 public class SUMOformulaToTPTPformulaTest {
 
-    @Before
+    @BeforeEach
     public void init() {
         SUMOformulaToTPTPformula.hideNumbers = true;
         SUMOformulaToTPTPformula.lang = "fof";
@@ -155,7 +155,7 @@ public class SUMOformulaToTPTPformulaTest {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void embedded() {
 
         String kifstring, expectedRes, actualRes;

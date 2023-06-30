@@ -6,8 +6,8 @@ package com.articulate.sigma;
 // apease@articulatesoftware.com
 
 import com.google.common.collect.Sets;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * TODO: See how relevant the line "if (kb.kbCache.transInstOf("exhaustiveAttribute","VariableArityRelation"))"
  * at the start of the original PredVarInst.test( ) method is. Should these tests somehow reflect that?
  */
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class PredVarInstITCase extends UnitTestBase {
 
     private static final String stmt1 = "(<=> (instance ?REL TransitiveRelation) " +

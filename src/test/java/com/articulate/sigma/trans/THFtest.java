@@ -4,8 +4,8 @@ import com.articulate.sigma.Formula;
 import com.articulate.sigma.IntegrationTestBase;
 import com.articulate.sigma.KB;
 import com.articulate.sigma.KBmanager;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,7 +17,7 @@ public class THFtest extends IntegrationTestBase {
     private static THF thf = null;
     private static KB kb = null;
 
-    @BeforeClass
+    @BeforeAll
     public static void init() {
 
         thf = new THF();

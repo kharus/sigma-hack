@@ -2,19 +2,19 @@ package com.articulate.sigma.trans;
 
 import com.articulate.sigma.*;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class TPTP3ProofProcITCase extends UnitTestBase {
 
-    @BeforeClass
+    @BeforeAll
     public static void init() {
 
     }

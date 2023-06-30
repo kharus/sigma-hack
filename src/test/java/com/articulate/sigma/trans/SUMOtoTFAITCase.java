@@ -1,11 +1,10 @@
 package com.articulate.sigma.trans;
 
 import com.articulate.sigma.*;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,10 +14,10 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class SUMOtoTFAITCase extends UnitTestBase {
 
-    @BeforeClass
+    @BeforeAll
     public static void init() {
 
         System.out.println("============ SUMOtoTFAITCase.init()");
@@ -41,7 +40,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
         SUMOtoTFAform.setNumericFunctionInfo();
     }
 
-    @AfterClass
+    @AfterAll
     public static void cleanup() {
         FormulaPreprocessor.addOnlyNonNumericTypes = false;
     }
@@ -155,7 +154,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void test5() {
 
         System.out.println("\n========= test 5 ==========\n");
@@ -186,7 +185,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void test6() {
 
         System.out.println("\n========= test 6 ==========\n");
@@ -242,7 +241,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
         assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
-    @Ignore // includes ListFn
+    @Disabled // includes ListFn
     @Test
     public void test8() {
 
@@ -303,7 +302,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void test9() {
 
         System.out.println("\n========= test 9 ==========\n");
@@ -357,7 +356,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testTemporalComp() {
 
         System.out.println("\n========= test testTemporalComp ==========\n");
@@ -380,7 +379,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testBigNumber() {
 
         System.out.println("\n========= test testBigNumber ==========\n");
@@ -403,7 +402,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testNumber() {
 
         System.out.println("\n========= test testNumber ==========\n");
@@ -435,7 +434,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testTemporalComp2() {
 
         System.out.println("\n========= test testTemporalComp2 ==========\n");
@@ -458,7 +457,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testCeiling() {
 
         System.out.println("\n========= test testTemporalComp ==========\n");
@@ -482,7 +481,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
         assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
-    @Ignore // contains ListFn
+    @Disabled // contains ListFn
     @Test
     public void testInList() {
 
@@ -507,7 +506,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
         assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
-    @Ignore // contains ListFn
+    @Disabled // contains ListFn
     @Test
     public void testLeastCommon() {
 
@@ -531,7 +530,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testMult() {
 
         System.out.println("\n========= test testMult ==========\n");
@@ -553,7 +552,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testDay() {
 
         System.out.println("\n========= test testDay ==========\n");
@@ -575,7 +574,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testExponent() {
 
         System.out.println("\n========= test testExponent ==========\n");
@@ -618,7 +617,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testRadian() {
 
         //SUMOformulaToTPTPformula.debug = true;
@@ -643,7 +642,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testFloor() {
 
         //SUMOtoTFAform.debug = true;
@@ -667,7 +666,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testPrime() {
 
         //SUMOtoTFAform.debug = true;
@@ -691,7 +690,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
         assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
-    @Ignore // requires loading a new kif file
+    @Disabled // requires loading a new kif file
     @Test
     public void testAvgWork() {
 
@@ -725,7 +724,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testComposeSuffix() {
 
         //SUMOtoTFAform.debug = true;

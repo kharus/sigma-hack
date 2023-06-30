@@ -2,8 +2,8 @@ package com.articulate.sigma.wordnet;
 
 import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 // TODO: Test the WordNet class more thoroughly. Start with the test methods called in main( ).
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class WordNetITCase extends UnitTestBase {
 
     @Test

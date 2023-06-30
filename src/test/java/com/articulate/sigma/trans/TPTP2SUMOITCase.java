@@ -3,24 +3,24 @@ package com.articulate.sigma.trans;
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.KBmanager;
 import com.articulate.sigma.TopOnly;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class TPTP2SUMOITCase {
 
-    @BeforeClass
+    @BeforeAll
     public static void init() {
 
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testPartition() {
 
@@ -46,7 +46,7 @@ public class TPTP2SUMOITCase {
         }
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testCollapse() {
 
@@ -61,7 +61,7 @@ public class TPTP2SUMOITCase {
         assertThat(result).isEqualTo(expected);
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testCollapse2() {
 

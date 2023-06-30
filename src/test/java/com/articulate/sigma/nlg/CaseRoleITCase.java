@@ -2,13 +2,13 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 // Tests requiring that KBs be loaded.
-@Category(TopOnly.class)
+@Tag("com.articulate.sigma.TopOnly")
 public class CaseRoleITCase extends UnitTestBase {
 
     @Test
