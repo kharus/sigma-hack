@@ -14,8 +14,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Set;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SUMOtoTFAKBITCase extends IntegrationTestBase {
 
@@ -46,7 +45,7 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
             System.out.println("testPartition(): Success!");
         else
             System.out.println("testPartition(): fail");
-        assertEquals(expectedRes, result);
+        assertThat(result).isEqualTo(expectedRes);
     }
 
     @Test
@@ -63,7 +62,7 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
             System.out.println("testDynamicSortDef(): Success!");
         else
             System.out.println("testDynamicSortDef(): fail");
-        assertEquals(expectedRes, result);
+        assertThat(result).isEqualTo(expectedRes);
     }
 
     @Test
@@ -91,6 +90,6 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
             System.out.println("testMissingSort(): Success!");
         else
             System.out.println("testMissingSort(): fail");
-        assertTrue(result.contains(expectedRes));
+        assertThat(result.contains(expectedRes)).isTrue();
     }
 }

@@ -10,7 +10,7 @@ import org.junit.rules.ExpectedException;
 
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 // Tests on SumoProcess that do not require KBs be loaded.
 
@@ -69,9 +69,9 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
         // Test constructor.
         SumoProcessCollector process = new SumoProcessCollector(knowledgeBase, "agent", "Driving", "Human");
         Multimap<CaseRole, String> roleScratchPad = process.createNewRoleScratchPad();
-        assertEquals(1, process.getRolesAndEntities().size());
-        assertEquals(1, Sentence.getRoleEntities(CaseRole.AGENT, roleScratchPad).size());
-        assertEquals(0, Sentence.getRoleEntities(CaseRole.PATIENT, roleScratchPad).size());
+        assertThat(process.getRolesAndEntities().size()).isEqualTo(1);
+        assertThat(Sentence.getRoleEntities(CaseRole.AGENT, roleScratchPad).size()).isEqualTo(1);
+        assertThat(Sentence.getRoleEntities(CaseRole.PATIENT, roleScratchPad).size()).isEqualTo(0);
 
         //Test agent getters and setters.
         process.addRole("agent", "Tom");
@@ -82,7 +82,7 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
         Set<String> actualAgents = Sentence.getRoleEntities(CaseRole.AGENT, roleScratchPad);
         //Collections.sort(actualAgents);
 
-        assertEquals(expectedAgents, actualAgents);
+        assertThat(actualAgents).isEqualTo(expectedAgents);
 
         // Test patient getters and setters.
         process.addRole("patient", "Automobile");
@@ -91,13 +91,13 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
         Set<String> expectedPatients = Sets.newTreeSet(Sets.newHashSet("Automobile"));
         Set<String> actualPatients = Sentence.getRoleEntities(CaseRole.PATIENT, roleScratchPad);
 
-        assertEquals(expectedPatients, actualPatients);
+        assertThat(actualPatients).isEqualTo(expectedPatients);
 
         // Test toString().
         String expected = "agent Driving Human\n" +
                 "agent Driving Tom\n" +
                 "patient Driving Automobile\n";
-        assertEquals(expected, process.toString());
+        assertThat(process.toString()).isEqualTo(expected);
     }
 
     /**
@@ -119,7 +119,7 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
         String expected = "agent Driving Human\n" +
                 "destination Driving HospitalBuilding\n" +
                 "patient Driving Sally\n";
-        assertEquals(expected, process.toString());
+        assertThat(process.toString()).isEqualTo(expected);
     }
 
     @Test
@@ -131,9 +131,9 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
         String expected = "agent Driving ?H\n" +
                 "destination Driving ?P\n" +
                 "patient Driving ?C\n";
-        assertEquals(expected, process.toString());
+        assertThat(process.toString()).isEqualTo(expected);
         expected = "?H drives ?C to ?P";
-        assertEquals(expected, process.toNaturalLanguage());
+        assertThat(process.toNaturalLanguage()).isEqualTo(expected);
     }
 
     /**
@@ -143,11 +143,11 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
     public void testNoIdenticalRoleParticipants() {
         SumoProcessCollector process = new SumoProcessCollector(knowledgeBase, "agent", "Driving", "Mark");
         Multimap<CaseRole, String> roleScratchPad = process.createNewRoleScratchPad();
-        assertEquals(1, Sentence.getRoleEntities(CaseRole.AGENT, roleScratchPad).size());
+        assertThat(Sentence.getRoleEntities(CaseRole.AGENT, roleScratchPad).size()).isEqualTo(1);
 
         process.addRole("agent", "Mark");
         roleScratchPad = process.createNewRoleScratchPad();
-        assertEquals(1, Sentence.getRoleEntities(CaseRole.AGENT, roleScratchPad).size());
+        assertThat(Sentence.getRoleEntities(CaseRole.AGENT, roleScratchPad).size()).isEqualTo(1);
     }
 
     /**
@@ -159,18 +159,18 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
         process.addRole("destination", "HospitalBuilding");
         Multimap<CaseRole, String> roleScratchPad = process.createNewRoleScratchPad();
 
-        assertEquals(1, Sentence.getRoleEntities(CaseRole.AGENT, roleScratchPad).size());
-        assertEquals(2, process.getRolesAndEntities().size());
+        assertThat(Sentence.getRoleEntities(CaseRole.AGENT, roleScratchPad).size()).isEqualTo(1);
+        assertThat(process.getRolesAndEntities().size()).isEqualTo(2);
 
         // Get local copy of agents, and change that.
         Set<String> agents = Sentence.getRoleEntities(CaseRole.AGENT, roleScratchPad);
         agents.add("Sally");
-        assertEquals(1, Sentence.getRoleEntities(CaseRole.AGENT, roleScratchPad).size());
+        assertThat(Sentence.getRoleEntities(CaseRole.AGENT, roleScratchPad).size()).isEqualTo(1);
 
         // Get local copy of all roles, and change that.
         Multimap<CaseRole, String> allRoles = process.getRolesAndEntities();
         allRoles.put(CaseRole.DESTINATION, "House");
-        assertEquals(2, process.getRolesAndEntities().size());
+        assertThat(process.getRolesAndEntities().size()).isEqualTo(2);
     }
 
     /**
@@ -181,13 +181,13 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
         SumoProcessCollector process = new SumoProcessCollector(knowledgeBase, "agent", "Transportation", "Maria");
 
         Multimap<CaseRole, String> originalMap = process.createNewRoleScratchPad();
-        assertEquals(1, originalMap.size());
+        assertThat(originalMap.size()).isEqualTo(1);
         originalMap.clear();
-        assertEquals(0, originalMap.size());
+        assertThat(originalMap.size()).isEqualTo(0);
 
         Multimap<CaseRole, String> actualMap = process.createNewRoleScratchPad();
 
-        assertEquals(1, actualMap.size());
+        assertThat(actualMap.size()).isEqualTo(1);
     }
 
     /**
@@ -219,9 +219,9 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
                 "destination Driving ?P\n" +
                 "patient Driving ?C\n" +
                 "patient Driving ?D\n";
-        assertEquals(expected, process1.toString());
+        assertThat(process1.toString()).isEqualTo(expected);
         expected = "?H drives ?C and ?D to ?P";
-        assertEquals(expected, process1.toNaturalLanguage());
+        assertThat(process1.toNaturalLanguage()).isEqualTo(expected);
     }
 
     @Test
@@ -239,9 +239,9 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
                 "destination Driving ?P\n" +
                 "patient Driving ?C\n" +
                 "patient Driving ?D\n";
-        assertEquals(expected, process1.toString());
+        assertThat(process1.toString()).isEqualTo(expected);
         expected = "?H drives ?C and ?D to ?P";
-        assertEquals(expected, process1.toNaturalLanguage());
+        assertThat(process1.toNaturalLanguage()).isEqualTo(expected);
     }
 
     @Test
@@ -255,20 +255,20 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
         process2.setPolarity(VerbProperties.Polarity.NEGATIVE);
 
         // Verify polarity before the merge.
-        assertEquals(VerbProperties.Polarity.AFFIRMATIVE, process1.getPolarity());
-        assertEquals(VerbProperties.Polarity.NEGATIVE, process2.getPolarity());
+        assertThat(process1.getPolarity()).isEqualTo(VerbProperties.Polarity.AFFIRMATIVE);
+        assertThat(process2.getPolarity()).isEqualTo(VerbProperties.Polarity.NEGATIVE);
 
         process1.merge(process2);
 
-        assertEquals(VerbProperties.Polarity.NEGATIVE, process1.getPolarity());
+        assertThat(process1.getPolarity()).isEqualTo(VerbProperties.Polarity.NEGATIVE);
 
         String expected = "agent Driving ?H\n" +
                 "destination Driving ?P\n" +
                 "patient Driving ?C\n" +
                 "patient Driving ?D\n";
-        assertEquals(expected, process1.toString());
+        assertThat(process1.toString()).isEqualTo(expected);
         expected = "?H doesn't drive ?C and ?D to ?P";
-        assertEquals(expected, process1.toNaturalLanguage());
+        assertThat(process1.toNaturalLanguage()).isEqualTo(expected);
     }
 
 }

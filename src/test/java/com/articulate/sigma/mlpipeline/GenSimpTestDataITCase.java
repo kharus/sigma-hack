@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import static com.articulate.sigma.mlpipeline.GenSimpTestData.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class GenSimpTestDataITCase {
@@ -63,7 +62,7 @@ public class GenSimpTestDataITCase {
         if (!v.equalsIgnoreCase(expected)) {
             if (!v.replace("won't", "will not").equalsIgnoreCase(expected)) {
                 System.out.println("Error!: found " + v + " Expected: " + expected);
-                assertTrue(v.equalsIgnoreCase(expected));
+                assertThat(v.equalsIgnoreCase(expected)).isTrue();
             } else
                 System.out.println("Success");
         } else
@@ -83,7 +82,7 @@ public class GenSimpTestDataITCase {
         System.out.println("testNoun(): noun form: " + v);
         if (!v.toLowerCase().contains(expected)) {
             System.out.println("Error!: found " + v + " Expected: " + expected);
-            assertTrue(v.equalsIgnoreCase(expected));
+            assertThat(v.equalsIgnoreCase(expected)).isTrue();
         } else
             System.out.println("Success");
     }
@@ -104,7 +103,7 @@ public class GenSimpTestDataITCase {
         boolean actual = gstd.checkCapabilities(proc, role, obj);
         if (actual != expected) {
             System.out.println("Error!: found " + actual + " Expected: " + expected);
-            assertEquals(actual, expected);
+            assertThat(expected).isEqualTo(actual);
         } else
             System.out.println("Success");
     }
@@ -311,7 +310,7 @@ public class GenSimpTestDataITCase {
             System.out.println("Success! : " + english);
         else {
             System.out.println("Fail : " + english);
-            assertTrue(english.toString().contains("sells a"));
+            assertThat(english.toString().contains("sells a")).isTrue();
         }
     }
 
@@ -338,7 +337,7 @@ public class GenSimpTestDataITCase {
             System.out.println("Success! : " + english);
         else {
             System.out.println("Fail : '" + english + "'");
-            assertTrue(StringUtil.emptyString(english.toString()));
+            assertThat(StringUtil.emptyString(english.toString())).isTrue();
         }
     }
 
@@ -364,7 +363,7 @@ public class GenSimpTestDataITCase {
             System.out.println("Success! : " + english);
         else {
             System.out.println("Fail : " + english);
-            assertTrue(english.toString().contains("vote for"));
+            assertThat(english.toString().contains("vote for")).isTrue();
         }
     }
 

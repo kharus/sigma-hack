@@ -3,7 +3,7 @@ package com.articulate.sigma.nlg;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class NLGStringUtilsTest {
 
@@ -11,38 +11,38 @@ public class NLGStringUtilsTest {
     public void testConcatenateNoInput() {
         String expected = "";
         String actual = NLGStringUtils.concatenateWithCommas(Lists.newArrayList());
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
 
         expected = "";
         actual = NLGStringUtils.concatenateWithCommas(null);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testOneItem() {
         String expected = "one";
         String actual = NLGStringUtils.concatenateWithCommas(Lists.newArrayList("one"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testTwoItems() {
         String expected = "one and two";
         String actual = NLGStringUtils.concatenateWithCommas(Lists.newArrayList("one", "two"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testThreeItems() {
         String expected = "one, two and three";
         String actual = NLGStringUtils.concatenateWithCommas(Lists.newArrayList("one", "two", "three"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testSixItems() {
         String expected = "one, two, three, four, five and six";
         String actual = NLGStringUtils.concatenateWithCommas(Lists.newArrayList("one", "two", "three", "four", "five", "six"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * LanguageFormatter tests NOT targeted toward the htmlParaphrase( ) method.
@@ -32,7 +32,7 @@ public class LanguageFormatterITCase extends UnitTestBase {
         LanguageFormatter lf = new LanguageFormatter(input, SigmaTestBase.kb.getFormatMap("EnglishLanguage"), SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
         String actual = lf.paraphraseStatement(input, false, 0);
-        assertEquals("", actual);
+        assertThat(actual).isEqualTo("");
     }
 
     @Test
@@ -47,7 +47,7 @@ public class LanguageFormatterITCase extends UnitTestBase {
 
         String actual = LanguageFormatter.variableReplace(form, instanceMap, classMap, SigmaTestBase.kb, "EnglishLanguage");
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -60,12 +60,12 @@ public class LanguageFormatterITCase extends UnitTestBase {
         String actual = formatter.generateFormalNaturalLanguage(translations, "=>", false);
         actual = StringUtil.filterHtml(actual);
 
-        assertEquals("if Socrates is a man, then Socrates is mortal", actual);
+        assertThat(actual).isEqualTo("if Socrates is a man, then Socrates is mortal");
 
         actual = formatter.generateFormalNaturalLanguage(translations, "=>", true);
         actual = StringUtil.filterHtml(actual);
 
-        assertEquals("Socrates is mortal and ~{Socrates is a man}", actual);
+        assertThat(actual).isEqualTo("Socrates is mortal and ~{Socrates is a man}");
     }
 
     @Test
@@ -78,12 +78,12 @@ public class LanguageFormatterITCase extends UnitTestBase {
         String actual = formatter.generateFormalNaturalLanguage(translations, "<=>", false);
         actual = StringUtil.filterHtml(actual);
 
-        assertEquals("Socrates is a man if and only if Socrates is mortal", actual);
+        assertThat(actual).isEqualTo("Socrates is a man if and only if Socrates is mortal");
 
         actual = formatter.generateFormalNaturalLanguage(translations, "<=>", true);
         actual = StringUtil.filterHtml(actual);
 
-        assertEquals("Socrates is mortal or ~{ Socrates is a man } or Socrates is a man or ~{ Socrates is mortal }", actual);
+        assertThat(actual).isEqualTo("Socrates is mortal or ~{ Socrates is a man } or Socrates is a man or ~{ Socrates is mortal }");
     }
 
     @Test
@@ -96,12 +96,12 @@ public class LanguageFormatterITCase extends UnitTestBase {
         String actual = formatter.generateFormalNaturalLanguage(translations, "and", false);
         actual = StringUtil.filterHtml(actual);
 
-        assertEquals("Socrates is a man and Socrates is mortal", actual);
+        assertThat(actual).isEqualTo("Socrates is a man and Socrates is mortal");
 
         actual = formatter.generateFormalNaturalLanguage(translations, "and", true);
         actual = StringUtil.filterHtml(actual);
 
-        assertEquals("~{ Socrates is a man } or ~{ Socrates is mortal }", actual);
+        assertThat(actual).isEqualTo("~{ Socrates is a man } or ~{ Socrates is mortal }");
     }
 
     @Test
@@ -114,12 +114,12 @@ public class LanguageFormatterITCase extends UnitTestBase {
         String actual = formatter.generateFormalNaturalLanguage(translations, "or", false);
         actual = StringUtil.filterHtml(actual);
 
-        assertEquals("Socrates is a man or Socrates is mortal", actual);
+        assertThat(actual).isEqualTo("Socrates is a man or Socrates is mortal");
 
         actual = formatter.generateFormalNaturalLanguage(translations, "or", true);
         actual = StringUtil.filterHtml(actual);
 
-        assertEquals("Socrates is a man and Socrates is mortal", actual);
+        assertThat(actual).isEqualTo("Socrates is a man and Socrates is mortal");
     }
 
     /**
@@ -136,12 +136,12 @@ public class LanguageFormatterITCase extends UnitTestBase {
 
         String expected = "<ul><li>if &%Human$\"a  human\" drives,</li><li>then &%Human$\"the human\" sees</li></ul>";
         String variableReplaceOutput = LanguageFormatter.variableReplace(form, instanceMap, classMap, SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expected, variableReplaceOutput);
+        assertThat(variableReplaceOutput).isEqualTo(expected);
 
         // Verify resolveFormatSpecifiers( ).
         expected = "<ul><li>if <a href=\"&term=Human\">a  human</a> drives,</li><li>then <a href=\"&term=Human\">the human</a> sees</li></ul>";
         String resolveFormatSpecifiersOutput = NLGUtils.resolveFormatSpecifiers(variableReplaceOutput, "");
-        assertEquals(expected, resolveFormatSpecifiersOutput);
+        assertThat(resolveFormatSpecifiersOutput).isEqualTo(expected);
     }
 
     /**
@@ -158,12 +158,12 @@ public class LanguageFormatterITCase extends UnitTestBase {
 
         String expected = "if &%Human$\"a  human\" drives, then &%Human$\"the human\" sees";
         String variableReplaceOutput = LanguageFormatter.variableReplace(form, instanceMap, classMap, SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expected, variableReplaceOutput);
+        assertThat(variableReplaceOutput).isEqualTo(expected);
 
         // Verify resolveFormatSpecifiers( ).
         expected = "if a human drives, then the human sees";
         String resolveFormatSpecifiersOutput = NLGUtils.resolveFormatSpecifiers(variableReplaceOutput, "");
-        assertEquals(expected, StringUtil.filterHtml(resolveFormatSpecifiersOutput));
+        assertThat(StringUtil.filterHtml(resolveFormatSpecifiersOutput)).isEqualTo(expected);
     }
 
 }

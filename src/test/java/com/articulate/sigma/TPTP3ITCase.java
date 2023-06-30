@@ -12,8 +12,7 @@ import java.io.FileReader;
 import java.io.LineNumberReader;
 import java.io.StringReader;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class TPTP3ITCase extends UnitTestBase {
@@ -38,8 +37,8 @@ public class TPTP3ITCase extends UnitTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertFalse(StringUtil.emptyString(result));
-        assertEquals(tpp.proof.size(), 22);
+        assertThat(StringUtil.emptyString(result)).isFalse();
+        assertThat(22).isEqualTo(tpp.proof.size());
         System.out.println("\n\n");
     }
 
@@ -72,9 +71,9 @@ public class TPTP3ITCase extends UnitTestBase {
                 System.out.println("Success");
             else
                 System.out.println("FAIL");
-            assertEquals(bindExpect, tpp.bindings.toString());
-            assertFalse(StringUtil.emptyString(result));
-            assertEquals(6, tpp.proof.size());
+            assertThat(tpp.bindings.toString()).isEqualTo(bindExpect);
+            assertThat(StringUtil.emptyString(result)).isFalse();
+            assertThat(tpp.proof.size()).isEqualTo(6);
             eprover.terminate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -102,7 +101,7 @@ public class TPTP3ITCase extends UnitTestBase {
                 System.out.println("Success");
             else
                 System.out.println("FAIL");
-            assertEquals(4, tpp.proof.size());
+            assertThat(tpp.proof.size()).isEqualTo(4);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -132,16 +131,16 @@ public class TPTP3ITCase extends UnitTestBase {
                 System.out.println("Success");
             else
                 System.out.println("FAIL");
-            assertEquals(10, tpp.proof.size());
+            assertThat(tpp.proof.size()).isEqualTo(10);
             System.out.println("answers: " + result);
-            assertEquals("false", tpp.proof.get(7).sumo);
+            assertThat(tpp.proof.get(7).sumo).isEqualTo("false");
             result = tpp.bindings.toString();
             System.out.println("answers: " + result);
             if (!StringUtil.emptyString(result) && result.equals(expected))
                 System.out.println("Success");
             else
                 System.out.println("FAIL");
-            assertEquals(expected, result);
+            assertThat(result).isEqualTo(expected);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -169,7 +168,7 @@ public class TPTP3ITCase extends UnitTestBase {
                 System.out.println("Success");
             else
                 System.out.println("FAIL");
-            assertEquals(expected, result);
+            assertThat(result).isEqualTo(expected);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -199,7 +198,7 @@ public class TPTP3ITCase extends UnitTestBase {
                 System.out.println("Success");
             else
                 System.out.println("FAIL");
-            assertEquals(expected, result);
+            assertThat(result).isEqualTo(expected);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -224,7 +223,7 @@ public class TPTP3ITCase extends UnitTestBase {
         String result = tpp.parseProofStep(ps1).toString().trim();
         System.out.println(tpp.parseProofStep(ps1));
         String expected = "0. (subclass Artifact Object) [1] null";
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
         System.out.println();
 
         expected = "2. (not\n" +
@@ -240,7 +239,7 @@ public class TPTP3ITCase extends UnitTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
         System.out.println();
 
         expected = "3. false [2, 3] eval_answer_literal";
@@ -250,7 +249,7 @@ public class TPTP3ITCase extends UnitTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
         System.out.println("\n\n");
     }
 
@@ -273,7 +272,7 @@ public class TPTP3ITCase extends UnitTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -294,7 +293,7 @@ public class TPTP3ITCase extends UnitTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -316,7 +315,7 @@ public class TPTP3ITCase extends UnitTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -342,7 +341,7 @@ public class TPTP3ITCase extends UnitTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -364,7 +363,7 @@ public class TPTP3ITCase extends UnitTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -403,6 +402,6 @@ public class TPTP3ITCase extends UnitTestBase {
             System.out.println("Success");
         else
             System.out.println("FAIL");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 }

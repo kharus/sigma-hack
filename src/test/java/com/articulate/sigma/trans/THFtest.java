@@ -7,7 +7,7 @@ import com.articulate.sigma.KBmanager;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 //This software is released under the GNU Public License
 //<http://www.gnu.org/copyleft/gpl.html>.
@@ -36,7 +36,7 @@ public class THFtest extends IntegrationTestBase {
             System.out.println("THFtest.test(): Success!");
         else
             System.out.println("THFtest.test(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test

@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * FormulaPreprocessor tests not focused on findExplicitTypes( ) or computeVariableTypes( ).
@@ -55,7 +54,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
             System.out.println("testGatherRelationships(): pass");
         else
             System.out.println("testGatherRelationships(): fail");
-        assertEquals(expectedMap, actualMap);
+        assertThat(actualMap).isEqualTo(expectedMap);
     }
 
     // FIXME: test is waiting completion of Formula.logicallyEquals()
@@ -83,12 +82,12 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
             System.out.println("testAddTypes1(): pass");
         else
             System.out.println("testAddTypes1(): fail");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
         if (expected.logicallyEquals(actual))
             System.out.println("testAddTypes1(): pass");
         else
             System.out.println("testAddTypes1(): fail");
-        assertTrue(expected.logicallyEquals(actual));
+        assertThat(expected.logicallyEquals(actual)).isTrue();
     }
 
     // FIXME: test is waiting completion of Formula.logicallyEquals()
@@ -111,13 +110,13 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         Formula actual = fp.addTypeRestrictions(f, SigmaTestBase.kb);
         System.out.println("testAddTypes2(): actual: " + actual);
         System.out.println("testAddTypes2(): expected: " + expected);
-        //assertEquals(expected, actual);
+        //assertThat(actual).isEqualTo(expected);
         if (expected.logicallyEquals(actual))
             System.out.println("testAddTypes2(): pass");
         else
             System.out.println("testAddTypes2(): fail");
-        assertTrue(expected.logicallyEquals(actual));
-        assertTrue(expected.logicallyEquals(actual));
+        assertThat(expected.logicallyEquals(actual)).isTrue();
+        assertThat(expected.logicallyEquals(actual)).isTrue();
     }
 
     @Test
@@ -147,7 +146,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
             System.out.println("testMergeToMap1(): pass");
         else
             System.out.println("testMergeToMap1(): fail");
-        assertEquals(expectedMap, actualMap);
+        assertThat(actualMap).isEqualTo(expectedMap);
     }
 
     @Test
@@ -183,7 +182,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
             System.out.println("test4(): pass");
         else
             System.out.println("test4(): fail");
-        assertTrue(fExpected.deepEquals(fActual));
+        assertThat(fExpected.deepEquals(fActual)).isTrue();
     }
 
     @Test
@@ -220,7 +219,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
             System.out.println("test5(): pass");
         else
             System.out.println("test5(): fail");
-        assertTrue(fExpected.deepEquals(fActual));
+        assertThat(fExpected.deepEquals(fActual)).isTrue();
     }
 
     @Test
@@ -251,7 +250,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
             System.out.println("test6(): pass");
         else
             System.out.println("test6(): fail");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -282,7 +281,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
             System.out.println("test7(): pass");
         else
             System.out.println("test7(): fail");
-        assertEquals(expected, actual.iterator().next().toString());
+        assertThat(actual.iterator().next().toString()).isEqualTo(expected);
     }
 
     @Test
@@ -303,7 +302,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
             System.out.println("testAbsolute(): pass");
         else
             System.out.println("testAbsolute(): fail");
-        assertEquals(expected, actual.toString());
+        assertThat(actual.toString()).isEqualTo(expected);
     }
 
     @Test
@@ -331,7 +330,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
             System.out.println("testInstantiatePredStmt4(): pass");
         else
             System.out.println("testInstantiatePredStmt4(): fail");
-        assertTrue(actual.size() > expectedSize);
+        assertThat(actual.size() > expectedSize).isTrue();
     }
 
     @Test
@@ -350,7 +349,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         FormulaPreprocessor fp = new FormulaPreprocessor();
         System.out.println("testMinValuePreprocess: greaterThanOrEqualTo valence: " +
                 kb.kbCache.valences.get("greaterThanOrEqualTo"));
-        assertEquals(2, (int) kb.kbCache.valences.get("greaterThanOrEqualTo"));
+        assertThat((int) kb.kbCache.valences.get("greaterThanOrEqualTo")).isEqualTo(2);
         Set<Formula> actual = fp.preProcess(f, false, kb);
         int expectedSize = 100;
         System.out.println("testMinValuePreprocess(): expected: " + expectedSize);
@@ -358,7 +357,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
             System.out.println("testMinValuePreprocess(): pass");
         else
             System.out.println("testMinValuePreprocess(): fail");
-        assertTrue(actual.size() > expectedSize);
+        assertThat(actual.size() > expectedSize).isTrue();
     }
 
     @Test
@@ -457,7 +456,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
             System.out.println("testTVRPreprocess(): pass");
         else
             System.out.println("testTVRPreprocess(): fail");
-        assertTrue(actual.size() > expectedSize);
+        assertThat(actual.size() > expectedSize).isTrue();
     }
 
     @Test
@@ -483,6 +482,6 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
             System.out.println("testFunctionVariable(): pass");
         else
             System.out.println("testFunctionVariable(): fail");
-        assertTrue(actual.size() > expectedSize);
+        assertThat(actual.size() > expectedSize).isTrue();
     }
 }

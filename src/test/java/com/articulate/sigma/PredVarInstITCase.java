@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * These tests follow PredVarInst.test( ), with the exception of that method's call to FormulaPreprocessor.
@@ -53,7 +53,7 @@ public class PredVarInstITCase extends UnitTestBase {
             System.out.println("testGatherPredVarsStmt1(): success!");
         else
             System.out.println("testGatherPredVarsStmt1(): failure");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class PredVarInstITCase extends UnitTestBase {
             System.out.println("testGatherPredVarsStmt2(): success!");
         else
             System.out.println("testGatherPredVarsStmt2(): failure");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -87,7 +87,7 @@ public class PredVarInstITCase extends UnitTestBase {
             System.out.println("testGatherPredVarsStmt3(): success!");
         else
             System.out.println("testGatherPredVarsStmt3(): failure");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -104,7 +104,7 @@ public class PredVarInstITCase extends UnitTestBase {
             System.out.println("testInstantiatePredStmt2(): success!");
         else
             System.out.println("testInstantiatePredStmt2(): failure");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class PredVarInstITCase extends UnitTestBase {
             System.out.println("testInstantiatePredStmt3(): success!");
         else
             System.out.println("testInstantiatePredStmt3(): failure");
-        assertTrue(actual.size() > 100);
+        assertThat(actual.size() > 100).isTrue();
     }
 
     @Test
@@ -146,7 +146,7 @@ public class PredVarInstITCase extends UnitTestBase {
             System.out.println("testPredVarArity(): success!");
         else
             System.out.println("testPredVarArity(): failure");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
 
         System.out.println("PredVarInstITCase.testPredVarArity(): actual arity: " + PredVarInst.predVarArity.get("?REL").intValue());
         System.out.println("PredVarInstITCase.testPredVarArity(): expected arity: " + 2);
@@ -154,7 +154,7 @@ public class PredVarInstITCase extends UnitTestBase {
             System.out.println("testPredVarArity(): success!");
         else
             System.out.println("testPredVarArity(): failure");
-        assertEquals(2, PredVarInst.predVarArity.get("?REL").intValue());
+        assertThat(PredVarInst.predVarArity.get("?REL").intValue()).isEqualTo(2);
     }
 
     @Test
@@ -182,8 +182,8 @@ public class PredVarInstITCase extends UnitTestBase {
         Set<String> expected = new HashSet<>();
         expected.add(var);
         System.out.println("PredVarInstITCase.testPredVarArity2(): expected pred vars: " + expected);
-        assertEquals(expected, actual);
-        assertEquals(expectedArity, arity);
+        assertThat(actual).isEqualTo(expected);
+        assertThat(arity).isEqualTo(expectedArity);
     }
 
     @Test
@@ -218,7 +218,7 @@ public class PredVarInstITCase extends UnitTestBase {
         Set<String> expected = new HashSet<>();
         expected.add("?REL");
         System.out.println("PredVarInstITCase.testTVRPredVars(): expected: " + expected);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -255,7 +255,7 @@ public class PredVarInstITCase extends UnitTestBase {
         int expected = 0; // variable arity is given as "0"
         System.out.println("PredVarInstITCase.testTVRArity(): actual arity: " + arity);
         System.out.println("PredVarInstITCase.testTVRArity(): expected arity: " + expected);
-        assertEquals(expected, arity);
+        assertThat(arity).isEqualTo(expected);
     }
 
     @Test
@@ -296,8 +296,8 @@ public class PredVarInstITCase extends UnitTestBase {
             System.out.println("PredVarInstITCase.testTVRTypes(): pass");
         else
             System.out.println("PredVarInstITCase.testTVRTypes(): fail");
-        assertTrue(types.contains("TotalValuedRelation"));
-        assertTrue(types.contains("Predicate"));
+        assertThat(types.contains("TotalValuedRelation")).isTrue();
+        assertThat(types.contains("Predicate")).isTrue();
     }
 
     @Test
@@ -316,7 +316,7 @@ public class PredVarInstITCase extends UnitTestBase {
             System.out.println("PredVarInstITCase.testPredVarCount(): pass");
         else
             System.out.println("PredVarInstITCase.testPredVarCount(): fail");
-        assertTrue(predVars.contains("?REL1") && predVars.contains("?REL2") && predVars.size() == 2);
+        assertThat(predVars.contains("?REL1") && predVars.contains("?REL2") && predVars.size() == 2).isTrue();
     }
 
     @Test
@@ -332,6 +332,6 @@ public class PredVarInstITCase extends UnitTestBase {
             System.out.println("PredVarInstITCase.testPredVarCount(): pass");
         else
             System.out.println("PredVarInstITCase.testPredVarCount(): fail");
-        assertNull(hasCorrectArity);
+        assertThat(hasCorrectArity).isNull();
     }
 }

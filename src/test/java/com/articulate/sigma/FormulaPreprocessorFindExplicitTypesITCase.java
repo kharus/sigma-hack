@@ -19,8 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * FormulaPreprocessor tests specifically targeted on the findExplicitTypes( ) and findExplicitTypesInAntecedent( ) methods.
@@ -50,7 +49,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
         Map<String, Set<String>> actual = formulaPre.findExplicitTypesInAntecedent(kb, f);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -65,7 +64,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
 
         Map<String, Set<String>> expected = Maps.newHashMap();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -78,7 +77,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
         Map<String, Set<String>> actual = formulaPre.findExplicitTypesInAntecedent(kb, f);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -93,7 +92,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
 
         Map<String, Set<String>> expected = Maps.newHashMap();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -106,7 +105,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
         Map<String, Set<String>> actual = formulaPre.findExplicitTypesInAntecedent(kb, f);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -123,7 +122,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Set<String> set1 = Sets.newHashSet("Feline+");
         expected.put("?Cougar", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -142,7 +141,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Set<String> set1 = Sets.newHashSet("Feline+");
         expected.put("?C", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -161,7 +160,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Set<String> set1 = Sets.newHashSet("Feline+", "Carnivore+");
         expected.put("?C", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -181,7 +180,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Set<String> set1 = Sets.newHashSet("TransitiveRelation");
         expected.put("?REL", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -201,7 +200,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Set<String> set1 = Sets.newHashSet("TransitiveRelation");
         expected.put("?REL", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -227,7 +226,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Set<String> set2 = Sets.newHashSet("Human");
         expected.put("?J", set2);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -252,7 +251,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Set<String> set2 = Sets.newHashSet("Human");
         expected.put("?J", set2);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -268,7 +267,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Set<String> set1 = Sets.newHashSet("Entity");
         expected.put("?PHYS", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -284,7 +283,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Set<String> set1 = Sets.newHashSet("Entity");
         expected.put("?PHYS", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -300,7 +299,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Set<String> set1 = Sets.newHashSet("Automobile");
         expected.put("?PHYS", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -316,7 +315,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Set<String> set1 = Sets.newHashSet("Automobile");
         expected.put("?PHYS", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -334,7 +333,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
 
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?REL", Sets.newHashSet("TransitiveRelation"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -352,7 +351,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
 
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?REL", Sets.newHashSet("TransitiveRelation"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -365,7 +364,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
 
         Map<String, Set<String>> actual = fp.findExplicitTypesInAntecedent(kb, f);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -379,7 +378,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
         Map<String, Set<String>> expected = Maps.newHashMap();
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -396,7 +395,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
 
         Map<String, Set<String>> actual = fp.findExplicitTypesInAntecedent(kb, f);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -416,7 +415,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?D", Sets.newHashSet("Driving"));
         expected.put("?H", Sets.newHashSet("Human"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -437,7 +436,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
 
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?RATE", Sets.newHashSet("Classifying"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -457,7 +456,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?MIXTURE", Sets.newHashSet("Mixture"));
         expected.put("?SUBSTANCE", Sets.newHashSet("PureSubstance"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -483,7 +482,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         expected.put("?ANIMAL", Sets.newHashSet("Animal"));
         expected.put("?MOTION", Sets.newHashSet("BodyMotion"));
         expected.put("?ATTR", Sets.newHashSet("BodyPosition"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -502,7 +501,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
         Map<String, Set<String>> expected = Maps.newHashMap();
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -522,7 +521,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Map<String, Set<String>> expected = Maps.newHashMap();
         //expected.put("?Y", new HashSet<String>());
         // TODO: add explicit type "Month" for ?MONTH
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -550,7 +549,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?CLOUD", Sets.newHashSet("WaterCloud"));
         expected.put("?WATER", Sets.newHashSet("Water"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -572,7 +571,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?LANG", Sets.newHashSet("AnimalLanguage"));
         expected.put("?AGENT", Sets.newHashSet("Animal"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -592,7 +591,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?LANG", Sets.newHashSet("ConstructedLanguage"));
         expected.put("?PLAN", Sets.newHashSet("Planning"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -611,7 +610,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?PUB", Sets.newHashSet("Publication"));
         expected.put("?TEXT", Sets.newHashSet("Text+"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -635,7 +634,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Map<String, Set<String>> expected = Maps.newHashMap();
         //expected.put("?X", new HashSet<String>());
         expected.put("?Y", Sets.newHashSet("PureSubstance+"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -659,7 +658,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         //expected.put("?SUBSTANCE", new HashSet<String>());
         expected.put("?BOILING", Sets.newHashSet("Boiling"));
         expected.put("?MEASURE", Sets.newHashSet("UnitOfTemperature"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -686,7 +685,7 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?R", Sets.newHashSet("Rotating"));
         expected.put("?R2", Sets.newHashSet("Rotating"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -734,6 +733,6 @@ public class FormulaPreprocessorFindExplicitTypesITCase {
         expected.put("?PROC", Sets.newHashSet("Maintaining"));
         expected.put("?SOUND", Sets.newHashSet("RadiatingSound"));
         expected.put("?RADIO", Sets.newHashSet("RadioEmission"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }

@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by sserban on 3/1/15.
@@ -61,6 +61,6 @@ public class FormulaUnificationITCase extends UnitTestBase {
         Formula f2 = new Formula();
         f2.read(f2Text);
 
-        assertTrue(f1.unifyWith(f2));
+        assertThat(f1.unifyWith(f2)).isTrue();
     }
 }

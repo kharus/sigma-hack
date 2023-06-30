@@ -10,8 +10,7 @@ import org.junit.experimental.categories.Category;
 
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class TPTP2SUMOITCase {
@@ -59,7 +58,7 @@ public class TPTP2SUMOITCase {
                 "  (foo B B)\n" +
                 "  (bar C))";
         System.out.println("result: " + result);
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Ignore
@@ -76,7 +75,7 @@ public class TPTP2SUMOITCase {
                 "    (bar C))\n" +
                 "  (blah F G))";
         System.out.println("result: " + result);
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -147,6 +146,6 @@ public class TPTP2SUMOITCase {
         System.out.println("expected: " + expected);
         Formula fresult = new Formula(result);
         Formula fexpected = new Formula(expected);
-        assertTrue(fexpected.deepEquals(fresult));
+        assertThat(fexpected.deepEquals(fresult)).isTrue();
     }
 }

@@ -28,7 +28,7 @@ import org.junit.experimental.categories.Category;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class KBcacheUnitITCase {
@@ -87,7 +87,7 @@ public class KBcacheUnitITCase {
                 "var", "rel", "subclass", "CitizenryFn", "ResidentFn", "relsub",
                 "subrelation"));
         Set<String> actual = kb.kbCache.relations;
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class KBcacheUnitITCase {
         Set<String> expected = new HashSet<>(Arrays.asList("CitizenryFn", "ResidentFn"));
         Set<String> actual = kb.kbCache.functions;
         System.out.println("functions:" + actual);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -109,7 +109,7 @@ public class KBcacheUnitITCase {
                 "subrelation"));
         Set<String> actual = kb.kbCache.predicates;
         System.out.println("predicates:" + actual);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -118,7 +118,7 @@ public class KBcacheUnitITCase {
         System.out.println("Test transRels");
         Set<String> expected = new HashSet<>(Arrays.asList("subclass", "subAttribute", "subrelation"));
         Set<String> actual = kb.kbCache.transRels;
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class KBcacheUnitITCase {
         System.out.println("Test parents");
         Set<String> expected = new HashSet<>(Arrays.asList("Relation", "Entity"));
         Set<String> actual = kb.kbCache.getParentClassesOfInstance("rel");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -141,7 +141,7 @@ public class KBcacheUnitITCase {
             actual = kb.kbCache.children.get("subrelation").get("rel");
         System.out.println("testChildren(): actual: " + actual);
         System.out.println("testChildren(): expected: " + expected);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -150,7 +150,7 @@ public class KBcacheUnitITCase {
         System.out.println("Test signatures");
         List<String> expected = new ArrayList<>(Arrays.asList("", "Object", "Object"));
         List<String> actual = kb.kbCache.signatures.get("rel");
-        assertEquals(expected.subList(1, 2), actual.subList(1, 2));
+        assertThat(actual.subList(1, 2)).isEqualTo(expected.subList(1, 2));
     }
 
     @Test
@@ -161,7 +161,7 @@ public class KBcacheUnitITCase {
         System.out.println("testVarSignatures() expected: " + expected);
         String actual = kb.kbCache.variableArityType("var");
         System.out.println("testVarSignatures() actual: " + actual);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -170,7 +170,7 @@ public class KBcacheUnitITCase {
         System.out.println("Test valences");
         int expected = 2;
         int actual = kb.kbCache.valences.get("rel");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -179,14 +179,14 @@ public class KBcacheUnitITCase {
         System.out.println("Test valences 2");
         int expected = -1;
         int actual = kb.kbCache.valences.get("var");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testInsts() {
 
         System.out.println("Test insts");
-        assertTrue(kb.kbCache.insts.contains("rel"));
+        assertThat(kb.kbCache.insts.contains("rel")).isTrue();
     }
 
     @Test
@@ -197,7 +197,7 @@ public class KBcacheUnitITCase {
                 "var", "rel", "relsub", "subclass",
                 "subrelation", "CitizenryFn", "ResidentFn"));
         Set<String> actual = kb.kbCache.instances.get("Relation");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -206,14 +206,14 @@ public class KBcacheUnitITCase {
         System.out.println("Test testTransInsts");
         System.out.println("kb.kbCache.transInstOf(\"Attorney\", \"Attribute\"): " +
                 kb.kbCache.transInstOf("Attorney", "Attribute"));
-        assertTrue(kb.kbCache.transInstOf("Attorney", "Attribute"));
+        assertThat(kb.kbCache.transInstOf("Attorney", "Attribute")).isTrue();
     }
 
     @Test
     public void testIsChildOf() {
 
         System.out.println("Test testIsChildOf");
-        assertTrue(kb.isChildOf("CitizenryFn", "Function"));
+        assertThat(kb.isChildOf("CitizenryFn", "Function")).isTrue();
     }
 
     @Test
@@ -223,7 +223,7 @@ public class KBcacheUnitITCase {
         String actual = kb.kbCache.getCommonParent("LadderBackChair", "Table");
         String expected = "Furniture";
         System.out.println("Test testCommonParent(): result: " + actual);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -234,7 +234,7 @@ public class KBcacheUnitITCase {
                 "var", "subclass", "rel", "CitizenryFn", "ResidentFn", "relsub",
                 "subrelation"));
         Set<String> actual = kb.kbCache.getInstancesForType("Relation");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -248,7 +248,7 @@ public class KBcacheUnitITCase {
             System.out.println("KBcacheUnitITCase.testDisjoint(): pass");
         else
             System.out.println("KBcacheUnitITCase.testDisjoint(): fail");
-        assertTrue(kb.kbCache.checkDisjoint(kb, "Dog", "Jellyfish"));
+        assertThat(kb.kbCache.checkDisjoint(kb, "Dog", "Jellyfish")).isTrue();
 
         System.out.println("KBcacheUnitITCase.testDisjoint(): classes: " + classes);
         System.out.println("KBcacheUnitITCase.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb, classes));
@@ -256,7 +256,7 @@ public class KBcacheUnitITCase {
             System.out.println("KBcacheUnitITCase.testDisjoint(): pass");
         else
             System.out.println("KBcacheUnitITCase.testDisjoint(): fail");
-        assertTrue(kb.kbCache.checkDisjoint(kb, classes));
+        assertThat(kb.kbCache.checkDisjoint(kb, classes)).isTrue();
 
         classes = new HashSet<>(Arrays.asList("Table", "Chair"));
         System.out.println("KBcacheUnitITCase.testDisjoint(): classes: " + classes);
@@ -265,7 +265,7 @@ public class KBcacheUnitITCase {
             System.out.println("KBcacheUnitITCase.testDisjoint(): pass");
         else
             System.out.println("KBcacheUnitITCase.testDisjoint(): fail");
-        assertFalse(kb.kbCache.checkDisjoint(kb, classes));
+        assertThat(kb.kbCache.checkDisjoint(kb, classes)).isFalse();
     }
 
     @Test
@@ -282,6 +282,6 @@ public class KBcacheUnitITCase {
                 "subclass", "subrelation"));
         System.out.println("INFO in KBcache.testCollectArgsFromFormulas(): actual: " + actual);
         System.out.println("INFO in KBcache.testCollectArgsFromFormulas(): expected: " + expected);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }

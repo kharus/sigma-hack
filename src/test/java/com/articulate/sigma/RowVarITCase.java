@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * These tests follow PredVarInst.test( ), with the exception of that method's call to FormulaPreprocessor.
@@ -30,12 +29,12 @@ public class RowVarITCase extends UnitTestBase {
 
         //RowVars.DEBUG = true;
         Set<String> vars = RowVars.findRowVars(f);
-        assertTrue(vars != null && vars.size() > 0);
+        assertThat(vars != null && vars.size() > 0).isTrue();
         if (vars.contains("@ARGS") && vars.size() == 1)
             System.out.println("testFindRowVars(): success!");
         else
             System.out.println("testFindRowVars(): failure");
-        assertTrue(vars.contains("@ARGS") && vars.size() == 1);
+        assertThat(vars.contains("@ARGS") && vars.size() == 1).isTrue();
     }
 
     @Test
@@ -56,13 +55,13 @@ public class RowVarITCase extends UnitTestBase {
 
         //RowVars.DEBUG = true;
         Map<String, Set<String>> rels = RowVars.getRowVarRelations(f);
-        assertTrue(rels != null && rels.keySet().size() > 0);
+        assertThat(rels != null && rels.keySet().size() > 0).isTrue();
         System.out.println("testRowVarRels(): rels: " + rels);
         if (rels.get("@ARGS").contains("links"))
             System.out.println("testRowVarRels(): success!");
         else
             System.out.println("testRowVarRels(): failure");
-        assertTrue(rels.get("@ARGS").contains("links"));
+        assertThat(rels.get("@ARGS").contains("links")).isTrue();
     }
 
     @Test
@@ -94,7 +93,7 @@ public class RowVarITCase extends UnitTestBase {
             System.out.println("testLinks(): success!");
         else
             System.out.println("testLinks(): failure");
-        assertEquals(3, rowVarMaxArities.get("@ARGS").intValue());
+        assertThat(rowVarMaxArities.get("@ARGS").intValue()).isEqualTo(3);
     }
 
     @Test
@@ -130,7 +129,7 @@ public class RowVarITCase extends UnitTestBase {
             System.out.println("testLinks2(): success!");
         else
             System.out.println("testLinks2(): failure");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -151,6 +150,6 @@ public class RowVarITCase extends UnitTestBase {
             System.out.println("testLinks(): success!");
         else
             System.out.println("testLinks(): failure");
-        assertEquals(RowVars.MAX_ARITY, results.size());
+        assertThat(results.size()).isEqualTo(RowVars.MAX_ARITY);
     }
 }

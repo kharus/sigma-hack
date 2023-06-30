@@ -28,7 +28,7 @@ import org.junit.experimental.categories.Category;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class MultiWordsITCase extends UnitTestBase {
@@ -40,7 +40,7 @@ public class MultiWordsITCase extends UnitTestBase {
         List<String> synset = Lists.newArrayList();
         String w = WordNet.wn.getMultiWords().findMultiWord(input);
         String s = WordNetUtilities.wordsToSynsets(w).iterator().next();
-        assertEquals("200358431", s);
+        assertThat(s).isEqualTo("200358431");
     }
 
     @Test
@@ -50,7 +50,7 @@ public class MultiWordsITCase extends UnitTestBase {
         List<String> synset = Lists.newArrayList();
         String w = WordNet.wn.getMultiWords().findMultiWord(input);
         String s = WordNetUtilities.wordsToSynsets(w).iterator().next();
-        assertEquals("200358431", s);
+        assertThat(s).isEqualTo("200358431");
     }
 
     @Test
@@ -60,8 +60,8 @@ public class MultiWordsITCase extends UnitTestBase {
         List<String> synset = Lists.newArrayList();
         int endIndex = WordNet.wn.getMultiWords().findMultiWord(input, 0, synset);
 
-        assertEquals(0, endIndex);
-        assertEquals(0, synset.size());
+        assertThat(endIndex).isEqualTo(0);
+        assertThat(synset.size()).isEqualTo(0);
     }
 
     @Test
@@ -71,8 +71,8 @@ public class MultiWordsITCase extends UnitTestBase {
         List<String> synset = Lists.newArrayList();
         int endIndex = WordNet.wn.getMultiWords().findMultiWord(input, 1, synset);
 
-        assertEquals(5, endIndex);
-        assertEquals(1, synset.size());
+        assertThat(endIndex).isEqualTo(5);
+        assertThat(synset.size()).isEqualTo(1);
     }
 
     @Test
@@ -82,9 +82,9 @@ public class MultiWordsITCase extends UnitTestBase {
         List<String> synset = Lists.newArrayList();
         int endIndex = WordNet.wn.getMultiWords().findMultiWord("rain", "rain", input, synset);
 
-        assertEquals(4, endIndex);
-        assertEquals(1, synset.size());
-        assertEquals("202758033", synset.get(0));
+        assertThat(endIndex).isEqualTo(4);
+        assertThat(synset.size()).isEqualTo(1);
+        assertThat(synset.get(0)).isEqualTo("202758033");
     }
 
     @Test
@@ -95,8 +95,8 @@ public class MultiWordsITCase extends UnitTestBase {
         // Incorrect root form
         int endIndex = WordNet.wn.getMultiWords().findMultiWord("raining", "raining", input, synset);
 
-        assertEquals(0, endIndex);
-        assertEquals(0, synset.size());
+        assertThat(endIndex).isEqualTo(0);
+        assertThat(synset.size()).isEqualTo(0);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class MultiWordsITCase extends UnitTestBase {
         // Incorrect root form
         String result = WordNet.wn.getMultiWords().findMultiWord(input);
 
-        assertEquals("raining_cats_and_dogs", result);
+        assertThat(result).isEqualTo("raining_cats_and_dogs");
         //WordNet.wn.getSUMO
     }
 
@@ -119,8 +119,8 @@ public class MultiWordsITCase extends UnitTestBase {
         // Incorrect root form
         int endIndex = WordNet.wn.getMultiWords().findMultiWord("found", "found", input, synset);
 
-        assertEquals(0, endIndex);
-        assertEquals(0, synset.size());
+        assertThat(endIndex).isEqualTo(0);
+        assertThat(synset.size()).isEqualTo(0);
     }
 
     @Test
@@ -130,8 +130,8 @@ public class MultiWordsITCase extends UnitTestBase {
         List<String> synset = Lists.newArrayList();
         int endIndex = WordNet.wn.getMultiWords().findMultiWord("founding", "founding", input, synset);
 
-        assertEquals(2, endIndex);
-        assertEquals(1, synset.size());
-        assertEquals("110107303", synset.get(0));
+        assertThat(endIndex).isEqualTo(2);
+        assertThat(synset.size()).isEqualTo(1);
+        assertThat(synset.get(0)).isEqualTo("110107303");
     }
 }

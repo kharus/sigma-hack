@@ -7,8 +7,7 @@ import org.junit.experimental.categories.Category;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 // TODO: Test the WordNet class more thoroughly. Start with the test methods called in main( ).
 
@@ -20,7 +19,7 @@ public class WordNetITCase extends UnitTestBase {
 
         String actual = WordNet.wn.verbRootForm("going", "going");
         String expected = "go";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -28,7 +27,7 @@ public class WordNetITCase extends UnitTestBase {
 
         String actual = WordNet.wn.verbRootForm("driving", "driving");
         String expected = "drive";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -36,7 +35,7 @@ public class WordNetITCase extends UnitTestBase {
 
         String actual = WordNetUtilities.verbPlural("go");
         String expected = "goes";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -44,13 +43,13 @@ public class WordNetITCase extends UnitTestBase {
 
         String actual = WordNetUtilities.verbPlural("drive");
         String expected = "drives";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testIsValidKey() {
 
-        assertTrue(WordNetUtilities.isValidKey("stick_together_VB_1"));
+        assertThat(WordNetUtilities.isValidKey("stick_together_VB_1")).isTrue();
     }
 
     @Test
@@ -58,7 +57,7 @@ public class WordNetITCase extends UnitTestBase {
 
         List<String> runs = WordNet.wn.wordsToSenseKeys.get("run");
         System.out.println("run " + runs);
-        assertTrue(runs.contains("run_NN_7"));
+        assertThat(runs.contains("run_NN_7")).isTrue();
         System.out.println("TV " + WordNet.wn.wordsToSenseKeys.get("TV"));
         System.out.println("tv " + WordNet.wn.wordsToSenseKeys.get("tv"));
         System.out.println("106277280 " + WordNet.wn.synsetsToWords.get("106277280"));

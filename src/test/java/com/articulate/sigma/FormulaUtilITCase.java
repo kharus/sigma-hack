@@ -3,7 +3,7 @@ package com.articulate.sigma;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class FormulaUtilITCase {
@@ -15,7 +15,7 @@ public class FormulaUtilITCase {
         Formula f = new Formula(stmt);
         String result = FormulaUtil.toProlog(f);
         System.out.println("FormulaUtilITCase.testToProlog(): " + result);
-        assertEquals("birthplace(?animal,?LOC)", result);
+        assertThat(result).isEqualTo("birthplace(?animal,?LOC)");
     }
 
 }

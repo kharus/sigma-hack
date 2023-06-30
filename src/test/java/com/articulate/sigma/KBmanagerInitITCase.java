@@ -3,7 +3,7 @@ package com.articulate.sigma;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class KBmanagerInitITCase extends UnitTestBase {
@@ -19,7 +19,7 @@ public class KBmanagerInitITCase extends UnitTestBase {
 
         int expected = UnitTestBase.NUM_KIF_FILES;
         int actual = SigmaTestBase.kb.constituents.size();
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
 }

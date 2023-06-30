@@ -13,8 +13,7 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class SUMOtoTFAITCase extends UnitTestBase {
@@ -61,7 +60,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testBuildConstraints(): Success!");
         else
             System.out.println("testBuildConstraints(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -78,7 +77,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("test1(): Success!");
         else
             System.out.println("test1(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -95,7 +94,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("test2(): Success!");
         else
             System.out.println("test2(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -121,7 +120,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("test3(): Success!");
         else
             System.out.println("test3(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -152,7 +151,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("test4(): Success!");
         else
             System.out.println("test4(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -183,7 +182,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("test5(): Success!");
         else
             System.out.println("test5(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -215,7 +214,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("test6(): Success!");
         else
             System.out.println("test6(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -240,7 +239,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("test7(): Success!");
         else
             System.out.println("test7(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Ignore // includes ListFn
@@ -300,7 +299,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("test8(): Success!");
         else
             System.out.println("test8(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -324,7 +323,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("test9(): Success!");
         else
             System.out.println("test9(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -354,7 +353,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testElimLogops: pass");
         else
             System.out.println("testElimLogops: fail");
-        assertTrue(fExpected.deepEquals(fActual));
+        assertThat(fExpected.deepEquals(fActual)).isTrue();
     }
 
     @Test
@@ -377,7 +376,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testTemporalComp(): Success!");
         else
             System.out.println("testTemporalComp(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -400,7 +399,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testBigNumber(): Success!");
         else
             System.out.println("testBigNumber(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -424,14 +423,15 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testNumber(): Success!");
         else
             System.out.println("testNumber(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
     public void testMostSpecific() {
 
         System.out.println("\n========= test testMostSpecific ==========\n");
-        assertEquals("LengthMeasure", SUMOtoTFAform.mostSpecificType(Arrays.asList("RealNumber", "LengthMeasure")));
+        assertThat(SUMOtoTFAform.mostSpecificType(Arrays.asList("RealNumber", "LengthMeasure")))
+                .isEqualTo("LengthMeasure");
     }
 
     @Test
@@ -454,7 +454,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testTemporalComp2(): Success!");
         else
             System.out.println("testTemporalComp2(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -479,7 +479,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testCeiling(): Success!");
         else
             System.out.println("testCeiling(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Ignore // contains ListFn
@@ -504,7 +504,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testInList(): Success!");
         else
             System.out.println("testInList(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Ignore // contains ListFn
@@ -527,7 +527,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testLeastCommon(): Success!");
         else
             System.out.println("testLeastCommon(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -549,7 +549,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testMult(): Success!");
         else
             System.out.println("testMult(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -571,7 +571,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testDay(): Success!");
         else
             System.out.println("testDay(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -592,7 +592,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testExponent(): Success!");
         else
             System.out.println("testExponent(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -614,7 +614,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testInstance(): Success!");
         else
             System.out.println("testInstance(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -639,7 +639,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testRadian(): Success!");
         else
             System.out.println("testRadian(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -663,7 +663,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testFloor(): Success!");
         else
             System.out.println("testFloor(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -688,7 +688,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testPrime(): Success!");
         else
             System.out.println("testPrime(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Ignore // requires loading a new kif file
@@ -721,7 +721,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testAvgWork(): Success!");
         else
             System.out.println("testAvgWork(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -740,6 +740,6 @@ public class SUMOtoTFAITCase extends UnitTestBase {
             System.out.println("testComposeSuffix(): Success!");
         else
             System.out.println("testComposeSuffix(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 }

@@ -8,7 +8,6 @@ import org.junit.experimental.categories.Category;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 
 @Category(MidLevel.class)
 public class KBcacheITCase extends IntegrationTestBase {
@@ -35,7 +34,7 @@ public class KBcacheITCase extends IntegrationTestBase {
         //System.out.println("childOfP(\"Shirt\", \"WearableItem\"): " + cache.childOfP("subclass", "WearableItem","Shirt"));
         //System.out.println("SigmaTestBase.kb.isChildOf(\"Shirt\", \"WearableItem\"): " + SigmaTestBase.kb.isChildOf("Shirt", "WearableItem"));
         //System.out.println("SigmaTestBase.kb.childOf(Shirt, WearableItem): " + SigmaTestBase.kb.childOf("Shirt", "WearableItem"));
-        assertTrue(SigmaTestBase.kb.kbCache.parents.get("subclass").get("Shirt").contains("WearableItem"));
+        assertThat(SigmaTestBase.kb.kbCache.parents.get("subclass").get("Shirt").contains("WearableItem")).isTrue();
     }
 
     @Test
@@ -46,17 +45,17 @@ public class KBcacheITCase extends IntegrationTestBase {
         String child = "IrreflexiveRelation";
         Set<String> expected = new HashSet<>(Arrays.asList("Entity", "Relation", "InheritableRelation", "Abstract", "BinaryRelation"));
         Set<String> actual = cache.getParentClasses(child);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
 
         child = "City";
         expected = new HashSet<>(Arrays.asList("Entity", "Physical", "Object", "Region", "GeographicArea", "AutonomousAgent", "GeopoliticalArea", "LandArea"));
         actual = cache.getParentClasses(child);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
 
         child = "AsymmetricRelation";
         expected = new HashSet<>(Arrays.asList("Entity", "Abstract", "Relation", "InheritableRelation", "BinaryRelation", "AntisymmetricRelation", "IrreflexiveRelation"));
         actual = cache.getParentClasses(child);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -83,12 +82,12 @@ public class KBcacheITCase extends IntegrationTestBase {
         TreeSet<String> actual = new TreeSet<String>(cache.getChildClasses(parent));
         System.out.println("Expected: " + expected);
         System.out.println("Actual: " + actual);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
 
         parent = "AsymmetricRelation";
         expected = new TreeSet<>(Arrays.asList("AsymmetricRelation", "PropositionalAttitude", "CaseRole"));
         actual = new TreeSet<String>(cache.getChildClasses(parent));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -111,7 +110,7 @@ public class KBcacheITCase extends IntegrationTestBase {
             System.out.println("KBcacheITCase.testBuildChildren2(): pass");
         else
             System.out.println("KBcacheITCase.testBuildChildren2(): fail");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -125,14 +124,14 @@ public class KBcacheITCase extends IntegrationTestBase {
         Set<String> expected = new HashSet<>(Arrays.asList("Entity", "Relation", "InheritableRelation",
                 "Abstract", "BinaryPredicate", "BinaryRelation", "Predicate"));
         Set<String> actual = cache.getParentClassesOfInstance(relation);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
 
         relation = "during";  // TODO: since during is a subrelation of temporalPart it should be a superset here - bad test
         System.out.println("testbuildTransInstOf(): testing: " + relation);
         expected = new HashSet<>(Arrays.asList("Entity", "TransitiveRelation", "Abstract", "Relation",
                 "InheritableRelation", "IrreflexiveRelation", "BinaryPredicate", "BinaryRelation", "Predicate"));
         actual = cache.getParentClassesOfInstance(relation);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
 
         relation = "temporalPart";
         System.out.println("testbuildTransInstOf(): testing: " + relation);
@@ -144,7 +143,7 @@ public class KBcacheITCase extends IntegrationTestBase {
                 "InheritableRelation", "ReflexiveRelation", "BinaryPredicate", "PartialOrderingRelation",
                 "BinaryRelation"));
         actual = cache.getParentClassesOfInstance(relation);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -153,7 +152,7 @@ public class KBcacheITCase extends IntegrationTestBase {
         KBcache cache = SigmaTestBase.kb.kbCache;
         //System.out.println("parents of CitizenryFn (as instance): " + cache.getParentClassesOfInstance("CitizenryFn"));
         //System.out.println("parents of CitizenryFn: " + cache.parents.get("subclass").get("CitizenryFn"));
-        assertTrue(SigmaTestBase.kb.isChildOf("CitizenryFn", "Function"));
+        assertThat(SigmaTestBase.kb.isChildOf("CitizenryFn", "Function")).isTrue();
     }
 
     @Test
@@ -162,7 +161,7 @@ public class KBcacheITCase extends IntegrationTestBase {
         KBcache cache = SigmaTestBase.kb.kbCache;
         //System.out.println("parents of Attorney (as instance): " + cache.getParentClassesOfInstance("Attorney"));
         //System.out.println("parents of Attorney: " + cache.parents.get("subclass").get("Attorney"));
-        assertTrue(SigmaTestBase.kb.isChildOf("Attorney", "Attribute"));
+        assertThat(SigmaTestBase.kb.isChildOf("Attorney", "Attribute")).isTrue();
     }
 
     @Test
@@ -173,7 +172,7 @@ public class KBcacheITCase extends IntegrationTestBase {
         //System.out.println("parents of Shirt: " + cache.parents.get("subclass").get("Shirt"));
         //System.out.println("childOfP(\"Shirt\", \"WearableItem\"): " + cache.childOfP("subclass", "WearableItem","Shirt"));
         //System.out.println("SigmaTestBase.kb.isChildOf(\"Shirt\", \"WearableItem\"): " + SigmaTestBase.kb.isChildOf("Shirt", "WearableItem"));
-        assertTrue(SigmaTestBase.kb.isChildOf("Shirt", "WearableItem"));
+        assertThat(SigmaTestBase.kb.isChildOf("Shirt", "WearableItem")).isTrue();
     }
 
     @Test
@@ -184,21 +183,21 @@ public class KBcacheITCase extends IntegrationTestBase {
         //System.out.println("parents of Shirt: " + cache.parents.get("subclass").get("Shirt"));
         //System.out.println("childOfP(\"Shirt\", \"Process\"): " + cache.childOfP("subclass", "Process","Shirt"));
         //System.out.println("SigmaTestBase.kb.isChildOf(\"Shirt\", \"Process\"): " + SigmaTestBase.kb.isChildOf("Shirt", "Process"));
-        assertFalse(SigmaTestBase.kb.isChildOf("Shirt", "Process"));
+        assertThat(SigmaTestBase.kb.isChildOf("Shirt", "Process")).isFalse();
     }
 
     @Test
     public void testIsChildOf5() {
 
         KBcache cache = SigmaTestBase.kb.kbCache;
-        assertTrue(SigmaTestBase.kb.isChildOf("Integer", "RealNumber"));
+        assertThat(SigmaTestBase.kb.isChildOf("Integer", "RealNumber")).isTrue();
     }
 
     @Test
     public void testIsChildOf6() {
 
         KBcache cache = SigmaTestBase.kb.kbCache;
-        assertTrue(SigmaTestBase.kb.isChildOf("Writing", "ContentDevelopment"));
+        assertThat(SigmaTestBase.kb.isChildOf("Writing", "ContentDevelopment")).isTrue();
     }
 
     @Test
@@ -207,8 +206,8 @@ public class KBcacheITCase extends IntegrationTestBase {
         System.out.println("\n============= testTransitiveRelations2 ==================");
         KBcache cache = SigmaTestBase.kb.kbCache;
         System.out.println("testTransitiveRelations2: " + cache.transRels);
-        assertTrue(cache.transRels.contains("subAttribute"));
-        assertTrue(cache.transRels.contains("subrelation"));
+        assertThat(cache.transRels.contains("subAttribute")).isTrue();
+        assertThat(cache.transRels.contains("subrelation")).isTrue();
     }
 
     /**
@@ -227,7 +226,7 @@ public class KBcacheITCase extends IntegrationTestBase {
             System.out.println("KBcacheITCase.testDisjoint(): pass");
         else
             System.out.println("KBcacheITCase.testDisjoint(): fail");
-        assertTrue(kb.kbCache.checkDisjoint(kb, "Arthropod", "Bird"));
+        assertThat(kb.kbCache.checkDisjoint(kb, "Arthropod", "Bird")).isTrue();
 
         System.out.println("KBcacheITCase.testDisjoint(): classes: " + classes);
         System.out.println("KBcacheITCase.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb, classes));
@@ -235,7 +234,7 @@ public class KBcacheITCase extends IntegrationTestBase {
             System.out.println("KBcacheITCase.testDisjoint(): pass");
         else
             System.out.println("KBcacheITCase.testDisjoint(): fail");
-        assertTrue(kb.kbCache.checkDisjoint(kb, classes));
+        assertThat(kb.kbCache.checkDisjoint(kb, classes)).isTrue();
 
         classes = new HashSet<>(Arrays.asList("Table", "Chair"));
         System.out.println("KBcacheITCase.testDisjoint(): classes: " + classes);
@@ -244,7 +243,7 @@ public class KBcacheITCase extends IntegrationTestBase {
             System.out.println("KBcacheITCase.testDisjoint(): pass");
         else
             System.out.println("KBcacheITCase.testDisjoint(): fail");
-        assertFalse(kb.kbCache.checkDisjoint(kb, classes));
+        assertThat(kb.kbCache.checkDisjoint(kb, classes)).isFalse();
 
         classes = new HashSet<>(Arrays.asList("Table", "Agent"));
         System.out.println("KBcacheITCase.testDisjoint(): classes: " + classes);
@@ -253,7 +252,7 @@ public class KBcacheITCase extends IntegrationTestBase {
             System.out.println("KBcacheITCase.testDisjoint(): pass");
         else
             System.out.println("KBcacheITCase.testDisjoint(): fail");
-        assertTrue(kb.kbCache.checkDisjoint(kb, classes));
+        assertThat(kb.kbCache.checkDisjoint(kb, classes)).isTrue();
     }
 
     @Test
@@ -275,7 +274,7 @@ public class KBcacheITCase extends IntegrationTestBase {
         System.out.println("testTransInst(): insts.contains(Anger): " + cache.insts.contains("Anger"));
         //System.out.println("testTransInst(): insts.contains(Anger): " + cache.insts.contains("Anger"));
         //System.out.println("testTransInst(): instancesOf: " + cache.instanceOf);
-        assertTrue(cache.transInstOf("Anger", "Entity"));
+        assertThat(cache.transInstOf("Anger", "Entity")).isTrue();
     }
 
     @Test
@@ -289,8 +288,8 @@ public class KBcacheITCase extends IntegrationTestBase {
         //System.out.println("testRealization(): cache.instances.get(SymmetricRelation): " + cache.instances.get("SymmetricRelation"));
         //System.out.println("testRealization(): cache.parents.get(intsance).get(realization): " + cache.parents.get("subrelation").get("realization"));
         //System.out.println("testRealization(): cache.instanceOf.get(realization): " + cache.instanceOf.get("realization"));
-        assertFalse(cache.isInstanceOf("realization", "SymmetricRelation"));
-        assertTrue(cache.isInstanceOf("realization", "AntisymmetricRelation"));
+        assertThat(cache.isInstanceOf("realization", "SymmetricRelation")).isFalse();
+        assertThat(cache.isInstanceOf("realization", "AntisymmetricRelation")).isTrue();
     }
 
     @Test
@@ -299,7 +298,7 @@ public class KBcacheITCase extends IntegrationTestBase {
         System.out.println("\n============= testFunctions ==================");
         KBcache cache = SigmaTestBase.kb.kbCache;
         System.out.println("cache.functions.contains(\"AfternoonFn\"): " + cache.functions.contains("AfternoonFn"));
-        assertTrue(cache.functions.contains("AfternoonFn"));
+        assertThat(cache.functions.contains("AfternoonFn")).isTrue();
 
     }
 
@@ -326,7 +325,7 @@ public class KBcacheITCase extends IntegrationTestBase {
                     System.out.println("parents of " + rel + " " + cache.instanceOf.get(rel));
                 } else
                     System.out.println("success for predicate: " + rel);
-                assertTrue(cache.isInstanceOf(rel, "Predicate"));
+                assertThat(cache.isInstanceOf(rel, "Predicate")).isTrue();
             }
         }
         System.out.println("Success");

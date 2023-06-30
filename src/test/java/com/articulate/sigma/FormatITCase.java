@@ -5,7 +5,7 @@ import org.junit.experimental.categories.Category;
 
 import java.util.Map;
 
-import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class FormatITCase extends UnitTestBase {
@@ -28,7 +28,9 @@ public class FormatITCase extends UnitTestBase {
         }
 
         // If a trimmed problems list is not empty, then all the problems will be printed out.
-        assertTrue(problems.toString(), problems.toString().trim().isEmpty());
+        assertThat(problems.toString().trim().isEmpty())
+                .as(problems.toString())
+                .isTrue();
     }
 
     @Test
@@ -57,6 +59,8 @@ public class FormatITCase extends UnitTestBase {
         }
 
         // If a trimmed problems list is not empty, then all the problems will be printed out.
-        assertTrue(problems.toString(), problems.toString().trim().isEmpty());
+        assertThat(problems.toString().trim().isEmpty())
+                .as(problems.toString())
+                .isTrue();
     }
 }

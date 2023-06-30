@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
 public class InferenceITCase {
@@ -105,6 +105,6 @@ public class InferenceITCase {
         else
             System.out.println("Failure in " + fInput);
         System.out.println("\n\n");
-        assertEquals(itd.expectedAnswers, itd.actualAnswers);
+        assertThat(itd.actualAnswers).isEqualTo(itd.expectedAnswers);
     }
 }
