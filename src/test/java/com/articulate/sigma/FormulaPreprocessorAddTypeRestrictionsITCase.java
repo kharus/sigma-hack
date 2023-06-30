@@ -2,8 +2,8 @@ package com.articulate.sigma;
 
 import com.articulate.sigma.trans.SUMOformulaToTPTPformula;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -197,7 +197,7 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
         test("testAddTypeRestrictions5", stmt, expected);
     }
 
-    @Ignore  // serviceFee is in Financial ontology not merge or MILO
+    @Disabled  // serviceFee is in Financial ontology not merge or MILO
     @Test
     public void testAddTypeRestrictions6() {
 
@@ -251,7 +251,7 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
         test("testAddTypeRestrictions7", stmt, expected);
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testAddTypeRestrictions8() {
 
@@ -305,7 +305,7 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
         test("testAddTypeRestrictions8", stmt, expected);
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testAddTypeRestrictions9() {
 
@@ -380,7 +380,7 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
         test("testAddTypeRestrictions11", stmt, expected);
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testAddTypeRestrictions12() {
 

@@ -1,8 +1,8 @@
 package com.articulate.sigma;
 
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 
 import java.util.*;
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Category(MidLevel.class)
 public class KBcacheITCase extends IntegrationTestBase {
 
-    @BeforeClass
+    @BeforeAll
     public static void requiredKB() {
 
         List<String> reqFiles =
@@ -59,7 +59,7 @@ public class KBcacheITCase extends IntegrationTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testBuildChildren() {
 
         System.out.println("\n============= testBuildChildren ==================");
@@ -214,7 +214,7 @@ public class KBcacheITCase extends IntegrationTestBase {
      * TODO: try to fix this
      */
     @Test
-    @Ignore
+    @Disabled
     public void testDisjoint() {
 
         System.out.println("\n============= testDisjoint ==================");
@@ -303,7 +303,7 @@ public class KBcacheITCase extends IntegrationTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testPredicates() {
 
         System.out.println("\n============= testPredicates ==================");

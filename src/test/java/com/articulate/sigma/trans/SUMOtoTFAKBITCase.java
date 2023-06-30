@@ -8,8 +8,8 @@ package com.articulate.sigma.trans;
 
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.IntegrationTestBase;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Set;
@@ -20,7 +20,7 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
 
     private static SUMOKBtoTFAKB skbtfakb = null;
 
-    @BeforeClass
+    @BeforeAll
     public static void init() {
 
         SUMOtoTFAform.initOnce();

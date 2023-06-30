@@ -4,7 +4,7 @@ import com.articulate.sigma.KB;
 import com.articulate.sigma.SigmaTestBase;
 import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 
 import static org.assertj.core.api.Assertions.assertThat;

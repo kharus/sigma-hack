@@ -3,7 +3,7 @@ package com.articulate.sigma.nlg;
 import com.articulate.sigma.KB;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

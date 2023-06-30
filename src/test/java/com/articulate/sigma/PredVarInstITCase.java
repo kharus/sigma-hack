@@ -6,7 +6,7 @@ package com.articulate.sigma;
 // apease@articulatesoftware.com
 
 import com.google.common.collect.Sets;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 
 import java.util.HashSet;

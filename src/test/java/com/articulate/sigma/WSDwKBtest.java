@@ -4,8 +4,8 @@ import com.articulate.sigma.wordnet.WSD;
 import com.articulate.sigma.wordnet.WordNet;
 import com.articulate.sigma.wordnet.WordNetUtilities;
 import com.google.common.collect.Lists;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,7 +14,7 @@ import static junit.framework.TestCase.assertEquals;
 
 public class WSDwKBtest extends IntegrationTestBase {
 
-    @Before
+    @BeforeEach
     public void setUpInterpreter() throws IOException {
 
         KBmanager.getMgr().initializeOnce();

@@ -3,9 +3,9 @@ package com.articulate.sigma;
 import com.articulate.sigma.utils.FileUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 
 import java.util.HashSet;
@@ -19,7 +19,7 @@ public class KBmanagerInitIntegrationITCase extends IntegrationTestBase {
 
     private static final Set<String> kifSet = Sets.newHashSet();
 
-    @BeforeClass
+    @BeforeAll
     public static void setKB() {
 
         //kifSet.add("ArabicCulture.kif");
@@ -65,7 +65,7 @@ public class KBmanagerInitIntegrationITCase extends IntegrationTestBase {
      * Verify that you are running your tests with the expected configuration.
      */
     @Test
-    @Ignore
+    @Disabled
     public void testNbrKifFilesLoaded() {
 
         Set<String> expectedKifFiles = Sets.newHashSet(kifSet);

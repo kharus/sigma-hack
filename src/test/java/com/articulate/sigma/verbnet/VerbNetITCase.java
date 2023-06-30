@@ -3,7 +3,7 @@ package com.articulate.sigma.verbnet;
 import com.articulate.sigma.IntegrationTestBase;
 import com.articulate.sigma.utils.StringUtil;
 import com.articulate.sigma.wordnet.WordNet;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.TreeMap;

@@ -4,8 +4,8 @@ import com.articulate.sigma.InferenceTestSuite;
 import com.articulate.sigma.KB;
 import com.articulate.sigma.KBmanager;
 import com.google.common.collect.Lists;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -26,7 +26,7 @@ public class InferenceITCase {
     @Parameterized.Parameter(value = 0)
     public String fInput;
 
-    @BeforeClass
+    @BeforeAll
     public static void setKB() {
 
         KBmanager.getMgr().initializeOnce();

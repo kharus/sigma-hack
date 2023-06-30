@@ -6,9 +6,9 @@ import com.articulate.sigma.nlg.LanguageFormatter;
 import com.articulate.sigma.utils.AVPair;
 import com.articulate.sigma.utils.StringUtil;
 import com.articulate.sigma.wordnet.WordNetUtilities;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 
 import java.io.FileWriter;
@@ -25,7 +25,7 @@ public class GenSimpTestDataITCase {
     public static LFeatures lfeat = null;
     public static GenSimpTestData gstd = new GenSimpTestData();
 
-    @BeforeClass
+    @BeforeAll
     public static void init() {
 
         System.out.println("GenSimpTestDataITCase.init()");
@@ -170,7 +170,7 @@ public class GenSimpTestDataITCase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testSoccer() {
         testVerb("Soccer", false, PROGRESSIVE, "soccer", false, "Is playing soccer", lfeat);
     }
@@ -232,7 +232,7 @@ public class GenSimpTestDataITCase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testBeckon() {
         testVerb("Waving", true, FUTUREPROG, "beckon", true, "will not be beckoning", lfeat);
     }
@@ -262,32 +262,32 @@ public class GenSimpTestDataITCase {
         testVerb("Interpreting", false, PROGRESSIVE, "rede", false, "is reding", lfeat);
     }
 
-    @Ignore // it's randomly plural or singular which breaks the test
+    @Disabled // it's randomly plural or singular which breaks the test
     @Test
     public void testMonkey() {
         testNoun("Monkey", "monkey", true, "monkies", lfeat);
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testEat1() {
         testCapability("Eating", "patient", "ArtWork", false);
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testWading1() {
         testCapability("Wading", "patient", "Book", false);
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testChimney1() {
         testCapability("Eating", "objectTransferred", "Chimney", false);
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testSell() {
 
         System.out.println();
@@ -315,7 +315,7 @@ public class GenSimpTestDataITCase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testTaste() {
 
         System.out.println();

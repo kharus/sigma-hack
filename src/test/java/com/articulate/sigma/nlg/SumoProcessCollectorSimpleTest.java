@@ -3,9 +3,9 @@ package com.articulate.sigma.nlg;
 import com.articulate.sigma.KB;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.Set;
@@ -103,7 +103,7 @@ public class SumoProcessCollectorSimpleTest extends SigmaMockTestBase {
     /**
      * Ignoring test till we figure out how to do benefactive/benefits in SUMO.
      */
-    @Ignore
+    @Disabled
     @Test
     public void testIsValidFalse() {
         SumoProcessCollector process = new SumoProcessCollector(knowledgeBase, "benefactive", "Driving", "Sally");

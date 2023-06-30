@@ -22,8 +22,8 @@ package com.articulate.sigma;
  * Relation
  */
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 
 import java.util.*;
@@ -35,7 +35,7 @@ public class KBcacheUnitITCase {
 
     public static KB kb = new KB("TestKB");
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
 
         kb.kbCache = new KBcache(kb);

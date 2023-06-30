@@ -2,8 +2,8 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
-import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

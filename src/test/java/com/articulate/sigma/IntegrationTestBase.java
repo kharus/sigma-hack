@@ -1,6 +1,6 @@
 package com.articulate.sigma;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class IntegrationTestBase extends SigmaTestBase {
 //        xmlReader = SigmaTestBase.getXmlReader(CONFIG_FILE_PATH, CLASS);
 //    }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws IOException {
 
         long startTime = System.currentTimeMillis();

@@ -12,9 +12,9 @@ import com.articulate.sigma.trans.SUMOformulaToTPTPformula;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -28,8 +28,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * FormulaPreprocessor tests not focused on findExplicitTypes( ) or computeVariableTypes( ).
  */
-@Category(TopOnly.class)
-public class FormulaPreprocessorITCase extends UnitTestBase {
+@Tag("com.articulate.sigma.TopOnly")
+public class FormulaPreprocessorITCase extends UnitTestBase5 {
 
     // TODO: Technically, this should to in the FormulaITCase class, but the gatherRelationsWithArgTypes( ) method requires a KB
     // and none of the other tests in that class do. Maybe move the method to FormulaPreprocessor--it's the only Formula method
@@ -58,7 +58,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     }
 
     // FIXME: test is waiting completion of Formula.logicallyEquals()
-    @Ignore
+    @Disabled
     @Test
     public void testAddTypes1() {
 
@@ -91,7 +91,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     }
 
     // FIXME: test is waiting completion of Formula.logicallyEquals()
-    @Ignore
+    @Disabled
     @Test
     public void testAddTypes2() {
 
@@ -186,7 +186,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void test5() {
 
         System.out.println("\n============= test5 ==================");
@@ -223,7 +223,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void test6() {
 
         System.out.println("\n============= test6 ==================");
@@ -254,7 +254,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void test7() {
 
         System.out.println("\n============= test7 ==================");

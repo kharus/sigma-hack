@@ -2,9 +2,9 @@ package com.articulate.sigma;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.Set;
@@ -67,7 +67,7 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
         assertThat(actualMap).isEqualTo(expected);
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testAddTypes3() {
 

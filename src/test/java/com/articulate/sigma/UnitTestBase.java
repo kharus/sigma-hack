@@ -1,7 +1,7 @@
 package com.articulate.sigma;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,7 +32,7 @@ public class UnitTestBase extends SigmaTestBase {
         xmlReader = SigmaTestBase.getXmlReader(CONFIG_FILE_PATH, CLASS);
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
 
         System.out.println("UnitTestBase.setup(): reading test config file: " + CONFIG_FILE_PATH);
@@ -46,7 +46,7 @@ public class UnitTestBase extends SigmaTestBase {
         }
     }
 
-    @AfterClass
+    @AfterAll
     public static void checkKBCount() {
 
         if (KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname")).constituents.size() > NUM_KIF_FILES) { // include cache file

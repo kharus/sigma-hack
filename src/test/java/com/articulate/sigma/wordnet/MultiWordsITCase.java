@@ -23,7 +23,7 @@ package com.articulate.sigma.wordnet;
 import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
 import com.google.common.collect.Lists;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.experimental.categories.Category;
 
 import java.util.List;

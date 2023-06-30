@@ -3,8 +3,8 @@ package com.articulate.sigma.nlg;
 import com.articulate.sigma.IntegrationTestBase;
 import com.articulate.sigma.SigmaTestBase;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -53,7 +53,7 @@ public class HtmlParaphraseIntegrationITCase extends IntegrationTestBase {
      * Ideal: "Bell created the telephone."; also "The telephone was created by Bell."
      */
     @Test
-    @Ignore
+    @Disabled
     public void testHtmlParaphraseBellCreateTelephone() {
         String stmt = "(exists \n" +
                 "              (?event ?telephone) \n" +
@@ -209,7 +209,7 @@ public class HtmlParaphraseIntegrationITCase extends IntegrationTestBase {
      * Ideal: "The waiter pours soup into the bowl."
      */
     @Test
-    @Ignore
+    @Disabled
     public void testWaiterPoursSoupBowl() {
         String stmt = "(exists \n" +
                 "              (?bowl ?event ?soup ?waiter) \n" +
