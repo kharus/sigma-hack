@@ -117,7 +117,7 @@ public class KBcache implements Serializable {
     public Map<String, List<String>> signatures =
             new HashMap<String, List<String>>();
     // The number of arguments to each relation.  Variable arity is -1
-    public Map<String, Integer> valences = new HashMap<String, Integer>();
+    public Map<String, Integer> valences = new HashMap<>();
     /**
      * Disjoint relationships which were explicitly defined in "partition", "disjoint",
      * and "disjointDecomposition" expressions

@@ -12,9 +12,14 @@ import com.articulate.sigma.trans.SUMOformulaToTPTPformula;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -28,8 +33,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * FormulaPreprocessor tests not focused on findExplicitTypes( ) or computeVariableTypes( ).
  */
+@SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
-public class FormulaPreprocessorITCase extends UnitTestBase {
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class FormulaPreprocessorITCase {
+
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
 
     // TODO: Technically, this should to in the FormulaITCase class, but the gatherRelationsWithArgTypes( ) method requires a KB
     // and none of the other tests in that class do. Maybe move the method to FormulaPreprocessor--it's the only Formula method
@@ -42,10 +60,10 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         Formula f = new Formula();
         f.read(stmt);
 
-        Map<String, List> actualMap = f.gatherRelationsWithArgTypes(SigmaTestBase.kb);
+        Map<String, List<String>> actualMap = f.gatherRelationsWithArgTypes(kb);
 
         List<String> expectedList = Lists.newArrayList(null, "Process", "AutonomousAgent", null, null, null, null, null);
-        Map<String, List> expectedMap = Maps.newHashMap();
+        Map<String, List<String>> expectedMap = Maps.newHashMap();
         expectedMap.put("agent", expectedList);
 
         System.out.println("testGatherRelationships(): actual: " + actualMap);
@@ -75,7 +93,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
                 "(equal ?SET1 ?SET2)))";
         expected.read(expectedString);
 
-        Formula actual = fp.addTypeRestrictions(f, SigmaTestBase.kb);
+        Formula actual = fp.addTypeRestrictions(f, kb);
         System.out.println("testAddTypes1(): actual: " + actual);
         System.out.println("testAddTypes1(): expected: " + expected);
         if (expected.equals(actual))
@@ -107,7 +125,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
                 "(=> (and (attribute ?AREA LowTerrain) (part ?ZONE ?AREA) (slopeGradient ?ZONE ?SLOPE)) (greaterThan 0.03 ?SLOPE)))";
         expected.read(expectedString);
 
-        Formula actual = fp.addTypeRestrictions(f, SigmaTestBase.kb);
+        Formula actual = fp.addTypeRestrictions(f, kb);
         System.out.println("testAddTypes2(): actual: " + actual);
         System.out.println("testAddTypes2(): expected: " + expected);
         //assertThat(actual).isEqualTo(expected);
@@ -138,7 +156,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         expectedMap.put("?Hum", Sets.newHashSet("Man", "Woman"));
         expectedMap.put("?Time", Sets.newHashSet("Month"));
 
-        Map<String, Set<String>> actualMap = KButilities.mergeToMap(map1, map2, SigmaTestBase.kb);
+        Map<String, Set<String>> actualMap = KButilities.mergeToMap(map1, map2, kb);
 
         System.out.println("testMergeToMap1(): actual: " + actualMap);
         System.out.println("testMergeToMap1(): expected: " + expectedMap);
@@ -164,16 +182,17 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         Formula f = new Formula();
         f.read(strf);
         String actual = fp.addTypeRestrictions(f, kb).toString();
-        String expected = "(forall (?NUMBER ?ELEMENT ?CLASS)\n" +
-                "    (=>\n" +
-                "      (and\n" +
-                "        (instance ?NUMBER PositiveInteger)\n" +
-                "        (instance ?CLASS Class))\n" +
-                "      (=>\n" +
-                "        (equal ?ELEMENT\n" +
-                "          (ListOrderFn\n" +
-                "            (ListFn_1Fn ?FOO) ?NUMBER))\n" +
-                "        (instance ?ELEMENT ?CLASS))))";
+        String expected = """
+                (forall (?NUMBER ?ELEMENT ?CLASS)
+                    (=>
+                      (and
+                        (instance ?NUMBER PositiveInteger)
+                        (instance ?CLASS Class))
+                      (=>
+                        (equal ?ELEMENT
+                          (ListOrderFn
+                            (ListFn_1Fn ?FOO) ?NUMBER))
+                        (instance ?ELEMENT ?CLASS))))""";
         System.out.println("test4(): actual: " + actual);
         System.out.println("test4(): expected: " + expected);
         Formula fActual = new Formula(actual);
@@ -191,9 +210,10 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
 
         System.out.println("\n============= test5 ==================");
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        String strf = "(<=>\n" +
-                "   (equal (RemainderFn ?NUMBER1 ?NUMBER2) ?NUMBER)\n" +
-                "   (equal (AdditionFn (MultiplicationFn (FloorFn (DivisionFn ?NUMBER1 ?NUMBER2)) ?NUMBER2) ?NUMBER) ?NUMBER1))";
+        String strf = """
+                (<=>
+                   (equal (RemainderFn ?NUMBER1 ?NUMBER2) ?NUMBER)
+                   (equal (AdditionFn (MultiplicationFn (FloorFn (DivisionFn ?NUMBER1 ?NUMBER2)) ?NUMBER2) ?NUMBER) ?NUMBER1))""";
         Formula f = new Formula();
         f.read(strf);
         //FormulaPreprocessor.debug = true;
@@ -226,30 +246,26 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     @Disabled
     public void test6() {
 
-        System.out.println("\n============= test6 ==================");
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        String strf = "(<=>\n" +
-                "  (temporalPart ?POS\n" +
-                "    (WhenFn ?THING))\n" +
-                "  (time ?THING ?POS))";
+        String strf = """
+                (<=>
+                  (temporalPart ?POS
+                    (WhenFn ?THING))
+                  (time ?THING ?POS))""";
         Formula f = new Formula();
         f.read(strf);
         //FormulaPreprocessor.debug = true;
         String actual = fp.addTypeRestrictions(f, kb).toString();
-        String expected = "(=>\n" +
-                "  (and\n" +
-                "    (instance ?POS TimePosition)\n" +
-                "    (instance ?THING Physical))\n" +
-                "  (<=>\n" +
-                "    (temporalPart ?POS\n" +
-                "      (WhenFn ?THING))\n" +
-                "    (time ?THING ?POS)))";
-        System.out.println("test6(): actual: " + actual);
-        System.out.println("test6(): expected: " + expected);
-        if (expected.equals(actual))
-            System.out.println("test6(): pass");
-        else
-            System.out.println("test6(): fail");
+        String expected = """
+                (=>
+                  (and
+                    (instance ?POS TimePosition)
+                    (instance ?THING Physical))
+                  (<=>
+                    (temporalPart ?POS
+                      (WhenFn ?THING))
+                    (time ?THING ?POS)))""";
+
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -257,30 +273,26 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
     @Disabled
     public void test7() {
 
-        System.out.println("\n============= test7 ==================");
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        String strf = "(<=>\n" +
-                "  (temporalPart ?POS\n" +
-                "    (WhenFn ?THING))\n" +
-                "  (time ?THING ?POS))";
+        String strf = """
+                (<=>
+                  (temporalPart ?POS
+                    (WhenFn ?THING))
+                  (time ?THING ?POS))""";
         Formula f = new Formula();
         f.read(strf);
-        //FormulaPreprocessor.debug = true;
+
         Set<Formula> actual = fp.preProcess(f, false, kb);
-        String expected = "(=>\n" +
-                "  (and\n" +
-                "    (instance ?POS TimePosition)\n" +
-                "    (instance ?THING Physical))\n" +
-                "  (<=>\n" +
-                "    (temporalPart ?POS\n" +
-                "      (WhenFn ?THING))\n" +
-                "    (time ?THING ?POS)))";
-        System.out.println("test7(): actual: " + actual);
-        System.out.println("test7(): expected: " + expected);
-        if (expected.equals(actual.iterator().next().toString()))
-            System.out.println("test7(): pass");
-        else
-            System.out.println("test7(): fail");
+        String expected = """
+                (=>
+                  (and
+                    (instance ?POS TimePosition)
+                    (instance ?THING Physical))
+                  (<=>
+                    (temporalPart ?POS
+                      (WhenFn ?THING))
+                    (time ?THING ?POS)))""";
+
         assertThat(actual.iterator().next().toString()).isEqualTo(expected);
     }
 
@@ -296,12 +308,7 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         //FormulaPreprocessor.debug = true;
         Map<String, Set<String>> actual = fp.findAllTypeRestrictions(f, kb);
         String expected = "{?NUMBER1=[RealNumber], ?NUMBER2=[NonnegativeRealNumber]}";
-        System.out.println("testAbsolute(): actual: " + actual);
-        System.out.println("testAbsolute(): expected: " + expected);
-        if (expected.equals(actual.toString()))
-            System.out.println("testAbsolute(): pass");
-        else
-            System.out.println("testAbsolute(): fail");
+
         assertThat(actual.toString()).isEqualTo(expected);
     }
 
@@ -321,16 +328,8 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         FormulaPreprocessor fp = new FormulaPreprocessor();
         //FormulaPreprocessor.debug = true;
         List<Formula> actual = fp.replacePredVarsAndRowVars(f, kb, false);
-        System.out.println("testInstantiatePredStmt4(): actual: " + actual);
-        Set<Formula> expected = Sets.newHashSet();
         int expectedSize = 100;
-        System.out.println("testInstantiatePredStmt4(): actual: " + actual.size());
-        System.out.println("testInstantiatePredStmt4(): expected: " + expectedSize);
-        if (actual.size() > expectedSize)
-            System.out.println("testInstantiatePredStmt4(): pass");
-        else
-            System.out.println("testInstantiatePredStmt4(): fail");
-        assertThat(actual.size() > expectedSize).isTrue();
+        assertThat(actual.size()).isGreaterThan(100);
     }
 
     @Test
@@ -347,41 +346,34 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        System.out.println("testMinValuePreprocess: greaterThanOrEqualTo valence: " +
-                kb.kbCache.valences.get("greaterThanOrEqualTo"));
-        assertThat((int) kb.kbCache.valences.get("greaterThanOrEqualTo")).isEqualTo(2);
+        assertThat(kb.kbCache.valences.get("greaterThanOrEqualTo").intValue()).isEqualTo(2);
         Set<Formula> actual = fp.preProcess(f, false, kb);
-        int expectedSize = 100;
-        System.out.println("testMinValuePreprocess(): expected: " + expectedSize);
-        if (actual.size() > expectedSize)
-            System.out.println("testMinValuePreprocess(): pass");
-        else
-            System.out.println("testMinValuePreprocess(): fail");
-        assertThat(actual.size() > expectedSize).isTrue();
+
+        assertThat(actual.size()).isGreaterThan(100);
     }
 
     @Test
     public void testArgNumsPreprocess() {
 
-        System.out.println("\n============= testArgNumsPreprocess ==================");
-        String stmt = "(=>\n" +
-                "    (and\n" +
-                "        (exactCardinality patient ?ARG 1)\n" +
-                "        (instance patient Predicate))\n" +
-                "    (exists (?X @ARGS)\n" +
-                "        (and\n" +
-                "            (patient @ARGS)\n" +
-                "            (equal ?X\n" +
-                "                (ListOrderFn\n" +
-                "                    (ListFn @ARGS) ?ARG))\n" +
-                "            (not\n" +
-                "                (exists (?Y)\n" +
-                "                    (and\n" +
-                "                        (equal ?Y\n" +
-                "                            (ListOrderFn\n" +
-                "                                (ListFn @ARGS) ?ARG))\n" +
-                "                        (not\n" +
-                "                            (equal ?X ?Y))))))))";
+        String stmt = """
+                (=>
+                    (and
+                        (exactCardinality patient ?ARG 1)
+                        (instance patient Predicate))
+                    (exists (?X @ARGS)
+                        (and
+                            (patient @ARGS)
+                            (equal ?X
+                                (ListOrderFn
+                                    (ListFn @ARGS) ?ARG))
+                            (not
+                                (exists (?Y)
+                                    (and
+                                        (equal ?Y
+                                            (ListOrderFn
+                                                (ListFn @ARGS) ?ARG))
+                                        (not
+                                            (equal ?X ?Y))))))))""";
         Formula f = new Formula();
         f.read(stmt);
 
@@ -415,48 +407,33 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("\n============= testTVRPreprocess ==================");
-        String stmt = "\n" +
-                "(<=>\n" +
-                "    (and\n" +
-                "        (instance ?REL TotalValuedRelation)\n" +
-                "        (instance ?REL Predicate))\n" +
-                "    (exists (?VALENCE)\n" +
-                "        (and\n" +
-                "            (instance ?REL Relation)\n" +
-                "            (valence ?REL ?VALENCE)\n" +
-                "            (=>\n" +
-                "                (forall (?NUMBER ?ELEMENT ?CLASS)\n" +
-                "                    (=>\n" +
-                "                        (and\n" +
-                "                            (lessThan ?NUMBER ?VALENCE)\n" +
-                "                            (domain ?REL ?NUMBER ?CLASS)\n" +
-                "                            (equal ?ELEMENT\n" +
-                "                                (ListOrderFn\n" +
-                "                                    (ListFn @ROW) ?NUMBER)))\n" +
-                "                        (instance ?ELEMENT ?CLASS)))\n" +
-                "                (exists (?ITEM)\n" +
-                "                    (?REL @ROW ?ITEM))))))";
+        String stmt = """
+                (<=>
+                    (and
+                        (instance ?REL TotalValuedRelation)
+                        (instance ?REL Predicate))
+                    (exists (?VALENCE)
+                        (and
+                            (instance ?REL Relation)
+                            (valence ?REL ?VALENCE)
+                            (=>
+                                (forall (?NUMBER ?ELEMENT ?CLASS)
+                                    (=>
+                                        (and
+                                            (lessThan ?NUMBER ?VALENCE)
+                                            (domain ?REL ?NUMBER ?CLASS)
+                                            (equal ?ELEMENT
+                                                (ListOrderFn
+                                                    (ListFn @ROW) ?NUMBER)))
+                                        (instance ?ELEMENT ?CLASS)))
+                                (exists (?ITEM)
+                                    (?REL @ROW ?ITEM))))))""";
         Formula f = new Formula();
         f.read(stmt);
 
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        //PredVarInst.debug = true;
-        //FormulaPreprocessor.debug = true;
-        //RowVars.DEBUG = true;
-        System.out.println("testTVRPreprocess: greaterThanOrEqualTo valence: " +
-                kb.kbCache.valences.get("greaterThanOrEqualTo"));
         Set<Formula> actual = fp.preProcess(f, false, kb);
-        System.out.println("testTVRPreprocess(): actual: " + actual);
-        Set<Formula> expected = Sets.newHashSet();
-        int expectedSize = 30;
-        System.out.println("testTVRPreprocess(): actual size: " + actual.size());
-        System.out.println("testTVRPreprocess(): expected: " + expectedSize);
-        if (actual.size() > expectedSize)
-            System.out.println("testTVRPreprocess(): pass");
-        else
-            System.out.println("testTVRPreprocess(): fail");
-        assertThat(actual.size() > expectedSize).isTrue();
+        assertThat(actual.size()).isGreaterThan(30);
     }
 
     @Test
@@ -470,18 +447,8 @@ public class FormulaPreprocessorITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        //PredVarInst.debug = true;
-        //FormulaPreprocessor.debug = true;
-        //RowVars.DEBUG = true;
         Set<Formula> actual = fp.preProcess(f, false, kb);
-        System.out.println("testFunctionVariable(): actual: " + actual);
-        Set<Formula> expected = Sets.newHashSet();
-        int expectedSize = 1;
-        System.out.println("testFunctionVariable(): expected: " + expectedSize);
-        if (actual.size() > expectedSize)
-            System.out.println("testFunctionVariable(): pass");
-        else
-            System.out.println("testFunctionVariable(): fail");
-        assertThat(actual.size() > expectedSize).isTrue();
+
+        assertThat(actual.size()).isGreaterThan(1);
     }
 }
