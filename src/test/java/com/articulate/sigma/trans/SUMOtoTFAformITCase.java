@@ -6,7 +6,10 @@
  */
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.*;
+import com.articulate.sigma.Formula;
+import com.articulate.sigma.IntegrationTestBase;
+import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.MidLevel;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -17,6 +20,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -54,7 +58,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
 
         System.out.println();
         System.out.println("\n======================== SUMOtoTFAformITCase.testExtractSig(): ");
-        ArrayList<String> sorts = SUMOtoTFAform.relationExtractSigFromName("ListFn__6Fn__0Ra1Ra2Ra3Ra4Ra5Ra6Ra");
+        List<String> sorts = SUMOtoTFAform.relationExtractSigFromName("ListFn__6Fn__0Ra1Ra2Ra3Ra4Ra5Ra6Ra");
         System.out.println(sorts);
         String expectedRes = "[RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber]";
         String result = sorts.toString();
@@ -72,7 +76,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
 
         System.out.println();
         System.out.println("\n======================== SUMOtoTFAformITCase.testExtractUpdateSig(): ");
-        ArrayList<String> sorts = SUMOtoTFAform.relationExtractUpdateSigFromName("ListFn__6Fn__0Ra1Ra2Ra3Ra4Ra5Ra6Ra");
+        List<String> sorts = SUMOtoTFAform.relationExtractUpdateSigFromName("ListFn__6Fn__0Ra1Ra2Ra3Ra4Ra5Ra6Ra");
         System.out.println(sorts);
         String expectedRes = "[RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber, RationalNumber]";
         String result = sorts.toString();
@@ -90,7 +94,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
 
         System.out.println();
         System.out.println("\n======================== SUMOtoTFAformITCase.testExtractUpdateSig2(): ");
-        ArrayList<String> sorts = SUMOtoTFAform.relationExtractUpdateSigFromName("partition__5");
+        List<String> sorts = SUMOtoTFAform.relationExtractUpdateSigFromName("partition__5");
         System.out.println(sorts);
         String expectedRes = "[, Class, Class, Class, Class, Class]";
         System.out.println("testExtractUpdateSig2(): expected: " + expectedRes);
@@ -108,7 +112,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
 
         System.out.println();
         System.out.println("\n======================== SUMOtoTFAformITCase.testSorts(): ");
-        ArrayList<String> actual = skbtfakb.kb.kbCache.getSignature("AbsoluteValueFn__0Re1ReFn");
+        List<String> actual = skbtfakb.kb.kbCache.getSignature("AbsoluteValueFn__0Re1ReFn");
         String expectedRes = "[RealNumber, RealNumber]";
         System.out.println("testSorts(): expected: " + expectedRes);
         System.out.println("testSorts(): actual:    " + actual);
@@ -127,7 +131,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
         System.out.println();
         System.out.println("\n======================== SUMOtoTFAformITCase.testParents(): ");
         Formula f = new Formula("(=> (instance ?X Human) (parents ?X (AdditionFn 1 1)))");
-        ArrayList<String> sig = new ArrayList<>();
+        List<String> sig = new ArrayList<>();
         sig.add("");
         sig.add("Human");
         sig.add("Integer");

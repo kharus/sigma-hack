@@ -44,7 +44,7 @@ public class KBcacheITCase extends IntegrationTestBase {
         KBcache cache = SigmaTestBase.kb.kbCache;
 
         String child = "IrreflexiveRelation";
-        HashSet<String> expected = new HashSet<>(Arrays.asList("Entity", "Relation", "InheritableRelation", "Abstract", "BinaryRelation"));
+        Set<String> expected = new HashSet<>(Arrays.asList("Entity", "Relation", "InheritableRelation", "Abstract", "BinaryRelation"));
         Set<String> actual = cache.getParentClasses(child);
         assertEquals(expected, actual);
 
@@ -122,9 +122,9 @@ public class KBcacheITCase extends IntegrationTestBase {
 
         String relation = "abbreviation";
         System.out.println("testbuildTransInstOf(): testing: " + relation);
-        HashSet<String> expected = new HashSet<>(Arrays.asList("Entity", "Relation", "InheritableRelation",
+        Set<String> expected = new HashSet<>(Arrays.asList("Entity", "Relation", "InheritableRelation",
                 "Abstract", "BinaryPredicate", "BinaryRelation", "Predicate"));
-        HashSet<String> actual = cache.getParentClassesOfInstance(relation);
+        Set<String> actual = cache.getParentClassesOfInstance(relation);
         assertEquals(expected, actual);
 
         relation = "during";  // TODO: since during is a subrelation of temporalPart it should be a superset here - bad test
@@ -220,7 +220,7 @@ public class KBcacheITCase extends IntegrationTestBase {
 
         System.out.println("\n============= testDisjoint ==================");
         System.out.println("Test testDisjoint");
-        HashSet<String> classes = new HashSet<>(Arrays.asList("Arthropod", "Bird"));
+        Set<String> classes = new HashSet<>(Arrays.asList("Arthropod", "Bird"));
         System.out.println("KBcacheITCase.testDisjoint(): Arthropod&Bird");
         System.out.println("KBcacheITCase.testDisjoint(): disjoint? " + kb.kbCache.checkDisjoint(kb, "Arthropod", "Bird"));
         if (kb.kbCache.checkDisjoint(kb, "Arthropod", "Bird"))
@@ -309,7 +309,7 @@ public class KBcacheITCase extends IntegrationTestBase {
 
         System.out.println("\n============= testPredicates ==================");
         KBcache cache = SigmaTestBase.kb.kbCache;
-        HashSet<String> rels = cache.getChildInstances("Relation");
+        Set<String> rels = cache.getChildInstances("Relation");
         for (String rel : rels) {
             if (!rel.endsWith("Fn")) {
                 if (!cache.isInstanceOf(rel, "Predicate")) {

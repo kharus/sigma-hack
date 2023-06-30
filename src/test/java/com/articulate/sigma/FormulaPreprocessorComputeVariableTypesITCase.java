@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -35,6 +35,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
     void init() {
         kb = kBManager.getKB(kBManager.getPref("sumokbname"));
     }
+
     @Test
     public void testComputeVariableTypesNoVariables() {
         String stmt = "(domain date 1 Physical)";
@@ -42,9 +43,9 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        HashMap<String, HashSet<String>> expected = new HashMap<>();
+        Map<String, Set<String>> expected = new HashMap<>();
 
         assertEquals(expected, actual);
     }
@@ -56,10 +57,10 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        HashSet<String> set = Sets.newHashSet("Entity");
-        HashMap<String, HashSet<String>> expected = Maps.newHashMap();
+        Set<String> set = Sets.newHashSet("Entity");
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?H", set);
 
         assertEquals(expected, actual);
@@ -76,12 +77,12 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("AutonomousAgent");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("AutonomousAgent");
         expected.put("?H", set1);
-        HashSet<String> set2 = Sets.newHashSet("Process");
+        Set<String> set2 = Sets.newHashSet("Process");
         expected.put("?D", set2);
 
         assertEquals(expected, actual);
@@ -100,12 +101,12 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("AutonomousAgent");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("AutonomousAgent");
         expected.put("?H", set1);
-        HashSet<String> set2 = Sets.newHashSet("Process");
+        Set<String> set2 = Sets.newHashSet("Process");
         expected.put("?D", set2);
 
         assertEquals(expected, actual);
@@ -126,9 +127,9 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?H", Sets.newHashSet("AutonomousAgent"));
         expected.put("?D", Sets.newHashSet("Process"));
         expected.put("?Car", Sets.newHashSet("Entity"));
@@ -148,14 +149,14 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Set");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Set");
         expected.put("?SET1", set1);
-        HashSet<String> set2 = Sets.newHashSet("Set");
+        Set<String> set2 = Sets.newHashSet("Set");
         expected.put("?SET2", set2);
-        HashSet<String> setElement = Sets.newHashSet("Entity");
+        Set<String> setElement = Sets.newHashSet("Entity");
         expected.put("?ELEMENT", setElement);
 
         assertEquals(expected, actual);
@@ -168,10 +169,10 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Class");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Class");
         expected.put("?Cougar", set1);
 
         assertEquals(expected, actual);
@@ -186,10 +187,10 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Month+");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Month+");
         expected.put("?M", set1);
 
         assertEquals(expected, actual);
@@ -205,10 +206,10 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("GeopoliticalArea");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("GeopoliticalArea");
         expected.put("?Place", set1);
 
         assertEquals(expected, actual);
@@ -223,10 +224,10 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Class");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Class");
         expected.put("?Cougar", set1);
 
         assertEquals(expected, actual);
@@ -234,7 +235,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
 
     @Test
     public void testComputeVariableTypesLowTerrain() {
-        Map<String, HashSet<String>> expected = ImmutableMap.of("?ZONE", Sets.newHashSet("Object"),
+        Map<String, Set<String>> expected = ImmutableMap.of("?ZONE", Sets.newHashSet("Object"),
                 "?SLOPE", Sets.newHashSet("RealNumber"), "?AREA", Sets.newHashSet("Object"));
 
         String stmt = "(=> (and (attribute ?AREA LowTerrain) (part ?ZONE ?AREA)" +
@@ -242,7 +243,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         Formula f = new Formula();
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actualMap = fp.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
         assertEquals(expected, actualMap);
 
@@ -250,7 +251,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
 
     @Test
     public void testComputeVariableTypesIfAndOnlyIfTransitiveRelation() {
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?REL", Sets.newHashSet("Entity"));
 
         String stmt = "(<=> (instance ?REL TransitiveRelation) " +
@@ -262,14 +263,14 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         FormulaPreprocessor fp = new FormulaPreprocessor();
         System.out.println("Var types: " + fp.computeVariableTypes(f, kb));
 
-        HashMap<String, HashSet<String>> actualMap = fp.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
         assertEquals(expected, actualMap);
     }
 
     @Test
     public void testComputeVariableTypesForAllElementSet() {
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?SET2", Sets.newHashSet("Set"));
         expected.put("?SET1", Sets.newHashSet("Set"));
         expected.put("?ELEMENT", Sets.newHashSet("Entity"));
@@ -282,14 +283,14 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         System.out.println("Formula: " + f);
         System.out.println("Var types: " + fp.computeVariableTypes(f, kb));
 
-        HashMap<String, HashSet<String>> actualMap = fp.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
         assertEquals(expected, actualMap);
     }
 
     @Test
     public void testComputeVariableTypesAwake() {
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?HUMAN", Sets.newHashSet("AutonomousAgent"));
         expected.put("?PROC", Sets.newHashSet("Process"));
 
@@ -308,7 +309,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         System.out.println("Formula: " + f);
         System.out.println("Var types: " + fp.computeVariableTypes(f, kb));
 
-        HashMap<String, HashSet<String>> actualMap = fp.computeVariableTypes(f, kb);
+        Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
         assertEquals(expected, actualMap);
     }

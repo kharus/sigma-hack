@@ -22,7 +22,6 @@
  */
 package com.articulate.sigma;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -109,7 +108,7 @@ public class FormulaDeepEqualsService {
         boolean equalStrings = f1.equals(f2);
         if (equalStrings) {
             return true;
-        } else if (!this.deepEquals(f1,f2)) {
+        } else if (!this.deepEquals(f1, f2)) {
             return false;
         } else {
             return f1.unifyWith(f2);

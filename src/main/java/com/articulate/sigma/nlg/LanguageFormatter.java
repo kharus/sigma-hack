@@ -42,21 +42,21 @@ public class LanguageFormatter {
     private static final List<String> notReadyOperators = Lists.newArrayList();
     public static boolean debug = false;
     // a list of format parameters or words and the sentence words they match with
-    public static HashMap<String, CoreLabel> outputMap = new HashMap<>();
+    public static Map<String, CoreLabel> outputMap = new HashMap<>();
     private static KB kb;
     private final String statement;
     private final Map<String, String> phraseMap;
     // kb.getTermFormatMap() for this language
     private final Map<String, String> termMap;
     private final String language;
-    private final Map<String, HashSet<String>> variableTypes;
-    private final Map<String, HashSet<String>> variableToInstanceMap;
+    private final Map<String, Set<String>> variableTypes;
+    private final Map<String, Set<String>> variableToInstanceMap;
     /**
      * The stack holds information on the formula being processed, so that successive recursive calls can refer to it.
      */
     private final LanguageFormatterStack theStack = new LanguageFormatterStack();
     // Modifiable versions of variableTypes and variableToInstanceMap for informal NLG.
-    private HashMap<String, Set<String>> variableTypesNLG;
+    private Map<String, Set<String>> variableTypesNLG;
     private Map<String, Set<String>> variableToInstanceMapNLG;
     /**
      * "Informal" NLG refers to natural language generation in which the formal logic terms are expressions are
@@ -264,7 +264,7 @@ public class LanguageFormatter {
      */
     private static String incrementalVarReplace(String form, String varString, String varType,
                                                 String varPretty, String language,
-                                                boolean isClass, HashMap<String, Integer> typeMap) {
+                                                boolean isClass, Map<String, Integer> typeMap) {
 
         String argNumStr = "";
         if (debug) System.out.println("LanguageFormatter.incrementalVarReplace(): form " + form);
@@ -345,11 +345,11 @@ public class LanguageFormatter {
      * type.
      */
     public static String variableReplace(String form, Map<String, Set<String>> instMap,
-                                         HashMap<String, Set<String>> classMap, KB kb, String language) {
+                                         Map<String, Set<String>> classMap, KB kb, String language) {
 
         String result = form;
-        HashMap<String, Integer> typeMap = new HashMap<>();
-        ArrayList<String> varList = NLGUtils.collectOrderedVariables(form);
+        Map<String, Integer> typeMap = new HashMap<>();
+        List<String> varList = NLGUtils.collectOrderedVariables(form);
         Iterator<String> it = varList.iterator();
         while (it.hasNext()) {
             String varString = it.next();
@@ -549,7 +549,7 @@ public class LanguageFormatter {
 
         // variableTypes should map variables to the correct surface form of the SUMO term, but we want it to contain
         // only those terms not in variableToInstanceMapNLG
-        for (Map.Entry<String, HashSet<String>> entry : variableTypes.entrySet()) {
+        for (Map.Entry<String, Set<String>> entry : variableTypes.entrySet()) {
             String variable = entry.getKey();
             if (!variableToInstanceMapNLG.containsKey(variable)) {
                 Set<String> origInstances = entry.getValue();
@@ -600,14 +600,14 @@ public class LanguageFormatter {
                 Formula f = new Formula();
                 f.read(statement);
                 FormulaPreprocessor fp = new FormulaPreprocessor();
-                //HashMap varMap = fp.computeVariableTypes(kb);
-                HashMap<String, Set<String>> instanceMap = new HashMap<>();
-                HashMap<String, Set<String>> classMap = new HashMap<>();
-                HashMap<String, HashSet<String>> types = fp.computeVariableTypes(f, kb);
+                //Map varMap = fp.computeVariableTypes(kb);
+                Map<String, Set<String>> instanceMap = new HashMap<>();
+                Map<String, Set<String>> classMap = new HashMap<>();
+                Map<String, Set<String>> types = fp.computeVariableTypes(f, kb);
                 Iterator<String> it = types.keySet().iterator();
                 while (it.hasNext()) {
                     String var = it.next();
-                    HashSet<String> typeList = types.get(var);
+                    Set<String> typeList = types.get(var);
                     Iterator<String> it2 = typeList.iterator();
                     while (it2.hasNext()) {
                         String t = it2.next();
@@ -792,13 +792,13 @@ public class LanguageFormatter {
 
         if (variableMap.containsKey(key)) {
             Set<String> oldSet = variableMap.get(key);
-            Set<String> newSet = Sets.newHashSet();
+            Set<String> newHashSet = Sets.newHashSet();
             for (String oldStr : oldSet) {
                 // modify each noun accordingly
                 String newStr = property.getSurfaceFormForNoun(oldStr, kb);
-                newSet.add(newStr);
+                newHashSet.add(newStr);
             }
-            variableMap.put(key, newSet);
+            variableMap.put(key, newHashSet);
         }
     }
 
@@ -824,7 +824,7 @@ public class LanguageFormatter {
 
                     if (variableTypes.containsKey(processInstanceName)) {
 
-                        HashSet<String> vals = variableTypes.get(processInstanceName);
+                        Set<String> vals = variableTypes.get(processInstanceName);
                         if (NLGUtils.containsProcess(vals, kb)) {
                             // Mark the argument as PROCESSED.
                             theStack.markFormulaArgAsProcessed(formula.getFormula());
@@ -899,7 +899,7 @@ public class LanguageFormatter {
                     System.out.println("Error in LanguageFormatter.paraphraseLogicalOperator(): " + "keywordMap is null");
                 return null;
             }
-            ArrayList<String> args = new ArrayList<>();
+            List<String> args = new ArrayList<>();
             Formula f = new Formula();
             f.read(stmt);
             String pred = f.getStringArgument(0);

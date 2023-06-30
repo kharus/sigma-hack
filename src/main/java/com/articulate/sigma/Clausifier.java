@@ -26,8 +26,8 @@ import java.util.*;
  * public methods are:
  * <p>
  * public Formula clausify()
- * public ArrayList clausifyWithRenameInfo()
- * public ArrayList toNegAndPosLitsWithRenameInfo()
+ * public List clausifyWithRenameInfo()
+ * public List toNegAndPosLitsWithRenameInfo()
  * <p>
  * The result is a single formula in conjunctive normal form
  * (CNF), which is actually a set of (possibly negated) clauses
@@ -62,7 +62,7 @@ public class Clausifier {
     /**
      * convenience method
      */
-    public static ArrayList<Formula> separateConjunctions(Formula f) {
+    public static List<Formula> separateConjunctions(Formula f) {
 
         Clausifier temp = new Clausifier(f.getFormula());
         return temp.separateConjunctions();
@@ -80,7 +80,7 @@ public class Clausifier {
     /**
      * convenience method
      */
-    public static ArrayList toNegAndPosLitsWithRenameInfo(Formula f) {
+    public static List toNegAndPosLitsWithRenameInfo(Formula f) {
 
         Clausifier temp = new Clausifier(f.getFormula());
         return temp.toNegAndPosLitsWithRenameInfo();
@@ -556,10 +556,10 @@ public class Clausifier {
      * public Formula instantiateVariables() {
      * <p>
      * Formula f = renameVariables();
-     * ArrayList<HashSet<String>> varList = f.collectVariables();
+     * List<Set<String>> varList = f.collectVariables();
      * TreeMap<String,String> vars = new TreeMap<String,String>();
-     * ArrayList<String> al = (ArrayList<String>) varList.get(0);
-     * al.addAll((ArrayList<String>) varList.get(1));
+     * List<String> al = (List<String>) varList.get(0);
+     * al.addAll((List<String>) varList.get(1));
      * for (int i = 0; i < al.size(); i++) {
      * String s = (String) al.get(i);
      * _GENSYM_COUNTER++;
@@ -829,7 +829,7 @@ public class Clausifier {
 
         System.out.println();
         f = new Clausifier(form.getFormula());
-        ArrayList<Formula> forms = f.separateConjunctions();
+        List<Formula> forms = f.separateConjunctions();
         System.out.println("after separation: " + forms);
     }
 
@@ -880,15 +880,15 @@ public class Clausifier {
     }
 
     /**
-     * Turn a conjunction into an ArrayList of separate statements
+     * Turn a conjunction into an List of separate statements
      */
-    public ArrayList<Formula> separateConjunctions() {
+    public List<Formula> separateConjunctions() {
 
         if (!thisFormula.car().equals("and")) {
             System.out.println("Error Formula.separateConjunctions(): not a conjunction " + thisFormula);
             return null;
         }
-        ArrayList<Formula> result = new ArrayList<Formula>();
+        List<Formula> result = new ArrayList<Formula>();
         Formula temp = new Formula();
         temp.read(thisFormula.cdr());
         while (!temp.empty()) {
@@ -903,7 +903,7 @@ public class Clausifier {
     /**
      * Note this returns a List of mixed types!  Fixme!
      *
-     * @return an ArrayList that contains three items: The new
+     * @return an List that contains three items: The new
      * clausal-form Formula, the original (input) SUO-KIF Formula, and
      * a Map containing a graph of all the variable substitions done
      * during the conversion to clausal form.  This Map makes it
@@ -915,15 +915,15 @@ public class Clausifier {
      * @see toNegAndPosLitsWithRenameInfo()
      * @see toCanonicalClausalForm();
      */
-    public ArrayList clausifyWithRenameInfo() {
+    public List clausifyWithRenameInfo() {
 
         Formula old = new Formula(thisFormula.getFormula());
-        ArrayList result = new ArrayList();
+        List result = new ArrayList();
         Formula ans = null;
-        HashMap topLevelVars = new HashMap();
-        HashMap scopedRenames = new HashMap();
-        HashMap allRenames = new HashMap();
-        HashMap standardizedRenames = new HashMap();
+        Map topLevelVars = new HashMap();
+        Map scopedRenames = new HashMap();
+        Map allRenames = new HashMap();
+        Map standardizedRenames = new HashMap();
         thisFormula = equivalencesOut();
         thisFormula = implicationsOut();
         thisFormula = negationsIn();
@@ -943,26 +943,26 @@ public class Clausifier {
     /**
      * TODO: Note mixed types in return List!  Fixme!
      * <p>
-     * This method converts the SUO-KIF Formula to an ArrayList of
-     * clauses.  Each clause is an ArrayList containing an ArrayList
-     * of negative literals, and an ArrayList of positive literals.
+     * This method converts the SUO-KIF Formula to an List of
+     * clauses.  Each clause is an List containing an List
+     * of negative literals, and an List of positive literals.
      * Either the neg lits list or the pos lits list could be empty.
      * Each literal is a Formula object.
      * <p>
-     * The first object in the returned ArrayList is an ArrayList of
+     * The first object in the returned List is an List of
      * clauses.
      * <p>
-     * The second object in the returned ArrayList is the original
+     * The second object in the returned List is the original
      * (input) Formula object (this).
      * <p>
-     * The third object in the returned ArrayList is a Map that
+     * The third object in the returned List is a Map that
      * contains a graph of all the variable substitions done during
      * the conversion of this Formula to clausal form.  This Map makes
      * it possible to retrieve the correspondences between the
      * variables in the clausal form and the variables in the original
      * Formula.
      *
-     * @return A three-element ArrayList,
+     * @return A three-element List,
      * <p>
      * [
      * // 1. clauses
@@ -997,22 +997,22 @@ public class Clausifier {
      * @see clausifyWithRenameInfo()
      * @see toCanonicalClausalForm();
      */
-    public ArrayList toNegAndPosLitsWithRenameInfo() {
+    public List toNegAndPosLitsWithRenameInfo() {
 
-        ArrayList ans = new ArrayList();
+        List ans = new ArrayList();
         List<Formula> clausesWithRenameInfo = this.clausifyWithRenameInfo();
         if (clausesWithRenameInfo.size() == 3) {
             Formula clausalForm = clausesWithRenameInfo.get(0);
             Clausifier cForm = new Clausifier(clausalForm.getFormula());
-            ArrayList clauses = cForm.operatorsOut();
+            List clauses = cForm.operatorsOut();
             if ((clauses != null) && !clauses.isEmpty()) {
                 // System.out.println("\nclauses == " + clauses);
-                ArrayList newClauses = new ArrayList();
+                List newClauses = new ArrayList();
                 Formula clause = null;
                 for (Iterator<Formula> it = clauses.iterator(); it.hasNext(); ) {
-                    ArrayList<Formula> negLits = new ArrayList<Formula>();
-                    ArrayList<Formula> posLits = new ArrayList<Formula>();
-                    ArrayList literals = new ArrayList();
+                    List<Formula> negLits = new ArrayList<Formula>();
+                    List<Formula> posLits = new ArrayList<Formula>();
+                    List literals = new ArrayList();
                     literals.add(negLits);
                     literals.add(posLits);
                     clause = it.next();
@@ -1527,9 +1527,9 @@ public class Clausifier {
      */
     private Formula renameVariables() {
 
-        HashMap topLevelVars = new HashMap();
-        HashMap scopedRenames = new HashMap();
-        HashMap allRenames = new HashMap();
+        Map topLevelVars = new HashMap();
+        Map scopedRenames = new HashMap();
+        Map allRenames = new HashMap();
         return renameVariables(topLevelVars, scopedRenames, allRenames);
     }
 
@@ -1688,7 +1688,7 @@ public class Clausifier {
                 TreeSet<String> uQVs = new TreeSet<String>(iUQVs);
                 uQVs.addAll(scopedUQVs);
                 // Collect the existentially quantified variables.
-                ArrayList<String> eQVs = new ArrayList<String>();
+                List<String> eQVs = new ArrayList<String>();
                 String varList = thisFormula.cadr();
                 Formula varListF = new Formula();
                 varListF.read(varList);
@@ -1839,7 +1839,7 @@ public class Clausifier {
             }
             String arg0 = thisFormula.car();
             if (Formula.isCommutative(arg0) || arg0.equals(Formula.NOT)) {
-                ArrayList literals = new ArrayList();
+                List literals = new ArrayList();
                 Formula restF = thisFormula.cdrAsFormula();
                 while (!(restF.empty())) {
                     String lit = restF.car();
@@ -1970,19 +1970,19 @@ public class Clausifier {
     }
 
     /**
-     * This method returns an ArrayList of clauses.  Each clause is a
+     * This method returns an List of clauses.  Each clause is a
      * LISP list (really, a Formula) containing one or more Formulas.
      * The LISP list is assumed to be a disjunction, but there is no
      * 'or' at the head.
      *
-     * @return An ArrayList of LISP lists, each of which contains one
+     * @return An List of LISP lists, each of which contains one
      * or more Formulas.
      * @see clausify()
      */
-    private ArrayList<Formula> operatorsOut() {
+    private List<Formula> operatorsOut() {
 
-        ArrayList<Formula> result = new ArrayList<Formula>();
-        ArrayList<Formula> clauses = new ArrayList<Formula>();
+        List<Formula> result = new ArrayList<Formula>();
+        List<Formula> clauses = new ArrayList<Formula>();
         if (!StringUtil.emptyString(thisFormula.getFormula())) {
             if (thisFormula.listP()) {
                 String arg0 = thisFormula.car();
@@ -2031,7 +2031,7 @@ public class Clausifier {
      * @see standardizeApart_1(Map renames, Map reverseRenames)
      */
     private Formula standardizeApart() {
-        HashMap<String, String> reverseRenames = new HashMap<String, String>();
+        Map<String, String> reverseRenames = new HashMap<String, String>();
         return standardizeApart(thisFormula, reverseRenames);
     }
 
@@ -2056,7 +2056,7 @@ public class Clausifier {
         else
             reverseRenames = new HashMap();
         // First, break the Formula into separate clauses, if necessary.
-        ArrayList<Formula> clauses = new ArrayList<Formula>();
+        List<Formula> clauses = new ArrayList<Formula>();
         if (!StringUtil.emptyString(thisFormula.getFormula())) {
             if (thisFormula.listP()) {
                 String arg0 = thisFormula.car();
@@ -2076,7 +2076,7 @@ public class Clausifier {
             // 'Standardize apart' by renaming the variables in each clause.
             int n = clauses.size();
             for (int i = 0; i < n; i++) {
-                HashMap<String, String> renames = new HashMap<String, String>();
+                Map<String, String> renames = new HashMap<String, String>();
                 Formula oldClause = clauses.remove(0);
                 clauses.add(standardizeApart_1(oldClause, renames, reverseRenames));
             }

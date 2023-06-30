@@ -2,15 +2,16 @@ package com.articulate.sigma;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Derivation implements Serializable {
     public String operator = "input";
-    public ArrayList<Formula> parents = new ArrayList<>();
+    public List<Formula> parents = new ArrayList<>();
 
     public Derivation() {
     }
 
-    public Derivation(String op, ArrayList<Formula> par) {
+    public Derivation(String op, List<Formula> par) {
 
         operator = op;
         if (par != null)
@@ -51,12 +52,12 @@ public class Derivation implements Serializable {
      * Return a list of all derived objects that are used in this
      * derivation.
      */
-    public ArrayList<Formula> getParents() {
+    public List<Formula> getParents() {
 
         if (operator.equals("input"))
             return new ArrayList<>();
         else {
-            ArrayList<Formula> res = new ArrayList<>();
+            List<Formula> res = new ArrayList<>();
             for (Formula p : parents)
                 res.addAll(p.derivation.parents);
             return res;

@@ -75,7 +75,7 @@ public class FormulaUtil {
             return null;
         if (f.car().equals(pred) && f.getFormula().indexOf("@") != -1)
             return f.getFormula();
-        ArrayList<Formula> lits = f.complexArgumentsToArrayList(0);
+        List<Formula> lits = f.complexArgumentsToArrayList(0);
         for (Formula form : lits) {
             String result = getLiteralWithPredAndRowVar(pred, form);
             if (result != null)
@@ -139,11 +139,11 @@ public class FormulaUtil {
      * the String representation of a SUO-KIF (LISP) list.
      *
      * @param kifListAsString A SUO-KIF list represented as a String
-     * @return ArrayList
+     * @return List
      */
-    public static ArrayList kifListToArrayList(String kifListAsString) {
+    public static List kifListToArrayList(String kifListAsString) {
 
-        ArrayList ans = new ArrayList();
+        List ans = new ArrayList();
         try {
             if (!StringUtil.emptyString(kifListAsString)) {
                 Formula f = new Formula();

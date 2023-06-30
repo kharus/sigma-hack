@@ -4,8 +4,8 @@ import com.google.common.collect.Sets;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -24,7 +24,7 @@ public class KBITCase extends UnitTestBase {
     @Test
     public void testAskWithTwoRestrictionsDirect1() {
 
-        ArrayList<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Driving", 2, "Guiding");
+        List<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Driving", 2, "Guiding");
         assertNotEquals(0, actual.size());
     }
 
@@ -34,7 +34,7 @@ public class KBITCase extends UnitTestBase {
     @Test
     public void testAskWithTwoRestrictionsIndirect1() {
 
-        ArrayList<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Driving", 2, "Guiding");
+        List<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Driving", 2, "Guiding");
         if (actual != null && actual.size() != 0)
             System.out.println("KBtest.testAskWithTwoRestrictionsIndirect1(): " + actual);
         assertEquals(1, actual.size());
@@ -46,7 +46,7 @@ public class KBITCase extends UnitTestBase {
     @Test
     public void testAskWithTwoRestrictionsIndirect2() {
 
-        ArrayList<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Boy", 2, "Entity");
+        List<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Boy", 2, "Entity");
         assertEquals(0, actual.size());
     }
 

@@ -73,7 +73,7 @@ public class KButilities {
         SUMOtoTFAform.initOnce();
         SUMOtoTFAform.varmap = SUMOtoTFAform.fp.findAllTypeRestrictions(f, kb);
         if (debug) System.out.println("hasCorrectTypes() varmap: " + SUMOtoTFAform.varmap);
-        HashMap<String, HashSet<String>> explicit = SUMOtoTFAform.fp.findExplicitTypes(kb, f);
+        Map<String, Set<String>> explicit = SUMOtoTFAform.fp.findExplicitTypes(kb, f);
         if (debug) System.out.println("hasCorrectTypes() explicit: " + explicit);
         KButilities.mergeToMap(SUMOtoTFAform.varmap, explicit, kb);
         if (SUMOtoTFAform.inconsistentVarTypes()) {
@@ -139,7 +139,7 @@ public class KButilities {
 
     public static String getDocumentation(KB kb, String term) {
 
-        ArrayList<Formula> forms = kb.askWithRestriction(0, "documentation", 1, term);
+        List<Formula> forms = kb.askWithRestriction(0, "documentation", 1, term);
         if (forms == null || forms.size() == 0)
             return null;
         Formula form = forms.get(0);
@@ -155,7 +155,7 @@ public class KButilities {
      */
     public static int getCountTermFormats(KB kb, String lang) {
 
-        ArrayList<Formula> forms = kb.askWithRestriction(0, "termFormat", 1, lang);
+        List<Formula> forms = kb.askWithRestriction(0, "termFormat", 1, lang);
         return forms.size();
     }
 
@@ -166,8 +166,8 @@ public class KButilities {
      */
     public static int getCountUniqueTermFormats(KB kb, String lang) {
 
-        ArrayList<Formula> forms = kb.askWithRestriction(0, "termFormat", 1, lang);
-        HashSet<String> terms = new HashSet<>();
+        List<Formula> forms = kb.askWithRestriction(0, "termFormat", 1, lang);
+        Set<String> terms = new HashSet<>();
         for (Formula f : forms) {
             String s = f.getStringArgument(2);
             terms.add(s);
@@ -217,9 +217,9 @@ public class KButilities {
     public static void genSynLinks(String fname) {
 
         int termcol = 0;
-        ArrayList<ArrayList<String>> spread = new ArrayList<>();
+        List<List<String>> spread = new ArrayList<>();
         spread = DB.readSpreadsheet(fname, null, false, '\t');
-        for (ArrayList<String> row : spread) {
+        for (List<String> row : spread) {
             if (row != null && row.size() > 1) {
                 String label = row.get(termcol);
                 System.out.println("(synonymousExternalConcept \"" + label + "\" Entity Taxonomy)");
@@ -246,29 +246,29 @@ public class KButilities {
     /**
      * Get all formulas that contain both terms.
      */
-    public static ArrayList<Formula> termIntersection(KB kb, String term1, String term2) {
+    public static List<Formula> termIntersection(KB kb, String term1, String term2) {
 
-        ArrayList<Formula> ant1 = kb.ask("ant", 0, term1);
-        ArrayList<Formula> ant2 = kb.ask("ant", 0, term2);
-        ArrayList<Formula> cons1 = kb.ask("cons", 0, term1);
-        ArrayList<Formula> cons2 = kb.ask("cons", 0, term2);
-        HashSet<Formula> hrule1 = new HashSet<Formula>();
+        List<Formula> ant1 = kb.ask("ant", 0, term1);
+        List<Formula> ant2 = kb.ask("ant", 0, term2);
+        List<Formula> cons1 = kb.ask("cons", 0, term1);
+        List<Formula> cons2 = kb.ask("cons", 0, term2);
+        Set<Formula> hrule1 = new HashSet<Formula>();
         hrule1.addAll(ant1);
         hrule1.addAll(cons1);
-        HashSet<Formula> hrule2 = new HashSet<Formula>();
+        Set<Formula> hrule2 = new HashSet<Formula>();
         hrule2.addAll(ant2);
         hrule2.addAll(cons2);
-        ArrayList<Formula> result = new ArrayList<Formula>();
+        List<Formula> result = new ArrayList<Formula>();
         result.addAll(hrule1);
         result.retainAll(hrule2);
-        ArrayList<Formula> stmt1 = kb.ask("stmt", 0, term1);
-        ArrayList<Formula> stmt2 = kb.ask("stmt", 0, term2);
+        List<Formula> stmt1 = kb.ask("stmt", 0, term1);
+        List<Formula> stmt2 = kb.ask("stmt", 0, term2);
         stmt1.retainAll(stmt2);
         result.addAll(stmt1);
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 7; j++) {
                 if (j != i) {
-                    ArrayList<Formula> stmt = kb.askWithRestriction(i, term1, j, term2);
+                    List<Formula> stmt = kb.askWithRestriction(i, term1, j, term2);
                     result.addAll(stmt);
                 }
             }
@@ -282,7 +282,7 @@ public class KButilities {
         Iterator it = kb.terms.iterator();
         while (it.hasNext()) {
             String term = (String) it.next();
-            ArrayList al = kb.ask("arg", 0, term);
+            List al = kb.ask("arg", 0, term);
             if (al != null && al.size() > 0) {
                 System.out.println(term + " " + al.size());
             }
@@ -332,7 +332,7 @@ public class KButilities {
     public static void checkURLs(KB kb) {
 
         URL u = null;
-        ArrayList<Formula> results = kb.ask("arg", 0, "externalImage");
+        List<Formula> results = kb.ask("arg", 0, "externalImage");
         for (int i = 0; i < results.size(); i++) {
             Formula f = results.get(i);
             String url = StringUtil.removeEnclosingQuotes(f.getStringArgument(2));
@@ -421,7 +421,7 @@ public class KButilities {
                 }
             } else {
                 String predicate = f.getStringArgument(0);
-                ArrayList<String> args = f.argumentsToArrayListString(1);
+                List<String> args = f.argumentsToArrayListString(1);
                 if (args != null && args.size() == 2) { // could have a function which would return null
                     String arg1 = f.getStringArgument(1);
                     String arg2 = f.getStringArgument(2);
@@ -468,7 +468,7 @@ public class KButilities {
             if (Formula.isLogicalOperator(s))
                 continue;
             sb.append("                \"" + s + "\": {\n");
-            ArrayList<Formula> forms = kb.askWithTwoRestrictions(0, "termFormat", 1, language, 2, s);
+            List<Formula> forms = kb.askWithTwoRestrictions(0, "termFormat", 1, language, 2, s);
             String formStr = "";
             if (forms != null && forms.size() > 0) {
                 Formula form = forms.iterator().next().getArgument(3);
@@ -521,7 +521,7 @@ public class KButilities {
                 if (Formula.isLogicalOperator(s))
                     continue;
                 sb.append("    { \"id\" : \"" + s + "\",\n");
-                ArrayList<Formula> forms = kb.askWithTwoRestrictions(0, "termFormat", 1, language, 2, s);
+                List<Formula> forms = kb.askWithTwoRestrictions(0, "termFormat", 1, language, 2, s);
                 String formStr = "";
                 if (forms != null && forms.size() > 0) {
                     Formula form = forms.iterator().next().getArgument(3);
@@ -578,7 +578,7 @@ public class KButilities {
             for (String s : kb.getTerms()) {
                 if (Formula.isLogicalOperator(s))
                     continue;
-                ArrayList<Formula> forms = kb.askWithTwoRestrictions(0, "termFormat", 1, language, 2, s);
+                List<Formula> forms = kb.askWithTwoRestrictions(0, "termFormat", 1, language, 2, s);
                 String formStr = "";
                 if (forms != null && forms.size() > 0) {
                     Formula form = forms.iterator().next().getArgument(3);
@@ -626,7 +626,7 @@ public class KButilities {
                 if (Formula.isLogicalOperator(s))
                     continue;
                 sb.append("INSERT INTO nodes (id, label) values ('" + s + "',");
-                ArrayList<Formula> forms = kb.askWithTwoRestrictions(0, "termFormat", 1, language, 2, s);
+                List<Formula> forms = kb.askWithTwoRestrictions(0, "termFormat", 1, language, 2, s);
                 String formStr = "";
                 if (forms != null && forms.size() > 0) {
                     Formula form = forms.iterator().next().getArgument(3);
@@ -682,19 +682,19 @@ public class KButilities {
 
         boolean result = false;
         for (String term : kb.terms) {
-            ArrayList<Formula> al = kb.askWithRestriction(0, "instance", 1, term);
+            List<Formula> al = kb.askWithRestriction(0, "instance", 1, term);
             for (int i = 0; i < al.size(); i++) {
                 Formula f = al.get(i);
                 String term2 = f.getStringArgument(2);
                 if (Formula.atom(term2)) {
-                    ArrayList<Formula> al2 = kb.askWithRestriction(0, "instance", 1, term2);
+                    List<Formula> al2 = kb.askWithRestriction(0, "instance", 1, term2);
                     if (al2.size() > 0)
                         result = true;
                     for (int j = 0; j < al2.size(); j++) {
                         Formula f2 = al2.get(j);
                         String term3 = f2.getStringArgument(2);
                         if (Formula.atom(term3)) {
-                            ArrayList<Formula> al3 = kb.askWithRestriction(0, "instance", 1, term3);
+                            List<Formula> al3 = kb.askWithRestriction(0, "instance", 1, term3);
                             for (int k = 0; k < al3.size(); k++) {
                                 Formula f3 = al3.get(k);
                                 String term4 = f3.getStringArgument(2);
@@ -714,9 +714,9 @@ public class KButilities {
         try {
             pr = new PrintWriter(new FileWriter(fname, false));
             //get all formulas that have the display predicate as the predicate
-            ArrayList<Formula> formats = kb.askWithRestriction(0, displayFormatPredicate, 1, language);
-            ArrayList<Formula> terms = kb.askWithRestriction(0, displayTermPredicate, 1, language);
-            HashMap<String, String> termMap = new HashMap<String, String>();
+            List<Formula> formats = kb.askWithRestriction(0, displayFormatPredicate, 1, language);
+            List<Formula> terms = kb.askWithRestriction(0, displayTermPredicate, 1, language);
+            Map<String, String> termMap = new HashMap<String, String>();
             for (int i = 0; i < terms.size(); i++) {
                 Formula term = terms.get(i);
                 String key = term.getStringArgument(2);
@@ -731,12 +731,12 @@ public class KButilities {
                 String value = format.getStringArgument(3);
                 if (key != "" && value != "") {
                     // This basically gets all statements that use the current predicate in the 0 position
-                    ArrayList<Formula> predInstances = kb.ask("arg", 0, key);
+                    List<Formula> predInstances = kb.ask("arg", 0, key);
                     for (int j = 0; j < predInstances.size(); j++) {
                         StringBuilder sb = new StringBuilder();
                         String displayText = String.copyValueOf(value.toCharArray());
                         Formula f = predInstances.get(j);
-                        ArrayList arguments = f.complexArgumentsToArrayList(0);
+                        List arguments = f.complexArgumentsToArrayList(0);
                         sb.append(key);
                         sb.append(",");
                         // check if each of the arguments for the statements is to be replaced in its
@@ -787,7 +787,7 @@ public class KButilities {
             for (String term : kb.terms) {
                 if (Character.isLowerCase(term.charAt(0)) && kb.kbCache.valences.get(term) <= 2) {
                     /*
-                    ArrayList<Formula> forms = kb.askWithRestriction(0,"domain",1,term);
+                    List<Formula> forms = kb.askWithRestriction(0,"domain",1,term);
                     for (int i = 0; i < forms.size(); i++) {
                         String argnum = forms.get(i).getArgument(2);
                         String type = forms.get(i).getArgument(3);
@@ -832,12 +832,12 @@ public class KButilities {
 
     public static int getCountNonLinguisticAxioms(KB kb) {
 
-        HashSet<String> rels = new HashSet<>();
+        Set<String> rels = new HashSet<>();
         rels.add("documentation");
         rels.add("termFormat");
         rels.add("format");
         int counter = 0;
-        HashSet<Formula> forms = new HashSet<>();
+        Set<Formula> forms = new HashSet<>();
         forms.addAll(kb.formulaMap.values());
         for (Formula f : forms) {
             if (!rels.contains(f.getArgument(0)))
@@ -878,7 +878,7 @@ public class KButilities {
      */
     public static Set<Formula> getAllFormulasOfTerm(KB kb, String term) {
 
-        HashSet<Formula> result = new HashSet<>();
+        Set<Formula> result = new HashSet<>();
         Pattern pattern = Pattern.compile("(\\s|\\()" + term + "(\\s|\\))");
         for (String f : kb.formulaMap.keySet()) {
             Matcher matcher = pattern.matcher(f);
@@ -915,7 +915,7 @@ public class KButilities {
     public static String termFormatIndex(KB kb) {
 
         StringBuffer sb = new StringBuffer();
-        ArrayList<Formula> forms = kb.ask("arg", 0, "termFormat");
+        List<Formula> forms = kb.ask("arg", 0, "termFormat");
         for (Formula f : forms) {
             String term = f.getStringArgument(2);
             String str = f.getStringArgument(3);
@@ -926,14 +926,14 @@ public class KButilities {
     }
 
     /**
-     * utility method to merge two HashMaps of String keys and a values
-     * of an HashSet of Strings.  Note that parent classes in the set of
+     * utility method to merge two Maps of String keys and a values
+     * of an Set of Strings.  Note that parent classes in the set of
      * classes will be removed
      */
-    public static HashMap<String, HashSet<String>> mergeToMap(HashMap<String, HashSet<String>> map1,
-                                                              HashMap<String, HashSet<String>> map2, KB kb) {
+    public static Map<String, Set<String>> mergeToMap(Map<String, Set<String>> map1,
+                                                      Map<String, Set<String>> map2, KB kb) {
 
-        HashMap<String, HashSet<String>> result = new HashMap<String, HashSet<String>>(map1);
+        Map<String, Set<String>> result = new HashMap<String, Set<String>>(map1);
 
         for (String key : map2.keySet()) {
             Set<String> value = new HashSet<String>();
@@ -1032,7 +1032,7 @@ public class KButilities {
     public String semnetAsJSON3(KB kb, boolean cached, boolean strings) {
 
         Set<String> s = generateSemanticNetwork(kb, cached, strings);
-        ArrayList<GraphArc> al = new ArrayList();
+        List<GraphArc> al = new ArrayList();
         for (String st : s) {
             String[] sp = st.split(" ");
             GraphArc ga = this.new GraphArc(sp[0], sp[1], sp[2]);
@@ -1075,7 +1075,7 @@ public class KButilities {
             } else {
                 String predicate = f.getStringArgument(0);
                 if (debug) System.out.println("generateSemNetNeighbors(): simple");
-                ArrayList<String> args = f.argumentsToArrayListString(0);
+                List<String> args = f.argumentsToArrayListString(0);
                 if ((args != null && args.size() == 3) || args.get(0).equals("documentation")) { // could have a function which would return null
                     String arg1 = f.getStringArgument(1);
                     if (arg1.equals(term)) {

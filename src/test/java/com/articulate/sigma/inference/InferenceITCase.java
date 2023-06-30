@@ -48,15 +48,15 @@ public class InferenceITCase {
         boolean enableIncludeTestsList = false;   // If enableIncludeTestsList=true, only run test files in includeTestsList
         boolean enableExcludeTestsList = false;   // If enableIncludeTestsList=false & enableExcludeTestsList=true, only run test files NOT in excludeTestsLists
         // If enableIncludeTestsList=false & enableExcludeTestsList=false, run all test files in InferenceITCaseData
-        ArrayList<String> includeTestsList = Lists.newArrayList("QA1");
-        ArrayList<String> excludeTestsList = Lists.newArrayList("TQG2", "TQG4", "TQG10");
+        List<String> includeTestsList = Lists.newArrayList("QA1");
+        List<String> excludeTestsList = Lists.newArrayList("TQG2", "TQG4", "TQG10");
         return getTestFiles(testDataDirectoryPath, includeTestsList, enableIncludeTestsList,
                 excludeTestsList, enableExcludeTestsList);
     }
 
     public static <T> Collection<T> getTestFiles(String testDataDirectoryPath,
-                                                 ArrayList<String> includeTestsList, boolean enableIncludeTestsList,
-                                                 ArrayList<String> excludeTestsList, boolean enableExcludeTestsList) {
+                                                 List<String> includeTestsList, boolean enableIncludeTestsList,
+                                                 List<String> excludeTestsList, boolean enableExcludeTestsList) {
 
         Collection<T> result = Lists.newArrayList();
         File folder = new File(testDataDirectoryPath);
@@ -92,8 +92,8 @@ public class InferenceITCase {
     public void test() {
 
         System.out.println("InferenceITCase.test(): " + fInput);
-        ArrayList<String> expectedAnswers = new ArrayList<>();
-        ArrayList<String> actualAnswers = new ArrayList<>();
+        List<String> expectedAnswers = new ArrayList<>();
+        List<String> actualAnswers = new ArrayList<>();
         InferenceTestSuite its = new InferenceTestSuite();
         InferenceTestSuite.InfTestData itd = its.inferenceUnitTest(fInput, kb);
         System.out.println("expected: " + itd.expectedAnswers);

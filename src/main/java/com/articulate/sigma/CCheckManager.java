@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -32,8 +33,8 @@ import java.util.logging.Logger;
  * @author Karen Joy Nomorosa, Rearden Commerce Inc.
  */
 public class CCheckManager extends ThreadPoolExecutor {
-    private HashMap<String, HashMap<String, Object>> checkedKBs = null;
-    private HashMap<String, String> ccheckQueue = null;
+    private Map<String, Map<String, Object>> checkedKBs = null;
+    private Map<String, String> ccheckQueue = null;
     private Logger logger = null;
 
     public CCheckManager() {
@@ -42,8 +43,8 @@ public class CCheckManager extends ThreadPoolExecutor {
         if (logger == null)
             logger = Logger.getLogger(this.getClass().getName());
 
-        ccheckQueue = new HashMap<String, String>();
-        checkedKBs = new HashMap<String, HashMap<String, Object>>();
+        ccheckQueue = new HashMap<>();
+        checkedKBs = new HashMap<>();
     }
 
     /**
@@ -55,7 +56,7 @@ public class CCheckManager extends ThreadPoolExecutor {
     public Timestamp lastCCheck(String kbName) {
 
         if (checkedKBs.containsKey(kbName)) {
-            HashMap<String, Object> obj = checkedKBs.get(kbName);
+            Map<String, Object> obj = checkedKBs.get(kbName);
 
             if (obj.containsKey("timestamp"))
                 return (Timestamp) obj.get("timestamp");
@@ -116,7 +117,7 @@ public class CCheckManager extends ThreadPoolExecutor {
             // These are for the consistency checks that are already done.
             // Note that code in performing CChecks ensures that a KBName cannot be in
             // both checkedKBs and ccheckQueue at the same time.
-            HashMap<String, Object> value = checkedKBs.get(kbName);
+            Map<String, Object> value = checkedKBs.get(kbName);
             String filename = (String) value.get("filename");
 
             if (filename != null) {
@@ -209,7 +210,7 @@ public class CCheckManager extends ThreadPoolExecutor {
      */
     protected void afterExecute(CCheck r, Throwable t) {
 
-        HashMap<String, Object> value = new HashMap<String, Object>();
+        Map<String, Object> value = new HashMap<String, Object>();
         value.put("timestamp", new Timestamp((new Date()).getTime()));
         value.put("filename", ccheckQueue.get(r.getKBName()));
         checkedKBs.put(r.getKBName(), value);

@@ -46,6 +46,7 @@ public class FormulaArityCheckITCase {
     void init() {
         kb = kbManager.getKB(kbManager.getPref("sumokbname"));
     }
+
     @Test
     public void testArityCheck1() {
 

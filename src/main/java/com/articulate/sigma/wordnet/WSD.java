@@ -37,11 +37,11 @@ public class WSD {
     /**
      * Collect all the SUMO terms that are found in the sentence.
      */
-    public static ArrayList<String> collectSUMOFromWords(String sentence) {
+    public static List<String> collectSUMOFromWords(String sentence) {
 
         //System.out.println("INFO in WordNet.collectSUMOFromWords(): " + sentence);
-        ArrayList<String> senses = collectWordSenses(sentence);
-        ArrayList<String> result = new ArrayList<String>();
+        List<String> senses = collectWordSenses(sentence);
+        List<String> result = new ArrayList<String>();
         for (int i = 0; i < senses.size(); i++) {
             String SUMO = WordNetUtilities.getBareSUMOTerm(WordNet.wn.getSUMOMapping(senses.get(i)));
             if (!StringUtil.emptyString(SUMO))
@@ -52,7 +52,7 @@ public class WSD {
 
     public static boolean polysemous(String word) {
 
-        ArrayList<String> values = WordNet.wn.wordsToSenseKeys.get(word);
+        List<String> values = WordNet.wn.wordsToSenseKeys.get(word);
         if (values == null || values.size() == 0)
             return false;
         return values.size() != 1;
@@ -60,7 +60,7 @@ public class WSD {
 
     public static boolean polysemous(String word, int pos) {
 
-        ArrayList<String> values = WordNet.wn.wordsToSenseKeys.get(word);
+        List<String> values = WordNet.wn.wordsToSenseKeys.get(word);
         if (values == null || values.size() == 0)
             return false;
         if (values.size() == 1)
@@ -89,19 +89,19 @@ public class WSD {
      *
      * @return 9 digit synset IDs
      */
-    public static ArrayList<String> collectWordSenses(String text) {
+    public static List<String> collectWordSenses(String text) {
 
         if (debug) System.out.println("INFO in WordNet.collectWordSenses(): " + text);
         String newtext = StringUtil.removeHTML(text);
         newtext = StringUtil.removePunctuation(newtext);
         String context = newtext;
         text = newtext;
-        ArrayList<String> result = new ArrayList<String>();
-        ArrayList<String> al = WordNet.splitToArrayList(text);
-        ArrayList<String> alcon = WordNet.splitToArrayList(context);
+        List<String> result = new ArrayList<String>();
+        List<String> al = WordNet.splitToArrayList(text);
+        List<String> alcon = WordNet.splitToArrayList(context);
         for (int i = 0; i < al.size(); i++) {
             String word = al.get(i);
-            //ArrayList<String> multiWordResult = new ArrayList<String>();
+            //List<String> multiWordResult = new ArrayList<String>();
             //int wordIndex = WordNet.wn.getMultiWords().findMultiWord(al, i, multiWordResult);
             List<String> sublist = al.subList(i, al.size());
             String multiWord = WordNet.wn.getMultiWords().findMultiWord(sublist);
@@ -264,7 +264,7 @@ public class WSD {
 
     /**
      * Check if a sense has been created from a domain ontology and give
-     * it priority.  Returns an ArrayList consisting of
+     * it priority.  Returns an List consisting of
      * a 9-digit WordNet synset, and the score
      * reflecting the quality of the guess the given synset is the right one.
      */
@@ -272,7 +272,7 @@ public class WSD {
 
         if (debug) System.out.println("INFO in WSD.termFormatBypass(): word: " + word +
                 " : " + WordNet.wn.caseMap.get(word.toUpperCase()));
-        ArrayList<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
         TreeSet<AVPair> senselist = WordNet.wn.wordFrequencies.get(word);
         if (senselist == null) {
             if (WordNet.wn.caseMap.containsKey(word.toUpperCase())) {
@@ -311,7 +311,7 @@ public class WSD {
         TreeSet<AVPair> result = new TreeSet<AVPair>();
         //System.out.println("INFO in WSD.findWordSensePOS(): word, POS, text: " +
         //        word + ", " + POS + ", " + words);
-        ArrayList<String> senseKeys = WordNet.wn.wordsToSenseKeys.get(word);
+        List<String> senseKeys = WordNet.wn.wordsToSenseKeys.get(word);
         List<String> termFormatBypass = termFormatBypass(word);
         if (termFormatBypass != null) {
             AVPair score = new AVPair();
@@ -345,7 +345,7 @@ public class WSD {
             String senseKey = senseKeys.get(i);
             String synset = WordNetUtilities.getSenseFromKey(senseKey);
             if (WordNetUtilities.sensePOS(senseKey) == POS) {
-                HashMap<String, Integer> senseAssoc = WordNet.wn.wordCoFrequencies.get(senseKey.intern());
+                Map<String, Integer> senseAssoc = WordNet.wn.wordCoFrequencies.get(senseKey.intern());
                 if (senseAssoc != null) {
                     int total = 0;
                     for (int j = 0; j < words.size(); j++) {
@@ -370,7 +370,7 @@ public class WSD {
         if (bestTotal > 5) {
             String senseValue = (String) senses.get(bestSense);
             String synset = WordNet.wn.senseIndex.get(senseValue.intern());
-            ArrayList<String> result = new ArrayList<String>();
+            List<String> result = new ArrayList<String>();
             result.add((new Integer(POS)).toString() + synset);
             result.add(Integer.toString(bestTotal));
             //System.out.println("INFO in WordNet.findWordSensePOS(): result: " + result);
@@ -480,7 +480,7 @@ public class WSD {
                 System.out.println("INFO in WSD.getBestDefaultSense(): best sense: " + bestSense + " best score: " + bestScore);
         }
         if (StringUtil.emptyString(bestSense)) {
-            ArrayList<String> al = WordNet.wn.wordsToSenseKeys.get(word);
+            List<String> al = WordNet.wn.wordsToSenseKeys.get(word);
             if (al == null)
                 al = WordNet.wn.wordsToSenseKeys.get(word.toLowerCase());
             if (debug) System.out.println("INFO in WSD.getBestDefaultSense(): senses: " + al);
@@ -548,12 +548,12 @@ public class WSD {
             }
         }
         // if none of the sensekeys are the right pos, fall through to here
-        ArrayList<String> al = WordNet.wn.wordsToSenseKeys.get(newWord.toLowerCase());
+        List<String> al = WordNet.wn.wordsToSenseKeys.get(newWord.toLowerCase());
         //System.out.println("WSD.getBestDefaultSense(): al: " + al);
         //System.out.println("WSD.getBestDefaultSense(): nouns: " + WordNet.wn.nounSynsetHash.get(newWord));
         if (al == null || al.size() == 0) {
             al = new ArrayList<String>();
-            HashSet<String> synsets = null;
+            Set<String> synsets = null;
             switch (pos) {
                 case 1:
                     synsets = WordNet.wn.nounSynsetHash.get(newWord);
@@ -592,10 +592,10 @@ public class WSD {
      * each interior array is the whole line, and subsequent elements
      * are the individual words.
      */
-    public static ArrayList<ArrayList<String>> readFileIntoArray(String filename) {
+    public static List<List<String>> readFileIntoArray(String filename) {
 
         System.out.println("In WSD.readFileIntoArray(): Reading file " + filename);
-        ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
+        List<List<String>> result = new ArrayList<List<String>>();
         LineNumberReader lr = null;
         try {
             String line;
@@ -610,7 +610,7 @@ public class WSD {
             while ((line = lr.readLine()) != null) {
                 //System.out.println(line);
                 String[] ls = line.split(" ");
-                ArrayList<String> al = new ArrayList<String>();
+                List<String> al = new ArrayList<String>();
                 al.add(line);
                 al.addAll(Arrays.asList(ls));
                 result.add(al);
@@ -626,10 +626,10 @@ public class WSD {
     /**
      * @return each line of a file into an array of String.
      */
-    public static ArrayList<String> readFile(String filename) {
+    public static List<String> readFile(String filename) {
 
         System.out.println("In WSD.readFile(): Reading file " + filename);
-        ArrayList<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
         LineNumberReader lr = null;
         try {
             String line;
@@ -660,9 +660,9 @@ public class WSD {
      */
     public static Map<String, Integer> collectSUMOFromFile(String filename) {
 
-        HashMap<String, Integer> result = new HashMap<>();
-        ArrayList<ArrayList<String>> far = readFileIntoArray(filename);
-        for (ArrayList<String> line : far) {
+        Map<String, Integer> result = new HashMap<>();
+        List<List<String>> far = readFileIntoArray(filename);
+        for (List<String> line : far) {
             String fullsent = line.get(0);
             for (int i = 1; i < line.size(); i++) {
                 if (WordNet.wn.stopwords.contains(line.get(i)))
@@ -682,14 +682,14 @@ public class WSD {
                 }
             }
         }
-        TreeMap<String, HashSet<String>> reversed = new TreeMap<>();
+        TreeMap<String, Set<String>> reversed = new TreeMap<>();
         for (String key : result.keySet())
             MapUtils.addToMap(reversed, StringUtil.integerToPaddedString(result.get(key)), key);
         for (String key : reversed.keySet()) {
-            HashSet<String> values = reversed.get(key);
+            Set<String> values = reversed.get(key);
             for (String synset : values) {
                 String SUMO = WordNetUtilities.getBareSUMOTerm(WordNet.wn.getSUMOMapping(synset));
-                ArrayList<String> words = WordNet.wn.synsetsToWords.get(synset);
+                List<String> words = WordNet.wn.synsetsToWords.get(synset);
                 String wordstr = "";
                 if (words != null)
                     wordstr = words.toString();
@@ -706,8 +706,8 @@ public class WSD {
      */
     public static void printSUMOFromFileByLine(String filename) {
 
-        HashMap<String, Integer> result = new HashMap<>();
-        ArrayList<String> far = readFile(filename);
+        Map<String, Integer> result = new HashMap<>();
+        List<String> far = readFile(filename);
         for (String line : far) {
             System.out.println("\n" + line);
             collectSUMOFromString(line);
@@ -722,9 +722,9 @@ public class WSD {
      */
     public static Map<String, Integer> collectSUMOFromString(String lineStr) {
 
-        ArrayList<String> line = new ArrayList<String>();
+        List<String> line = new ArrayList<String>();
         line.addAll(Arrays.asList(lineStr.split(" ")));
-        HashMap<String, Integer> result = new HashMap<>();
+        Map<String, Integer> result = new HashMap<>();
         for (int i = 1; i < line.size(); i++) {
             String synset = findWordSenseInContext(line.get(i), line);
             if (synset == "")
@@ -740,7 +740,7 @@ public class WSD {
                     Integer val = result.get(SUMO);
                     result.put(SUMO, val.intValue() + 1);
                 }
-                ArrayList<String> words = WordNet.wn.synsetsToWords.get(synset);
+                List<String> words = WordNet.wn.synsetsToWords.get(synset);
                 String wordstr = "";
                 if (words != null)
                     wordstr = words.toString();
@@ -793,7 +793,7 @@ public class WSD {
         System.out.println("INFO in WSD.testSentenceWSD(): " + sentence);
         System.out.println("INFO in WSD.testSentenceWSD(): " + WSD.collectWordSenses(sentence));
         System.out.println("INFO in WSD.testSentenceWSD(): " + WordNet.wn.sumoSentenceDisplay(sentence, sentence, ""));
-        ArrayList<String> sentar = Lists.newArrayList("John", "kicks", "the", "cart");
+        List<String> sentar = Lists.newArrayList("John", "kicks", "the", "cart");
         System.out.println("INFO in WSD.testSentenceWSD(): " + sentar);
         for (String s : sentar)
             System.out.println("INFO in WSD.testSentenceWSD(): word: " + s + " SUMO: " + WSD.getBestDefaultSUMO(s));
@@ -815,7 +815,7 @@ public class WSD {
         String sentence = "Play Hello on Hulu.";
         System.out.println("INFO in WSD.testSentenceWSD(): " + sentence);
         System.out.println("INFO in WSD.testSentenceWSD(): " + WSD.collectWordSenses(sentence));
-        ArrayList<String> sentar = Lists.newArrayList("Play", "Hello", "on", "Hulu");
+        List<String> sentar = Lists.newArrayList("Play", "Hello", "on", "Hulu");
         System.out.println("INFO in WSD.testSentenceWSD(): " + sentar);
         for (String s : sentar)
             System.out.println("INFO in WSD.testSentenceWSD(): word: " + s + " SUMO: " + WSD.getBestDefaultSUMO(s));

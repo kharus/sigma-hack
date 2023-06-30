@@ -41,7 +41,7 @@ public class LEO {
     public static int axiomIndex = 0;
     public static boolean debug = false;
     public StringBuffer qlist = null; // quantifier list in order for answer extraction
-    public ArrayList<String> output = new ArrayList<>();
+    public List<String> output = new ArrayList<>();
 
     private static String[] createCommandList(File executable, int timeout, File kbFile) {
 
@@ -64,14 +64,14 @@ public class LEO {
      * directly add assertion into opened inference engine (e_ltb_runner)
      */
     public static boolean assertFormula(String userAssertionTPTP, KB kb,
-                                        ArrayList<Formula> parsedFormulas, boolean tptp) {
+                                        List<Formula> parsedFormulas, boolean tptp) {
 
         if (debug) System.out.println("INFO in Leo.assertFormula(2):writing to file " + userAssertionTPTP);
         boolean allAdded = false;
         PrintWriter pw = null;
         try {
             pw = new PrintWriter(new BufferedWriter(new FileWriter(userAssertionTPTP, true)));
-            HashSet<Formula> processedFormulas = new HashSet();
+            Set<Formula> processedFormulas = new HashSet();
             for (Formula parsedF : parsedFormulas) {
                 processedFormulas.clear();
                 FormulaPreprocessor fp = new FormulaPreprocessor();
@@ -131,7 +131,7 @@ public class LEO {
         f4.delete();
         File kbFile = new File(dir + kbName + "." + lang);
         System.out.println("Leo.main(): first test");
-        HashSet<String> query = new HashSet<>();
+        Set<String> query = new HashSet<>();
         query.add("thf(conj1,conjecture,?[V__X:$i, V__Y:$i] : (subclass_THFTYPE_IiioI @ V__X @ V__Y)).");
         System.out.println("Leo.main(): calling Leo with: " + kbFile + ", 30, " + query);
         LEO leo = new LEO();
@@ -210,7 +210,7 @@ public class LEO {
     /**
      * Write the THF statements to the temp-stmt.thf file
      */
-    public void writeStatements(HashSet<String> stmts, String type) {
+    public void writeStatements(Set<String> stmts, String type) {
 
         FileWriter fw = null;
         PrintWriter pw = null;
@@ -281,7 +281,7 @@ public class LEO {
      * @param stmts should be the query but the list gets expanded here with
      *              any other prior user assertions
      */
-    public void run(KB kb, File kbFile, int timeout, HashSet<String> stmts) throws Exception {
+    public void run(KB kb, File kbFile, int timeout, Set<String> stmts) throws Exception {
 
         System.out.println("Leo.run(): query : " + stmts);
         String lang = "thf";

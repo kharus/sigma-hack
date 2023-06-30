@@ -3,9 +3,9 @@ package com.articulate.sigma;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -29,7 +29,7 @@ public class RowVarITCase extends UnitTestBase {
         f.read(stmt1);
 
         //RowVars.DEBUG = true;
-        HashSet<String> vars = RowVars.findRowVars(f);
+        Set<String> vars = RowVars.findRowVars(f);
         assertTrue(vars != null && vars.size() > 0);
         if (vars.contains("@ARGS") && vars.size() == 1)
             System.out.println("testFindRowVars(): success!");
@@ -55,7 +55,7 @@ public class RowVarITCase extends UnitTestBase {
         f.read(stmt1);
 
         //RowVars.DEBUG = true;
-        HashMap<String, HashSet<String>> rels = RowVars.getRowVarRelations(f);
+        Map<String, Set<String>> rels = RowVars.getRowVarRelations(f);
         assertTrue(rels != null && rels.keySet().size() > 0);
         System.out.println("testRowVarRels(): rels: " + rels);
         if (rels.get("@ARGS").contains("links"))
@@ -82,8 +82,8 @@ public class RowVarITCase extends UnitTestBase {
         f.read(stmt1);
 
         //RowVars.DEBUG = true;
-        HashMap<String, HashSet<String>> rels = RowVars.getRowVarRelations(f);
-        HashMap<String, Integer> rowVarMaxArities = RowVars.getRowVarMaxAritiesWithOtherArgs(rels, kb, f);
+        Map<String, Set<String>> rels = RowVars.getRowVarRelations(f);
+        Map<String, Integer> rowVarMaxArities = RowVars.getRowVarMaxAritiesWithOtherArgs(rels, kb, f);
         int arity = kb.kbCache.valences.get("links").intValue();
         System.out.println("testLinks(): arity of 'links': " + arity);
         System.out.println("testLinks(): rels: " + rels);
@@ -114,7 +114,7 @@ public class RowVarITCase extends UnitTestBase {
         f.read(stmt1);
 
         //RowVars.DEBUG = true;
-        ArrayList<Formula> results = RowVars.expandRowVars(kb, f);
+        List<Formula> results = RowVars.expandRowVars(kb, f);
         String result = results.get(0).getFormula();
         String expected = "(=>\n" +
                 "  (and\n" +
@@ -142,7 +142,7 @@ public class RowVarITCase extends UnitTestBase {
         f.read(stmt);
 
         //RowVars.DEBUG = true;
-        ArrayList<Formula> results = RowVars.expandRowVars(kb, f);
+        List<Formula> results = RowVars.expandRowVars(kb, f);
         System.out.println("testRowVarExp(: input: " + stmt);
         System.out.println("testRowVarExp(): results: " + results);
         System.out.println("testRowVarExp(): results size: " + results.size());

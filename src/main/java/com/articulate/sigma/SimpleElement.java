@@ -19,8 +19,8 @@ import java.util.*;
  */
 public class SimpleElement {
 
-    private final HashMap<String, String> attributes;
-    private final ArrayList<SimpleElement> childElements;
+    private final Map<String, String> attributes;
+    private final List<SimpleElement> childElements;
     private String tagName;
     private String text;
 
@@ -78,7 +78,7 @@ public class SimpleElement {
         childElements.add(element);
     }
 
-    public ArrayList<SimpleElement> getChildElements() {
+    public List<SimpleElement> getChildElements() {
         return childElements;
     }
 
@@ -105,7 +105,7 @@ public class SimpleElement {
         }
         StringBuffer result = new StringBuffer();
         result.append(strindent + "<" + getTagName() + " ");
-        HashSet names = new HashSet();
+        Set names = new HashSet();
         names.addAll(getAttributeNames());
         Iterator it = names.iterator();
         while (it.hasNext()) {
@@ -115,7 +115,7 @@ public class SimpleElement {
                 value = SimpleDOMParser.convertFromReservedCharacters(value);
             result.append(attName + "=\"" + value + "\" ");
         }
-        ArrayList children = getChildElements();
+        List children = getChildElements();
         if (children.size() == 0 && (getText() == null || getText().equals("null")))
             result.append("/>\n");
         else {

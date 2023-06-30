@@ -184,7 +184,7 @@ public class FormulaITCase {
     @Test
     public void testCollectQuantifiedVariables() {
 
-        HashSet<String> expected = new HashSet<>(Arrays.asList("?T", "?Z"));
+        Set<String> expected = new HashSet<>(Arrays.asList("?T", "?Z"));
         Formula f1 = new Formula();
         f1.read("(=> " +
                 "  (and " +
@@ -244,7 +244,7 @@ public class FormulaITCase {
     @Test
     public void testUnquantifiedVariables() {
 
-        HashSet<String> expected = new HashSet<>(Arrays.asList("?C", "?W", "?H", "?Y"));
+        Set<String> expected = new HashSet<>(Arrays.asList("?C", "?W", "?H", "?Y"));
         Formula f1 = new Formula();
         f1.read("(=> " +
                 "  (and " +
@@ -408,7 +408,7 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.argumentsToArrayListString(0);
+        List<String> actual = f.argumentsToArrayListString(0);
 
         assertNull(actual);
     }
@@ -424,7 +424,7 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.argumentsToArrayListString(1);
+        List<String> actual = f.argumentsToArrayListString(1);
 
         assertNull(actual);
     }
@@ -439,7 +439,7 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.argumentsToArrayListString(0);
+        List<String> actual = f.argumentsToArrayListString(0);
 
         assertNull(actual);
     }
@@ -451,8 +451,8 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.argumentsToArrayListString(0);
-        ArrayList<String> expected = Lists.newArrayList("instance", "?D", "Driving");
+        List<String> actual = f.argumentsToArrayListString(0);
+        List<String> expected = Lists.newArrayList("instance", "?D", "Driving");
 
         assertEquals(expected, actual);
     }
@@ -468,12 +468,12 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.complexArgumentsToArrayListString(0);
+        List<String> actual = f.complexArgumentsToArrayListString(0);
         String temp = "(and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
                 "                   (agent ?D ?H))";
-        ArrayList<String> expected = Lists.newArrayList("exists", "(?D ?H)", temp);
+        List<String> expected = Lists.newArrayList("exists", "(?D ?H)", temp);
 
         assertEquals(expected, actual);
     }
@@ -489,12 +489,12 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.complexArgumentsToArrayListString(1);
+        List<String> actual = f.complexArgumentsToArrayListString(1);
         String temp = "(and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
                 "                   (agent ?D ?H))";
-        ArrayList<String> expected = Lists.newArrayList("(?D ?H)", temp);
+        List<String> expected = Lists.newArrayList("(?D ?H)", temp);
 
         assertEquals(expected, actual);
     }
@@ -510,12 +510,12 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.complexArgumentsToArrayListString(2);
+        List<String> actual = f.complexArgumentsToArrayListString(2);
         String temp = "(and\n" +
                 "                   (instance ?D Driving)\n" +
                 "                   (instance ?H Human)\n" +
                 "                   (agent ?D ?H))";
-        ArrayList<String> expected = Lists.newArrayList(temp);
+        List<String> expected = Lists.newArrayList(temp);
 
         assertEquals(expected, actual);
     }
@@ -531,7 +531,7 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.complexArgumentsToArrayListString(3);
+        List<String> actual = f.complexArgumentsToArrayListString(3);
 
         assertNull(actual);
     }
@@ -546,8 +546,8 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.complexArgumentsToArrayListString(0);
-        ArrayList<String> expected = Lists.newArrayList("and", "(instance ?D Driving)", "(instance ?H Human)", "(agent ?D ?H)");
+        List<String> actual = f.complexArgumentsToArrayListString(0);
+        List<String> expected = Lists.newArrayList("and", "(instance ?D Driving)", "(instance ?H Human)", "(agent ?D ?H)");
 
         assertEquals(expected, actual);
     }
@@ -562,8 +562,8 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.complexArgumentsToArrayListString(1);
-        ArrayList<String> expected = Lists.newArrayList("(instance ?D Driving)", "(instance ?H Human)", "(agent ?D ?H)");
+        List<String> actual = f.complexArgumentsToArrayListString(1);
+        List<String> expected = Lists.newArrayList("(instance ?D Driving)", "(instance ?H Human)", "(agent ?D ?H)");
 
         assertEquals(expected, actual);
     }
@@ -578,8 +578,8 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.complexArgumentsToArrayListString(2);
-        ArrayList<String> expected = Lists.newArrayList("(instance ?H Human)", "(agent ?D ?H)");
+        List<String> actual = f.complexArgumentsToArrayListString(2);
+        List<String> expected = Lists.newArrayList("(instance ?H Human)", "(agent ?D ?H)");
 
         assertEquals(expected, actual);
     }
@@ -594,8 +594,8 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.complexArgumentsToArrayListString(3);
-        ArrayList<String> expected = Lists.newArrayList("(agent ?D ?H)");
+        List<String> actual = f.complexArgumentsToArrayListString(3);
+        List<String> expected = Lists.newArrayList("(agent ?D ?H)");
 
         assertEquals(expected, actual);
     }
@@ -610,7 +610,7 @@ public class FormulaITCase {
 
         Formula f = new Formula(stmt);
 
-        ArrayList<String> actual = f.complexArgumentsToArrayListString(4);
+        List<String> actual = f.complexArgumentsToArrayListString(4);
 
         assertNull(actual);
     }
@@ -622,7 +622,7 @@ public class FormulaITCase {
                 "  (AbsoluteValueFn ?NUMBER1) ?NUMBER2)";
         Formula f = new Formula(stmt);
         String expected = "[(AbsoluteValueFn ?NUMBER1), ?NUMBER2]";
-        ArrayList<String> actual = f.complexArgumentsToArrayListString(1);
+        List<String> actual = f.complexArgumentsToArrayListString(1);
         System.out.println("testComplexArgumentsToArrayListAbsolute(): actual: " + actual);
         System.out.println("testComplexArgumentsToArrayListAbsolute(): expected: " + expected);
         assertEquals(expected, actual.toString());
@@ -634,7 +634,7 @@ public class FormulaITCase {
         String stmt = "(termFormat EnglishLanguage WestMakianLanguage \"west makian language\")";
         Formula f = new Formula(stmt);
         String expected = "";
-        ArrayList<Formula> l = f.complexArgumentsToArrayList(1);
+        List<Formula> l = f.complexArgumentsToArrayList(1);
         System.out.println("testComplexArgumentsToArrayList2(): actual: " + l.size());
         System.out.println("testComplexArgumentsToArrayList2(): expected: " + 3);
         assertEquals(l.size(), 3);
@@ -644,7 +644,7 @@ public class FormulaITCase {
     public void testGetArg() {
 
         List<String> expected = Lists.newArrayList("during", "?Y", "(WhenFn ?H)");
-        ArrayList<String> actual = new ArrayList<>();
+        List<String> actual = new ArrayList<>();
         Formula f1 = new Formula();
         f1.read("(during ?Y (WhenFn ?H))");
         for (int i = 0; i < 3; i++) {
@@ -678,7 +678,7 @@ public class FormulaITCase {
     public void testGetArgString() {
 
         List<String> expected = Lists.newArrayList("during", "?Y", "(WhenFn ?H)");
-        ArrayList<String> actual = new ArrayList<>();
+        List<String> actual = new ArrayList<>();
         Formula f1 = new Formula();
         f1.read("(during ?Y (WhenFn ?H))");
         for (int i = 0; i < 3; i++) {

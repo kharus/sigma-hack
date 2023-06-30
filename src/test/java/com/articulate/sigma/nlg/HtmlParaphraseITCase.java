@@ -1034,7 +1034,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
     /**
      * Ideal: ? "If an animal performs an intentional process, then the animal is awake."
      * This test may fail, but should be fixed by #17181: Modify LanguageFormatter.computeVariableTypes( )
-     * so that the HashSet consists of only a single element which is the least general--the most specific.
+     * so that the Set consists of only a single element which is the least general--the most specific.
      */
     @Test
     public void testAwakeIf() {

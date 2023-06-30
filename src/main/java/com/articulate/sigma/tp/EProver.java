@@ -33,7 +33,7 @@ public class EProver {
     private final ProcessBuilder _builder;
     private final BufferedReader _reader;
     private final BufferedWriter _writer;
-    public ArrayList<String> output = new ArrayList<>();
+    public List<String> output = new ArrayList<>();
     public StringBuffer qlist = null;
     private Process _eprover;
 
@@ -72,7 +72,7 @@ public class EProver {
         }
         eproverPath = eproverPath != null && eproverPath.length() != 0 ? eproverPath
                 : executable.substring(0, executable.lastIndexOf(File.separator)) + File.separator + "eprover";
-        ArrayList<String> commands = new ArrayList<>(Arrays.asList(
+        List<String> commands = new ArrayList<>(Arrays.asList(
                 executable, "--interactive", kbdir + File.separator + "EBatchConfig.txt",
                 eproverPath));
 
@@ -110,7 +110,7 @@ public class EProver {
         }
         eproverPath = eproverPath != null && eproverPath.length() != 0 ? eproverPath
                 : executable.substring(0, executable.lastIndexOf(File.separator)) + File.separator + "eprover";
-        ArrayList<String> commands = new ArrayList<>(Arrays.asList(
+        List<String> commands = new ArrayList<>(Arrays.asList(
                 executable, "--interactive", kbdir + File.separator + "EBatchConfig.txt",
                 eproverPath));
 
@@ -146,11 +146,11 @@ public class EProver {
         }
         eproverPath = eproverPath != null && eproverPath.length() != 0 ? eproverPath
                 : executable.substring(0, executable.lastIndexOf(File.separator)) + File.separator + "eprover";
-        //ArrayList<String> commands = new ArrayList<>(Arrays.asList(
+        //List<String> commands = new ArrayList<>(Arrays.asList(
         //        executable,"--answers=" + maxAnswers, "--interactive", __dummyKBdir + File.separator + "EBatchConfig.txt",
         //        eproverPath));
         String batchPath = kbdir + File.separator + "EBatchConfig.txt";
-        ArrayList<String> commands = new ArrayList<>(Arrays.asList(
+        List<String> commands = new ArrayList<>(Arrays.asList(
                 executable, "--interactive", batchPath,
                 eproverPath));
         System.out.println("EProver(): command: " + commands);
@@ -211,7 +211,7 @@ public class EProver {
     public static void addBatchConfig(String inputFilename, int timeout) {
 
         File initFile = new File(kbdir, "EBatchConfig.txt");
-        HashSet<String> ebatchfiles = new HashSet<>();
+        Set<String> ebatchfiles = new HashSet<>();
         if (inputFilename != null && !inputFilename.isEmpty())
             ebatchfiles.add(inputFilename);
 
@@ -360,14 +360,14 @@ public class EProver {
      * directly add assertion into opened inference engine (e_ltb_runner)
      */
     public boolean assertFormula(String userAssertionTPTP, KB kb, EProver eprover,
-                                 ArrayList<Formula> parsedFormulas, boolean tptp) {
+                                 List<Formula> parsedFormulas, boolean tptp) {
 
         System.out.println("EProver.assertFormula(2): process: " + _eprover);
         boolean allAdded = (eprover != null);
         PrintWriter pw = null;
         try {
             pw = new PrintWriter(new BufferedWriter(new FileWriter(userAssertionTPTP, true)));
-            HashSet<Formula> processedFormulas = new HashSet<Formula>();
+            Set<Formula> processedFormulas = new HashSet<Formula>();
             for (Formula parsedF : parsedFormulas) {
                 processedFormulas.clear();
                 FormulaPreprocessor fp = new FormulaPreprocessor();

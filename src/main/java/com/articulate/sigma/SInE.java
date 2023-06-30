@@ -48,12 +48,12 @@ public class SInE extends InferenceEngine {
         nonSymbols.add("exists");
     }
 
-    ArrayList<String> formulas;
+    List<String> formulas;
     /**
      * These formulas will be always selected.
      * Actually formulas which contain no symbols are put here.
      */
-    ArrayList<String> mandatoryFormulas;
+    List<String> mandatoryFormulas;
     Hashtable<String, Set<String>> formSymbols;
     Hashtable<String, Integer> degrees;
     /**
@@ -91,9 +91,9 @@ public class SInE extends InferenceEngine {
         if (error == null) {
             if (!kifFormat) {
                 //System.out.println("INFO in SInE(): non KIF");
-                ArrayList<String> forms = loadNonKif(kbFile);
+                List<String> forms = loadNonKif(kbFile);
                 if (!forms.isEmpty()) {
-                    formulas.ensureCapacity(forms.size());
+                    //formulas.ensureCapacity(forms.size());
                     loadFormulas(forms);
                 }
             } else {
@@ -101,7 +101,7 @@ public class SInE extends InferenceEngine {
                 kif.setParseMode(KIF.RELAXED_PARSE_MODE);
                 kif.readFile(kbFile.getCanonicalPath());
                 if (!kif.formulaMap.keySet().isEmpty()) {
-                    formulas.ensureCapacity(kif.formulaMap.keySet().size());
+                    //formulas.ensureCapacity(kif.formulaMap.keySet().size());
                     loadFormulas(kif.formulaMap.keySet());
                 }
             }
@@ -179,9 +179,9 @@ public class SInE extends InferenceEngine {
     /**
      * Loads formulas from given source.
      */
-    public ArrayList<String> loadNonKif(File kbFile) {
+    public List<String> loadNonKif(File kbFile) {
 
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         LineNumberReader lr = null;
         String line = null;
         try {
@@ -235,7 +235,7 @@ public class SInE extends InferenceEngine {
             }
 
             int minDeg = 5000000;
-            ArrayList<String> minDegSyms = new ArrayList<String>();
+            List<String> minDegSyms = new ArrayList<String>();
             for (String sym : symbols) {
                 int deg = degrees.get(sym);
                 if (deg < minDeg) {

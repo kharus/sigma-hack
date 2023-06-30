@@ -6,9 +6,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,10 +33,10 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Class", "Object+");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Class", "Object+");
         expected.put("?Y", set1);
         expected.put("?X", Sets.newHashSet("Object+"));
 
@@ -47,7 +46,7 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
     @Test
     public void testFindTypes2() {
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?NOTPARTPROB", Sets.newHashSet("RealNumber"));
         expected.put("?PART", Sets.newHashSet("Class", "Object+"));
         expected.put("?PARTPROB", Sets.newHashSet("RealNumber"));
@@ -63,7 +62,7 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
         f.read(strf);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        HashMap<String, HashSet<String>> actualMap = fp.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, SigmaTestBase.kb);
 
         assertEquals(expected, actualMap);
     }
@@ -105,12 +104,12 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("CognitiveAgent");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("CognitiveAgent");
         expected.put("?H", set1);
-        HashSet<String> set2 = Sets.newHashSet("LegalAction");
+        Set<String> set2 = Sets.newHashSet("LegalAction");
         expected.put("?P", set2);
 
         assertEquals(expected, actual);

@@ -145,7 +145,7 @@ public class Formula implements Comparable, Serializable {
      * count on it being set to a value other than -1L.
      */
     public long endFilePosition = -1L;
-    // An ArrayList of String messages with a message that has a reserved character of ':'
+    // An List of String messages with a message that has a reserved character of ':'
     // dividing the message from a formula or term that will be hyperlinked and formmated
     public TreeSet<String> errors = new TreeSet<String>();
     /**
@@ -161,35 +161,35 @@ public class Formula implements Comparable, Serializable {
     public boolean isGround = true; // assume true unless a variable is found during parsing
     public String relation = null;
 
-    public ArrayList<String> stringArgs = new ArrayList<>(); // cached - only in the case of a simpleClause
+    public List<String> stringArgs = new ArrayList<>(); // cached - only in the case of a simpleClause
 
-    public ArrayList<Formula> args = new ArrayList<>();
+    public List<Formula> args = new ArrayList<>();
     // caches of frequently computed sets of variables in the formula
-    public HashSet<String> allVarsCache = new HashSet<>();
-    /* an ArrayList
-     * containing a pair of ArrayLists.  The first contains all
+    public Set<String> allVarsCache = new HashSet<>();
+    /* an List
+     * containing a pair of Lists.  The first contains all
      * explicitly quantified variables in the Formula.  The second
      * contains all variables in Formula that are not within the scope
      * of some explicit quantifier. */
-    public ArrayList<HashSet<String>> allVarsPairCache = new ArrayList<HashSet<String>>();
-    public HashSet<String> quantVarsCache = new HashSet<>();
-    public HashSet<String> unquantVarsCache = new HashSet<>();
-    public HashSet<String> existVarsCache = new HashSet<>();
-    public HashSet<String> univVarsCache = new HashSet<>();
-    public HashSet<String> termCache = new HashSet<>();
-    public HashSet<String> predVarCache = null; // null if not set, empty if no pred vars
-    public HashSet<String> rowVarCache = null; // null if not set, empty if no row vars
+    public List<Set<String>> allVarsPairCache = new ArrayList<Set<String>>();
+    public Set<String> quantVarsCache = new HashSet<>();
+    public Set<String> unquantVarsCache = new HashSet<>();
+    public Set<String> existVarsCache = new HashSet<>();
+    public Set<String> univVarsCache = new HashSet<>();
+    public Set<String> termCache = new HashSet<>();
+    public Set<String> predVarCache = null; // null if not set, empty if no pred vars
+    public Set<String> rowVarCache = null; // null if not set, empty if no row vars
     // includes the leading '?'.  Does not include row variables
-    public HashMap<String, HashSet<String>> varTypeCache = new HashMap<>();
+    public Map<String, Set<String>> varTypeCache = new HashMap<>();
     /**
      * A list of TPTP formulas (Strings) that together constitute the
      * translation of theFormula.  This member is a Set, because
      * predicate variable instantiation and row variable expansion
      * might cause theFormula to expand to several TPTP formulas.
      */
-    public HashSet<String> theTptpFormulas = new HashSet<>();
+    public Set<String> theTptpFormulas = new HashSet<>();
     //any extra sort signatures not computed in advance
-    public HashSet<String> tffSorts = new HashSet<>();
+    public Set<String> tffSorts = new HashSet<>();
     /**
      * The formula in textual forms.
      */
@@ -198,7 +198,7 @@ public class Formula implements Comparable, Serializable {
      * A list of clausal (resolution) forms generated from this
      * Formula.
      */
-    private ArrayList theClausalForm = null;
+    private List theClausalForm = null;
 
     /**
      * Constructor to build a formula from an existing formula.  This isn't
@@ -316,7 +316,7 @@ public class Formula implements Comparable, Serializable {
      * list 0f variable mapping sets the list of possible variable mapping sets which will make formulas equal
      */
     public static List<Set<VariableMapping>> mapFormulaVariables(Formula f1, Formula f2, KB kb,
-                                                                 HashMap<FormulaUtil.FormulaMatchMemoMapKey, List<Set<VariableMapping>>> memoMap) {
+                                                                 Map<FormulaUtil.FormulaMatchMemoMapKey, List<Set<VariableMapping>>> memoMap) {
 
         //reading the memo map first
         FormulaUtil.FormulaMatchMemoMapKey key = FormulaUtil.createFormulaMatchMemoMapKey(f1.theFormula, f2.theFormula);
@@ -327,7 +327,7 @@ public class Formula implements Comparable, Serializable {
         //not memo hit, carrying on the actual computations
         //null tests first
         if (f1 == null && f2 == null) {
-            ArrayList<Set<VariableMapping>> result = new ArrayList<Set<VariableMapping>>();
+            List<Set<VariableMapping>> result = new ArrayList<Set<VariableMapping>>();
             result.add(new HashSet<VariableMapping>());
             return result;
         } else if (f1 == null || f2 == null) {
@@ -337,14 +337,14 @@ public class Formula implements Comparable, Serializable {
         //checking formulas are simple tokens
         if (f1.atom() && f2.atom()) {
             if ((f1.isVariable() && f2.isVariable()) || (Formula.isSkolemTerm(f1.theFormula) && Formula.isSkolemTerm(f2.theFormula))) {
-                ArrayList<Set<VariableMapping>> result = new ArrayList<Set<VariableMapping>>();
+                List<Set<VariableMapping>> result = new ArrayList<Set<VariableMapping>>();
                 Set<VariableMapping> set = new HashSet<VariableMapping>();
                 set.add(new VariableMapping(f1.theFormula, f2.theFormula));
                 result.add(set);
                 return result;
             } else {
                 if (f1.theFormula.equals(f2.theFormula)) {
-                    ArrayList<Set<VariableMapping>> result = new ArrayList<Set<VariableMapping>>();
+                    List<Set<VariableMapping>> result = new ArrayList<Set<VariableMapping>>();
                     result.add(new HashSet<VariableMapping>());
                     return result;
                 } else {
@@ -369,8 +369,8 @@ public class Formula implements Comparable, Serializable {
         }
 
         //comparing arguments
-        ArrayList<String> args1 = f1.complexArgumentsToArrayListString(1);
-        ArrayList<String> args2 = f2.complexArgumentsToArrayListString(1);
+        List<String> args1 = f1.complexArgumentsToArrayListString(1);
+        List<String> args2 = f2.complexArgumentsToArrayListString(1);
         if (args1.size() != args2.size()) {
             return null;
         }
@@ -451,7 +451,7 @@ public class Formula implements Comparable, Serializable {
         f.read(formula);
 
         //normalizing parameters
-        ArrayList<String> args = f.complexArgumentsToArrayListString(1);
+        List<String> args = f.complexArgumentsToArrayListString(1);
         if (args == null || args.size() == 0) {
             return formula;
         }
@@ -975,9 +975,9 @@ public class Formula implements Comparable, Serializable {
      * resolution form of this Formula.  The list could be empty if
      * the clausal form has not yet been computed.
      *
-     * @return ArrayList
+     * @return List
      */
-    public ArrayList getTheClausalForm() {
+    public List getTheClausalForm() {
 
         if (theClausalForm == null) {
             if (!StringUtil.emptyString(theFormula))
@@ -1010,12 +1010,12 @@ public class Formula implements Comparable, Serializable {
      *
      * @return A List of Lists.
      */
-    public ArrayList getClauses() {
+    public List getClauses() {
 
-        ArrayList clausesWithVarMap = getTheClausalForm();
+        List clausesWithVarMap = getTheClausalForm();
         if ((clausesWithVarMap == null) || clausesWithVarMap.isEmpty())
             return null;
-        return (ArrayList) clausesWithVarMap.get(0);
+        return (List) clausesWithVarMap.get(0);
     }
 
     /**
@@ -1025,12 +1025,12 @@ public class Formula implements Comparable, Serializable {
      *
      * @return A Map of String (SUO-KIF variable) key-value pairs.
      */
-    public HashMap getVarMap() {
+    public Map getVarMap() {
 
-        ArrayList clausesWithVarMap = getTheClausalForm();
+        List clausesWithVarMap = getTheClausalForm();
         if ((clausesWithVarMap == null) || (clausesWithVarMap.size() < 3))
             return null;
-        return (HashMap) clausesWithVarMap.get(2);
+        return (Map) clausesWithVarMap.get(2);
     }
 
     /**
@@ -1038,7 +1038,7 @@ public class Formula implements Comparable, Serializable {
      *
      * @return A Map of String (SUO-KIF variable) key-value pairs.
      */
-    public HashMap<String, HashSet<String>> getVarTypes(KB kb) {
+    public Map<String, Set<String>> getVarTypes(KB kb) {
 
         if (varTypeCache != null)
             return varTypeCache;
@@ -1050,9 +1050,9 @@ public class Formula implements Comparable, Serializable {
     /**
      * Returns the type of a variable or null if it doesn't exist.
      */
-    public HashSet<String> getVarType(KB kb, String var) {
+    public Set<String> getVarType(KB kb, String var) {
 
-        HashMap<String, HashSet<String>> varTypes = getVarTypes(kb);
+        Map<String, Set<String>> varTypes = getVarTypes(kb);
         if (varTypes.containsKey(var))
             return varTypes.get(var);
         else
@@ -1066,7 +1066,7 @@ public class Formula implements Comparable, Serializable {
 
         theFormula = s;
         allVarsCache = new HashSet<>();
-        allVarsPairCache = new ArrayList<HashSet<String>>();
+        allVarsPairCache = new ArrayList<Set<String>>();
         quantVarsCache = new HashSet<>();
         unquantVarsCache = new HashSet<>();
         existVarsCache = new HashSet<>();
@@ -1629,12 +1629,12 @@ public class Formula implements Comparable, Serializable {
     }
 
     /**
-     * Parse a String into an ArrayList of Formulas. The String must be
+     * Parse a String into an List of Formulas. The String must be
      * a LISP-style list.
      */
-    private ArrayList<Formula> parseList(String s) {
+    private List<Formula> parseList(String s) {
 
-        ArrayList<Formula> result = new ArrayList<Formula>();
+        List<Formula> result = new ArrayList<Formula>();
         Formula f = new Formula();
         f.read("(" + s + ")");
         if (f.empty())
@@ -1661,8 +1661,8 @@ public class Formula implements Comparable, Serializable {
      */
     private boolean compareFormulaSets(String s) {
 
-        ArrayList<Formula> thisList = parseList(this.theFormula.substring(1, this.theFormula.length() - 1));
-        ArrayList<Formula> sList = parseList(s.substring(1, s.length() - 1));
+        List<Formula> thisList = parseList(this.theFormula.substring(1, this.theFormula.length() - 1));
+        List<Formula> sList = parseList(s.substring(1, s.length() - 1));
         if (thisList.size() != sList.size())
             return false;
         for (int i = 0; i < thisList.size(); i++) {
@@ -1830,7 +1830,7 @@ public class Formula implements Comparable, Serializable {
         //the normalizeParameterOrder method should be moved to Clausifier
         KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
 
-        HashMap<FormulaUtil.FormulaMatchMemoMapKey, List<Set<VariableMapping>>> memoMap =
+        Map<FormulaUtil.FormulaMatchMemoMapKey, List<Set<VariableMapping>>> memoMap =
                 new HashMap<FormulaUtil.FormulaMatchMemoMapKey, List<Set<VariableMapping>>>();
         List<Set<VariableMapping>> result = mapFormulaVariables(f1, f2, kb, memoMap);
 
@@ -1987,13 +1987,13 @@ public class Formula implements Comparable, Serializable {
      * argument is greater than the number of arguments, also return
      * null.
      */
-    public ArrayList<String> argumentsToArrayListString(int start) {
+    public List<String> argumentsToArrayListString(int start) {
 
         //if (start > 1)
         //    System.out.println("Error in Formula.argumentsToArrayList() start greater than 1 : " + start);
         if (debug) System.out.println("Formula.argumentsToArrayListString(): formula: " + getFormula());
         if (debug) System.out.println("Formula.argumentsToArrayListString(): stringArgs: " + stringArgs);
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         if (args != null && args.size() > 0) {
             if (start == 0)
                 return stringArgs;
@@ -2006,7 +2006,7 @@ public class Formula implements Comparable, Serializable {
             return result;
         }
         if (theFormula.indexOf('(', 1) != -1) {
-            ArrayList<String> erList = complexArgumentsToArrayListString(0);
+            List<String> erList = complexArgumentsToArrayListString(0);
             for (String s : erList) {
                 if (s.indexOf('(') != -1 && !StringUtil.quoted(s)) {
                     //String err = "Error in Formula.argumentsToArrayListString() complex formula: " + this.toString();
@@ -2037,9 +2037,9 @@ public class Formula implements Comparable, Serializable {
      * null.
      */
     @Deprecated
-    public ArrayList<Formula> argumentsToArrayList(int start) {
+    public List<Formula> argumentsToArrayList(int start) {
 
-        ArrayList<Formula> result = new ArrayList<>();
+        List<Formula> result = new ArrayList<>();
         System.out.println("Error not implemented Formula.argumentsToArrayList()");
         return result;
     }
@@ -2049,10 +2049,10 @@ public class Formula implements Comparable, Serializable {
      * at the given argument.  If the starting
      * argument is greater than the number of arguments, return null.
      */
-    public ArrayList<Formula> complexArgumentsToArrayList(int start) {
+    public List<Formula> complexArgumentsToArrayList(int start) {
 
         int index = start;
-        ArrayList<Formula> result = new ArrayList<>();
+        List<Formula> result = new ArrayList<>();
         Formula arg = getArgument(index);
         while (arg != null && !arg.empty() && index < 20) {
             result.add(arg);
@@ -2072,10 +2072,10 @@ public class Formula implements Comparable, Serializable {
      * at the given argument.  If the starting
      * argument is greater than the number of arguments, return null.
      */
-    public ArrayList<String> complexArgumentsToArrayListString(int start) {
+    public List<String> complexArgumentsToArrayListString(int start) {
 
         int index = start;
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         String arg = getStringArgument(index);
         while (!StringUtil.emptyString(arg)) {
             result.add(arg);
@@ -2088,26 +2088,26 @@ public class Formula implements Comparable, Serializable {
     }
 
     /**
-     * Collects all variables in this Formula.  Returns an ArrayList
-     * containing a pair of ArrayLists.  The first contains all
+     * Collects all variables in this Formula.  Returns an List
+     * containing a pair of Lists.  The first contains all
      * explicitly quantified variables in the Formula.  The second
      * contains all variables in Formula that are not within the scope
      * of some explicit quantifier.
      *
-     * @return An ArrayList containing two ArrayLists, each of which
+     * @return An List containing two Lists, each of which
      * could be empty
      */
-    public ArrayList<HashSet<String>> collectVariables() {
+    public List<Set<String>> collectVariables() {
 
         if (allVarsPairCache.size() > 0 && KBmanager.initialized)
             return allVarsPairCache;
-        ArrayList<HashSet<String>> ans = new ArrayList<HashSet<String>>();
+        List<Set<String>> ans = new ArrayList<Set<String>>();
         ans.add(new HashSet());
         ans.add(new HashSet());
         allVarsPairCache.add(new HashSet());
         allVarsPairCache.add(new HashSet());
-        HashSet<String> quantified = new HashSet<String>();
-        HashSet<String> unquantified = new HashSet<String>();
+        Set<String> quantified = new HashSet<String>();
+        Set<String> unquantified = new HashSet<String>();
         unquantified.addAll(collectAllVariables());
         quantified.addAll(collectQuantifiedVariables());
         unquantified.removeAll(quantified);
@@ -2121,8 +2121,8 @@ public class Formula implements Comparable, Serializable {
     /**
      * Collect quantified and unquantified variables recursively
      */
-    public void collectQuantifiedUnquantifiedVariablesRecurse(Formula f, HashMap<String, Boolean> varFlag,
-                                                              HashSet<String> unquantifiedVariables, HashSet<String> quantifiedVariables) {
+    public void collectQuantifiedUnquantifiedVariablesRecurse(Formula f, Map<String, Boolean> varFlag,
+                                                              Set<String> unquantifiedVariables, Set<String> quantifiedVariables) {
 
         if (f == null || StringUtil.emptyString(f.theFormula) || f.empty())
             return;
@@ -2184,8 +2184,8 @@ public class Formula implements Comparable, Serializable {
 
         if (allVarsCache.size() > 0)
             return allVarsCache;
-        //ArrayList<String> result = new ArrayList<String>();
-        HashSet<String> resultSet = new HashSet<String>();
+        //List<String> result = new ArrayList<String>();
+        Set<String> resultSet = new HashSet<String>();
         if (listLength() < 1)
             return resultSet;
         Formula fcar = new Formula();
@@ -2210,18 +2210,18 @@ public class Formula implements Comparable, Serializable {
     }
 
     /**
-     * Collects all variables in this Formula in lexical order.  Returns an ArrayList
+     * Collects all variables in this Formula in lexical order.  Returns an List
      * of String variable names (with initial '?'). Note that unlike
      * collectAllVariables() this is not cached and therefore potentially much
      * slower, although it does fill the cache of variable names so using
      * this method first, will make calls to collectAllVariables() fast
      * if that method is called on the same formula after this method is called.
      *
-     * @return An ArrayList of String variable names
+     * @return An List of String variable names
      */
-    public ArrayList<String> collectAllVariablesOrdered() {
+    public List<String> collectAllVariablesOrdered() {
 
-        ArrayList<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
         if (listLength() < 1)
             return result;
         Formula fcar = new Formula();
@@ -2245,17 +2245,17 @@ public class Formula implements Comparable, Serializable {
     }
 
     /**
-     * Collects all quantified variables in this Formula.  Returns an ArrayList
+     * Collects all quantified variables in this Formula.  Returns an List
      * of String variable names (with initial '?').  Note that
      * duplicates are not removed.
      *
-     * @return An ArrayList of String variable names
+     * @return An List of String variable names
      */
     public Set<String> collectQuantifiedVariables() {
 
         if (quantVarsCache.size() > 0)
             return quantVarsCache;
-        HashSet<String> resultSet = new HashSet<String>();
+        Set<String> resultSet = new HashSet<String>();
         if (empty())
             return resultSet;
         Formula fcar = new Formula();
@@ -2283,7 +2283,7 @@ public class Formula implements Comparable, Serializable {
     /**
      * Collect all the unquantified variables in a formula
      */
-    public HashSet<String> collectUnquantifiedVariables() {
+    public Set<String> collectUnquantifiedVariables() {
         return collectVariables().get(1);
     }
 
@@ -2292,7 +2292,7 @@ public class Formula implements Comparable, Serializable {
      */
     public Set<String> collectTerms() {
 
-        HashSet<String> resultSet = new HashSet<String>();
+        Set<String> resultSet = new HashSet<String>();
 
         if (this.theFormula == null || this.theFormula == "") {
             System.out.println("Error in Formula.collectTerms(): " +
@@ -2316,7 +2316,7 @@ public class Formula implements Comparable, Serializable {
                 f.read(f.cdr());
             }
         }
-        //ArrayList<String> result = new ArrayList(resultSet);
+        //List<String> result = new ArrayList(resultSet);
         termCache.addAll(resultSet);
         return resultSet;
     }
@@ -2361,9 +2361,9 @@ public class Formula implements Comparable, Serializable {
 
         String result = this.theFormula;
         String arg0 = this.car();
-        ArrayList<HashSet<String>> vpair = collectVariables();
-        HashSet<String> quantVariables = vpair.get(0);
-        HashSet<String> unquantVariables = vpair.get(1);
+        List<Set<String>> vpair = collectVariables();
+        Set<String> quantVariables = vpair.get(0);
+        Set<String> unquantVariables = vpair.get(1);
 
         if (!unquantVariables.isEmpty()) {   // Quantify all the unquantified variables
             StringBuilder sb = new StringBuilder();
@@ -2431,33 +2431,33 @@ public class Formula implements Comparable, Serializable {
     }
 
     /**
-     * Returns a HashMap in which the keys are the Relation constants
-     * gathered from this Formula, and the values are ArrayLists in
+     * Returns a Map in which the keys are the Relation constants
+     * gathered from this Formula, and the values are Lists in
      * which the ordinal positions 0 - n are occupied by the names of
      * the corresponding argument types.  n should never be greater
      * than the value of Formula.MAX_PREDICATE_ARITY.  For each
-     * Predicate key, the length of its ArrayList should be equal to
+     * Predicate key, the length of its List should be equal to
      * the predicate's valence + 1.  For each Function, the length of
-     * its ArrayList should be equal to its valence.  Only Functions
-     * will have argument types in the 0th position of the ArrayList,
+     * its List should be equal to its valence.  Only Functions
+     * will have argument types in the 0th position of the List,
      * since this position contains a function's range type.  This
-     * means that all Predicate ArrayLists will contain at least one
+     * means that all Predicate Lists will contain at least one
      * null value.  A null value will also be added to the nth
-     * position of an ArrayList when no value can be obtained for that
+     * position of an List when no value can be obtained for that
      * position.
      *
-     * @return A HashMap that maps every Relation occurring in this
-     * Formula to an ArrayList indicating the Relation's argument
-     * types.  Some HashMap keys may map to null values or empty
-     * ArrayLists, and most ArrayLists will contain some null values.
+     * @return A Map that maps every Relation occurring in this
+     * Formula to an List indicating the Relation's argument
+     * types.  Some Map keys may map to null values or empty
+     * Lists, and most Lists will contain some null values.
      */
-    public HashMap<String, ArrayList> gatherRelationsWithArgTypes(KB kb) {
+    public Map<String, List> gatherRelationsWithArgTypes(KB kb) {
 
-        HashMap<String, ArrayList> argtypemap = new HashMap<String, ArrayList>();
+        Map<String, List> argtypemap = new HashMap<String, List>();
         Set<String> relations = gatherRelationConstants();
         for (String r : relations) {
             int atlen = (Formula.MAX_PREDICATE_ARITY + 1);
-            ArrayList argtypes = new ArrayList();
+            List argtypes = new ArrayList();
             for (int i = 0; i < atlen; i++)
                 argtypes.add(kb.getArgType(r, i));
             argtypemap.put(r, argtypes);
@@ -2466,16 +2466,16 @@ public class Formula implements Comparable, Serializable {
     }
 
     /**
-     * Returns a HashSet of all atomic KIF Relation constants that
+     * Returns a Set of all atomic KIF Relation constants that
      * occur as Predicates or Functions (argument 0 terms) in this
      * Formula.
      *
-     * @return a HashSet containing the String constants that denote
-     * KIF Relations in this Formula, or an empty HashSet.
+     * @return a Set containing the String constants that denote
+     * KIF Relations in this Formula, or an empty Set.
      */
-    public HashSet<String> gatherRelationConstants() {
+    public Set<String> gatherRelationConstants() {
 
-        HashSet<String> relations = new HashSet<String>();
+        Set<String> relations = new HashSet<String>();
         Set<String> accumulator = new HashSet<String>();
         if (this.listP() && !this.empty())
             accumulator.add(this.theFormula);
@@ -2553,12 +2553,12 @@ public class Formula implements Comparable, Serializable {
         if (this.listP()) {
             String pred = this.car();
             if (debug) System.out.println("Formula.isHigherOrder(): pred: " + pred);
-            ArrayList sig = kb.kbCache.getSignature(pred);
+            List sig = kb.kbCache.getSignature(pred);
             if (sig != null && !Formula.isVariable(pred) && sig.contains("Formula"))
                 return true;
             boolean logop = isLogicalOperator(pred);
             if (debug) System.out.println("Formula.isHigherOrder(): logop: " + logop);
-            ArrayList<String> al = literalToArrayList();
+            List<String> al = literalToArrayList();
             for (String arg : al) {
                 Formula f = new Formula();
                 f.read(arg);
@@ -2784,20 +2784,20 @@ public class Formula implements Comparable, Serializable {
      */
     public boolean isBinary() {
 
-        ArrayList<String> l = argumentsToArrayListString(0);
+        List<String> l = argumentsToArrayListString(0);
         if (l == null)
             return false;
         return complexArgumentsToArrayList(0).size() == 3;
     }
 
     /**
-     * @return An ArrayList (ordered tuple) representation of the
+     * @return An List (ordered tuple) representation of the
      * Formula, in which each top-level element of the Formula is
      * either an atom (String) or another list.
      */
-    public ArrayList<String> literalToArrayList() {
+    public List<String> literalToArrayList() {
 
-        ArrayList<String> tuple = new ArrayList<String>();
+        List<String> tuple = new ArrayList<String>();
         Formula f = this;
         if (f.listP()) {
             while (!f.empty()) {
@@ -2860,7 +2860,7 @@ public class Formula implements Comparable, Serializable {
 
         Formula param = new Formula();
         param.read(this.cadr());
-        ArrayList<String> existVars = param.complexArgumentsToArrayListString(0);
+        List<String> existVars = param.complexArgumentsToArrayListString(0);
 
         if (existVars.size() != vars.size()) {
             throw new Exception("Wrong number of variables: " + vars + " to substitute in existentially quantified formula: " + this);

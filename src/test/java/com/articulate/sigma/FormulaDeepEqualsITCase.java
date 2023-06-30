@@ -2,8 +2,8 @@ package com.articulate.sigma;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -18,8 +18,9 @@ import static org.junit.Assert.assertTrue;
 @Import(KBmanagerTestConfiguration.class)
 public class FormulaDeepEqualsITCase {
 
+    @Autowired
+    FormulaDeepEqualsService deepEqualsService;
     private KB kb;
-
     @Autowired
     private KBmanager kbManager;
 
@@ -27,9 +28,6 @@ public class FormulaDeepEqualsITCase {
     void init() {
         kb = kbManager.getKB(kbManager.getPref("sumokbname"));
     }
-
-    @Autowired
-    FormulaDeepEqualsService deepEqualsService;
 
     @Test
     public void testDeepEquals() {
