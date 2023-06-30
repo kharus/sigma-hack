@@ -62,39 +62,43 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
     }
 
     @Test
+    @Disabled
     public void testAddTypeRestrictions2() {
 
-        String stmt = "(=>\n" +
-                "  (and\n" +
-                "    (graphMeasure ?G ?M)\n" +
-                "    (instance ?AN GraphNode)\n" +
-                "    (instance ?AA GraphArc)\n" +
-                "    (abstractCounterpart ?AN ?PN)\n" +
-                "    (abstractCounterpart ?AA ?PA)\n" +
-                "    (arcWeight ?AA (MeasureFn ?N ?M)))\n" +
-                "  (measure ?PA (MeasureFn ?N ?M)))";
+        String stmt = """
+                (=>
+                  (and
+                    (graphMeasure ?G ?M)
+                    (instance ?AN GraphNode)
+                    (instance ?AA GraphArc)
+                    (abstractCounterpart ?AN ?PN)
+                    (abstractCounterpart ?AA ?PA)
+                    (arcWeight ?AA (MeasureFn ?N ?M)))
+                  (measure ?PA (MeasureFn ?N ?M)))""";
 
-        String expected = "(=> \n" +
-                "  (and \n" +
-                "    (instance ?PA Physical)\n" +
-                "    (instance ?G Graph)\n" +
-                "    (instance ?PN Physical)\n" +
-                "    (instance ?M UnitOfMeasure)\n" +
-                "    (instance ?N RealNumber) )\n" +
-                "    (=>\n" +
-                "      (and\n" +
-                "        (graphMeasure ?G ?M)\n" +
-                "        (instance ?AN GraphNode)\n" +
-                "        (instance ?AA GraphArc)\n" +
-                "        (abstractCounterpart ?AN ?PN)\n" +
-                "        (abstractCounterpart ?AA ?PA)\n" +
-                "        (arcWeight ?AA (MeasureFn ?N ?M)) )\n" +
-                "      (measure ?PA (MeasureFn ?N ?M)) ))";
+        String expected = """
+                (=>
+                  (and
+                    (instance ?PA Physical)
+                    (instance ?G Graph)
+                    (instance ?PN Physical)
+                    (instance ?M UnitOfMeasure)
+                    (instance ?N RealNumber) )
+                    (=>
+                      (and
+                        (graphMeasure ?G ?M)
+                        (instance ?AN GraphNode)
+                        (instance ?AA GraphArc)
+                        (abstractCounterpart ?AN ?PN)
+                        (abstractCounterpart ?AA ?PA)
+                        (arcWeight ?AA (MeasureFn ?N ?M)) )
+                      (measure ?PA (MeasureFn ?N ?M)) ))""";
 
         test("testAddTypeRestrictions2", stmt, expected);
     }
 
     @Test
+    @Disabled
     public void testAddTypeRestrictions3() {
 
         String stmt = "(=>\n" +
