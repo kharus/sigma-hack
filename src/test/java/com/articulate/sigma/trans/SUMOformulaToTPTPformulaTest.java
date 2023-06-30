@@ -14,7 +14,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(MidLevel.class)
 public class SUMOformulaToTPTPformulaTest {
@@ -41,7 +41,7 @@ public class SUMOformulaToTPTPformulaTest {
             System.out.println(label + " : Success");
         else
             System.out.println(label + " : fail!");
-        assertEquals(expected, actualRes);
+        assertThat(actualRes).isEqualTo(expected);
     }
 
     @Test

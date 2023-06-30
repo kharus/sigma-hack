@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(MidLevel.class)
 public class CaseRoleITCase extends IntegrationTestBase {
@@ -47,6 +47,6 @@ public class CaseRoleITCase extends IntegrationTestBase {
                 actualInstancesForCaseRole.add(inst);
         }
 
-        assertEquals(expectedInstancesForCaseRole, actualInstancesForCaseRole);
+        assertThat(actualInstancesForCaseRole).isEqualTo(expectedInstancesForCaseRole);
     }
 }

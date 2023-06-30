@@ -9,8 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
@@ -51,11 +50,11 @@ public class FormulaDeepEqualsITCase {
                 "                (instrument ?W ?C)))))");
 
         //testing equal formulas
-        assertTrue(deepEqualsService.deepEquals(f1, f1));
+        assertThat(deepEqualsService.deepEquals(f1, f1)).isTrue();
 
         //testing formulas that differ in variable reference
         f2.read("(or (not (instance ?X6 WalkingCane)) (hasPurpose ?X4 (and (instance (SkFn2 ?X6) Walking) (instrument (SkFn2 ?X6) ?X6))))");
-        assertTrue(deepEqualsService.deepEquals(f1, f2));
+        assertThat(deepEqualsService.deepEquals(f1, f2)).isTrue();
 
         //testing unequal formulas
         f1 = new Formula();
@@ -76,7 +75,7 @@ public class FormulaDeepEqualsITCase {
                 "                (instance ?W Running)" +
                 "                (instrument ?W ?C)))))");
 
-        assertFalse(deepEqualsService.deepEquals(f1, f2));
+        assertThat(deepEqualsService.deepEquals(f1, f2)).isFalse();
 
         //testing commutative terms
         f1 = new Formula();
@@ -97,7 +96,7 @@ public class FormulaDeepEqualsITCase {
                 "                (instrument ?W ?C)" +
                 "                (instance ?W Walking)))))");
 
-        assertTrue(deepEqualsService.deepEquals(f1, f2));
+        assertThat(deepEqualsService.deepEquals(f1, f2)).isTrue();
 
     }
 
@@ -135,7 +134,7 @@ public class FormulaDeepEqualsITCase {
                 "    (instance ?Leigh-1 Human)\n" +
                 "    (instance ?baby-4 HumanBaby)) )");
         //testing equal formulas
-        assertTrue(deepEqualsService.deepEquals(f1, f2));
+        assertThat(deepEqualsService.deepEquals(f1, f2)).isTrue();
     }
 
     @Test
@@ -144,18 +143,18 @@ public class FormulaDeepEqualsITCase {
         Formula f = new Formula();
         f.read("(<=> (instance ?REL SymmetricRelation) (forall (?INST1 ?INST2) (=> (?REL ?INST1 ?INST2) (?REL ?INST2 ?INST1)))))");
 
-        assertFalse(deepEqualsService.deepEquals(f, null));
+        assertThat(deepEqualsService.deepEquals(f, null)).isFalse();
 
         Formula compared = new Formula();
-        assertFalse(deepEqualsService.deepEquals(f, compared));
+        assertThat(deepEqualsService.deepEquals(f, compared)).isFalse();
 
         compared.read("");
-        assertFalse(deepEqualsService.deepEquals(f, compared));
+        assertThat(deepEqualsService.deepEquals(f, compared)).isFalse();
 
         compared.read("()");
-        assertFalse(deepEqualsService.deepEquals(f, compared));
+        assertThat(deepEqualsService.deepEquals(f, compared)).isFalse();
 
-        assertTrue(deepEqualsService.deepEquals(f, f));
+        assertThat(deepEqualsService.deepEquals(f, f)).isTrue();
     }
 
     @Test
@@ -164,18 +163,18 @@ public class FormulaDeepEqualsITCase {
         Formula f = new Formula();
         f.read("(<=> (instance ?REL SymmetricRelation) (forall (?INST1 ?INST2) (=> (?REL ?INST1 ?INST2) (?REL ?INST2 ?INST1)))))");
 
-        assertFalse(deepEqualsService.logicallyEquals(f, null));
+        assertThat(deepEqualsService.logicallyEquals(f, null)).isFalse();
 
         Formula compared = new Formula();
-        assertFalse(deepEqualsService.logicallyEquals(f, compared));
+        assertThat(deepEqualsService.logicallyEquals(f, compared)).isFalse();
 
         compared.read("");
-        assertFalse(deepEqualsService.logicallyEquals(f, compared));
+        assertThat(deepEqualsService.logicallyEquals(f, compared)).isFalse();
 
         compared.read("()");
-        assertFalse(deepEqualsService.logicallyEquals(f, compared));
+        assertThat(deepEqualsService.logicallyEquals(f, compared)).isFalse();
 
-        assertTrue(deepEqualsService.logicallyEquals(f, f));
+        assertThat(deepEqualsService.logicallyEquals(f, f)).isTrue();
     }
 
     @Test
@@ -200,11 +199,11 @@ public class FormulaDeepEqualsITCase {
                 "                (instrument ?W ?C)))))");
 
         //testing equal formulas
-        assertTrue(f1.unifyWith(f2));
+        assertThat(f1.unifyWith(f2)).isTrue();
 
         //testing formulas that differ in variable reference
         f2.read("(or (not (instance ?X6 WalkingCane)) (hasPurpose ?X4 (and (instance (SkFn2 ?X6) Walking) (instrument (SkFn2 ?X6) ?X6))))");
-        assertFalse(f1.unifyWith(f2));
+        assertThat(f1.unifyWith(f2)).isFalse();
 
         //testing unequal formulas
         f1 = new Formula();
@@ -225,7 +224,7 @@ public class FormulaDeepEqualsITCase {
                 "                (instance ?W Running)" +
                 "                (instrument ?W ?C)))))");
 
-        assertFalse(f1.unifyWith(f2));
+        assertThat(f1.unifyWith(f2)).isFalse();
 
         //testing commutative terms
         f1 = new Formula();
@@ -246,7 +245,7 @@ public class FormulaDeepEqualsITCase {
                 "                (instrument ?W ?C)" +
                 "                (instance ?W Walking)))))");
 
-        assertTrue(f1.unifyWith(f2));
+        assertThat(f1.unifyWith(f2)).isTrue();
 
     }
 
@@ -267,7 +266,7 @@ public class FormulaDeepEqualsITCase {
 
         //System.out.println("testUnifyWithMiscPredicates(): deepEquals: " +  f1.deepEquals(f2));
         long start = System.nanoTime();
-        assertTrue(f1.unifyWith(f2));
+        assertThat(f1.unifyWith(f2)).isTrue();
         long stop = System.nanoTime();
         System.out.println("Execution time (in microseconds): " + ((stop - start) / 1000));
     }
@@ -292,8 +291,8 @@ public class FormulaDeepEqualsITCase {
         System.out.println("testLogicallyEqualsPerformance: expected: " + expected);
         System.out.println("testLogicallyEqualsPerformance: actual: " + actual);
         long start = System.nanoTime();
-//        assertTrue(expected.logicallyEquals(actual));
-        assertTrue(expected.unifyWith(actual));
+//        assertThat(expected.logicallyEquals(actual)).isTrue();
+        assertThat(expected.unifyWith(actual)).isTrue();
         long stop = System.nanoTime();
         System.out.println("Execution time (in microseconds): " + ((stop - start) / 1000));
     }

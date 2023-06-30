@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(MidLevel.class)
 public class SUMOtoTFAformITCase extends IntegrationTestBase {
@@ -86,7 +86,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testExtractUpdateSig(): Success!");
         else
             System.out.println("testExtractUpdateSig(): fail");
-        assertEquals(expectedRes, result);
+        assertThat(result).isEqualTo(expectedRes);
     }
 
     @Test
@@ -104,7 +104,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testExtractUpdateSig2(): Success!");
         else
             System.out.println("testExtractUpdateSig2(): fail");
-        assertEquals(expectedRes, result);
+        assertThat(result).isEqualTo(expectedRes);
     }
 
     @Test
@@ -121,7 +121,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testSorts(): Success!");
         else
             System.out.println("testSorts(): fail");
-        assertEquals(expectedRes, result);
+        assertThat(result).isEqualTo(expectedRes);
     }
 
     @Test
@@ -146,7 +146,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testParents(): Success!");
         else
             System.out.println("testParents(): fail");
-        assertEquals(expectedRes, result);
+        assertThat(result).isEqualTo(expectedRes);
     }
 
     @Test
@@ -164,7 +164,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("test1(): Success!");
         else
             System.out.println("test1(): fail");
-        assertEquals(expectedRes, result);
+        assertThat(result).isEqualTo(expectedRes);
     }
 
     @Test
@@ -182,7 +182,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("test1_5(): Success!");
         else
             System.out.println("test1_5(): fail");
-        assertEquals(expectedRes, result);
+        assertThat(result).isEqualTo(expectedRes);
     }
 
     @Test
@@ -207,7 +207,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("test2(): Success!");
         else
             System.out.println("test2(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -231,7 +231,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("test3(): Success!");
         else
             System.out.println("test3(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -254,7 +254,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("test4(): Success!");
         else
             System.out.println("test4(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -278,7 +278,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("test5(): Success!");
         else
             System.out.println("test5(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -305,7 +305,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testFloorFn(): Success!");
         else
             System.out.println("testFloorFn(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -334,7 +334,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testNumericSubclass(): Success!");
         else
             System.out.println("testNumericSubclass(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -355,7 +355,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testElimUnitaryLogops(): Success!");
         else
             System.out.println("testElimUnitaryLogops(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Ignore // can't process ListFn
@@ -393,7 +393,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testVariableArity(): Success!");
         else
             System.out.println("testVariableArity(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Ignore // can't process ListFn
@@ -435,7 +435,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testVariableArity2(): Success!");
         else
             System.out.println("testVariableArity2(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -499,7 +499,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testPredVarArity(): Success!");
         else
             System.out.println("testPredVarArity(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Ignore // can't process ListFn
@@ -541,7 +541,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testRemoveNumInst(): Success!");
         else
             System.out.println("testRemoveNumInst(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -576,7 +576,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testInstNum(): Success!");
         else
             System.out.println("testInstNum(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -598,7 +598,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testTypeConflict(): Success!");
         else
             System.out.println("testTypeConflict(): fail");
-        assertTrue(inc);
+        assertThat(inc).isTrue();
     }
 
     @Test
@@ -622,7 +622,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testTypeConflict2(): Success!");
         else
             System.out.println("testTypeConflict2(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     /**
@@ -645,7 +645,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testTypeConflict3(): Success!");
         else
             System.out.println("testTypeConflict3(): fail");
-        assertTrue(inc);
+        assertThat(inc).isTrue();
     }
 
     @Ignore
@@ -665,7 +665,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testTransNum(): Success!");
         else
             System.out.println("testTransNum(): fail");
-        assertTrue(StringUtil.emptyString(result));
+        assertThat(StringUtil.emptyString(result)).isTrue();
     }
 
     @Test
@@ -689,7 +689,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testPropertyFn(): Success!");
         else
             System.out.println("testPropertyFn(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -713,7 +713,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testMemberTypeCount(): Success!");
         else
             System.out.println("testMemberTypeCount(): fail");
-        assertEquals(expectedRes, actualRes.trim());
+        assertThat(actualRes.trim()).isEqualTo(expectedRes);
     }
 
     @Test
@@ -742,6 +742,6 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
             System.out.println("testTypeConflict4(): Success!");
         else
             System.out.println("testTypeConflict4(): fail");
-        assertTrue(actual);
+        assertThat(actual).isTrue();
     }
 }

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LanguageFormatterStackTest extends SigmaMockTestBase {
     private final KB kb = kbMock;
@@ -26,15 +26,16 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
         stack.insertFormulaArgs(formula);
 
         List<StackElement.FormulaArg> formulaArgs = stack.getCurrStackElement().formulaArgs;
-        assertEquals(2, formulaArgs.size());
+        assertThat(formulaArgs.size()).isEqualTo(2);
 
-        assertEquals(StackElement.StackState.QUANTIFIED_VARS, LanguageFormatterStack.getFormulaArg(formulaArgs, "(?D ?H)").state);
+        assertThat(LanguageFormatterStack.getFormulaArg(formulaArgs, "(?D ?H)").state).isEqualTo(StackElement.StackState.QUANTIFIED_VARS);
 
-        String expectedKey = "(and\n" +
-                "                   (instance ?D Driving)\n" +
-                "                   (instance ?H Human)\n" +
-                "                   (agent ?D ?H))";
-        assertEquals(StackElement.StackState.UNPROCESSED, LanguageFormatterStack.getFormulaArg(formulaArgs, expectedKey).state);
+        String expectedKey = """
+                (and
+                                   (instance ?D Driving)
+                                   (instance ?H Human)
+                                   (agent ?D ?H))""";
+        assertThat(LanguageFormatterStack.getFormulaArg(formulaArgs, expectedKey).state).isEqualTo(StackElement.StackState.UNPROCESSED);
     }
 
 
@@ -51,16 +52,16 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
         stack.insertFormulaArgs(formula);
 
         List<StackElement.FormulaArg> formulaArgs = stack.getCurrStackElement().formulaArgs;
-        assertEquals(3, formulaArgs.size());
+        assertThat(formulaArgs.size()).isEqualTo(3);
 
         String expectedKey = "(instance ?D Driving)";
-        assertEquals(StackElement.StackState.UNPROCESSED, LanguageFormatterStack.getFormulaArg(formulaArgs, expectedKey).state);
+        assertThat(LanguageFormatterStack.getFormulaArg(formulaArgs, expectedKey).state).isEqualTo(StackElement.StackState.UNPROCESSED);
 
         expectedKey = "(instance ?H Human)";
-        assertEquals(StackElement.StackState.UNPROCESSED, LanguageFormatterStack.getFormulaArg(formulaArgs, expectedKey).state);
+        assertThat(LanguageFormatterStack.getFormulaArg(formulaArgs, expectedKey).state).isEqualTo(StackElement.StackState.UNPROCESSED);
 
         expectedKey = "(agent ?D ?H)";
-        assertEquals(StackElement.StackState.UNPROCESSED, LanguageFormatterStack.getFormulaArg(formulaArgs, expectedKey).state);
+        assertThat(LanguageFormatterStack.getFormulaArg(formulaArgs, expectedKey).state).isEqualTo(StackElement.StackState.UNPROCESSED);
     }
 
 
@@ -85,7 +86,7 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
         stack.insertFormulaArgs(formula2);
 
         // Verify state of bottom element's arg.
-        assertEquals(StackElement.StackState.UNPROCESSED, LanguageFormatterStack.getFormulaArg(stack.getPrevStackElement().formulaArgs, string2).state);
+        assertThat(LanguageFormatterStack.getFormulaArg(stack.getPrevStackElement().formulaArgs, string2).state).isEqualTo(StackElement.StackState.UNPROCESSED);
 
         // Set top element's translated state, creating the illegal state.
         stack.getCurrStackElement().setTranslation("", true);
@@ -115,7 +116,7 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
         stack.insertFormulaArgs(formula2);
 
         // Verify state of bottom element's arg.
-        assertEquals(StackElement.StackState.UNPROCESSED, LanguageFormatterStack.getFormulaArg(stack.getPrevStackElement().formulaArgs, string2).state);
+        assertThat(LanguageFormatterStack.getFormulaArg(stack.getPrevStackElement().formulaArgs, string2).state).isEqualTo(StackElement.StackState.UNPROCESSED);
 
         // Set top element's translated state.
         stack.getCurrStackElement().setTranslation("a human drives", true);
@@ -125,8 +126,8 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
 
         // Verify the state has changed.
         StackElement.FormulaArg formulaArg = LanguageFormatterStack.getFormulaArg(stack.getPrevStackElement().formulaArgs, string2);
-        assertEquals("a human drives", formulaArg.translation);
-        assertEquals(StackElement.StackState.TRANSLATED, formulaArg.state);
+        assertThat(formulaArg.translation).isEqualTo("a human drives");
+        assertThat(formulaArg.state).isEqualTo(StackElement.StackState.TRANSLATED);
     }
 
     @Test
@@ -150,7 +151,7 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
         stack.insertFormulaArgs(formula2);
 
         // Verify state of bottom element's arg.
-        assertEquals(StackElement.StackState.UNPROCESSED, LanguageFormatterStack.getFormulaArg(stack.getPrevStackElement().formulaArgs, string2).state);
+        assertThat(LanguageFormatterStack.getFormulaArg(stack.getPrevStackElement().formulaArgs, string2).state).isEqualTo(StackElement.StackState.UNPROCESSED);
 
         // Do not modify top element's translated state.
         //stack.getCurrStackElement().setTranslation(true);
@@ -159,7 +160,7 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
         stack.pushCurrTranslatedStateDown(string2);
 
         // Verify the state has changed.
-        assertEquals(StackElement.StackState.UNPROCESSED, LanguageFormatterStack.getFormulaArg(stack.getPrevStackElement().formulaArgs, string2).state);
+        assertThat(LanguageFormatterStack.getFormulaArg(stack.getPrevStackElement().formulaArgs, string2).state).isEqualTo(StackElement.StackState.UNPROCESSED);
     }
 
 
@@ -184,8 +185,8 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
         stack.insertFormulaArgs(formula2);
 
         // Nothing marked as processed except for var quantifier in first element at bottom of stack.
-        assertFalse(LanguageFormatterStack.areFormulaArgsProcessed(stack.getCurrStackElement()));
-        assertFalse(LanguageFormatterStack.areFormulaArgsProcessed(stack.getPrevStackElement()));
+        assertThat(LanguageFormatterStack.areFormulaArgsProcessed(stack.getCurrStackElement())).isFalse();
+        assertThat(LanguageFormatterStack.areFormulaArgsProcessed(stack.getPrevStackElement())).isFalse();
 
 
         // Set top element's translated state.
@@ -196,8 +197,8 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
 
         // Pushing down from curr to bottom of stack has set the state of the second element at bottom of stack.
         // Now both are in a "processed" state.
-        assertFalse(LanguageFormatterStack.areFormulaArgsProcessed(stack.getCurrStackElement()));
-        assertTrue(LanguageFormatterStack.areFormulaArgsProcessed(stack.getPrevStackElement()));
+        assertThat(LanguageFormatterStack.areFormulaArgsProcessed(stack.getCurrStackElement())).isFalse();
+        assertThat(LanguageFormatterStack.areFormulaArgsProcessed(stack.getPrevStackElement())).isTrue();
     }
 
 
@@ -228,8 +229,8 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
         stack.insertFormulaArgs(formula3);
 
         // Nothing marked as processed except for var quantifier in first element at bottom of stack.
-        assertEquals(0, stack.getCurrStackElement().getSumoProcessMap().size());
-        assertEquals(0, stack.getPrevStackElement().getSumoProcessMap().size());
+        assertThat(stack.getCurrStackElement().getSumoProcessMap().size()).isEqualTo(0);
+        assertThat(stack.getPrevStackElement().getSumoProcessMap().size()).isEqualTo(0);
 
         // Set the Sumo process maps for the top two elements.
         SumoProcessCollector processCollector = new SumoProcessCollector(kb, "experiencer", "Seeing", "John-1");
@@ -242,23 +243,23 @@ public class LanguageFormatterStackTest extends SigmaMockTestBase {
         stack.getCurrStackElement().setProcessPolarity("?event", VerbProperties.Polarity.NEGATIVE);
 
         // Now the stack elements should be populated.
-        assertEquals(1, stack.getCurrStackElement().getSumoProcessMap().size());
-        assertEquals(1, stack.getCurrStackElement().getSumoProcessMap().get("?event").getRolesAndEntities().size());
-        assertEquals(VerbProperties.Polarity.NEGATIVE, stack.getCurrStackElement().getSumoProcessMap().get("?event").getPolarity());
-        assertEquals(1, stack.getPrevStackElement().getSumoProcessMap().size());
-        assertEquals(1, stack.getPrevStackElement().getSumoProcessMap().get("?event").getRolesAndEntities().size());
-        assertEquals(VerbProperties.Polarity.AFFIRMATIVE, stack.getPrevStackElement().getSumoProcessMap().get("?event").getPolarity());
+        assertThat(stack.getCurrStackElement().getSumoProcessMap().size()).isEqualTo(1);
+        assertThat(stack.getCurrStackElement().getSumoProcessMap().get("?event").getRolesAndEntities().size()).isEqualTo(1);
+        assertThat(stack.getCurrStackElement().getSumoProcessMap().get("?event").getPolarity()).isEqualTo(VerbProperties.Polarity.NEGATIVE);
+        assertThat(stack.getPrevStackElement().getSumoProcessMap().size()).isEqualTo(1);
+        assertThat(stack.getPrevStackElement().getSumoProcessMap().get("?event").getRolesAndEntities().size()).isEqualTo(1);
+        assertThat(stack.getPrevStackElement().getSumoProcessMap().get("?event").getPolarity()).isEqualTo(VerbProperties.Polarity.AFFIRMATIVE);
 
         // Call pushCurrSumoProcessDown().
         stack.pushCurrSumoProcessDown();
 
         // Now the second-from-the-top should contain the information in the topmost element. The topmost won't have changed.
-        assertEquals(1, stack.getCurrStackElement().getSumoProcessMap().size());
-        assertEquals(1, stack.getCurrStackElement().getSumoProcessMap().get("?event").getRolesAndEntities().size());
-        assertEquals(VerbProperties.Polarity.NEGATIVE, stack.getCurrStackElement().getSumoProcessMap().get("?event").getPolarity());
-        assertEquals(1, stack.getPrevStackElement().getSumoProcessMap().size());
-        assertEquals(2, stack.getPrevStackElement().getSumoProcessMap().get("?event").getRolesAndEntities().size());
-        assertEquals(VerbProperties.Polarity.NEGATIVE, stack.getPrevStackElement().getSumoProcessMap().get("?event").getPolarity());
+        assertThat(stack.getCurrStackElement().getSumoProcessMap().size()).isEqualTo(1);
+        assertThat(stack.getCurrStackElement().getSumoProcessMap().get("?event").getRolesAndEntities().size()).isEqualTo(1);
+        assertThat(stack.getCurrStackElement().getSumoProcessMap().get("?event").getPolarity()).isEqualTo(VerbProperties.Polarity.NEGATIVE);
+        assertThat(stack.getPrevStackElement().getSumoProcessMap().size()).isEqualTo(1);
+        assertThat(stack.getPrevStackElement().getSumoProcessMap().get("?event").getRolesAndEntities().size()).isEqualTo(2);
+        assertThat(stack.getPrevStackElement().getSumoProcessMap().get("?event").getPolarity()).isEqualTo(VerbProperties.Polarity.NEGATIVE);
     }
 
 }

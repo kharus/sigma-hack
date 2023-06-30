@@ -7,7 +7,7 @@ import org.junit.experimental.categories.Category;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class FormulaITCase {
@@ -17,17 +17,17 @@ public class FormulaITCase {
 
         String stmt = "(domain date 1 Physical)";
         Formula f = new Formula(stmt);
-        assertEquals(stmt, f.getFormula());
+        assertThat(f.getFormula()).isEqualTo(stmt);
 
         stmt = "(=> (and (instance ?REL ObjectAttitude) (?REL ?AGENT ?THING)) (instance ?THING Physical))";
         f = new Formula();
         f.read(stmt);
-        assertEquals(stmt, f.getFormula());
+        assertThat(f.getFormula()).isEqualTo(stmt);
 
         stmt = "aabbc";
         f = new Formula();
         f.read(stmt);
-        assertEquals(stmt, f.getFormula());
+        assertThat(f.getFormula()).isEqualTo(stmt);
 
     }
 
@@ -38,24 +38,24 @@ public class FormulaITCase {
         Formula f = new Formula(stmt);
 
         String car = f.car();
-        assertEquals("exists", car);
+        assertThat(car).isEqualTo("exists");
         Formula cdrF = f.cdrAsFormula();
-        assertEquals("((?M))", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("((?M))");
 
         car = cdrF.car();
-        assertEquals("(?M)", car);
+        assertThat(car).isEqualTo("(?M)");
         cdrF = cdrF.cdrAsFormula();
-        assertEquals("()", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("()");
 
         car = cdrF.car();
-        assertEquals("", car);
+        assertThat(car).isEqualTo("");
         cdrF = cdrF.cdrAsFormula();
-        assertEquals("()", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("()");
 
         car = cdrF.car();
-        assertEquals("", car);
+        assertThat(car).isEqualTo("");
         cdrF = cdrF.cdrAsFormula();
-        assertEquals("()", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("()");
     }
 
     @Test
@@ -66,60 +66,60 @@ public class FormulaITCase {
         Formula f = new Formula(stmt);
 
         String car = f.car();
-        assertEquals("time", car);
+        assertThat(car).isEqualTo("time");
         Formula cdrF = f.cdrAsFormula();
-        assertEquals("(JohnsBirth (MonthFn ?M (YearFn 2000)))", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("(JohnsBirth (MonthFn ?M (YearFn 2000)))");
 
         car = cdrF.car();
-        assertEquals("JohnsBirth", car);
+        assertThat(car).isEqualTo("JohnsBirth");
         cdrF = cdrF.cdrAsFormula();
-        assertEquals("((MonthFn ?M (YearFn 2000)))", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("((MonthFn ?M (YearFn 2000)))");
 
         String functionStr = cdrF.car();
-        assertEquals("(MonthFn ?M (YearFn 2000))", functionStr);
+        assertThat(functionStr).isEqualTo("(MonthFn ?M (YearFn 2000))");
         cdrF = cdrF.cdrAsFormula();
-        assertEquals("()", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("()");
 
         System.out.println("testRecursiveCdrComplex(): functionStr: " + functionStr);
-        //assertTrue(Formula.isFunctionalTerm(functionStr));
+        //assertThat(Formula.isFunctionalTerm(functionStr)).isTrue();
 
         f = new Formula();
         f.read(functionStr);
 
         car = f.car();
-        assertEquals("MonthFn", car);
+        assertThat(car).isEqualTo("MonthFn");
         cdrF = f.cdrAsFormula();
-        assertEquals("(?M (YearFn 2000))", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("(?M (YearFn 2000))");
 
         car = cdrF.car();
-        assertEquals("?M", car);
+        assertThat(car).isEqualTo("?M");
         cdrF = cdrF.cdrAsFormula();
-        assertEquals("((YearFn 2000))", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("((YearFn 2000))");
 
         functionStr = cdrF.car();
-        assertEquals("(YearFn 2000)", functionStr);
+        assertThat(functionStr).isEqualTo("(YearFn 2000)");
         cdrF = cdrF.cdrAsFormula();
-        assertEquals("()", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("()");
 
-        //assertTrue(Formula.isFunctionalTerm(functionStr));
+        //assertThat(Formula.isFunctionalTerm(functionStr)).isTrue();
 
         f = new Formula();
         f.read(functionStr);
 
         car = f.car();
-        assertEquals("YearFn", car);
+        assertThat(car).isEqualTo("YearFn");
         cdrF = f.cdrAsFormula();
-        assertEquals("(2000)", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("(2000)");
 
         car = cdrF.car();
-        assertEquals("2000", car);
+        assertThat(car).isEqualTo("2000");
         cdrF = cdrF.cdrAsFormula();
-        assertEquals("()", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("()");
 
         car = cdrF.car();
-        assertEquals("", car);
+        assertThat(car).isEqualTo("");
         cdrF = cdrF.cdrAsFormula();
-        assertEquals("()", cdrF.getFormula());
+        assertThat(cdrF.getFormula()).isEqualTo("()");
     }
 
     /*
@@ -128,7 +128,7 @@ public class FormulaITCase {
         Formula f1 = new Formula();
         f1.read("(part (MarialogicalSumFn ?X) ?Y)");
 
-        assertTrue(f1.isSimpleClause());
+        assertThat(f1.isSimpleClause()).isTrue();
     }
 
     @Test
@@ -136,7 +136,7 @@ public class FormulaITCase {
         Formula f1 = new Formula();
         f1.read("(instance ?X Human)");
 
-        assertTrue(f1.isSimpleClause());
+        assertThat(f1.isSimpleClause()).isTrue();
     }
 
     @Test
@@ -144,7 +144,7 @@ public class FormulaITCase {
         Formula f1 = new Formula();
         f1.read("(member (SkFn 1 ?X3) ?X3)");
 
-        assertTrue(f1.isSimpleClause());
+        assertThat(f1.isSimpleClause()).isTrue();
     }
 
     @Test
@@ -152,7 +152,7 @@ public class FormulaITCase {
         Formula f1 = new Formula();
         f1.read("(member ?VAR1 Org1-1)");
 
-        assertTrue(f1.isSimpleClause());
+        assertThat(f1.isSimpleClause()).isTrue();
     }
 
     @Test
@@ -161,7 +161,7 @@ public class FormulaITCase {
         f1.read("(capability (KappaFn ?HEAR (and (instance ?HEAR Hearing) (agent ?HEAR ?HUMAN) " +
                 "(destination ?HEAR ?HUMAN) (origin ?HEAR ?OBJ))) agent ?HUMAN)");
 
-        assertTrue(f1.isSimpleClause());
+        assertThat(f1.isSimpleClause()).isTrue();
     }
 
     @Test
@@ -169,7 +169,7 @@ public class FormulaITCase {
         Formula f1 = new Formula();
         f1.read("(=> (attribute ?Agent Investor) (exists (?Investing) (agent ?Investing ?Agent)))");
 
-        assertFalse(f1.isSimpleClause());
+        assertThat(f1.isSimpleClause()).isFalse();
     }
 
     @Test
@@ -177,7 +177,7 @@ public class FormulaITCase {
         Formula f1 = new Formula();
         f1.read("(not (instance ?X Human))");
 
-        assertFalse(f1.isSimpleClause());
+        assertThat(f1.isSimpleClause()).isFalse();
     }
 */
 
@@ -209,7 +209,7 @@ public class FormulaITCase {
         System.out.println("testCollectQuantifiedVariables(): expected: " + expected);
         Set<String> result = f1.collectQuantifiedVariables();
         System.out.println("testCollectQuantifiedVariables(): result: " + result);
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -238,7 +238,7 @@ public class FormulaITCase {
                 "      (greaterThan ?C " +
                 "        (MultiplicationFn ?W 0.025)))) Obligation)) ");
 
-        assertEquals(expected, f1.collectAllVariables());
+        assertThat(f1.collectAllVariables()).isEqualTo(expected);
     }
 
     @Test
@@ -266,7 +266,7 @@ public class FormulaITCase {
                 "      (greaterThan ?C " +
                 "        (MultiplicationFn ?W 0.025)))) Obligation)) ");
 
-        assertEquals(expected, f1.collectUnquantifiedVariables());
+        assertThat(f1.collectUnquantifiedVariables()).isEqualTo(expected);
     }
 
     @Test
@@ -298,7 +298,7 @@ public class FormulaITCase {
                 "      (greaterThan ?C " +
                 "        (MultiplicationFn ?W 0.025)))) Obligation)) ");
 
-        assertEquals(expected, f1.collectTerms());
+        assertThat(f1.collectTerms()).isEqualTo(expected);
     }
 
     @Test
@@ -311,7 +311,7 @@ public class FormulaITCase {
         f1.read("(<=> (instance ?REL TransitiveRelation) (forall (?INST1 ?INST2 ?INST3) " +
                 " (=> (and (?REL ?INST1 ?INST2) (?REL ?INST2 ?INST3)) (?REL ?INST1 ?INST3))))");
 
-        assertEquals(expected, f1.replaceVar("?REL", "part"));
+        assertThat(f1.replaceVar("?REL", "part")).isEqualTo(expected);
     }
 
     @Test
@@ -322,7 +322,7 @@ public class FormulaITCase {
         Formula f1 = new Formula();
         f1.read("(during ?Y (WhenFn ?H))");
 
-        assertEquals(expected, f1.complexArgumentsToArrayListString(1));
+        assertThat(f1.complexArgumentsToArrayListString(1)).isEqualTo(expected);
     }
 
     @Test
@@ -333,7 +333,7 @@ public class FormulaITCase {
         Formula f1 = new Formula();
         f1.read("(during ?Y (WhenFn ?H))");
 
-        assertEquals(expected, f1.complexArgumentsToArrayListString(2));
+        assertThat(f1.complexArgumentsToArrayListString(2)).isEqualTo(expected);
     }
 
     @Test
@@ -344,7 +344,7 @@ public class FormulaITCase {
         Formula f1 = new Formula();
         f1.read("(instance ?DRIVE Driving)");
 
-        assertEquals(expected, f1.complexArgumentsToArrayListString(1));
+        assertThat(f1.complexArgumentsToArrayListString(1)).isEqualTo(expected);
     }
 
     @Test
@@ -355,7 +355,7 @@ public class FormulaITCase {
         Formula f1 = new Formula();
         f1.read("(instance ?DRIVE Driving)");
 
-        assertEquals(expected, f1.complexArgumentsToArrayListString(2));
+        assertThat(f1.complexArgumentsToArrayListString(2)).isEqualTo(expected);
     }
 
     @Test
@@ -366,7 +366,7 @@ public class FormulaITCase {
         Formula f1 = new Formula();
         f1.read("(instance (GovernmentFn ?Place) StateGovernment))");
 
-        assertEquals(expected, f1.complexArgumentsToArrayListString(1));
+        assertThat(f1.complexArgumentsToArrayListString(1)).isEqualTo(expected);
     }
 
     @Test
@@ -377,7 +377,7 @@ public class FormulaITCase {
         Formula f1 = new Formula();
         f1.read("(instance (GovernmentFn ?Place) StateGovernment))");
 
-        assertEquals(expected, f1.complexArgumentsToArrayListString(2));
+        assertThat(f1.complexArgumentsToArrayListString(2)).isEqualTo(expected);
     }
 
     @Test
@@ -394,7 +394,7 @@ public class FormulaITCase {
                 " (holdsDuring ?R2 (measure ?C (RotationFn ?N1 MinuteDuration))) (holdsDuring ?R3 (measure ?D (RotationFn ?N2 MinuteDuration))) (holdsDuring ?R4" +
                 " (measure ?D (RotationFn ?N3 MinuteDuration))) (not (equal ?N2 ?N3))))))");
 
-        assertEquals(expected, f1.validArgs());
+        assertThat(f1.validArgs()).isEqualTo(expected);
     }
 
     @Test
@@ -410,7 +410,7 @@ public class FormulaITCase {
 
         List<String> actual = f.argumentsToArrayListString(0);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -426,7 +426,7 @@ public class FormulaITCase {
 
         List<String> actual = f.argumentsToArrayListString(1);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -441,7 +441,7 @@ public class FormulaITCase {
 
         List<String> actual = f.argumentsToArrayListString(0);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -454,7 +454,7 @@ public class FormulaITCase {
         List<String> actual = f.argumentsToArrayListString(0);
         List<String> expected = Lists.newArrayList("instance", "?D", "Driving");
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -475,7 +475,7 @@ public class FormulaITCase {
                 "                   (agent ?D ?H))";
         List<String> expected = Lists.newArrayList("exists", "(?D ?H)", temp);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -496,7 +496,7 @@ public class FormulaITCase {
                 "                   (agent ?D ?H))";
         List<String> expected = Lists.newArrayList("(?D ?H)", temp);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -517,7 +517,7 @@ public class FormulaITCase {
                 "                   (agent ?D ?H))";
         List<String> expected = Lists.newArrayList(temp);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -533,7 +533,7 @@ public class FormulaITCase {
 
         List<String> actual = f.complexArgumentsToArrayListString(3);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -549,7 +549,7 @@ public class FormulaITCase {
         List<String> actual = f.complexArgumentsToArrayListString(0);
         List<String> expected = Lists.newArrayList("and", "(instance ?D Driving)", "(instance ?H Human)", "(agent ?D ?H)");
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -565,7 +565,7 @@ public class FormulaITCase {
         List<String> actual = f.complexArgumentsToArrayListString(1);
         List<String> expected = Lists.newArrayList("(instance ?D Driving)", "(instance ?H Human)", "(agent ?D ?H)");
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -581,7 +581,7 @@ public class FormulaITCase {
         List<String> actual = f.complexArgumentsToArrayListString(2);
         List<String> expected = Lists.newArrayList("(instance ?H Human)", "(agent ?D ?H)");
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -597,7 +597,7 @@ public class FormulaITCase {
         List<String> actual = f.complexArgumentsToArrayListString(3);
         List<String> expected = Lists.newArrayList("(agent ?D ?H)");
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -612,7 +612,7 @@ public class FormulaITCase {
 
         List<String> actual = f.complexArgumentsToArrayListString(4);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -625,7 +625,7 @@ public class FormulaITCase {
         List<String> actual = f.complexArgumentsToArrayListString(1);
         System.out.println("testComplexArgumentsToArrayListAbsolute(): actual: " + actual);
         System.out.println("testComplexArgumentsToArrayListAbsolute(): expected: " + expected);
-        assertEquals(expected, actual.toString());
+        assertThat(actual.toString()).isEqualTo(expected);
     }
 
     @Test
@@ -637,7 +637,7 @@ public class FormulaITCase {
         List<Formula> l = f.complexArgumentsToArrayList(1);
         System.out.println("testComplexArgumentsToArrayList2(): actual: " + l.size());
         System.out.println("testComplexArgumentsToArrayList2(): expected: " + 3);
-        assertEquals(l.size(), 3);
+        assertThat(3).isEqualTo(l.size());
     }
 
     @Test
@@ -658,8 +658,8 @@ public class FormulaITCase {
         String e = "?Y";
         System.out.println("testGetArg(): a: " + a.getFormula());
         System.out.println("testGetArg(): e: " + e);
-        assertEquals(expected, actual);
-        assertEquals(e, a.toString());
+        assertThat(actual).isEqualTo(expected);
+        assertThat(a.toString()).isEqualTo(e);
     }
 
     @Test
@@ -671,7 +671,7 @@ public class FormulaITCase {
         Formula actual = f1.getArgument(3);
         System.out.println("testGetArg(): actual: " + actual);
         System.out.println("testGetArg(): expected: " + expected);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -688,12 +688,12 @@ public class FormulaITCase {
         }
         System.out.println("testGetArgString(): actual: " + actual);
         System.out.println("testGetArgString(): expected: " + expected);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
         String a = f1.getStringArgument(1); // test caching of argument list
         String e = "?Y";
         System.out.println("testGetArgString(): a: " + a);
         System.out.println("testGetArgString(): e: " + e);
-        assertEquals(e, a);
+        assertThat(a).isEqualTo(e);
     }
 
     @Test
@@ -705,7 +705,7 @@ public class FormulaITCase {
         String actual = f1.getStringArgument(3);
         System.out.println("testGetArg(): actual: " + actual);
         System.out.println("testGetArg(): expected: " + expected);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -726,7 +726,7 @@ public class FormulaITCase {
         List<String> vars = new ArrayList<>();
         vars.add("Drosophila");
         Formula actual = f.replaceQuantifierVars(Formula.EQUANT, vars);
-        assertTrue(actual.logicallyEquals(exp));
+        assertThat(actual.logicallyEquals(exp)).isTrue();
 
         stmt = "(exists (?JOHN ?KICKS ?CART)\n" +
                 "  (and\n" +
@@ -751,7 +751,7 @@ public class FormulaITCase {
         vars.add("Kick_2");
         vars.add("Cart_1");
         actual = f.replaceQuantifierVars(Formula.EQUANT, vars);
-        assertTrue(actual.logicallyEquals(exp));
+        assertThat(actual.logicallyEquals(exp)).isTrue();
 
         stmt = "(exists (?ENTITY)\n" +
                 "         (and \n" +
@@ -770,7 +770,7 @@ public class FormulaITCase {
         vars = new ArrayList<>();
         vars.add("Ent_1");
         actual = f.replaceQuantifierVars(Formula.EQUANT, vars);
-        assertTrue(actual.logicallyEquals(exp));
+        assertThat(actual.logicallyEquals(exp)).isTrue();
 
         stmt = "(exists (?ENTITY)\n" +
                 "         (and \n" +
@@ -789,6 +789,8 @@ public class FormulaITCase {
         vars = new ArrayList<>();
         vars.add("Ent_1");
         actual = f.replaceQuantifierVars(Formula.EQUANT, vars);
-        assertFalse(actual.toString() + "\n should not be logically equal to \n" + expected, actual.logicallyEquals(exp));
+        assertThat(actual.logicallyEquals(exp))
+                .as(actual + "\n should not be logically equal to \n" + expected)
+                .isFalse();
     }
 }

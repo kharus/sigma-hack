@@ -9,7 +9,7 @@ import org.junit.experimental.categories.Category;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class TPTP3ProofProcITCase extends UnitTestBase {
@@ -31,7 +31,7 @@ public class TPTP3ProofProcITCase extends UnitTestBase {
             System.out.println(label + " : Success");
         else
             System.out.println(label + " : fail!");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class TPTP3ProofProcITCase extends UnitTestBase {
         System.out.println();
         String result = tpp.parseProofStep(ps5).toString();
         System.out.println(result);
-        assertTrue(result.contains("inhabits"));
+        assertThat(result.contains("inhabits")).isTrue();
     }
 
     @Test
@@ -150,7 +150,7 @@ public class TPTP3ProofProcITCase extends UnitTestBase {
             System.out.println(label + " : Success");
         else
             System.out.println(label + " : fail!");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
 
         line = "% SZS answers Tuple [[s__A,s__B]|_] for temp-comb";
         tpp = new TPTP3ProofProcessor();
@@ -163,7 +163,7 @@ public class TPTP3ProofProcITCase extends UnitTestBase {
             System.out.println(label + " : Success");
         else
             System.out.println(label + " : fail!");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -178,7 +178,7 @@ public class TPTP3ProofProcITCase extends UnitTestBase {
         Formula ans = tpp.extractAnswerClause(new Formula(input));
         if (ans == null)
             System.out.println("Fail ans == null");
-        assertNotNull(ans);
+        assertThat(ans).isNotNull();
         String actual = ans.toString();
         String expected = "(ans0 ?X0)";
         System.out.println("Actual: " + actual);
@@ -187,7 +187,7 @@ public class TPTP3ProofProcITCase extends UnitTestBase {
             System.out.println(label + " : Success");
         else
             System.out.println(label + " : fail!");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -226,6 +226,6 @@ public class TPTP3ProofProcITCase extends UnitTestBase {
             System.out.println(label + " : Success");
         else
             System.out.println(label + " : fail!");
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }

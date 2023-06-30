@@ -9,7 +9,7 @@ import org.junit.experimental.categories.Category;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * FormulaPreprocessor tests not focused on findExplicitTypes( ), but requiring that the KBs be loaded.
@@ -40,7 +40,7 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
         expected.put("?Y", set1);
         expected.put("?X", Sets.newHashSet("Object+"));
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
 
         Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, SigmaTestBase.kb);
 
-        assertEquals(expected, actualMap);
+        assertThat(actualMap).isEqualTo(expected);
     }
 
     @Ignore
@@ -88,8 +88,8 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
                 "(greaterThan ?PARTPROB ?NOTPARTPROB))) ";
         expected.read(expectedString);
         Formula actual = fp.addTypeRestrictions(f, SigmaTestBase.kb);
-        //assertTrue("expected: " + expected.toString() + ", but was: " + actual.toString(), expected.equals(actual));
-        assertEquals(expected, actual);
+        //assertThat("expected: " + expected.toString() + ", but was: " + actual.toString(), expected.equals(actual)).isTrue();
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -112,7 +112,7 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
         Set<String> set2 = Sets.newHashSet("LegalAction");
         expected.put("?P", set2);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
 }

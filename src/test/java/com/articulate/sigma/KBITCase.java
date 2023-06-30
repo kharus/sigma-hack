@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class KBITCase extends UnitTestBase {
@@ -18,14 +18,14 @@ public class KBITCase extends UnitTestBase {
 
         String t = SigmaTestBase.kb.mostSpecificTerm(Arrays.asList("Entity", "RealNumber"));
         System.out.println("testMostSpecificTerm(): " + t);
-        assertEquals("RealNumber", t);
+        assertThat(t).isEqualTo("RealNumber");
     }
 
     @Test
     public void testAskWithTwoRestrictionsDirect1() {
 
         List<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Driving", 2, "Guiding");
-        assertNotEquals(0, actual.size());
+        assertThat(actual.size()).isNotEqualTo(0);
     }
 
     /**
@@ -37,7 +37,7 @@ public class KBITCase extends UnitTestBase {
         List<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Driving", 2, "Guiding");
         if (actual != null && actual.size() != 0)
             System.out.println("KBtest.testAskWithTwoRestrictionsIndirect1(): " + actual);
-        assertEquals(1, actual.size());
+        assertThat(actual.size()).isEqualTo(1);
     }
 
     /**
@@ -47,12 +47,12 @@ public class KBITCase extends UnitTestBase {
     public void testAskWithTwoRestrictionsIndirect2() {
 
         List<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Boy", 2, "Entity");
-        assertEquals(0, actual.size());
+        assertThat(actual.size()).isEqualTo(0);
     }
 
     @Test
     public void testIsSubclass2() {
-        assertTrue(SigmaTestBase.kb.isSubclass("Driving", "Process"));
+        assertThat(SigmaTestBase.kb.isSubclass("Driving", "Process")).isTrue();
     }
 
     @Test
@@ -61,7 +61,7 @@ public class KBITCase extends UnitTestBase {
         Set<String> inputSet = Sets.newHashSet();
         Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
         Set<String> expectedSet = Sets.newHashSet();
-        assertEquals(expectedSet, actualSet);
+        assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class KBITCase extends UnitTestBase {
         Set<String> inputSet = Sets.newHashSet("nonsenseWord");
         Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
         Set<String> expectedSet = Sets.newHashSet("nonsenseWord");
-        assertEquals(expectedSet, actualSet);
+        assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class KBITCase extends UnitTestBase {
         Set<String> inputSet = Sets.newHashSet("Entity", "Entity");
         Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
         Set<String> expectedSet = Sets.newHashSet("Entity");
-        assertEquals(expectedSet, actualSet);
+        assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class KBITCase extends UnitTestBase {
         Set<String> inputSet = Sets.newHashSet("Process", "Process");
         Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
         Set<String> expectedSet = Sets.newHashSet("Process");
-        assertEquals(expectedSet, actualSet);
+        assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class KBITCase extends UnitTestBase {
         Set<String> inputSet = Sets.newHashSet("Physical", "Physical");
         Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
         Set<String> expectedSet = Sets.newHashSet("Physical");
-        assertEquals(expectedSet, actualSet);
+        assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
@@ -106,7 +106,7 @@ public class KBITCase extends UnitTestBase {
         Set<String> inputSet = Sets.newHashSet("Man", "Human");
         Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
         Set<String> expectedSet = Sets.newHashSet("Man");
-        assertEquals(expectedSet, actualSet);
+        assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class KBITCase extends UnitTestBase {
         Set<String> inputSet = Sets.newHashSet("Human", "Man");
         Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
         Set<String> expectedSet = Sets.newHashSet("Man");
-        assertEquals(expectedSet, actualSet);
+        assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
@@ -124,7 +124,7 @@ public class KBITCase extends UnitTestBase {
         Set<String> inputSet = Sets.newHashSet("Man", "Woman");
         Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
         Set<String> expectedSet = Sets.newHashSet("Man", "Woman");
-        assertEquals(expectedSet, actualSet);
+        assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
@@ -133,7 +133,7 @@ public class KBITCase extends UnitTestBase {
         Set<String> inputSet = Sets.newHashSet("Object", "CorpuscularObject", "Woman", "Human", "Man");
         Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
         Set<String> expectedSet = Sets.newHashSet("Man", "Woman");
-        assertEquals(expectedSet, actualSet);
+        assertThat(actualSet).isEqualTo(expectedSet);
     }
 
 }

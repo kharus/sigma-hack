@@ -6,7 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by qingqingcai on 3/9/15.
@@ -39,7 +39,7 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
             System.out.println(label + " : Success");
         else
             System.out.println(label + " : fail!");
-        assertEquals(expectedTPTP, actualTPTP);
+        assertThat(actualTPTP).isEqualTo(expectedTPTP);
     }
 
     @Test

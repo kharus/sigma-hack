@@ -10,7 +10,7 @@ import org.junit.experimental.categories.Category;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(TopOnly.class)
 public class NLGUtilsITCase extends UnitTestBase {
@@ -42,7 +42,7 @@ public class NLGUtilsITCase extends UnitTestBase {
         String input = "";
         String actual = NLGUtils.formatList(input, "EnglishLanguage");
         String expected = "";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -56,7 +56,7 @@ public class NLGUtilsITCase extends UnitTestBase {
         String input = "?A";
         String actual = NLGUtils.formatList(input, "EnglishLanguage");
         String expected = "?A";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class NLGUtilsITCase extends UnitTestBase {
         String input = "?A ?B";
         String actual = NLGUtils.formatList(input, "EnglishLanguage");
         String expected = "?A and ?B";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -72,7 +72,7 @@ public class NLGUtilsITCase extends UnitTestBase {
         String input = "?A and ?B";
         String actual = NLGUtils.formatList(input, "EnglishLanguage");
         String expected = "?A and ?B";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class NLGUtilsITCase extends UnitTestBase {
         String input = "?A ?B ?C";
         String actual = NLGUtils.formatList(input, "EnglishLanguage");
         String expected = "?A, ?B and ?C";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class NLGUtilsITCase extends UnitTestBase {
         String input = "?A ?B and ?C";
         String actual = NLGUtils.formatList(input, "EnglishLanguage");
         String expected = "?A, ?B and ?C";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class NLGUtilsITCase extends UnitTestBase {
         String input = "?A ?B ?C";
         String actual = NLGUtils.formatList(input, "fr");
         String expected = "?A, ?B et ?C";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -104,7 +104,7 @@ public class NLGUtilsITCase extends UnitTestBase {
         String input = "?A ?B et ?C";
         String actual = NLGUtils.formatList(input, "fr");
         String expected = "?A, ?B et ?C";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -120,7 +120,7 @@ public class NLGUtilsITCase extends UnitTestBase {
 
         List<String> expected = Lists.newArrayList("?he", "?event");
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -132,7 +132,7 @@ public class NLGUtilsITCase extends UnitTestBase {
 
         List<String> expected = Lists.newArrayList("?event", "?he");
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -144,7 +144,7 @@ public class NLGUtilsITCase extends UnitTestBase {
 
         List<String> expected = Lists.newArrayList("?H");
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -158,7 +158,7 @@ public class NLGUtilsITCase extends UnitTestBase {
 
         List<String> expected = Lists.newArrayList("?he", "?event");
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -168,7 +168,7 @@ public class NLGUtilsITCase extends UnitTestBase {
 
         List<String> expected = Lists.newArrayList("?event", "?he");
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -178,7 +178,7 @@ public class NLGUtilsITCase extends UnitTestBase {
 
         List<String> expected = Lists.newArrayList("?H");
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
 }

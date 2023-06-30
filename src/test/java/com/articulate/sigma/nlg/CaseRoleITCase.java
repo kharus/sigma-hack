@@ -5,7 +5,7 @@ import com.articulate.sigma.UnitTestBase;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 // Tests requiring that KBs be loaded.
 @Category(TopOnly.class)
@@ -14,46 +14,46 @@ public class CaseRoleITCase extends UnitTestBase {
     @Test
     public void testCommonCaseRoles() {
         CaseRole caseRole = CaseRole.toCaseRole("agent", kb);
-        assertEquals(CaseRole.AGENT, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.AGENT);
 
         caseRole = CaseRole.toCaseRole("attends", kb);
-        assertEquals(CaseRole.ATTENDS, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.ATTENDS);
 
         caseRole = CaseRole.toCaseRole("destination", kb);
-        assertEquals(CaseRole.DESTINATION, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.DESTINATION);
 
         caseRole = CaseRole.toCaseRole("direction", kb);
-        assertEquals(CaseRole.DIRECTION, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.DIRECTION);
 
         caseRole = CaseRole.toCaseRole("eventPartlyLocated", kb);
-        assertEquals(CaseRole.EVENTPARTLYLOCATED, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.EVENTPARTLYLOCATED);
 
         caseRole = CaseRole.toCaseRole("experiencer", kb);
-        assertEquals(CaseRole.EXPERIENCER, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.EXPERIENCER);
 
         caseRole = CaseRole.toCaseRole("instrument", kb);
-        assertEquals(CaseRole.INSTRUMENT, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.INSTRUMENT);
 
         caseRole = CaseRole.toCaseRole("moves", kb);
-        assertEquals(CaseRole.MOVES, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.MOVES);
 
         caseRole = CaseRole.toCaseRole("origin", kb);
-        assertEquals(CaseRole.ORIGIN, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.ORIGIN);
 
         caseRole = CaseRole.toCaseRole("patient", kb);
-        assertEquals(CaseRole.PATIENT, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.PATIENT);
 
         caseRole = CaseRole.toCaseRole("path", kb);
-        assertEquals(CaseRole.PATH, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.PATH);
 
         caseRole = CaseRole.toCaseRole("resource", kb);
-        assertEquals(CaseRole.RESOURCE, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.RESOURCE);
 
         caseRole = CaseRole.toCaseRole("other", kb);
-        assertEquals(CaseRole.OTHER, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.OTHER);
 
         caseRole = CaseRole.toCaseRole("blahblah", kb);
-        assertEquals(CaseRole.OTHER, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.OTHER);
     }
 
     /**
@@ -62,17 +62,17 @@ public class CaseRoleITCase extends UnitTestBase {
     @Test
     public void testSubrelationCaseRoles() {
         CaseRole caseRole = CaseRole.toCaseRole("result", kb);
-        assertEquals(CaseRole.PATIENT, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.PATIENT);
 
         caseRole = CaseRole.toCaseRole("eventLocated", kb);
-        assertEquals(CaseRole.EVENTPARTLYLOCATED, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.EVENTPARTLYLOCATED);
 
         caseRole = CaseRole.toCaseRole("changesLocation", kb);
-        assertEquals(CaseRole.MOVES, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.MOVES);
 
         // partly located is not a case role
         caseRole = CaseRole.toCaseRole("partlyLocated", kb);
-        assertEquals(CaseRole.OTHER, caseRole);
+        assertThat(caseRole).isEqualTo(CaseRole.OTHER);
     }
 
 }

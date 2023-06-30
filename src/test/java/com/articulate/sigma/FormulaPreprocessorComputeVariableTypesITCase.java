@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * FormulaPreprocessor tests focused on computeVariableTypes().
@@ -47,7 +47,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
 
         Map<String, Set<String>> expected = new HashMap<>();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?H", set);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -85,7 +85,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         Set<String> set2 = Sets.newHashSet("Process");
         expected.put("?D", set2);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     /**
@@ -109,7 +109,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         Set<String> set2 = Sets.newHashSet("Process");
         expected.put("?D", set2);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -134,7 +134,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         expected.put("?D", Sets.newHashSet("Process"));
         expected.put("?Car", Sets.newHashSet("Entity"));
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -159,7 +159,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         Set<String> setElement = Sets.newHashSet("Entity");
         expected.put("?ELEMENT", setElement);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -175,7 +175,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         Set<String> set1 = Sets.newHashSet("Class");
         expected.put("?Cougar", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -193,7 +193,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         Set<String> set1 = Sets.newHashSet("Month+");
         expected.put("?M", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -212,7 +212,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         Set<String> set1 = Sets.newHashSet("GeopoliticalArea");
         expected.put("?Place", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -230,7 +230,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         Set<String> set1 = Sets.newHashSet("Class");
         expected.put("?Cougar", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -245,7 +245,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
         FormulaPreprocessor fp = new FormulaPreprocessor();
         Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
-        assertEquals(expected, actualMap);
+        assertThat(actualMap).isEqualTo(expected);
 
     }
 
@@ -265,7 +265,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
 
         Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
-        assertEquals(expected, actualMap);
+        assertThat(actualMap).isEqualTo(expected);
     }
 
     @Test
@@ -285,7 +285,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
 
         Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
-        assertEquals(expected, actualMap);
+        assertThat(actualMap).isEqualTo(expected);
     }
 
     @Test
@@ -311,7 +311,7 @@ public class FormulaPreprocessorComputeVariableTypesITCase {
 
         Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
-        assertEquals(expected, actualMap);
+        assertThat(actualMap).isEqualTo(expected);
     }
 
 }

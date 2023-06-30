@@ -9,7 +9,7 @@ import org.junit.experimental.categories.Category;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Category(MidLevel.class)
 public class PredVarInstIntegrationITCase extends IntegrationTestBase {
@@ -1407,7 +1407,7 @@ public class PredVarInstIntegrationITCase extends IntegrationTestBase {
                 "      (identicalListItems ?INST1 ?INST3))))";
         expected.add(new Formula(formulaStr));
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -1421,6 +1421,6 @@ public class PredVarInstIntegrationITCase extends IntegrationTestBase {
         System.out.println("testFindPredVarTypesStmt3(): actual: " + actual);
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?ROLE", Sets.newHashSet("CaseRole"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }

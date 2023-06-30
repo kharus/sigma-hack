@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.TreeMap;
 
-import static org.junit.Assert.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class VerbNetITCase extends IntegrationTestBase {
 
@@ -20,7 +20,7 @@ public class VerbNetITCase extends IntegrationTestBase {
         System.out.println("testTerm(): words: " + tm);
         String verbs = VerbNet.formatVerbs(tm);
         System.out.println("testTerm(): verbs: " + verbs);
-        assertFalse(StringUtil.emptyString(verbs));
+        assertThat(StringUtil.emptyString(verbs)).isFalse();
     }
 
     @Test
@@ -30,6 +30,6 @@ public class VerbNetITCase extends IntegrationTestBase {
         System.out.println("testWordList(): senses: " + tm);
         String verbs = VerbNet.formatVerbsList(tm);
         System.out.println("testWordList(): verbs: " + verbs);
-        assertFalse(StringUtil.emptyString(verbs));
+        assertThat(StringUtil.emptyString(verbs)).isFalse();
     }
 }
