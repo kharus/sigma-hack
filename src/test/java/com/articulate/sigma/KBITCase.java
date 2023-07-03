@@ -1,22 +1,37 @@
 package com.articulate.sigma;
 
-import com.google.common.collect.Sets;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
-public class KBITCase extends UnitTestBase {
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class KBITCase {
 
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
     @Test
     public void testMostSpecificTerm() {
 
-        String t = SigmaTestBase.kb.mostSpecificTerm(Arrays.asList("Entity", "RealNumber"));
+        String t = kb.mostSpecificTerm(List.of("Entity", "RealNumber"));
         System.out.println("testMostSpecificTerm(): " + t);
         assertThat(t).isEqualTo("RealNumber");
     }
@@ -24,7 +39,7 @@ public class KBITCase extends UnitTestBase {
     @Test
     public void testAskWithTwoRestrictionsDirect1() {
 
-        List<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Driving", 2, "Guiding");
+        List<Formula> actual = kb.askWithTwoRestrictions(0, "subclass", 1, "Driving", 2, "Guiding");
         assertThat(actual.size()).isNotEqualTo(0);
     }
 
@@ -34,9 +49,8 @@ public class KBITCase extends UnitTestBase {
     @Test
     public void testAskWithTwoRestrictionsIndirect1() {
 
-        List<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Driving", 2, "Guiding");
-        if (actual != null && actual.size() != 0)
-            System.out.println("KBtest.testAskWithTwoRestrictionsIndirect1(): " + actual);
+        List<Formula> actual = kb.askWithTwoRestrictions(0, "subclass", 1, "Driving", 2, "Guiding");
+
         assertThat(actual.size()).isEqualTo(1);
     }
 
@@ -46,93 +60,91 @@ public class KBITCase extends UnitTestBase {
     @Test
     public void testAskWithTwoRestrictionsIndirect2() {
 
-        List<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Boy", 2, "Entity");
+        List<Formula> actual = kb.askWithTwoRestrictions(0, "subclass", 1, "Boy", 2, "Entity");
         assertThat(actual.size()).isEqualTo(0);
     }
 
     @Test
     public void testIsSubclass2() {
-        assertThat(SigmaTestBase.kb.isSubclass("Driving", "Process")).isTrue();
+        assertThat(kb.isSubclass("Driving", "Process")).isTrue();
     }
 
     @Test
     public void testRemoveSuperClassesEmptyInput() {
 
-        Set<String> inputSet = Sets.newHashSet();
-        Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
-        Set<String> expectedSet = Sets.newHashSet();
-        assertThat(actualSet).isEqualTo(expectedSet);
+        Set<String> actualSet = kb.removeSuperClasses(Set.of());
+        assertThat(actualSet).isEqualTo(Set.of());
     }
 
     @Test
     public void testRemoveSuperClassesOneElementInput() {
 
-        Set<String> inputSet = Sets.newHashSet("nonsenseWord");
-        Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
-        Set<String> expectedSet = Sets.newHashSet("nonsenseWord");
+        Set<String> inputSet = Set.of("nonsenseWord");
+        Set<String> actualSet = kb.removeSuperClasses(inputSet);
+        Set<String> expectedSet = Set.of("nonsenseWord");
         assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
     public void testRemoveSuperClassesTwoElementIdenticalInput1() {
 
-        Set<String> inputSet = Sets.newHashSet("Entity", "Entity");
-        Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
-        Set<String> expectedSet = Sets.newHashSet("Entity");
+        Set<String> inputSet = Set.of("Entity");
+        Set<String> actualSet = kb.removeSuperClasses(inputSet);
+        Set<String> expectedSet = Set.of("Entity");
         assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
     public void testRemoveSuperClassesTwoElementIdenticalInput2() {
 
-        Set<String> inputSet = Sets.newHashSet("Process", "Process");
-        Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
-        Set<String> expectedSet = Sets.newHashSet("Process");
+        Set<String> inputSet = Set.of("Process");
+        Set<String> actualSet = kb.removeSuperClasses(inputSet);
+        Set<String> expectedSet = Set.of("Process");
         assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
     public void testRemoveSuperClassesTwoElementIdenticalInput3() {
 
-        Set<String> inputSet = Sets.newHashSet("Physical", "Physical");
-        Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
-        Set<String> expectedSet = Sets.newHashSet("Physical");
+        Set<String> inputSet = Set.of("Physical");
+        Set<String> actualSet = kb.removeSuperClasses(inputSet);
+        Set<String> expectedSet = Set.of("Physical");
         assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
     public void testRemoveSuperClassesTwoElementInput() {
 
-        Set<String> inputSet = Sets.newHashSet("Man", "Human");
-        Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
-        Set<String> expectedSet = Sets.newHashSet("Man");
+        Set<String> inputSet = Set.of("Man", "Human");
+        Set<String> actualSet = kb.removeSuperClasses(inputSet);
+        Set<String> expectedSet = Set.of("Man");
         assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
     public void testRemoveSuperClassesTwoElementInputReverse() {
 
-        Set<String> inputSet = Sets.newHashSet("Human", "Man");
-        Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
-        Set<String> expectedSet = Sets.newHashSet("Man");
+        Set<String> inputSet = Set.of("Human", "Man");
+        Set<String> actualSet = kb.removeSuperClasses(inputSet);
+        Set<String> expectedSet = Set.of("Man");
         assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
     public void testRemoveSuperClassesTwoElementInputNoSubclass() {
 
-        Set<String> inputSet = Sets.newHashSet("Man", "Woman");
-        Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
-        Set<String> expectedSet = Sets.newHashSet("Man", "Woman");
+        Set<String> inputSet = Set.of("Man", "Woman");
+        Set<String> actualSet = kb.removeSuperClasses(inputSet);
+        Set<String> expectedSet = Set.of("Man", "Woman");
         assertThat(actualSet).isEqualTo(expectedSet);
     }
 
     @Test
     public void testRemoveSuperClassesFiveElementInput() {
 
-        Set<String> inputSet = Sets.newHashSet("Object", "CorpuscularObject", "Woman", "Human", "Man");
-        Set<String> actualSet = SigmaTestBase.kb.removeSuperClasses(inputSet);
-        Set<String> expectedSet = Sets.newHashSet("Man", "Woman");
+        Set<String> inputSet = Set.of("Object", "CorpuscularObject", "Woman", "Human", "Man");
+        Set<String> actualSet = kb.removeSuperClasses(inputSet);
+        Set<String> expectedSet = Set.of("Man", "Woman");
         assertThat(actualSet).isEqualTo(expectedSet);
     }
 
