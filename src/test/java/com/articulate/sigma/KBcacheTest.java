@@ -30,8 +30,7 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Tag("com.articulate.sigma.TopOnly")
-public class KBcacheUnitITCase {
+public class KBcacheTest {
 
     public static KB kb = new KB("TestKB");
 
