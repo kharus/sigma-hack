@@ -1,12 +1,10 @@
 package com.articulate.sigma;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Tag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Tag("com.articulate.sigma.TopOnly")
-public class FormulaUtilITCase {
+public class FormulaUtilTest {
 
     @Test
     public void testToProlog() {
