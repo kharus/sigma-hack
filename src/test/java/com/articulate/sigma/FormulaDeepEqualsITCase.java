@@ -199,11 +199,11 @@ public class FormulaDeepEqualsITCase {
                 "                (instrument ?W ?C)))))");
 
         //testing equal formulas
-        assertThat(f1.unifyWith(f2)).isTrue();
+        assertThat(deepEqualsService.unifyWith(f1,f2)).isTrue();
 
         //testing formulas that differ in variable reference
         f2.read("(or (not (instance ?X6 WalkingCane)) (hasPurpose ?X4 (and (instance (SkFn2 ?X6) Walking) (instrument (SkFn2 ?X6) ?X6))))");
-        assertThat(f1.unifyWith(f2)).isFalse();
+        assertThat(deepEqualsService.unifyWith(f1,f2)).isFalse();
 
         //testing unequal formulas
         f1 = new Formula();
@@ -224,7 +224,7 @@ public class FormulaDeepEqualsITCase {
                 "                (instance ?W Running)" +
                 "                (instrument ?W ?C)))))");
 
-        assertThat(f1.unifyWith(f2)).isFalse();
+        assertThat(deepEqualsService.unifyWith(f1,f2)).isFalse();
 
         //testing commutative terms
         f1 = new Formula();
@@ -245,7 +245,7 @@ public class FormulaDeepEqualsITCase {
                 "                (instrument ?W ?C)" +
                 "                (instance ?W Walking)))))");
 
-        assertThat(f1.unifyWith(f2)).isTrue();
+        assertThat(deepEqualsService.unifyWith(f1,f2)).isTrue();
 
     }
 
@@ -264,11 +264,7 @@ public class FormulaDeepEqualsITCase {
         Formula f2 = new Formula();
         f2.read(s2);
 
-        //System.out.println("testUnifyWithMiscPredicates(): deepEquals: " +  f1.deepEquals(f2));
-        long start = System.nanoTime();
-        assertThat(f1.unifyWith(f2)).isTrue();
-        long stop = System.nanoTime();
-        System.out.println("Execution time (in microseconds): " + ((stop - start) / 1000));
+        assertThat(deepEqualsService.unifyWith(f1,f2)).isTrue();
     }
 
     @Test
@@ -288,12 +284,35 @@ public class FormulaDeepEqualsITCase {
         expected.read(expectedString);
 
         Formula actual = fp.addTypeRestrictions(f, kb);
-        System.out.println("testLogicallyEqualsPerformance: expected: " + expected);
-        System.out.println("testLogicallyEqualsPerformance: actual: " + actual);
-        long start = System.nanoTime();
-//        assertThat(expected.logicallyEquals(actual)).isTrue();
-        assertThat(expected.unifyWith(actual)).isTrue();
-        long stop = System.nanoTime();
-        System.out.println("Execution time (in microseconds): " + ((stop - start) / 1000));
+
+        assertThat(deepEqualsService.unifyWith(expected,actual)).isTrue();
+    }
+
+    @Test
+    public void testUnification() {
+        String f1Text = """
+                (=>
+                    (instance ?C WalkingCane)
+                    (hasPurpose ?C
+                       (exists (?W)
+                          (and
+                                (instance ?W Walking)
+                                (instrument ?W ?C)))))""";
+
+        String f2Text = """
+                (=>
+                    (instance ?C WalkingCane)
+                      (hasPurpose ?C
+                      (exists (?W)
+                        (and
+                        (instance ?W Walking)
+                        (instrument ?W ?C)))))""";
+
+        Formula f1 = new Formula();
+        f1.read(f1Text);
+        Formula f2 = new Formula();
+        f2.read(f2Text);
+
+        assertThat(deepEqualsService.unifyWith(f1,f2)).isTrue();
     }
 }

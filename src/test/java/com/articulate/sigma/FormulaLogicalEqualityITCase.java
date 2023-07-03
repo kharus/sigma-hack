@@ -41,7 +41,7 @@ public class FormulaLogicalEqualityITCase {
     @ArgumentsSource(JsonArgumentsProvider.class)
     public void test(Formula f1, Formula f2, boolean areEqual) {
 
-        boolean comparisonResult = f1.logicallyEquals(f2);
+        boolean comparisonResult = deepEqualsService.logicallyEquals(f1, f2);
 
         if (areEqual) {
             assertThat(comparisonResult)
