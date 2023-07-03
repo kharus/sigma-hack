@@ -20,24 +20,28 @@
  */
 package com.articulate.sigma.wordnet;
 
-import com.articulate.sigma.TopOnly;
-import com.articulate.sigma.UnitTestBase;
+import com.articulate.sigma.KBmanagerTestConfiguration;
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
-public class MultiWordsITCase extends UnitTestBase {
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class MultiWordsITCase {
 
     @Test
     public void testVerbMultiWordKickBucket1() {
 
         List<String> input = Lists.newArrayList("kick", "the", "bucket");
-        List<String> synset = Lists.newArrayList();
         String w = WordNet.wn.getMultiWords().findMultiWord(input);
         String s = WordNetUtilities.wordsToSynsets(w).iterator().next();
         assertThat(s).isEqualTo("200358431");

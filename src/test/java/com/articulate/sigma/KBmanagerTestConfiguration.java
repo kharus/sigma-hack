@@ -9,7 +9,7 @@ import java.io.*;
 import static com.articulate.sigma.SigmaTestBase.checkConfiguration;
 
 @TestConfiguration
-class KBmanagerTestConfiguration {
+public class KBmanagerTestConfiguration {
     @Bean
     @Profile("TopOnly")
     public KBmanager kbManager() {
