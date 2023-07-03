@@ -22,9 +22,12 @@
  */
 package com.articulate.sigma;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Handle operations on an individual formula.  This includes
@@ -33,7 +36,7 @@ import java.util.Objects;
  */
 @Component
 public class FormulaDeepEqualsService {
-
+    private final Log log = LogFactory.getLog(getClass());
     private final KBmanager kBManager;
 
     public FormulaDeepEqualsService(KBmanager kBManager) {
@@ -45,6 +48,7 @@ public class FormulaDeepEqualsService {
      */
     public boolean deepEquals(Formula f1, Formula f2) {
 
+        log.debug("this: " + f1 + " arg: " + f2);
         //null and simple string equality tests
         if (f2 == null) {
             return false;
@@ -57,7 +61,7 @@ public class FormulaDeepEqualsService {
 
         Formula cf1 = Clausifier.clausify(f1);
         Formula cf2 = Clausifier.clausify(f2);
-
+        log.debug("clausified : " + cf1 + "  " + cf2);
 
         //the normalizeParameterOrder method should be moved to Clausifier
         KB kb = kBManager.getKB(kBManager.getPref("sumokbname"));
@@ -68,9 +72,18 @@ public class FormulaDeepEqualsService {
         Formula nf1 = new Formula(normalized1);
         Formula nf2 = new Formula(normalized2);
 
+        log.debug("normalized : \n"
+                + nf1.format("", "  ", "\n") + "\n arg: \n"
+                + nf2.format("", "  ", "\n"));
 
-        normalized1 = Clausifier.normalizeVariables(nf1.getFormula(), true); // renumber skolems too
+
+        normalized1 = Clausifier.normalizeVariables(nf1.getFormula(), true);
         normalized2 = Clausifier.normalizeVariables(nf2.getFormula(), true);
+
+        log.debug("deepEquals(2): normalized : \n"
+                + f1.format("", "  ", "\n")
+                + "\n arg: \n" + f2.format("", "  ", "\n"));
+        log.debug("difference: \n" + StringUtils.difference(f1.getFormula(), f2.getFormula()));
 
         return normalized1.equals(normalized2);
     }
@@ -111,8 +124,36 @@ public class FormulaDeepEqualsService {
         } else if (!this.deepEquals(f1, f2)) {
             return false;
         } else {
-            return f1.unifyWith(f2);
+            return this.unifyWith(f1, f2);
         }
+    }
+
+    /**
+     * Compares this formula with the parameter by trying to compare the
+     * predicate structure of th two and logically
+     * unify their variables. The helper method mapFormulaVariables(....)
+     * returns a logical mapping between the variables
+     * of two formulae of one exists.
+     */
+    public boolean unifyWith(Formula f1, Formula f2) {
+
+        log.debug("Formula.unifyWith(): input f : " + f2);
+        log.debug("Formula.unifyWith(): input this : " + f1);
+        Formula cf1 = Clausifier.clausify(f1);
+        Formula cf2 = Clausifier.clausify(f2);
+
+        log.debug("Formula.unifyWith(): after clausify f : " + cf2);
+        log.debug("Formula.unifyWith(): after clausify  this : " + cf1);
+
+        //the normalizeParameterOrder method should be moved to Clausifier
+        KB kb = kBManager.getKB(kBManager.getPref("sumokbname"));
+
+        Map<FormulaUtil.FormulaMatchMemoMapKey, List<Set<VariableMapping>>> memoMap =
+                new HashMap<>();
+        List<Set<VariableMapping>> result = Formula.mapFormulaVariables(cf1, cf2, kb, memoMap);
+
+        log.debug("Formula.unifyWith(): variable mapping : " + result);
+        return result != null;
     }
 }
 
