@@ -3,14 +3,12 @@ package com.articulate.sigma;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Tag;
 
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Tag("com.articulate.sigma.TopOnly")
-public class FormulaITCase {
+public class FormulaTest {
 
     @Test
     public void testFormulaRead() {
@@ -121,65 +119,6 @@ public class FormulaITCase {
         cdrF = cdrF.cdrAsFormula();
         assertThat(cdrF.getFormula()).isEqualTo("()");
     }
-
-    /*
-    @Test
-    public void testIsSimpleClauseWithFunctionalTerm() {
-        Formula f1 = new Formula();
-        f1.read("(part (MarialogicalSumFn ?X) ?Y)");
-
-        assertThat(f1.isSimpleClause()).isTrue();
-    }
-
-    @Test
-    public void testIsSimpleClause1() {
-        Formula f1 = new Formula();
-        f1.read("(instance ?X Human)");
-
-        assertThat(f1.isSimpleClause()).isTrue();
-    }
-
-    @Test
-    public void testIsSimpleClause2() {
-        Formula f1 = new Formula();
-        f1.read("(member (SkFn 1 ?X3) ?X3)");
-
-        assertThat(f1.isSimpleClause()).isTrue();
-    }
-
-    @Test
-    public void testIsSimpleClause3() {
-        Formula f1 = new Formula();
-        f1.read("(member ?VAR1 Org1-1)");
-
-        assertThat(f1.isSimpleClause()).isTrue();
-    }
-
-    @Test
-    public void testIsSimpleClause4() {
-        Formula f1 = new Formula();
-        f1.read("(capability (KappaFn ?HEAR (and (instance ?HEAR Hearing) (agent ?HEAR ?HUMAN) " +
-                "(destination ?HEAR ?HUMAN) (origin ?HEAR ?OBJ))) agent ?HUMAN)");
-
-        assertThat(f1.isSimpleClause()).isTrue();
-    }
-
-    @Test
-    public void testNotSimpleClause1() {
-        Formula f1 = new Formula();
-        f1.read("(=> (attribute ?Agent Investor) (exists (?Investing) (agent ?Investing ?Agent)))");
-
-        assertThat(f1.isSimpleClause()).isFalse();
-    }
-
-    @Test
-    public void testNotSimpleClause2() {
-        Formula f1 = new Formula();
-        f1.read("(not (instance ?X Human))");
-
-        assertThat(f1.isSimpleClause()).isFalse();
-    }
-*/
 
     @Test
     public void testCollectQuantifiedVariables() {
