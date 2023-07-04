@@ -206,13 +206,13 @@ public class WordNet implements Serializable {
      * POS-prefixed 9-digit synset String(s) meaning that the part of speech code is
      * prepended to the synset number.
      */
-    public Hashtable<String, List<String>> SUMOHash = new Hashtable<String, List<String>>();
+    public Map<String, List<String>> SUMOHash = new HashMap<>();
     /**
      * Keys are String POS-prefixed synsets.  Values
      * are List(s) of String(s) which are words. Note
      * that the order of words in the file is preserved.
      */
-    public Hashtable<String, List<String>> synsetsToWords = new Hashtable<String, List<String>>();
+    public Map<String, List<String>> synsetsToWords = new HashMap<>();
     // key is inflected form, value is root
     public Map<String, String> exceptionVerbHash = new HashMap<>();
     // key root, value is inflected (-en) form
@@ -242,7 +242,7 @@ public class WordNet implements Serializable {
      * number of times that word cooccurs in sentences with the word sense
      * given in the key.
      */
-    public Map<String, Map<String, Integer>> wordCoFrequencies = new HashMap<String, Map<String, Integer>>();
+    public Map<String, Map<String, Integer>> wordCoFrequencies = new HashMap<>();
     // A Map from all uppercase words to their possibly mixed case original versions
     public Map<String, String> caseMap = new HashMap<>();
     /**
@@ -254,26 +254,26 @@ public class WordNet implements Serializable {
      * English "stop words" such as "a", "at", "them", which have no or little
      * inherent meaning when taken alone.
      */
-    public List<String> stopwords = new ArrayList<String>();
+    public List<String> stopwords = new ArrayList<>();
     /**
      * A Map where the keys are of the form word_POS_sensenum (alpha POS like "VB")
      * and values are 8 digit WordNet synset byte offsets. Note that all words are
      * from index.sense, which reduces all words to lower case
      */
-    public Map<String, String> senseIndex = new HashMap<String, String>();
+    public Map<String, String> senseIndex = new HashMap<>();
     /**
      * A Map where the keys are of the form word%POS:lex_filenum:lex_id (numeric POS)
      * and values are 8 digit WordNet synset byte offsets. Note that all words are
      * from index.sense, which reduces all words to lower case
      */
-    public Map<String, String> senseKeys = new HashMap<String, String>();
+    public Map<String, String> senseKeys = new HashMap<>();
     /**
      * A Map where the keys are 9 digit POS prefixed WordNet synset byte offsets,
      * and the values are of the form word_POS_sensenum (alpha POS like "VB"). Note
      * that all words are from index.sense, which reduces
      * all words to lower case
      */
-    public Map<String, String> reverseSenseIndex = new HashMap<String, String>();
+    public Map<String, String> reverseSenseIndex = new HashMap<>();
     /**
      * A Map where keys are 8 digit
      * WordNet synset byte offsets or synsets appended with a dash and a specific
@@ -296,14 +296,14 @@ public class WordNet implements Serializable {
      * has String keys which are PWN30 synsets with 8-digit synsets a dash and then a alphabetic
      * part of speech character.  Values are words in the target language.
      */
-    public Map<String, Map<String, String>> OMW = new HashMap<String, Map<String, String>>();
+    public Map<String, Map<String, String>> OMW = new HashMap<>();
     /**
      * a Map of Maps where the key is a word and the value is a
      * Map of 9-digit POS-prefixed senses which is the value of the AVPair,
      * and the number of times that sense occurs in the Brown corpus, which is
      * the key of the AVPair
      */
-    protected Map<String, TreeSet<AVPair>> wordFrequencies = new HashMap<String, TreeSet<AVPair>>();
+    protected Map<String, TreeSet<AVPair>> wordFrequencies = new HashMap<>();
     //private Pattern p;
     private transient Matcher m;
 
@@ -317,7 +317,7 @@ public class WordNet implements Serializable {
             return null;
         }
         String[] sentar = st.split(" ");
-        List<String> words = new ArrayList<String>(Arrays.asList(sentar));
+        List<String> words = new ArrayList<>(Arrays.asList(sentar));
         for (int i = 0; i < words.size(); i++) {
             if (words.get(i).equals("") || words.get(i) == null || words.get(i).matches("\\s*"))
                 words.remove(i);
@@ -1240,7 +1240,7 @@ public class WordNet implements Serializable {
                         processPointers("3" + m.group(1), m.group(2));
                     } else {
                         //System.out.println("line: " + line);
-                        if (line != null && line.length() > 0 && line.charAt(0) != ';') {
+                        if (line.length() > 0 && line.charAt(0) != ';') {
                             System.out.println();
                             System.out.println("Error in WordNet.readAdjectives(): No match in "
                                     + adjFile.getCanonicalPath() + " for line " + line);
