@@ -81,7 +81,6 @@ public class WordNet implements Serializable {
      * This array contains all of the compiled Pattern objects that
      * will be used by methods in this file.
      */
-    public static Pattern[] regexPatterns = null;
     public static List<String> VerbFrames = List.of("", // empty 0 index
             "Something ----s",                                      // 1
             "Somebody ----s",
@@ -410,7 +409,6 @@ public class WordNet implements Serializable {
         System.out.println("WordNet.loadFresh(): ");
         try {
             wn = new WordNet();
-            wn.makeFileMap();
 
             wn.readNouns();
             wn.readVerbs();
@@ -558,7 +556,7 @@ public class WordNet implements Serializable {
 
         String line = "01522276 35 v 04 wind 6 wrap 2 roll 0 twine 3 013 @ 01850315 v 0000 + 03150232 n 0303 + 07441619 n 0303 ^ 00435688 v 0301 ^ 00435688 v 0202 + 04586421 n 0101 + 10781984 n 0101 ! 01523654 v 0101 ~ 01522878 v 0000 ~ 01523105 v 0000 ~ 01523270 v 0000 ~ 01523401 v 0000 ~ 01523986 v 0000 01 + 21 00 | arrange or or coil around; \"roll your hair around your finger\"; \"Twine the thread around the spool\"; \"She wrapped her arms around the child\" &%Motion+";
         // 10: p = Pattern.compile("^([0-9]{8})([^\\|]+)\\|\\s([\\S\\s]+?)\\s(\\(?\\&\\%\\S+[\\S\\s]+)$");
-        Matcher m = WordNetRegexPatterns.regexPatterns10.matcher(line);
+        Matcher m = WordNetRegexPatterns.READ_VERBS_1.matcher(line);
         if (m.matches()) {
             //verbDocumentationHash.put(m.group(1),m.group(3));
             //addSUMOMapping(m.group(4),"2" + m.group(1));
@@ -642,23 +640,6 @@ public class WordNet implements Serializable {
         return multiWords;
     }
 
-    private void makeFileMap() {
-
-        wnFilenames.put("noun_mappings", "WordNetMappings30-noun.txt");
-        wnFilenames.put("verb_mappings", "WordNetMappings30-verb.txt");
-        wnFilenames.put("adj_mappings", "WordNetMappings30-adj.txt");
-        wnFilenames.put("adv_mappings", "WordNetMappings30-adv.txt");
-        wnFilenames.put("noun_exceptions", "noun.exc");
-        wnFilenames.put("verb_exceptions", "verb.exc");
-        wnFilenames.put("adj_exceptions", "adj.exc");
-        wnFilenames.put("adv_exceptions", "adv.exc");
-        wnFilenames.put("sense_indexes", "index.sense");
-        wnFilenames.put("word_frequencies", "wordFrequencies.txt");
-        wnFilenames.put("cntlist", "cntlist");
-        wnFilenames.put("stopwords", "stopwords.txt");
-        wnFilenames.put("messages", "messages.txt");
-    }
-
     /**
      * Returns the WordNet File object corresponding to key.
      *
@@ -666,14 +647,14 @@ public class WordNet implements Serializable {
      *            expression pattern used to obtain a WordNet file.
      * @return A File object
      */
-    public File getWnFile(String key, String override) {
+    public File getWnFile(FileMaps key, String override) {
 
         File theFile = null;
         try {
             if (override != null)
                 theFile = new File(override);
             else if ((key != null) && (baseDirFile != null))
-                theFile = new File(baseDirFile + File.separator + wnFilenames.get(key));
+                theFile = new File(baseDirFile + File.separator + key.fileName);
             if (theFile == null || !theFile.exists())
                 System.out.println("Error in WordNet.getWnFile(): no such file: " + theFile.getAbsolutePath());
         } catch (Exception ex) {
@@ -745,14 +726,14 @@ public class WordNet implements Serializable {
 
         //System.out.println("INFO in WordNet.processPointers(): " + pointers);
         // 0: p = Pattern.compile("^\\s*\\d\\d\\s\\S\\s\\d\\S\\s");
-        m = WordNetRegexPatterns.regexPatterns0.matcher(pointers);
+        m = WordNetRegexPatterns.PROCESS_POINTERS_1.matcher(pointers);
         pointers = m.replaceFirst("");
         //System.out.println("INFO in WordNet.processPointers(): removed prefix: " + pointers);
 
         // Should be left with:
         // word  lex_id  [word  lex_id...]  p_cnt  [ptr...]  [frames...]
         // 1: p = Pattern.compile("^([a-zA-Z0-9'._\\-]\\S*)\\s([0-9a-f])\\s");
-        m = WordNetRegexPatterns.regexPatterns1.matcher(pointers);
+        m = WordNetRegexPatterns.PROCESS_POINTERS_2.matcher(pointers);
         while (m.lookingAt()) {
             String word = m.group(1);
             //if (word.equals("roll"))
@@ -765,14 +746,14 @@ public class WordNet implements Serializable {
             //String count = m.group(2);
             addToSynsetsToWords(word, synset.substring(1), synset.substring(0, 1));
             pointers = m.replaceFirst("");
-            m = WordNetRegexPatterns.regexPatterns1.matcher(pointers);
+            m = WordNetRegexPatterns.PROCESS_POINTERS_2.matcher(pointers);
         }
         //System.out.println("INFO in WordNet.processPointers(): removed words: " + pointers);
 
         // Should be left with:
         // p_cnt  [ptr...]  [frames...]
         // 2: p = Pattern.compile("^...\\s");
-        m = WordNetRegexPatterns.regexPatterns2.matcher(pointers);
+        m = WordNetRegexPatterns.PROCESS_POINTERS_3.matcher(pointers);
         pointers = m.replaceFirst("");
 
         // Should be left with:
@@ -780,7 +761,7 @@ public class WordNet implements Serializable {
         // where ptr is
         // pointer_symbol  synset_offset  pos  source/target
         // 3: p = Pattern.compile("^(\\S\\S?)\\s([0-9]{8})\\s(.)\\s([0-9a-f]{4})\\s?");
-        m = WordNetRegexPatterns.regexPatterns3.matcher(pointers);
+        m = WordNetRegexPatterns.PROCESS_POINTERS_4.matcher(pointers);
         while (m.lookingAt()) {
             String ptr = m.group(1);
             String targetSynset = m.group(2);
@@ -788,7 +769,7 @@ public class WordNet implements Serializable {
             //String sourceTarget = m.group(4);
             targetPOS = (Character.valueOf(WordNetUtilities.posLetterToNumber(targetPOS.charAt(0)))).toString();
             pointers = m.replaceFirst("");
-            m = WordNetRegexPatterns.regexPatterns3.matcher(pointers);
+            m = WordNetRegexPatterns.PROCESS_POINTERS_4.matcher(pointers);
             ptr = WordNetUtilities.convertWordNetPointer(ptr);
             AVPair avp = new AVPair();
             avp.attribute = ptr;
@@ -811,10 +792,10 @@ public class WordNet implements Serializable {
             // f_cnt + f_num  w_num  [ +  f_num  w_num...]
             if (synset.charAt(0) == '2') {
                 // 4: p = Pattern.compile("^..\\s");
-                m = WordNetRegexPatterns.regexPatterns4.matcher(pointers);
+                m = WordNetRegexPatterns.PROCESS_POINTERS_5.matcher(pointers);
                 pointers = m.replaceFirst("");
                 // 5: p = Pattern.compile("^\\+\\s(\\d\\d)\\s(\\d\\d)\\s?");
-                m = WordNetRegexPatterns.regexPatterns5.matcher(pointers);
+                m = WordNetRegexPatterns.PROCESS_POINTERS_6.matcher(pointers);
                 while (m.lookingAt()) {
                     String frameNum = m.group(1);
                     String wordNum = m.group(2);
@@ -837,7 +818,7 @@ public class WordNet implements Serializable {
                         frames = verbFrames.get(key);
                     frames.add(frameNum);
                     pointers = m.replaceFirst("");
-                    m = WordNetRegexPatterns.regexPatterns5.matcher(pointers);
+                    m = WordNetRegexPatterns.PROCESS_POINTERS_6.matcher(pointers);
                 }
             } else {
                 System.out.println("Error in WordNet.processPointers(): " +
@@ -909,7 +890,7 @@ public class WordNet implements Serializable {
         try {
             // synset_offset  lex_filenum  ss_type  w_cnt  word  lex_id  [word  lex_id...]  p_cnt  [ptr...]  [frames...]  |   gloss
             String line;
-            File nounFile = getWnFile("noun_mappings", null);
+            File nounFile = getWnFile(FileMaps.noun_mappings, null);
             if (nounFile == null) {
                 System.out.println("Error in WordNet.readNouns(): The noun mappings file does not exist in " + baseDir);
                 return;
@@ -933,7 +914,7 @@ public class WordNet implements Serializable {
                     + " seconds to process " + nounFile.getCanonicalPath() +
                     " with " + lr.getLineNumber() + " lines");
             // System.out.println("INFO in WordNet.readNouns(): Reading WordNet noun exceptions");
-            nounFile = getWnFile("noun_exceptions", null);
+            nounFile = getWnFile(FileMaps.noun_exceptions, null);
             if (nounFile == null) {
                 System.out.println("ERROR in WordNet.readNouns(): "
                         + "The noun mapping exceptions file does not exist in " + baseDir);
@@ -945,13 +926,13 @@ public class WordNet implements Serializable {
             lr = new LineNumberReader(r);
             while ((line = lr.readLine()) != null) {
                 // 8: p = Pattern.compile("(\\S+)\\s+(\\S+)");
-                m = WordNetRegexPatterns.regexPatterns8.matcher(line);
+                m = WordNetRegexPatterns.READ_NOUNS_3.matcher(line);
                 if (m.matches()) {
                     exceptionNounHash.put(m.group(1), m.group(2));      // 1-plural, 2-singular
                     exceptionNounPluralHash.put(m.group(2), m.group(1));
                 } else {
                     // 9: p = Pattern.compile("(\\S+)\\s+(\\S+)\\s+(\\S+)");
-                    m = WordNetRegexPatterns.regexPatterns9.matcher(line);
+                    m = WordNetRegexPatterns.READ_NOUNS_4.matcher(line);
                     if (m.matches()) {
                         exceptionNounHash.put(m.group(1), m.group(2));      // 1-plural, 2-singular 3-alternate singular
                         exceptionNounPluralHash.put(m.group(2), m.group(1));
@@ -993,7 +974,7 @@ public class WordNet implements Serializable {
     protected boolean processNounLine(String line) {
 
         // 6: p = Pattern.compile("^([0-9]{8})([\\S\\s]+)\\|\\s([\\S\\s]+?)\\s(\\(?\\&\\%\\S+[\\S\\s]+)$");
-        m = WordNetRegexPatterns.regexPatterns6.matcher(line);
+        m = WordNetRegexPatterns.READ_NOUNS_1.matcher(line);
         boolean anyAreNull = false;
         if (m.matches()) {
             for (int i = 1; i < 5; i++) {
@@ -1010,7 +991,7 @@ public class WordNet implements Serializable {
             }
         } else {
             // 7: p = Pattern.compile("^([0-9]{8})([\\S\\s]+)\\|\\s([\\S\\s]+)$");  // no SUMO mapping
-            m = WordNetRegexPatterns.regexPatterns7.matcher(line);
+            m = WordNetRegexPatterns.READ_NOUNS_2.matcher(line);
             if (m.matches()) {
                 nounDocumentationHash.put(m.group(1), m.group(3));
                 setMaxNounSynsetID(m.group(1));
@@ -1037,7 +1018,7 @@ public class WordNet implements Serializable {
         LineNumberReader lr = null;
         try {
             String line;
-            File verbFile = getWnFile("verb_mappings", null);
+            File verbFile = getWnFile(FileMaps.verb_mappings, null);
             if (verbFile == null) {
                 System.out.println("Error in WordNet.readVerbs(): The verb mappings file does not exist in " + baseDir);
                 return;
@@ -1050,7 +1031,7 @@ public class WordNet implements Serializable {
                     System.out.print('.');
                 line = line.trim();
                 // 10: p = Pattern.compile("^([0-9]{8})([^\\|]+)\\|\\s([\\S\\s]+?)\\s(\\(?\\&\\%\\S+[\\S\\s]+)$");
-                m = WordNetRegexPatterns.regexPatterns10.matcher(line);
+                m = WordNetRegexPatterns.READ_VERBS_1.matcher(line);
                 if (m.matches()) {
                     verbDocumentationHash.put(m.group(1), m.group(3));
                     setMaxVerbSynsetID(m.group(1));
@@ -1058,7 +1039,7 @@ public class WordNet implements Serializable {
                     processPointers("2" + m.group(1), m.group(2));
                 } else {
                     // 11: p = Pattern.compile("^([0-9]{8})([^\\|]+)\\|\\s([\\S\\s]+)$");   // no SUMO mapping
-                    m = WordNetRegexPatterns.regexPatterns11.matcher(line);
+                    m = WordNetRegexPatterns.READ_VERBS_2.matcher(line);
                     if (m.matches()) {
                         verbDocumentationHash.put(m.group(1), m.group(3));
                         setMaxVerbSynsetID(m.group(1));
@@ -1078,7 +1059,7 @@ public class WordNet implements Serializable {
                     + " seconds to process " + verbFile.getCanonicalPath() +
                     " with " + lr.getLineNumber() + " lines");
             // System.out.println("INFO in WordNet.readVerbs(): Reading WordNet verb exceptions");
-            verbFile = getWnFile("verb_exceptions", null);
+            verbFile = getWnFile(FileMaps.verb_exceptions, null);
             if (verbFile == null) {
                 System.out.println("Error in WordNet.readVerbs(): The verb mapping exceptions file does not exist in " + baseDir);
                 return;
@@ -1088,7 +1069,7 @@ public class WordNet implements Serializable {
             lr = new LineNumberReader(r);
             while ((line = lr.readLine()) != null) {
                 // 12: p = Pattern.compile("(\\S+)\\s+(\\S+).*");
-                m = WordNetRegexPatterns.regexPatterns12.matcher(line);  // TODO: Note we ignore more then one base form for a given tense
+                m = WordNetRegexPatterns.READ_VERBS_3.matcher(line);  // TODO: Note we ignore more then one base form for a given tense
                 if (m.matches()) {
                     exceptionVerbHash.put(m.group(1), m.group(2));          // 1-past/progressive, 2-root
                     if (m.group(1).endsWith("ing"))
@@ -1130,7 +1111,7 @@ public class WordNet implements Serializable {
         LineNumberReader lr = null;
         try {
             String line;
-            File adjFile = getWnFile("adj_mappings", null);
+            File adjFile = getWnFile(FileMaps.adj_mappings, null);
             if (adjFile == null) {
                 System.out.println("Error in WordNet.readAdjectives(): The adjective mappings file does not exist in " + baseDir);
                 return;
@@ -1143,14 +1124,14 @@ public class WordNet implements Serializable {
                     System.out.print('.');
                 line = line.trim();
                 // 13: p = Pattern.compile("^([0-9]{8})([\\S\\s]+)\\|\\s([\\S\\s]+?)\\s(\\(?\\&\\%\\S+[\\S\\s]+)$");
-                m = WordNetRegexPatterns.regexPatterns13.matcher(line);
+                m = WordNetRegexPatterns.READ_ADJECTIVES_1.matcher(line);
                 if (m.matches()) {
                     adjectiveDocumentationHash.put(m.group(1), m.group(3));
                     addSUMOMapping(m.group(4), "3" + m.group(1));
                     processPointers("3" + m.group(1), m.group(2));
                 } else {
                     // 14: p = Pattern.compile("^([0-9]{8})([\\S\\s]+)\\|\\s([\\S\\s]+)$");     // no SUMO mapping
-                    m = WordNetRegexPatterns.regexPatterns14.matcher(line);
+                    m = WordNetRegexPatterns.READ_ADJECTIVES_2.matcher(line);
                     if (m.matches()) {
                         adjectiveDocumentationHash.put(m.group(1), m.group(3));
                         processPointers("3" + m.group(1), m.group(2));
@@ -1193,7 +1174,7 @@ public class WordNet implements Serializable {
         LineNumberReader lr = null;
         try {
             String line;
-            File advFile = getWnFile("adv_mappings", null);
+            File advFile = getWnFile(FileMaps.adv_mappings, null);
             if (advFile == null) {
                 System.out.println("Error in WordNet.readAdverbs(): The adverb mappings file does not exist in " + baseDir);
                 return;
@@ -1206,14 +1187,14 @@ public class WordNet implements Serializable {
                     System.out.print('.');
                 line = line.trim();
                 // 15: p = Pattern.compile("^([0-9]{8})([\\S\\s]+)\\|\\s([\\S\\s]+)\\s(\\(?\\&\\%\\S+[\\S\\s]+)$");
-                m = WordNetRegexPatterns.regexPatterns15.matcher(line);
+                m = WordNetRegexPatterns.READ_ADJECTIVES_3.matcher(line);
                 if (m.matches()) {
                     adverbDocumentationHash.put(m.group(1), m.group(3));
                     addSUMOMapping(m.group(4), "4" + m.group(1));
                     processPointers("4" + m.group(1), m.group(2));
                 } else {
                     // 16: p = Pattern.compile("^([0-9]{8})([\\S\\s]+)\\|\\s([\\S\\s]+)$");   // no SUMO mapping
-                    m = WordNetRegexPatterns.regexPatterns16.matcher(line);
+                    m = WordNetRegexPatterns.READ_ADVERBS_1.matcher(line);
                     if (m.matches()) {
                         adverbDocumentationHash.put(m.group(1), m.group(3));
                         processPointers("4" + m.group(1), m.group(2));
@@ -1286,7 +1267,7 @@ public class WordNet implements Serializable {
         File wfFile = null;
         String canonicalPath = "";
         try {
-            wfFile = getWnFile("word_frequencies", null);
+            wfFile = getWnFile(FileMaps.word_frequencies, null);
             if (wfFile == null) {
                 System.out.println("Error in WordNet.readWordFrequencies(): The word frequencies file does not exist in " + baseDir);
                 return;
@@ -1299,7 +1280,7 @@ public class WordNet implements Serializable {
             while ((line = lr.readLine()) != null) {
                 line = line.trim();
                 // 17: Pattern p = Pattern.compile("^Word: ([^ ]+) Values: (.*)");
-                Matcher m = WordNetRegexPatterns.regexPatterns17.matcher(line);
+                Matcher m = WordNetRegexPatterns.READ_WORD_FREQUENCIES.matcher(line);
                 if (m.matches()) {
                     String key = m.group(1);
                     String values = m.group(2);
@@ -1352,7 +1333,7 @@ public class WordNet implements Serializable {
         File swFile = null;
         String canonicalPath = "";
         try {
-            swFile = getWnFile("stopwords", null);
+            swFile = getWnFile(FileMaps.stopwords, null);
             if (swFile == null) {
                 System.out.println("Error in WordNet.readStopWords(): The stopwords file does not exist in " + baseDir);
                 return;
@@ -1392,7 +1373,7 @@ public class WordNet implements Serializable {
         File siFile = null;
         String canonicalPath = "";
         try {
-            siFile = getWnFile("sense_indexes", filename);
+            siFile = getWnFile(FileMaps.sense_indexes, filename);
             if (siFile == null) {
                 System.out.println("Error in WordNet.readSenseIndex(): The sense indexes file does not exist in " + baseDir);
                 return;
@@ -1406,7 +1387,7 @@ public class WordNet implements Serializable {
             String line;
             while ((line = lr.readLine()) != null) {
                 // 18: Pattern p = Pattern.compile("([^%]+)%([^:]*):([^:]*):([^:]*):([^:]*):([^ ]*) ([^ ]+) ([^ ]+) .*");
-                m = WordNetRegexPatterns.regexPatterns18.matcher(line);
+                m = WordNetRegexPatterns.READ_SENSE_INDEX.matcher(line);
                 if (m.matches()) {
                     String word = m.group(1);
                     String pos = m.group(2);  // WN's ss_type
@@ -1473,7 +1454,7 @@ public class WordNet implements Serializable {
         File siFile = null;
         String canonicalPath = "";
         try {
-            siFile = getWnFile("cntlist", null);
+            siFile = getWnFile(FileMaps.cntlist, null);
             if (siFile == null) {
                 System.out.println("Error in WordNet.readSenseCount(): The sense count file does not exist in " +
                         baseDir + File.separator + "cntlist");

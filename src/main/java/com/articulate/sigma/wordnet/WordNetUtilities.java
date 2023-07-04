@@ -1357,18 +1357,6 @@ public class WordNetUtilities {
                 ",axiom,(s__documentation(s__VerbFrame,s__EnglishLanguage,\"A string template showing allowed form of use of a verb.\"))).");
     }
 
-    private static void writeTPTPVerbFrames(PrintWriter pw) throws IOException {
-
-        for (int i = 0; i < WordNet.VerbFrames.size(); i++) {
-            String frame = WordNet.VerbFrames.get(i);
-            String numString = String.valueOf(i);
-            if (numString.length() == 1)
-                numString = "0" + numString;
-            pw.println("fof(kb_WordNet_" + TPTPidCounter++ +
-                    ",axiom,(s__documentation(s__WN30VerbFrame_" + numString + ",s__EnglishLanguage,\"" + frame + "\"))).");
-        }
-    }
-
     private static void writeTPTPWordNetRelationDefinitions(PrintWriter pw) throws IOException {
 
         Iterator<String> it = WordNetRelations.iterator();
