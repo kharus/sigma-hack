@@ -48,26 +48,6 @@ public class WordNet implements Serializable {
     public static final int ADJECTIVE = 3;
     public static final int ADVERB = 4;
     public static final int ADJECTIVE_SATELLITE = 5;
-    /**
-     * This array contains all of the regular expression strings that
-     * will be compiled to Pattern objects for use in the methods in
-     * this file.
-     */
-
-    private static final Map<String, String> wnFilenames = Map.ofEntries(
-            Map.entry("noun_mappings", "WordNetMappings30-noun.txt"),
-            Map.entry("verb_mappings", "WordNetMappings30-verb.txt"),
-            Map.entry("adj_mappings", "WordNetMappings30-adj.txt"),
-            Map.entry("adv_mappings", "WordNetMappings30-adv.txt"),
-            Map.entry("noun_exceptions", "noun.exc"),
-            Map.entry("verb_exceptions", "verb.exc"),
-            Map.entry("adj_exceptions", "adj.exc"),
-            Map.entry("adv_exceptions", "adv.exc"),
-            Map.entry("sense_indexes", "index.sense"),
-            Map.entry("word_frequencies", "wordFrequencies.txt"),
-            Map.entry("cntlist", "cntlist"),
-            Map.entry("stopwords", "stopwords.txt"),
-            Map.entry("messages", "messages.txt"));
 
     public static boolean disable = false;
     public static boolean debug = false;
@@ -331,8 +311,8 @@ public class WordNet implements Serializable {
 
         File serfile = new File(baseDir + File.separator + "wn.ser");
         Date saveDate = new Date(serfile.lastModified());
-        for (String f : wnFilenames.values()) {
-            File file = new File(f);
+        for (FileMaps f : FileMaps.values()) {
+            File file = new File(f.fileName);
             Date fileDate = new Date(file.lastModified());
             if (saveDate.compareTo(fileDate) < 0) {
                 return true;
