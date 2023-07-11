@@ -394,7 +394,7 @@ public class FormulaPreprocessorITCase {
         SUMOformulaToTPTPformula.lang = "tff";
         SUMOKBtoTPTPKB.lang = "tff";
         SUMOKBtoTFAKB skbtfakb = new SUMOKBtoTFAKB();
-        skbtfakb.initOnce();
+        skbtfakb.initOnce(kb);
         String kbName = KBmanager.getMgr().getPref("sumokbname");
         String filename = KBmanager.getMgr().getPref("kbDir") + File.separator + kbName + ".tff";
         PrintWriter pw = null;

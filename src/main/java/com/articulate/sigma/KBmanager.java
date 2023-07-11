@@ -28,6 +28,7 @@ import com.articulate.sigma.wordnet.WordNet;
 import py4j.GatewayServer;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -64,7 +65,13 @@ public class KBmanager implements Serializable {
     public Prover prover = Prover.VAMPIRE;
     private String error = "";
 
+    private transient KBConfigProperties kbConfigProperties;
+
     public KBmanager() {
+    }
+
+    public void setKbConfigProperties(KBConfigProperties kbConfigProperties) {
+        this.kbConfigProperties = kbConfigProperties;
     }
 
     /**
@@ -676,9 +683,8 @@ public class KBmanager implements Serializable {
      * configuration file, or uses the default parameters.
      */
     public void initializeOnce() {
-        System.out.println("Info in KBmanager.initializeOnce()");
-        String base = System.getenv("SIGMA_HOME");
-        initializeOnce(base + File.separator + "KBs");
+        Path base = kbConfigProperties.getSigmaHome();
+        initializeOnce(base.resolve("KBs").toString());
     }
 
     /**

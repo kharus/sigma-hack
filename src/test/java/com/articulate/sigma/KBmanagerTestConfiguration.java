@@ -12,7 +12,7 @@ import static com.articulate.sigma.SigmaTestBase.checkConfiguration;
 public class KBmanagerTestConfiguration {
     @Bean
     @Profile("TopOnly")
-    public KBmanager kbManager() {
+    public KBmanager kbManager(KBConfigProperties kbConfigProperties) {
         System.out.println("KBmanagerTestConfiguration.kbManager");
         try (InputStream is = getClass().getClassLoader().getResourceAsStream("config_topOnly.xml");
              Reader reader = new BufferedReader(new InputStreamReader(is))) {
@@ -21,6 +21,7 @@ public class KBmanagerTestConfiguration {
                 SimpleDOMParser sdp = new SimpleDOMParser();
                 SimpleElement configuration = sdp.parse(reader);
 
+                KBmanager.getMgr().setKbConfigProperties(kbConfigProperties);
                 KBmanager.getMgr().setDefaultAttributes();
                 KBmanager.getMgr().setConfiguration(configuration);
                 KBmanager.initialized = true;

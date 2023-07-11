@@ -6,10 +6,7 @@
  */
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.Formula;
-import com.articulate.sigma.IntegrationTestBase;
-import com.articulate.sigma.KBmanager;
-import com.articulate.sigma.MidLevel;
+import com.articulate.sigma.*;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
@@ -33,12 +30,12 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
     @BeforeAll
     public static void init() {
 
-        SUMOtoTFAform.initOnce();
+        SUMOtoTFAform.initOnce(kb);
         if (!kb.containsFile("Merge.kif") || !kb.containsFile("Mid-level-ontology.kif"))
             System.out.println("!!!!!!!! error in init(): missing KB files !!!!!!!!!!!!");
         SUMOtoTFAform.setNumericFunctionInfo();
         skbtfakb = new SUMOKBtoTFAKB();
-        skbtfakb.initOnce();
+        skbtfakb.initOnce(kb);
         SUMOformulaToTPTPformula.lang = "tff";
         String kbName = KBmanager.getMgr().getPref("sumokbname");
         String filename = KBmanager.getMgr().getPref("kbDir") + File.separator + kbName + ".tff";
@@ -724,7 +721,7 @@ public class SUMOtoTFAformITCase extends IntegrationTestBase {
 
         SUMOtoTFAform.debug = true;
         SUMOtoTFAform stfa = new SUMOtoTFAform();
-        SUMOtoTFAform.initOnce();
+        SUMOtoTFAform.initOnce(kb);
         SUMOKBtoTFAKB.debug = true;
         System.out.println("\n========= testTypeConflict4 ==========\n");
         String input = "(=> (and (domain intelligenceQuotient ?NUMBER ?CLASS) " +
