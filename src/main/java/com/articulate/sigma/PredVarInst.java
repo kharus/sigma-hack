@@ -1,6 +1,4 @@
-package com.articulate.sigma;
-
-/**
+/*
  * This code is copyright Articulate Software (c) 2014. Infosys 2019-
  * This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
  * Users of this code also consent, by use of this code, to credit Articulate Software
@@ -15,6 +13,7 @@ package com.articulate.sigma;
  * Note that relations that are automatically created by SUMOKBtoTFAKB are excluded
  * and this depends on double underscore in the names of those predicates
  */
+package com.articulate.sigma;
 
 import com.articulate.sigma.trans.SUMOtoTFAform;
 import com.articulate.sigma.utils.StringUtil;
@@ -510,68 +509,4 @@ public class PredVarInst {
         System.out.println("INFO in PredVarInst.arityTest(): correct arity: " + hasCorrectArity(f, kb));
     }
 
-    public static void test() {
-
-        KBmanager.getMgr().initializeOnce();
-        KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-        System.out.println("INFO in PredVarInst.test(): completed loading KBs");
-        if (kb.kbCache.transInstOf("exhaustiveAttribute", "VariableArityRelation")) {
-            System.out.println("INFO in PredVarInst.test() variable arity: ");
-        } else
-            System.out.println("INFO in PredVarInst.test() not variable arity: ");
-        System.out.println("INFO in PredVarInst.test(): " + kb.kbCache.instanceOf.get("partition"));
-        System.out.println("INFO in PredVarInst.test(): " + kb.kbCache.insts.contains("partition"));
-        //String formStr = "(=> (inverse ?REL1 ?REL2) (forall (?INST1 ?INST2) (<=> (?REL1 ?INST1 ?INST2) (?REL2 ?INST2 ?INST1))))";
-        String formStr = "(<=> (instance ?REL TransitiveRelation) " +
-                "(forall (?INST1 ?INST2 ?INST3) " +
-                "(=> (and (?REL ?INST1 ?INST2) " +
-                "(?REL ?INST2 ?INST3)) (?REL ?INST1 ?INST3))))";
-        //Formula f = kb.formulaMap.get(formStr);
-        Formula f = new Formula(formStr);
-        System.out.println("Formula: " + f);
-        System.out.println("Pred vars: " + gatherPredVars(kb, f));
-        System.out.println("Pred vars with types: " + findPredVarTypes(f, kb));
-        FormulaPreprocessor fp = new FormulaPreprocessor();
-        System.out.println("Explicit types: " + fp.findExplicitTypesInAntecedent(kb, f));
-        System.out.println("Instantiated: " + instantiatePredVars(f, kb));
-        System.out.println();
-
-        formStr = "(=> " +
-                "(instance ?JURY Jury) " +
-                "(holdsRight " +
-                "(exists (?DECISION) " +
-                "(and " +
-                "(instance ?DECISION LegalDecision) " +
-                "(agent ?DECISION ?JURY))) ?JURY))";
-        //f = kb.formulaMap.get(formStr);
-        f = new Formula(formStr);
-        System.out.println("Formula: " + f);
-        System.out.println("Pred vars: " + gatherPredVars(kb, f));
-        System.out.println("Instantiated: " + instantiatePredVars(f, kb));
-
-    }
-
-    public static void main(String[] args) {
-
-        //arityTest();
-        test();
-        /*
-         KBmanager.getMgr().initializeOnce();
-         KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-         String formStr = "(<=> (instance ?REL TransitiveRelation) " +
-         "(forall (?INST1 ?INST2 ?INST3) " +
-         "(=> (and (?REL ?INST1 ?INST2) " +
-         "(?REL ?INST2 ?INST3)) (?REL ?INST1 ?INST3))))";
-         formStr = "(=> (inverse ?REL1 ?REL2) (forall (?INST1 ?INST2) (<=> (?REL1 ?INST1 ?INST2) (?REL2 ?INST2 ?INST1))))";
-         // formStr = " (=> (reflexiveOn ?REL ?CLASS) (forall (?INST) (=> (instance ?INST ?CLASS) (?REL ?INST ?INST))))";
-         Formula f = kb.formulaMap.get(formStr);
-         if (f == null) {
-        	System.out.println("Error " + formStr + " not found.");
-        	formStr = kb.formulas.get("ant-reflexiveOn").get(0);
-        	f = kb.formulaMap.get(formStr);
-         }
-         
-         System.out.println(instantiatePredVars(f,kb));
-         */
-    }
 }
