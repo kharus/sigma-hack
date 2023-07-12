@@ -790,9 +790,7 @@ public class FormulaPreprocessor {
     protected String getMostRelevantType(KB kb, HashSet<String> types) {
 
         HashSet<String> insts = new HashSet<String>();
-        Iterator<String> iter = types.iterator();
-        while (iter.hasNext()) {
-            String type = iter.next();
+        for (String type : types) {
             if (!type.endsWith("+"))
                 insts.add(type);
             else
@@ -800,9 +798,8 @@ public class FormulaPreprocessor {
         }
         if (insts != null) {
             winnowTypeList(insts, kb);
-            Iterator<String> it1 = insts.iterator();
-            while (it1.hasNext()) {
-                return it1.next();
+            for (String inst : insts) {
+                return inst;
             }
         }
 

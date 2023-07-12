@@ -67,9 +67,7 @@ public class WSD {
             return false;
         boolean done = false;
         int count = 0;
-        Iterator<String> it = values.iterator();
-        while (it.hasNext()) {
-            String s = it.next();
+        for (String s : values) {
             if (!WordNetUtilities.isValidKey(s))
                 continue;
             String POS = WordNetUtilities.getPOSfromKey(s);
@@ -485,9 +483,7 @@ public class WSD {
                 al = WordNet.wn.wordsToSenseKeys.get(word.toLowerCase());
             if (debug) System.out.println("INFO in WSD.getBestDefaultSense(): senses: " + al);
             if (al != null) {
-                Iterator<String> it = al.iterator();
-                while (it.hasNext()) {
-                    String key = it.next();
+                for (String key : al) {
                     String POS = WordNetUtilities.getPOSfromKey(key);
                     String numPOS = WordNetUtilities.posLettersToNumber(POS);
                     String result = numPOS + WordNet.wn.senseIndex.get(key);
@@ -576,9 +572,7 @@ public class WSD {
             else
                 return pos + al.get(0);
         }
-        Iterator<String> it = al.iterator();
-        while (it.hasNext()) {
-            String key = it.next();
+        for (String key : al) {
             String POS = WordNetUtilities.getPOSfromKey(key);
             String numPOS = WordNetUtilities.posLettersToNumber(POS);
             if (Integer.toString(pos).equals(numPOS))
