@@ -2,18 +2,35 @@ package com.articulate.sigma;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Map;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 @Tag("com.articulate.sigma.MidLevel")
-public class PredVarInstIntegrationITCase extends IntegrationTestBase {
+@ActiveProfiles("MidLevel")
+@Import(KBmanagerTestConfiguration.class)
+public class PredVarInstIntegrationITCase {
 
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
     @Disabled
     public void testInstantiatePredVars1() {
 
@@ -24,28 +41,30 @@ public class PredVarInstIntegrationITCase extends IntegrationTestBase {
         Formula f = new Formula();
         f.read(stmt1);
 
-        Set<Formula> actual = PredVarInst.instantiatePredVars(f, SigmaTestBase.kb);
+        Set<Formula> actual = PredVarInst.instantiatePredVars(f, kb);
 
         // Prep the expected set of formula objects.
         Set<Formula> expected = Sets.newHashSet();
 
-        String formulaStr = "(<=>\n" +
-                "  (instance time TransitiveRelation)\n" +
-                "  (forall (?INST1 ?INST2 ?INST3)\n" +
-                "    (=>\n" +
-                "      (and\n" +
-                "    (time ?INST1 ?INST2)\n" +
-                "    (time ?INST2 ?INST3))\n" +
-                "      (time ?INST1 ?INST3))))";
+        String formulaStr = """
+                (<=>
+                  (instance time TransitiveRelation)
+                  (forall (?INST1 ?INST2 ?INST3)
+                    (=>
+                      (and
+                    (time ?INST1 ?INST2)
+                    (time ?INST2 ?INST3))
+                      (time ?INST1 ?INST3))))""";
         expected.add(new Formula(formulaStr));
-        formulaStr = "(<=>\n" +
-                "  (instance finishes TransitiveRelation)\n" +
-                "  (forall (?INST1 ?INST2 ?INST3)\n" +
-                "    (=>\n" +
-                "      (and\n" +
-                "    (finishes ?INST1 ?INST2)\n" +
-                "    (finishes ?INST2 ?INST3))\n" +
-                "      (finishes ?INST1 ?INST3))))";
+        formulaStr = """
+                (<=>
+                  (instance finishes TransitiveRelation)
+                  (forall (?INST1 ?INST2 ?INST3)
+                    (=>
+                      (and
+                    (finishes ?INST1 ?INST2)
+                    (finishes ?INST2 ?INST3))
+                      (finishes ?INST1 ?INST3))))""";
         expected.add(new Formula(formulaStr));
         formulaStr = " (<=>\n" +
                 "  (instance telecomCode2 TransitiveRelation)\n" +
@@ -1417,7 +1436,7 @@ public class PredVarInstIntegrationITCase extends IntegrationTestBase {
         Formula f = new Formula();
         f.read(stmt3);
 
-        Map<String, Set<String>> actual = PredVarInst.findPredVarTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = PredVarInst.findPredVarTypes(f, kb);
         System.out.println("testFindPredVarTypesStmt3(): actual: " + actual);
         Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?ROLE", Sets.newHashSet("CaseRole"));
