@@ -1,42 +1,59 @@
 package com.articulate.sigma;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 @Tag("com.articulate.sigma.MidLevel")
-public class KbIntegrationITCase extends IntegrationTestBase {
+@ActiveProfiles("MidLevel")
+@Import(KBmanagerTestConfiguration.class)
+public class KbIntegrationITCase {
 
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
     @Test
     public void testIsChildOf3() {
 
-        KBcache cache = SigmaTestBase.kb.kbCache;
+        KBcache cache = kb.kbCache;
         System.out.println("parents of Shirt (as instance): " + cache.getParentClassesOfInstance("Shirt"));
         System.out.println("parents of Shirt: " + cache.parents.get("subclass").get("Shirt"));
         System.out.println("KBcache.childOfP(subclass, WearableItem, Shirt): " + cache.childOfP("subclass", "WearableItem", "Shirt"));
-        System.out.println("SigmaTestBase.kb.isChildOf(Shirt, WearableItem): " + SigmaTestBase.kb.isChildOf("Shirt", "WearableItem"));
-        System.out.println("SigmaTestBase.kb.childOf(Shirt, WearableItem): " + SigmaTestBase.kb.childOf("Shirt", "WearableItem"));
-        assertThat(SigmaTestBase.kb.isSubclass("Shirt", "WearableItem")).isTrue();
+        System.out.println("kb.isChildOf(Shirt, WearableItem): " + kb.isChildOf("Shirt", "WearableItem"));
+        System.out.println("kb.childOf(Shirt, WearableItem): " + kb.childOf("Shirt", "WearableItem"));
+        assertThat(kb.isSubclass("Shirt", "WearableItem")).isTrue();
     }
 
     @Test
     public void testAskWithTwoRestrictionsDirect2() {
-        List<Formula> actual = SigmaTestBase.kb.askWithTwoRestrictions(0, "subclass", 1, "Boy", 2, "Man");
+        List<Formula> actual = kb.askWithTwoRestrictions(0, "subclass", 1, "Boy", 2, "Man");
         assertThat(actual.size()).isNotEqualTo(0);
     }
 
     @Test
     public void testIsSubclass1() {
 
-        KBcache cache = SigmaTestBase.kb.kbCache;
+        KBcache cache = kb.kbCache;
         System.out.println("parents of Boy (as instance): " + cache.getParentClassesOfInstance("Boy"));
         System.out.println("parents of Boy: " + cache.parents.get("Boy"));
         System.out.println("childOfP(\"Boy\", \"Entity\"): " + cache.childOfP("subclass", "Entity", "Boy"));
-        System.out.println("SigmaTestBase.kb.isChildOf(\"Boy\", \"Entity\"): " + SigmaTestBase.kb.isChildOf("Boy", "Entity"));
-        assertThat(SigmaTestBase.kb.isSubclass("Boy", "Entity")).isTrue();
+        System.out.println("kb.isChildOf(\"Boy\", \"Entity\"): " + kb.isChildOf("Boy", "Entity"));
+        assertThat(kb.isSubclass("Boy", "Entity")).isTrue();
     }
 
     @Test
@@ -49,7 +66,7 @@ public class KbIntegrationITCase extends IntegrationTestBase {
                 "(capability (KappaFn ?KILLING (and (instance ?KILLING Killing) " +
                 "(patient ?KILLING ?O))) instrument ?GUN))";
         Formula f = new Formula(stmt);
-        assertThat(f.isHigherOrder(SigmaTestBase.kb)).isTrue();
+        assertThat(f.isHigherOrder(kb)).isTrue();
     }
 
     @Test
@@ -72,8 +89,8 @@ public class KbIntegrationITCase extends IntegrationTestBase {
                 "  (length Tunnel1 L))";
         Formula f = new Formula(stmt);
         System.out.println("testIsHigherOrder2: " + f);
-        System.out.println("isHigherOrder: " + f.isHigherOrder(SigmaTestBase.kb));
-        assertThat(f.isHigherOrder(SigmaTestBase.kb)).isFalse();
+        System.out.println("isHigherOrder: " + f.isHigherOrder(kb));
+        assertThat(f.isHigherOrder(kb)).isFalse();
     }
 
     @Test
@@ -87,13 +104,13 @@ public class KbIntegrationITCase extends IntegrationTestBase {
                 "  (instance ?I ?C))";
         Formula f = new Formula(stmt);
         System.out.println("testIsHigherOrder3: " + f);
-        System.out.println("testIsHigherOrder3: results: " + f.isHigherOrder(SigmaTestBase.kb));
+        System.out.println("testIsHigherOrder3: results: " + f.isHigherOrder(kb));
         System.out.println("testIsHigherOrder3(): expected: " + false);
-        if (!f.isHigherOrder(SigmaTestBase.kb))
+        if (!f.isHigherOrder(kb))
             System.out.println("testIsHigherOrder3(): success!");
         else
             System.out.println("testIsHigherOrder3(): failure");
-        assertThat(f.isHigherOrder(SigmaTestBase.kb)).isFalse();
+        assertThat(f.isHigherOrder(kb)).isFalse();
     }
 
     @Test
@@ -110,12 +127,12 @@ public class KbIntegrationITCase extends IntegrationTestBase {
                 "      (result ?M ?W))))";
         Formula f = new Formula(stmt);
         System.out.println("testIsHigherOrder4: " + f);
-        System.out.println("testIsHigherOrder4: results: " + f.isHigherOrder(SigmaTestBase.kb));
+        System.out.println("testIsHigherOrder4: results: " + f.isHigherOrder(kb));
         System.out.println("testIsHigherOrder4(): expected: " + true);
-        if (f.isHigherOrder(SigmaTestBase.kb))
+        if (f.isHigherOrder(kb))
             System.out.println("testIsHigherOrder4(): success!");
         else
             System.out.println("testIsHigherOrder4(): failure");
-        assertThat(f.isHigherOrder(SigmaTestBase.kb)).isTrue();
+        assertThat(f.isHigherOrder(kb)).isTrue();
     }
 }

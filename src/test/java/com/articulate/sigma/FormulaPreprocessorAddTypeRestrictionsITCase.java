@@ -2,9 +2,14 @@ package com.articulate.sigma;
 
 import com.articulate.sigma.trans.SUMOformulaToTPTPformula;
 import com.articulate.sigma.utils.StringUtil;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,16 +21,27 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <constituent filename="Mid-level-ontology.kif" />
  * <constituent filename="FinancialOntology.kif" />
  */
+@SpringBootTest
 @Tag("com.articulate.sigma.MidLevel")
-public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTestBase {
+@ActiveProfiles("MidLevel")
+@Import(KBmanagerTestConfiguration.class)
+public class FormulaPreprocessorAddTypeRestrictionsITCase {
 
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
     public void test(String label, String stmt, String expected) {
 
         System.out.println("=============================");
         System.out.println("FormulaPreprocessorAddTypeRestrictionsITCase: " + label);
         System.out.println();
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        KB kb = SigmaTestBase.kb;
         Formula f = new Formula(stmt);
         Formula actualF = fp.addTypeRestrictions(f, kb);
         String actualTPTP = SUMOformulaToTPTPformula.tptpParseSUOKIFString(actualF.getFormula(), false);
@@ -45,19 +61,21 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
     @Test
     public void testAddTypeRestrictions1() {
 
-        String stmt = "(<=>\n" +
-                "   (instance ?GRAPH PseudoGraph)\n" +
-                "   (exists (?LOOP)\n" +
-                "      (and\n" +
-                "         (instance ?LOOP GraphLoop)\n" +
-                "         (graphPart ?LOOP ?GRAPH))))";
+        String stmt = """
+                (<=>
+                   (instance ?GRAPH PseudoGraph)
+                   (exists (?LOOP)
+                      (and
+                         (instance ?LOOP GraphLoop)
+                         (graphPart ?LOOP ?GRAPH))))""";
 
-        String expected = "(<=>\n" +
-                "   (instance ?GRAPH PseudoGraph)\n" +
-                "   (exists (?LOOP)\n" +
-                "      (and\n" +
-                "         (instance ?LOOP GraphLoop)\n" +
-                "         (graphPart ?LOOP ?GRAPH))))";
+        String expected = """
+                (<=>
+                   (instance ?GRAPH PseudoGraph)
+                   (exists (?LOOP)
+                      (and
+                         (instance ?LOOP GraphLoop)
+                         (graphPart ?LOOP ?GRAPH))))""";
         test("testAddTypeRestrictions1", stmt, expected);
     }
 
@@ -101,20 +119,21 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
     @Disabled
     public void testAddTypeRestrictions3() {
 
-        String stmt = "(=>\n" +
-                "   (instance ?CLOUD WaterCloud)\n" +
-                "   (forall (?PART)\n" +
-                "      (=>\n" +
-                "         (and\n" +
-                "            (part ?PART ?CLOUD)\n" +
-                "            (not (instance ?PART Water)))\n" +
-                "         (exists (?WATER)\n" +
-                "            (and\n" +
-                "               (instance ?WATER Water)\n" +
-                "               (part ?WATER ?CLOUD)\n" +
-                "               (measure ?WATER (MeasureFn ?MEASURE1 ?UNIT))\n" +
-                "               (measure ?PART (MeasureFn ?MEASURE2 ?UNIT))\n" +
-                "               (greaterThan ?MEASURE1 ?MEASURE2))))))";
+        String stmt = """
+                (=>
+                   (instance ?CLOUD WaterCloud)
+                   (forall (?PART)
+                      (=>
+                         (and
+                            (part ?PART ?CLOUD)
+                            (not (instance ?PART Water)))
+                         (exists (?WATER)
+                            (and
+                               (instance ?WATER Water)
+                               (part ?WATER ?CLOUD)
+                               (measure ?WATER (MeasureFn ?MEASURE1 ?UNIT))
+                               (measure ?PART (MeasureFn ?MEASURE2 ?UNIT))
+                               (greaterThan ?MEASURE1 ?MEASURE2))))))""";
 
         String expected = "(=> \n" +
                 "  (and \n" +
@@ -144,21 +163,23 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
     @Test
     public void testAddTypeRestrictions4() {
 
-        String stmt = "(=>\n" +
-                "   (and\n" +
-                "      (instance ?MIXTURE Mixture)\n" +
-                "      (part ?SUBSTANCE ?MIXTURE)\n" +
-                "      (not (instance ?SUBSTANCE Mixture)))\n" +
-                "   (instance ?SUBSTANCE PureSubstance))";
+        String stmt = """
+                (=>
+                   (and
+                      (instance ?MIXTURE Mixture)
+                      (part ?SUBSTANCE ?MIXTURE)
+                      (not (instance ?SUBSTANCE Mixture)))
+                   (instance ?SUBSTANCE PureSubstance))""";
 
-        String expected = "(=>\n" +
-                "(instance ?SUBSTANCE Object)\n" +
-                "(=>\n" +
-                "  (and\n" +
-                "    (instance ?MIXTURE Mixture)\n" +
-                "    (part ?SUBSTANCE ?MIXTURE)\n" +
-                "    (not (instance ?SUBSTANCE Mixture) ))\n" +
-                "  (instance ?SUBSTANCE PureSubstance) ))";
+        String expected = """
+                (=>
+                (instance ?SUBSTANCE Object)
+                (=>
+                  (and
+                    (instance ?MIXTURE Mixture)
+                    (part ?SUBSTANCE ?MIXTURE)
+                    (not (instance ?SUBSTANCE Mixture) ))
+                  (instance ?SUBSTANCE PureSubstance) ))""";
 
         test("testAddTypeRestrictions4()", stmt, expected);
     }
@@ -166,37 +187,39 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
     @Test
     public void testAddTypeRestrictions5() {
 
-        String stmt = "(=>\n" +
-                "  (axis ?AXIS ?OBJ)\n" +
-                "  (exists (?R)\n" +
-                "    (and\n" +
-                "      (instance ?R Rotating)\n" +
-                "      (part ?AXIS ?OBJ)\n" +
-                "      (experiencer ?R ?OBJ)\n" +
-                "      (not\n" +
-                "        (exists (?R2)\n" +
-                "          (and\n" +
-                "            (instance ?R2 Rotating)\n" +
-                "            (subProcess ?R2 ?R)\n" +
-                "            (experiencer ?R2 ?AXIS)))))))";
+        String stmt = """
+                (=>
+                  (axis ?AXIS ?OBJ)
+                  (exists (?R)
+                    (and
+                      (instance ?R Rotating)
+                      (part ?AXIS ?OBJ)
+                      (experiencer ?R ?OBJ)
+                      (not
+                        (exists (?R2)
+                          (and
+                            (instance ?R2 Rotating)
+                            (subProcess ?R2 ?R)
+                            (experiencer ?R2 ?AXIS)))))))""";
 
-        String expected = "(=> \n" +
-                "  (and \n" +
-                "    (instance ?OBJ AutonomousAgent)\n" +
-                "    (instance ?AXIS AutonomousAgent) )\n" +
-                "  (=>\n" +
-                "    (axis ?AXIS ?OBJ)\n" +
-                "    (exists (?R)\n" +
-                "      (and\n" +
-                "        (instance ?R Rotating)\n" +
-                "        (part ?AXIS ?OBJ)\n" +
-                "        (experiencer ?R ?OBJ)\n" +
-                "        (not\n" +
-                "          (exists (?R2)\n" +
-                "            (and\n" +
-                "              (instance ?R2 Rotating)\n" +
-                "              (subProcess ?R2 ?R)\n" +
-                "              (experiencer ?R2 ?AXIS) )))))))";
+        String expected = """
+                (=>
+                  (and
+                    (instance ?OBJ AutonomousAgent)
+                    (instance ?AXIS AutonomousAgent) )
+                  (=>
+                    (axis ?AXIS ?OBJ)
+                    (exists (?R)
+                      (and
+                        (instance ?R Rotating)
+                        (part ?AXIS ?OBJ)
+                        (experiencer ?R ?OBJ)
+                        (not
+                          (exists (?R2)
+                            (and
+                              (instance ?R2 Rotating)
+                              (subProcess ?R2 ?R)
+                              (experiencer ?R2 ?AXIS) )))))))""";
 
         test("testAddTypeRestrictions5", stmt, expected);
     }
@@ -205,28 +228,30 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
     @Test
     public void testAddTypeRestrictions6() {
 
-        String stmt = "(=>\n" +
-                "    (serviceFee ?Bank ?Action ?Amount)\n" +
-                "    (exists (?Fee)\n" +
-                "        (and\n" +
-                "            (instance ?Fee ChargingAFee)\n" +
-                "            (agent ?Fee ?Bank)\n" +
-                "            (causes ?Action ?Fee)\n" +
-                "            (amountCharged ?Fee ?Amount))))";
+        String stmt = """
+                (=>
+                    (serviceFee ?Bank ?Action ?Amount)
+                    (exists (?Fee)
+                        (and
+                            (instance ?Fee ChargingAFee)
+                            (agent ?Fee ?Bank)
+                            (causes ?Action ?Fee)
+                            (amountCharged ?Fee ?Amount))))""";
 
-        String expected = "(=> \n" +
-                "  (and \n" +
-                "    (instance ?Amount CurrencyMeasure)\n" +
-                "    (instance ?Action FinancialTransaction)\n" +
-                "    (instance ?Bank FinancialOrganization) )\n" +
-                "  (=>\n" +
-                "    (serviceFee ?Bank ?Action ?Amount)\n" +
-                "    (exists (?Fee)\n" +
-                "      (and\n" +
-                "        (instance ?Fee ChargingAFee)\n" +
-                "        (agent ?Fee ?Bank)\n" +
-                "        (causes ?Action ?Fee)\n" +
-                "        (amountCharged ?Fee ?Amount) ))))";
+        String expected = """
+                (=>
+                  (and
+                    (instance ?Amount CurrencyMeasure)
+                    (instance ?Action FinancialTransaction)
+                    (instance ?Bank FinancialOrganization) )
+                  (=>
+                    (serviceFee ?Bank ?Action ?Amount)
+                    (exists (?Fee)
+                      (and
+                        (instance ?Fee ChargingAFee)
+                        (agent ?Fee ?Bank)
+                        (causes ?Action ?Fee)
+                        (amountCharged ?Fee ?Amount) ))))""";
 
         test("testAddTypeRestrictions6", stmt, expected);
     }
@@ -234,23 +259,25 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
     @Test
     public void testAddTypeRestrictions7() {
 
-        String stmt = "(=>\n" +
-                "    (forall (?ELEMENT)\n" +
-                "        (<=>\n" +
-                "            (element ?ELEMENT ?SET1)\n" +
-                "            (element ?ELEMENT ?SET2)))\n" +
-                "    (equal ?SET1 ?SET2))";
+        String stmt = """
+                (=>
+                    (forall (?ELEMENT)
+                        (<=>
+                            (element ?ELEMENT ?SET1)
+                            (element ?ELEMENT ?SET2)))
+                    (equal ?SET1 ?SET2))""";
 
-        String expected = "(=> \n" +
-                "  (and \n" +
-                "    (instance ?SET1 Set)\n" +
-                "    (instance ?SET2 Set) )\n" +
-                "  (=>\n" +
-                "    (forall (?ELEMENT)\n" +
-                "        (<=>\n" +
-                "          (element ?ELEMENT ?SET1)\n" +
-                "          (element ?ELEMENT ?SET2)) )\n" +
-                "    (equal ?SET1 ?SET2) ))";
+        String expected = """
+                (=>
+                  (and
+                    (instance ?SET1 Set)
+                    (instance ?SET2 Set) )
+                  (=>
+                    (forall (?ELEMENT)
+                        (<=>
+                          (element ?ELEMENT ?SET1)
+                          (element ?ELEMENT ?SET2)) )
+                    (equal ?SET1 ?SET2) ))""";
 
         test("testAddTypeRestrictions7", stmt, expected);
     }
@@ -259,52 +286,54 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
     @Test
     public void testAddTypeRestrictions8() {
 
-        String stmt = "(=>\n" +
-                "    (and\n" +
-                "        (typicalPart ?PART ?WHOLE)\n" +
-                "        (instance ?X ?PART)\n" +
-                "        (equal ?PARTPROB\n" +
-                "            (ProbabilityFn\n" +
-                "                (exists (?Y)\n" +
-                "                    (and\n" +
-                "                        (instance ?Y ?WHOLE)\n" +
-                "                        (part ?X ?Y)))))\n" +
-                "        (equal ?NOTPARTPROB\n" +
-                "            (ProbabilityFn\n" +
-                "                (not\n" +
-                "                    (exists (?Z)\n" +
-                "                        (and\n" +
-                "                            (instance ?Z ?WHOLE)\n" +
-                "                            (part ?X ?Z)))))))\n" +
-                "    (greaterThan ?PARTPROB ?NOTPARTPROB))";
+        String stmt = """
+                (=>
+                    (and
+                        (typicalPart ?PART ?WHOLE)
+                        (instance ?X ?PART)
+                        (equal ?PARTPROB
+                            (ProbabilityFn
+                                (exists (?Y)
+                                    (and
+                                        (instance ?Y ?WHOLE)
+                                        (part ?X ?Y)))))
+                        (equal ?NOTPARTPROB
+                            (ProbabilityFn
+                                (not
+                                    (exists (?Z)
+                                        (and
+                                            (instance ?Z ?WHOLE)
+                                            (part ?X ?Z)))))))
+                    (greaterThan ?PARTPROB ?NOTPARTPROB))""";
 
-        String expected = "(=> \n" +
-                "  (and \n" +
-                "    (subclass ?WHOLE Object)\n" +
-                "    (instance ?NOTPARTPROB RealNumber)\n" +
-                "    (instance ?PARTPROB RealNumber)\n" +
-                "    (subclass ?PART Object)\n" +
-                "    (instance ?PART Class))\n" +
-                "  (=>\n" +
-                "    (and\n" +
-                "      (typicalPart ?PART ?WHOLE)\n" +
-                "      (instance ?X ?PART)\n" +
-                "      (equal ?PARTPROB\n" +
-                "        (ProbabilityFn\n" +
-                "          (exists (?Y)\n" +
-                "            (and\n" +
-                "              (instance ?Y Object)\n" +
-                "              (instance ?Y ?WHOLE)\n" +
-                "              (part ?X ?Y)))))\n" +
-                "      (equal ?NOTPARTPROB\n" +
-                "        (ProbabilityFn\n" +
-                "          (not\n" +
-                "            (exists (?Z)\n" +
-                "              (and\n" +
-                "                (instance ?Z Object)\n" +
-                "                (instance ?Z ?WHOLE)\n" +
-                "                (part ?X ?Z)))))))\n" +
-                "    (greaterThan ?PARTPROB ?NOTPARTPROB)))";
+        String expected = """
+                (=>
+                  (and
+                    (subclass ?WHOLE Object)
+                    (instance ?NOTPARTPROB RealNumber)
+                    (instance ?PARTPROB RealNumber)
+                    (subclass ?PART Object)
+                    (instance ?PART Class))
+                  (=>
+                    (and
+                      (typicalPart ?PART ?WHOLE)
+                      (instance ?X ?PART)
+                      (equal ?PARTPROB
+                        (ProbabilityFn
+                          (exists (?Y)
+                            (and
+                              (instance ?Y Object)
+                              (instance ?Y ?WHOLE)
+                              (part ?X ?Y)))))
+                      (equal ?NOTPARTPROB
+                        (ProbabilityFn
+                          (not
+                            (exists (?Z)
+                              (and
+                                (instance ?Z Object)
+                                (instance ?Z ?WHOLE)
+                                (part ?X ?Z)))))))
+                    (greaterThan ?PARTPROB ?NOTPARTPROB)))""";
 
         test("testAddTypeRestrictions8", stmt, expected);
     }
@@ -313,21 +342,23 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
     @Test
     public void testAddTypeRestrictions9() {
 
-        String stmt = "(<=>\n" +
-                "  (instance ?PHYS Physical)\n" +
-                "  (exists (?LOC ?TIME)\n" +
-                "    (and\n" +
-                "      (located ?PHYS ?LOC)\n" +
-                "      (time ?PHYS ?TIME))))";
+        String stmt = """
+                (<=>
+                  (instance ?PHYS Physical)
+                  (exists (?LOC ?TIME)
+                    (and
+                      (located ?PHYS ?LOC)
+                      (time ?PHYS ?TIME))))""";
 
-        String expected = "(<=>\n" +
-                "  (instance ?PHYS Physical)\n" +
-                "  (exists (?LOC ?TIME)\n" +
-                "    (and\n" +
-                "      (instance ?LOC Object)\n" +
-                "      (instance ?TIME TimePosition)\n" +
-                "      (located ?PHYS ?LOC)\n" +
-                "      (time ?PHYS ?TIME))))";
+        String expected = """
+                (<=>
+                  (instance ?PHYS Physical)
+                  (exists (?LOC ?TIME)
+                    (and
+                      (instance ?LOC Object)
+                      (instance ?TIME TimePosition)
+                      (located ?PHYS ?LOC)
+                      (time ?PHYS ?TIME))))""";
 
         test("testAddTypeRestrictions9", stmt, expected);
     }
@@ -335,25 +366,27 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
     @Test
     public void testAddTypeRestrictions10() {
 
-        String stmt = "(=>\n" +
-                "  (instance ?GROUP BeliefGroup)\n" +
-                "  (exists (?BELIEF)\n" +
-                "    (forall (?MEMB)\n" +
-                "      (=>\n" +
-                "        (member ?MEMB ?GROUP)\n" +
-                "        (believes ?MEMB ?BELIEF)))))";
+        String stmt = """
+                (=>
+                  (instance ?GROUP BeliefGroup)
+                  (exists (?BELIEF)
+                    (forall (?MEMB)
+                      (=>
+                        (member ?MEMB ?GROUP)
+                        (believes ?MEMB ?BELIEF)))))""";
 
-        String expected = "(=>\n" +
-                "  (instance ?GROUP BeliefGroup)\n" +
-                "  (exists (?BELIEF)\n" +
-                "    (and\n" +
-                "      (instance ?BELIEF Formula)\n" +
-                "      (forall (?MEMB)\n" +
-                "        (=>\n" +
-                "          (instance ?MEMB CognitiveAgent)\n" +
-                "          (=>\n" +
-                "            (member ?MEMB ?GROUP)\n" +
-                "            (believes ?MEMB ?BELIEF) ))))))";
+        String expected = """
+                (=>
+                  (instance ?GROUP BeliefGroup)
+                  (exists (?BELIEF)
+                    (and
+                      (instance ?BELIEF Formula)
+                      (forall (?MEMB)
+                        (=>
+                          (instance ?MEMB CognitiveAgent)
+                          (=>
+                            (member ?MEMB ?GROUP)
+                            (believes ?MEMB ?BELIEF) ))))))""";
 
         test("testAddTypeRestrictions10", stmt, expected);
     }
@@ -361,25 +394,27 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
     @Test
     public void testAddTypeRestrictions11() {
 
-        String stmt = "(<=>\n" +
-                "  (instance ?OBJ SelfConnectedObject)\n" +
-                "  (forall (?PART1 ?PART2)\n" +
-                "  (=>\n" +
-                "    (equal ?OBJ\n" +
-                "      (MereologicalSumFn ?PART1 ?PART2))\n" +
-                "    (connected ?PART1 ?PART2))))";
+        String stmt = """
+                (<=>
+                  (instance ?OBJ SelfConnectedObject)
+                  (forall (?PART1 ?PART2)
+                  (=>
+                    (equal ?OBJ
+                      (MereologicalSumFn ?PART1 ?PART2))
+                    (connected ?PART1 ?PART2))))""";
 
-        String expected = "(<=>\n" +
-                "  (instance ?OBJ SelfConnectedObject)\n" +
-                "  (forall (?PART1 ?PART2)\n" +
-                "    (=>\n" +
-                "      (and\n" +
-                "        (instance ?PART1 Object)\n" +
-                "        (instance ?PART2 Object))\n" +
-                "      (=>\n" +
-                "        (equal ?OBJ\n" +
-                "          (MereologicalSumFn ?PART1 ?PART2))\n" +
-                "        (connected ?PART1 ?PART2) ))))";
+        String expected = """
+                (<=>
+                  (instance ?OBJ SelfConnectedObject)
+                  (forall (?PART1 ?PART2)
+                    (=>
+                      (and
+                        (instance ?PART1 Object)
+                        (instance ?PART2 Object))
+                      (=>
+                        (equal ?OBJ
+                          (MereologicalSumFn ?PART1 ?PART2))
+                        (connected ?PART1 ?PART2) ))))""";
 
         test("testAddTypeRestrictions11", stmt, expected);
     }
@@ -389,33 +424,35 @@ public class FormulaPreprocessorAddTypeRestrictionsITCase extends IntegrationTes
     public void testAddTypeRestrictions12() {
 
         SUMOformulaToTPTPformula.debug = true;
-        String stmt = "(=>\n" +
-                "  (and\n" +
-                "    (instance ?S ?C)\n" +
-                "    (subclass ?C Seafood))\n" +
-                "  (exists (?X ?SEA)\n" +
-                "    (and\n" +
-                "      (meatOfAnimal ?C ?ANIMAL)\n" +
-                "      (instance ?X ?ANIMAL)\n" +
-                "      (instance ?SEA BodyOfWater)\n" +
-                "      (inhabits ?X ?SEA))))";
+        String stmt = """
+                (=>
+                  (and
+                    (instance ?S ?C)
+                    (subclass ?C Seafood))
+                  (exists (?X ?SEA)
+                    (and
+                      (meatOfAnimal ?C ?ANIMAL)
+                      (instance ?X ?ANIMAL)
+                      (instance ?SEA BodyOfWater)
+                      (inhabits ?X ?SEA))))""";
 
-        String expected = "(=>\n" +
-                "  (and\n" +
-                "    (instance ?S Meat)\n" +
-                "    (subclass ?ANIMAL Animal)\n" +
-                "    (subclass ?C Meat)\n" +
-                "    (instance ?ANIMAL Class))\n" +
-                "  (=>\n" +
-                "  (and\n" +
-                "    (instance ?S ?C)\n" +
-                "    (subclass ?C Seafood))\n" +
-                "  (exists (?X ?SEA)\n" +
-                "    (and\n" +
-                "      (meatOfAnimal ?C ?ANIMAL)\n" +
-                "      (instance ?X ?ANIMAL)\n" +
-                "      (instance ?SEA BodyOfWater)\n" +
-                "      (inhabits ?X ?SEA)))))";
+        String expected = """
+                (=>
+                  (and
+                    (instance ?S Meat)
+                    (subclass ?ANIMAL Animal)
+                    (subclass ?C Meat)
+                    (instance ?ANIMAL Class))
+                  (=>
+                  (and
+                    (instance ?S ?C)
+                    (subclass ?C Seafood))
+                  (exists (?X ?SEA)
+                    (and
+                      (meatOfAnimal ?C ?ANIMAL)
+                      (instance ?X ?ANIMAL)
+                      (instance ?SEA BodyOfWater)
+                      (inhabits ?X ?SEA)))))""";
 
         test("testAddTypeRestrictions12", stmt, expected);
     }

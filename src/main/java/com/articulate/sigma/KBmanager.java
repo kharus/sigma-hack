@@ -28,6 +28,7 @@ import com.articulate.sigma.wordnet.WordNet;
 import py4j.GatewayServer;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -64,7 +65,13 @@ public class KBmanager implements Serializable {
     public Prover prover = Prover.VAMPIRE;
     private String error = "";
 
+    private transient KBConfigProperties kbConfigProperties;
+
     public KBmanager() {
+    }
+
+    public void setKbConfigProperties(KBConfigProperties kbConfigProperties) {
+        this.kbConfigProperties = kbConfigProperties;
     }
 
     /**
@@ -676,9 +683,11 @@ public class KBmanager implements Serializable {
      * configuration file, or uses the default parameters.
      */
     public void initializeOnce() {
-        System.out.println("Info in KBmanager.initializeOnce()");
-        String base = System.getenv("SIGMA_HOME");
-        initializeOnce(base + File.separator + "KBs");
+        Path base = kbConfigProperties.getSigmaHome();
+        String configFileDir = base.resolve("KBs").toString();
+        SimpleElement configuration = readConfiguration(configFileDir);
+
+        initializeOnce(configFileDir, configuration);
     }
 
     /**
@@ -687,7 +696,7 @@ public class KBmanager implements Serializable {
      * configFileDir is not null and a configuration file can be read
      * from the directory, reinitialization is forced.
      */
-    public void initializeOnce(String configFileDir) {
+    public void initializeOnce(String configFileDir, SimpleElement configuration) {
 
         long millis = System.currentTimeMillis();
         boolean loaded = false;
@@ -703,7 +712,6 @@ public class KBmanager implements Serializable {
                 preferences.keySet().size());
         try {
             System.out.println("Info in KBmanager.initializeOnce(): initializing with " + configFileDir);
-            SimpleElement configuration = readConfiguration(configFileDir);
             if (configuration == null)
                 throw new Exception("Error reading configuration file in KBmanager.initializeOnce()");
             if (serializedExists() && !serializedOld(configuration)) {

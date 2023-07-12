@@ -965,7 +965,7 @@ public class KB implements Serializable {
                 if (counter++ % 10 == 0)
                     System.out.print(".");
                 if (counter % 400 == 0)
-                    System.out.print("\nINFO in KB.checkArity(): Still performing Arity Check");
+                    System.out.printf("%nINFO in KB.checkArity(): Still performing Arity Check. %d%% done.%n", counter*100/formulaMap.size());
                 String term = PredVarInst.hasCorrectArity(f, this);
                 if (!StringUtil.emptyString(term)) {
                     errors.add("Formula in " + f.sourceFile + " rejected due to arity error of predicate " + term
@@ -2185,8 +2185,10 @@ public class KB implements Serializable {
                 String lang = "tff";
                 if (SUMOKBtoTPTPKB.lang.equals("fof"))
                     lang = "tptp";
-                else
-                    SUMOtoTFAform.initOnce();
+                else {
+                    KB kb1 = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+                    SUMOtoTFAform.initOnce(kb1);
+                }
                 System.out.println("KB.askVampire(): lang: " + lang);
                 File s = new File(dir + kbName + "." + lang);
                 if (!s.exists()) {
@@ -3602,7 +3604,7 @@ public class KB implements Serializable {
                     } else {
                         SUMOKBtoTFAKB stff = new SUMOKBtoTFAKB();
                         stff.kb = this;
-                        SUMOtoTFAform.initOnce();
+                        SUMOtoTFAform.initOnce(this);
                         PrintWriter pw = new PrintWriter(new FileWriter(infFilename));
                         stff.writeSorts(pw);
                         stff.writeFile(infFilename, null, false, pw);

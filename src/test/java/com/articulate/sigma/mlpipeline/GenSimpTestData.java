@@ -84,8 +84,8 @@ public class GenSimpTestData {
     public static List<String> others = new ArrayList<>(); // when next noun is same as a previous one
     public static Map<String, String> prepPhrase = new HashMap<>();
 
-    public GenSimpTestData() {
-
+    public GenSimpTestData(KB localKb) {
+        kb = localKb;
         initNumbers();
         initRequests();
         initAttitudes();
@@ -689,6 +689,8 @@ public class GenSimpTestData {
     public static void main(String[] args) {
 
         KBmanager.prefOverride.put("TPTP", "no");
+        KBmanager.getMgr().initializeOnce();
+        kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
         try {
             if (args == null || args.length == 0 || args[0].equals("-h"))
                 showHelp();
@@ -709,7 +711,7 @@ public class GenSimpTestData {
                 if (args != null && args.length > 1 && args[0].equals("-s")) { // create NL/logic synthetically
                     if (args.length > 2)
                         sentMax = Integer.parseInt(args[2]);
-                    GenSimpTestData gstd = new GenSimpTestData();
+                    GenSimpTestData gstd = new GenSimpTestData(kb);
                     gstd.runGenSentence();
                     englishFile.close();
                     logicFile.close();
@@ -720,7 +722,7 @@ public class GenSimpTestData {
                     logicFile.close();
                 }
                 if (args != null && args.length > 0 && args[0].equals("-u")) {
-                    GenSimpTestData gstd = new GenSimpTestData();
+                    GenSimpTestData gstd = new GenSimpTestData(kb);
                 }
                 if (args != null && args.length > 0 && args[0].equals("-a")) { // generate NL/logic for all existing axioms
                     allAxioms();
@@ -732,16 +734,8 @@ public class GenSimpTestData {
                 if (args != null && args.length > 0 && args[0].equals("-hu"))
                     generateAllHumans();
                 if (args != null && args.length > 0 && args[0].equals("-t")) {
-                    //testTypes();
-                    //testNLG();
-                    //testGiving();
+                    GenSimpTestData gstd = new GenSimpTestData(kb);
 
-                    //testPutting();
-                    //testToy();
-                    //testProgressPrint();
-                    GenSimpTestData gstd = new GenSimpTestData();
-                    KBmanager.getMgr().initializeOnce();
-                    kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
                     String word = "Sheep";
                     System.out.println("exceptions: " + WordNet.wn.exceptionNounPluralHash);
                     for (int i = 0; i < 10; i++)
@@ -753,8 +747,6 @@ public class GenSimpTestData {
                     lfeat.framePart = lfeat.frame;
                     System.out.println("frame: ");
                     getPrepFromFrame(lfeat);
-                    //gstd.testVerbs();
-                    //gstd.testLFeatures();
                 }
                 if (args != null && args.length > 1 && args[0].equals("-n")) {
                     genTermFormatFromNames(args[1]);
@@ -2348,12 +2340,7 @@ public class GenSimpTestData {
      */
     public void genProcTable() {
 
-        System.out.println("GenSimpTestData.genProcTable(): start");
-        KBmanager.getMgr().initializeOnce();
-        kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
         Collection<Capability> caps = collectCapabilities();
-        //System.out.println("GenSimpTestData.genProcTable(): " + caps.size() + " capability entries");
-        //System.out.println(caps);
         extendCapabilities(caps);
     }
 
