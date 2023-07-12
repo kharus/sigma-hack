@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
 import java.io.*;
+import java.nio.file.Path;
 
 import static com.articulate.sigma.SigmaTestBase.checkConfiguration;
 
@@ -12,25 +13,43 @@ import static com.articulate.sigma.SigmaTestBase.checkConfiguration;
 public class KBmanagerTestConfiguration {
     @Bean
     @Profile("TopOnly")
-    public KBmanager kbManager(KBConfigProperties kbConfigProperties) {
-        System.out.println("KBmanagerTestConfiguration.kbManager");
+    public KBmanager kbManagerTop(KBConfigProperties kbConfigProperties) {
         try (InputStream is = getClass().getClassLoader().getResourceAsStream("config_topOnly.xml");
              Reader reader = new BufferedReader(new InputStreamReader(is))) {
 
-            if (!KBmanager.initialized) {
-                SimpleDOMParser sdp = new SimpleDOMParser();
-                SimpleElement configuration = sdp.parse(reader);
+            SimpleDOMParser sdp = new SimpleDOMParser();
+            SimpleElement configuration = sdp.parse(reader);
 
-                KBmanager.getMgr().setKbConfigProperties(kbConfigProperties);
-                KBmanager.getMgr().setDefaultAttributes();
-                KBmanager.getMgr().setConfiguration(configuration);
-                KBmanager.initialized = true;
-            }
+            Path base = kbConfigProperties.getSigmaHome();
+            String configFileDir = base.resolve("KBs").toString();
+
+            KBmanager.getMgr().initializeOnce(configFileDir, configuration);
+
             checkConfiguration();
             return KBmanager.getMgr();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @Bean
+    @Profile("MidLevel")
+    public KBmanager kbManagerMilo(KBConfigProperties kbConfigProperties) {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream("config_all.xml");
+             Reader reader = new BufferedReader(new InputStreamReader(is))) {
+
+            SimpleDOMParser sdp = new SimpleDOMParser();
+            SimpleElement configuration = sdp.parse(reader);
+
+            Path base = kbConfigProperties.getSigmaHome();
+            String configFileDir = base.resolve("KBs").toString();
+
+            KBmanager.getMgr().initializeOnce(configFileDir, configuration);
+
+            checkConfiguration();
+            return KBmanager.getMgr();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

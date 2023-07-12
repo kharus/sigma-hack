@@ -8,10 +8,11 @@ package com.articulate.sigma.trans;
 
 import com.articulate.sigma.*;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -22,14 +23,24 @@ import java.util.List;
 import static junit.framework.TestCase.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 @Tag("com.articulate.sigma.MidLevel")
-public class SUMOtoTFAformITCase extends IntegrationTestBase {
+@ActiveProfiles("MidLevel")
+@Import(KBmanagerTestConfiguration.class)
+public class SUMOtoTFAformITCase {
 
     private static SUMOKBtoTFAKB skbtfakb = null;
 
-    @BeforeAll
-    public static void init() {
+    private KB kb;
 
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+
+        // WAS BeforeAll
         SUMOtoTFAform.initOnce(kb);
         if (!kb.containsFile("Merge.kif") || !kb.containsFile("Mid-level-ontology.kif"))
             System.out.println("!!!!!!!! error in init(): missing KB files !!!!!!!!!!!!");

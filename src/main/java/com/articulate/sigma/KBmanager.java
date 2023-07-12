@@ -684,7 +684,10 @@ public class KBmanager implements Serializable {
      */
     public void initializeOnce() {
         Path base = kbConfigProperties.getSigmaHome();
-        initializeOnce(base.resolve("KBs").toString());
+        String configFileDir = base.resolve("KBs").toString();
+        SimpleElement configuration = readConfiguration(configFileDir);
+
+        initializeOnce(configFileDir, configuration);
     }
 
     /**
@@ -693,7 +696,7 @@ public class KBmanager implements Serializable {
      * configFileDir is not null and a configuration file can be read
      * from the directory, reinitialization is forced.
      */
-    public void initializeOnce(String configFileDir) {
+    public void initializeOnce(String configFileDir, SimpleElement configuration) {
 
         long millis = System.currentTimeMillis();
         boolean loaded = false;
@@ -709,7 +712,6 @@ public class KBmanager implements Serializable {
                 preferences.keySet().size());
         try {
             System.out.println("Info in KBmanager.initializeOnce(): initializing with " + configFileDir);
-            SimpleElement configuration = readConfiguration(configFileDir);
             if (configuration == null)
                 throw new Exception("Error reading configuration file in KBmanager.initializeOnce()");
             if (serializedExists() && !serializedOld(configuration)) {
