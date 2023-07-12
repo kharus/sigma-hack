@@ -1,8 +1,4 @@
 InferenceITCase.java
-HtmlParaphraseIntegrationITCase.java
-SUMOtoTFAKBITCase.java
-VerbNetITCase.java
 
 # Were disabled in UnitNLGTestSuite
-HtmlParaphraseITCase
 HtmlParaphraseMockITCase
