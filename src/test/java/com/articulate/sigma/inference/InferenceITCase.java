@@ -4,8 +4,8 @@ import com.articulate.sigma.InferenceTestSuite;
 import com.articulate.sigma.KB;
 import com.articulate.sigma.KBmanager;
 import com.google.common.collect.Lists;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
 public class InferenceITCase {
@@ -26,7 +26,7 @@ public class InferenceITCase {
     @Parameterized.Parameter(value = 0)
     public String fInput;
 
-    @BeforeClass
+    @BeforeAll
     public static void setKB() {
 
         KBmanager.getMgr().initializeOnce();
@@ -48,15 +48,15 @@ public class InferenceITCase {
         boolean enableIncludeTestsList = false;   // If enableIncludeTestsList=true, only run test files in includeTestsList
         boolean enableExcludeTestsList = false;   // If enableIncludeTestsList=false & enableExcludeTestsList=true, only run test files NOT in excludeTestsLists
         // If enableIncludeTestsList=false & enableExcludeTestsList=false, run all test files in InferenceITCaseData
-        ArrayList<String> includeTestsList = Lists.newArrayList("QA1");
-        ArrayList<String> excludeTestsList = Lists.newArrayList("TQG2", "TQG4", "TQG10");
+        List<String> includeTestsList = Lists.newArrayList("QA1");
+        List<String> excludeTestsList = Lists.newArrayList("TQG2", "TQG4", "TQG10");
         return getTestFiles(testDataDirectoryPath, includeTestsList, enableIncludeTestsList,
                 excludeTestsList, enableExcludeTestsList);
     }
 
     public static <T> Collection<T> getTestFiles(String testDataDirectoryPath,
-                                                 ArrayList<String> includeTestsList, boolean enableIncludeTestsList,
-                                                 ArrayList<String> excludeTestsList, boolean enableExcludeTestsList) {
+                                                 List<String> includeTestsList, boolean enableIncludeTestsList,
+                                                 List<String> excludeTestsList, boolean enableExcludeTestsList) {
 
         Collection<T> result = Lists.newArrayList();
         File folder = new File(testDataDirectoryPath);
@@ -92,8 +92,8 @@ public class InferenceITCase {
     public void test() {
 
         System.out.println("InferenceITCase.test(): " + fInput);
-        ArrayList<String> expectedAnswers = new ArrayList<>();
-        ArrayList<String> actualAnswers = new ArrayList<>();
+        List<String> expectedAnswers = new ArrayList<>();
+        List<String> actualAnswers = new ArrayList<>();
         InferenceTestSuite its = new InferenceTestSuite();
         InferenceTestSuite.InfTestData itd = its.inferenceUnitTest(fInput, kb);
         System.out.println("expected: " + itd.expectedAnswers);
@@ -105,6 +105,6 @@ public class InferenceITCase {
         else
             System.out.println("Failure in " + fInput);
         System.out.println("\n\n");
-        assertEquals(itd.expectedAnswers, itd.actualAnswers);
+        assertThat(itd.actualAnswers).isEqualTo(itd.expectedAnswers);
     }
 }

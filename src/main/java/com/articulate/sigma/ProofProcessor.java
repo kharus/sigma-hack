@@ -33,15 +33,15 @@ import java.util.regex.Pattern;
 public class ProofProcessor {
 
     /**
-     * An ArrayList of BasicXMLelement (s).
+     * An List of BasicXMLelement (s).
      */
-    private ArrayList<BasicXMLelement> xml = null;
+    private List<BasicXMLelement> xml = null;
 
     /**
-     * Take an ArrayList of BasicXMLelement (s) and process them as
+     * Take an List of BasicXMLelement (s) and process them as
      * needed
      */
-    public ProofProcessor(ArrayList<BasicXMLelement> xmlInput) {
+    public ProofProcessor(List<BasicXMLelement> xmlInput) {
 
         xml = new ArrayList<BasicXMLelement>(xmlInput);
     }
@@ -53,7 +53,7 @@ public class ProofProcessor {
      * one without, for example: sk2
      * We need to find either of these in the proofs to see what relationship it goes into
      */
-    public static ArrayList<String> returnSkolemStmt(String skolem, ArrayList<TPTPFormula> proofSteps) {
+    public static List<String> returnSkolemStmt(String skolem, List<TPTPFormula> proofSteps) {
 
         if (skolem.startsWith("(") && skolem.endsWith(")"))
             skolem = skolem.substring(1, skolem.length() - 1);
@@ -61,7 +61,7 @@ public class ProofProcessor {
         Pattern pattern = Pattern.compile("(\\([^\\(|.]*?\\(" + skolem + " .+?\\).*?\\)|\\([^\\(|.]*?" + skolem + "[^\\)|.]*?\\))");
         Matcher match;
 
-        ArrayList<String> matches = new ArrayList<String>();
+        List<String> matches = new ArrayList<String>();
         for (int i = 0; i < proofSteps.size(); i++) {
             TPTPFormula step = proofSteps.get(i);
             match = pattern.matcher(step.sumo);
@@ -105,7 +105,7 @@ public class ProofProcessor {
             }
         }
         boolean connective = relation.equals("or") || relation.equals("and");
-        ArrayList<Formula> arglist = new ArrayList<Formula>();
+        List<Formula> arglist = new ArrayList<Formula>();
         int arg = 1;
         boolean foundAnswer = false;
         String strArgs = "";
@@ -152,7 +152,7 @@ public class ProofProcessor {
     /**
      * Convert XML proof to TPTP format
      */
-    public static String tptpProof(ArrayList<ProofStep> proofSteps) {
+    public static String tptpProof(List<ProofStep> proofSteps) {
 
         StringBuffer result = new StringBuffer();
         try {
@@ -204,8 +204,8 @@ public class ProofProcessor {
      */
     public static void tallyAxioms(String file) {
 
-        HashMap<String, String> axioms = new HashMap<>();
-        HashMap<String, Integer> counts = new HashMap<>();
+        Map<String, String> axioms = new HashMap<>();
+        Map<String, Integer> counts = new HashMap<>();
         LineNumberReader lr = null;
         try {
             String line;
@@ -278,11 +278,11 @@ public class ProofProcessor {
         try {
             KBmanager.getMgr().initializeOnce();
             KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-            List<String> lines = TPTP3ProofProcessor.joinLines((ArrayList<String>) FileUtil.readLines(filename, false));
+            List<String> lines = TPTP3ProofProcessor.joinLines(FileUtil.readLines(filename, false));
             String query = "";
             StringBuffer answerVars = new StringBuffer();
             TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
-            tpp.parseProofOutput((ArrayList<String>) lines, query, kb, answerVars);
+            tpp.parseProofOutput(lines, query, kb, answerVars);
             String result = HTMLformatter.formatTPTP3ProofResult(tpp, "", "<hr>\n",
                     KBmanager.getMgr().getPref("sumokbname"), "EnglishLanguage");
             System.out.println(result);
@@ -326,7 +326,7 @@ public class ProofProcessor {
     public boolean equalsAnswer(int answerNum, String expectedAnswer) {
 
         StringBuffer result = new StringBuffer();
-        ArrayList<BasicXMLelement> queryResponseElements = xml.get(0).subelements;
+        List<BasicXMLelement> queryResponseElements = xml.get(0).subelements;
         BasicXMLelement answer = queryResponseElements.get(answerNum);
         if (answer.attributes.get("result").equalsIgnoreCase("no"))
             return false;

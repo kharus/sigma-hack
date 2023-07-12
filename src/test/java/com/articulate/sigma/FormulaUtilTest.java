@@ -1,10 +1,10 @@
 package com.articulate.sigma;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class FormulaUtilITCase {
+public class FormulaUtilTest {
 
     @Test
     public void testToProlog() {
@@ -13,7 +13,7 @@ public class FormulaUtilITCase {
         Formula f = new Formula(stmt);
         String result = FormulaUtil.toProlog(f);
         System.out.println("FormulaUtilITCase.testToProlog(): " + result);
-        assertEquals("birthplace(?animal,?LOC)", result);
+        assertThat(result).isEqualTo("birthplace(?animal,?LOC)");
     }
 
 }

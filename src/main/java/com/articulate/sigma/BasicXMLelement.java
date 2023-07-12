@@ -15,9 +15,7 @@
 
 package com.articulate.sigma;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * A class designed to mirror the information in a basic XML tag.
@@ -31,12 +29,12 @@ public class BasicXMLelement {
     /**
      * The attributes of the tag in key=value form
      */
-    public HashMap<String, String> attributes = new HashMap<String, String>();
+    public Map<String, String> attributes = new HashMap<String, String>();
     /**
      * Any subelements of the tag, meaning any other
      * tags that are nested within this one.
      */
-    public ArrayList<BasicXMLelement> subelements = new ArrayList<BasicXMLelement>();
+    public List<BasicXMLelement> subelements = new ArrayList<BasicXMLelement>();
     /**
      * The contents between the start and end of this tag
      */

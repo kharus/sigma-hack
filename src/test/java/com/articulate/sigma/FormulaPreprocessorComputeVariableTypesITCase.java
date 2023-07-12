@@ -3,18 +3,38 @@ package com.articulate.sigma;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * FormulaPreprocessor tests focused on computeVariableTypes().
  */
-public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase {
+@SpringBootTest
+@Tag("com.articulate.sigma.TopOnly")
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class FormulaPreprocessorComputeVariableTypesITCase {
+
+    private KB kb;
+
+    @Autowired
+    private KBmanager kBManager;
+
+    @BeforeEach
+    void init() {
+        kb = kBManager.getKB(kBManager.getPref("sumokbname"));
+    }
 
     @Test
     public void testComputeVariableTypesNoVariables() {
@@ -23,11 +43,11 @@ public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase 
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        HashMap<String, HashSet<String>> expected = new HashMap<>();
+        Map<String, Set<String>> expected = new HashMap<>();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -37,13 +57,13 @@ public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase 
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        HashSet<String> set = Sets.newHashSet("Entity");
-        HashMap<String, HashSet<String>> expected = Maps.newHashMap();
+        Set<String> set = Sets.newHashSet("Entity");
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?H", set);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -57,15 +77,15 @@ public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase 
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("AutonomousAgent");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("AutonomousAgent");
         expected.put("?H", set1);
-        HashSet<String> set2 = Sets.newHashSet("Process");
+        Set<String> set2 = Sets.newHashSet("Process");
         expected.put("?D", set2);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     /**
@@ -81,39 +101,40 @@ public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase 
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("AutonomousAgent");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("AutonomousAgent");
         expected.put("?H", set1);
-        HashSet<String> set2 = Sets.newHashSet("Process");
+        Set<String> set2 = Sets.newHashSet("Process");
         expected.put("?D", set2);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testComputeVariableTypesInstanceAgentInstrument() {
-        String stmt = "(exists (?D ?H ?Car)\n" +
-                "           (and\n" +
-                "               (instance ?D Driving)\n" +
-                "               (instance ?H Human)\n" +
-                "               (names \"John\" ?H)\n" +
-                "               (instance ?Car Automobile)\n" +
-                "               (agent ?D ?H)\n" +
-                "               (patient ?D ?Car)))";
+        String stmt = """
+                (exists (?D ?H ?Car)
+                           (and
+                               (instance ?D Driving)
+                               (instance ?H Human)
+                               (names "John" ?H)
+                               (instance ?Car Automobile)
+                               (agent ?D ?H)
+                               (patient ?D ?Car)))""";
         Formula f = new Formula();
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?H", Sets.newHashSet("AutonomousAgent"));
         expected.put("?D", Sets.newHashSet("Process"));
         expected.put("?Car", Sets.newHashSet("Entity"));
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -128,17 +149,17 @@ public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase 
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Set");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Set");
         expected.put("?SET1", set1);
-        HashSet<String> set2 = Sets.newHashSet("Set");
+        Set<String> set2 = Sets.newHashSet("Set");
         expected.put("?SET2", set2);
-        HashSet<String> setElement = Sets.newHashSet("Entity");
+        Set<String> setElement = Sets.newHashSet("Entity");
         expected.put("?ELEMENT", setElement);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -148,13 +169,13 @@ public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase 
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Class");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Class");
         expected.put("?Cougar", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -166,13 +187,13 @@ public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase 
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Month+");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Month+");
         expected.put("?M", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -185,13 +206,13 @@ public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase 
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("GeopoliticalArea");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("GeopoliticalArea");
         expected.put("?Place", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -203,18 +224,18 @@ public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase 
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Class");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Class");
         expected.put("?Cougar", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testComputeVariableTypesLowTerrain() {
-        Map<String, HashSet<String>> expected = ImmutableMap.of("?ZONE", Sets.newHashSet("Object"),
+        Map<String, Set<String>> expected = ImmutableMap.of("?ZONE", Sets.newHashSet("Object"),
                 "?SLOPE", Sets.newHashSet("RealNumber"), "?AREA", Sets.newHashSet("Object"));
 
         String stmt = "(=> (and (attribute ?AREA LowTerrain) (part ?ZONE ?AREA)" +
@@ -222,15 +243,15 @@ public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase 
         Formula f = new Formula();
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actualMap = fp.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
-        assertEquals(expected, actualMap);
+        assertThat(actualMap).isEqualTo(expected);
 
     }
 
     @Test
     public void testComputeVariableTypesIfAndOnlyIfTransitiveRelation() {
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?REL", Sets.newHashSet("Entity"));
 
         String stmt = "(<=> (instance ?REL TransitiveRelation) " +
@@ -240,16 +261,16 @@ public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase 
         Formula f = new Formula();
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
-        System.out.println("Var types: " + fp.computeVariableTypes(f, SigmaTestBase.kb));
+        System.out.println("Var types: " + fp.computeVariableTypes(f, kb));
 
-        HashMap<String, HashSet<String>> actualMap = fp.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
-        assertEquals(expected, actualMap);
+        assertThat(actualMap).isEqualTo(expected);
     }
 
     @Test
     public void testComputeVariableTypesForAllElementSet() {
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?SET2", Sets.newHashSet("Set"));
         expected.put("?SET1", Sets.newHashSet("Set"));
         expected.put("?ELEMENT", Sets.newHashSet("Entity"));
@@ -260,36 +281,37 @@ public class FormulaPreprocessorComputeVariableTypesITCase extends UnitTestBase 
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
         System.out.println("Formula: " + f);
-        System.out.println("Var types: " + fp.computeVariableTypes(f, SigmaTestBase.kb));
+        System.out.println("Var types: " + fp.computeVariableTypes(f, kb));
 
-        HashMap<String, HashSet<String>> actualMap = fp.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
-        assertEquals(expected, actualMap);
+        assertThat(actualMap).isEqualTo(expected);
     }
 
     @Test
     public void testComputeVariableTypesAwake() {
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?HUMAN", Sets.newHashSet("AutonomousAgent"));
         expected.put("?PROC", Sets.newHashSet("Process"));
 
-        String stmt = "(=>\n" +
-                "           (and\n" +
-                "               (instance ?PROC IntentionalProcess)\n" +
-                "               (agent ?PROC ?HUMAN)\n" +
-                "               (instance ?HUMAN Animal))\n" +
-                "           (holdsDuring\n" +
-                "               (WhenFn ?PROC)\n" +
-                "               (attribute ?HUMAN Awake)))";
+        String stmt = """
+                (=>
+                           (and
+                               (instance ?PROC IntentionalProcess)
+                               (agent ?PROC ?HUMAN)
+                               (instance ?HUMAN Animal))
+                           (holdsDuring
+                               (WhenFn ?PROC)
+                               (attribute ?HUMAN Awake)))""";
         Formula f = new Formula(stmt);
 
         FormulaPreprocessor fp = new FormulaPreprocessor();
         System.out.println("Formula: " + f);
-        System.out.println("Var types: " + fp.computeVariableTypes(f, SigmaTestBase.kb));
+        System.out.println("Var types: " + fp.computeVariableTypes(f, kb));
 
-        HashMap<String, HashSet<String>> actualMap = fp.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
-        assertEquals(expected, actualMap);
+        assertThat(actualMap).isEqualTo(expected);
     }
 
 }

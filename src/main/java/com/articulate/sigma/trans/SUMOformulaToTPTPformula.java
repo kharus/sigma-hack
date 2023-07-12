@@ -220,7 +220,7 @@ public class SUMOformulaToTPTPformula {
     }
 
     private static String processQuant(Formula f, Formula car, String op,
-                                       ArrayList<String> args) {
+                                       List<String> args) {
 
         if (debug) System.out.println("SUMOformulaToTPTPformula.processQuant(): quantifier");
         if (args.size() < 2) {
@@ -231,7 +231,7 @@ public class SUMOformulaToTPTPformula {
             if (args.get(0) != null) {
                 //if (debug) System.out.println("SUMOtoTFAform.processQuant(): valid varlist: " + args.get(0));
                 Formula varlist = new Formula(args.get(0));
-                ArrayList<String> vars = varlist.argumentsToArrayListString(0);
+                List<String> vars = varlist.argumentsToArrayListString(0);
                 //if (debug) System.out.println("SUMOformulaToTPTPformula.processRecurse(): valid vars: " + vars);
                 StringBuffer varStr = new StringBuffer();
                 for (String v : vars) {
@@ -253,7 +253,7 @@ public class SUMOformulaToTPTPformula {
     }
 
     private static String processConjDisj(Formula f, Formula car,
-                                          ArrayList<String> args) {
+                                          List<String> args) {
 
         String op = car.getFormula();
         if (args.size() < 2) {
@@ -272,7 +272,7 @@ public class SUMOformulaToTPTPformula {
         return sb.toString();
     }
 
-    public static String processLogOp(Formula f, Formula car, ArrayList<String> args) {
+    public static String processLogOp(Formula f, Formula car, List<String> args) {
 
         String op = car.getFormula();
         if (debug) System.out.println("processLogOp(): op: " + op);
@@ -317,7 +317,7 @@ public class SUMOformulaToTPTPformula {
         return "";
     }
 
-    public static String processEquals(Formula f, Formula car, ArrayList<String> args) {
+    public static String processEquals(Formula f, Formula car, List<String> args) {
 
         String op = car.getFormula();
         if (args.size() != 2) {
@@ -346,7 +346,7 @@ public class SUMOformulaToTPTPformula {
         Formula car = f.carAsFormula();
         //System.out.println("SUMOformulaToTPTPformula.processRecurse(): car: " + car);
         //System.out.println("SUMOformulaToTPTPformula.processRecurse(): car: " + car.theFormula);
-        ArrayList<String> args = f.complexArgumentsToArrayListString(1);
+        List<String> args = f.complexArgumentsToArrayListString(1);
         if (car.listP()) {
             System.out.println("Error in SUMOformulaToTPTPformula.processRecurse(): formula " + f);
             return "";
@@ -383,7 +383,7 @@ public class SUMOformulaToTPTPformula {
      */
     public static void generateQList(Formula f) {
 
-        HashSet<String> UqVars = f.collectUnquantifiedVariables();
+        Set<String> UqVars = f.collectUnquantifiedVariables();
         qlist = new StringBuffer();
         for (String s : UqVars) {
             String oneVar = SUMOformulaToTPTPformula.translateWord(s, s.charAt(0), false);

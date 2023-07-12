@@ -22,7 +22,6 @@ import com.articulate.sigma.utils.StringUtil;
 import tptp_parser.TPTPFormula;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -198,7 +197,7 @@ public class TPTPutil {
 
         //System.out.println("\nTPTPutil.citation: sumoStep: " + sumoStep);
         //System.out.println("TPTPutil.citation: stepName: " + stepName);
-        ArrayList<Formula> ciAxioms = kb.ask("arg", 0, "containsFormula");
+        List<Formula> ciAxioms = kb.ask("arg", 0, "containsFormula");
         //System.out.println("TPTPutil.citation: formulas: " + ciAxioms);
         for (Formula f : ciAxioms) {
             Formula arg = f.getArgument(2);
@@ -218,7 +217,7 @@ public class TPTPutil {
      */
     public static String getCitationString(String sumoStep, String stepName, KB kb) {
 
-        ArrayList<Formula> ciAxioms = kb.ask("arg", 0, "containsFormula");
+        List<Formula> ciAxioms = kb.ask("arg", 0, "containsFormula");
         //System.out.println("TPTPutil.getCitationString: stepName: " + stepName);
         //System.out.println("TPTPutil.getCitationString: sumo: " + sumoStep);
         for (Formula f : ciAxioms) {
@@ -227,7 +226,7 @@ public class TPTPutil {
                 if (arg.equals(new Formula(sumoStep))) {
                     //System.out.println("TPTPutil.getCitationString: formula arg: " + arg);
                     String term = f.getStringArgument(1);
-                    ArrayList<Formula> comments = kb.askWithRestriction(0, "comment", 1, term);
+                    List<Formula> comments = kb.askWithRestriction(0, "comment", 1, term);
                     if (comments != null && comments.size() > 0)
                         return comments.get(0).getStringArgument(2);
                 }
@@ -277,7 +276,7 @@ public class TPTPutil {
                     String query = "(";
                     StringBuffer answerVars = new StringBuffer();
                     System.out.println("input: " + lines + "\n");
-                    tpp.parseProofOutput((ArrayList<String>) lines, query, kb, answerVars);
+                    tpp.parseProofOutput(lines, query, kb, answerVars);
                     System.out.println("TPTPutil.main(): " + tpp.proof.size() + " steps ");
                     System.out.println("TPTPutil.main(): showing only source axioms ");
                     for (TPTPFormula step : tpp.proof) {
@@ -295,7 +294,7 @@ public class TPTPutil {
                     KB.force = true;
                     kb.loadVampire();
                     Vampire vamp = kb.askVampire(args[1], 30, 1);
-                    //System.out.println("KB.main(): completed Vampire query with result: " + StringUtil.arrayListToCRLFString(vamp.output));
+                    //System.out.println("KB.main(): completed Vampire query with result: " + StringUtil.ListToCRLFString(vamp.output));
                     tpp = new TPTP3ProofProcessor();
                     tpp.parseProofOutput(vamp.output, args[1], kb, vamp.qlist);
                     //System.out.println("TPTPutil.main(): " + tpp.proof.size() + " steps ");

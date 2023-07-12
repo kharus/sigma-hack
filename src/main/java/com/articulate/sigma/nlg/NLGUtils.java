@@ -18,10 +18,10 @@ public class NLGUtils implements Serializable {
     private static final String SIGMA_HOME = System.getenv("SIGMA_HOME");
     private static final String PHRASES_FILENAME = "Translations/language.txt";
     // a list of format parameters or words and the sentence words they match with
-    public static HashMap<String, CoreLabel> outputMap = new HashMap<>();
+    public static Map<String, CoreLabel> outputMap = new HashMap<>();
     public static boolean debug = false;
     private static NLGUtils nlg = null;
-    private HashMap<String, HashMap<String, String>> keywordMap;
+    private Map<String, Map<String, String>> keywordMap;
 
     public static void init(String kbDir) {
 
@@ -258,8 +258,8 @@ public class NLGUtils implements Serializable {
      * Each phrase must appear on a new line with alternatives separated by '|'.
      * The first entry should be a set of two letter language identifiers.
      *
-     * @return a HashMap of HashMaps where the first HashMap has a key of the
-     * English phrase, and the interior HashMap has a key of the two letter
+     * @return a Map of Maps where the first Map has a key of the
+     * English phrase, and the interior Map has a key of the two letter
      * language identifier.
      */
     public static void readKeywordMap(String dir) {
@@ -293,7 +293,7 @@ public class NLGUtils implements Serializable {
                 if (!phrasesFile.canRead())
                     throw new Exception("Cannot read \"" + phrasesFile.getCanonicalPath() + "\"");
                 br = new BufferedReader(new InputStreamReader(new FileInputStream(phrasesFile), StandardCharsets.UTF_8));
-                HashMap<String, String> phrasesByLang = null;
+                Map<String, String> phrasesByLang = null;
                 List<String> phraseList = null;
                 List<String> languageKeys = null;
                 String delim = "|";
@@ -429,14 +429,14 @@ public class NLGUtils implements Serializable {
 
     /**
      * Collect all the variables occurring in a formula in order.  Return
-     * an ArrayList of Strings.
+     * an List of Strings.
      */
-    static ArrayList<String> collectOrderedVariables(String form) {
+    static List<String> collectOrderedVariables(String form) {
 
         boolean inString = false;
         boolean inVar = false;
         String var = "";
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (int i = 0; i < form.length(); i++) {
             char ch = form.charAt(i);
             switch (ch) {
@@ -467,7 +467,7 @@ public class NLGUtils implements Serializable {
         return result;
     }
 
-    public static HashMap<String, HashMap<String, String>> getKeywordMap() {
+    public static Map<String, Map<String, String>> getKeywordMap() {
 
         if (NLGUtils.nlg == null || NLGUtils.nlg.keywordMap == null) {
             return null;
@@ -475,7 +475,7 @@ public class NLGUtils implements Serializable {
         return NLGUtils.nlg.keywordMap;
     }
 
-    public static void setKeywordMap(HashMap<String, HashMap<String, String>> themap) {
+    public static void setKeywordMap(Map<String, Map<String, String>> themap) {
 
         if (NLGUtils.nlg == null)
             NLGUtils.nlg = new NLGUtils();
@@ -489,7 +489,7 @@ public class NLGUtils implements Serializable {
             if (debug) System.out.println("Error in NLGUtils.getKeyword(): keyword map is null");
             return ans;
         }
-        HashMap<String, String> hm = getKeywordMap().get(englishWord);
+        Map<String, String> hm = getKeywordMap().get(englishWord);
         if (hm != null) {
             String tmp = hm.get(language);
             if (tmp != null)
@@ -535,7 +535,7 @@ public class NLGUtils implements Serializable {
     public static String expandStar(Formula f, String strFormat, String lang) {
 
         String result = strFormat;
-        ArrayList<String> problems = new ArrayList<>();
+        List<String> problems = new ArrayList<>();
         try {
             int flen = f.listLength();
             if (StringUtil.isNonEmptyString(strFormat) && (flen > 1)) {

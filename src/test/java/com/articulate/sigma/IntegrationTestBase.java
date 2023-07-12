@@ -1,6 +1,6 @@
 package com.articulate.sigma;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class IntegrationTestBase extends SigmaTestBase {
     static {
         String d = null;
         try {
-            d = System.getenv("SIGMA_SRC") + File.separator + "test/integration/java/resources";
+            d = System.getenv("SIGMA_SRC") + File.separator + "src/test/resources";
             System.out.println("IntegrationTestBase initialization with dir: " + d);
             File f = new File(d);
             if (!f.exists())
@@ -41,7 +41,7 @@ public class IntegrationTestBase extends SigmaTestBase {
 //        xmlReader = SigmaTestBase.getXmlReader(CONFIG_FILE_PATH, CLASS);
 //    }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws IOException {
 
         long startTime = System.currentTimeMillis();

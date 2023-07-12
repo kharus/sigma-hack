@@ -2,18 +2,19 @@ package com.articulate.sigma;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@Tag("com.articulate.sigma.MidLevel")
 public class PredVarInstIntegrationITCase extends IntegrationTestBase {
 
-    @Ignore
+    @Disabled
     public void testInstantiatePredVars1() {
 
         String stmt1 = "(<=> (instance ?REL TransitiveRelation) " +
@@ -1406,7 +1407,7 @@ public class PredVarInstIntegrationITCase extends IntegrationTestBase {
                 "      (identicalListItems ?INST1 ?INST3))))";
         expected.add(new Formula(formulaStr));
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -1416,10 +1417,10 @@ public class PredVarInstIntegrationITCase extends IntegrationTestBase {
         Formula f = new Formula();
         f.read(stmt3);
 
-        Map<String, HashSet<String>> actual = PredVarInst.findPredVarTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = PredVarInst.findPredVarTypes(f, SigmaTestBase.kb);
         System.out.println("testFindPredVarTypesStmt3(): actual: " + actual);
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?ROLE", Sets.newHashSet("CaseRole"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }

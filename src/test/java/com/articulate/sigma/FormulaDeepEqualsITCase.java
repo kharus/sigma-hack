@@ -1,15 +1,32 @@
 package com.articulate.sigma;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Created by sserban on 2/11/15.
- */
-public class FormulaDeepEqualsITCase extends UnitTestBase {
+@SpringBootTest
+@Tag("com.articulate.sigma.TopOnly")
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class FormulaDeepEqualsITCase {
+
+    @Autowired
+    FormulaDeepEqualsService deepEqualsService;
+    private KB kb;
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
 
     @Test
     public void testDeepEquals() {
@@ -33,11 +50,11 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
                 "                (instrument ?W ?C)))))");
 
         //testing equal formulas
-        assertTrue(f1.deepEquals(f1));
+        assertThat(deepEqualsService.deepEquals(f1, f1)).isTrue();
 
         //testing formulas that differ in variable reference
         f2.read("(or (not (instance ?X6 WalkingCane)) (hasPurpose ?X4 (and (instance (SkFn2 ?X6) Walking) (instrument (SkFn2 ?X6) ?X6))))");
-        assertTrue(f1.deepEquals(f2));
+        assertThat(deepEqualsService.deepEquals(f1, f2)).isTrue();
 
         //testing unequal formulas
         f1 = new Formula();
@@ -58,7 +75,7 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
                 "                (instance ?W Running)" +
                 "                (instrument ?W ?C)))))");
 
-        assertFalse(f1.deepEquals(f2));
+        assertThat(deepEqualsService.deepEquals(f1, f2)).isFalse();
 
         //testing commutative terms
         f1 = new Formula();
@@ -79,7 +96,7 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
                 "                (instrument ?W ?C)" +
                 "                (instance ?W Walking)))))");
 
-        assertTrue(f1.deepEquals(f2));
+        assertThat(deepEqualsService.deepEquals(f1, f2)).isTrue();
 
     }
 
@@ -116,10 +133,8 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
                 "    (instance ?blankets-6 Blanket)\n" +
                 "    (instance ?Leigh-1 Human)\n" +
                 "    (instance ?baby-4 HumanBaby)) )");
-        Formula.debug = true;
         //testing equal formulas
-        assertTrue(f1.deepEquals(f2));
-        Formula.debug = false;
+        assertThat(deepEqualsService.deepEquals(f1, f2)).isTrue();
     }
 
     @Test
@@ -128,18 +143,18 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
         Formula f = new Formula();
         f.read("(<=> (instance ?REL SymmetricRelation) (forall (?INST1 ?INST2) (=> (?REL ?INST1 ?INST2) (?REL ?INST2 ?INST1)))))");
 
-        assertFalse(f.deepEquals(null));
+        assertThat(deepEqualsService.deepEquals(f, null)).isFalse();
 
         Formula compared = new Formula();
-        assertFalse(f.deepEquals(compared));
+        assertThat(deepEqualsService.deepEquals(f, compared)).isFalse();
 
         compared.read("");
-        assertFalse(f.deepEquals(compared));
+        assertThat(deepEqualsService.deepEquals(f, compared)).isFalse();
 
         compared.read("()");
-        assertFalse(f.deepEquals(compared));
+        assertThat(deepEqualsService.deepEquals(f, compared)).isFalse();
 
-        assertTrue(f.deepEquals(f));
+        assertThat(deepEqualsService.deepEquals(f, f)).isTrue();
     }
 
     @Test
@@ -148,18 +163,18 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
         Formula f = new Formula();
         f.read("(<=> (instance ?REL SymmetricRelation) (forall (?INST1 ?INST2) (=> (?REL ?INST1 ?INST2) (?REL ?INST2 ?INST1)))))");
 
-        assertFalse(f.logicallyEquals((Formula) null));
+        assertThat(deepEqualsService.logicallyEquals(f, null)).isFalse();
 
         Formula compared = new Formula();
-        assertFalse(f.logicallyEquals(compared));
+        assertThat(deepEqualsService.logicallyEquals(f, compared)).isFalse();
 
         compared.read("");
-        assertFalse(f.logicallyEquals(compared));
+        assertThat(deepEqualsService.logicallyEquals(f, compared)).isFalse();
 
         compared.read("()");
-        assertFalse(f.logicallyEquals(compared));
+        assertThat(deepEqualsService.logicallyEquals(f, compared)).isFalse();
 
-        assertTrue(f.logicallyEquals(f));
+        assertThat(deepEqualsService.logicallyEquals(f, f)).isTrue();
     }
 
     @Test
@@ -184,11 +199,11 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
                 "                (instrument ?W ?C)))))");
 
         //testing equal formulas
-        assertTrue(f1.unifyWith(f2));
+        assertThat(deepEqualsService.unifyWith(f1,f2)).isTrue();
 
         //testing formulas that differ in variable reference
         f2.read("(or (not (instance ?X6 WalkingCane)) (hasPurpose ?X4 (and (instance (SkFn2 ?X6) Walking) (instrument (SkFn2 ?X6) ?X6))))");
-        assertFalse(f1.unifyWith(f2));
+        assertThat(deepEqualsService.unifyWith(f1,f2)).isFalse();
 
         //testing unequal formulas
         f1 = new Formula();
@@ -209,7 +224,7 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
                 "                (instance ?W Running)" +
                 "                (instrument ?W ?C)))))");
 
-        assertFalse(f1.unifyWith(f2));
+        assertThat(deepEqualsService.unifyWith(f1,f2)).isFalse();
 
         //testing commutative terms
         f1 = new Formula();
@@ -230,15 +245,15 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
                 "                (instrument ?W ?C)" +
                 "                (instance ?W Walking)))))");
 
-        assertTrue(f1.unifyWith(f2));
+        assertThat(deepEqualsService.unifyWith(f1,f2)).isTrue();
 
     }
 
     /**
      * Formula.unifyWith is deprecated
      */
-    @Ignore
     @Test
+    @Disabled
     public void testUnifyWithMiscPredicates() {
 
         String s1 = "(=> (and (instance ?X4 Dog) (instance ?X5 Cat)) (equal ?X4 ?X5))";
@@ -249,12 +264,7 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
         Formula f2 = new Formula();
         f2.read(s2);
 
-        Formula.debug = true;
-        //System.out.println("testUnifyWithMiscPredicates(): deepEquals: " +  f1.deepEquals(f2));
-        long start = System.nanoTime();
-        assertTrue(f1.unifyWith(f2));
-        long stop = System.nanoTime();
-        System.out.println("Execution time (in microseconds): " + ((stop - start) / 1000));
+        assertThat(deepEqualsService.unifyWith(f1,f2)).isTrue();
     }
 
     @Test
@@ -273,13 +283,36 @@ public class FormulaDeepEqualsITCase extends UnitTestBase {
 
         expected.read(expectedString);
 
-        Formula actual = fp.addTypeRestrictions(f, SigmaTestBase.kb);
-        System.out.println("testLogicallyEqualsPerformance: expected: " + expected);
-        System.out.println("testLogicallyEqualsPerformance: actual: " + actual);
-        long start = System.nanoTime();
-//        assertTrue(expected.logicallyEquals(actual));
-        assertTrue(expected.unifyWith(actual));
-        long stop = System.nanoTime();
-        System.out.println("Execution time (in microseconds): " + ((stop - start) / 1000));
+        Formula actual = fp.addTypeRestrictions(f, kb);
+
+        assertThat(deepEqualsService.unifyWith(expected,actual)).isTrue();
+    }
+
+    @Test
+    public void testUnification() {
+        String f1Text = """
+                (=>
+                    (instance ?C WalkingCane)
+                    (hasPurpose ?C
+                       (exists (?W)
+                          (and
+                                (instance ?W Walking)
+                                (instrument ?W ?C)))))""";
+
+        String f2Text = """
+                (=>
+                    (instance ?C WalkingCane)
+                      (hasPurpose ?C
+                      (exists (?W)
+                        (and
+                        (instance ?W Walking)
+                        (instrument ?W ?C)))))""";
+
+        Formula f1 = new Formula();
+        f1.read(f1Text);
+        Formula f2 = new Formula();
+        f2.read(f2Text);
+
+        assertThat(deepEqualsService.unifyWith(f1,f2)).isTrue();
     }
 }

@@ -36,9 +36,9 @@ public class VariableMapping {
         }
         for (Set<VariableMapping> set1 : mapList1) {
             for (Set<VariableMapping> set2 : mapList2) {
-                Set<VariableMapping> newSet = VariableMapping.unify(set1, set2);
-                if (newSet != null && !intersection.contains(newSet)) {
-                    intersection.add(newSet);
+                Set<VariableMapping> newHashSet = VariableMapping.unify(set1, set2);
+                if (newHashSet != null && !intersection.contains(newHashSet)) {
+                    intersection.add(newHashSet);
                 }
             }
         }

@@ -33,15 +33,15 @@ public class VerbNet {
 
     private static final boolean debug = false;
     private static final boolean echo = false;
-    private static final HashMap<String, SimpleElement> verbFiles = new HashMap<>();
-    private static final HashMap<String, String> roles = new HashMap<>(); // VN to SUMO role mappings
+    private static final Map<String, SimpleElement> verbFiles = new HashMap<>();
+    private static final Map<String, String> roles = new HashMap<>(); // VN to SUMO role mappings
     public static KB kb;
     public static int verbcount = 0;
     public static int syncount = 0;
     // a mapping of a WordNet key to a VerbNet pair of VerbID\tmember-word-name
-    public static HashMap<String, String> wnMapping = new HashMap<>();
+    public static Map<String, String> wnMapping = new HashMap<>();
     // verb ID keys and Verb values
-    public static HashMap<String, Verb> verbs = new HashMap<>();
+    public static Map<String, Verb> verbs = new HashMap<>();
     public static boolean disable = false;
     private static boolean initialized = false;
 
@@ -50,7 +50,7 @@ public class VerbNet {
         if (KBmanager.getMgr().getPref("loadLexicons").equals("false"))
             disable = true;
         if (disable) return;
-        ArrayList<String> keys = new ArrayList<String>(Arrays.asList("Actor", "involvedInEvent",
+        List<String> keys = new ArrayList<String>(Arrays.asList("Actor", "involvedInEvent",
                 "Agent", "agent", "Asset", "objectTransferred", "Attribute", "attribute",
                 "Beneficiary", "beneficiary", "Cause", "involvedInEvent",
                 "Co-Agent", "agent", "Co-Patient", "patient", "Co-Theme", "patient",
@@ -138,14 +138,14 @@ public class VerbNet {
     /**
      * @param tm Map of words with their corresponding synset numbers
      */
-    public static String formatVerbsList(TreeMap<String, ArrayList<String>> tm) {
+    public static String formatVerbsList(TreeMap<String, List<String>> tm) {
 
         StringBuffer result = new StringBuffer();
         int count = 0;
         Iterator<String> it = tm.keySet().iterator();
         while (it.hasNext() && count < 50) {
             String word = it.next();
-            ArrayList<String> synsetList = tm.get(word);
+            List<String> synsetList = tm.get(word);
             for (int i = 0; i < synsetList.size(); i++) {
                 String synset = synsetList.get(i);
                 String res = formatForSynset(synset);

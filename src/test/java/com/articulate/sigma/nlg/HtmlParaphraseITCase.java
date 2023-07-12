@@ -3,9 +3,9 @@ package com.articulate.sigma.nlg;
 import com.articulate.sigma.SigmaTestBase;
 import com.articulate.sigma.UnitTestBase;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * LanguageFormatter tests specifically targeted toward the htmlParaphrase( ) method.
@@ -20,7 +20,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(expectedResult).isEqualTo(StringUtil.filterHtml(actualResult));
     }
 
     /**
@@ -38,7 +38,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -72,7 +72,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -86,7 +86,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -101,7 +101,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     // It seems this is not a correct SUO-Kif expression since only instances can be arguments in a case role.
@@ -114,7 +114,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -136,7 +136,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -149,12 +149,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "an entity doesn't have name \"John\"";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "an entity doesn't have name \"John\"";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -172,12 +172,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there don't exist a process and an agent such that the process is an instance of driving and the agent is an instance of human and the agent is an agent of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a human doesn't drive";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -194,12 +194,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there doesn't exist a process such that the process is an instance of driving and John is an agent of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "John doesn't drive";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -217,12 +217,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String expectedResult = "there exist a process and an agent such that the process is an instance of driving and " +
                 "the agent is an instance of human and the agent is an agent of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a human drives";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -243,12 +243,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then there exists another process such that the other process is an instance of breathing and the agent is an agent of the other process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "if a human drives, then the human breathes";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -270,12 +270,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process if and only if there exists another process such that the other process is an instance of breathing and the agent is an agent of the other process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a human drives if and only if the human breathes";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -296,12 +296,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String expectedResult = "there exist a process and an agent such that the process is an instance of driving and " +
                 "the agent is an instance of human and the agent has name \"John\" and the agent is an agent of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "John drives";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -321,14 +321,14 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there don't exist a process and an agent such that the process is an instance of driving and the agent is an instance of human and the agent has name \"John\" and the agent is an agent of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         // FIXME: perhaps this is a better rendering of the formula:
         //expectedResult = "No one named John drives.";
         expectedResult = "John doesn't drive";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -353,12 +353,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
                 "the entity is an instance of automobile and the agent is an agent of the process and " +
                 "the entity is a patient of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "John drives an automobile";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -376,7 +376,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -389,7 +389,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -401,7 +401,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -421,7 +421,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
         String expectedResult = "";
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
         System.out.println("Finished performing unit test that throws an IndexOutOfBoundsException.");
         System.out.flush();
     }
@@ -435,7 +435,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
         String expectedResult = "if the government of a geopolitical area is an instance of state government, then the geopolitical area is an instance of state or province";
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -452,7 +452,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -485,7 +485,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -517,7 +517,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -541,12 +541,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an entity and a process such that Mary-1 is an instance of human and Robert-1 is an instance of human and the entity is an instance of bank card and Robert-1 is an agent of the process and the process is an instance of directing and the entity is a patient of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "Robert-1 directs a bank card";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -571,12 +571,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an entity and a process such that Mary-1 is an instance of human and Robert-1 is an instance of human and the entity is an instance of bank card and Robert-1 is an agent of the process and the process ends at Mary-1 and the process is an instance of directing and the entity is a patient of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "Robert-1 directs a bank card to Mary-1";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -603,12 +603,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an entity and a process such that Mary-1 is an instance of human and Robert-1 is an instance of human and the entity is an instance of bank card and an object is an instance of pigeon and Robert-1 is an agent of the process and the process ends at Mary-1 and the process is an instance of directing and the object is an instrument for the process and the entity is a patient of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "Robert-1 directs a bank card to Mary-1 with a pigeon";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -637,12 +637,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an entity and a process such that female is an attribute of Mary-1 and male is an attribute of Robert-1 and Mary-1 is an instance of human and Robert-1 is an instance of human and the entity is an instance of bank card and Robert-1 is an agent of the process and the process ends at Mary-1 and the process is an instance of directing and the entity is a patient of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "male Robert-1 directs a bank card to female Mary-1";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -666,12 +666,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent, an entity and a process such that the agent is an instance of agent and the entity is an instance of city and the process is an instance of making and the agent is an agent of the process and the entity is a patient of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "an agent makes a city";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -696,12 +696,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent, an entity and a process such that the agent is an instance of agent and the entity is an instance of city and the process is an instance of making and the agent is an agent of the process and the entity is a patient of the process and Machine-1 is an instance of machine and Machine-1 is an instrument for the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "an agent makes a city with Machine-1";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -730,7 +730,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -758,7 +758,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -777,7 +777,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String actualResult = NLGUtils.htmlParaphrase("", stmt, SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
                 SigmaTestBase.kb, "EnglishLanguage");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -801,12 +801,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an entity and a process such that the process is an instance of giving and John-1 is an instance of human and John-1 is an agent of the process and the entity is an instance of bank card and the entity is a patient of the process and Mary-1 is an instance of human and the process ends at Mary-1";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "John-1 gives a bank card to Mary-1";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -834,12 +834,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an entity and a process such that the process is an instance of giving and male is an attribute of John-1 and John-1 is an instance of human and John-1 is an agent of the process and the entity is an instance of bank card and the entity is a patient of the process and female is an attribute of Mary-1 and Mary-1 is an instance of human and the process ends at Mary-1";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "male John-1 gives a bank card to female Mary-1";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -873,12 +873,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an entity, an agent and a process such that for all an object if the object is an instance of canine and the object is not equal to the agent, then a time duration is greater than another time duration and the age of the agent is the time duration and the age of the object is the other time duration and the entity is an instance of bank- financial organization and the agent is an instance of canine and the process is an instance of motion and the entity is a patient of the process and the agent is an agent of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "there exist an entity, an agent and a process such that for all an object if the object is an instance of canine and the object is not equal to the agent, then a time duration is greater than another time duration and the age of the agent is the time duration and the age of the object is the other time duration and the entity is an instance of bank- financial organization and the agent is an instance of canine and the process is an instance of motion and the entity is a patient of the process and the agent is an agent of the process";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -905,12 +905,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an entity and a process such that fully formed is an attribute of MrMiller and male is an attribute of MrMiller and MrMiller is an instance of human and the entity is an instance of bank- financial organization and MrMiller is an agent of the process and the process is an instance of motion and the process ends at the entity";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "male fully formed MrMiller motions to a bank- financial organization";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -937,13 +937,13 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent, an entity and a process such that female is an attribute of the agent and the agent is an instance of human and the agent has name \"Mary\" and the entity is an instance of bank- financial organization and the agent is an agent of the process and the process is an instance of walking and the process ends at the entity";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         // TODO: or should it be "a woman named Mary walks to a bank- financial organization"?
         expectedResult = "Mary walks to a bank- financial organization";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -971,12 +971,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an entity and a process such that fully formed is an attribute of MrMiller and male is an attribute of MrMiller and MrMiller is an instance of human and MrMiller has name \"MrMiller\" and the entity is an instance of bank- financial organization and MrMiller is an agent of the process and the process is an instance of walking and the process ends at the entity";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "male fully formed MrMiller walks to a bank- financial organization";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -994,12 +994,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent and a process such that the process is an instance of transportation and the agent is an instance of human and the agent is an agent of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a human performs a transportation";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -1023,18 +1023,18 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent and a process such that the process is an instance of transportation and male is an attribute of the agent and the agent is an instance of human and the agent is an agent of the process and the process ends at sudan";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a male human performs a transportation to Sudan";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
      * Ideal: ? "If an animal performs an intentional process, then the animal is awake."
      * This test may fail, but should be fixed by #17181: Modify LanguageFormatter.computeVariableTypes( )
-     * so that the HashSet consists of only a single element which is the least general--the most specific.
+     * so that the Set consists of only a single element which is the least general--the most specific.
      */
     @Test
     public void testAwakeIf() {
@@ -1056,7 +1056,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String expectedResult = "if a process is an instance of intentional process and an agent is an agent of the process and the agent is an instance of animal, " +
                 "then awake is an attribute of the agent holds during the time of existence of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         // Do "informal" NLG.
         languageFormatter.setDoInformalNLG(true);
@@ -1065,7 +1065,7 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         expectedResult = "if a process is an instance of intentional process and an agent is an agent of the process and the agent is an instance of animal, " +
                 "then awake is an attribute of the agent holds during the time of existence of the process";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -1093,13 +1093,13 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         String expectedResult = "if an object is an instance of animal language and an agent is an agent of a process and the object is an instrument for the process, " +
                 "then the agent is an instance of animal and the agent is not an instance of human";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         //expectedResult = "if an animal is speaking an animal language, then the animal is not human";
         expectedResult = "if an object is an instance of animal language and an agent is an agent of a process and the object is an instrument for the process, then the agent is an instance of animal and the agent is not an instance of human";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -1120,12 +1120,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "if an entity is an instance of object, then the entity is an instance of collection or the entity is an instance of self connected object";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "if an entity is an instance of object, then the entity is an instance of collection or the entity is an instance of self connected object";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1143,12 +1143,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "an entity is an instance of symmetric relation if and only if for all another entity and a third entity if the entity the other entity and the third entity, then the entity the third entity and the other entity";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "an entity is an instance of symmetric relation if and only if for all another entity and a third entity if the entity the other entity and the third entity, then the entity the third entity and the other entity";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1169,12 +1169,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then there exists another process such that the other process is an instance of seeing and the agent is an agent of the other process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "if a human drives, then the human sees";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -1200,12 +1200,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then there exist another process and an object such that the object is an instance of eye glass and the other process is an instance of seeing and the object is an instrument for the other process and the agent is an agent of the other process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "if a human drives, then the human sees with an eye glass";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -1229,12 +1229,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then there exists an entity such that the entity is an instance of automobile and the entity comes to be physically controlled by an agent during the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then there exists an entity such that the entity is an instance of automobile and the entity comes to be physically controlled by an agent during the process";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -1255,12 +1255,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then the agent is transported during the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then the agent is transported during the process";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -1291,14 +1291,14 @@ public class HtmlParaphraseITCase extends UnitTestBase {
                 "then there exists a process such that the process is an instance of body motion and the agent is an agent of the process " +
                 "or there exists an entity such that the entity is an instance of body position and the entity is an attribute of the agent";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "if an agent is an instance of animal, " +
                 "then there exists a process such that the process is an instance of body motion and the agent is an agent of the process " +
                 "or there exists an entity such that the entity is an instance of body position and the entity is an attribute of the agent";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1318,12 +1318,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
 
         String expectedResult = "there exist a process and an entity such that John-1 is an instance of human and the process is an instance of seeing and the entity is an instance of self connected object and John-1 experiences the process and the entity is a patient of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "John-1 sees a self connected object";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1344,12 +1344,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
 
         String expectedResult = "there exist a process and an entity such that John-1 is an instance of human and the process is an instance of seeing and the entity is an instance of self connected object and John-1 experiences the process and the entity is not a patient of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "John-1 doesn't see a self connected object";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1371,12 +1371,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
 
         String expectedResult = "there exist a process and an entity such that John-1 is an instance of human and the process is an instance of seeing and the entity is an instance of self connected object and ~{ John-1 experiences the process } or ~{ the entity is a patient of the process }";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "John-1 doesn't see a self connected object";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -1397,12 +1397,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
 
         String expectedResult = "there exist a process and an entity such that the process is an instance of seeing and the entity is an instance of self connected object and the entity is a patient of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a self connected object experiences a seeing";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1422,12 +1422,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
 
         String expectedResult = "there exist a process and an entity such that John-1 is an instance of human and the process is an instance of seeing and the entity is an instance of FoodForFn human and John-1 experiences the process and the entity is a patient of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "there exist a process and an entity such that John-1 is an instance of human and the process is an instance of seeing and the entity is an instance of FoodForFn human and John-1 experiences the process and the entity is a patient of the process";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1445,13 +1445,13 @@ public class HtmlParaphraseITCase extends UnitTestBase {
 
         String expectedResult = "there exist a motion and an object such that the motion is an instance of body motion and the object is an instance of artifact and moves the motion and the object";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         // FIXME: the CaseRole has influence on the verb: expectedResult = "an artifact moves";
         expectedResult = "an artifact experiences a body motion";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1470,13 +1470,13 @@ public class HtmlParaphraseITCase extends UnitTestBase {
 
         String expectedResult = "there doesn't exist a motion such that the motion is an instance of body motion and Thing1 is an instance of artifact and moves the motion and Thing1";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         // FIXME: the CaseRole has influence on the verb: expectedResult = "an artifact moves";
         expectedResult = "Thing1 doesn't experience a body motion";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1495,13 +1495,13 @@ public class HtmlParaphraseITCase extends UnitTestBase {
 
         String expectedResult = "there exist a motion and an object such that the motion is an instance of body motion and the object is an instance of artifact and moves the motion and the object";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         // FIXME: the CaseRole has influence on the verb: expectedResult = "an artifact moves";
         expectedResult = "an artifact doesn't experience a body motion";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1521,12 +1521,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent, a motion and an object such that the motion is an instance of driving and the agent is an instance of girl and the object is an instance of expressway and the agent is an agent of the motion and the object is path along which the motion occurs and the motion originates at London";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a girl drives along an expressway from LondonUnitedKingdom";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1547,12 +1547,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent, a motion and an object such that the motion is an instance of driving and the agent is an instance of girl and the object is an instance of expressway and the agent is an agent of the motion and the object is path along which the motion occurs and entities in the process the motion are moving Leeds and the motion originates at London";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a girl drives toward Leeds along an expressway from LondonUnitedKingdom";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1573,12 +1573,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent, a motion and an object such that the motion is an instance of driving and the agent is an instance of girl and the object is an instance of expressway and the agent is an agent of the motion and the object is path along which the motion occurs and entities in the process the motion are moving north and the motion originates at London";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a girl drives toward North along an expressway from LondonUnitedKingdom";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1601,12 +1601,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent, a motion, , , an object and an entity such that the motion is an instance of driving and the agent is an instance of girl and the object is an instance of expressway and Leeds is an instance of city and the agent is an agent of the motion and the object is path along which the motion occurs and entities in the process the motion are moving north and event partly located the motion and Leeds and the motion originates at London";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a girl drives toward North along an expressway from LondonUnitedKingdom in Leeds";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1624,12 +1624,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent and a process such that the process is an instance of driving and the agent is an instance of girl and the agent is an agent of the process and event located the process and England";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a girl drives in England";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1650,12 +1650,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent, a process, , , an entity and an object such that the process is an instance of making and the agent is an instance of woman and the entity is an instance of weapon and the object is an instance of artifact and the agent is an agent of the process and the entity is a patient of the process and the object is a resource for the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a woman makes a weapon out of an artifact";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     /**
@@ -1679,12 +1679,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent, a process, , , an entity and an object such that the process is an instance of making and the agent is an instance of woman and the entity is an instance of weapon and the object is an instance of artifact and the agent is an agent of the process and the entity is a result of the process and the object is a resource for the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a woman makes a weapon out of an artifact";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1701,14 +1701,14 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist a human and a demonstrating such that the demonstrating is an instance of demonstrating and the human is an instance of boy and attends the demonstrating and the human";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         // FIXME: the CaseRole has influence on the verb:
         //expectedResult = "a boy attends a demonstration";
         expectedResult = "a boy experiences a demonstrating";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1725,12 +1725,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an entity and a process such that the process is an instance of combustion and the entity is an instance of self connected object and the entity is a patient of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a self connected object experiences a combustion";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1747,12 +1747,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an object and a process such that the process is an instance of combustion and the object is an instance of self connected object and the object is a resource for the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a self connected object experiences a combustion";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1771,12 +1771,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an agent, a process and an entity such that the process is an instance of combustion and the agent is an instance of boy and the entity is an instance of self connected object and the entity is a patient of the process and the agent is an agent of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "a boy performs a combustion on a self connected object";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1794,13 +1794,13 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "if a process is an instance of driving, then there exists an entity such that the entity is an instance of vehicle and the entity is a patient of the process";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "if someone drives, then a vehicle experiences a driving";
         // expectedResult = "if a process is an instance of driving, then there exists an entity such that the entity is an instance of vehicle and the entity is a patient of the process";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1820,13 +1820,13 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "if a process is an instance of swimming and an agent is an agent of the process, then there exists an object such that the object is an instance of water area and the agent is located at the object";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         //expectedResult = "if an agent swims, then the agent is in a body of water";
         expectedResult = "if a process is an instance of swimming and an agent is an agent of the process, then there exists an object such that the object is an instance of water area and the agent is located at the object";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1846,13 +1846,13 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "if a process is an instance of swimming and an agent is an agent of the process, then there exists an entity such that the entity is an instance of water area and event located the process and the entity";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         //expectedResult = "if an agent swims, then the agent is in a body of water";
         expectedResult = "if a process is an instance of swimming and an agent is an agent of the process, then there exists an entity such that the entity is an instance of water area and event located the process and the entity";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1869,12 +1869,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an object and a hole such that the object is an instance of object and the hole is an instance of hole and the object fills the hole";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = "there exist an object and a hole such that the object is an instance of object and the hole is an instance of hole and the object fills the hole";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
     @Test
@@ -1892,12 +1892,12 @@ public class HtmlParaphraseITCase extends UnitTestBase {
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = "there exist an object and a hole such that the object is an instance of object and the hole is an instance of hole and the object doesn't fill the hole";
         String actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         //expectedResult = "some object doesn't fill a hole";
         expectedResult = "there exist an object and a hole such that the object is an instance of object and the hole is an instance of hole and the object doesn't fill the hole";
         actualResult = languageFormatter.htmlParaphrase("");
-        assertEquals(expectedResult, StringUtil.filterHtml(actualResult));
+        assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 }

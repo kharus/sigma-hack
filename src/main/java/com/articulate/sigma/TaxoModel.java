@@ -2,6 +2,8 @@ package com.articulate.sigma;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This code is copyright Articulate Software (c) 2003.
@@ -26,8 +28,8 @@ public class TaxoModel {
     public static String kbName = "";
     public static String defaultTerm = "Entity";
     public static String termPage = "SimpleBrowse.jsp";
-    public static HashMap<String, TaxoNode> nodeMap = new HashMap<String, TaxoNode>();
-    public static HashMap<String, TaxoNode> rootList = new HashMap<String, TaxoNode>();
+    public static Map<String, TaxoNode> nodeMap = new HashMap<String, TaxoNode>();
+    public static Map<String, TaxoNode> rootList = new HashMap<String, TaxoNode>();
 
     /**
      * Remove the old tree and start over from termName.
@@ -45,9 +47,9 @@ public class TaxoModel {
     /**
      * Remove any cached formulas from a list.
      */
-    public static ArrayList<Formula> removeCached(ArrayList<Formula> forms) {
+    public static List<Formula> removeCached(List<Formula> forms) {
 
-        ArrayList<Formula> result = new ArrayList<Formula>();
+        List<Formula> result = new ArrayList<Formula>();
         for (int i = 0; i < forms.size(); i++) {
             Formula f = forms.get(i);
             //if (f == null || f.sourceFile == null) {
@@ -98,7 +100,7 @@ public class TaxoModel {
         n.parents = new ArrayList<TaxoNode>();
         rootList.clear();  // = new HashMap();
         KB kb = KBmanager.getMgr().getKB(kbName);
-        ArrayList<Formula> forms = kb.askWithPredicateSubsumption(relation, 1, nodeName);
+        List<Formula> forms = kb.askWithPredicateSubsumption(relation, 1, nodeName);
         forms = removeCached(forms);
         for (int i = 0; i < forms.size(); i++) {
             Formula form = forms.get(i);
@@ -161,7 +163,7 @@ public class TaxoModel {
         n.oneChild = null;
         n.children = new ArrayList();
         KB kb = KBmanager.getMgr().getKB(kbName);
-        ArrayList forms = kb.askWithPredicateSubsumption(relation, 2, nodeName);
+        List forms = kb.askWithPredicateSubsumption(relation, 2, nodeName);
         // kb.askWithRestriction(0,relation,2,nodeName);
         forms = removeCached(forms);
         for (int i = 0; i < forms.size(); i++) {

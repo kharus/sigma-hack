@@ -4,10 +4,10 @@ import com.articulate.sigma.Formula;
 import com.articulate.sigma.IntegrationTestBase;
 import com.articulate.sigma.KB;
 import com.articulate.sigma.KBmanager;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 //This software is released under the GNU Public License
 //<http://www.gnu.org/copyleft/gpl.html>.
@@ -17,7 +17,7 @@ public class THFtest extends IntegrationTestBase {
     private static THF thf = null;
     private static KB kb = null;
 
-    @BeforeClass
+    @BeforeAll
     public static void init() {
 
         thf = new THF();
@@ -36,7 +36,7 @@ public class THFtest extends IntegrationTestBase {
             System.out.println("THFtest.test(): Success!");
         else
             System.out.println("THFtest.test(): fail");
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test

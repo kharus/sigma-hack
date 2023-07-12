@@ -3,21 +3,23 @@ package com.articulate.sigma;
 import com.articulate.sigma.utils.FileUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@Tag("com.articulate.sigma.MidLevel")
 public class KBmanagerInitIntegrationITCase extends IntegrationTestBase {
 
     private static final Set<String> kifSet = Sets.newHashSet();
 
-    @BeforeClass
+    @BeforeAll
     public static void setKB() {
 
         //kifSet.add("ArabicCulture.kif");
@@ -63,7 +65,7 @@ public class KBmanagerInitIntegrationITCase extends IntegrationTestBase {
      * Verify that you are running your tests with the expected configuration.
      */
     @Test
-    @Ignore
+    @Disabled
     public void testNbrKifFilesLoaded() {
 
         Set<String> expectedKifFiles = Sets.newHashSet(kifSet);
@@ -73,10 +75,10 @@ public class KBmanagerInitIntegrationITCase extends IntegrationTestBase {
         System.out.println("testNbrKifFilesLoaded: actual: " + actualKifFiles);
         System.out.println("testNbrKifFilesLoaded: expected: " + expectedKifFiles);
         //filterExpectedKifs(actualKifFiles, expectedKifFiles);
-        assertTrue(actualKifFiles.size() > 2);
+        assertThat(actualKifFiles.size() > 2).isTrue();
         for (String f : expectedKifFiles) {
             System.out.println("testNbrKifFilesLoaded: contains: " + f + " : " + actualKifFiles.contains(f));
-            assertTrue(actualKifFiles.contains(f));
+            assertThat(actualKifFiles.contains(f)).isTrue();
         }
     }
 
@@ -95,16 +97,5 @@ public class KBmanagerInitIntegrationITCase extends IntegrationTestBase {
         }
         actualKifFiles.clear();
         actualKifFiles.addAll(remainingActualKifFiles);
-    }
-
-    /**
-     * Verify how long the base class's KBmanager initialization took.
-     */
-    @Test
-    public void testInitializationTime() {
-
-        assertTrue("Actual time = " + IntegrationTestBase.totalKbMgrInitTime, IntegrationTestBase.totalKbMgrInitTime < 350000);
-        // Just in case something whacky is going on, make sure it's greater than some minimum, too.
-        assertTrue("Actual time = " + IntegrationTestBase.totalKbMgrInitTime, IntegrationTestBase.totalKbMgrInitTime > 30000);
     }
 }

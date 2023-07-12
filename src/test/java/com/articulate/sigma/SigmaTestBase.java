@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class SigmaTestBase {
@@ -27,12 +26,10 @@ public class SigmaTestBase {
      */
     protected static void doSetUp(BufferedReader reader) {
 
-        KBmanager manager = KBmanager.getMgr();
         SimpleElement configuration = null;
         if (!KBmanager.initialized) {
             try {
                 SimpleDOMParser sdp = new SimpleDOMParser();
-                //sdp.setSkipProlog(false);
                 configuration = sdp.parse(reader);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -46,7 +43,7 @@ public class SigmaTestBase {
         checkConfiguration();
     }
 
-    protected static void checkConfiguration() {
+    public static void checkConfiguration() {
 
         List<String> problemList = Lists.newArrayList();
         if (NLGUtils.getKeywordMap() == null || NLGUtils.getKeywordMap().isEmpty()) {
@@ -116,17 +113,4 @@ public class SigmaTestBase {
         return xmlReader;
     }
 
-    public static <T> void displayCollectionStringDiffs(Collection<T> coll1, Collection<T> coll2) {
-
-        for (T obj : coll1) {
-            if (!coll2.contains(obj)) {
-                System.out.println("Found in parameter 1 but not 2: " + obj.toString());
-            }
-        }
-        for (T obj : coll2) {
-            if (!coll1.contains(obj)) {
-                System.out.println("Found in parameter 2 but not 1: " + obj.toString());
-            }
-        }
-    }
 }

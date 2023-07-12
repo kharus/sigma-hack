@@ -3,13 +3,13 @@ package com.articulate.sigma.nlg;
 import com.articulate.sigma.KB;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 // Tests on SumoProcess that do not require KBs be loaded.
 
-public class SentenceSimpleITCase extends SigmaMockTestBase {
+public class SentenceSimpleTest extends SigmaMockTestBase {
 
     private final KB knowledgeBase = this.kbMock;
 
@@ -22,21 +22,21 @@ public class SentenceSimpleITCase extends SigmaMockTestBase {
         String expected = "an automobile";
         Sentence sentence = new Sentence(process.createNewRoleScratchPad(), process.getSumoProcess(), knowledgeBase, entityProperties);
         sentence.formulateNaturalDirectObject();
-        assertEquals(expected, sentence.getDirectObject().getSurfaceForm());
+        assertThat(sentence.getDirectObject().getSurfaceForm()).isEqualTo(expected);
 
         process.addRole("patient", "Truck");
         sentence.setCaseRolesScratchpad(process.createNewRoleScratchPad());
         sentence.setDirectObject(new SVOElement(SVOElement.SVOGrammarPosition.DIRECT_OBJECT));
         expected = "an automobile and a truck";
         sentence.formulateNaturalDirectObject();
-        assertEquals(expected, sentence.getDirectObject().getSurfaceForm());
+        assertThat(sentence.getDirectObject().getSurfaceForm()).isEqualTo(expected);
 
         process.addRole("patient", "Taxi");
         sentence.setCaseRolesScratchpad(process.createNewRoleScratchPad());
         sentence.setDirectObject(new SVOElement(SVOElement.SVOGrammarPosition.DIRECT_OBJECT));
         expected = "an automobile, a taxi and a truck";
         sentence.formulateNaturalDirectObject();
-        assertEquals(expected, sentence.getDirectObject().getSurfaceForm());
+        assertThat(sentence.getDirectObject().getSurfaceForm()).isEqualTo(expected);
     }
 
     /**
@@ -50,7 +50,7 @@ public class SentenceSimpleITCase extends SigmaMockTestBase {
         String expected = "Entity";
         Sentence sentence = new Sentence(process.createNewRoleScratchPad(), process.getSumoProcess(), knowledgeBase, entityProperties);
         sentence.formulateNaturalDirectObject();
-        assertEquals(expected, sentence.getDirectObject().getSurfaceForm());
+        assertThat(sentence.getDirectObject().getSurfaceForm()).isEqualTo(expected);
     }
 
     @Test
@@ -60,19 +60,19 @@ public class SentenceSimpleITCase extends SigmaMockTestBase {
         String expected = "a human";
         Sentence sentence = new Sentence(process.createNewRoleScratchPad(), process.getSumoProcess(), knowledgeBase, entityProperties);
         sentence.formulateNaturalSubject();
-        assertEquals(expected, sentence.getSubject().getSurfaceForm());
+        assertThat(sentence.getSubject().getSurfaceForm()).isEqualTo(expected);
 
         process.addRole("agent", "Coffee");
         expected = "coffee and a human";
         sentence.setCaseRolesScratchpad(process.createNewRoleScratchPad());
         sentence.formulateNaturalSubject();
-        assertEquals(expected, sentence.getSubject().getSurfaceForm());
+        assertThat(sentence.getSubject().getSurfaceForm()).isEqualTo(expected);
 
         process.addRole("agent", "MedicalDoctor");
         expected = "coffee, a human and a medical doctor";
         sentence.setCaseRolesScratchpad(process.createNewRoleScratchPad());
         sentence.formulateNaturalSubject();
-        assertEquals(expected, sentence.getSubject().getSurfaceForm());
+        assertThat(sentence.getSubject().getSurfaceForm()).isEqualTo(expected);
     }
 
     @Test
@@ -82,9 +82,9 @@ public class SentenceSimpleITCase extends SigmaMockTestBase {
         Sentence sentence = new Sentence(process.createNewRoleScratchPad(), process.getSumoProcess(), knowledgeBase, entityProperties);
         sentence.formulateNaturalSubject();
         sentence.formulateNaturalVerb();
-        assertEquals("Maria", sentence.getSubject().getSurfaceForm());
-        assertEquals("performs", sentence.getVerb().getSurfaceForm());
-        assertEquals("a transportation", sentence.getDirectObject().getSurfaceForm());
+        assertThat(sentence.getSubject().getSurfaceForm()).isEqualTo("Maria");
+        assertThat(sentence.getVerb().getSurfaceForm()).isEqualTo("performs");
+        assertThat(sentence.getDirectObject().getSurfaceForm()).isEqualTo("a transportation");
     }
 
     @Test
@@ -96,7 +96,7 @@ public class SentenceSimpleITCase extends SigmaMockTestBase {
 
         String expected = "Maria drives an automobile with a telephone";
         String actual = sentence.toNaturalLanguage();
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -109,7 +109,7 @@ public class SentenceSimpleITCase extends SigmaMockTestBase {
 
         String expected = "Maria drives an automobile to Albany with a telephone";
         String actual = sentence.toNaturalLanguage();
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class SentenceSimpleITCase extends SigmaMockTestBase {
 
         String expected = "Maria and a medical doctor drive an automobile and a truck to Albany with a bell and a telephone";
         String actual = sentence.toNaturalLanguage();
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -144,7 +144,7 @@ public class SentenceSimpleITCase extends SigmaMockTestBase {
 
         String expected = "Maria, a medical doctor and Suzy drive an automobile, a taxi and a truck to Albany with a bell, a book and a telephone";
         String actual = sentence.toNaturalLanguage();
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
 }

@@ -1,12 +1,14 @@
 package com.articulate.sigma;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.Map;
 
-import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class FormatITCase extends IntegrationTestBase {
+@Tag("com.articulate.sigma.TopOnly")
+public class FormatITCase extends UnitTestBase {
 
     @Test
     public void testNegativePositiveFormat() {
@@ -26,7 +28,9 @@ public class FormatITCase extends IntegrationTestBase {
         }
 
         // If a trimmed problems list is not empty, then all the problems will be printed out.
-        assertTrue(problems.toString(), problems.toString().trim().isEmpty());
+        assertThat(problems.toString().trim().isEmpty())
+                .as(problems.toString())
+                .isTrue();
     }
 
     @Test
@@ -55,6 +59,8 @@ public class FormatITCase extends IntegrationTestBase {
         }
 
         // If a trimmed problems list is not empty, then all the problems will be printed out.
-        assertTrue(problems.toString(), problems.toString().trim().isEmpty());
+        assertThat(problems.toString().trim().isEmpty())
+                .as(problems.toString())
+                .isTrue();
     }
 }

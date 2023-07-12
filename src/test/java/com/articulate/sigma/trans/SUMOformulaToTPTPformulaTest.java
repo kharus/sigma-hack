@@ -1,22 +1,25 @@
+/*
+ * Created by qingqingcai on 1/14/15. Copyright IPsoft 2015
+ * This software is released under the GNU Public License
+ * <http://www.gnu.org/copyleft/gpl.html>.
+ * Copyright 2019 Infosys, 2020- Articulate Software
+ * apease@articulatesoftware.com
+ */
 package com.articulate.sigma.trans;
 
+import com.articulate.sigma.MidLevel;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Created by qingqingcai on 1/14/15. Copyright IPsoft 2015
- * //This software is released under the GNU Public License
- * //<http://www.gnu.org/copyleft/gpl.html>.
- * // Copyright 2019 Infosys, 2020- Articulate Software
- * // apease@articulatesoftware.com
- */
-public class SUMOformulaToTPTPformulaITCase {
+@Tag("com.articulate.sigma.MidLevel")
+public class SUMOformulaToTPTPformulaTest {
 
-    @Before
+    @BeforeEach
     public void init() {
         SUMOformulaToTPTPformula.hideNumbers = true;
         SUMOformulaToTPTPformula.lang = "fof";
@@ -38,7 +41,7 @@ public class SUMOformulaToTPTPformulaITCase {
             System.out.println(label + " : Success");
         else
             System.out.println(label + " : fail!");
-        assertEquals(expected, actualRes);
+        assertThat(actualRes).isEqualTo(expected);
     }
 
     @Test
@@ -152,7 +155,7 @@ public class SUMOformulaToTPTPformulaITCase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void embedded() {
 
         String kifstring, expectedRes, actualRes;

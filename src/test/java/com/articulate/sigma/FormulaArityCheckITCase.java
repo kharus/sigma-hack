@@ -21,41 +21,62 @@
 package com.articulate.sigma;
 
 import junit.framework.AssertionFailedError;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class FormulaArityCheckITCase extends UnitTestBase {
+@SpringBootTest
+@Tag("com.articulate.sigma.TopOnly")
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class FormulaArityCheckITCase {
+
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
 
     @Test
     public void testArityCheck1() {
 
-        String input = "(=>\n" +
-                "   (and\n" +
-                "      (domainSubclass ?REL ?NUMBER ?CLASS1)\n" +
-                "      (domainSubclass ?REL ?NUMBER ?CLASS2))\n" +
-                "   (or\n" +
-                "      (subclass ?CLASS1 ?CLASS2)\n" +
-                "      (subclass ?CLASS2 ?CLASS1)))";
+        String input = """
+                (=>
+                   (and
+                      (domainSubclass ?REL ?NUMBER ?CLASS1)
+                      (domainSubclass ?REL ?NUMBER ?CLASS2))
+                   (or
+                      (subclass ?CLASS1 ?CLASS2)
+                      (subclass ?CLASS2 ?CLASS1)))""";
         Formula f = new Formula();
         f.read(input);
         String output = PredVarInst.hasCorrectArity(f, kb);
-        assertNull(output);
+        assertThat(output).isNull();
     }
 
     @Test
     public void testArityCheck2() throws AssertionFailedError {
 
-        String input = "(=>\n" +
-                "   (and\n" +
-                "      (subrelation ?REL1 ?REL2 Car)\n" +
-                "      (domainSubclass ?REL2 ?NUMBER ?CLASS1))\n" +
-                "   (domainSubclass ?REL1 ?NUMBER ?CLASS1))";
+        String input = """
+                (=>
+                   (and
+                      (subrelation ?REL1 ?REL2 Car)
+                      (domainSubclass ?REL2 ?NUMBER ?CLASS1))
+                   (domainSubclass ?REL1 ?NUMBER ?CLASS1))""";
         Formula f = new Formula();
         f.read(input);
         String output = PredVarInst.hasCorrectArity(f, kb);
-        assertNotNull(output);
+        assertThat(output).isNotNull();
     }
 
 }

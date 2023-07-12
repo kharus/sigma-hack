@@ -30,7 +30,7 @@ public class SUMOKBtoTPTPKB {
     public static boolean debug = false;
     public static String lang = "fof"; // or thf
     // maps TPTP axiom IDs to SUMO formulas
-    public static HashMap<String, Formula> axiomKey = new HashMap<>();
+    public static Map<String, Formula> axiomKey = new HashMap<>();
     public KB kb;
     public Set<String> alreadyWrittenTPTPs = new HashSet<>();
 
@@ -51,7 +51,7 @@ public class SUMOKBtoTPTPKB {
         return l;
     }
 
-    public static void addToFile(String fileName, ArrayList<String> axioms, String conjecture) {
+    public static void addToFile(String fileName, List<String> axioms, String conjecture) {
 
         DataOutputStream out = null;
         try {
@@ -132,7 +132,7 @@ public class SUMOKBtoTPTPKB {
         while (it.hasNext()) {
             String key = it.next();
             String value = relationMap.get(key);
-            ArrayList<Formula> result = kb.ask("arg", 1, value);
+            List<Formula> result = kb.ask("arg", 1, value);
             if (result != null) {
                 for (int i = 0; i < result.size(); i++) {
                     Formula f = result.get(i);
@@ -203,6 +203,7 @@ public class SUMOKBtoTPTPKB {
             //if (debug) pr.println("% INFO in SUMOKBtoTPTPKB.writeFile(): added formulas: " + orderedFormulae.size());
             int counter = 0;
             int formCount = 0;
+            int total = orderedFormulae.size();
             for (Formula f : orderedFormulae) {
                 f.theTptpFormulas = new HashSet<>();
                 if (debug) System.out.println("SUMOKBtoTPTPKB.writeFile() : source line: " + f.startLine);
@@ -223,15 +224,15 @@ public class SUMOKBtoTPTPKB {
                     pw.println("% not higher order");
                 if (!KBmanager.getMgr().prefEquals("cache", "yes") && f.isCached())
                     continue;
-                if (counter++ == 100) System.out.print(".");
+                if (counter++ % 100 == 0) System.out.print(".");
                 if ((counter % 4000) == 1)
-                    System.out.println("\nSUMOKBtoTPTPKB.writeFile() : still working");
+                    System.out.printf("%nSUMOKBtoTPTPKB.writeFile(%s) : still working. %d%% done.%n",fileName, counter*100/total);
                 FormulaPreprocessor fp = new FormulaPreprocessor();
                 if (debug) System.out.println("SUMOKBtoTPTPKB.writeFile() : process: " + f);
                 Set<Formula> processed = fp.preProcess(f, false, kb);
                 if (debug) System.out.println("SUMOKBtoTPTPKB.writeFile() : processed: " + processed);
                 if (!processed.isEmpty()) {
-                    HashSet<Formula> withRelnRenames = new HashSet<Formula>();
+                    Set<Formula> withRelnRenames = new HashSet<Formula>();
                     for (Formula f2 : processed)
                         withRelnRenames.add(f2.renameVariableArityRelations(kb, relationMap));
                     for (Formula f3 : withRelnRenames) {

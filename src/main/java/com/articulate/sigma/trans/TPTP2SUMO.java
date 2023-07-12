@@ -23,7 +23,8 @@ import tptp_parser.TPTPVisitor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TPTP2SUMO {
 
@@ -41,13 +42,13 @@ public class TPTP2SUMO {
         if (!form.isBalancedList())
             return form;
         if (debug) System.out.println("collapseConnectives(): input: " + form);
-        ArrayList<Formula> args = form.complexArgumentsToArrayList(1);
+        List<Formula> args = form.complexArgumentsToArrayList(1);
         if (args == null)
             return form;
         StringBuffer sb = new StringBuffer();
         String pred = form.car();
         sb.append("(" + pred + " ");
-        ArrayList<Formula> newargs = new ArrayList<>();
+        List<Formula> newargs = new ArrayList<>();
         if (debug) System.out.println("collapseConnectives(): args: " + args);
         for (Formula f : args)
             newargs.add(collapseConnectives(f));
@@ -56,7 +57,7 @@ public class TPTP2SUMO {
             for (Formula f : newargs) {
                 if (f.car() != null && f.car().equals(pred)) {
                     if (debug) System.out.println("collapseConnectives(): matching connectives in " + f);
-                    ArrayList<Formula> subargs = f.complexArgumentsToArrayList(1);
+                    List<Formula> subargs = f.complexArgumentsToArrayList(1);
                     if (debug) System.out.println("collapseConnectives(): subargs " + subargs);
                     for (Formula f2 : subargs)
                         sb.append(f2.toString() + " ");
@@ -130,7 +131,7 @@ public class TPTP2SUMO {
         if (debug) System.out.println("formToSUMO() " + clause);
         TPTPVisitor sv = new TPTPVisitor();
         sv.parseString(clause);
-        HashMap<String, TPTPFormula> hm = sv.result;
+        Map<String, TPTPFormula> hm = sv.result;
         if (debug) {
             for (String s : hm.keySet()) {
                 System.out.println(hm.get(s));
@@ -151,7 +152,7 @@ public class TPTP2SUMO {
         if (debug) System.out.println("toSUMO() " + clause);
         TPTPVisitor sv = new TPTPVisitor();
         sv.parseString(clause);
-        HashMap<String, TPTPFormula> hm = sv.result;
+        Map<String, TPTPFormula> hm = sv.result;
         if (debug) {
             for (String s : hm.keySet()) {
                 System.out.println(hm.get(s));
@@ -202,7 +203,7 @@ public class TPTP2SUMO {
                     tptp_parser.TPTPVisitor sv = new TPTPVisitor();
                     System.out.println("main parse file " + args[1]);
                     sv.parseFile(args[1]);
-                    HashMap<String, TPTPFormula> hm = sv.result;
+                    Map<String, TPTPFormula> hm = sv.result;
                     for (String s : hm.keySet()) {
                         System.out.println(hm.get(s));
                         System.out.println("\t" + hm.get(s).sumo + "\n");

@@ -36,12 +36,12 @@ public class WordNetUtilities {
      * POS-prefixed mappings from a new synset number to the old
      * one.
      */
-    public static HashMap<String, String> mappings = new HashMap<String, String>();
+    public static Map<String, String> mappings = new HashMap<String, String>();
     public static int TPTPidCounter = 1;
     public static int errorCount = 0;
     public static int patternNum = 18; // sense key patten
     public static boolean withThoughtEmotion = false;
-    protected static ArrayList<String> WordNetRelations = new ArrayList<String>(Arrays.asList("antonym",
+    protected static List<String> WordNetRelations = new ArrayList<String>(Arrays.asList("antonym",
             "hypernym", "instance_hypernym", "hyponym", "instance_hyponym",
             "member_holonym", "substance_holonym", "part_holonym", "member_meronym",
             "substance_meronym", "part_meronym", "attribute", "derivationally_related",
@@ -179,9 +179,9 @@ public class WordNetUtilities {
      * Extract the info in a word%num:num:num sense key.
      * colonp = Pattern.compile("([^%]+)%([^:]*):([^:]*):([^:]*):([^:]*)");
      */
-    public static ArrayList<String> parseColonKey(String colonKey) {
+    public static List<String> parseColonKey(String colonKey) {
 
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         Pattern p = Pattern.compile("([^%]+)%([^:]*):([^:]*):([^:]*)");
         Matcher m = p.matcher(colonKey);
         if (m.matches()) {
@@ -201,7 +201,7 @@ public class WordNetUtilities {
      */
     public static String getWordFromColonKey(String key) {
 
-        ArrayList<String> result = parseColonKey(key);
+        List<String> result = parseColonKey(key);
         if (result.size() < 3) {
             System.out.println("Info in WordNetUtilities.getWordFromColonKey(): missing word: " + key);
             new Exception().printStackTrace();
@@ -215,7 +215,7 @@ public class WordNetUtilities {
      */
     public static String getPOSNumFromColonKey(String key) {
 
-        ArrayList<String> result = parseColonKey(key);
+        List<String> result = parseColonKey(key);
         if (result.size() < 3) {
             System.out.println("Info in WordNetUtilities.getPOSNumFromColonKey(): missing num: " + key);
             new Exception().printStackTrace();
@@ -229,7 +229,7 @@ public class WordNetUtilities {
      */
     public static String getSenseFromColonKey(String key) {
 
-        ArrayList<String> result = parseColonKey(key);
+        List<String> result = parseColonKey(key);
         if (result.size() < 3) {
             System.out.println("Info in WordNetUtilities.getSenseFromColonKey(): missing or bad key: " + key);
             new Exception().printStackTrace();
@@ -305,12 +305,12 @@ public class WordNetUtilities {
     }
 
     /**
-     * Convert a list of Terms in the format "&%term1 &%term2" to an ArrayList
+     * Convert a list of Terms in the format "&%term1 &%term2" to an List
      * of bare term Strings
      */
-    public static ArrayList<String> convertTermList(String termList) {
+    public static List<String> convertTermList(String termList) {
 
-        ArrayList<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
         String[] list = termList.split(" ");
         for (int i = 0; i < list.length; i++) {
             String t = getBareSUMOTerm(list[i]);
@@ -571,7 +571,7 @@ public class WordNetUtilities {
      * was found in the hashtable.
      */
     public static boolean substTest(String result, String match, String subst,
-                                    HashMap<String, HashSet<String>> hash) {
+                                    Map<String, Set<String>> hash) {
 
         Pattern p = Pattern.compile(match);
         Matcher m = p.matcher(result);
@@ -671,16 +671,16 @@ public class WordNetUtilities {
     }
 
     /**
-     * HTML format a TreeMap of ArrayLists word senses
+     * HTML format a TreeMap of Lists word senses
      */
-    public static String formatWordsList(TreeMap<String, ArrayList<String>> words, String kbName) {
+    public static String formatWordsList(TreeMap<String, List<String>> words, String kbName) {
 
         StringBuffer result = new StringBuffer();
         int count = 0;
         Iterator<String> it = words.keySet().iterator();
         while (it.hasNext() && count < 50) {
             String word = it.next();
-            ArrayList<String> synsetList = words.get(word);
+            List<String> synsetList = words.get(word);
             for (int i = 0; i < synsetList.size(); i++) {
                 String synset = synsetList.get(i);
                 result.append("<a href=\"WordNet.jsp?word=");
@@ -708,7 +708,7 @@ public class WordNetUtilities {
      * Routine called by mergeUpdates which does the bulk of the work.
      * Should not be called during normal interactive running of Sigma.
      */
-    private static void processMergers(HashMap<String, String> hm, String fileName,
+    private static void processMergers(Map<String, String> hm, String fileName,
                                        String pattern, String posNum) throws IOException {
 
         FileWriter fw = null;
@@ -766,10 +766,10 @@ public class WordNetUtilities {
      */
     public static void mergeUpdates() throws IOException {
 
-        HashMap<String, String> hm = new HashMap<String, String>();
+        Map<String, String> hm = new HashMap<String, String>();
 
         String dir = "/Program Files/Apache Software Foundation/Tomcat 5.5/KBs";
-        FileReader r = new FileReader(dir + File.separator + "newMappings20.dat");
+        FileReader r = new FileReader(dir + File.separator + "newHashMappings20.dat");
         LineNumberReader lr = new LineNumberReader(r);
         String line;
         while ((line = lr.readLine()) != null) {
@@ -808,7 +808,7 @@ public class WordNetUtilities {
      */
     private static String findMappingFromHypernym(String synset) {
 
-        ArrayList<AVPair> rels = WordNet.wn.relations.get(synset);   // relations requires prefixes
+        List<AVPair> rels = WordNet.wn.relations.get(synset);   // relations requires prefixes
         if (rels != null) {
             Iterator<AVPair> it2 = rels.iterator();
             while (it2.hasNext()) {
@@ -995,7 +995,7 @@ public class WordNetUtilities {
     }
 
     /**
-     * Read the version mapping files and store in the HashMap
+     * Read the version mapping files and store in the Map
      * called "mappings".
      * Note that the "old" synset should be the second element of each line
      */
@@ -1114,7 +1114,7 @@ public class WordNetUtilities {
 
     public static String printStatistics() {
 
-        HashSet<String> mappedSUMOterms = new HashSet<String>();
+        Set<String> mappedSUMOterms = new HashSet<String>();
         int totalInstanceMappings = 0;
         int totalSubsumingMappings = 0;
         int totalEquivalenceMappings = 0;
@@ -1238,7 +1238,7 @@ public class WordNetUtilities {
         Iterator<String> it = WordNet.wn.relations.keySet().iterator();
         while (it.hasNext()) {
             String key = it.next();
-            ArrayList<AVPair> al = WordNet.wn.relations.get(key);
+            List<AVPair> al = WordNet.wn.relations.get(key);
             for (int i = 0; i < al.size(); i++) {
                 AVPair avp = al.get(i);
                 if (avp.attribute.equals("member meronym") ||
@@ -1251,7 +1251,7 @@ public class WordNetUtilities {
                     String keywordlist = WordNet.wn.synsetsToWords.get(key).toString();
                     String valuewordlist = WordNet.wn.synsetsToWords.get(value).toString();
                     if (!excludedStringsForMeronymy(keywordlist, valuewordlist)) {
-                        System.out.println("; " + WordNet.wn.synsetsToWords.get(key)); //ArrayList<String>
+                        System.out.println("; " + WordNet.wn.synsetsToWords.get(key)); //List<String>
                         System.out.println("; " + WordNet.wn.synsetsToWords.get(value));
                         if (SUMO1 != null && SUMO2 != null)
                             System.out.println("(" + avp.attribute + " " + SUMO2.substring(2, SUMO2.length() - 1) +
@@ -1336,7 +1336,7 @@ public class WordNetUtilities {
 
     private static void writeTPTPWordNetClassDefinitions(PrintWriter pw) throws IOException {
 
-        ArrayList<String> WordNetClasses =
+        List<String> WordNetClasses =
                 new ArrayList<String>(Arrays.asList("s__Synset", "s__NounSynset", "s__VerbSynset", "s__AdjectiveSynset", "s__AdverbSynset"));
         Iterator<String> it = WordNetClasses.iterator();
         while (it.hasNext()) {
@@ -1355,18 +1355,6 @@ public class WordNetUtilities {
                 ",axiom,(s__documentation(s__Word,s__EnglishLanguage,\"A particular word.\"))).");
         pw.println("fof(kb_WordNet_" + TPTPidCounter++ +
                 ",axiom,(s__documentation(s__VerbFrame,s__EnglishLanguage,\"A string template showing allowed form of use of a verb.\"))).");
-    }
-
-    private static void writeTPTPVerbFrames(PrintWriter pw) throws IOException {
-
-        for (int i = 0; i < WordNet.VerbFrames.size(); i++) {
-            String frame = WordNet.VerbFrames.get(i);
-            String numString = String.valueOf(i);
-            if (numString.length() == 1)
-                numString = "0" + numString;
-            pw.println("fof(kb_WordNet_" + TPTPidCounter++ +
-                    ",axiom,(s__documentation(s__WN30VerbFrame_" + numString + ",s__EnglishLanguage,\"" + frame + "\"))).");
-        }
     }
 
     private static void writeTPTPWordNetRelationDefinitions(PrintWriter pw) throws IOException {
@@ -1454,7 +1442,7 @@ public class WordNetUtilities {
 
         //if (synset.startsWith("WN30-"))
         //    synset = synset.substring(5);
-        ArrayList<String> al = WordNet.wn.synsetsToWords.get(synset);
+        List<String> al = WordNet.wn.synsetsToWords.get(synset);
         if (al != null) {
             String parent = "Noun";
             switch (synset.charAt(0)) {
@@ -1497,7 +1485,7 @@ public class WordNetUtilities {
 
             //pw.println("fof(kb_WordNet_" + TPTPidCounter++ + ",axiom,(s__documentation(s__WN30_" +
             //        synset + ",s__EnglishLanguage,\"" + StringUtil.escapeQuoteChars(doc) + "\"))).");
-            ArrayList<AVPair> al2 = WordNet.wn.relations.get(synset);
+            List<AVPair> al2 = WordNet.wn.relations.get(synset);
             if (al2 != null) {
                 for (int i = 0; i < al2.size(); i++) {
                     AVPair avp = al2.get(i);
@@ -1548,7 +1536,7 @@ public class WordNetUtilities {
             wordOrPhrase = "phrase";
         //pw.println("fof(kb_WordNet_" + TPTPidCounter++ + ",axiom,(s__documentation(s__WN30Word_" +
         //        wordAsID + ",s__EnglishLanguage,\"The English " + wordOrPhrase + " '" + word + "'\"))).\n");
-        ArrayList<String> senses = WordNet.wn.wordsToSenseKeys.get(word);
+        List<String> senses = WordNet.wn.wordsToSenseKeys.get(word);
         if (senses != null) {
             for (int i = 0; i < senses.size(); i++) {
                 String sense = StringUtil.StringToPrologID(senses.get(i));
@@ -1585,7 +1573,7 @@ public class WordNetUtilities {
             pw.println("fof(kb_WordNet_" + TPTPidCounter++ + ",axiom,(s__synset(s__" +
                     StringUtil.StringToPrologID(sense) + ",s__WN30_" + posNum + synset + "))).\n");
             if (posNum.equals("2")) {
-                ArrayList<String> frames = WordNet.wn.verbFrames.get(synset + "-" + word);
+                List<String> frames = WordNet.wn.verbFrames.get(synset + "-" + word);
                 if (frames != null) {
                     for (int i = 0; i < frames.size(); i++) {
                         String frame = frames.get(i);
@@ -1636,12 +1624,12 @@ public class WordNetUtilities {
      *
      * @return a list of POS-prefixed synsets
      */
-    public static HashSet<String> findLeavesInTree(HashSet<String> rels) {
+    public static Set<String> findLeavesInTree(Set<String> rels) {
 
         // first find all valid nodes that are pointed to
-        HashSet<String> valid = new HashSet<>();
+        Set<String> valid = new HashSet<>();
         for (String s : WordNet.wn.relations.keySet()) {
-            ArrayList<AVPair> avpList = WordNet.wn.relations.get(s);
+            List<AVPair> avpList = WordNet.wn.relations.get(s);
             Iterator<AVPair> it = avpList.iterator();
             while (it.hasNext()) {
                 AVPair avp = it.next();
@@ -1650,9 +1638,9 @@ public class WordNetUtilities {
             }
         }
 
-        HashSet<String> result = new HashSet<>();
+        Set<String> result = new HashSet<>();
         for (String s : WordNet.wn.relations.keySet()) {
-            ArrayList<AVPair> avpList = WordNet.wn.relations.get(s);
+            List<AVPair> avpList = WordNet.wn.relations.get(s);
             boolean found = false;
             Iterator<AVPair> it = avpList.iterator();
             while (it.hasNext() && !found) {
@@ -1670,27 +1658,27 @@ public class WordNetUtilities {
      * Find the complete path from a given synset.  If multiple
      * inheritance results in multiple paths, return them all.
      */
-    public static ArrayList<ArrayList<String>> findPathsToRoot(ArrayList<String> base, String synset) {
+    public static List<List<String>> findPathsToRoot(List<String> base, String synset) {
 
         //System.out.println("WordNetUtilities.findPathsToRoot(): base: " + base);
         //System.out.println("WordNetUtilities.findPathsToRoot(): synset: " +
         //        WordNet.wn.getWordsFromSynset(synset).get(0) + "-" + synset);
-        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        List<List<String>> result = new ArrayList<>();
         if (base.contains(synset) || synset.equals("100001740")) { // catch cycles, stop at "entity"
-            ArrayList<String> path = new ArrayList<>();
+            List<String> path = new ArrayList<>();
             path.addAll(base);
             path.add(synset);
             result.add(path);
             return result;
         }
-        ArrayList<AVPair> links = WordNet.wn.relations.get(synset);
+        List<AVPair> links = WordNet.wn.relations.get(synset);
         if (links != null) {
             for (AVPair link : links) {
                 if (link == null)
                     System.out.println("Error in WordNetUtilities.findPathsToRoot(): null link");
                 else if (link.attribute.equals("hypernym") || link.attribute.equals("instance hypernym")) {
                     //System.out.println("WordNetUtilities.findPathsToRoot(): link: " + link);
-                    ArrayList<String> path = new ArrayList<>();
+                    List<String> path = new ArrayList<>();
                     path.addAll(base);
                     path.add(synset);
                     result.addAll(findPathsToRoot(path, link.value));
@@ -1700,12 +1688,12 @@ public class WordNetUtilities {
         return result;
     }
 
-    private static String lowestCommonParentInner(ArrayList<String> path,
-                                                  ArrayList<ArrayList<String>> paths, int cursor) {
+    private static String lowestCommonParentInner(List<String> path,
+                                                  List<List<String>> paths, int cursor) {
 
-        Iterator<ArrayList<String>> it = paths.iterator();
+        Iterator<List<String>> it = paths.iterator();
         while (it.hasNext()) {
-            ArrayList<String> path2 = it.next();
+            List<String> path2 = it.next();
             int index1 = path.size() - cursor - 1;
             int index2 = path2.size() - cursor - 1;
             if (index1 < 0 || index2 < 0)
@@ -1720,11 +1708,11 @@ public class WordNetUtilities {
         return null;
     }
 
-    private static String lowestCommonParent(ArrayList<ArrayList<String>> paths1,
-                                             ArrayList<ArrayList<String>> paths2, int cursor) {
+    private static String lowestCommonParent(List<List<String>> paths1,
+                                             List<List<String>> paths2, int cursor) {
 
         String bestSyn = null;
-        Iterator<ArrayList<String>> it = paths1.iterator();
+        Iterator<List<String>> it = paths1.iterator();
         while (it.hasNext()) {
             String result = lowestCommonParentInner(it.next(), paths2, cursor);
             if (result != null)
@@ -1735,10 +1723,10 @@ public class WordNetUtilities {
 
     public static String lowestCommonParent(String s1, String s2) {
 
-        ArrayList<String> base1 = new ArrayList<String>();
-        ArrayList<String> base2 = new ArrayList<String>();
-        ArrayList<ArrayList<String>> paths1 = findPathsToRoot(base1, s1);
-        ArrayList<ArrayList<String>> paths2 = findPathsToRoot(base2, s2);
+        List<String> base1 = new ArrayList<String>();
+        List<String> base2 = new ArrayList<String>();
+        List<List<String>> paths1 = findPathsToRoot(base1, s1);
+        List<List<String>> paths2 = findPathsToRoot(base2, s2);
         int cursor = 0;
         String bestSyn = "100001740"; // entity
         String result = bestSyn;
@@ -1758,11 +1746,11 @@ public class WordNetUtilities {
      *
      * @return a list of POS-prefixed synsets
      */
-    public static HashSet<String> findLeaves(String rel) {
+    public static Set<String> findLeaves(String rel) {
 
-        HashSet<String> result = new HashSet<>();
+        Set<String> result = new HashSet<>();
         for (String s : WordNet.wn.relations.keySet()) {
-            ArrayList<AVPair> avpList = WordNet.wn.relations.get(s);
+            List<AVPair> avpList = WordNet.wn.relations.get(s);
             boolean found = false;
             Iterator<AVPair> it = avpList.iterator();
             while (it.hasNext() && !found) {
@@ -1780,7 +1768,7 @@ public class WordNetUtilities {
 
         try {
             KBmanager.getMgr().initializeOnce();
-            HashSet<String> hs = findLeavesInTree(Sets.newHashSet("hyponym", "instance hyponym"));
+            Set<String> hs = findLeavesInTree(Sets.newHashSet("hyponym", "instance hyponym"));
             int count = 0;
             System.out.println();
             System.out.println("====================================");
@@ -1802,7 +1790,7 @@ public class WordNetUtilities {
 
         try {
             KBmanager.getMgr().initializeOnce();
-            HashSet<String> hs = findLeavesInTree(Sets.newHashSet("hypernym", "instance hypernym"));
+            Set<String> hs = findLeavesInTree(Sets.newHashSet("hypernym", "instance hypernym"));
             int count = 0;
             System.out.println();
             System.out.println("====================================");
@@ -1823,10 +1811,10 @@ public class WordNetUtilities {
     /**
      * @return POS-prefixed synsets
      */
-    public static HashSet<String> wordsToSynsets(String word) {
+    public static Set<String> wordsToSynsets(String word) {
 
-        HashSet<String> result = new HashSet<String>();
-        ArrayList<String> sensekeys = WordNet.wn.wordsToSenseKeys.get(word);
+        Set<String> result = new HashSet<String>();
+        List<String> sensekeys = WordNet.wn.wordsToSenseKeys.get(word);
         if (sensekeys == null) {
             //System.out.println("Error in WordNetUtilities.wordsToSynsets(): no synset for : " + word);
             return null;
@@ -1862,13 +1850,13 @@ public class WordNetUtilities {
     }
 
     private static void addSenseSet(Hashtable<String, String> SUMOhash,
-                                    String prefix, HashMap<String, HashSet<String>> SUMOs) {
+                                    String prefix, Map<String, Set<String>> SUMOs) {
 
         for (String synset : SUMOhash.keySet()) {
             String SUMO = SUMOhash.get(synset);
             String bareSUMO = getBareSUMOTerm(SUMO);
             String posSynset = prefix + synset;
-            HashSet<String> theSet = null;
+            Set<String> theSet = null;
             if (!SUMOs.containsKey(bareSUMO)) {
                 theSet = new HashSet<String>();
                 SUMOs.put(bareSUMO, theSet);
@@ -1884,9 +1872,9 @@ public class WordNetUtilities {
      * The goal is to provide a way to collapse WordNet synsets that
      * embody overly fine grained distinctions.
      */
-    public static HashMap<String, HashSet<String>> collapseSenses() {
+    public static Map<String, Set<String>> collapseSenses() {
 
-        HashMap<String, HashSet<String>> SUMOs = new HashMap<>();
+        Map<String, Set<String>> SUMOs = new HashMap<>();
         //nounSUMOHash = new Hashtable<String,String>();   // Keys are synset Strings, values are SUMO
         //verbSUMOHash = new Hashtable<String,String>();   // terms with the &% prefix and =, +, @ or [ suffix.
         //djectiveSUMOHash = new Hashtable<String,String>();
@@ -1901,11 +1889,11 @@ public class WordNetUtilities {
     /**
      * @return all the hyponyms of a given POS-prefixed synset
      */
-    public static HashSet<String> getAllHyponyms(String s) {
+    public static Set<String> getAllHyponyms(String s) {
 
         //System.out.println("getAllHyponyms(): " + s);
-        HashSet<String> result = new HashSet<String>();
-        ArrayList<AVPair> rels = WordNet.wn.relations.get(s);
+        Set<String> result = new HashSet<String>();
+        List<AVPair> rels = WordNet.wn.relations.get(s);
         // System.out.println("getAllHyponyms() rels: " + rels);
         if (rels == null)
             return result;
@@ -1920,14 +1908,14 @@ public class WordNetUtilities {
     /**
      * @return all the hyponyms of a given POS-prefixed synset
      */
-    public static HashSet<String> getAllHyponymsTransitive(String s) {
+    public static Set<String> getAllHyponymsTransitive(String s) {
 
         //System.out.println("getAllHyponymsTransitive(): input: " + s);
-        HashSet<String> result = new HashSet<String>();
+        Set<String> result = new HashSet<String>();
         result.addAll(getAllHyponyms(s));
         boolean changed = true;
         while (changed) {
-            HashSet<String> newresult = new HashSet<String>();
+            Set<String> newresult = new HashSet<String>();
             newresult.addAll(result);
             for (String str : result)
                 newresult.addAll(getAllHyponyms(str));
@@ -1941,7 +1929,7 @@ public class WordNetUtilities {
     /**
      * @return whether the word is a possible hyponym of a given POS-prefixed synset
      */
-    public static boolean isHyponymousWord(String word, HashSet<String> synsets) {
+    public static boolean isHyponymousWord(String word, Set<String> synsets) {
 
         if (StringUtil.emptyString(word) || synsets == null || synsets.isEmpty()) {
             System.out.println("WordNetUtilities.isHyponymousWord(): bad inputs");
@@ -1949,11 +1937,11 @@ public class WordNetUtilities {
             return false;
         }
         for (String synset : synsets) {
-            HashSet<String> hypo = getAllHyponymsTransitive(synset);
-            HashSet<String> words = new HashSet<>();
+            Set<String> hypo = getAllHyponymsTransitive(synset);
+            Set<String> words = new HashSet<>();
             for (String s : hypo) {
                 if (WordNet.wn.synsetsToWords.containsKey(s)) {
-                    ArrayList<String> newWords = WordNet.wn.synsetsToWords.get(s);
+                    List<String> newWords = WordNet.wn.synsetsToWords.get(s);
                     //System.out.println("WordNetUtilities.isHyponymousWord(): words: "  + newWords);
                     words.addAll(newWords);
                 }
@@ -1988,10 +1976,10 @@ public class WordNetUtilities {
                     System.out.print('.');
                 System.out.println("==============");
                 System.out.println(line.trim());
-                ArrayList<String> words = WordNet.wn.synsetsToWords.get(line.trim());
+                List<String> words = WordNet.wn.synsetsToWords.get(line.trim());
                 if (words != null)
                     System.out.println(words);
-                HashSet<String> hyps = getAllHyponymsTransitive(line.trim());
+                Set<String> hyps = getAllHyponymsTransitive(line.trim());
                 for (String s : hyps) {
                     words = WordNet.wn.synsetsToWords.get(s);
                     System.out.println(words);
@@ -2056,7 +2044,7 @@ public class WordNetUtilities {
     /**
      * get all synsets corresponding to a SUMO term
      */
-    public static ArrayList<String> getSynsetsFromSUMO(String sumo) {
+    public static List<String> getSynsetsFromSUMO(String sumo) {
 
         return WordNet.wn.SUMOHash.get(sumo);
     }
@@ -2065,9 +2053,9 @@ public class WordNetUtilities {
      * Convert verb frame indexes as Strings into actual vrb frame strings.
      * For example "1" becomes "Something ----s"
      */
-    public static ArrayList<String> convertVerbFrameNumbersToFrames(ArrayList<String> numbers) {
+    public static List<String> convertVerbFrameNumbersToFrames(List<String> numbers) {
 
-        ArrayList<String> res = new ArrayList<>();
+        List<String> res = new ArrayList<>();
         if (numbers == null)
             return res;
         for (String s : numbers)
@@ -2081,14 +2069,14 @@ public class WordNetUtilities {
      * @param synset is a 9-digit synset
      *               Note! The verb frame key takes an 8-digit synset
      */
-    public static ArrayList<String> getVerbFramesForSynset(String synset) {
+    public static List<String> getVerbFramesForSynset(String synset) {
 
-        ArrayList<String> res = new ArrayList<>();
+        List<String> res = new ArrayList<>();
         if (synset.length() == 8) {
             System.out.println("Error in WordNetUtilities.getVerbFramesForSynset(): 8 digit synset");
             return res;
         }
-        ArrayList<String> numbers = WordNet.wn.verbFrames.get(synset.substring(1));
+        List<String> numbers = WordNet.wn.verbFrames.get(synset.substring(1));
         return convertVerbFrameNumbersToFrames(numbers);
     }
 
@@ -2099,9 +2087,9 @@ public class WordNetUtilities {
      * @param synset is a 9-digit synset
      *               Note! The verb frame key takes an 8-digit synset
      */
-    public static ArrayList<String> getVerbFramesForWord(String synset, String word) {
+    public static List<String> getVerbFramesForWord(String synset, String word) {
 
-        ArrayList<String> res = new ArrayList<>();
+        List<String> res = new ArrayList<>();
         if (synset.length() < 9) {
             System.out.println("Error in WordNetUtilities.getVerbFramesForWord(): 8 digit synset: " + synset);
             return res;
@@ -2119,10 +2107,10 @@ public class WordNetUtilities {
      * @param map   is a set of word keys and the values are the verb frames
      * @param words are all the words in a given synset
      */
-    public static ArrayList<String> doVerbFrameSubstitution(HashMap<String, ArrayList<String>> map,
-                                                            ArrayList<String> words) {
+    public static List<String> doVerbFrameSubstitution(Map<String, List<String>> map,
+                                                       List<String> words) {
 
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (String w : map.keySet()) {
             if (w.equals("all")) {
                 for (String word : words) {
@@ -2153,10 +2141,10 @@ public class WordNetUtilities {
      * @param synset is a 9-digit synset
      *               Note! The verb frame key takes an 8-digit synset
      */
-    public static HashMap<String, ArrayList<String>> getAllVerbFrames(String synset,
-                                                                      ArrayList<String> words) {
+    public static Map<String, List<String>> getAllVerbFrames(String synset,
+                                                             List<String> words) {
 
-        HashMap<String, ArrayList<String>> res = new HashMap<>();
+        Map<String, List<String>> res = new HashMap<>();
         res.put("all", getVerbFramesForSynset(synset));
         System.out.println("showVerbFrames(1): res: " + res);
         if (res.get("all") == null)
@@ -2180,9 +2168,9 @@ public class WordNetUtilities {
 
         System.out.println("showVerbFrames(): synset: " + synset);
         StringBuffer sb = new StringBuffer();
-        ArrayList<String> words = WordNet.wn.getWordsFromSynset(synset);
+        List<String> words = WordNet.wn.getWordsFromSynset(synset);
         System.out.println("showVerbFrames(): words: " + words);
-        HashMap<String, ArrayList<String>> res = new HashMap<>();
+        Map<String, List<String>> res = new HashMap<>();
         res.put("all", getVerbFramesForSynset(synset));
         System.out.println("showVerbFrames(1): res: " + res);
         if (res.get("all") == null)
@@ -2195,7 +2183,7 @@ public class WordNetUtilities {
         }
         if (res.size() > 0) {
             sb.append("<b>Verb Frames</b><P>\n");
-            ArrayList<String> stringList = doVerbFrameSubstitution(res, words);
+            List<String> stringList = doVerbFrameSubstitution(res, words);
             for (String s : stringList)
                 sb.append(s + "<br>\n");
             sb.append("<P>\n");
@@ -2206,9 +2194,9 @@ public class WordNetUtilities {
     /**
      * get all verb synsets corresponding to a SUMO term that are equivalence links
      */
-    public static ArrayList<String> getEquivalentVerbSynsetsFromSUMO(String sumo) {
+    public static List<String> getEquivalentVerbSynsetsFromSUMO(String sumo) {
 
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         if (WordNet.wn == null || WordNet.wn.SUMOHash == null) {
             System.out.println("Error in getEquivalentVerbSynsetsFromSUMO(): WordNet not loaded");
             return null;
@@ -2217,7 +2205,7 @@ public class WordNetUtilities {
             System.out.println("Error in getEquivalentVerbSynsetsFromSUMO(): null input");
             return null;
         }
-        ArrayList<String> synlist = WordNet.wn.SUMOHash.get(sumo);
+        List<String> synlist = WordNet.wn.SUMOHash.get(sumo);
         if (synlist == null) return result;
         //System.out.println("getEquivalentVerbSynsetsFromSUMO(): synlist: " + synlist);
         for (String s : synlist) {
@@ -2236,9 +2224,9 @@ public class WordNetUtilities {
     /**
      * get all verb synsets corresponding to a SUMO term
      */
-    public static ArrayList<String> getVerbSynsetsFromSUMO(String sumo) {
+    public static List<String> getVerbSynsetsFromSUMO(String sumo) {
 
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         if (WordNet.wn == null || WordNet.wn.SUMOHash == null) {
             System.out.println("Error in getVerbSynsetsFromSUMO(): WordNet not loaded");
             return null;
@@ -2247,7 +2235,7 @@ public class WordNetUtilities {
             System.out.println("Error in getVerbSynsetsFromSUMO(): null input");
             return null;
         }
-        ArrayList<String> synlist = WordNet.wn.SUMOHash.get(sumo);
+        List<String> synlist = WordNet.wn.SUMOHash.get(sumo);
         //System.out.println("getVerbSynsetsFromSUMO(): synlist: " + synlist);
         if (synlist == null) return result;
         for (String s : synlist) {
@@ -2261,9 +2249,9 @@ public class WordNetUtilities {
     /**
      * get all synsets corresponding to a SUMO term that are equivalence links
      */
-    public static ArrayList<String> getEquivalentSynsetsFromSUMO(String sumo) {
+    public static List<String> getEquivalentSynsetsFromSUMO(String sumo) {
 
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         if (WordNet.wn == null || WordNet.wn.SUMOHash == null) {
             System.out.println("Error in getEquivalentSynsetsFromSUMO(): WordNet not loaded");
             return null;
@@ -2272,7 +2260,7 @@ public class WordNetUtilities {
             System.out.println("Error in getEquivalentSynsetsFromSUMO(): null input");
             return null;
         }
-        ArrayList<String> synlist = WordNet.wn.SUMOHash.get(sumo);
+        List<String> synlist = WordNet.wn.SUMOHash.get(sumo);
         if (synlist == null) return result;
         for (String s : synlist) {
             String SUMO = WordNet.wn.getSUMOMapping(s);
@@ -2286,11 +2274,11 @@ public class WordNetUtilities {
     /**
      * get all synsets corresponding to a list of SUMO terms
      */
-    public static HashSet<String> getSynsetsFromSUMOList(Collection<String> sumo) {
+    public static Set<String> getSynsetsFromSUMOList(Collection<String> sumo) {
 
-        HashSet<String> result = new HashSet<>();
+        Set<String> result = new HashSet<>();
         for (String s : sumo) {
-            ArrayList<String> synsets = WordNet.wn.SUMOHash.get(s);
+            List<String> synsets = WordNet.wn.SUMOHash.get(s);
             if (synsets != null)
                 result.addAll(synsets);
         }
@@ -2300,11 +2288,11 @@ public class WordNetUtilities {
     /**
      * get all words corresponding to a list of synsets
      */
-    public static HashSet<String> getWordsFromSynsetList(Collection<String> synsets) {
+    public static Set<String> getWordsFromSynsetList(Collection<String> synsets) {
 
-        HashSet<String> result = new HashSet<>();
+        Set<String> result = new HashSet<>();
         for (String s : synsets) {
-            ArrayList<String> words = WordNet.wn.getWordsFromSynset(s);
+            List<String> words = WordNet.wn.getWordsFromSynset(s);
             if (words != null)
                 result.addAll(words);
         }
@@ -2332,14 +2320,14 @@ public class WordNetUtilities {
      * to a given human sense (as well as a list of emotions and a list
      * of thought words)
      */
-    private static HashSet<String> findWordIntersections(HashMap<String, HashSet<String>> words) {
+    private static Set<String> findWordIntersections(Map<String, Set<String>> words) {
 
-        HashSet<String> synesthesiaWords = new HashSet<>();
-        HashSet<String> inverses = new HashSet<>();
+        Set<String> synesthesiaWords = new HashSet<>();
+        Set<String> inverses = new HashSet<>();
         for (String s1 : words.keySet()) {
             for (String s2 : words.keySet()) {
                 if (!s1.equals(s2) && !inverses.contains(s2 + "_" + s1)) {
-                    HashSet<String> temp = new HashSet<>();
+                    Set<String> temp = new HashSet<>();
                     temp.addAll(words.get(s1));
                     temp.retainAll(words.get(s2));
                     if (temp.size() > 0) {
@@ -2356,11 +2344,11 @@ public class WordNetUtilities {
     /**
      * result is a side effect on "orig"
      */
-    private static void addTermAndSubs(KB kb, HashSet<String> orig, String term) {
+    private static void addTermAndSubs(KB kb, Set<String> orig, String term) {
 
-        HashSet<String> newterms = null;
+        Set<String> newterms = null;
         if (kb.isAttribute(term))
-            newterms = (HashSet) kb.getAllSub(term, "subAttribute");
+            newterms = kb.getAllSub(term, "subAttribute");
         else
             newterms = kb.kbCache.getChildClasses(term);
         if (newterms != null)
@@ -2373,7 +2361,7 @@ public class WordNetUtilities {
      * emotional concepts.  Return a set of words with String keys
      * as to the human sense plus "emotion" and "thought"
      */
-    public static HashMap<String, HashSet<String>> sensoryWords() {
+    public static Map<String, Set<String>> sensoryWords() {
 
         KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
         KBcache cache = kb.kbCache;
@@ -2381,16 +2369,16 @@ public class WordNetUtilities {
         System.out.println("INFO in WordNetUtilities.sensorySynsets(): ");
         // Hearing, Seeing, Smelling, TactilePerception, Tasting
         // OlfactoryAttribute, SoundAttribute, TasteAttribute, TextureAttribute, VisualAttribute
-        HashSet<String> tasteTerms = new HashSet<>();
-        HashSet<String> smellTerms = new HashSet<>();
-        HashSet<String> sightTerms = new HashSet<>();
-        HashSet<String> touchTerms = new HashSet<>();
-        HashSet<String> soundTerms = new HashSet<>();
+        Set<String> tasteTerms = new HashSet<>();
+        Set<String> smellTerms = new HashSet<>();
+        Set<String> sightTerms = new HashSet<>();
+        Set<String> touchTerms = new HashSet<>();
+        Set<String> soundTerms = new HashSet<>();
 
-        HashSet<String> perceptionTerms = new HashSet<>();
+        Set<String> perceptionTerms = new HashSet<>();
 
-        HashSet<String> emotionTerms = new HashSet<>();
-        HashSet<String> thoughtTerms = new HashSet<>();
+        Set<String> emotionTerms = new HashSet<>();
+        Set<String> thoughtTerms = new HashSet<>();
 
         addTermAndSubs(kb, tasteTerms, "Tasting");
         addTermAndSubs(kb, tasteTerms, "TasteAttribute");
@@ -2422,16 +2410,16 @@ public class WordNetUtilities {
 
         addTermAndSubs(kb, emotionTerms, "EmotionalState");
 
-        HashSet<String> tasteSynsets = getSynsetsFromSUMOList(tasteTerms);
-        HashSet<String> smellSynsets = getSynsetsFromSUMOList(smellTerms);
-        HashSet<String> sightSynsets = getSynsetsFromSUMOList(sightTerms);
-        HashSet<String> touchSynsets = getSynsetsFromSUMOList(touchTerms);
-        HashSet<String> soundSynsets = getSynsetsFromSUMOList(soundTerms);
-        HashSet<String> perceptionSynsets = getSynsetsFromSUMOList(perceptionTerms);
-        HashSet<String> emotionSynsets = getSynsetsFromSUMOList(emotionTerms);
-        HashSet<String> thoughtSynsets = getSynsetsFromSUMOList(thoughtTerms);
+        Set<String> tasteSynsets = getSynsetsFromSUMOList(tasteTerms);
+        Set<String> smellSynsets = getSynsetsFromSUMOList(smellTerms);
+        Set<String> sightSynsets = getSynsetsFromSUMOList(sightTerms);
+        Set<String> touchSynsets = getSynsetsFromSUMOList(touchTerms);
+        Set<String> soundSynsets = getSynsetsFromSUMOList(soundTerms);
+        Set<String> perceptionSynsets = getSynsetsFromSUMOList(perceptionTerms);
+        Set<String> emotionSynsets = getSynsetsFromSUMOList(emotionTerms);
+        Set<String> thoughtSynsets = getSynsetsFromSUMOList(thoughtTerms);
 
-        HashMap<String, HashSet<String>> words = new HashMap<>();
+        Map<String, Set<String>> words = new HashMap<>();
         words.put("taste", getWordsFromSynsetList(tasteSynsets));
         words.put("smell", getWordsFromSynsetList(smellSynsets));
         words.put("sight", getWordsFromSynsetList(sightSynsets));
@@ -2450,9 +2438,9 @@ public class WordNetUtilities {
      * Find all the words that exhibit links to multiple sensory modes
      * in SUMO
      */
-    public static HashSet<String> synestheticSynsets(HashMap<String, HashSet<String>> words) {
+    public static Set<String> synestheticSynsets(Map<String, Set<String>> words) {
 
-        HashSet<String> synWords = findWordIntersections(words);
+        Set<String> synWords = findWordIntersections(words);
         System.out.println();
         System.out.println("synesthesiaCompare(): synWords list: " + synWords);
         System.out.println("count of synWords list: " + synWords.size());
@@ -2473,15 +2461,15 @@ public class WordNetUtilities {
      * Compare Lievers list of synesthetic words with those derived from
      * SUMO-WordNet
      */
-    public static void synesthesiaCompare(HashMap<String, HashSet<String>> words,
-                                          HashSet<String> synwords) {
+    public static void synesthesiaCompare(Map<String, Set<String>> words,
+                                          Set<String> synwords) {
 
         System.out.println();
-        ArrayList<ArrayList<String>> lieversFile = readFileIntoArray(System.getenv("CORPORA") +
+        List<List<String>> lieversFile = readFileIntoArray(System.getenv("CORPORA") +
                 File.separator + "LieversLexiconList.txt");
         TreeSet<String> lievers = new TreeSet<>();
         TreeSet<String> lieversRoots = new TreeSet<>();
-        for (ArrayList<String> al : lieversFile) {
+        for (List<String> al : lieversFile) {
             lievers.addAll(al);
         }
         for (String s : lievers) {
@@ -2497,7 +2485,7 @@ public class WordNetUtilities {
         lievers.addAll(lieversRoots);
 
         TreeSet<String> sumo = new TreeSet<>();
-        for (HashSet<String> hs : words.values()) {
+        for (Set<String> hs : words.values()) {
             sumo.addAll(hs);
         }
         System.out.println("synesthesiaCompare(): lievers list: " + lievers);
@@ -2546,9 +2534,9 @@ public class WordNetUtilities {
         // showAllRoots();
         try {
             KBmanager.getMgr().initializeOnce();
-            ArrayList<String> base = new ArrayList<String>();
-            ArrayList<ArrayList<String>> result = findPathsToRoot(base, "102858304");
-            for (ArrayList<String> path : result) {
+            List<String> base = new ArrayList<String>();
+            List<List<String>> result = findPathsToRoot(base, "102858304");
+            for (List<String> path : result) {
                 int count = 0;
                 for (String s : path) {
                     System.out.print(WordNet.wn.getWordsFromSynset(s).get(0) + "-" + s + ", ");
@@ -2559,9 +2547,9 @@ public class WordNetUtilities {
                 }
             }
             System.out.println();
-            ArrayList<String> base2 = new ArrayList<String>();
-            ArrayList<ArrayList<String>> result2 = findPathsToRoot(base2, "102958343");
-            for (ArrayList<String> path : result2) {
+            List<String> base2 = new ArrayList<String>();
+            List<List<String>> result2 = findPathsToRoot(base2, "102958343");
+            for (List<String> path : result2) {
                 int count = 0;
                 for (String s : path) {
                     System.out.print(WordNet.wn.getWordsFromSynset(s).get(0) + "-" + s + ", ");
@@ -2598,15 +2586,15 @@ public class WordNetUtilities {
         KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
 
         if (testWordDebug) System.out.println("WordNetUtilities.testWord(): word: " + word);
-        HashSet<String> synsets = wordsToSynsets(word);
+        Set<String> synsets = wordsToSynsets(word);
         if (synsets == null)
             return false;
         String root = MultiWords.rootFormOf(word);
-        HashSet<String> rootSynsets = wordsToSynsets(root);
+        Set<String> rootSynsets = wordsToSynsets(root);
         if (rootSynsets != null)
             synsets.addAll(rootSynsets);
         if (testWordDebug) System.out.println("WordNetUtilities.testWord(): synsets: " + synsets);
-        HashSet<String> terms = new HashSet<>();
+        Set<String> terms = new HashSet<>();
         for (String s : synsets) {
             terms.add(WordNet.wn.getSUMOMapping(s));
         }
@@ -2631,13 +2619,13 @@ public class WordNetUtilities {
         return false;
     }
 
-    private static HashSet<String> readDomain(String domain) {
+    private static Set<String> readDomain(String domain) {
 
-        HashSet<String> result = new HashSet<>();
+        Set<String> result = new HashSet<>();
         String filename = System.getenv("CORPORA") + File.separator +
                 "WordNet-3.0" + File.separator + "wn-domains-3.0.txt";
-        ArrayList<ArrayList<String>> lines = DB.readSpreadsheet(filename, null, false, ' ');
-        for (ArrayList<String> line : lines) {
+        List<List<String>> lines = DB.readSpreadsheet(filename, null, false, ' ');
+        for (List<String> line : lines) {
             if (line == null && line.size() < 3)
                 continue;
             if (line.contains(domain))
@@ -2651,7 +2639,7 @@ public class WordNetUtilities {
      */
     private static void lawDomainInfo() {
 
-        HashSet<String> synsets = readDomain("law");
+        Set<String> synsets = readDomain("law");
         for (String synset : synsets) {
             String id = synset.substring(0, 8);
             char pos = synset.charAt(synset.length() - 1);
@@ -2675,8 +2663,8 @@ public class WordNetUtilities {
 
     public static void testSynesthesia() {
 
-        HashMap<String, HashSet<String>> sensoryWords = sensoryWords();
-        HashSet<String> synwords = synestheticSynsets(sensoryWords);
+        Map<String, Set<String>> sensoryWords = sensoryWords();
+        Set<String> synwords = synestheticSynsets(sensoryWords);
         synesthesiaCompare(sensoryWords, synwords);
     }
 

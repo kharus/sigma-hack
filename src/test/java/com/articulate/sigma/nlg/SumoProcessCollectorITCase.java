@@ -2,21 +2,26 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.KB;
 import com.articulate.sigma.SigmaTestBase;
+import com.articulate.sigma.TopOnly;
 import com.articulate.sigma.UnitTestBase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // Tests on SumoProcess require KBs be loaded.
-
+@Tag("com.articulate.sigma.TopOnly")
 public class SumoProcessCollectorITCase extends UnitTestBase {
 
     private final KB knowledgeBase = SigmaTestBase.kb;
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testAddInvalidRole() {
         SumoProcessCollector process = new SumoProcessCollector(knowledgeBase, "agent", "Driving", "Mark");
-        process.addRole("goal", "HospitalBuilding");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            process.addRole("goal", "HospitalBuilding");
+        });
     }
 
     @Test
@@ -26,7 +31,7 @@ public class SumoProcessCollectorITCase extends UnitTestBase {
 
         String actual = process.toNaturalLanguage();
         String expected = "Mark drives a human";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -37,7 +42,7 @@ public class SumoProcessCollectorITCase extends UnitTestBase {
 
         String actual = process.toNaturalLanguage();
         String expected = "Mark doesn't drive a human";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -47,7 +52,7 @@ public class SumoProcessCollectorITCase extends UnitTestBase {
 
         String actual = process.toNaturalLanguage();
         String expected = "Mark drives to HospitalBuilding";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -58,7 +63,7 @@ public class SumoProcessCollectorITCase extends UnitTestBase {
 
         String actual = process.toNaturalLanguage();
         String expected = "Mark doesn't drive to HospitalBuilding";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -67,7 +72,7 @@ public class SumoProcessCollectorITCase extends UnitTestBase {
 
         String actual = process.toNaturalLanguage();
         String expected = "Mark performs an intentional process";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -77,7 +82,7 @@ public class SumoProcessCollectorITCase extends UnitTestBase {
 
         String actual = process.toNaturalLanguage();
         String expected = "Mark doesn't perform an intentional process";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -88,7 +93,7 @@ public class SumoProcessCollectorITCase extends UnitTestBase {
 
         String actual = process.toNaturalLanguage();
         String expected = "Julie and Mark don't perform an intentional process";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -99,7 +104,7 @@ public class SumoProcessCollectorITCase extends UnitTestBase {
 
         String actual = process.toNaturalLanguage();
         String expected = "Mark doesn't see HospitalBuilding";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -111,7 +116,7 @@ public class SumoProcessCollectorITCase extends UnitTestBase {
 
         String actual = process.toNaturalLanguage();
         String expected = "Julie and Mark don't see HospitalBuilding";
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
 }

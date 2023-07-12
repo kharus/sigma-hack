@@ -2,23 +2,25 @@ package com.articulate.sigma.trans;
 
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.KBmanager;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import com.articulate.sigma.TopOnly;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
-import java.util.HashMap;
+import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@Tag("com.articulate.sigma.TopOnly")
 public class TPTP2SUMOITCase {
 
-    @BeforeClass
+    @BeforeAll
     public static void init() {
 
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testPartition() {
 
@@ -33,7 +35,7 @@ public class TPTP2SUMOITCase {
             // kif = TPTP2SUMO.convert(reader, false);
             tptp_parser.TPTPVisitor sv = new tptp_parser.TPTPVisitor();
             sv.parseString(input);
-            HashMap<String, tptp_parser.TPTPFormula> hm = sv.result;
+            Map<String, tptp_parser.TPTPFormula> hm = sv.result;
             for (String s : hm.keySet()) {
                 System.out.println(hm.get(s));
                 System.out.println("\t" + hm.get(s).sumo + "\n");
@@ -44,7 +46,7 @@ public class TPTP2SUMOITCase {
         }
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testCollapse() {
 
@@ -56,10 +58,10 @@ public class TPTP2SUMOITCase {
                 "  (foo B B)\n" +
                 "  (bar C))";
         System.out.println("result: " + result);
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testCollapse2() {
 
@@ -73,7 +75,7 @@ public class TPTP2SUMOITCase {
                 "    (bar C))\n" +
                 "  (blah F G))";
         System.out.println("result: " + result);
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -144,6 +146,6 @@ public class TPTP2SUMOITCase {
         System.out.println("expected: " + expected);
         Formula fresult = new Formula(result);
         Formula fexpected = new Formula(expected);
-        assertTrue(fexpected.deepEquals(fresult));
+        assertThat(fexpected.deepEquals(fresult)).isTrue();
     }
 }

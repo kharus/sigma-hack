@@ -2,13 +2,13 @@ package com.articulate.sigma.nlg;
 
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.KB;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 // Tests on SumoProcessEntityProperty with a mock set of KBs.
 
-public class SumoProcessEntityPropertySimpleITCase extends SigmaMockTestBase {
+public class SumoProcessEntityPropertySimpleTest extends SigmaMockTestBase {
 
     private final KB knowledgeBase = this.kbMock;
 
@@ -19,7 +19,7 @@ public class SumoProcessEntityPropertySimpleITCase extends SigmaMockTestBase {
 
         String expected = "female human";
         String actual = prop.getSurfaceFormForNoun("human", knowledgeBase);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     /**
@@ -32,7 +32,7 @@ public class SumoProcessEntityPropertySimpleITCase extends SigmaMockTestBase {
 
         String expected = "Stultifying bureaucracy";
         String actual = prop.getSurfaceFormForNoun("bureaucracy", knowledgeBase);
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
 }

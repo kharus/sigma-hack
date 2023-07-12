@@ -1,9 +1,8 @@
 package com.articulate.sigma;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class KBmeasures extends IntegrationTestBase {
 
@@ -11,27 +10,27 @@ public class KBmeasures extends IntegrationTestBase {
     public void testTermDepth1() {
 
         KB kb = KBmanager.getMgr().getKB("SUMO");
-        assertTrue(kb.termDepth("AudioRecorder") > kb.termDepth("Device"));
+        assertThat(kb.termDepth("AudioRecorder") > kb.termDepth("Device")).isTrue();
     }
 
     @Test
     public void testTermDepth2() {
 
         KB kb = KBmanager.getMgr().getKB("SUMO");
-        assertEquals(1, kb.compareTermDepth("AudioRecorder", "Device"));
+        assertThat(kb.compareTermDepth("AudioRecorder", "Device")).isEqualTo(1);
     }
 
     @Test
     public void testTermDepth3() {
 
         KB kb = KBmanager.getMgr().getKB("SUMO");
-        assertTrue(kb.termDepth("VacuumCleaner") > kb.termDepth("Device"));
+        assertThat(kb.termDepth("VacuumCleaner") > kb.termDepth("Device")).isTrue();
     }
 
     @Test
     public void testTermDepth4() {
 
         KB kb = KBmanager.getMgr().getKB("SUMO");
-        assertEquals(1, kb.compareTermDepth("VacuumCleaner", "Device"));
+        assertThat(kb.compareTermDepth("VacuumCleaner", "Device")).isEqualTo(1);
     }
 }

@@ -12,8 +12,8 @@ public class RandSet {
 
     public static boolean avoidDup = false;
     public Random rand = new Random();
-    ArrayList<String> terms = new ArrayList<String>();
-    HashSet<String> returned = new HashSet<>();
+    List<String> terms = new ArrayList<String>();
+    Set<String> returned = new HashSet<>();
 
     /**
      * Create a list, in the global variable terms, in which String terms

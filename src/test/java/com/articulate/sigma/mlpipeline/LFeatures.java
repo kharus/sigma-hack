@@ -2,10 +2,7 @@ package com.articulate.sigma.mlpipeline;
 
 import com.articulate.sigma.utils.AVPair;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * **************************************************************
@@ -23,9 +20,9 @@ public class LFeatures {
     public String attitude = "None";
     public boolean negatedModal = false;
     public boolean negatedBody = false;
-    public ArrayList<AVPair> modals = null;
+    public List<AVPair> modals = null;
     public AVPair modal = new AVPair("None", "none"); // attribute if SUMO ModalAttribute, value is English
-    public HashMap<String, String> genders = null;
+    public Map<String, String> genders = null;
     public RandSet humans = null;
     public RandSet socRoles = null;
     public RandSet objects = null;
@@ -35,13 +32,13 @@ public class LFeatures {
     public String secondVerb = ""; // the verb word that appears as INFINITIVE or VERB-ing or V-ing in the frame
     public String secondVerbType = ""; // the SUMO type of the second verb
     public String secondVerbSynset = "";
-    public HashSet<String> prevHumans = new HashSet<>();
+    public Set<String> prevHumans = new HashSet<>();
     public String subj = "";
     public String subjName = "";
     public boolean subjectPlural = false;
     public int subjectCount = 1;
     public RandSet processes = null;
-    public ArrayList<String> frames = null;  // verb frames for the current process type
+    public List<String> frames = null;  // verb frames for the current process type
     public String frame = null; // the particular verb frame under consideration.
     public String framePart = null; // the frame that gets "consumed" during processing
     // Note that the frame is destructively modified as we proceed through the sentence
@@ -73,18 +70,18 @@ public class LFeatures {
 
         modals = initModals();
 
-        HashSet<String> roles = GenSimpTestData.kb.kbCache.getInstancesForType("SocialRole");
+        Set<String> roles = GenSimpTestData.kb.kbCache.getInstancesForType("SocialRole");
         //if (debug) System.out.println("LFeatures(): SocialRoles: " + roles);
         Collection<AVPair> roleFreqs = genSimpTestData.findWordFreq(roles);
         socRoles = RandSet.create(roleFreqs);
 
-        HashSet<String> parts = GenSimpTestData.kb.kbCache.getInstancesForType("BodyPart");
+        Set<String> parts = GenSimpTestData.kb.kbCache.getInstancesForType("BodyPart");
         //if (debug) System.out.println("LFeatures(): BodyParts: " + parts);
         Collection<AVPair> bodyFreqs = genSimpTestData.findWordFreq(parts);
         bodyParts = RandSet.create(bodyFreqs);
 
-        HashSet<String> artInst = GenSimpTestData.kb.kbCache.getInstancesForType("Artifact");
-        HashSet<String> artClass = GenSimpTestData.kb.kbCache.getChildClasses("Artifact");
+        Set<String> artInst = GenSimpTestData.kb.kbCache.getInstancesForType("Artifact");
+        Set<String> artClass = GenSimpTestData.kb.kbCache.getChildClasses("Artifact");
 
         Collection<AVPair> procFreqs = genSimpTestData.findWordFreq(GenSimpTestData.kb.kbCache.getChildClasses("Process"));
         processes = RandSet.create(procFreqs);
@@ -94,13 +91,13 @@ public class LFeatures {
             processes.terms.addAll(rs.terms);
         }
 
-        HashSet<String> orgInst = GenSimpTestData.kb.kbCache.getInstancesForType("OrganicObject");
-        HashSet<String> orgClass = GenSimpTestData.kb.kbCache.getChildClasses("OrganicObject");
+        Set<String> orgInst = GenSimpTestData.kb.kbCache.getInstancesForType("OrganicObject");
+        Set<String> orgClass = GenSimpTestData.kb.kbCache.getChildClasses("OrganicObject");
 
-        HashSet<String> objs = new HashSet<>();
+        Set<String> objs = new HashSet<>();
         objs.addAll(orgClass);
         objs.addAll(artClass);
-        HashSet<String> objs2 = new HashSet<>();
+        Set<String> objs2 = new HashSet<>();
         for (String s : objs)
             if (!s.equals("Human") && !GenSimpTestData.kb.isSubclass(s, "Human"))
                 objs2.add(s);
@@ -111,9 +108,9 @@ public class LFeatures {
         //System.out.println("LFeatures(): objects: " + objects.terms);
     }
 
-    public ArrayList<AVPair> initModals() {
+    public List<AVPair> initModals() {
 
-        ArrayList<AVPair> modals = new ArrayList<>();
+        List<AVPair> modals = new ArrayList<>();
         for (int i = 0; i < 50; i++)
             modals.add(new AVPair("None", ""));
         if (!GenSimpTestData.suppress.contains("modal")) {

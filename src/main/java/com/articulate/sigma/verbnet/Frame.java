@@ -3,9 +3,7 @@ package com.articulate.sigma.verbnet;
 import com.articulate.sigma.SimpleElement;
 import com.articulate.sigma.utils.AVPair;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * This code is copyright Infosys 2019.
@@ -27,8 +25,8 @@ public class Frame {
     public String secondary;
     public String xtag;
     public String example;
-    public ArrayList<Tuple> syntax = new ArrayList<>();
-    public ArrayList<Tuple> semantics = new ArrayList<>();
+    public List<Tuple> syntax = new ArrayList<>();
+    public List<Tuple> semantics = new ArrayList<>();
 
     public void readDesc(SimpleElement desc) {
 
@@ -59,9 +57,9 @@ public class Frame {
         }
     }
 
-    public HashSet<AVPair> readSynrestrs(SimpleElement syn) {
+    public Set<AVPair> readSynrestrs(SimpleElement syn) {
 
-        HashSet<AVPair> restr = new HashSet<>();
+        Set<AVPair> restr = new HashSet<>();
         if (echo) System.out.println("Frame.readSynrestrs()");
         for (int i = 0; i < syn.getChildElements().size(); i++) {
             SimpleElement element = syn.getChildElements().get(i);
@@ -81,7 +79,7 @@ public class Frame {
 
     public void readSyn(SimpleElement syn) {
 
-        HashMap<String, String> parts = new HashMap<>();
+        Map<String, String> parts = new HashMap<>();
         if (echo) System.out.println("Frame.readSyn()");
         for (int i = 0; i < syn.getChildElements().size(); i++) {
             Tuple t = new Tuple();
@@ -161,9 +159,9 @@ public class Frame {
         }
     }
 
-    public HashSet<AVPair> readArgs(SimpleElement pred) {
+    public Set<AVPair> readArgs(SimpleElement pred) {
 
-        HashSet<AVPair> result = new HashSet<>();
+        Set<AVPair> result = new HashSet<>();
         if (echo) System.out.println("Frame.readArgs()");
         for (int i = 0; i < pred.getChildElements().size(); i++) {
             SimpleElement element = pred.getChildElements().get(i);
@@ -234,6 +232,6 @@ public class Frame {
 
     public class Tuple {
         String value;
-        HashSet<AVPair> restrict = new HashSet<>();
+        Set<AVPair> restrict = new HashSet<>();
     }
 }

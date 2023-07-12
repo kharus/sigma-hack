@@ -1,25 +1,43 @@
+/*
+ * This software is released under the GNU Public License
+ * <http://www.gnu.org/copyleft/gpl.html>.
+ * Copyright 2019 Infosys
+ * adam.pease@infosys.com
+ */
 package com.articulate.sigma;
-
-//This software is released under the GNU Public License
-//<http://www.gnu.org/copyleft/gpl.html>.
-// Copyright 2019 Infosys
-// adam.pease@infosys.com
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * FormulaPreprocessor tests specifically targeted on the findExplicitTypes( ) and findExplicitTypesInAntecedent( ) methods.
  */
-public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
+@SpringBootTest
+@Tag("com.articulate.sigma.TopOnly")
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class FormulaPreprocessorFindExplicitTypesITCase {
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
 
     @Test
     public void testFindExplicitTypesDomainNotRule() {
@@ -29,9 +47,9 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypesInAntecedent(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypesInAntecedent(kb, f);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -42,11 +60,11 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -57,9 +75,9 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypesInAntecedent(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypesInAntecedent(kb, f);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -70,11 +88,11 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -85,9 +103,9 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypesInAntecedent(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypesInAntecedent(kb, f);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -98,13 +116,13 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Feline+");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Feline+");
         expected.put("?Cougar", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -117,13 +135,13 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypesInAntecedent(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypesInAntecedent(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Feline+");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Feline+");
         expected.put("?C", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -136,13 +154,13 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Feline+", "Carnivore+");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Feline+", "Carnivore+");
         expected.put("?C", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -156,13 +174,13 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypesInAntecedent(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypesInAntecedent(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("TransitiveRelation");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("TransitiveRelation");
         expected.put("?REL", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -176,13 +194,13 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("TransitiveRelation");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("TransitiveRelation");
         expected.put("?REL", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -200,15 +218,15 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypesInAntecedent(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypesInAntecedent(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Human");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Human");
         expected.put("?S", set1);
-        HashSet<String> set2 = Sets.newHashSet("Human");
+        Set<String> set2 = Sets.newHashSet("Human");
         expected.put("?J", set2);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -225,15 +243,15 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Human");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Human");
         expected.put("?S", set1);
-        HashSet<String> set2 = Sets.newHashSet("Human");
+        Set<String> set2 = Sets.newHashSet("Human");
         expected.put("?J", set2);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -243,13 +261,13 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypesInAntecedent(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypesInAntecedent(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Entity");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Entity");
         expected.put("?PHYS", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -259,13 +277,13 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Entity");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Entity");
         expected.put("?PHYS", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -275,13 +293,13 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypesInAntecedent(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypesInAntecedent(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Automobile");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Automobile");
         expected.put("?PHYS", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -291,13 +309,13 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        HashMap<String, HashSet<String>> actual = formulaPre.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = formulaPre.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        HashSet<String> set1 = Sets.newHashSet("Automobile");
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        Set<String> set1 = Sets.newHashSet("Automobile");
         expected.put("?PHYS", set1);
 
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -311,11 +329,11 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypesInAntecedent(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypesInAntecedent(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?REL", Sets.newHashSet("TransitiveRelation"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -329,11 +347,11 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?REL", Sets.newHashSet("TransitiveRelation"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -344,9 +362,9 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypesInAntecedent(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypesInAntecedent(kb, f);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -357,10 +375,10 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        assertEquals(expected, actual);
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -375,9 +393,9 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypesInAntecedent(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypesInAntecedent(kb, f);
 
-        assertNull(actual);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -392,12 +410,12 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?D", Sets.newHashSet("Driving"));
         expected.put("?H", Sets.newHashSet("Human"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -414,11 +432,11 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?RATE", Sets.newHashSet("Classifying"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -433,12 +451,12 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?MIXTURE", Sets.newHashSet("Mixture"));
         expected.put("?SUBSTANCE", Sets.newHashSet("PureSubstance"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -458,13 +476,13 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?ANIMAL", Sets.newHashSet("Animal"));
         expected.put("?MOTION", Sets.newHashSet("BodyMotion"));
         expected.put("?ATTR", Sets.newHashSet("BodyPosition"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -480,10 +498,10 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
-        assertEquals(expected, actual);
+        Map<String, Set<String>> expected = Maps.newHashMap();
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -498,12 +516,12 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         //expected.put("?Y", new HashSet<String>());
         // TODO: add explicit type "Month" for ?MONTH
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -526,12 +544,12 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?CLOUD", Sets.newHashSet("WaterCloud"));
         expected.put("?WATER", Sets.newHashSet("Water"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -548,12 +566,12 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?LANG", Sets.newHashSet("AnimalLanguage"));
         expected.put("?AGENT", Sets.newHashSet("Animal"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -568,12 +586,12 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?LANG", Sets.newHashSet("ConstructedLanguage"));
         expected.put("?PLAN", Sets.newHashSet("Planning"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -587,12 +605,12 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?PUB", Sets.newHashSet("Publication"));
         expected.put("?TEXT", Sets.newHashSet("Text+"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -611,12 +629,12 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         //expected.put("?X", new HashSet<String>());
         expected.put("?Y", Sets.newHashSet("PureSubstance+"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -634,13 +652,13 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         //expected.put("?SUBSTANCE", new HashSet<String>());
         expected.put("?BOILING", Sets.newHashSet("Boiling"));
         expected.put("?MEASURE", Sets.newHashSet("UnitOfTemperature"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -662,12 +680,12 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?R", Sets.newHashSet("Rotating"));
         expected.put("?R2", Sets.newHashSet("Rotating"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -704,9 +722,9 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         f.read(stmt);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, HashSet<String>> actual = fp.findExplicitTypes(SigmaTestBase.kb, f);
+        Map<String, Set<String>> actual = fp.findExplicitTypes(kb, f);
 
-        Map<String, HashSet<String>> expected = Maps.newHashMap();
+        Map<String, Set<String>> expected = Maps.newHashMap();
         expected.put("?X", Sets.newHashSet("BabyMonitoringSystem"));
         expected.put("?RX", Sets.newHashSet("RadioReceiver"));
         expected.put("?TX", Sets.newHashSet("Device"));
@@ -715,6 +733,6 @@ public class FormulaPreprocessorFindExplicitTypesITCase extends UnitTestBase {
         expected.put("?PROC", Sets.newHashSet("Maintaining"));
         expected.put("?SOUND", Sets.newHashSet("RadiatingSound"));
         expected.put("?RADIO", Sets.newHashSet("RadioEmission"));
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 }

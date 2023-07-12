@@ -3,107 +3,85 @@ package com.articulate.sigma;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.json.simple.parser.ParseException;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.ListIterator;
+import java.util.List;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Created by sserban on 3/1/15.
- */
-@RunWith(Parameterized.class)
-public class FormulaLogicalEqualityITCase extends UnitTestBase {
+
+@SpringBootTest
+@Tag("com.articulate.sigma.TopOnly")
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class FormulaLogicalEqualityITCase {
 
     private static final String TEST_FILE_NAME = "formula_logical_equality_tests.json";
 
-    private static long totalExecutionTime;
-    private static int testCount;
+    @Autowired
+    FormulaDeepEqualsService deepEqualsService;
 
-    @Parameterized.Parameter(value = 0)
-    public String f1Text;
-    @Parameterized.Parameter(value = 1)
-    public String f2Text;
-    @Parameterized.Parameter(value = 2)
-    public boolean areEqual;
 
-    @Parameterized.Parameters(name = "{0}")
-    public static Collection<Object[]> loadParamteres() {
+    @ParameterizedTest
+    @ArgumentsSource(JsonArgumentsProvider.class)
+    public void test(Formula f1, Formula f2, boolean areEqual) {
 
-        File jsonTestFile = new File(UnitTestBase.CONFIG_FILE_DIR, TEST_FILE_NAME);
-        JSONParser parser = new JSONParser();
-        ArrayList<Object[]> result = new ArrayList<Object[]>();
-
-        try {
-            Object obj = parser.parse(new FileReader(jsonTestFile.getAbsolutePath()));
-            JSONArray jsonObject = (JSONArray) obj;
-            ListIterator<JSONObject> li = jsonObject.listIterator();
-            while (li.hasNext()) {
-                JSONObject jo = li.next();
-                String f1 = (String) jo.get("f1");
-                String f2 = (String) jo.get("f2");
-                boolean equal = (boolean) jo.get("equal");
-                result.add(new Object[]{f1, f2, equal});
-            }
-
-            testCount = 0;
-            totalExecutionTime = 0;
-            System.out.println("Loaded " + jsonObject.size() + " tests.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    @After
-    public void performanceReport() {
-
-        System.out.println("\nFormulaLogicalEqualityITCase: \nA total of " +
-                testCount + " tests ran with an average of " +
-                ((totalExecutionTime / testCount) / 1000000) +
-                " milisecond execution time per test.\n");
-    }
-
-    @Test
-    public void test() {
-
-        //Formula.debug = true;
-        Formula f1 = new Formula();
-        f1.read(f1Text);
-        Formula f2 = new Formula();
-        f2.read(f2Text);
-
-        long start = System.nanoTime();
-        boolean comparisonResult = f1.logicallyEquals(f2);
-        //boolean comparisonResult = f1.unifyWith(f2);
-        long stop = System.nanoTime();
-        totalExecutionTime += (stop - start);
-        testCount++;
-        System.out.println("FormulaLogicalEqualityITCase.test() f1: " + f1);
-        System.out.println("FormulaLogicalEqualityITCase.test() f2: " + f2);
+        boolean comparisonResult = deepEqualsService.logicallyEquals(f1, f2);
 
         if (areEqual) {
-            if (comparisonResult)
-                System.out.println("FormulaLogicalEqualityITCase.test() Equal: success");
-            else
-                System.out.println("FormulaLogicalEqualityITCase.test() Not equal: fail!");
-            assertTrue("The following should be equal: \n" +
-                    f1.getFormula() + "\n and \n" + f2.getFormula(), comparisonResult);
+            assertThat(comparisonResult)
+                    .as("%s\n should be equal:\n%s", f1.getFormula(), f2.getFormula())
+                    .isTrue();
         } else {
-            if (comparisonResult)
-                System.out.println("FormulaLogicalEqualityITCase.test() equal: fail!");
-            else
-                System.out.println("FormulaLogicalEqualityITCase.test() not equal: success");
-            assertFalse("The following should not be equal: \n" +
-                    f1.getFormula() + "\n and \n" + f2.getFormula(), comparisonResult);
+            assertThat(comparisonResult)
+                    .as("%s\n should not be equal:\n%s", f1.getFormula(), f2.getFormula())
+                    .isFalse();
+        }
+    }
+
+    public static class JsonArgumentsProvider implements ArgumentsProvider {
+        public JsonArgumentsProvider() {
+        }
+
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+            File jsonTestFile = new File(UnitTestBase.CONFIG_FILE_DIR, TEST_FILE_NAME);
+            JSONParser parser = new JSONParser();
+            List<Object[]> result = new ArrayList<Object[]>();
+
+            try {
+                Object obj = parser.parse(new FileReader(jsonTestFile.getAbsolutePath()));
+                JSONArray jsonObject = (JSONArray) obj;
+                for (JSONObject jo : (Iterable<JSONObject>) jsonObject) {
+                    String f1Text = (String) jo.get("f1");
+                    String f2Text = (String) jo.get("f2");
+                    Formula f1 = new Formula();
+                    f1.read(f1Text);
+                    Formula f2 = new Formula();
+                    f2.read(f2Text);
+                    boolean equal = (boolean) jo.get("equal");
+                    result.add(new Object[]{f1, f2, equal});
+                }
+            } catch (IOException | ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+            return result.stream().map(Arguments::of);
         }
     }
 }

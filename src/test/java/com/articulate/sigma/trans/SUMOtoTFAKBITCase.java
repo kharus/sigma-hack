@@ -1,26 +1,26 @@
+/*
+ * This software is released under the GNU Public License
+ * <http://www.gnu.org/copyleft/gpl.html>.
+ * Copyright 2019 Infosys
+ * adam.pease@infosys.com
+ */
 package com.articulate.sigma.trans;
 
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.IntegrationTestBase;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
-
-//This software is released under the GNU Public License
-//<http://www.gnu.org/copyleft/gpl.html>.
-// Copyright 2019 Infosys
-// adam.pease@infosys.com
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SUMOtoTFAKBITCase extends IntegrationTestBase {
 
     private static SUMOKBtoTFAKB skbtfakb = null;
 
-    @BeforeClass
+    @BeforeAll
     public static void init() {
 
         SUMOtoTFAform.initOnce();
@@ -35,7 +35,7 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
 
         System.out.println();
         System.out.println("\n======================== SUMOtoTFAKBITCase.testPartition(): ");
-        ArrayList<String> sig = SUMOtoTFAform.relationExtractNonNumericSig("partition__5");
+        List<String> sig = SUMOtoTFAform.relationExtractNonNumericSig("partition__5");
         System.out.println(sig);
         String expectedRes = "[, Class, Class, Class, Class, Class]";
         String result = sig.toString();
@@ -45,7 +45,7 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
             System.out.println("testPartition(): Success!");
         else
             System.out.println("testPartition(): fail");
-        assertEquals(expectedRes, result);
+        assertThat(result).isEqualTo(expectedRes);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
             System.out.println("testDynamicSortDef(): Success!");
         else
             System.out.println("testDynamicSortDef(): fail");
-        assertEquals(expectedRes, result);
+        assertThat(result).isEqualTo(expectedRes);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
                 "s__instance(s__intelligenceQuotient__m, s__Predicate) & " +
                 "s__intelligenceQuotient__2Re(V__ROW1, V__ROW2)) => " +
                 "s__instance(s__ListOrderFn__2InFn(s__ListFn__2ReFn(V__ROW1, V__ROW2), V__NUMBER), V__CLASS))";
-        HashSet<String> result = stfa.missingSorts(new Formula(f));
+        Set<String> result = stfa.missingSorts(new Formula(f));
         String expectedRes = "tff(listFn__2ReFn_sig,type,s__ListFn__2ReFn : (  $i * $real  ) > $i ).";
         String resultStr = "";
         if (result != null && result.size() > 0)
@@ -90,6 +90,6 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
             System.out.println("testMissingSort(): Success!");
         else
             System.out.println("testMissingSort(): fail");
-        assertTrue(result.contains(expectedRes));
+        assertThat(result.contains(expectedRes)).isTrue();
     }
 }
