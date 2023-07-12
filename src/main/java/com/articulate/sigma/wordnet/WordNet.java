@@ -2721,9 +2721,7 @@ public class WordNet implements Serializable {
      */
     private void writeVerbsProlog(PrintWriter pw, KB kb) throws IOException {
 
-        Iterator<String> it = verbSynsetHash.keySet().iterator();
-        while (it.hasNext()) {
-            String word = it.next();
+        for (String word : verbSynsetHash.keySet()) {
             String compound = "simple";
             if (word.indexOf("_") > -1)
                 compound = "compound";
@@ -2742,9 +2740,7 @@ public class WordNet implements Serializable {
                     plural = "'" + plural + "'";
                 }
             }
-            Iterator<String> it2 = stringSynsets.iterator();
-            while (it2.hasNext()) {
-                String synset = it2.next();
+            for (String synset : stringSynsets) {
                 String sumoTerm = verbSUMOHash.get(synset);
                 if (sumoTerm != null && sumoTerm != "") {
                     String bareSumoTerm = WordNetUtilities.getBareSUMOTerm(sumoTerm);
