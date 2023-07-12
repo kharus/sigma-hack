@@ -47,6 +47,7 @@ public class SUMOtoTFAformITCase {
         SUMOtoTFAform.setNumericFunctionInfo();
         skbtfakb = new SUMOKBtoTFAKB();
         skbtfakb.initOnce(kb);
+        skbtfakb.kb = kb;
         SUMOformulaToTPTPformula.lang = "tff";
         String kbName = KBmanager.getMgr().getPref("sumokbname");
         String filename = KBmanager.getMgr().getPref("kbDir") + File.separator + kbName + ".tff";

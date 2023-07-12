@@ -35,7 +35,7 @@ public class KBmanagerTestConfiguration {
     @Bean
     @Profile("MidLevel")
     public KBmanager kbManagerMilo(KBConfigProperties kbConfigProperties) {
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream("config_all.xml");
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream("config_topAndMid.xml");
              Reader reader = new BufferedReader(new InputStreamReader(is))) {
 
             SimpleDOMParser sdp = new SimpleDOMParser();
