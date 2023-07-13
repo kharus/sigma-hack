@@ -1,12 +1,9 @@
 package com.articulate.sigma.verbnet;
 
-import com.articulate.sigma.IntegrationTestBase;
-import com.articulate.sigma.KB;
 import com.articulate.sigma.KBmanager;
 import com.articulate.sigma.KBmanagerTestConfiguration;
 import com.articulate.sigma.utils.StringUtil;
 import com.articulate.sigma.wordnet.WordNet;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

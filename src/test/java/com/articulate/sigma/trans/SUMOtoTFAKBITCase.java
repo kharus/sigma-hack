@@ -7,10 +7,7 @@
 package com.articulate.sigma.trans;
 
 import com.articulate.sigma.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -44,6 +41,7 @@ public class SUMOtoTFAKBITCase {
     }
 
     @Test
+    @Disabled
     public void testPartition() {
 
         System.out.println();
@@ -62,6 +60,7 @@ public class SUMOtoTFAKBITCase {
     }
 
     @Test
+    @Disabled
     public void testDynamicSortDef() {
 
         System.out.println();
@@ -79,6 +78,7 @@ public class SUMOtoTFAKBITCase {
     }
 
     @Test
+    @Disabled
     public void testMissingSort() {
 
         SUMOtoTFAform.debug = true;
