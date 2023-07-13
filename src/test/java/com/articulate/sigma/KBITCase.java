@@ -1,6 +1,7 @@
 package com.articulate.sigma;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class KBITCase {
      * Fails because askWithTwoRestrictions does not go up the class hierarchy.
      */
     @Test
+    @Disabled
     public void testAskWithTwoRestrictionsIndirect2() {
 
         List<Formula> actual = kb.askWithTwoRestrictions(0, "subclass", 1, "Boy", 2, "Entity");

@@ -1,19 +1,36 @@
 package com.articulate.sigma;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
-public class FormatITCase extends UnitTestBase {
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class FormatITCase {
 
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
     @Test
     public void testNegativePositiveFormat() {
 
-        Map<String, String> phraseMap = SigmaTestBase.kb.getFormatMap("EnglishLanguage");
+        Map<String, String> phraseMap = kb.getFormatMap("EnglishLanguage");
 
         StringBuilder problems = new StringBuilder("\n");
         for (Map.Entry<String, String> entry : phraseMap.entrySet()) {
@@ -36,7 +53,7 @@ public class FormatITCase extends UnitTestBase {
     @Test
     public void testFormatMatchingCharacters() {
 
-        Map<String, String> phraseMap = SigmaTestBase.kb.getFormatMap("EnglishLanguage");
+        Map<String, String> phraseMap = kb.getFormatMap("EnglishLanguage");
 
         StringBuilder problems = new StringBuilder("\n");
         for (Map.Entry<String, String> entry : phraseMap.entrySet()) {

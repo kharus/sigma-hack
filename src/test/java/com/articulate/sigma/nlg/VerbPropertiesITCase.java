@@ -1,6 +1,5 @@
 package com.articulate.sigma.nlg;
 
-import com.articulate.sigma.TopOnly;
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
