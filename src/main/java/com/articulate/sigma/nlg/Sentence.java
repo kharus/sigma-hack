@@ -113,13 +113,6 @@ public class Sentence {
     }
 
     /**
-     * @param indirectObjects
-     */
-    public void setIndirectObjects(List<SVOElement> indirectObjects) {
-        this.indirectObjects = indirectObjects;
-    }
-
-    /**
      * Return the case roles scratchpad.
      *
      * @return

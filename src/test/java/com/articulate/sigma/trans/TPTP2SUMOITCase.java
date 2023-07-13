@@ -1,10 +1,7 @@
 package com.articulate.sigma.trans;
 
 import com.articulate.sigma.Formula;
-import com.articulate.sigma.KBmanager;
 import com.articulate.sigma.KBmanagerTestConfiguration;
-import com.articulate.sigma.TopOnly;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;

@@ -5,6 +5,10 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.BeforeAll;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -14,15 +18,23 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
-public class SUMOtoTFAITCase extends UnitTestBase {
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class SUMOtoTFAITCase {
 
-    @BeforeAll
-    public static void init() {
+    private KB kb;
 
-        System.out.println("============ SUMOtoTFAITCase.init()");
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+
         SUMOtoTFAform.initOnce(kb);
-        System.out.println("SUMOtoTFAITCase.init(): " + SUMOtoTFAform.numericConstantValues);
+
         SUMOKBtoTFAKB skbtfakb = new SUMOKBtoTFAKB();
         skbtfakb.initOnce(kb);
         SUMOformulaToTPTPformula.lang = "tff";
