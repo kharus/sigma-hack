@@ -5,21 +5,31 @@ import com.articulate.sigma.wordnet.WordNet;
 import com.articulate.sigma.wordnet.WordNetUtilities;
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class WSDwKBtest extends IntegrationTestBase {
+@SpringBootTest
+@Tag("com.articulate.sigma.MidLevel")
+@ActiveProfiles("MidLevel")
+@Import(KBmanagerTestConfiguration.class)
+public class WSDwKBtest {
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
 
     @BeforeEach
-    public void setUpInterpreter() throws IOException {
-
-        KBmanager.getMgr().initializeOnce();
-        WSD.debug = true;
-        System.out.println("INFO in WSDwKBtest.setUpInterpreter(): done initializing");
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
     }
 
     @Test
