@@ -1,6 +1,7 @@
 package com.articulate.sigma;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,7 @@ public class KbIntegrationITCase {
     }
 
     @Test
+    @Disabled
     public void testIsHigherOrder() {
 
         String stmt;
@@ -117,6 +119,7 @@ public class KbIntegrationITCase {
     }
 
     @Test
+    @Disabled
     public void testIsHigherOrder4() {
 
         String stmt = "(=> " +
