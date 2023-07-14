@@ -2,10 +2,8 @@ package com.articulate.sigma.trans;
 
 import com.articulate.sigma.*;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.BeforeAll;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,22 +21,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("TopOnly")
 @Import(KBmanagerTestConfiguration.class)
 public class SUMOtoTFAITCase {
-
+    @Value("${sumokbname}")
+    private String sumokbname;
     private KB kb;
 
     @Autowired
     private KBmanager kbManager;
 
+    @AfterAll
+    public static void cleanup() {
+        FormulaPreprocessor.addOnlyNonNumericTypes = false;
+    }
+
     @BeforeEach
     void init() {
-        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+        kb = kbManager.getKB(sumokbname);
 
         SUMOtoTFAform.initOnce(kb);
 
         SUMOKBtoTFAKB skbtfakb = new SUMOKBtoTFAKB();
         skbtfakb.initOnce(kb);
         SUMOformulaToTPTPformula.lang = "tff";
-        String kbName = KBmanager.getMgr().getPref("sumokbname");
+        String kbName = sumokbname;
         String filename = KBmanager.getMgr().getPref("kbDir") + File.separator + kbName + ".tff";
         PrintWriter pw = null;
         try {
@@ -50,11 +54,6 @@ public class SUMOtoTFAITCase {
             e.printStackTrace();
         }
         SUMOtoTFAform.setNumericFunctionInfo();
-    }
-
-    @AfterAll
-    public static void cleanup() {
-        FormulaPreprocessor.addOnlyNonNumericTypes = false;
     }
 
     @Test
@@ -709,7 +708,7 @@ public class SUMOtoTFAITCase {
         System.out.println("\n========= test testAvgWork ==========\n");
 
         kb.addConstituent(KBmanager.getMgr().getPref("kbDir") + "/Demographics.kif");
-        KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+        KB kb = KBmanager.getMgr().getKB(sumokbname);
         if (!kb.terms.contains("avgWorkHours")) {
             System.out.println("test6AvgWork(): Demographics.kif not loaded");
             return;

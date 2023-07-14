@@ -484,29 +484,4 @@ public class PredVarInst {
         return varlist;
     }
 
-    public static void arityTest() {
-
-        KBmanager.getMgr().initializeOnce();
-        KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-        System.out.println("INFO in PredVarInst.test(): completed loading KBs");
-        String formStr = "(=> " +
-                "(and " +
-                "(instance ?SOUND RadiatingSound) " +
-                "(agent ?SOUND ?OBJ) " +
-                "(attribute ?SOUND Audible)) " +
-                "(exists (?HUMAN) " +
-                "(and " +
-                "(instance ?HUMAN Human) " +
-                "(capability " +
-                "(KappaFn ?HEAR " +
-                "(and " +
-                "(instance ?HEAR Hearing) " +
-                "(agent ?HEAR ?HUMAN) " +
-                "(destination ?HEAR ?HUMAN) " +
-                "(origin ?HEAR ?OBJ))) agent ?HUMAN)))) ";
-        Formula f = new Formula(formStr);
-        System.out.println("INFO in PredVarInst.arityTest(): formula: " + f);
-        System.out.println("INFO in PredVarInst.arityTest(): correct arity: " + hasCorrectArity(f, kb));
-    }
-
 }

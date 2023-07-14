@@ -1,10 +1,11 @@
 package com.articulate.sigma.nlg;
 
-import com.articulate.sigma.*;
+import com.articulate.sigma.Formula;
+import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.KBmanagerTestConfiguration;
 import com.google.common.collect.Lists;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;

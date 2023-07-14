@@ -1,9 +1,12 @@
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.*;
+import com.articulate.sigma.Formula;
+import com.articulate.sigma.KB;
+import com.articulate.sigma.KBmanager;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag("com.articulate.sigma.TopOnly")
 public class TPTP3ProofProcTest {
+    @Value("${sumokbname}")
+    private String sumokbname;
 
     public void test(String input, String expected, String label) {
 
@@ -208,7 +213,7 @@ public class TPTP3ProofProcTest {
         KBmanager.getMgr().prover = KBmanager.Prover.VAMPIRE;
         TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
         String query = "(instance ?X Relation)";
-        KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+        KB kb = KBmanager.getMgr().getKB(sumokbname);
         StringBuffer sb = new StringBuffer("X0");
         tpp.parseProofOutput(input, query, kb, sb);
         tpp.processAnswersFromProof(new StringBuffer("X"), query);

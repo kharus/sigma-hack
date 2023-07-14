@@ -1,7 +1,11 @@
 package com.articulate.sigma;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -15,7 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("MidLevel")
 @Import(KBmanagerTestConfiguration.class)
 public class KBcacheITCase {
-
+    @Value("${sumokbname}")
+    private String sumokbname;
     private KB kb;
 
     @Autowired
@@ -23,19 +28,7 @@ public class KBcacheITCase {
 
     @BeforeEach
     void init() {
-        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
-    }
-    @BeforeAll
-    public static void requiredKB() {
-
-        List<String> reqFiles =
-                Arrays.asList("Merge.kif", "Mid-level-ontology.kif");
-        for (String s : reqFiles) {
-            if (!KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname")).containsFile(s)) {
-                System.out.println("Error in KBcacheITCase.requiredKB() required file " + s + " missing");
-                System.exit(-1);
-            }
-        }
+        kb = kbManager.getKB(sumokbname);
     }
 
     @Test
@@ -77,7 +70,7 @@ public class KBcacheITCase {
 
         System.out.println("\n============= testBuildChildren ==================");
         KBcache cache = kb.kbCache;
-        String kbName = KBmanager.getMgr().getPref("sumokbname");
+        String kbName = sumokbname;
         System.out.println("testbuildChildren(): KBs: " + KBmanager.getMgr().getKB(kbName).constituents);
         String parent = "BiologicalAttribute";
 

@@ -6,9 +6,16 @@
  */
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.*;
-import org.junit.jupiter.api.*;
+import com.articulate.sigma.Formula;
+import com.articulate.sigma.KB;
+import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.KBmanagerTestConfiguration;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,6 +30,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("MidLevel")
 @Import(KBmanagerTestConfiguration.class)
 public class SUMOtoTFAKBITCase {
+    @Value("${sumokbname}")
+    private String sumokbname;
     private KB kb;
 
     @Autowired
@@ -32,7 +41,7 @@ public class SUMOtoTFAKBITCase {
 
     @BeforeEach
     void initEach() {
-        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+        kb = kbManager.getKB(sumokbname);
         SUMOtoTFAform.initOnce(kb);
         SUMOtoTFAform.setNumericFunctionInfo();
         skbtfakb = new SUMOKBtoTFAKB();

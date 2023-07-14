@@ -2,17 +2,15 @@ package com.articulate.sigma.inference;
 
 import com.articulate.sigma.InferenceTestSuite;
 import com.articulate.sigma.KB;
-import com.articulate.sigma.KBmanager;
 import com.google.common.collect.Lists;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,26 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
 public class InferenceITCase {
-
     private static KB kb;
-
     @Parameterized.Parameter(value = 0)
     public String fInput;
-
-    @BeforeAll
-    public static void setKB() {
-
-        KBmanager.getMgr().initializeOnce();
-        kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-        List<String> reqFiles =
-                Arrays.asList("Merge.kif", "Mid-level-ontology.kif");
-        for (String s : reqFiles) {
-            if (!kb.containsFile(s)) {
-                System.out.println("Error in InferenceITCase.setKB(): required file " + s + " missing");
-                System.exit(-1);
-            }
-        }
-    }
+    @Value("${sumokbname}")
+    private String sumokbname;
 
     @Parameterized.Parameters(name = "{0}")
     public static <T> Collection<T> prepare() {

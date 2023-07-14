@@ -7,8 +7,12 @@ import com.articulate.sigma.nlg.LanguageFormatter;
 import com.articulate.sigma.utils.AVPair;
 import com.articulate.sigma.utils.StringUtil;
 import com.articulate.sigma.wordnet.WordNetUtilities;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -26,15 +30,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("TopOnly")
 @Import(KBmanagerTestConfiguration.class)
 public class GenSimpTestDataITCase {
-
+    public LFeatures lfeat = null;
+    public GenSimpTestData gstd = null;
+    @Value("${sumokbname}")
+    private String sumokbname;
     private KB kb;
-
     @Autowired
     private KBmanager kbManager;
 
     @BeforeEach
     void initEach() {
-        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+        kb = kbManager.getKB(sumokbname);
 
         GenSimpTestData.initNumbers();
         gstd = new GenSimpTestData(kb);
@@ -52,9 +58,6 @@ public class GenSimpTestDataITCase {
             e.printStackTrace();
         }
     }
-
-    public LFeatures lfeat = null;
-    public GenSimpTestData gstd = null;
 
     public void testVerb(String term, boolean negated, int tense, String word,
                          boolean plural, String expected, LFeatures lfeat) {

@@ -1,12 +1,15 @@
 package com.articulate.sigma.nlg;
 
-import com.articulate.sigma.*;
+import com.articulate.sigma.KB;
+import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.KBmanagerTestConfiguration;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -21,6 +24,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("TopOnly")
 @Import(KBmanagerTestConfiguration.class)
 public class HtmlParaphraseITCase {
+    @Value("${sumokbname}")
+    private String sumokbname;
     private KB kb;
 
     @Autowired
@@ -28,7 +33,7 @@ public class HtmlParaphraseITCase {
 
     @BeforeEach
     void init() {
-        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+        kb = kbManager.getKB(sumokbname);
     }
 
     @Test
@@ -36,7 +41,7 @@ public class HtmlParaphraseITCase {
         String stmt = "(domain date 1 Physical)";
 
         String expectedResult = """
-the number 1 argument of date is an instance of physical""";
+                the number 1 argument of date is an instance of physical""";
         String actualResult = NLGUtils.htmlParaphrase("", stmt, kb.getFormatMap("EnglishLanguage"),
                 kb.getTermFormatMap("EnglishLanguage"),
                 kb, "EnglishLanguage");
@@ -88,7 +93,7 @@ the number 1 argument of date is an instance of physical""";
         String stmt = "(subclass BiologicallyActiveSubstance Substance)";
 
         String expectedResult = """
-biologically active substance is a subclass of substance""";
+                biologically active substance is a subclass of substance""";
         String actualResult = NLGUtils.htmlParaphrase("", stmt, kb.getFormatMap("EnglishLanguage"),
                 kb.getTermFormatMap("EnglishLanguage"),
                 kb, "EnglishLanguage");
@@ -100,7 +105,7 @@ biologically active substance is a subclass of substance""";
         String stmt = "(partition Substance PureSubstance Mixture)";
 
         String expectedResult = """
-substance is exhaustively partitioned into pure substance and mixture""";
+                substance is exhaustively partitioned into pure substance and mixture""";
         String actualResult = NLGUtils.htmlParaphrase("", stmt, kb.getFormatMap("EnglishLanguage"),
                 kb.getTermFormatMap("EnglishLanguage"),
                 kb, "EnglishLanguage");
@@ -115,7 +120,7 @@ substance is exhaustively partitioned into pure substance and mixture""";
         String stmt = "(=> (and (instance ?OBJ1 Object) (partlyLocated ?OBJ1 ?OBJ2)) (exists (?SUB) (and (part ?SUB ?OBJ1) (located ?SUB ?OBJ2))))";
 
         String expectedResult = """
-if an object is an instance of object and the object is partly located in another object, then there exists a third object such that the third object is a part of the object and the third object is located at the other object""";
+                if an object is an instance of object and the object is partly located in another object, then there exists a third object such that the third object is a part of the object and the third object is located at the other object""";
         String actualResult = NLGUtils.htmlParaphrase("", stmt, kb.getFormatMap("EnglishLanguage"),
                 kb.getTermFormatMap("EnglishLanguage"),
                 kb, "EnglishLanguage");
@@ -144,7 +149,7 @@ if an object is an instance of object and the object is partly located in anothe
         String stmt = "( patient Leaving ?ENTITY )";
 
         String expectedResult = """
-an entity is a patient of leaving""";
+                an entity is a patient of leaving""";
         String actualResult = NLGUtils.htmlParaphrase("", stmt, kb.getFormatMap("EnglishLanguage"),
                 kb.getTermFormatMap("EnglishLanguage"),
                 kb, "EnglishLanguage");
@@ -156,7 +161,7 @@ an entity is a patient of leaving""";
         String stmt = "(names \"John\" ?H)";
 
         String expectedResult = """
-an entity has name \"John\"""";
+                an entity has name \"John\"""";
         String actualResult = NLGUtils.htmlParaphrase("", stmt, kb.getFormatMap("EnglishLanguage"),
                 kb.getTermFormatMap("EnglishLanguage"),
                 kb, "EnglishLanguage");
@@ -183,13 +188,13 @@ an entity has name \"John\"""";
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-an entity doesn't have name \"John\"""";
+                an entity doesn't have name \"John\"""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = """
-an entity doesn't have name \"John\"""";
+                an entity doesn't have name \"John\"""";
         actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
@@ -208,7 +213,7 @@ an entity doesn't have name \"John\"""";
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-there don't exist a process and an agent such that the process is an instance of driving and the agent is an instance of human and the agent is an agent of the process""";
+                there don't exist a process and an agent such that the process is an instance of driving and the agent is an instance of human and the agent is an agent of the process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -231,7 +236,7 @@ there don't exist a process and an agent such that the process is an instance of
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-there doesn't exist a process such that the process is an instance of driving and John is an agent of the process""";
+                there doesn't exist a process such that the process is an instance of driving and John is an agent of the process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -281,7 +286,7 @@ there doesn't exist a process such that the process is an instance of driving an
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then there exists another process such that the other process is an instance of breathing and the agent is an agent of the other process""";
+                if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then there exists another process such that the other process is an instance of breathing and the agent is an agent of the other process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -309,7 +314,7 @@ if a process is an instance of driving and an agent is an instance of human and 
 
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process if and only if there exists another process such that the other process is an instance of breathing and the agent is an agent of the other process""";
+                a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process if and only if there exists another process such that the other process is an instance of breathing and the agent is an agent of the other process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -361,7 +366,7 @@ a process is an instance of driving and an agent is an instance of human and the
 
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-there don't exist a process and an agent such that the process is an instance of driving and the agent is an instance of human and the agent has name \"John\" and the agent is an agent of the process""";
+                there don't exist a process and an agent such that the process is an instance of driving and the agent is an instance of human and the agent has name \"John\" and the agent is an agent of the process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -429,9 +434,9 @@ there don't exist a process and an agent such that the process is an instance of
     @Test
     public void testHtmlParaphraseSubclassIf() {
         String stmt = """
-                        (=>
-                          (subclass ?Cougar Feline)
-                          (subclass ?Cougar Carnivore))""";
+                (=>
+                  (subclass ?Cougar Feline)
+                  (subclass ?Cougar Carnivore))""";
 
         String expectedResult = """
                 if a class is a subclass of feline, \
@@ -448,7 +453,7 @@ there don't exist a process and an agent such that the process is an instance of
                 "           (time JohnsBirth (MonthFn ?M (YearFn 2000))))";
 
         String expectedResult = """
-there exists a kind of month such that JohnsBirth exists during the month a kind of month""";
+                there exists a kind of month such that JohnsBirth exists during the month a kind of month""";
         String actualResult = NLGUtils.htmlParaphrase("", stmt, kb.getFormatMap("EnglishLanguage"),
                 kb.getTermFormatMap("EnglishLanguage"),
                 kb, "EnglishLanguage");
@@ -486,7 +491,7 @@ there exists a kind of month such that JohnsBirth exists during the month a kind
                 kb.getTermFormatMap("EnglishLanguage"),
                 kb, "EnglishLanguage");
         String expectedResult = """
-if the government of a geopolitical area is an instance of state government, then the geopolitical area is an instance of state or province""";
+                if the government of a geopolitical area is an instance of state government, then the geopolitical area is an instance of state or province""";
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
 
@@ -610,7 +615,7 @@ if the government of a geopolitical area is an instance of state government, the
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-there exist an entity and a process such that Mary-1 is an instance of human and Robert-1 is an instance of human and the entity is an instance of bank card and Robert-1 is an agent of the process and the process is an instance of directing and the entity is a patient of the process""";
+                there exist an entity and a process such that Mary-1 is an instance of human and Robert-1 is an instance of human and the entity is an instance of bank card and Robert-1 is an agent of the process and the process is an instance of directing and the entity is a patient of the process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -844,7 +849,7 @@ there exist an entity and a process such that Mary-1 is an instance of human and
                 "                (instance ?event2 Drinking)))";
 
         String expectedResult = """
-there exist an object, a process and another process such that male is an attribute of Robert-1 and there exists another object such that the other process is located at the other object and the other object is on to the object and Robert-1 is an instance of human and the object is an instance of desk and Robert-1 is an agent of the process and the process is an instance of eating and Robert-1 is an agent of the other process and the other process is an instance of drinking""";
+                there exist an object, a process and another process such that male is an attribute of Robert-1 and there exists another object such that the other process is located at the other object and the other object is on to the object and Robert-1 is an instance of human and the object is an instance of desk and Robert-1 is an agent of the process and the process is an instance of eating and Robert-1 is an agent of the other process and the other process is an instance of drinking""";
 
         String actualResult = NLGUtils.htmlParaphrase("", stmt, kb.getFormatMap("EnglishLanguage"),
                 kb.getTermFormatMap("EnglishLanguage"),
@@ -905,7 +910,7 @@ there exist an object, a process and another process such that male is an attrib
                 "               (possesses John-1 ?dog)))";
 
         String expectedResult = """
-there exists an object such that the object is an instance of canine and John-1 is an instance of human and male is an attribute of John-1 and John-1 possesses the object""";
+                there exists an object such that the object is an instance of canine and John-1 is an instance of human and male is an attribute of John-1 and John-1 possesses the object""";
         String actualResult = NLGUtils.htmlParaphrase("", stmt, kb.getFormatMap("EnglishLanguage"),
                 kb.getTermFormatMap("EnglishLanguage"),
                 kb, "EnglishLanguage");
@@ -1044,7 +1049,7 @@ there exists an object such that the object is an instance of canine and John-1 
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = """
-there exist an entity, an agent and a process such that for all an object if the object is an instance of canine and the object is not equal to the agent, then a time duration is greater than another time duration and the age of the agent is the time duration and the age of the object is the other time duration and the entity is an instance of bank- financial organization and the agent is an instance of canine and the process is an instance of motion and the entity is a patient of the process and the agent is an agent of the process""";
+                there exist an entity, an agent and a process such that for all an object if the object is an instance of canine and the object is not equal to the agent, then a time duration is greater than another time duration and the age of the agent is the time duration and the age of the object is the other time duration and the entity is an instance of bank- financial organization and the agent is an instance of canine and the process is an instance of motion and the entity is a patient of the process and the agent is an agent of the process""";
         actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
@@ -1188,7 +1193,7 @@ there exist an entity, an agent and a process such that for all an object if the
 
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-there exist an agent and a process such that the process is an instance of transportation and the agent is an instance of human and the agent is an agent of the process""";
+                there exist an agent and a process such that the process is an instance of transportation and the agent is an instance of human and the agent is an agent of the process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1302,7 +1307,7 @@ there exist an agent and a process such that the process is an instance of trans
         languageFormatter.setDoInformalNLG(true);
         //expectedResult = "if an animal is speaking an animal language, then the animal is not human";
         expectedResult = """
-if an object is an instance of animal language and an agent is an agent of a process and the object is an instrument for the process, then the agent is an instance of animal and the agent is not an instance of human""";
+                if an object is an instance of animal language and an agent is an agent of a process and the object is an instrument for the process, then the agent is an instance of animal and the agent is not an instance of human""";
         actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
@@ -1324,13 +1329,13 @@ if an object is an instance of animal language and an agent is an agent of a pro
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-if an entity is an instance of object, then the entity is an instance of collection or the entity is an instance of self connected object""";
+                if an entity is an instance of object, then the entity is an instance of collection or the entity is an instance of self connected object""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = """
-if an entity is an instance of object, then the entity is an instance of collection or the entity is an instance of self connected object""";
+                if an entity is an instance of object, then the entity is an instance of collection or the entity is an instance of self connected object""";
         actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
@@ -1349,13 +1354,13 @@ if an entity is an instance of object, then the entity is an instance of collect
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-an entity is an instance of symmetric relation if and only if for all another entity and a third entity if the entity the other entity and the third entity, then the entity the third entity and the other entity""";
+                an entity is an instance of symmetric relation if and only if for all another entity and a third entity if the entity the other entity and the third entity, then the entity the third entity and the other entity""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         expectedResult = """
-an entity is an instance of symmetric relation if and only if for all another entity and a third entity if the entity the other entity and the third entity, then the entity the third entity and the other entity""";
+                an entity is an instance of symmetric relation if and only if for all another entity and a third entity if the entity the other entity and the third entity, then the entity the third entity and the other entity""";
         actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
@@ -1377,7 +1382,7 @@ an entity is an instance of symmetric relation if and only if for all another en
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then there exists another process such that the other process is an instance of seeing and the agent is an agent of the other process""";
+                if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then there exists another process such that the other process is an instance of seeing and the agent is an agent of the other process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1409,7 +1414,7 @@ if a process is an instance of driving and an agent is an instance of human and 
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then there exist another process and an object such that the object is an instance of eye glass and the other process is an instance of seeing and the object is an instrument for the other process and the agent is an agent of the other process""";
+                if a process is an instance of driving and an agent is an instance of human and the agent is an agent of the process, then there exist another process and an object such that the object is an instance of eye glass and the other process is an instance of seeing and the object is an instrument for the other process and the agent is an agent of the other process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1548,7 +1553,7 @@ if a process is an instance of driving and an agent is an instance of human and 
         languageFormatter.setDoInformalNLG(false);
 
         String expectedResult = """
-there exist a process and an entity such that John-1 is an instance of human and the process is an instance of seeing and the entity is an instance of self connected object and John-1 experiences the process and the entity is a patient of the process""";
+                there exist a process and an entity such that John-1 is an instance of human and the process is an instance of seeing and the entity is an instance of self connected object and John-1 experiences the process and the entity is a patient of the process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1575,7 +1580,7 @@ there exist a process and an entity such that John-1 is an instance of human and
         languageFormatter.setDoInformalNLG(false);
 
         String expectedResult = """
-there exist a process and an entity such that John-1 is an instance of human and the process is an instance of seeing and the entity is an instance of self connected object and John-1 experiences the process and the entity is not a patient of the process""";
+                there exist a process and an entity such that John-1 is an instance of human and the process is an instance of seeing and the entity is an instance of self connected object and John-1 experiences the process and the entity is not a patient of the process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1603,7 +1608,7 @@ there exist a process and an entity such that John-1 is an instance of human and
         languageFormatter.setDoInformalNLG(false);
 
         String expectedResult = """
-there exist a process and an entity such that John-1 is an instance of human and the process is an instance of seeing and the entity is an instance of self connected object and ~{ John-1 experiences the process } or ~{ the entity is a patient of the process }""";
+                there exist a process and an entity such that John-1 is an instance of human and the process is an instance of seeing and the entity is an instance of self connected object and ~{ John-1 experiences the process } or ~{ the entity is a patient of the process }""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1630,7 +1635,7 @@ there exist a process and an entity such that John-1 is an instance of human and
         languageFormatter.setDoInformalNLG(false);
 
         String expectedResult = """
-there exist a process and an entity such that the process is an instance of seeing and the entity is an instance of self connected object and the entity is a patient of the process""";
+                there exist a process and an entity such that the process is an instance of seeing and the entity is an instance of self connected object and the entity is a patient of the process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1693,7 +1698,7 @@ there exist a process and an entity such that the process is an instance of seei
         languageFormatter.setDoInformalNLG(false);
 
         String expectedResult = """
-there exist a motion and an object such that the motion is an instance of body motion and the object is an instance of artifact and moves the motion and the object""";
+                there exist a motion and an object such that the motion is an instance of body motion and the object is an instance of artifact and moves the motion and the object""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1719,7 +1724,7 @@ there exist a motion and an object such that the motion is an instance of body m
         languageFormatter.setDoInformalNLG(false);
 
         String expectedResult = """
-there doesn't exist a motion such that the motion is an instance of body motion and Thing1 is an instance of artifact and moves the motion and Thing1""";
+                there doesn't exist a motion such that the motion is an instance of body motion and Thing1 is an instance of artifact and moves the motion and Thing1""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1745,7 +1750,7 @@ there doesn't exist a motion such that the motion is an instance of body motion 
         languageFormatter.setDoInformalNLG(false);
 
         String expectedResult = """
-there exist a motion and an object such that the motion is an instance of body motion and the object is an instance of artifact and moves the motion and the object""";
+                there exist a motion and an object such that the motion is an instance of body motion and the object is an instance of artifact and moves the motion and the object""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1772,7 +1777,7 @@ there exist a motion and an object such that the motion is an instance of body m
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-there exist an agent, a motion and an object such that the motion is an instance of driving and the agent is an instance of girl and the object is an instance of expressway and the agent is an agent of the motion and the object is path along which the motion occurs and the motion originates at London""";
+                there exist an agent, a motion and an object such that the motion is an instance of driving and the agent is an instance of girl and the object is an instance of expressway and the agent is an agent of the motion and the object is path along which the motion occurs and the motion originates at London""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1799,7 +1804,7 @@ there exist an agent, a motion and an object such that the motion is an instance
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-there exist an agent, a motion and an object such that the motion is an instance of driving and the agent is an instance of girl and the object is an instance of expressway and the agent is an agent of the motion and the object is path along which the motion occurs and entities in the process the motion are moving Leeds and the motion originates at London""";
+                there exist an agent, a motion and an object such that the motion is an instance of driving and the agent is an instance of girl and the object is an instance of expressway and the agent is an agent of the motion and the object is path along which the motion occurs and entities in the process the motion are moving Leeds and the motion originates at London""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1826,7 +1831,7 @@ there exist an agent, a motion and an object such that the motion is an instance
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-there exist an agent, a motion and an object such that the motion is an instance of driving and the agent is an instance of girl and the object is an instance of expressway and the agent is an agent of the motion and the object is path along which the motion occurs and entities in the process the motion are moving north and the motion originates at London""";
+                there exist an agent, a motion and an object such that the motion is an instance of driving and the agent is an instance of girl and the object is an instance of expressway and the agent is an agent of the motion and the object is path along which the motion occurs and entities in the process the motion are moving north and the motion originates at London""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1923,7 +1928,7 @@ there exist an agent, a motion and an object such that the motion is an instance
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-there exist an agent, a process, , , an entity and an object such that the process is an instance of making and the agent is an instance of woman and the entity is an instance of weapon and the object is an instance of artifact and the agent is an agent of the process and the entity is a patient of the process and the object is a resource for the process""";
+                there exist an agent, a process, , , an entity and an object such that the process is an instance of making and the agent is an instance of woman and the entity is an instance of weapon and the object is an instance of artifact and the agent is an agent of the process and the entity is a patient of the process and the object is a resource for the process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1953,7 +1958,7 @@ there exist an agent, a process, , , an entity and an object such that the proce
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-there exist an agent, a process, , , an entity and an object such that the process is an instance of making and the agent is an instance of woman and the entity is an instance of weapon and the object is an instance of artifact and the agent is an agent of the process and the entity is a result of the process and the object is a resource for the process""";
+                there exist an agent, a process, , , an entity and an object such that the process is an instance of making and the agent is an instance of woman and the entity is an instance of weapon and the object is an instance of artifact and the agent is an agent of the process and the entity is a result of the process and the object is a resource for the process""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -1976,7 +1981,7 @@ there exist an agent, a process, , , an entity and an object such that the proce
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-there exist a human and a demonstrating such that the demonstrating is an instance of demonstrating and the human is an instance of boy and the human attends the demonstrating""";
+                there exist a human and a demonstrating such that the demonstrating is an instance of demonstrating and the human is an instance of boy and the human attends the demonstrating""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
@@ -2119,14 +2124,14 @@ there exist a human and a demonstrating such that the demonstrating is an instan
                 kb, "EnglishLanguage");
         languageFormatter.setDoInformalNLG(false);
         String expectedResult = """
-if a process is an instance of swimming and an agent is an agent of the process, then there exists an object such that the object is an instance of water area and the agent is located at the object""";
+                if a process is an instance of swimming and an agent is an agent of the process, then there exists an object such that the object is an instance of water area and the agent is located at the object""";
         String actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
 
         languageFormatter.setDoInformalNLG(true);
         //expectedResult = "if an agent swims, then the agent is in a body of water";
         expectedResult = """
-if a process is an instance of swimming and an agent is an agent of the process, then there exists an object such that the object is an instance of water area and the agent is located at the object""";
+                if a process is an instance of swimming and an agent is an agent of the process, then there exists an object such that the object is an instance of water area and the agent is located at the object""";
         actualResult = languageFormatter.htmlParaphrase("");
         assertThat(StringUtil.filterHtml(actualResult)).isEqualTo(expectedResult);
     }
