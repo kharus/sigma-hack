@@ -25,6 +25,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,6 +47,9 @@ public class FormulaPreprocessorITCase {
 
     @Autowired
     private KBmanager kbManager;
+
+    @Autowired
+    FormulaDeepEqualsService deepEqualsService;
 
     @BeforeEach
     void init() {
@@ -104,11 +108,8 @@ public class FormulaPreprocessorITCase {
         else
             System.out.println("testAddTypes1(): fail");
         assertThat(actual).isEqualTo(expected);
-        if (expected.logicallyEquals(actual))
-            System.out.println("testAddTypes1(): pass");
-        else
-            System.out.println("testAddTypes1(): fail");
-        assertThat(expected.logicallyEquals(actual)).isTrue();
+
+        assertThat(deepEqualsService.logicallyEquals(expected, actual)).isTrue();
     }
 
     // FIXME: test is waiting completion of Formula.logicallyEquals()
@@ -131,13 +132,8 @@ public class FormulaPreprocessorITCase {
         Formula actual = fp.addTypeRestrictions(f, kb);
         System.out.println("testAddTypes2(): actual: " + actual);
         System.out.println("testAddTypes2(): expected: " + expected);
-        //assertThat(actual).isEqualTo(expected);
-        if (expected.logicallyEquals(actual))
-            System.out.println("testAddTypes2(): pass");
-        else
-            System.out.println("testAddTypes2(): fail");
-        assertThat(expected.logicallyEquals(actual)).isTrue();
-        assertThat(expected.logicallyEquals(actual)).isTrue();
+
+        assertThat(deepEqualsService.logicallyEquals(expected, actual)).isTrue();
     }
 
     @Test
@@ -200,11 +196,7 @@ public class FormulaPreprocessorITCase {
         System.out.println("test4(): expected: " + expected);
         Formula fActual = new Formula(actual);
         Formula fExpected = new Formula(expected);
-        if (fExpected.deepEquals(fActual))
-            System.out.println("test4(): pass");
-        else
-            System.out.println("test4(): fail");
-        assertThat(fExpected.deepEquals(fActual)).isTrue();
+        assertThat(deepEqualsService.deepEquals(fExpected, fActual)).isTrue();
     }
 
     @Test
@@ -238,11 +230,7 @@ public class FormulaPreprocessorITCase {
         System.out.println("test5(): expected: " + expected);
         Formula fActual = new Formula(actual);
         Formula fExpected = new Formula(expected);
-        if (fExpected.deepEquals(fActual))
-            System.out.println("test5(): pass");
-        else
-            System.out.println("test5(): fail");
-        assertThat(fExpected.deepEquals(fActual)).isTrue();
+        assertThat(deepEqualsService.deepEquals(fExpected, fActual)).isTrue();
     }
 
     @Test
@@ -453,5 +441,93 @@ public class FormulaPreprocessorITCase {
         Set<Formula> actual = fp.preProcess(f, false, kb);
 
         assertThat(actual.size()).isGreaterThan(1);
+    }
+
+    @Test
+    public void testReplaceQuantifierVars() throws Exception {
+
+        String stmt = """
+                (exists (?X)
+                        (and
+                                (instance ?X Organism)
+                        (part Bio18-1 ?X)))""";
+
+        String expected = """
+                (exists (Drosophila)
+                        (and
+                                (instance Drosophila Organism)
+                        (part Bio18-1 Drosophila)))""";
+        Formula f = new Formula(stmt);
+        Formula exp = new Formula(expected);
+
+        List<String> vars = new ArrayList<>();
+        vars.add("Drosophila");
+        Formula actual = f.replaceQuantifierVars(Formula.EQUANT, vars);
+        assertThat(deepEqualsService.logicallyEquals(actual, exp)).isTrue();
+
+        stmt = "(exists (?JOHN ?KICKS ?CART)\n" +
+                "  (and\n" +
+                "    (instance ?JOHN Human)\n" +
+                "    (instance ?KICKS Kicking)\n" +
+                "    (instance ?CART Wagon)\n" +
+                "    (patient ?KICKS ?CART)\n" +
+                "    (agent ?KICKS ?JOHN)))\n";
+
+        expected = "(exists (Doyle Kick_2 Cart_1)\n" +
+                "  (and\n" +
+                "    (instance Doyle Human)\n" +
+                "    (instance Kick_2 Kicking)\n" +
+                "    (instance Cart_1 Wagon)\n" +
+                "    (patient Kick_2 Cart_1)\n" +
+                "    (agent Kick_2 Doyle)))\n";
+        f = new Formula(stmt);
+        exp = new Formula(expected);
+
+        vars = new ArrayList<>();
+        vars.add("Doyle");
+        vars.add("Kick_2");
+        vars.add("Cart_1");
+        actual = f.replaceQuantifierVars(Formula.EQUANT, vars);
+        assertThat(deepEqualsService.logicallyEquals(actual, exp)).isTrue();
+
+        stmt = "(exists (?ENTITY)\n" +
+                "         (and \n" +
+                "           (subclass ?ENTITY Animal) \n" +
+                "           (subclass ?ENTITY CognitiveAgent)\n" +
+                "           (equal ?ENTITY Human)))";
+
+        expected = "(exists (Ent_1)\n" +
+                "         (and \n" +
+                "           (subclass Ent_1 Animal) \n" +
+                "           (subclass Ent_1 CognitiveAgent)\n" +
+                "           (equal Ent_1 Human)))";
+        f = new Formula(stmt);
+        exp = new Formula(expected);
+
+        vars = new ArrayList<>();
+        vars.add("Ent_1");
+        actual = f.replaceQuantifierVars(Formula.EQUANT, vars);
+        assertThat(deepEqualsService.logicallyEquals(actual, exp)).isTrue();
+
+        stmt = "(exists (?ENTITY)\n" +
+                "         (and \n" +
+                "           (subclass ?ENTITY ?TEST) \n" +
+                "           (subclass ?ENTITY CognitiveAgent)\n" +
+                "           (equal ?ENTITY Human)))";
+
+        expected = "(exists (Ent_1)\n" +
+                "         (and \n" +
+                "           (subclass Ent_1 Ent_1) \n" +
+                "           (subclass Ent_1 CognitiveAgent)\n" +
+                "           (equal Ent_1 Human)))";
+        f = new Formula(stmt);
+        exp = new Formula(expected);
+
+        vars = new ArrayList<>();
+        vars.add("Ent_1");
+        actual = f.replaceQuantifierVars(Formula.EQUANT, vars);
+        assertThat(deepEqualsService.logicallyEquals(actual, exp))
+                .as(actual + "\n should not be logically equal to \n" + expected)
+                .isFalse();
     }
 }
