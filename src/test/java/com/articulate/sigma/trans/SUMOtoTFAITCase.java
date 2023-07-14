@@ -21,6 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("TopOnly")
 @Import(KBmanagerTestConfiguration.class)
 public class SUMOtoTFAITCase {
+    @Autowired
+    FormulaDeepEqualsService deepEqualsService;
+
     @Value("${sumokbname}")
     private String sumokbname;
     private KB kb;
@@ -359,11 +362,7 @@ public class SUMOtoTFAITCase {
         Formula fExpected = new Formula(expectedRes);
         System.out.println("actual:  " + fActual);
         System.out.println("expected:" + fExpected);
-        if (fExpected.deepEquals(fActual))
-            System.out.println("testElimLogops: pass");
-        else
-            System.out.println("testElimLogops: fail");
-        assertThat(fExpected.deepEquals(fActual)).isTrue();
+        assertThat(deepEqualsService.deepEquals(fExpected, fActual)).isTrue();
     }
 
     @Test

@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FormulaTest {
 
+
     @Test
     public void testFormulaRead() {
 
@@ -647,89 +648,4 @@ public class FormulaTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @Test
-    public void testReplaceQuantifierVars() throws Exception {
-
-        String stmt = "(exists (?X)\n" +
-                "        (and\n" +
-                "                (instance ?X Organism)\n" +
-                "        (part Bio18-1 ?X)))";
-
-        String expected = "(exists (Drosophila)\n" +
-                "        (and\n" +
-                "                (instance Drosophila Organism)\n" +
-                "        (part Bio18-1 Drosophila)))";
-        Formula f = new Formula(stmt);
-        Formula exp = new Formula(expected);
-
-        List<String> vars = new ArrayList<>();
-        vars.add("Drosophila");
-        Formula actual = f.replaceQuantifierVars(Formula.EQUANT, vars);
-        assertThat(actual.logicallyEquals(exp)).isTrue();
-
-        stmt = "(exists (?JOHN ?KICKS ?CART)\n" +
-                "  (and\n" +
-                "    (instance ?JOHN Human)\n" +
-                "    (instance ?KICKS Kicking)\n" +
-                "    (instance ?CART Wagon)\n" +
-                "    (patient ?KICKS ?CART)\n" +
-                "    (agent ?KICKS ?JOHN)))\n";
-
-        expected = "(exists (Doyle Kick_2 Cart_1)\n" +
-                "  (and\n" +
-                "    (instance Doyle Human)\n" +
-                "    (instance Kick_2 Kicking)\n" +
-                "    (instance Cart_1 Wagon)\n" +
-                "    (patient Kick_2 Cart_1)\n" +
-                "    (agent Kick_2 Doyle)))\n";
-        f = new Formula(stmt);
-        exp = new Formula(expected);
-
-        vars = new ArrayList<>();
-        vars.add("Doyle");
-        vars.add("Kick_2");
-        vars.add("Cart_1");
-        actual = f.replaceQuantifierVars(Formula.EQUANT, vars);
-        assertThat(actual.logicallyEquals(exp)).isTrue();
-
-        stmt = "(exists (?ENTITY)\n" +
-                "         (and \n" +
-                "           (subclass ?ENTITY Animal) \n" +
-                "           (subclass ?ENTITY CognitiveAgent)\n" +
-                "           (equal ?ENTITY Human)))";
-
-        expected = "(exists (Ent_1)\n" +
-                "         (and \n" +
-                "           (subclass Ent_1 Animal) \n" +
-                "           (subclass Ent_1 CognitiveAgent)\n" +
-                "           (equal Ent_1 Human)))";
-        f = new Formula(stmt);
-        exp = new Formula(expected);
-
-        vars = new ArrayList<>();
-        vars.add("Ent_1");
-        actual = f.replaceQuantifierVars(Formula.EQUANT, vars);
-        assertThat(actual.logicallyEquals(exp)).isTrue();
-
-        stmt = "(exists (?ENTITY)\n" +
-                "         (and \n" +
-                "           (subclass ?ENTITY ?TEST) \n" +
-                "           (subclass ?ENTITY CognitiveAgent)\n" +
-                "           (equal ?ENTITY Human)))";
-
-        expected = "(exists (Ent_1)\n" +
-                "         (and \n" +
-                "           (subclass Ent_1 Ent_1) \n" +
-                "           (subclass Ent_1 CognitiveAgent)\n" +
-                "           (equal Ent_1 Human)))";
-        f = new Formula(stmt);
-        exp = new Formula(expected);
-
-        vars = new ArrayList<>();
-        vars.add("Ent_1");
-        actual = f.replaceQuantifierVars(Formula.EQUANT, vars);
-        assertThat(actual.logicallyEquals(exp))
-                .as(actual + "\n should not be logically equal to \n" + expected)
-                .isFalse();
-    }
 }

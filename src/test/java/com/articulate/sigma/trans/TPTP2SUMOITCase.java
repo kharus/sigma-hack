@@ -1,10 +1,12 @@
 package com.articulate.sigma.trans;
 
 import com.articulate.sigma.Formula;
+import com.articulate.sigma.FormulaDeepEqualsService;
 import com.articulate.sigma.KBmanagerTestConfiguration;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -18,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("TopOnly")
 @Import(KBmanagerTestConfiguration.class)
 public class TPTP2SUMOITCase {
+    @Autowired
+    FormulaDeepEqualsService deepEqualsService;
 
     @Disabled
     @Test
@@ -144,6 +148,6 @@ public class TPTP2SUMOITCase {
                       (plays ?G3 ?A2))))))""";
         Formula fresult = new Formula(result);
         Formula fexpected = new Formula(expected);
-        assertThat(fexpected.deepEquals(fresult)).isTrue();
+        assertThat(deepEqualsService.deepEquals(fexpected, fresult)).isTrue();
     }
 }
