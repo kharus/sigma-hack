@@ -18,6 +18,7 @@ import com.articulate.sigma.*;
 import com.articulate.sigma.utils.AVPair;
 import com.articulate.sigma.utils.StringUtil;
 import com.google.common.collect.Sets;
+import org.apache.commons.text.similarity.LevenshteinDistance;
 
 import java.io.*;
 import java.util.*;
@@ -1294,7 +1295,7 @@ public class WordNetUtilities {
                         id = uid;
                     }
                     if (lastT != "") {
-                        int l = Mapping.getLevenshteinDistance(lastT, t);
+                        int l = LevenshteinDistance.getDefaultInstance().apply(lastT,t);
                         if (l != 0) {  // exclude searches with no changes
                             total = total + l;
                             count++;
