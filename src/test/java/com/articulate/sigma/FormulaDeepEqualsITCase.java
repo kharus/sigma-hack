@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -16,16 +17,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("TopOnly")
 @Import(KBmanagerTestConfiguration.class)
 public class FormulaDeepEqualsITCase {
-
     @Autowired
     FormulaDeepEqualsService deepEqualsService;
+    @Value("${sumokbname}")
+    private String sumokbname;
     private KB kb;
     @Autowired
     private KBmanager kbManager;
 
     @BeforeEach
     void init() {
-        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+        kb = kbManager.getKB(sumokbname);
     }
 
     @Test
@@ -199,11 +201,11 @@ public class FormulaDeepEqualsITCase {
                 "                (instrument ?W ?C)))))");
 
         //testing equal formulas
-        assertThat(deepEqualsService.unifyWith(f1,f2)).isTrue();
+        assertThat(deepEqualsService.unifyWith(f1, f2)).isTrue();
 
         //testing formulas that differ in variable reference
         f2.read("(or (not (instance ?X6 WalkingCane)) (hasPurpose ?X4 (and (instance (SkFn2 ?X6) Walking) (instrument (SkFn2 ?X6) ?X6))))");
-        assertThat(deepEqualsService.unifyWith(f1,f2)).isFalse();
+        assertThat(deepEqualsService.unifyWith(f1, f2)).isFalse();
 
         //testing unequal formulas
         f1 = new Formula();
@@ -224,7 +226,7 @@ public class FormulaDeepEqualsITCase {
                 "                (instance ?W Running)" +
                 "                (instrument ?W ?C)))))");
 
-        assertThat(deepEqualsService.unifyWith(f1,f2)).isFalse();
+        assertThat(deepEqualsService.unifyWith(f1, f2)).isFalse();
 
         //testing commutative terms
         f1 = new Formula();
@@ -245,7 +247,7 @@ public class FormulaDeepEqualsITCase {
                 "                (instrument ?W ?C)" +
                 "                (instance ?W Walking)))))");
 
-        assertThat(deepEqualsService.unifyWith(f1,f2)).isTrue();
+        assertThat(deepEqualsService.unifyWith(f1, f2)).isTrue();
 
     }
 
@@ -264,7 +266,7 @@ public class FormulaDeepEqualsITCase {
         Formula f2 = new Formula();
         f2.read(s2);
 
-        assertThat(deepEqualsService.unifyWith(f1,f2)).isTrue();
+        assertThat(deepEqualsService.unifyWith(f1, f2)).isTrue();
     }
 
     @Test
@@ -285,7 +287,7 @@ public class FormulaDeepEqualsITCase {
 
         Formula actual = fp.addTypeRestrictions(f, kb);
 
-        assertThat(deepEqualsService.unifyWith(expected,actual)).isTrue();
+        assertThat(deepEqualsService.unifyWith(expected, actual)).isTrue();
     }
 
     @Test
@@ -313,6 +315,6 @@ public class FormulaDeepEqualsITCase {
         Formula f2 = new Formula();
         f2.read(f2Text);
 
-        assertThat(deepEqualsService.unifyWith(f1,f2)).isTrue();
+        assertThat(deepEqualsService.unifyWith(f1, f2)).isTrue();
     }
 }

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -21,7 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("MidLevel")
 @Import(KBmanagerTestConfiguration.class)
 public class PredVarInstIntegrationITCase {
-
+    @Value("${sumokbname}")
+    private String sumokbname;
     private KB kb;
 
     @Autowired
@@ -29,8 +31,9 @@ public class PredVarInstIntegrationITCase {
 
     @BeforeEach
     void init() {
-        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+        kb = kbManager.getKB(sumokbname);
     }
+
     @Disabled
     public void testInstantiatePredVars1() {
 

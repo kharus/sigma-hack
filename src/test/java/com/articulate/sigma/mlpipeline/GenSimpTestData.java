@@ -6,6 +6,7 @@ import com.articulate.sigma.utils.AVPair;
 import com.articulate.sigma.utils.StringUtil;
 import com.articulate.sigma.wordnet.WordNet;
 import com.articulate.sigma.wordnet.WordNetUtilities;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -41,7 +42,6 @@ import java.util.regex.Pattern;
  */
 
 public class GenSimpTestData {
-
     public static final int instLimit = 200;
     public static final int loopMax = 3; // how many features at each level of linguistic composition
     public static final int attMax = 3;
@@ -72,9 +72,8 @@ public class GenSimpTestData {
     public static PrintWriter pw = null;
     public static PrintWriter englishFile = null; //generated English sentences
     public static PrintWriter logicFile = null;   //generated logic sentences, one per line,
-    // NL/logic should be on same line in the different files
-
     public static long estSentCount = 1;
+    // NL/logic should be on same line in the different files
     public static long sentCount = 0;
     public static long sentMax = 10000000;
     public static boolean startOfSentence = true;
@@ -83,6 +82,8 @@ public class GenSimpTestData {
     public static List<String> endings = new ArrayList<>(); // polite phrase at end of sentence
     public static List<String> others = new ArrayList<>(); // when next noun is same as a previous one
     public static Map<String, String> prepPhrase = new HashMap<>();
+    @Value("${sumokbname}")
+    private String sumokbname;
 
     public GenSimpTestData(KB localKb) {
         kb = localKb;
@@ -435,7 +436,7 @@ public class GenSimpTestData {
 
         System.out.println("GenSimpTestData.genMissingTermFormats(): start");
         KBmanager.getMgr().initializeOnce();
-        kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+        kb = KBmanager.getMgr().getKB("SUMO");
         for (String s : kb.terms) {
             List<Formula> res = kb.askWithRestriction(0, "termFormat", 2, s);
             if (res == null || res.size() == 0) {
@@ -513,7 +514,7 @@ public class GenSimpTestData {
         System.out.println("GenSimpTestData.generate()");
         KBmanager.getMgr().initializeOnce();
         //resultLimit = 0; // don't limit number of results on command line
-        kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+        kb = KBmanager.getMgr().getKB("SUMO");
         System.out.println("generate(): # relations: " + kb.kbCache.relations.size());
         Map<String, String> formatMap = kb.getFormatMap("EnglishLanguage");
         skipTypes.add("Formula");
@@ -531,7 +532,7 @@ public class GenSimpTestData {
 
         System.out.println("GenSimpTestData.allAxioms()");
         KBmanager.getMgr().initializeOnce();
-        kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+        kb = KBmanager.getMgr().getKB("SUMO");
         for (Formula f : kb.formulaMap.values()) {
             String form = f.getFormula();
             if (!StringUtil.emptyString(form) && !form.contains("\"") &&
@@ -690,7 +691,7 @@ public class GenSimpTestData {
 
         KBmanager.prefOverride.put("TPTP", "no");
         KBmanager.getMgr().initializeOnce();
-        kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+        kb = KBmanager.getMgr().getKB("SUMO");
         try {
             if (args == null || args.length == 0 || args[0].equals("-h"))
                 showHelp();
@@ -951,7 +952,7 @@ public class GenSimpTestData {
 
         System.out.println("GenSimpTestData.initActions(): start");
         KBmanager.getMgr().initializeOnce();
-        kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+        kb = KBmanager.getMgr().getKB(sumokbname);
         System.out.println("GenSimpTestData.initActions(): finished loading KBs");
 
         LFeatures lfeat = new LFeatures(this);

@@ -254,29 +254,9 @@ public class ProofProcessor {
         }
     }
 
-    public static void testFormatProof() {
-
-        try {
-            KBmanager.getMgr().initializeOnce();
-            KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-            String stmt = "(subclass ?X Entity)";
-            String result = kb.askEProver(stmt, 30, 3) + " ";
-            TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
-            StringBuffer qlist = new StringBuffer();
-            qlist.append("?X");
-            tpp.parseProofOutput(result, kb);
-            result = HTMLformatter.formatTPTP3ProofResult(tpp, stmt, "<hr>\n",
-                    KBmanager.getMgr().getPref("sumokbname"), "EnglishLanguage");
-            System.out.println(result);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
     public static void testFormatProof2(String filename) {
 
         try {
-            KBmanager.getMgr().initializeOnce();
             KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
             List<String> lines = TPTP3ProofProcessor.joinLines(FileUtil.readLines(filename, false));
             String query = "";
