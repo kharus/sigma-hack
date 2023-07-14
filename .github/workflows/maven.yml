@@ -73,6 +73,8 @@ jobs:
           mvn -B verify -Dgroups=com.articulate.sigma.TopOnly --file pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.PACKAGE_READONLY }}
+          BASE_DIR: ${{ github.workspace }}/sigmakee-runtime
+          KB_DIR: ${{ github.workspace }}/sigmakee-runtime/KBs
         working-directory: sigma-hack
 
       - name: Setup Mid-Level SigmaKEE
@@ -89,6 +91,8 @@ jobs:
           mvn -B verify -Dgroups=com.articulate.sigma.MidLevel --file pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.PACKAGE_READONLY }}
+          BASE_DIR: ${{ github.workspace }}/sigmakee-runtime
+          KB_DIR: ${{ github.workspace }}/sigmakee-runtime/KBs
         working-directory: sigma-hack
 
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive

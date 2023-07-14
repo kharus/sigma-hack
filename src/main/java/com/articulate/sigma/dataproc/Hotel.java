@@ -1388,7 +1388,6 @@ public class Hotel {
         System.out.println("INFO in readJSONHotels()");
         KBmanager.getMgr().initializeOnce();
         System.out.println("INFO in readJSONHotels(): completed KB initialization");
-        WordNet.initOnce();
         System.out.println("INFO in readJSONHotels(): complete reading WordNet files");
 
         long t1 = System.currentTimeMillis();
@@ -1486,7 +1485,6 @@ public class Hotel {
      */
     public static void hotelAmenitySentiment(List<Hotel> hotels) {
 
-        WordNet.initOnce();
         DB.readSentimentArray();
         DB.readStopConceptArray();
         for (int i = 0; i < hotels.size(); i++) {
