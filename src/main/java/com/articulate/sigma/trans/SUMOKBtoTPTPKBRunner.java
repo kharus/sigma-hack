@@ -46,4 +46,27 @@ public class SUMOKBtoTPTPKBRunner {
             e.printStackTrace();
         }
     }
+
+    @Command(command = "tff")
+    public void tptpTff() {
+        SUMOKBtoTFAKB skbtfakb = new SUMOKBtoTFAKB();
+        skbtfakb.initOnce();
+        // this setting has to be *after* initialization, otherwise init
+        // tries to write a TPTP file and then sees that tff is set and tries to write tff, but then sorts etc
+        // haven't been set
+        SUMOformulaToTPTPformula.lang = "tff";
+        SUMOKBtoTPTPKB.lang = "tff";
+        String kbName = KBmanager.getMgr().getPref("sumokbname");
+        String filename = KBmanager.getMgr().getPref("kbDir") + File.separator + kbName + "." + SUMOKBtoTPTPKB.lang;
+
+        try (FileWriter fw = new FileWriter(filename);
+             PrintWriter pw = new PrintWriter(fw)) {
+            skbtfakb.writeSorts(pw);
+            System.out.println("SUMOKBtoTFAKB.main(): completed writing sorts");
+            skbtfakb.writeFile(filename, null, false, pw);
+            pw.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
