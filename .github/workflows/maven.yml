@@ -75,6 +75,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PACKAGE_READONLY }}
         working-directory: sigma-hack
 
+      - name: Produce and compare SUMO.fof
+        env:
+          SIGMA_HOME: ${{ github.workspace }}/sigmakee-runtime
+          kbDir: ${{ github.workspace }}/sigmakee-runtime/KBs
+          SIGMA_SRC: ${{ github.workspace }}/sigma-hack
+        working-directory: ${{ github.workspace }}
+        run: |
+          find $SIGMA_HOME/KBs -name '*.ser' -delete
+          java "-Dspring.profiles.active=prod" -jar target/sigma-hack-0.0.1-SNAPSHOT.jar fof
+          zstd -d $SIGMA_SRC/src/test/resources/SUMO-gold.fof.zst -o SUMO-gold.fof
+          diff SUMO-gold.fof $SIGMA_HOME/KBs/SUMO-gold.fof
+
       - name: Setup Mid-Level SigmaKEE
         env:
           SIGMA_HOME: ${{ github.workspace }}/sigmakee-runtime
