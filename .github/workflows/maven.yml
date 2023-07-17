@@ -84,8 +84,8 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: |
           find $SIGMA_HOME/KBs -name '*.ser' -delete
-          java "-Dspring.profiles.active=prod" -jar $SIGMA_SRC/target/sigma-hack-0.0.1-SNAPSHOT.jar fof
           zstd -d $SIGMA_SRC/src/test/resources/SUMO-gold.fof.zst -o SUMO-gold.fof
+          java "-Dspring.profiles.active=prod" -jar $SIGMA_SRC/target/sigma-hack-0.0.1-SNAPSHOT.jar fof
           diff SUMO-gold.fof $SIGMA_HOME/KBs/SUMO-gold.fof
 
       - name: Setup Mid-Level SigmaKEE
