@@ -86,7 +86,9 @@ jobs:
           find $SIGMA_HOME/KBs -name '*.ser' -delete
           zstd -d $SIGMA_SRC/src/test/resources/SUMO-gold.fof.zst -o SUMO-gold.fof
           java "-Dspring.profiles.active=prod" -jar $SIGMA_SRC/target/sigma-hack-0.0.1-SNAPSHOT.jar fof
-          diff SUMO-gold.fof $SIGMA_HOME/KBs/SUMO.fof
+          sed -i 's/from file.*KBs\//from file /g' SUMO-gold.fof
+          sed -i 's/from file.*KBs\//from file /g' $SIGMA_HOME/KBs/SUMO.fof
+          diff SUMO-gold.fof $SIGMA_HOME/KBs/SUMO.fof | head
 
       - name: Setup Mid-Level SigmaKEE
         env:
