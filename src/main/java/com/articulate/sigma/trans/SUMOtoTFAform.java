@@ -2496,13 +2496,11 @@ public class SUMOtoTFAform {
         numericConstantValues.put("Pi", "3.141592653589793");
     }
 
-    public static void initOnce() {
+    public static void initOnce(KB kb) {
 
         if (initialized)
             return;
-        KBmanager.getMgr().initializeOnce();
-        String kbName = KBmanager.getMgr().getPref("sumokbname");
-        kb = KBmanager.getMgr().getKB(kbName);
+        SUMOtoTFAform.kb = kb;
         fp = new FormulaPreprocessor();
         FormulaPreprocessor.addOnlyNonNumericTypes = true;
         buildNumericConstraints();
@@ -2664,8 +2662,10 @@ public class SUMOtoTFAform {
             showHelp();
         else {
             SUMOKBtoTFAKB skbtfakb = new SUMOKBtoTFAKB();
-            skbtfakb.initOnce();
-            initOnce();
+            KBmanager.getMgr().initializeOnce();
+            KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+            skbtfakb.initOnce(kb);
+            initOnce(kb);
             System.out.println("INFO in SUMOtoTFAform.main()");
             if (args != null && args.length > 2 && args[0].equals("-c")) {
                 String t1 = args[1];

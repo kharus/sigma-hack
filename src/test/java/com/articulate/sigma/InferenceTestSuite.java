@@ -339,8 +339,8 @@ public class InferenceTestSuite {
                 if (args[0].indexOf('f') != -1) {
                     SUMOformulaToTPTPformula.lang = "tff";
                     SUMOKBtoTFAKB skbtfakb = new SUMOKBtoTFAKB();
-                    skbtfakb.initOnce();
-                    SUMOtoTFAform.initOnce();
+                    skbtfakb.initOnce(kb);
+                    SUMOtoTFAform.initOnce(kb);
                 }
                 if (args[0].indexOf('0') != -1) {
                     SUMOformulaToTPTPformula.lang = "thf";
@@ -558,8 +558,9 @@ public class InferenceTestSuite {
                 Formula theQuery = new Formula(itd.query);
                 FormulaPreprocessor fp = new FormulaPreprocessor();
                 SUMOKBtoTFAKB stfa = new SUMOKBtoTFAKB();
-                stfa.initOnce();
-                SUMOtoTFAform.initOnce();
+                KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+                stfa.initOnce(kb);
+                SUMOtoTFAform.initOnce(kb);
                 Set<Formula> theQueries = fp.preProcess(theQuery, true, kb);
                 for (Formula processed : theQueries) {
                     if (processed.isHigherOrder(kb)) {
