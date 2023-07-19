@@ -1,1 +1,2 @@
 SUMO-gold.fof.zst filter=lfs diff=lfs merge=lfs -text
+SUMO-gold.tff.zst filter=lfs diff=lfs merge=lfs -text
