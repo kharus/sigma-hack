@@ -755,7 +755,6 @@ public class WSD {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        WordNet.initOnce();
         System.out.println("INFO in WSD.testWordWSD(): " + WSD.getBestDefaultSense("India"));
         System.out.println("INFO in WSD.testWordWSD(): " + WSD.getBestDefaultSense("kick"));
     }
@@ -771,7 +770,6 @@ public class WSD {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        WordNet.initOnce();
         System.out.println("INFO in WSD.testSentenceWSD(): done initializing");
 
         String sentence = "John walks.";
@@ -804,7 +802,6 @@ public class WSD {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        WordNet.initOnce();
         System.out.println("INFO in WSD.testSentenceWSD(): done initializing");
         String sentence = "Play Hello on Hulu.";
         System.out.println("INFO in WSD.testSentenceWSD(): " + sentence);

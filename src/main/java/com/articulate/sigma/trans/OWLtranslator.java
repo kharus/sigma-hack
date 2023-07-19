@@ -605,7 +605,6 @@ public class OWLtranslator {
 
     private void writeWordNetLink(PrintWriter pw, String term) {
 
-        WordNet.initOnce();
         // get list of synsets with part of speech prepended to the synset number.
         List al = WordNet.wn.SUMOHash.get(term);
         if (al != null) {

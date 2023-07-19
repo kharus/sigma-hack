@@ -383,7 +383,7 @@ public class WordNet implements Serializable {
     /**
      * Read the WordNet files only on initialization of the class.
      */
-    private static void loadFresh() {
+    public static void loadFresh() {
 
         if (disable) return;
         System.out.println("WordNet.loadFresh(): ");
@@ -407,53 +407,6 @@ public class WordNet implements Serializable {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
-    }
-
-    /**
-     * Read the WordNet files only on initialization of the class.
-     */
-    public static void initOnce() {
-
-        if (KBmanager.getMgr().getPref("loadLexicons").equals("false"))
-            disable = true;
-        System.out.println("WordNet.initOnce(): 'disable' is: " + disable);
-        if (disable) return;
-        try {
-            if (initNeeded) {
-                if ((WordNet.baseDir == "") || (WordNet.baseDir == null))
-                    WordNet.baseDir = KBmanager.getMgr().getPref("kbDir") + File.separator + "WordNetMappings";
-                System.out.println("WordNet.initOnce(): using baseDir = " + WordNet.baseDir);
-                System.out.println("WordNet.initOnce(): disable: " + disable);
-                baseDirFile = new File(WordNet.baseDir);
-                if (KBmanager.getMgr().getPref("loadFresh").equals("true") || !serializedExists()) {
-                    System.out.println("WordNet.initOnce(): loading WordNet source files ");
-                    loadFresh();
-                    initNeeded = false;
-                } else {
-                    loadSerialized();
-                    if (wn == null)
-                        loadFresh();
-                }
-                DB.readSentimentArray();
-            }
-        } catch (Exception ex) {
-            System.out.println("Error in WordNet.initOnce(): ");
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        System.out.println("WordNet.initOnce(): " + wn.reverseSenseIndex.keySet().size() + " senses loaded");
-    }
-
-    /**
-     * Split apart the block of synsets, and return the separated values
-     * as an array.
-     */
-    private static String[] splitSynsets(String synsetBlock) {
-
-        String[] synsetList = null;
-        if (synsetBlock != null)
-            synsetList = synsetBlock.split("\\s+");
-        return synsetList;
     }
 
     private static boolean arrayContains(int[] ar, int value) {
@@ -515,7 +468,6 @@ public class WordNet implements Serializable {
             System.out.println(ex.getMessage());
         }
         System.out.println("INFO in WordNet.testWordFreq(): done initializing");
-        WordNet.initOnce();
         System.out.println("Word frequencies: " + WordNet.wn.wordFrequencies.get(word));
         System.out.println("Best word frequency: " + WordNet.wn.wordFrequencies.get(word).last());
         System.out.println("Best word frequency value: " + WordNet.wn.wordFrequencies.get(word).last().value);
@@ -602,9 +554,6 @@ public class WordNet implements Serializable {
      */
     public static void main(String[] args) {
 
-        //testWordFreq();
-        //checkWordsToSenses();
-        //getEntailments();
         System.out.println("INFO in WordNet.main()");
         KBmanager.getMgr().initializeOnce();
         String kbName = KBmanager.getMgr().getPref("sumokbname");
@@ -616,7 +565,6 @@ public class WordNet implements Serializable {
     }
 
     public MultiWords getMultiWords() {
-
         return multiWords;
     }
 
@@ -651,8 +599,6 @@ public class WordNet implements Serializable {
      */
     private void addSUMOHash(String term, String synset) {
 
-        //System.out.println("INFO in WordNet.addSUMOHash(): SUMO term: " + key);
-        //System.out.println("INFO in WordNet.addSUMOHash(): synset: " + value);
         term = term.substring(2, term.length() - 1);
         List<String> synsets = SUMOHash.get(term);
         if (synsets == null) {
@@ -863,7 +809,7 @@ public class WordNet implements Serializable {
      * Use a default filename and path unless a non-null string is
      * provided, in which case assume it is a full path.
      */
-    private void readNouns() throws java.io.IOException {
+    private void readNouns() {
 
         System.out.println("INFO in WordNet.readNouns(): Reading WordNet noun files");
         LineNumberReader lr = null;
