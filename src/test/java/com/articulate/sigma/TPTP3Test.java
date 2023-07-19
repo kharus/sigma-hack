@@ -15,7 +15,7 @@ import java.io.StringReader;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag("com.articulate.sigma.TopOnly")
-public class TPTP3ITCase extends UnitTestBase {
+public class TPTP3Test {
 
     @Test
     @Disabled
