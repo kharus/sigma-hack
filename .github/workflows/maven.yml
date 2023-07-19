@@ -88,7 +88,9 @@ jobs:
           java "-Dspring.profiles.active=prod" -jar $SIGMA_SRC/target/sigma-hack-0.0.1-SNAPSHOT.jar fof
           sed -i 's/from file.*KBs\//from file /g' SUMO-gold.fof
           sed -i 's/from file.*KBs\//from file /g' $SIGMA_HOME/KBs/SUMO.fof
-          diff SUMO-gold.fof $SIGMA_HOME/KBs/SUMO.fof | head
+          sed -i 's/translation to TPTP of KB.*KBs\//translation to TPTP of KB /g' SUMO-gold.fof
+          sed -i 's/translation to TPTP of KB.*KBs\//translation to TPTP of KB /g' $SIGMA_HOME/KBs/SUMO.fof
+          diff SUMO-gold.fof $SIGMA_HOME/KBs/SUMO.fof
 
       - name: Produce and compare SUMO.tff
         env:
@@ -102,7 +104,9 @@ jobs:
           java "-Dspring.profiles.active=prod" -jar $SIGMA_SRC/target/sigma-hack-0.0.1-SNAPSHOT.jar tff
           sed -i 's/from file.*KBs\//from file /g' SUMO-gold.tff
           sed -i 's/from file.*KBs\//from file /g' $SIGMA_HOME/KBs/SUMO.tff
-          diff SUMO-gold.tff $SIGMA_HOME/KBs/SUMO.tff | head
+          sed -i 's/translation to TPTP of KB.*KBs\//translation to TPTP of KB /g' SUMO-gold.tff
+          sed -i 's/translation to TPTP of KB.*KBs\//translation to TPTP of KB /g' $SIGMA_HOME/KBs/SUMO.tff
+          diff SUMO-gold.tff $SIGMA_HOME/KBs/SUMO.tff
 
       - name: Setup Mid-Level SigmaKEE
         env:
