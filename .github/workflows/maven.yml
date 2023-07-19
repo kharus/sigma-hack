@@ -90,6 +90,20 @@ jobs:
           sed -i 's/from file.*KBs\//from file /g' $SIGMA_HOME/KBs/SUMO.fof
           diff SUMO-gold.fof $SIGMA_HOME/KBs/SUMO.fof | head
 
+      - name: Produce and compare SUMO.tff
+        env:
+          SIGMA_HOME: ${{ github.workspace }}/sigmakee-runtime
+          kbDir: ${{ github.workspace }}/sigmakee-runtime/KBs
+          SIGMA_SRC: ${{ github.workspace }}/sigma-hack
+        working-directory: ${{ github.workspace }}
+        run: |
+          find $SIGMA_HOME/KBs -name '*.ser' -delete
+          zstd -d $SIGMA_SRC/src/test/resources/SUMO-gold.tff.zst -o SUMO-gold.tff
+          java "-Dspring.profiles.active=prod" -jar $SIGMA_SRC/target/sigma-hack-0.0.1-SNAPSHOT.jar tff
+          sed -i 's/from file.*KBs\//from file /g' SUMO-gold.tff
+          sed -i 's/from file.*KBs\//from file /g' $SIGMA_HOME/KBs/SUMO.tff
+          diff SUMO-gold.tff $SIGMA_HOME/KBs/SUMO.tff | head
+
       - name: Setup Mid-Level SigmaKEE
         env:
           SIGMA_HOME: ${{ github.workspace }}/sigmakee-runtime
