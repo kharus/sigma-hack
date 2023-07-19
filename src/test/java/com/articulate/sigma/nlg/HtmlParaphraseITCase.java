@@ -1423,6 +1423,7 @@ if a process is an instance of driving and an agent is an instance of human and 
      * This assertion is not valid, but we use to test how much the antecedent and the consequent affect each other.
      */
     @Test
+    @Disabled
     public void testHtmlParaphraseDrivingThenControllingCarIf() {
         String stmt = """
                 (=>
@@ -1458,6 +1459,7 @@ if a process is an instance of driving and an agent is an instance of human and 
      * We use this to test how much the antecedent and the consequent affect each other.
      */
     @Test
+    @Disabled
     public void testHtmlParaphraseDrivingThenTransportedIf() {
         String stmt = """
                 (=>

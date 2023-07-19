@@ -1,16 +1,19 @@
 package com.articulate.sigma.nlg;
 
-import com.articulate.sigma.SigmaTestBase;
-import com.articulate.sigma.TopOnly;
-import com.articulate.sigma.UnitTestBase;
+import com.articulate.sigma.*;
 import com.articulate.sigma.utils.StringUtil;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Map;
@@ -22,15 +25,27 @@ import static org.assertj.core.api.Assertions.assertThat;
  * LanguageFormatter tests NOT targeted toward the htmlParaphrase( ) method.
  * See LanguageFormatterHtmlParaphraseITCase for tests that invoke this method.
  */
+@SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
-public class LanguageFormatterITCase extends UnitTestBase {
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class LanguageFormatterITCase {
 
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
     @Disabled
     @Test
     public void testStatementParse() {
         String input = "(exists (?D ?H) (and (instance ?D Driving) (instance ?H Human) (agent ?D ?H)))";
-        LanguageFormatter lf = new LanguageFormatter(input, SigmaTestBase.kb.getFormatMap("EnglishLanguage"), SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
-                SigmaTestBase.kb, "EnglishLanguage");
+        LanguageFormatter lf = new LanguageFormatter(input, kb.getFormatMap("EnglishLanguage"), kb.getTermFormatMap("EnglishLanguage"),
+                kb, "EnglishLanguage");
         String actual = lf.paraphraseStatement(input, false, 0);
         assertThat(actual).isEqualTo("");
     }
@@ -45,16 +60,16 @@ public class LanguageFormatterITCase extends UnitTestBase {
 
         String expected = "there exist &%Process$\"a  process\" and &%AutonomousAgent$\"an agent\" such that &%Process$\"the process\" is an &%instance$\"instance\" of &%Driving$\"driving\" and &%AutonomousAgent$\"the agent\" is an &%instance$\"instance\" of &%Human$\"human\" and &%AutonomousAgent$\"the agent\" is an &%agent$\"agent\" of &%Process$\"the process\"";
 
-        String actual = LanguageFormatter.variableReplace(form, instanceMap, classMap, SigmaTestBase.kb, "EnglishLanguage");
+        String actual = LanguageFormatter.variableReplace(form, instanceMap, classMap, kb, "EnglishLanguage");
 
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void testGenerateFormalNaturalLanguageIf() {
-        LanguageFormatter formatter = new LanguageFormatter("", SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
-                SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
-                SigmaTestBase.kb, "EnglishLanguage");
+        LanguageFormatter formatter = new LanguageFormatter("", kb.getFormatMap("EnglishLanguage"),
+                kb.getTermFormatMap("EnglishLanguage"),
+                kb, "EnglishLanguage");
 
         List<String> translations = Lists.newArrayList("Socrates is a man", "Socrates is mortal");
         String actual = formatter.generateFormalNaturalLanguage(translations, "=>", false);
@@ -70,9 +85,9 @@ public class LanguageFormatterITCase extends UnitTestBase {
 
     @Test
     public void testGenerateFormalNaturalLanguageIfAndOnlyIf() {
-        LanguageFormatter formatter = new LanguageFormatter("", SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
-                SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
-                SigmaTestBase.kb, "EnglishLanguage");
+        LanguageFormatter formatter = new LanguageFormatter("", kb.getFormatMap("EnglishLanguage"),
+                kb.getTermFormatMap("EnglishLanguage"),
+                kb, "EnglishLanguage");
 
         List<String> translations = Lists.newArrayList("Socrates is a man", "Socrates is mortal");
         String actual = formatter.generateFormalNaturalLanguage(translations, "<=>", false);
@@ -88,9 +103,9 @@ public class LanguageFormatterITCase extends UnitTestBase {
 
     @Test
     public void testGenerateFormalNaturalLanguageAnd() {
-        LanguageFormatter formatter = new LanguageFormatter("", SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
-                SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
-                SigmaTestBase.kb, "EnglishLanguage");
+        LanguageFormatter formatter = new LanguageFormatter("", kb.getFormatMap("EnglishLanguage"),
+                kb.getTermFormatMap("EnglishLanguage"),
+                kb, "EnglishLanguage");
 
         List<String> translations = Lists.newArrayList("Socrates is a man", "Socrates is mortal");
         String actual = formatter.generateFormalNaturalLanguage(translations, "and", false);
@@ -106,9 +121,9 @@ public class LanguageFormatterITCase extends UnitTestBase {
 
     @Test
     public void testGenerateFormalNaturalLanguageOr() {
-        LanguageFormatter formatter = new LanguageFormatter("", SigmaTestBase.kb.getFormatMap("EnglishLanguage"),
-                SigmaTestBase.kb.getTermFormatMap("EnglishLanguage"),
-                SigmaTestBase.kb, "EnglishLanguage");
+        LanguageFormatter formatter = new LanguageFormatter("", kb.getFormatMap("EnglishLanguage"),
+                kb.getTermFormatMap("EnglishLanguage"),
+                kb, "EnglishLanguage");
 
         List<String> translations = Lists.newArrayList("Socrates is a man", "Socrates is mortal");
         String actual = formatter.generateFormalNaturalLanguage(translations, "or", false);
@@ -135,7 +150,7 @@ public class LanguageFormatterITCase extends UnitTestBase {
         Map<String, Set<String>> classMap = Maps.newHashMap();
 
         String expected = "<ul><li>if &%Human$\"a  human\" drives,</li><li>then &%Human$\"the human\" sees</li></ul>";
-        String variableReplaceOutput = LanguageFormatter.variableReplace(form, instanceMap, classMap, SigmaTestBase.kb, "EnglishLanguage");
+        String variableReplaceOutput = LanguageFormatter.variableReplace(form, instanceMap, classMap, kb, "EnglishLanguage");
         assertThat(variableReplaceOutput).isEqualTo(expected);
 
         // Verify resolveFormatSpecifiers( ).
@@ -157,7 +172,7 @@ public class LanguageFormatterITCase extends UnitTestBase {
         Map<String, Set<String>> classMap = Maps.newHashMap();
 
         String expected = "if &%Human$\"a  human\" drives, then &%Human$\"the human\" sees";
-        String variableReplaceOutput = LanguageFormatter.variableReplace(form, instanceMap, classMap, SigmaTestBase.kb, "EnglishLanguage");
+        String variableReplaceOutput = LanguageFormatter.variableReplace(form, instanceMap, classMap, kb, "EnglishLanguage");
         assertThat(variableReplaceOutput).isEqualTo(expected);
 
         // Verify resolveFormatSpecifiers( ).

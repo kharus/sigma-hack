@@ -31,6 +31,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import(KBmanagerTestConfiguration.class)
 public class FormulaLogicalEqualityITCase {
 
+    private static final String SIGMA_SRC = System.getenv("SIGMA_SRC");
+    public static final String CONFIG_FILE_DIR = SIGMA_SRC + File.separator +
+            "target/test-classes";
+
     private static final String TEST_FILE_NAME = "formula_logical_equality_tests.json";
 
     @Autowired
@@ -60,7 +64,7 @@ public class FormulaLogicalEqualityITCase {
 
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
-            File jsonTestFile = new File(UnitTestBase.CONFIG_FILE_DIR, TEST_FILE_NAME);
+            File jsonTestFile = new File(CONFIG_FILE_DIR, TEST_FILE_NAME);
             JSONParser parser = new JSONParser();
             List<Object[]> result = new ArrayList<Object[]>();
 

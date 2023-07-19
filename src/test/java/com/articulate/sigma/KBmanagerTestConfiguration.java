@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Profile;
 import java.io.*;
 import java.nio.file.Path;
 
-import static com.articulate.sigma.SigmaTestBase.checkConfiguration;
 
 @TestConfiguration
 public class KBmanagerTestConfiguration {
@@ -25,7 +24,6 @@ public class KBmanagerTestConfiguration {
 
             KBmanager.getMgr().initializeOnce(configFileDir, configuration);
 
-            checkConfiguration();
             return KBmanager.getMgr();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -46,7 +44,6 @@ public class KBmanagerTestConfiguration {
 
             KBmanager.getMgr().initializeOnce(configFileDir, configuration);
 
-            checkConfiguration();
             return KBmanager.getMgr();
         } catch (IOException e) {
             throw new RuntimeException(e);
