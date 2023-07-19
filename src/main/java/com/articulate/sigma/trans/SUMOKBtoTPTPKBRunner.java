@@ -50,7 +50,7 @@ public class SUMOKBtoTPTPKBRunner {
     @Command(command = "tff")
     public void tptpTff() {
         SUMOKBtoTFAKB skbtfakb = new SUMOKBtoTFAKB();
-        skbtfakb.initOnce();
+        skbtfakb.initOnce(kbManager.getKB(sumokbname));
         // this setting has to be *after* initialization, otherwise init
         // tries to write a TPTP file and then sees that tff is set and tries to write tff, but then sorts etc
         // haven't been set
