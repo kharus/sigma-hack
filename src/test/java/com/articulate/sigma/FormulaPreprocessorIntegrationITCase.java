@@ -2,9 +2,14 @@ package com.articulate.sigma;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Map;
 import java.util.Set;
@@ -14,8 +19,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * FormulaPreprocessor tests not focused on findExplicitTypes( ), but requiring that the KBs be loaded.
  */
+@SpringBootTest
 @Tag("com.articulate.sigma.MidLevel")
-public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
+@ActiveProfiles("MidLevel")
+@Import(KBmanagerTestConfiguration.class)
+public class FormulaPreprocessorIntegrationITCase {
+
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
 
     /**
      * NOTE: If this test fails, you need to load Mid-level-ontology.kif. One way to do this would be to edit
@@ -33,7 +51,7 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
         Map<String, Set<String>> expected = Maps.newHashMap();
         Set<String> set1 = Sets.newHashSet("Class", "Object+");
@@ -62,7 +80,7 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
         f.read(strf);
         FormulaPreprocessor fp = new FormulaPreprocessor();
 
-        Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actualMap = fp.computeVariableTypes(f, kb);
 
         assertThat(actualMap).isEqualTo(expected);
     }
@@ -87,7 +105,7 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
                 "(equal (?NOTPARTPROB (ProbabilityFn (not (exists (?Z) (and (instance ?Z ?WHOLE) (part ?X ?Z))))))) " +
                 "(greaterThan ?PARTPROB ?NOTPARTPROB))) ";
         expected.read(expectedString);
-        Formula actual = fp.addTypeRestrictions(f, SigmaTestBase.kb);
+        Formula actual = fp.addTypeRestrictions(f, kb);
         //assertThat("expected: " + expected.toString() + ", but was: " + actual.toString(), expected.equals(actual)).isTrue();
         assertThat(actual).isEqualTo(expected);
     }
@@ -95,16 +113,17 @@ public class FormulaPreprocessorIntegrationITCase extends IntegrationTestBase {
     @Test
     public void testComputeVariableTypesPlaintiff() {
 
-        String stmt = "(exists (?P ?H)\n" +
-                "           (and\n" +
-                "               (instance ?P LegalAction)\n" +
-                "               (instance ?H Human)\n" +
-                "               (plaintiff ?P ?H)))";
+        String stmt = """
+                (exists (?P ?H)
+                           (and
+                               (instance ?P LegalAction)
+                               (instance ?H Human)
+                               (plaintiff ?P ?H)))""";
         Formula f = new Formula();
         f.read(stmt);
 
         FormulaPreprocessor formulaPre = new FormulaPreprocessor();
-        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, SigmaTestBase.kb);
+        Map<String, Set<String>> actual = formulaPre.computeVariableTypes(f, kb);
 
         Map<String, Set<String>> expected = Maps.newHashMap();
         Set<String> set1 = Sets.newHashSet("CognitiveAgent");

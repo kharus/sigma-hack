@@ -8,6 +8,8 @@ package com.articulate.sigma.trans;
 
 import com.articulate.sigma.Formula;
 import com.articulate.sigma.IntegrationTestBase;
+import com.articulate.sigma.KB;
+import com.articulate.sigma.KBmanager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -23,11 +25,11 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
     @BeforeAll
     public static void init() {
 
-        SUMOtoTFAform.initOnce();
+        SUMOtoTFAform.initOnce(kb);
         SUMOtoTFAform.setNumericFunctionInfo();
         skbtfakb = new SUMOKBtoTFAKB();
         SUMOformulaToTPTPformula.lang = "tff";
-        skbtfakb.initOnce();
+        skbtfakb.initOnce(kb);
     }
 
     @Test

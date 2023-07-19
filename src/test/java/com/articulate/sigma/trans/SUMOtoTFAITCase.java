@@ -21,10 +21,10 @@ public class SUMOtoTFAITCase extends UnitTestBase {
     public static void init() {
 
         System.out.println("============ SUMOtoTFAITCase.init()");
-        SUMOtoTFAform.initOnce();
+        SUMOtoTFAform.initOnce(kb);
         System.out.println("SUMOtoTFAITCase.init(): " + SUMOtoTFAform.numericConstantValues);
         SUMOKBtoTFAKB skbtfakb = new SUMOKBtoTFAKB();
-        skbtfakb.initOnce();
+        skbtfakb.initOnce(kb);
         SUMOformulaToTPTPformula.lang = "tff";
         String kbName = KBmanager.getMgr().getPref("sumokbname");
         String filename = KBmanager.getMgr().getPref("kbDir") + File.separator + kbName + ".tff";
@@ -51,7 +51,7 @@ public class SUMOtoTFAITCase extends UnitTestBase {
         System.out.println("\n========= testBuildConstraints ==========\n");
         String kifstring, expectedRes, actualRes;
         expectedRes = "(or (equal (SignumFn ?NUMBER) 1) (equal (SignumFn ?NUMBER) 0))";
-        SUMOtoTFAform.initOnce();
+        SUMOtoTFAform.initOnce(kb);
         actualRes = SUMOtoTFAform.numericConstraints.get("NonnegativeRealNumber");
         System.out.println("actual:  " + actualRes);
         System.out.println("expected:" + expectedRes);
