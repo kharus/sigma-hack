@@ -720,7 +720,6 @@ public class KBmanager implements Serializable {
                 if (loaded) {
                     if (debug) System.out.println("KBmanager.initializeOnce(): manager is loaded ");
                     if (!prefEquals("loadLexicons", "false")) {
-                        WordNet.initOnce();
                         NLGUtils.init(configFileDir);
                         OMWordnet.readOMWfiles();
                         if (!VerbNet.disable) {
@@ -784,7 +783,6 @@ public class KBmanager implements Serializable {
         long milis = System.currentTimeMillis();
         NLGUtils.init(kbDir);
         if (!prefEquals("loadLexicons", "false")) {
-            WordNet.initOnce();
             VerbNet.initOnce();
             VerbNet.processVerbs();
             OMWordnet.readOMWfiles();
