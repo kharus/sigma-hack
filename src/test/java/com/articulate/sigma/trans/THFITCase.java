@@ -1,28 +1,37 @@
+/*
+ * This software is released under the GNU Public License
+ * <http://www.gnu.org/copyleft/gpl.html>.
+ */
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.Formula;
-import com.articulate.sigma.IntegrationTestBase;
-import com.articulate.sigma.KB;
-import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.*;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//This software is released under the GNU Public License
-//<http://www.gnu.org/copyleft/gpl.html>.
+@SpringBootTest
+@Tag("com.articulate.sigma.TopLevel")
+@ActiveProfiles("TopLevel")
+@Import(KBmanagerTestConfiguration.class)
+public class THFITCase {
 
-public class THFtest extends IntegrationTestBase {
+    private KB kb;
 
-    private static THF thf = null;
-    private static KB kb = null;
+    @Autowired
+    private KBmanager kbManager;
 
-    @BeforeAll
-    public static void init() {
+    private THF thf = new THF();
 
-        thf = new THF();
-        KBmanager.getMgr().initializeOnce();
-        kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
     }
 
     public void test(String msg, String f, String expected) {
@@ -49,6 +58,7 @@ public class THFtest extends IntegrationTestBase {
         String expected = "thf(ax1641,axiom,((! [ROW3: $i,ROW1: $i,ROW2: $i]: " +
                 "(((instance_THFTYPE_IiioI @ ROW3 @ lLanguage_THFTYPE_i) & " +
                 "(instance_THFTYPE_IiioI @ ROW1 @ lSymbolicString_THFTYPE_i)) =>";
+        test(msg, f, expected);
     }
 
 }
