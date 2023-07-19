@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,16 +21,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("MidLevel")
 @Import(KBmanagerTestConfiguration.class)
 public class KBmanagerInitIntegrationITCase {
+    private static final Set<String> kifSet = Sets.newHashSet();
+    @Value("${sumokbname}")
+    private String sumokbname;
     private KB kb;
-
     @Autowired
     private KBmanager kbManager;
-
-    @BeforeEach
-    void init() {
-        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
-    }
-    private static final Set<String> kifSet = Sets.newHashSet();
 
     @BeforeAll
     public static void setKB() {
@@ -37,6 +34,11 @@ public class KBmanagerInitIntegrationITCase {
         kifSet.add("SUMO_Cache.kif");
         kifSet.add("Merge.kif");
         kifSet.add("Mid-level-ontology.kif");
+    }
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(sumokbname);
     }
 
     /**

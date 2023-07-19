@@ -12,6 +12,8 @@ public class KBConfigProperties {
 
     private Path kbDir;
 
+    private String sumokbname;
+
     public Path getSigmaHome() {
         return sigmaHome;
     }
@@ -34,5 +36,13 @@ public class KBConfigProperties {
 
     public void setKbDir(Path kbDir) {
         this.kbDir = kbDir;
+    }
+
+    public String getSumokbname() {
+        return sumokbname;
+    }
+
+    public void setSumokbname(String sumokbname) {
+        this.sumokbname = sumokbname;
     }
 }

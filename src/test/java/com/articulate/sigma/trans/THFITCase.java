@@ -4,12 +4,15 @@
  */
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.*;
-import org.junit.jupiter.api.BeforeAll;
+import com.articulate.sigma.Formula;
+import com.articulate.sigma.KB;
+import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.KBmanagerTestConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -21,7 +24,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("TopLevel")
 @Import(KBmanagerTestConfiguration.class)
 public class THFITCase {
-
+    @Value("${sumokbname}")
+    private String sumokbname;
     private KB kb;
 
     @Autowired
@@ -31,7 +35,7 @@ public class THFITCase {
 
     @BeforeEach
     void init() {
-        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+        kb = kbManager.getKB(sumokbname);
     }
 
     public void test(String msg, String f, String expected) {

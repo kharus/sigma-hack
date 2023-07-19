@@ -776,60 +776,6 @@ public class KButilities {
         }
     }
 
-    public static void generateTPTPTestAssertions() {
-
-        try {
-            int counter = 0;
-            System.out.println("INFO in KB.generateTPTPTestAssertions()");
-            KBmanager.getMgr().initializeOnce();
-            KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-            System.out.println("INFO in KB.generateTPTPTestAssertions(): printing predicates");
-            for (String term : kb.terms) {
-                if (Character.isLowerCase(term.charAt(0)) && kb.kbCache.valences.get(term) <= 2) {
-                    /*
-                    List<Formula> forms = kb.askWithRestriction(0,"domain",1,term);
-                    for (int i = 0; i < forms.size(); i++) {
-                        String argnum = forms.get(i).getArgument(2);
-                        String type = forms.get(i).getArgument(3);
-                        if (argnum.equals("1"))
-                            System.out.print("(instance Foo " + type + "),");
-                        if (argnum.equals("2"))
-                            System.out.print("(instance Bar " + type + ")");
-                    }
-                    */
-                    String argType1 = kb.getArgType(term, 1);
-                    String argType2 = kb.getArgType(term, 2);
-                    if (argType1 != null && argType2 != null) {
-                        System.out.print("fof(local_" + counter++ + ",axiom,(s__" + term + "(s__Foo,s__Bar))).|");
-                        System.out.print("fof(local_" + counter++ + ",axiom,(s__instance(s__Foo,s__" + argType1 + "))).|");
-                        System.out.println("fof(local_" + counter++ + ",axiom,(s__instance(s__Bar,s__" + argType2 + "))).");
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * Note this simply assumes that initial lower case terms are relations.
-     */
-    public static void generateRelationList() {
-
-        try {
-            System.out.println("INFO in KB.generateRelationList()");
-            KBmanager.getMgr().initializeOnce();
-            KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-            System.out.println("INFO in KB.generateRelationList(): printing predicates");
-            for (String term : kb.terms) {
-                if (Character.isLowerCase(term.charAt(0)))
-                    System.out.println(term);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public static int getCountNonLinguisticAxioms(KB kb) {
 
         Set<String> rels = new HashSet<>();

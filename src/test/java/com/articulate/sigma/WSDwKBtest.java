@@ -8,11 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.io.IOException;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
@@ -22,6 +22,8 @@ import static junit.framework.TestCase.assertEquals;
 @ActiveProfiles("MidLevel")
 @Import(KBmanagerTestConfiguration.class)
 public class WSDwKBtest {
+    @Value("${sumokbname}")
+    private String sumokbname;
     private KB kb;
 
     @Autowired
@@ -29,7 +31,7 @@ public class WSDwKBtest {
 
     @BeforeEach
     void init() {
-        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+        kb = kbManager.getKB(sumokbname);
     }
 
     @Test

@@ -1,11 +1,14 @@
 package com.articulate.sigma.nlg;
 
-import com.articulate.sigma.*;
+import com.articulate.sigma.KB;
+import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.KBmanagerTestConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -19,7 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ActiveProfiles("TopOnly")
 @Import(KBmanagerTestConfiguration.class)
 public class SumoProcessCollectorITCase {
-
+    @Value("${sumokbname}")
+    private String sumokbname;
     @Autowired
     private KBmanager kbManager;
 
@@ -27,7 +31,7 @@ public class SumoProcessCollectorITCase {
 
     @BeforeEach
     void init() {
-        knowledgeBase = kbManager.getKB(kbManager.getPref("sumokbname"));
+        knowledgeBase = kbManager.getKB(sumokbname);
     }
 
     @Test
