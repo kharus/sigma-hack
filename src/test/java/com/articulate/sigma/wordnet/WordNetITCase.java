@@ -1,8 +1,15 @@
 package com.articulate.sigma.wordnet;
 
-import com.articulate.sigma.UnitTestBase;
+import com.articulate.sigma.KB;
+import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.KBmanagerTestConfiguration;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
@@ -10,8 +17,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 // TODO: Test the WordNet class more thoroughly. Start with the test methods called in main( ).
 
+@SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
-public class WordNetITCase extends UnitTestBase {
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class WordNetITCase {
+
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
 
     @Test
     public void testVerbRootFormGoing() {

@@ -2,7 +2,6 @@ package com.articulate.sigma.trans;
 
 import com.articulate.sigma.*;
 import com.articulate.sigma.utils.StringUtil;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
 
@@ -12,12 +11,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag("com.articulate.sigma.TopOnly")
-public class TPTP3ProofProcITCase extends UnitTestBase {
-
-    @BeforeAll
-    public static void init() {
-
-    }
+public class TPTP3ProofProcTest {
 
     public void test(String input, String expected, String label) {
 

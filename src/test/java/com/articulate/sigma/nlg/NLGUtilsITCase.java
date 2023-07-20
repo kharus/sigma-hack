@@ -1,30 +1,37 @@
 package com.articulate.sigma.nlg;
 
-import com.articulate.sigma.Formula;
-import com.articulate.sigma.SigmaTestBase;
-import com.articulate.sigma.TopOnly;
-import com.articulate.sigma.UnitTestBase;
+import com.articulate.sigma.*;
 import com.google.common.collect.Lists;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
+import java.io.File;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
-public class NLGUtilsITCase extends UnitTestBase {
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class NLGUtilsITCase {
+    static final String SIGMA_HOME = System.getenv("SIGMA_HOME");
+    public static final String KB_PATH = (new File(SIGMA_HOME, "KBs")).getAbsolutePath();
+
+    @Autowired
+    private KBmanager kbManager;
+
     @Test
     public void testReadKeywordMapNull() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             NLGUtils.readKeywordMap(null);
         });
-    }
-
-    @Test
-    public void testReadKeywordMapEmpty() {
-
     }
 
     @Test
@@ -39,7 +46,7 @@ public class NLGUtilsITCase extends UnitTestBase {
      */
     @Test
     public void testReadKeywordMapCorrectParameter() {
-        NLGUtils.readKeywordMap(SigmaTestBase.KB_PATH);
+        NLGUtils.readKeywordMap(KB_PATH);
     }
 
     @Test
