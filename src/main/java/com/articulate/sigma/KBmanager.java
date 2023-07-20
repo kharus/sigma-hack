@@ -22,7 +22,6 @@ import com.articulate.sigma.CCheckManager.CCheckStatus;
 import com.articulate.sigma.nlg.NLGUtils;
 import com.articulate.sigma.trans.SUMOKBtoTPTPKB;
 import com.articulate.sigma.utils.StringUtil;
-import com.articulate.sigma.verbnet.VerbNet;
 import com.articulate.sigma.wordnet.OMWordnet;
 import com.articulate.sigma.wordnet.WordNet;
 import py4j.GatewayServer;
@@ -722,13 +721,8 @@ public class KBmanager implements Serializable {
                     if (!prefEquals("loadLexicons", "false")) {
                         NLGUtils.init(configFileDir);
                         OMWordnet.readOMWfiles();
-                        if (!VerbNet.disable) {
-                            VerbNet.initOnce();
-                            VerbNet.processVerbs();
-                        }
                     } else {
                         WordNet.disable = true;
-                        VerbNet.disable = true;
                         OMWordnet.disable = true;
                     }
                     if (debug) System.out.println("KBmanager.initializeOnce(): kbs: " + manager.kbs.values());
@@ -783,8 +777,6 @@ public class KBmanager implements Serializable {
         long milis = System.currentTimeMillis();
         NLGUtils.init(kbDir);
         if (!prefEquals("loadLexicons", "false")) {
-            VerbNet.initOnce();
-            VerbNet.processVerbs();
             OMWordnet.readOMWfiles();
         }
         System.out.println("KBmanager.setConfiguration(): linguistics load time: " + (System.currentTimeMillis() - milis) / 1000);
