@@ -7,9 +7,10 @@
 package com.articulate.sigma;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -30,15 +31,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("TopOnly")
 @Import(KBmanagerTestConfiguration.class)
 public class PredVarInstITCase {
-    private KB kb;
-
-    @Autowired
-    private KBmanager kbManager;
-
-    @BeforeEach
-    void init() {
-        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
-    }
     private static final String stmt1 = """
             (<=>
              (instance ?REL TransitiveRelation)
@@ -49,7 +41,6 @@ public class PredVarInstITCase {
                 (?REL ?INST1 ?INST2)
                 (?REL ?INST2 ?INST3))
                (?REL ?INST1 ?INST3))))""";
-
     private static final String stmt2 = """
             (=>
               (instance ?JURY Jury)
@@ -60,7 +51,6 @@ public class PredVarInstITCase {
                  (instance ?DECISION LegalDecision)
                  (agent ?DECISION ?JURY)))
                ?JURY))""";
-
     private static final String stmt3 = """
             (=>
              (instance ?R TransitiveRelation)
@@ -69,6 +59,16 @@ public class PredVarInstITCase {
                (?R ?A ?B)
                (?R ?B ?C))
               (?R ?A ?C)))""";
+    @Value("${sumokbname}")
+    private String sumokbname;
+    private KB kb;
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(sumokbname);
+    }
 
     @Test
     public void testGatherPredVarsStmt1() {
@@ -121,7 +121,7 @@ public class PredVarInstITCase {
         f.read(stmt);
 
         Set<Formula> actual = PredVarInst.instantiatePredVars(f, kb);
-        assertThat(actual).hasSizeGreaterThanOrEqualTo( 100);
+        assertThat(actual).hasSizeGreaterThanOrEqualTo(100);
     }
 
     @Test

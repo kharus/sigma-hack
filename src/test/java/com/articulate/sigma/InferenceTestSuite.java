@@ -4,6 +4,7 @@ import com.articulate.sigma.tp.Vampire;
 import com.articulate.sigma.trans.*;
 import com.articulate.sigma.utils.FileUtil;
 import com.articulate.sigma.utils.StringUtil;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -56,17 +57,14 @@ import java.util.*;
  * could be more than one valid answer.
  */
 public class InferenceTestSuite {
-
     /**
      * Total time
      */
     public static long totalTime = 0;
-
     /**
      * Default timeout for queries with unspecified timeouts or override when selected
      */
     public static int _DEFAULT_TIMEOUT = 30;
-
     public static boolean overrideTimeout = false;
     public static boolean debug = false;
     // save TPTP translations of each problem as <probName>.p
@@ -74,6 +72,8 @@ public class InferenceTestSuite {
     public static Set<String> metaPred = new HashSet(
             Arrays.asList("note", "time", "query", "answer"));
     public KB kb = null;
+    @Value("${sumokbname}")
+    private String sumokbname;
 
     /**
      * Compare the expected answers to the returned answers.  Return
@@ -272,7 +272,7 @@ public class InferenceTestSuite {
         kb.deleteUserAssertions();
         // Remove the assertions in the files.
         File userAssertionsFile = new File(KBmanager.getMgr().getPref("kbDir") +
-                KBmanager.getMgr().getPref("sumokbname") + KB._userAssertionsString);
+                KB._userAssertionsString);
         if (userAssertionsFile.exists())
             userAssertionsFile.delete();
         String tptpFileName = userAssertionsFile.getAbsolutePath().replace(".kif", ".tptp");
@@ -321,7 +321,7 @@ public class InferenceTestSuite {
                     SUMOKBtoTPTPKB.lang = "thf";
                 if (args[0].indexOf('f') != -1)
                     SUMOKBtoTPTPKB.lang = "tff";
-                KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+                KB kb = KBmanager.getMgr().getKB("SUMO");
                 try {
                     resetAllForInference(kb);
                 } catch (Exception e) {
@@ -473,7 +473,7 @@ public class InferenceTestSuite {
     public void saveTPTP(InfTestData itd) {
 
         String name = FileUtil.noExt(FileUtil.noPath(itd.filename));
-        String kbName = KBmanager.getMgr().getPref("sumokbname");
+        String kbName = sumokbname;
         String kbDir = KBmanager.getMgr().getPref("kbDir");
         String sep = File.separator;
         try {
@@ -558,7 +558,7 @@ public class InferenceTestSuite {
                 Formula theQuery = new Formula(itd.query);
                 FormulaPreprocessor fp = new FormulaPreprocessor();
                 SUMOKBtoTFAKB stfa = new SUMOKBtoTFAKB();
-                KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+                KB kb = KBmanager.getMgr().getKB(sumokbname);
                 stfa.initOnce(kb);
                 SUMOtoTFAform.initOnce(kb);
                 Set<Formula> theQueries = fp.preProcess(theQuery, true, kb);
@@ -758,7 +758,7 @@ public class InferenceTestSuite {
      */
     public void runPassing() {
 
-        kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+        kb = KBmanager.getMgr().getKB(sumokbname);
         List<String> passingSet = Arrays.asList("TQG2", "TQG3", "TQG4", "TQG13", "TQG18", "TQG30", "TQG31", "TQG32");
         for (String s : passingSet) {
             cmdLineTest(s + ".kif.tq");
@@ -772,7 +772,7 @@ public class InferenceTestSuite {
 
         System.out.println("InferenceTestSuite.cmdLineTest(): trying: " + filename);
         try {
-            kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+            kb = KBmanager.getMgr().getKB(sumokbname);
             String path = KBmanager.getMgr().getPref("inferenceTestDir");
             InfTestData itd = inferenceUnitTest(path + File.separator + filename, kb);
             if (itd.inconsistent) {
