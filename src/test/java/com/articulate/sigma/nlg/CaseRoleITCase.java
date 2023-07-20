@@ -1,16 +1,33 @@
 package com.articulate.sigma.nlg;
 
-import com.articulate.sigma.TopOnly;
-import com.articulate.sigma.UnitTestBase;
+import com.articulate.sigma.KB;
+import com.articulate.sigma.KBmanager;
+import com.articulate.sigma.KBmanagerTestConfiguration;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// Tests requiring that KBs be loaded.
+@SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
-public class CaseRoleITCase extends UnitTestBase {
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
+public class CaseRoleITCase {
 
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
     @Test
     public void testCommonCaseRoles() {
         CaseRole caseRole = CaseRole.toCaseRole("agent", kb);

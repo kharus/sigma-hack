@@ -7,7 +7,6 @@
  */
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.MidLevel;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
