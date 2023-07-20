@@ -1448,7 +1448,6 @@ public class DB {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        WordNet.initOnce();
         readSentimentArray();
         //System.out.println(DB.computeConceptSentiment("This hotel is really bad."));
         textFileSentiment("rt-polarity.neg", true);
@@ -1504,7 +1503,6 @@ public class DB {
         }
         if (args[0].equals("-conSent")) {
             KBmanager.getMgr().initializeOnce();
-            WordNet.initOnce();
             System.out.println("INFO in DB.main: completed initialization");
             if (StringUtil.emptyString(args[1]))
                 System.out.println("Error in DB.main: no filename");

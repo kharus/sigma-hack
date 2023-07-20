@@ -1,6 +1,4 @@
-package com.articulate.sigma.verbnet;
-
-/**
+/*
  * This code is copyright Infosys 2019.
  * This software is released under the GNU Public License <http://www.gnu.org/copyleft/gpl.html>.
  * <p>
@@ -12,8 +10,8 @@ package com.articulate.sigma.verbnet;
  * Adam Pease
  * Infosys LTD.
  */
+package com.articulate.sigma.verbnet;
 
-import com.articulate.sigma.KB;
 import com.articulate.sigma.KBmanager;
 import com.articulate.sigma.SimpleDOMParser;
 import com.articulate.sigma.SimpleElement;
@@ -31,11 +29,8 @@ import java.util.*;
  */
 public class VerbNet {
 
-    private static final boolean debug = false;
     private static final boolean echo = false;
     private static final Map<String, SimpleElement> verbFiles = new HashMap<>();
-    private static final Map<String, String> roles = new HashMap<>(); // VN to SUMO role mappings
-    public static KB kb;
     public static int verbcount = 0;
     public static int syncount = 0;
     // a mapping of a WordNet key to a VerbNet pair of VerbID\tmember-word-name
@@ -43,36 +38,9 @@ public class VerbNet {
     // verb ID keys and Verb values
     public static Map<String, Verb> verbs = new HashMap<>();
     public static boolean disable = false;
-    private static boolean initialized = false;
 
     public static void initOnce() {
-
-        if (KBmanager.getMgr().getPref("loadLexicons").equals("false"))
-            disable = true;
-        if (disable) return;
-        List<String> keys = new ArrayList<String>(Arrays.asList("Actor", "involvedInEvent",
-                "Agent", "agent", "Asset", "objectTransferred", "Attribute", "attribute",
-                "Beneficiary", "beneficiary", "Cause", "involvedInEvent",
-                "Co-Agent", "agent", "Co-Patient", "patient", "Co-Theme", "patient",
-                "Destination", "destination", "Duration", "time",
-                "Experiencer", "experiencer", "Extent", "", "Final_Time", "EndFn",
-                "Frequency", "frequency", "Goal", "", "Initial_Location", "origin",
-                "Initial_Time", "BeginFn", "Instrument", "instrument",
-                "Location", "located", "Material", "resource",
-                "Participant", "involvedInEvent", "Patient", "patient",
-                "Pivot", "patient", "Place", "located", "Product", "result",
-                "Recipient", "recipient", "Result", "result",
-                "Source", "origin", "Stimulus", "causes", "Time", "WhenFn",
-                "Theme", "patient", "Trajectory", "path",
-                "Topic", "containsInformation", "Undergoer", "patient",
-                "Value", "measure"));
-        if (!initialized) {
-            for (int i = 1; i < keys.size() / 2; i++) {
-                roles.put(keys.get(i * 2 - 1), keys.get(i * 2));
-            }
-            readVerbFiles();
-            initialized = true;
-        }
+        readVerbFiles();
     }
 
     public static void readVerbFiles() {
@@ -113,8 +81,6 @@ public class VerbNet {
             SimpleElement verb = verbFiles.get(fname);
             String name = verb.getAttribute("ID");
             verbcount++;
-            String xmlns = verb.getAttribute("xmlns:xsi");
-            String xsi = verb.getAttribute("xsi:noNamespaceSchemaLocation");
             Verb v = new Verb();
             v.ID = name;
             v.readVerb(verb);
@@ -189,9 +155,6 @@ public class VerbNet {
     public static void main(String[] args) {
 
         KBmanager.getMgr().initializeOnce();
-        WordNet.initOnce();
-        String kbName = KBmanager.getMgr().getPref("sumokbname");
-        kb = KBmanager.getMgr().getKB(kbName);
         System.out.println("VerbNet.main()");
         initOnce();
         processVerbs();
