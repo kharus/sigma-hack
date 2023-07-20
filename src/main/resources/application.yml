@@ -1,5 +1,6 @@
 sumokbname: SUMO
-kbDir: "E:/code/sigmakee-runtime-top/KBs"
+kbDir: "../sigmakee-runtime-top/KBs"
+baseDir: "../sigmakee-runtime-top"
 spring:
   shell:
     interactive:
