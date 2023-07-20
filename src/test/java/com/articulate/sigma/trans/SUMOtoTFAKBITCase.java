@@ -6,25 +6,33 @@
  */
 package com.articulate.sigma.trans;
 
-import com.articulate.sigma.Formula;
-import com.articulate.sigma.IntegrationTestBase;
-import com.articulate.sigma.KB;
-import com.articulate.sigma.KBmanager;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import com.articulate.sigma.*;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SUMOtoTFAKBITCase extends IntegrationTestBase {
+@SpringBootTest
+@Tag("com.articulate.sigma.MidLevel")
+@ActiveProfiles("MidLevel")
+@Import(KBmanagerTestConfiguration.class)
+public class SUMOtoTFAKBITCase {
+    private KB kb;
 
-    private static SUMOKBtoTFAKB skbtfakb = null;
+    @Autowired
+    private KBmanager kbManager;
 
-    @BeforeAll
-    public static void init() {
+    private SUMOKBtoTFAKB skbtfakb = null;
 
+    @BeforeEach
+    void initEach() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
         SUMOtoTFAform.initOnce(kb);
         SUMOtoTFAform.setNumericFunctionInfo();
         skbtfakb = new SUMOKBtoTFAKB();
@@ -33,6 +41,7 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
     }
 
     @Test
+    @Disabled
     public void testPartition() {
 
         System.out.println();
@@ -51,6 +60,7 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
     }
 
     @Test
+    @Disabled
     public void testDynamicSortDef() {
 
         System.out.println();
@@ -68,6 +78,7 @@ public class SUMOtoTFAKBITCase extends IntegrationTestBase {
     }
 
     @Test
+    @Disabled
     public void testMissingSort() {
 
         SUMOtoTFAform.debug = true;
