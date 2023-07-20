@@ -153,7 +153,9 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
 
         System.out.println("SUMOKBtoTFAKB.main():");
         SUMOKBtoTFAKB skbtfakb = new SUMOKBtoTFAKB();
-        skbtfakb.initOnce();
+        KBmanager.getMgr().initializeOnce();
+        KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+        skbtfakb.initOnce(kb);
         System.out.println("SUMOKBtoTFAKB.main(): completed init");
         SUMOformulaToTPTPformula.lang = "tff"; // this setting has to be *after* initialization, otherwise init
         // tries to write a TPTP file and then sees that tff is set and tries to write tff, but then sorts etc
@@ -176,11 +178,9 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
         }
     }
 
-    public void initOnce() {
+    public void initOnce(KB kb) {
 
         if (!initialized) {
-            KBmanager.getMgr().initializeOnce();
-            kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
             qChildren = kb.kbCache.getChildClasses("Quantity");
             iChildren = kb.kbCache.getChildClasses("Integer");
             rChildren = kb.kbCache.getChildClasses("RationalNumber");
@@ -209,7 +209,7 @@ public class SUMOKBtoTFAKB extends SUMOKBtoTPTPKB {
             String lang = KBmanager.getMgr().getPref("TPTPlang");
             if (!StringUtil.emptyString(lang))
                 SUMOKBtoTFAKB.lang = lang;
-            SUMOtoTFAform.initOnce();
+            SUMOtoTFAform.initOnce(kb);
         }
         initialized = true;
     }

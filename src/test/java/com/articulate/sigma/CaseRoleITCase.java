@@ -1,7 +1,12 @@
 package com.articulate.sigma;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,8 +15,21 @@ import java.util.TreeSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 @Tag("com.articulate.sigma.MidLevel")
-public class CaseRoleITCase extends IntegrationTestBase {
+@ActiveProfiles("MidLevel")
+@Import(KBmanagerTestConfiguration.class)
+public class CaseRoleITCase {
+
+    private KB kb;
+
+    @Autowired
+    private KBmanager kbManager;
+
+    @BeforeEach
+    void init() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+    }
 
     /**
      * This test is meant to detect errors in the writing of SUMO rules in kif files. It fails if it finds a case where a term
@@ -23,7 +41,7 @@ public class CaseRoleITCase extends IntegrationTestBase {
     @Test
     public void testCaseRole() {
 
-        KBcache cache = SigmaTestBase.kb.kbCache;
+        KBcache cache = kb.kbCache;
 
         // Collect all expected instances for "CaseRole", by running KBcache.buildTransInstOf()
         cache.instanceOf = new HashMap<>();

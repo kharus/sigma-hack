@@ -1,15 +1,17 @@
 package com.articulate.sigma.mlpipeline;
 
+import com.articulate.sigma.KB;
 import com.articulate.sigma.KBmanager;
-import com.articulate.sigma.TopOnly;
+import com.articulate.sigma.KBmanagerTestConfiguration;
 import com.articulate.sigma.nlg.LanguageFormatter;
 import com.articulate.sigma.utils.AVPair;
 import com.articulate.sigma.utils.StringUtil;
 import com.articulate.sigma.wordnet.WordNetUtilities;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -19,19 +21,23 @@ import java.util.Set;
 import static com.articulate.sigma.mlpipeline.GenSimpTestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 @Tag("com.articulate.sigma.TopOnly")
+@ActiveProfiles("TopOnly")
+@Import(KBmanagerTestConfiguration.class)
 public class GenSimpTestDataITCase {
 
-    public static LFeatures lfeat = null;
-    public static GenSimpTestData gstd = new GenSimpTestData();
+    private KB kb;
 
-    @BeforeAll
-    public static void init() {
+    @Autowired
+    private KBmanager kbManager;
 
-        System.out.println("GenSimpTestDataITCase.init()");
-        KBmanager.getMgr().initializeOnce();
-        kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+    @BeforeEach
+    void initEach() {
+        kb = kbManager.getKB(kbManager.getPref("sumokbname"));
+
         GenSimpTestData.initNumbers();
+        gstd = new GenSimpTestData(kb);
         gstd.genProcTable();
         lfeat = new LFeatures(gstd);
         String fname = "test";
@@ -47,13 +53,16 @@ public class GenSimpTestDataITCase {
         }
     }
 
+    public LFeatures lfeat = null;
+    public GenSimpTestData gstd = null;
+
     public void testVerb(String term, boolean negated, int tense, String word,
                          boolean plural, String expected, LFeatures lfeat) {
 
         System.out.println();
         System.out.println("======================= ");
         System.out.println("test: " + term);
-        GenSimpTestData gstd = new GenSimpTestData();
+        GenSimpTestData gstd = new GenSimpTestData(kb);
         StringBuffer english = new StringBuffer();
         lfeat.testMode = true;
         lfeat.tense = tense;
@@ -75,7 +84,7 @@ public class GenSimpTestDataITCase {
         System.out.println();
         System.out.println("======================= ");
         System.out.println("test: " + term);
-        GenSimpTestData gstd = new GenSimpTestData();
+        GenSimpTestData gstd = new GenSimpTestData(kb);
         StringBuffer english = new StringBuffer();
         AVPair avp = new AVPair();
         String v = gstd.nounFormFromTerm(term, avp, "");
@@ -92,7 +101,7 @@ public class GenSimpTestDataITCase {
         System.out.println();
         System.out.println("======================= ");
         System.out.println("test: " + proc);
-        GenSimpTestData gstd = new GenSimpTestData();
+        GenSimpTestData gstd = new GenSimpTestData(kb);
         StringBuffer english = new StringBuffer();
         AVPair avp = new AVPair();
         System.out.println("testCapability(): (proc,role,obj): " + proc + ", " + role + ", " + obj);
@@ -410,7 +419,7 @@ public class GenSimpTestDataITCase {
         String word = "toy";
         lfeat.tense = PAST;
         StringBuffer english = new StringBuffer();
-        GenSimpTestData gstd = new GenSimpTestData();
+        GenSimpTestData gstd = new GenSimpTestData(kb);
         System.out.println("testToy(): past tense Game/toy: " + gstd.verbForm("Game", false, word, false, english, lfeat));
         word = "soccer";
         System.out.println("testToy(): past tense Soccer/soccer: " + gstd.verbForm("Soccer", false, word, false, english, lfeat));

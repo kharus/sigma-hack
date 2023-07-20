@@ -70,7 +70,7 @@ public class KButilities {
 
     public static boolean hasCorrectTypes(KB kb, Formula f) {
 
-        SUMOtoTFAform.initOnce();
+        SUMOtoTFAform.initOnce(kb);
         SUMOtoTFAform.varmap = SUMOtoTFAform.fp.findAllTypeRestrictions(f, kb);
         if (debug) System.out.println("hasCorrectTypes() varmap: " + SUMOtoTFAform.varmap);
         Map<String, Set<String>> explicit = SUMOtoTFAform.fp.findExplicitTypes(kb, f);
@@ -94,7 +94,7 @@ public class KButilities {
 
     public static boolean isValidFormula(KB kb, String form) {
 
-        SUMOtoTFAform.initOnce();
+        SUMOtoTFAform.initOnce(kb);
         String result = "";
         try {
             KIF kif = new KIF();
@@ -1009,10 +1009,10 @@ public class KButilities {
             } else if (args != null && args.length > 0 && args[0].equals("-f")) {
                 System.out.println(generateFormulasAndDoc(kb));
             } else if (args != null && args.length > 1 && args[0].equals("-v")) {
-                SUMOtoTFAform.initOnce();
+                SUMOtoTFAform.initOnce(kb);
                 System.out.println(isValidFormula(kb, args[1]));
             } else if (args != null && args.length > 1 && args[0].equals("-a")) {
-                SUMOtoTFAform.initOnce();
+                SUMOtoTFAform.initOnce(kb);
                 Formula f = new Formula(StringUtil.removeEnclosingQuotes(args[1]));
                 Formula.debug = true;
                 System.out.println("higherOrder : " + f.isHigherOrder(kb));
