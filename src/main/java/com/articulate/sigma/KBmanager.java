@@ -53,7 +53,6 @@ public class KBmanager implements Serializable {
     protected static final String CONFIG_FILE = "config.xml";
     // preferences set before initialization that override values in config.xml
     public static Map<String, String> prefOverride = new HashMap<String, String>();
-    public static boolean initialized = false;
     public static boolean debug = false;
     private static KBmanager manager = new KBmanager();
     private final Map<String, String> preferences = new HashMap<>();
@@ -125,7 +124,6 @@ public class KBmanager implements Serializable {
             in.close();
             file.close();
             System.out.println("KBmanager.loadSerialized(): KBmanager has been deserialized ");
-            initialized = true;
         } catch (java.io.InvalidClassException ex) {
             System.out.println("Error in KBmanager.loadSerialized(): InvalidClassException is caught");
             ex.printStackTrace();
