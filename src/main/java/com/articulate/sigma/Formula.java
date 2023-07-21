@@ -818,85 +818,6 @@ public class Formula implements Comparable<Formula>, Serializable {
         System.out.println("Terms: " + f.collectTerms());
     }
 
-    /**
-     * A test method.
-     */
-    public static void testIsSimpleClause() {
-
-        KBmanager.getMgr().initializeOnce();
-        KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-        Formula f1 = new Formula();
-        f1.read("(not (instance ?X Human))");
-        System.out.println("Simple clause? : " + f1.isSimpleClause(kb) + "\n" + f1 + "\n");
-        f1.read("(instance ?X Human)");
-        System.out.println("Simple clause? : " + f1.isSimpleClause(kb) + "\n" + f1 + "\n");
-        f1.read("(=> (attribute ?Agent Investor) (exists (?Investing) (agent ?Investing ?Agent)))");
-        System.out.println("Simple clause? : " + f1.isSimpleClause(kb) + "\n" + f1 + "\n");
-        f1.read("(member (SkFn 1 ?X3) ?X3)");
-        System.out.println("Simple clause? : " + f1.isSimpleClause(kb) + "\n" + f1 + "\n");
-        f1.read("(member ?VAR1 Org1-1)");
-        System.out.println("Simple clause? : " + f1.isSimpleClause(kb) + "\n" + f1 + "\n");
-        f1.read("(capability (KappaFn ?HEAR (and (instance ?HEAR Hearing) (agent ?HEAR ?HUMAN) " +
-                "(destination ?HEAR ?HUMAN) (origin ?HEAR ?OBJ))) agent ?HUMAN)");
-        System.out.println("Simple clause? : " + f1.isSimpleClause(kb) + "\n" + f1 + "\n");
-    }
-
-    /**
-     * A test method.
-     */
-    public static void testReplaceVar() {
-
-        Formula f1 = new Formula();
-        f1.read("(<=> (instance ?REL TransitiveRelation) (forall (?INST1 ?INST2 ?INST3) " +
-                " (=> (and (?REL ?INST1 ?INST2) (?REL ?INST2 ?INST3)) (?REL ?INST1 ?INST3))))");
-        System.out.println("Input: " + f1);
-        System.out.println(f1.replaceVar("?REL", "part"));
-    }
-
-    /**
-     * A test method.
-     */
-    public static void testComplexArgs() {
-
-        Formula f1 = new Formula();
-        f1.read("(during ?Y (WhenFn ?H))");
-        System.out.println("Input: " + f1);
-        System.out.println(f1.complexArgumentsToArrayList(1));
-    }
-
-    /**
-     * A test method.
-     */
-    public static void testBigArgs() {
-
-        Formula f1 = new Formula();
-        f1.read("(=>   (instance ?AT AutomobileTransmission)  (hasPurpose ?AT    (exists (?C ?D ?A ?R1 ?N1 ?R2 ?R3 ?R4 ?N2 ?N3)      (and        (instance ?C Crankshaft)        (instance ?D Driveshaft)        (instance ?A Automobile)        (part ?D ?A)        (part ?AT ?A)        (part ?C ?A)        (connectedEngineeringComponents ?C ?AT)        (connectedEngineeringComponents ?D ?AT)        (instance ?R1 Rotating)        (instance ?R2 Rotating)               (instance ?R3 Rotating)        (instance ?R4 Rotating)        (patient ?R1 ?C)        (patient ?R2 ?C)        (patient ?R3 ?D)        (patient ?R4 ?D)        (causes ?R1 ?R3)        (causes ?R2 ?R4)        (not          (equal ?R1 ?R2))        (holdsDuring ?R1          (measure ?C (RotationFn ?N1 MinuteDuration)))        (holdsDuring ?R2          (measure ?C (RotationFn ?N1 MinuteDuration)))        (holdsDuring ?R3          (measure ?D (RotationFn ?N2 MinuteDuration)))        (holdsDuring ?R4          (measure ?D (RotationFn ?N3 MinuteDuration)))        (not          (equal ?N2 ?N3))))))");
-        System.out.println("Input: " + f1);
-        System.out.println(f1.validArgs());
-    }
-
-    /**
-     * A test method.
-     */
-    public static void testCar1() {
-
-        Formula f1 = new Formula();
-        f1.read("(=>   (instance ?AT AutomobileTransmission)  (hasPurpose ?AT    (exists (?C ?D ?A ?R1 ?N1 ?R2 ?R3 ?R4 ?N2 ?N3)      (and        (instance ?C Crankshaft)        (instance ?D Driveshaft)        (instance ?A Automobile)        (part ?D ?A)        (part ?AT ?A)        (part ?C ?A)        (connectedEngineeringComponents ?C ?AT)        (connectedEngineeringComponents ?D ?AT)        (instance ?R1 Rotating)        (instance ?R2 Rotating)               (instance ?R3 Rotating)        (instance ?R4 Rotating)        (patient ?R1 ?C)        (patient ?R2 ?C)        (patient ?R3 ?D)        (patient ?R4 ?D)        (causes ?R1 ?R3)        (causes ?R2 ?R4)        (not          (equal ?R1 ?R2))        (holdsDuring ?R1          (measure ?C (RotationFn ?N1 MinuteDuration)))        (holdsDuring ?R2          (measure ?C (RotationFn ?N1 MinuteDuration)))        (holdsDuring ?R3          (measure ?D (RotationFn ?N2 MinuteDuration)))        (holdsDuring ?R4          (measure ?D (RotationFn ?N3 MinuteDuration)))        (not          (equal ?N2 ?N3))))))");
-        System.out.println("Input: " + f1);
-        System.out.println(f1.validArgs());
-    }
-
-    /**
-     * A test method.
-     */
-    public static void testArg2ArrayList() {
-
-        System.out.println("testArg2ArrayList(): ");
-        String f = "(termFormat EnglishLanguage experimentalControlProcess \"experimental control (process)\")";
-        Formula form = new Formula(f);
-        System.out.println(form.complexArgumentsToArrayList(0));
-    }
-
     public static void showHelp() {
 
         System.out.println("KB class");
@@ -904,29 +825,6 @@ public class Formula implements Comparable<Formula>, Serializable {
         System.out.println("  h - show this help screen");
         System.out.println("  t \"<formula\" - formula type");
         System.out.println("  x \"<formula\" - format a formula");
-    }
-
-    public static void main(String[] args) throws IOException {
-
-        System.out.println("INFO in Formula.main()");
-        if (args == null)
-            System.out.println("no command given");
-        else
-            System.out.println(args.length + " : " + Arrays.toString(args));
-        if (args != null && args.length > 0 && args[0].equals("-h"))
-            showHelp();
-        else {
-            KBmanager.getMgr().initializeOnce();
-            String kbName = KBmanager.getMgr().getPref("sumokbname");
-            KB kb = KBmanager.getMgr().getKB(kbName);
-            if (args != null && args.length > 1 && args[0].contains("t")) {
-                Formula f = new Formula(args[1]);
-                System.out.println("Formula.main() formula type of " + args[1] + " : " + f.findType(kb));
-            } else if (args != null && args.length > 1 && args[0].contains("x")) {
-                System.out.println(Formula.textFormat(args[1]));
-            } else
-                showHelp();
-        }
     }
 
     public String getSourceFile() {

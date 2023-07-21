@@ -98,10 +98,6 @@ public class KB implements Serializable {
      * EProver.     */
     public String kbDir = null;
     /**
-     * The instance of the CELT process.
-     */
-    public transient CELT celt = null;
-    /**
      * a cache built through lazy evaluation of the taxonomic depth of each term
      */
     public Map<String, Integer> termDepthCache = new HashMap<>();
@@ -158,17 +154,6 @@ public class KB implements Serializable {
 
         name = n;
         kbDir = dir;
-        try {
-            KBmanager mgr = KBmanager.getMgr();
-            if (mgr != null) {
-                String loadCelt = mgr.getPref("loadCELT");
-                if ((loadCelt != null) && loadCelt.equalsIgnoreCase("yes"))
-                    celt = new CELT();
-            }
-        } catch (IOException ioe) {
-            System.out.println("Error in KB(): " + ioe.getMessage());
-            celt = null;
-        }
     }
 
     public KB(String n, String dir, boolean visibility) {
@@ -222,10 +207,6 @@ public class KB implements Serializable {
             this.errors = Sets.newTreeSet(kbIn.errors);
         this.modifiedContents = kbIn.modifiedContents;
         this.kbCache = new KBcache(kbIn.kbCache, this);
-
-        // Must be done after kb manager set.
-        if (kbIn.celt != null)
-            this.celt = new CELT();
     }
 
     /**
@@ -234,18 +215,6 @@ public class KB implements Serializable {
     public KB(String n) {
 
         name = n;
-        try {
-            KBmanager mgr = KBmanager.getMgr();
-            kbDir = mgr.getPref("kbDir");
-            if (mgr != null) {
-                String loadCelt = mgr.getPref("loadCELT");
-                if ((loadCelt != null) && loadCelt.equalsIgnoreCase("yes"))
-                    celt = new CELT();
-            }
-        } catch (IOException ioe) {
-            System.out.println("Error in KB(): " + ioe.getMessage());
-            celt = null;
-        }
     }
 
     /**
