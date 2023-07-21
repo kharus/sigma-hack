@@ -899,7 +899,7 @@ public class FormulaPreprocessor {
      */
     public Map<String, Set<String>> computeVariableTypes(Formula form, KB kb) {
 
-        if (form.varTypeCache.keySet().size() > 0 && KBmanager.initialized) { // type lists can change as KBs are read
+        if (form.varTypeCache.keySet().size() > 0) { // type lists can change as KBs are read
             if (debug)
                 System.out.println("INFO in FormulaPreprocessor.computeVariableTypes(): returning cached types for \n" + form);
             return form.varTypeCache;

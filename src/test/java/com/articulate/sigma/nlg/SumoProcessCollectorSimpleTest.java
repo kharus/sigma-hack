@@ -3,8 +3,8 @@ package com.articulate.sigma.nlg;
 import com.articulate.sigma.KB;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import org.junit.jupiter.api.Disabled;
 import org.junit.Rule;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 

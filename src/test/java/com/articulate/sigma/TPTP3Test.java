@@ -5,8 +5,9 @@ import com.articulate.sigma.tp.Vampire;
 import com.articulate.sigma.trans.TPTP3ProofProcessor;
 import com.articulate.sigma.utils.StringUtil;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.FileReader;
 import java.io.LineNumberReader;
@@ -16,13 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag("com.articulate.sigma.TopOnly")
 public class TPTP3Test {
+    @Value("${sumokbname}")
+    private String sumokbname;
 
     @Test
     @Disabled
     public void testParseProofFile() {
 
         System.out.println("-----------------------testParseProofFile--------------------------");
-        KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+        KB kb = KBmanager.getMgr().getKB(sumokbname);
         TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
         try {
             FileReader r = new FileReader(System.getProperty("user.home") + "/Programs/E/PROVER/eltb_out.txt");
@@ -49,8 +52,8 @@ public class TPTP3Test {
         try {
             System.out.println("----------------------testE---------------------------");
             //KBmanager.getMgr().initializeOnce();
-            //KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-            KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+            //KB kb = KBmanager.getMgr().getKB(sumokbname);
+            KB kb = KBmanager.getMgr().getKB(sumokbname);
             EProver eprover = new EProver(KBmanager.getMgr().getPref("eprover"),
                     System.getenv("SIGMA_HOME") + "/KBs/SUMO.tptp");
             System.out.println("testE(): E completed initialization");
@@ -88,7 +91,7 @@ public class TPTP3Test {
         System.out.println("-------------------testVampireAvatar------------------------------");
         try {
             KBmanager.getMgr().initializeOnce();
-            KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+            KB kb = KBmanager.getMgr().getKB(sumokbname);
             Vampire.mode = Vampire.ModeType.AVATAR;
             String query = "(subclass ?X Entity)";
             Vampire vampire = kb.askVampire(query, 30, 1);
@@ -115,7 +118,7 @@ public class TPTP3Test {
         System.out.println("-------------------testVampireCASC------------------------------");
         try {
             KBmanager.getMgr().initializeOnce();
-            KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+            KB kb = KBmanager.getMgr().getKB(sumokbname);
             Vampire.mode = Vampire.ModeType.CASC;
             String query = "(subclass ?X Entity)";
             Vampire vampire = kb.askVampire(query, 30, 1);
@@ -154,7 +157,7 @@ public class TPTP3Test {
         System.out.println("-------------------testVampireCASCBindings------------------------------");
         try {
             KBmanager.getMgr().initializeOnce();
-            KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+            KB kb = KBmanager.getMgr().getKB(sumokbname);
             Vampire.mode = Vampire.ModeType.CASC;
             String query = "(subclass ?X Entity)";
             Vampire vampire = kb.askVampire(query, 30, 1);
@@ -182,7 +185,7 @@ public class TPTP3Test {
         System.out.println("-------------------testVampireCASCBindings2------------------------------");
         try {
             KBmanager.getMgr().initializeOnce();
-            KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
+            KB kb = KBmanager.getMgr().getKB(sumokbname);
 
             Vampire.mode = Vampire.ModeType.CASC;
             String query = "(subclass ?X ?Y)";

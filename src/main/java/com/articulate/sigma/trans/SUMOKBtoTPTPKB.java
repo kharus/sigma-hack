@@ -188,10 +188,7 @@ public class SUMOKBtoTPTPKB {
 
         PredVarInst.init();
         long millis = System.currentTimeMillis();
-        if (!KBmanager.initialized) {
-            System.out.println("Error in SUMOKBtoTPTPKB.writeFile(): KB initialization not completed");
-            return "Error in SUMOKBtoTPTPKB.writeFile(): KB initialization not completed";
-        }
+
         String result = null;
         try {
             int axiomIndex = 1;   // a count appended to axiom names to make a unique ID

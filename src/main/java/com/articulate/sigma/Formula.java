@@ -2090,7 +2090,7 @@ public class Formula implements Comparable<Formula>, Serializable {
      */
     public List<Set<String>> collectVariables() {
 
-        if (allVarsPairCache.size() > 0 && KBmanager.initialized)
+        if (allVarsPairCache.size() > 0)
             return allVarsPairCache;
         List<Set<String>> ans = new ArrayList<Set<String>>();
         ans.add(new HashSet());
@@ -2535,8 +2535,6 @@ public class Formula implements Comparable<Formula>, Serializable {
             FormulaPreprocessor fp = new FormulaPreprocessor();
             varTypeCache = fp.findAllTypeRestrictions(this, kb);
         }
-        if (!KBmanager.initialized)
-            return false;
         //if (higherOrder) {
         //    if (debug) if (debug) System.out.println("Formula.isHigherOrder(): cached as higher order: " + this);
         //    return true;
