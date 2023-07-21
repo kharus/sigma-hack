@@ -3025,11 +3025,6 @@ public class KB implements Serializable {
         String canonicalPath = null;
         KIF file = null;
         try {
-            if (filename.endsWith(".owl") || filename.endsWith(".OWL") || filename.endsWith(".rdf")
-                    || filename.endsWith(".RDF")) {
-                OWLtranslator.read(filename);
-                filename = filename + ".kif";
-            }
             File constituent = new File(filename);
 
             canonicalPath = constituent.getCanonicalPath();
