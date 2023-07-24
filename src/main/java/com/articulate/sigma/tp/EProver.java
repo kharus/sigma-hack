@@ -263,44 +263,6 @@ public class EProver {
         }
     }
 
-    /**
-     * A simple test. Works as follows:
-     * <ol>
-     *   <li>start E;</li>
-     *   <li>make an assertion;</li>
-     *   <li>submit a query;</li>
-     *   <li>terminate E</li>
-     * </ol>
-     */
-    public static void main(String[] args) throws Exception {
-
-        /*
-        String initialDatabase = "SUMO-v.kif";
-        EProver eprover = EProver.getNewInstance(initialDatabase);
-        eprover.setCommandLineOptions("--cpu-limit=600 --soft-cpu-limit=500 -xAuto -tAuto -l 4 --tptp3-in");
-        KBmanager.getMgr().setPref("eprover",System.getProperty("user.home") + "/Programs/E/Prover/eprover");
-        System.out.print(eprover.submitQuery("(holds instance ?X Relation)",5,2));
-        */
-        try {
-            System.out.println("INFO in EProver.main()");
-            KBmanager.getMgr().initializeOnce();
-            KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-            System.out.println("------------- INFO in EProver.main() completed initialization--------");
-            EProver eprover = new EProver(KBmanager.getMgr().getPref("eprover"),
-                    KBmanager.getMgr().getPref("kbDir") + File.separator + KBmanager.getMgr().getPref("sumokbname") + ".tptp");
-            System.out.println("------------- INFO in EProver.main() completed init of E --------");
-            System.out.println("Result: " + eprover.submitQuery("(subclass ?X Object)", kb));
-            eprover.terminate();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        // System.out.print(eprover.assertFormula("(human Socrates)"));
-        // System.out.print(eprover.assertFormula("(holds instance Adam Human)"));
-        // System.out.print(eprover.submitQuery("(human ?X)", 1, 2));
-        // System.out.print(eprover.submitQuery("(holds instance ?X Human)", 5, 2));
-    }
-
     public String toString() {
 
         StringBuffer sb = new StringBuffer();

@@ -498,19 +498,6 @@ public class DocGen {
         return StringUtil.isNonEmptyString(s);
     }
 
-    public static void main(String[] args) {
-
-        String status = "";
-        String ls = StringUtil.getLineSeparator();
-        try {
-            // Nothing here yet.
-        } catch (Throwable th) {
-            System.out.println(status);
-            System.out.println(th.getMessage());
-            th.printStackTrace();
-        }
-    }
-
     public String getLineSeparator() {
         return lineSeparator;
     }

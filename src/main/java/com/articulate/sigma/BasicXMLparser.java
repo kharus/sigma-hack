@@ -59,59 +59,6 @@ public class BasicXMLparser {
     }
 
     /**
-     * Test method.
-     */
-    public static void main(String[] args) {
-
-        //String xml = "<queryResponse>\n<answer result='yes' number='1'>\n<bindingSet type='definite'>\n<binding>\n<var name='?X' value='<=>'/>\n</binding>\n</bindingSet>\n<proof>\n<proofStep>\n<premises>\n</premises>\n<conclusion>\n<formula number='1531'>\n(<=> (holds subclass ?X108 ?X14) (and (holds instance ?X108 Class) (holds instance ?X14 Class) (forall ( ?X15) (=> (holds instance ?X15 ?X108) (holds instance ?X15 ?X14)))))\n</formula>\n</conclusion>\n</proofStep>\n</proof>\n</answer>\n</queryResponse>\n";
-        // String xml = "<queryResponse>\n<answer result='yes' number='1'>\n</answer>\n</queryResponse>\n";
-        String xml = "<preference key='showcached' value='yes'/>\n" +
-                "<preference key='eprover' value='/home/user/Programs/E/bin/eprover'/>\n" +
-                "<preference key='testOutputDir' value='/home/user/Sigma/tests'/>\n" +
-                "<preference key='prolog' value='/home/user'/>\n<preference key='sumokbname' value='sumo2'/>\n" +
-                "<preference key='kbDir' value='/home/user/Sigma/KBs'/>\n" +
-                "<preference key='celtdir' value='/home/user/2004-01-05-CELTv2.65-3b'/>\n" +
-                "<preference key='hostname' value='localhost'/>\n" +
-                "<preference key='cache' value='no'/>\n" +
-                "<preference key='inferenceTestDir' value='/home/user/tests'/>\n" +
-                "<preference key='PLDir' value='/home/user/Programs/pl-5.2.10/bin'/>\n" +
-                "<preference key='loadCELT' value='yes'/>\n" +
-                "<kb name='sumo2'>\n" +
-                "<constituent filename='/home/user/Sigma/KBs/english_format.kif'/>\n" +
-                "<constituent filename='/home/user/Sigma/KBs/Mid-level-ontology.txt'/>\n" +
-                "<constituent filename='/home/user/Sigma/KBs/Merge.kif'/>\n" +
-                "</kb>\n";
-
-        BasicXMLparser bp = new BasicXMLparser(xml);
-        System.out.print("Parse completed.  Number of elements: ");
-        System.out.println(bp.elements.size());
-        System.out.println(bp);
-
-        /*
-    <queryResponse>
-      <answer result='yes' number='1'>
-        <bindingSet type='definite'>
-          <binding>
-            <var name='?X' value='AbsoluteValueFn'/>
-          </binding>
-        </bindingSet>
-        <proof>
-          <proofStep>
-            <premises>
-            </premises>
-            <conclusion>
-              <formula number='1531'>
-                (holds instance AbsoluteValueFn TotalValuedRelation)
-              </formula>
-            </conclusion>
-          </proofStep>
-        </proof>
-      </answer>
-    </queryResponse>
-          */
-    }
-
-    /**
      * Parse an XML formatted string into a hierarchy of BasicXMLelement (s).
      * Assume that each line has only one tag.
      */

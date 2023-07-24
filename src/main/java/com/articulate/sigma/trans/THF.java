@@ -170,35 +170,6 @@ public class THF {
     }
 
     /**
-     * A test method.
-     */
-    public static void main(String[] args) {
-
-        THF thf = new THF();
-        KBmanager kbmgr = KBmanager.getMgr();
-        kbmgr.initializeOnce();
-        KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-        String kbDir = KBmanager.getMgr().getPref("kbDir");
-        if (kb.errors.size() > 0)
-            System.out.println("Errors: " + kb.errors);
-        String sep = File.separator;
-        try {
-            System.out.println("\n\nTHF.main(): Test on all KB kb content:");
-            Collection coll = Collections.EMPTY_LIST;
-            List<String> kbAll2 = thf.KIF2THF(kb.formulaMap.values(), coll, kb);
-            String filename = kbDir + sep + kb.name + ".thf";
-            FileWriter fstream = new FileWriter(filename);
-            BufferedWriter out = new BufferedWriter(fstream);
-            for (String s : kbAll2)
-                out.write(s);
-            out.close();
-            System.out.println("\n\nTHF.main(): Result written to file " + filename);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    /**
      * A function that checks whether a given term-to-type mapping
      * such as 'terms' or 'localsig' above contain some type information
      * involving the 'unkownTp'.

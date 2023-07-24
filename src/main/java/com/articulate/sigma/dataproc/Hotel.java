@@ -409,29 +409,6 @@ public class Hotel {
         }
     }
 
-    public static void execJSON(String path) {
-
-        //List<Hotel> hotels = readJSONHotels(path,false);
-        List<Hotel> hotels = readJSONHotels(path, true);
-        long t1 = System.currentTimeMillis();
-        //System.out.println(DB.writeSpreadsheet(Hotel.hotelReviewSUMOSentimentAsSparseMatrix(hotels,true),true));
-        System.out.println("INFO in Hotel.execJSON(): done computing sentiment in " + ((System.currentTimeMillis() - t1) / 1000.0) + " seconds");
-    }
-
-    public static void main(String[] args) {
-
-        if (args[0].equals("-help") || StringUtil.emptyString(args[0])) {
-            System.out.println("usage:");
-            System.out.println(">java -classpath . com.articulate.sigma.dataProc.Hotel -js /home/me/data");
-        }
-        if (args[0].equals("-js")) {
-            String path = ".";
-            if (!StringUtil.emptyString(args[1]))
-                path = args[1];
-            execJSON(path);
-        }
-    }
-
     public String toString() {
 
         StringBuffer result = new StringBuffer();

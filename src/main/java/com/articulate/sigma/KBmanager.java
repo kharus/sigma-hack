@@ -325,30 +325,6 @@ public class KBmanager implements Serializable {
         System.out.println("  with no arguments show this help screen an execute a test");
     }
 
-    public static void main(String[] args) {
-
-        if (args == null) {
-            printHelp();
-            try {
-                KBmanager.getMgr().initializeOnce();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-            KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-            Formula f = new Formula();
-            f.read("(=> (and (wears ?A ?C) (part ?P ?C)) (wears ?A ?P))");
-            FormulaPreprocessor fp = new FormulaPreprocessor();
-            System.out.println(fp.preProcess(f, false, kb));
-        } else {
-            if (args != null && args.length > 0 && args[0].equals("-p")) {
-                pythonServer();
-            }
-            if (args != null && args.length > 0 && args[0].equals("-h")) {
-                printHelp();
-            }
-        }
-    }
-
     /**
      * Get the error string for file loading.
      */

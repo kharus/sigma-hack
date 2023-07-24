@@ -127,63 +127,6 @@ public class Vampire {
         return allAdded;
     }
 
-    public static void main(String[] args) throws Exception {
-
-        /*
-        String initialDatabase = "SUMO-v.kif";
-        Vampire vampire = Vampire.getNewInstance(initialDatabase);
-        System.out.print(vampire.submitQuery("(holds instance ?X Relation)",5,2));
-
-        // System.out.print(vampire.assertFormula("(human Socrates)"));
-        // System.out.print(vampire.assertFormula("(holds instance Adam Human)"));
-        // System.out.print(vampire.submitQuery("(human ?X)", 1, 2));
-        // System.out.print(vampire.submitQuery("(holds instance ?X Human)", 5, 2));
-        vampire.terminate();
-        */
-        KBmanager.getMgr().initializeOnce();
-        String kbName = KBmanager.getMgr().getPref("sumokbname");
-        KB kb = KBmanager.getMgr().getKB(kbName);
-        String dir = KBmanager.getMgr().getPref("kbDir") + File.separator;
-        String lang = "tff";
-        if (SUMOKBtoTPTPKB.lang.equals("fof"))
-            lang = "tptp";
-        String outfile = dir + "temp-comb." + lang;
-        String stmtFile = dir + "temp-stmt." + lang;
-        File f1 = new File(outfile);
-        f1.delete();
-        File f2 = new File(stmtFile);
-        f2.delete();
-        File f3 = new File(dir + kbName + KB._userAssertionsString);
-        f3.delete();
-        File f4 = new File(dir + kbName + KB._userAssertionsTPTP);
-        f4.delete();
-        File s = new File(dir + kbName + "." + lang);
-        if (!s.exists())
-            System.out.println("Vampire.main(): no such file: " + s);
-        else {
-            System.out.println("Vampire.main(): first test");
-            Set<String> query = new HashSet<>();
-            query.add("tff(conj1,conjecture,?[V__X, V__Y] : (s__subclass(V__X,V__Y))).");
-            System.out.println("Vampire.main(): calling Vampire with: " + s + ", 30, " + query);
-            Vampire vampire = new Vampire();
-            vampire.run(kb, s, 30, query);
-            System.out.println("----------------\nVampire output\n");
-            for (String l : vampire.output)
-                System.out.println(l);
-            String queryStr = "(subclass ?X ?Y)";
-            TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
-            tpp.parseProofOutput(vampire.output, queryStr, kb, vampire.qlist);
-            System.out.println("Vampire.main(): bindings: " + tpp.bindings);
-            System.out.println("Vampire.main(): proof: " + tpp.proof);
-            System.out.println("-----------------\n");
-            System.out.println("\n");
-
-            System.out.println("Vampire.main(): second test");
-            System.out.println(kb.askVampire("(subclass ?X Entity)", 30, 1));
-            //vampire.terminate();
-        }
-    }
-
     public String toString() {
 
         StringBuffer sb = new StringBuffer();

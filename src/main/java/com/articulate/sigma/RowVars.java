@@ -410,16 +410,4 @@ public class RowVars {
         return formresult;
     }
 
-    public static void main(String[] args) {
-
-        //String fstring = "(=> (and (subrelation ?REL1 ?REL2) (?REL1 @ROW)) (?REL2 @ROW))";
-        String fstring = "(=> (and (contraryAttribute @ROW1) (identicalListItems (ListFn @ROW1) (ListFn @ROW2))) (contraryAttribute @ROW2))";
-        Formula f = new Formula(fstring);
-        System.out.println("Info in RowVars.main(): " + findRowVars(f));
-        KBmanager.getMgr().initializeOnce();
-        System.out.println("Info in RowVars.main(): finished initialization");
-        KB kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-        RowVars.DEBUG = true;
-        System.out.println("Info in RowVars.main(): " + getRowVarRelations(f));
-    }
 }

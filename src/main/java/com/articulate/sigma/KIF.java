@@ -256,32 +256,6 @@ public class KIF {
         System.out.println("  t - run a test");
     }
 
-    public static void main(String[] args) throws IOException {
-
-        System.out.println("INFO in KIF.main()");
-        if (args != null && args.length > 0 && args[0].equals("-h"))
-            showHelp();
-        else {
-            if (args != null && args.length > 1 && args[0].contains("p")) {
-                KIF kif = new KIF();
-                Reader r = new StringReader(args[1]);
-                kif.parse(r);
-                System.out.println("formulaMap: " + kif.formulaMap);
-                System.out.println("formulas: " + kif.formulas);
-            } else if (args != null && args.length > 1 && args[0].contains("f")) {
-                try {
-                    KIF kif = new KIF();
-                    kif.readFile(args[1]);
-                    System.out.println("formulaMap: " + kif.formulaMap);
-                    System.out.println("formulas: " + kif.formulas);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (args != null && args.length > 0 && args[0].contains("t"))
-                test();
-        }
-    }
-
     /**
      * @return long file size in bytes handling any errors
      */
