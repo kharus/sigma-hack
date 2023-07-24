@@ -505,26 +505,6 @@ public class LanguageFormatter {
         System.out.println("  -g \"<formula>\" - generate English from formula");
     }
 
-    /**
-     * A test method.
-     */
-    public static void main(String[] args) {
-
-        System.out.println("INFO in Graph.main()");
-        if (args != null && args.length > 1 && args[0].equals("-h")) {
-            showHelp();
-        } else if (args.length > 1 && args[0].equals("-g")) {
-            KBmanager.getMgr().initializeOnce();
-            Formula f = new Formula(args[1]);
-            kb = KBmanager.getMgr().getKB(KBmanager.getMgr().getPref("sumokbname"));
-            System.out.println("translation for\n" + f);
-            String actual = toEnglish(StringUtil.removeEnclosingQuotes(args[1]));
-            System.out.println(StringUtil.filterHtml(actual));
-        } else {
-            test3();
-        }
-    }
-
     public void setDoInformalNLG(boolean doIt) {
         doInformalNLG = doIt;
     }

@@ -438,22 +438,5 @@ public class OMWordnet implements Serializable {
         return sb.toString();
     }
 
-    /**
-     * A main method, used only for testing.  It should not be called
-     * during normal operation.
-     */
-    public static void main(String[] args) {
-
-        try {
-            KBmanager.getMgr().initializeOnce();
-            //readOMWfiles();
-            //System.out.println(formatWords("Table","","FrenchLanguage",""));
-            generateOMWformat("wn-data-smo.tab");
-        } catch (Exception e) {
-            System.out.println("Error in OMWordnet.main(): Exception: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-    }
 }
 

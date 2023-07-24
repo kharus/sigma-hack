@@ -830,37 +830,4 @@ public class WSD {
         }
     }
 
-    /**
-     * A main method, used only for testing.  It should not be called
-     * during normal operation.
-     */
-    public static void main(String[] args) {
-
-        //testWordWSD();
-        //testSentenceWSD();
-        //testSentenceWSD2();
-        //collectSUMOFromSICK();
-        System.out.println("Word Sense Disambiguation");
-        if (args != null && args.length > 0 && (args[0].equals("-f"))) {
-            KBmanager.getMgr().initializeOnce();
-            collectSUMOFromFile(args[1]);
-        } else if (args != null && args.length > 0 && (args[0].equals("-fp"))) {
-            KBmanager.getMgr().initializeOnce();
-            printSUMOFromFileByLine(args[1]);
-        } else if (args != null && args.length > 0 && (args[0].equals("-p"))) {
-            KBmanager.getMgr().initializeOnce();
-            System.out.println(collectSUMOFromString(StringUtil.removeEnclosingQuotes(args[1])));
-        } else if (args != null && args.length > 0 && (args[0].equals("-i"))) {
-            KBmanager.getMgr().initializeOnce();
-            interactive();
-        } else if (args != null || args.length == 0 || (args.length > 0 && args[0].equals("-h"))) {
-            System.out.println("Word Sense Disambiguation");
-            System.out.println("  options:");
-            System.out.println("  -h - show this help screen");
-            System.out.println("  -f <file> - find all SUMO terms in a file");
-            System.out.println("  -fp <file> - find all SUMO terms in a file by line");
-            System.out.println("  -p one quoted sentence with space delimited tokens into SUMO ");
-            System.out.println("  -i interactive mode ");
-        }
-    }
 }

@@ -88,35 +88,6 @@ public class SimpleDOMParser {
         return input;
     }
 
-    public static void main(String[] args) {
-
-        SimpleDOMParser sdp = new SimpleDOMParser();
-        String fname = "";
-        try {
-            //String _projectFileName = "projects-energy.xml";
-            //fname = KBmanager.getMgr().getPref("baseDir") + File.separator + _projectFileName;
-            fname = System.getProperty("user.home") + "/corpora/timebank_1_2/data/extra/wsj_0991.tml";
-            System.out.println(fname);
-            File f = new File(fname);
-            if (!f.exists())
-                return;
-            BufferedReader br = new BufferedReader(new FileReader(fname));
-
-            SimpleElement se = sdp.parse(br);
-            System.out.println(se.toString());
-        } catch (java.io.IOException e) {
-            System.out.println("Error in main(): IO exception parsing file " + fname);
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            System.out.println("elements: " + sdp.elements);
-            System.out.println("current element: " + sdp.currentElement);
-        }
-        /* String test = "<P>hi<P>";
-        String converted = SimpleDOMParser.convertFromReservedCharacters(test);
-        System.out.println(converted);
-        System.out.println(SimpleDOMParser.convertToReservedCharacters(converted)); */
-    }
-
     public void setSkipProlog(boolean b) {
         skipProlog = b;
     }

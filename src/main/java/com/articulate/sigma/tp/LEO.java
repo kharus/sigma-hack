@@ -112,53 +112,6 @@ public class LEO {
         return allAdded;
     }
 
-    public static void main(String[] args) throws Exception {
-
-        KBmanager.getMgr().initializeOnce();
-        String kbName = KBmanager.getMgr().getPref("sumokbname");
-        KB kb = KBmanager.getMgr().getKB(kbName);
-        String dir = KBmanager.getMgr().getPref("kbDir") + File.separator;
-        String lang = "thf";
-        String outfile = dir + "temp-comb." + lang;
-        String stmtFile = dir + "temp-stmt." + lang;
-        File f1 = new File(outfile);
-        f1.delete();
-        File f2 = new File(stmtFile);
-        f2.delete();
-        File f3 = new File(dir + kbName + KB._userAssertionsString);
-        f3.delete();
-        File f4 = new File(dir + kbName + KB._userAssertionsTPTP);
-        f4.delete();
-        File kbFile = new File(dir + kbName + "." + lang);
-        System.out.println("Leo.main(): first test");
-        Set<String> query = new HashSet<>();
-        query.add("thf(conj1,conjecture,?[V__X:$i, V__Y:$i] : (subclass_THFTYPE_IiioI @ V__X @ V__Y)).");
-        System.out.println("Leo.main(): calling Leo with: " + kbFile + ", 30, " + query);
-        LEO leo = new LEO();
-        leo.run(kb, kbFile, 30, query);
-        System.out.println("----------------\nLeo output\n");
-        for (String l : leo.output)
-            System.out.println(l);
-        String queryStr = "(subclass ?X ?Y)";
-        TPTP3ProofProcessor tpp = new TPTP3ProofProcessor();
-        tpp.parseProofOutput(leo.output, queryStr, kb, leo.qlist);
-        for (TPTPFormula step : tpp.proof) {
-            System.out.println(":: " + step);
-            Formula f = new Formula(step.sumo);
-            System.out.println(f.format("", "  ", "\n"));
-        }
-        System.out.println("Leo.main(): bindings: " + tpp.bindings);
-        //System.out.println("Leo.main(): proof: " + tpp.proof);
-        System.out.println("-----------------\n");
-        System.out.println("\n");
-/*
-        System.out.println("Leo.main(): second test");
-        System.out.println(kb.askLeo("(subclass ?X Entity)",30,1));
-
- */
-
-    }
-
     public String toString() {
 
         StringBuffer sb = new StringBuffer();

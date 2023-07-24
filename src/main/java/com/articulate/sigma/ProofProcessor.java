@@ -280,25 +280,6 @@ public class ProofProcessor {
     }
 
     /**
-     * A main method, used only for testing.  It should not be called
-     * during normal operation.
-     */
-    public static void main(String[] args) {
-
-        System.out.println("INFO in ProofProcessor.main()");
-        System.out.println("args:" + args.length + " : " + Arrays.toString(args));
-        if (args == null) {
-            System.out.println("no command given");
-            showHelp();
-        } else if (args != null && args.length > 0 && args[0].equals("-h"))
-            showHelp();
-        else {
-            if (args.length > 1 && args[0].equals("-f"))
-                testFormatProof2(args[1]);
-        }
-    }
-
-    /**
      * Compare the answer with the expected answer.  Note that this method
      * is very unforgiving in that it requires the exact same format for the
      * expected answer, including the order of variables.

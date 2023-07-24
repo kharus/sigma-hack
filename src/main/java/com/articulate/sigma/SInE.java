@@ -167,16 +167,6 @@ public class SInE extends InferenceEngine {
     }
 
     /**
-     * A simple test to load a KB file and pose a query, which are
-     * the first and second item, respectively, given on the
-     * command line.
-     */
-    public static void main(String[] args) throws Exception {
-
-        test(args);
-    }
-
-    /**
      * Loads formulas from given source.
      */
     public List<String> loadNonKif(File kbFile) {

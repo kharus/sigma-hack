@@ -861,19 +861,6 @@ public class Clausifier {
         System.out.println(result);
     }
 
-    public static void main(String[] args) {
-
-        //testRemoveImpEq();
-        //testMoveNegationIn();
-        //testMoveQuantifiersLeft();
-        //testStandardizeVariables();
-        //testSkolemization();
-        //testDistribute();
-        //testClausification();
-        testClausificationSimple();
-        //testClausifier(args);
-    }
-
     public String toString() {
 
         return thisFormula.getFormula();
