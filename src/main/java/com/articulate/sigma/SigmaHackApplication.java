@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.shell.command.annotation.EnableCommand;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @SpringBootApplication
 @EnableCommand(SUMOKBtoTPTPKBRunner.class)
@@ -41,7 +43,7 @@ public class SigmaHackApplication {
             if (WordNet.wn == null)
                 WordNet.loadFresh();
         }
-        DB.readSentimentArray();
+        DB.readSentimentArray(kbConfigProperties.getKbDir());
 
         return WordNet.wn;
     }

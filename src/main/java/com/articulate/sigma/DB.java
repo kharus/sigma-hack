@@ -25,6 +25,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -254,13 +256,14 @@ public class DB {
      *
      * @return void side effect on static variable "sentiment"
      */
-    public static void readSentimentArray() {
+    public static void readSentimentArray(Path kbDir) {
 
         if (sentiment.size() > 0) {
             System.out.println("Error in DB.readSentimentArray(): file previously read.");
             return;
         }
-        List<List<String>> f = DB.readSpreadsheet(KBmanager.getMgr().getPref("kbDir") +
+
+        List<List<String>> f = DB.readSpreadsheet(kbDir +
                 File.separator + "WordNetMappings" + File.separator + "sentiment.csv", null, false);
         for (List<String> al : f) {
             Map<String, String> entry = new HashMap<String, String>();

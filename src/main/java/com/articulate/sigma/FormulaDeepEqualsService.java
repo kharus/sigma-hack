@@ -25,6 +25,7 @@ package com.articulate.sigma;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -38,6 +39,9 @@ import java.util.*;
 public class FormulaDeepEqualsService {
     private final Log log = LogFactory.getLog(getClass());
     private final KBmanager kBManager;
+
+    @Value("${sumokbname}")
+    private String sumokbname;
 
     public FormulaDeepEqualsService(KBmanager kBManager) {
         this.kBManager = kBManager;
@@ -64,7 +68,7 @@ public class FormulaDeepEqualsService {
         log.debug("clausified : " + cf1 + "  " + cf2);
 
         //the normalizeParameterOrder method should be moved to Clausifier
-        KB kb = kBManager.getKB(kBManager.getPref("sumokbname"));
+        KB kb = kBManager.getKB(sumokbname);
 
         String normalized1 = Formula.normalizeParameterOrder(cf1.getFormula(), kb, true);
         String normalized2 = Formula.normalizeParameterOrder(cf2.getFormula(), kb, true);
@@ -146,7 +150,7 @@ public class FormulaDeepEqualsService {
         log.debug("Formula.unifyWith(): after clausify  this : " + cf1);
 
         //the normalizeParameterOrder method should be moved to Clausifier
-        KB kb = kBManager.getKB(kBManager.getPref("sumokbname"));
+        KB kb = kBManager.getKB(sumokbname);
 
         Map<FormulaUtil.FormulaMatchMemoMapKey, List<Set<VariableMapping>>> memoMap =
                 new HashMap<>();
