@@ -27,6 +27,12 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - name: Unit test with Maven
+        run: |
+          mvn -B test --file pom.xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.PACKAGE_READONLY }}
+
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@v2023.2
         env:
