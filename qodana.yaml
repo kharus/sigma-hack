@@ -2,6 +2,7 @@ version: "1.0"
 linter: jetbrains/qodana-jvm-community:2023.2
 bootstrap: |
   whoami
-  apt-get update
-  sudo apt-get install git-lfs
+  echo $PATH
+  wget https://github.com/git-lfs/git-lfs/releases/download/v3.3.0/git-lfs-linux-amd64-v3.3.0.tar.gz
+  tar -xf git-lfs-linux-amd64-v3.3.0.tar.gz
   git lfs install
