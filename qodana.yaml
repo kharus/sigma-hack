@@ -1,6 +1,7 @@
 version: "1.0"
 linter: jetbrains/qodana-jvm-community:2023.2
 bootstrap: |
-  sudo apt-get update
+  whoami
+  apt-get update
   sudo apt-get install git-lfs
   git lfs install
