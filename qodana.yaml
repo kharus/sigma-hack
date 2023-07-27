@@ -1,7 +1,7 @@
 version: "1.0"
 linter: jetbrains/qodana-jvm-community:2023.2
 bootstrap: |
-  whoami
   apt-get update
+  curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
   apt-get install git-lfs
   git lfs install
