@@ -38,3 +38,5 @@ jobs:
         uses: JetBrains/qodana-action@v2023.2
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }} # read the steps about it below
+        with:
+          args: -u,root
