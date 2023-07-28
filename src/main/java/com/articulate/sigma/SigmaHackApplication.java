@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @SpringBootApplication
-@EnableCommand(SUMOKBtoTPTPKBRunner.class)
+@EnableCommand({SUMOKBtoTPTPKBRunner.class, KBRunner.class})
 @EnableConfigurationProperties(KBConfigProperties.class)
 public class SigmaHackApplication {
 
