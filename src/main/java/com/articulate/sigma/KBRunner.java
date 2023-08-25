@@ -26,20 +26,14 @@ public class KBRunner {
     @Value("${sumokbname}")
     private String sumokbname;
 
-    @Value("${kbDir}")
-    private String kbDir;
-
-    private KB kb;
-
     public KBRunner(KBmanager kbManager) {
         this.kbManager = kbManager;
-        this.kb = kbManager.getKB(sumokbname);
     }
 
     @Command(command = "kb")
     public void run(String rest) throws IOException {
         String[] args = rest.split("\\s", 2);
-        kb = kbManager.getKB(sumokbname);
+        KB kb = kbManager.getKB(sumokbname);
 
         log.debug("in KB.main()");
         String command = args[0];
