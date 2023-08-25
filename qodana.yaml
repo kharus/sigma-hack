@@ -1,12 +1,27 @@
 version: "1.0"
-
 profile:
   name: qodana.recommended
-
 linter: jetbrains/qodana-jvm-community:latest
-
 bootstrap: |
   apt-get update
   curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
   apt-get install git-lfs
   git lfs install
+include:
+  - name: ForCanBeForeach
+  - name: IndexOfReplaceableByContains
+  - name: WhileCanBeForeach
+  - name: RawUseOfParameterizedType
+  - name: UnnecessaryBoxing
+  - name: UnnecessaryUnboxing
+  - name: TryFinallyCanBeTryWithResources
+  - name: Convert2Diamond
+  - name: StaticPseudoFunctionalStyleMethod
+  - name: Guava
+  - name: Java8MapApi
+  - name: Java9CollectionFactory
+  - name: TextBlockMigration
+  - name: ClassCanBeRecord
+  - name: PatternVariableCanBeUsed
+  - name: DeconstructionCanBeUsed
+  - name: ForEachWithRecordPatternCanBeUsed
