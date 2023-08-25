@@ -25,6 +25,8 @@ import org.springframework.test.context.ActiveProfiles;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +44,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FormulaPreprocessorITCase {
     @Value("${sumokbname}")
     private String sumokbname;
+
+    @Value("kbDir")
+    private Path kbDir;
 
     private KB kb;
 
@@ -387,10 +392,10 @@ public class FormulaPreprocessorITCase {
         SUMOKBtoTFAKB skbtfakb = new SUMOKBtoTFAKB();
         skbtfakb.initOnce(kb);
         String kbName = sumokbname;
-        String filename = KBmanager.getMgr().getPref("kbDir") + File.separator + kbName + ".tff";
+        Path filename =  kbDir.resolve(kbName + ".tff");
         PrintWriter pw = null;
         try {
-            pw = new PrintWriter(new FileWriter(filename));
+            pw = new PrintWriter(Files.newBufferedWriter(filename));
             skbtfakb.writeSorts(pw);
             //skbtfakb.writeFile(filename, null, false, "", false, pw);
             pw.flush();

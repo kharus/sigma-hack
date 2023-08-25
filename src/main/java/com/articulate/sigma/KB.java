@@ -600,8 +600,6 @@ public class KB implements Serializable {
 
     public static void test() {
 
-        // generateTPTPTestAssertions();
-        // testTPTP(args);
         KB kb = null;
         try {
             KBmanager.getMgr().initializeOnce();
@@ -630,21 +628,6 @@ public class KB implements Serializable {
         } catch (Exception ioe) {
             System.out.println(ioe.getMessage());
         }
-
-        // kb.generateSemanticNetwork();
-        // kb.generateRandomProof();
-        // kb.instanceOfInstanceP();
-        /*
-        System.out.println("KB.main(): termDepth of Object: " + kb.termDepth("Object"));
-        System.out.println("KB.main(): termDepth of Table: " + kb.termDepth("Table"));
-        System.out.println("KB.main(): termDepth of immediateSubclass: " + kb.termDepth("immediateSubclass"));
-        System.out.println("KB.main(): termDepth of Wagon: " + kb.termDepth("Wagon"));
-        System.out.println("KB.main(): termDepth of Foo: " + kb.termDepth("Foo"));
-*/
-        /*
-         * String foo = "(rel bar \"test\")"; Formula f = new Formula();
-         * f.read(foo); System.out.println(f.getArgument(2).equals("\"test\""));
-         */
     }
 
     public static void showHelp() {
